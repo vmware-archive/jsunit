@@ -8,6 +8,9 @@
       <useJavaw value="false" />
       <includeProjectClasspath value="false" />
       <includeParser value="true" />
+      <additionalClassPath>
+        <entry path="file://$APPLICATION_HOME_DIR$/lib/junit.jar" />
+      </additionalClassPath>
     </buildFile>
   </component>
   <component name="CodeStyleSettingsManager">

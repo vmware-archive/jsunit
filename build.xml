@@ -1,4 +1,4 @@
-<project name="JsUnit" default="test" basedir=".">
+<project name="JsUnit" default="jsunit_tests" basedir=".">
 
     <property name="src" location="java/src"/>
     <property name="bin" location="java/bin"/>
@@ -16,13 +16,13 @@
         </javac>
     </target>
 
-    <target name="dist" depends="compile" description="Generate the distribution">
+    <target name="create_jar" depends="compile" description="Generate jsunit.jar">
         <delete file="${bin}/jsunit.jar"/>
         <jar jarfile="${bin}/jsunit.jar" basedir="${bin}"/>
         <delete dir="${bin}/net"/>
     </target>
 
-    <target name="test" depends="dist" description="Runs the JUnit tests for JsUnit">
+    <target name="jsunit_tests" depends="create_jar" description="Runs the JUnit tests for JsUnit">
         <java classname="junit.textui.TestRunner">
             <classpath>
                 <fileset dir="${lib}">
@@ -36,9 +36,28 @@
         </java>
     </target>
 
-    <target name="standalonetest" description="Runs JsUnit tests">
+    <target name="start_server" description="Starts the JsUnit Server">
+        <java classname="net.jsunit.JsUnitServer" fork="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset dir="${bin}">
+                    <include name="jsunit.jar"/>
+                </fileset>
+            </classpath>
+        </java>
+    </target>
+    
+    <target name="standalone_test" description="Runs JsUnit tests">
         <junit>
             <test name="net.jsunit.StandaloneTest"/>
+        </junit>
+    </target>
+
+    <target name="distributed_test" description="Runs JsUnit tests">
+        <junit>
+            <test name="net.jsunit.DistributedTest"/>
         </junit>
     </target>
 
