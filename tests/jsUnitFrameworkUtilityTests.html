@@ -52,10 +52,6 @@ function testStackTrace() {
 }
 
 function doStackTraceTest(numberLeft) {
-  if (!arguments.caller) {
-    //This browser doesn't support the stack trace functionality; that's ok, just let it go.
-    return;
-  }
   if (numberLeft>0) {
     doStackTraceTest(numberLeft-1);
     return;
