@@ -54,6 +54,7 @@ public class TestSuiteResultTest extends JsUnitTest {
 			+ "<property name=\"JsUnitVersion\" value=\"2.5\" />"
 			+ "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />"
 			+ "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />"
+			+ "<property name=\"baseURL\" value=\"about:mozilla\" />"
 			+ "</properties>"
 			+ "<testcase name=\"testFoo\" time=\"1.3\" />"
 			+ "<testcase name=\"testFoo\" time=\"1.3\">"
@@ -74,6 +75,7 @@ public class TestSuiteResultTest extends JsUnitTest {
 		result.setId("An ID");
 		result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		result.setRemoteAddress("Dummy Remote Address");
+		result.setBaseURL("about:mozilla");
 		result.setTime(4.3);
 		result.setTestCaseStrings(new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Test Error Message|", "testFoo|1.3|F|Test Failure Message|" });
 	}

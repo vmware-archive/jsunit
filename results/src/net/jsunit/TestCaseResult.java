@@ -85,13 +85,17 @@ public class TestCaseResult {
 	public static TestCaseResult fromString(String string) {
 		TestCaseResult result = new TestCaseResult();
 		StringTokenizer toker = new StringTokenizer(string, DELIMITER);
-		result.setName(toker.nextToken());
-		result.setTime(Double.parseDouble(toker.nextToken()));
-		String successString = toker.nextToken();
-		if (successString.equals(ERROR_INDICATOR))
-			result.setError(toker.nextToken());
-		else if (successString.equals(FAILURE_INDICATOR))
-			result.setFailure(toker.nextToken());
+		try {
+		    result.setName(toker.nextToken());
+		    result.setTime(Double.parseDouble(toker.nextToken()));
+		    String successString = toker.nextToken();
+		    if (successString.equals(ERROR_INDICATOR))
+		        result.setError(toker.nextToken());
+		    else if (successString.equals(FAILURE_INDICATOR))
+		        result.setFailure(toker.nextToken());
+		} catch(java.util.NoSuchElementException ex) {
+		    result.setError("Incomplete test result: '" + string + "'.");
+		}
 		return result;
 	}
 	public static TestCaseResult fromXmlElement(Element testCaseElement) {

@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletRequest;
    @author Edward Hieatt
  */
 public class TestSuiteResult {
-	private String remoteAddress, id, jsUnitVersion, userAgent;
+	private String remoteAddress, id, jsUnitVersion, userAgent, baseURL;
 	private List testCaseResults = new ArrayList();
 	private double time;
 	private String SEPARATOR = "---------------------";
@@ -73,6 +73,12 @@ public class TestSuiteResult {
 	}
 	public void setJsUnitVersion(String jsUnitVersion) {
 		this.jsUnitVersion = jsUnitVersion;
+	}
+	public String getBaseURL() {
+		return baseURL;
+	}
+	public void setBaseURL(String baseURL) {
+		this.baseURL = baseURL;
 	}
 	public String getUserAgent() {
 		return userAgent;
@@ -99,6 +105,7 @@ public class TestSuiteResult {
 			result.setId(testId);
 		result.setRemoteAddress(request.getRemoteAddr());
 		result.setUserAgent(request.getParameter(TestSuiteResultWriter.USER_AGENT));
+		result.setBaseURL(request.getParameter(TestSuiteResultWriter.BASE_URL));
 		String time = request.getParameter(TestSuiteResultWriter.TIME);
 		if (!Utility.isEmpty(time))
 			result.setTime(Double.parseDouble(time));

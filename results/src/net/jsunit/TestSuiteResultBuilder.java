@@ -41,6 +41,8 @@ public class TestSuiteResultBuilder {
 				result.setUserAgent(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
 			else if (TestSuiteResultWriter.REMOTE_ADDRESS.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
 				result.setRemoteAddress(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
+			else if (TestSuiteResultWriter.BASE_URL.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
+				result.setBaseURL(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
 		}
 	}
 	private void updateWithTestCaseResults(List testCaseElements, TestSuiteResult result) {

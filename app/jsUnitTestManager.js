@@ -75,6 +75,7 @@ function jsUnitTestManager()
   this.uiFrames.mainCountsErrors   = mainCounts.frames.mainCountsErrors;
   this.uiFrames.mainCountsFailures = mainCounts.frames.mainCountsFailures;
   this.uiFrames.mainCountsRuns     = mainCounts.frames.mainCountsRuns;
+  this._baseURL = "";
 
   this.setup();
 }
@@ -96,15 +97,34 @@ jsUnitTestManager.prototype.setup = function ()
   this.failureCount  = 0;
   this._suiteStack   = Array();
 
+
   var initialSuite   = new top.jsUnitTestSuite();
   push(this._suiteStack, initialSuite);
 }
 
 jsUnitTestManager.prototype.start = function () 
 {
+  this._baseURL = this.resolveUserEnteredTestFileName();
+  var firstQuery = this._baseURL.indexOf("?");
+  if (firstQuery >= 0) {
+       this._baseURL = this._baseURL.substring(0, firstQuery);
+  }
+  var lastSlash = this._baseURL.lastIndexOf("/");
+  var lastRevSlash = this._baseURL.lastIndexOf("\\");
+  if (lastRevSlash > lastSlash) {
+     lastSlash = lastRevSlash;
+  }
+  if (lastSlash > 0) {
+     this._baseURL = this._baseURL.substring(0, lastSlash + 1);
+  }
+
   this._timeRunStarted = new Date();
   this.initialize();
   setTimeout('top.testManager._nextPage();', jsUnitTestManager.TIMEOUT_LENGTH);
+}
+
+jsUnitTestManager.prototype.getBaseURL = function () {
+  return this._baseURL;
 }
 
 jsUnitTestManager.prototype.doneLoadingPage = function (pageName) 
@@ -405,8 +425,17 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
 }
 
 jsUnitTestManager.prototype._fullyQualifiedCurrentTestFunctionName = function() {
-	return this.containerTestFrame.location.href + ':' + this._testFunctionName;
+    var testURL = this.containerTestFrame.location.href;
+    var testQuery = testURL.indexOf("?");
+    if (testQuery >= 0) {
+        testURL = testURL.substring(0, testQuery);
+    }
+    if (testURL.substring(0, this._baseURL.length) == this._baseURL) {
+          testURL = testURL.substring(this._baseURL.length);
+    }
+    return testURL + ':' + this._testFunctionName;
 }
+
 
 jsUnitTestManager.prototype._handleTestException = function (excep) 
 {

@@ -15,7 +15,8 @@ public class TestSuiteResultWriter {
 		PROPERTIES = "properties",
 		PROPERTY = "property",
 		PROPERTY_KEY = "name",
-		PROPERTY_VALUE = "value";	
+		PROPERTY_VALUE = "value",
+		BASE_URL = "baseURL";	
 	
 	TestSuiteResult result;
 	public TestSuiteResultWriter(TestSuiteResult result) {
@@ -47,6 +48,7 @@ public class TestSuiteResultWriter {
 		addProperty(properties, JSUNIT_VERSION, result.getJsUnitVersion());
 		addProperty(properties, USER_AGENT, result.getUserAgent());
 		addProperty(properties, REMOTE_ADDRESS, result.getRemoteAddress());
+		addProperty(properties, BASE_URL, result.getBaseURL());
 	}
 	private void addProperty(Element parent, String name, String value) {
 		Element property = new Element(PROPERTY);
