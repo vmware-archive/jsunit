@@ -12,14 +12,21 @@ import net.jsunit.Utility;
 public class TestRunnerServlet extends HttpServlet {
 	protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Utility.log("Received request to run standalone test...");
-		StandaloneTest test = new StandaloneTest("testStandaloneRun");
-		test.setStartAndStopServer(false);
+		StandaloneTest test = createTest();
 		TestResult result = TestRunner.run(test);
+		writeResponse(response, result);
+		Utility.log("...Done");
+	}
+	protected void writeResponse(HttpServletResponse response, TestResult result) throws IOException {
 		response.setContentType("text/xml");
 		OutputStream out = response.getOutputStream();
 		String resultString = result.wasSuccessful() ? "success" : "failure";
 		out.write(("<result>" + resultString + "</result>").getBytes());
 		out.close();
-		Utility.log("...Done");
+	}
+	protected StandaloneTest createTest() {
+		StandaloneTest test = new StandaloneTest("testStandaloneRun");
+		test.setStartAndStopServer(false);
+		return test;
 	}
 }
