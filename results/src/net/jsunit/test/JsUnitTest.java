@@ -43,10 +43,10 @@ import junit.framework.*;
    @author Edward Hieatt
  */
 public abstract class JsUnitTest extends TestCase {
-	protected ResultAcceptor acceptor;
+	protected JsUnitServer acceptor;
 	public void setUp() throws Exception {
 		super.setUp();
-		acceptor = ResultAcceptor.instance();
+		acceptor = JsUnitServer.instance();
 	}
 	public void tearDown() throws Exception {
 		acceptor.clearResults();

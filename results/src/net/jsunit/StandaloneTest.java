@@ -43,13 +43,19 @@ import junit.framework.*;
    @author Edward Hieatt
  */
 public class StandaloneTest extends TestCase {
+	private boolean shouldStartAndStopServer = true;
 	public static final String PROPERTY_URL = "url";
 	public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
-	private ResultAcceptor acceptor = ResultAcceptor.instance();
+	private JsUnitServer acceptor = JsUnitServer.instance();
+	private int initialResultsSize;
 	private List browserProcesses = new ArrayList();
 	private Properties properties;
+	public StandaloneTest(String name) {
+		super(name);
+	}
 	protected List browserFileNames() {
-		return Utility.listFromCommaDelimitedString(properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
+		return Utility.listFromCommaDelimitedString(
+			properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
 	}
 	protected String url() {
 		return properties.getProperty(PROPERTY_URL);
@@ -59,9 +65,11 @@ public class StandaloneTest extends TestCase {
 	}
 	public void setUp() throws Exception {
 		super.setUp();
-		ResultAcceptor acceptor = ResultAcceptor.instance();
+		JsUnitServer acceptor = JsUnitServer.instance();
 		this.properties = acceptor.jsUnitProperties();
-		acceptor.startServer();
+		if (shouldStartAndStopServer)
+			acceptor.startServer();
+		this.initialResultsSize = acceptor.getResults().size();
 	}
 	public void tearDown() throws Exception {
 		super.tearDown();
@@ -70,21 +78,26 @@ public class StandaloneTest extends TestCase {
 			Process next = (Process) it.next();
 			next.destroy();
 		}
-		ResultAcceptor.stopServer();
+		if (shouldStartAndStopServer)
+			JsUnitServer.stopServer();
 	}
 	public void testStandaloneRun() throws Exception {
 		Iterator it = browserFileNames().iterator();
 		while (it.hasNext()) {
 			String next = (String) it.next();
 			try {
-				System.out.println("Starting process "+next);
-				Process process = Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
+				System.out.println("Starting process " + next);
+				Process process =
+					Runtime.getRuntime().exec(
+						"\"" + next + "\" \"" + url() + "\"");
 				browserProcesses.add(process);
 			} catch (Throwable t) {
-				fail("All browser processes should started, but the following did not: " + next);
+				fail(
+					"All browser processes should start, but the following did not: "
+						+ next);
 				t.printStackTrace();
 			}
-		}		
+		}
 		waitForResultsToBeSubmitted();
 		verifyResults();
 		System.out.println("...Done");
@@ -92,7 +105,8 @@ public class StandaloneTest extends TestCase {
 	private void waitForResultsToBeSubmitted() throws Exception {
 		System.out.println("Waiting for results to be submitted...");
 		long secondsWaited = 0;
-		while (acceptor.getResults().size() != browserFileNames().size()) {
+		while (acceptor.getResults().size()
+			!= this.initialResultsSize + browserFileNames().size()) {
 			Thread.sleep(1000);
 			secondsWaited += 1;
 			if (secondsWaited > maxSecondsToWait())
@@ -107,6 +121,9 @@ public class StandaloneTest extends TestCase {
 			if (!result.hadSuccess()) {
 				fail("Result with ID " + result.getId() + " failed");
 			}
-		}		
+		}
+	}
+	public void setStartAndStopServer(boolean b) {
+		this.shouldStartAndStopServer = b;
 	}
 }

@@ -1,7 +1,14 @@
-package net.jsunit;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+package net.jsunit.servlet;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.jsunit.JsUnitServer;
+import net.jsunit.TestSuiteResult;
 
 /**
  * @author Edward Hieatt
@@ -46,7 +53,7 @@ import javax.servlet.http.*;
  */
 public class ResultAcceptorServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		TestSuiteResult result = ResultAcceptor.instance().accept(request);
+		TestSuiteResult result = JsUnitServer.instance().accept(request);
 		String xml = result.writeXml();
 		response.setContentType("text/xml");
 		OutputStream out = response.getOutputStream();

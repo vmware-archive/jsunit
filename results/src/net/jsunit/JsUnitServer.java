@@ -5,7 +5,13 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+
 import javax.servlet.http.HttpServletRequest;
+
+import net.jsunit.servlet.ResultAcceptorServlet;
+import net.jsunit.servlet.ResultDisplayerServlet;
+import net.jsunit.servlet.TestRunnerServlet;
+
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.handler.ResourceHandler;
@@ -51,9 +57,9 @@ import org.mortbay.jetty.servlet.ServletHandler;
    
    @author Edward Hieatt
  */
-public class ResultAcceptor {
+public class JsUnitServer {
 	private static Properties properties;
-	private static ResultAcceptor instance;
+	private static JsUnitServer instance;
 	private List results = new ArrayList();
 	public static String PROPERTY_PORT = "port";
 	public static String PROPERTY_RESOURCE_BASE = "resourceBase";
@@ -62,32 +68,33 @@ public class ResultAcceptor {
 	public static final int DEFAULT_PORT = 8080;
 	public static final String DEFAULT_RESOURCE_BASE = ".";
 	public static HttpServer server;
-	private ResultAcceptor() {
+	private JsUnitServer() {
 	}
 	public static void main(String args[]) throws Exception {
-		ResultAcceptor.instance().startServer();
+		JsUnitServer.instance().startServer();
 	}
 	public void startServer() throws Exception {
-		if (server != null)
-			throw new RuntimeException("Server already started");
-		server = new HttpServer();
-		server.addListener(":" + port());
-		HttpContext context = server.getContext("/jsunit");
-		ServletHandler handler = new ServletHandler();
-		handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
-		handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
-		context.addHandler(handler);
-		context.setResourceBase(resourceBase());
-		context.addHandler(new ResourceHandler());
-		server.addContext(context);
-		server.start();
+		if (server == null) {			
+			server = new HttpServer();
+			server.addListener(":" + port());
+			HttpContext context = server.getContext("/jsunit");
+			ServletHandler handler = new ServletHandler();
+			handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
+			handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
+			handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
+			context.addHandler(handler);
+			context.setResourceBase(resourceBase());
+			context.addHandler(new ResourceHandler());
+			server.addContext(context);
+			server.start();
+		}
 	}
 	public static void stopServer() throws Exception {
 		server.stop();
 	}
-	public static ResultAcceptor instance() {
+	public static JsUnitServer instance() {
 		if (instance == null)
-			instance = new ResultAcceptor();
+			instance = new JsUnitServer();
 		return instance;
 	}
 	public TestSuiteResult accept(HttpServletRequest request) {
@@ -137,7 +144,7 @@ public class ResultAcceptor {
 	public String resourceBase() {
 		String result = jsUnitProperties().getProperty(PROPERTY_RESOURCE_BASE);
 		if (Utility.isEmpty(result))
-			result = ResultAcceptor.DEFAULT_RESOURCE_BASE;
+			result = JsUnitServer.DEFAULT_RESOURCE_BASE;
 		return result;
 	}
 	public String logsDirectory() {

@@ -1,7 +1,15 @@
-package net.jsunit;
-import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
+package net.jsunit.servlet;
+import java.io.IOException;
+import java.io.OutputStream;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.jsunit.JsUnitServer;
+import net.jsunit.TestSuiteResult;
+import net.jsunit.TestSuiteResultWriter;
 /**
  * @author Edward Hieatt
  * 
@@ -50,7 +58,7 @@ public class ResultDisplayerServlet extends HttpServlet {
 		if (id == null) {
 			xml = "<error>No id specified</error>";
 		} else {
-			TestSuiteResult result = ResultAcceptor.instance().findResultWithId(id);
+			TestSuiteResult result = JsUnitServer.instance().findResultWithId(id);
 			if (result != null)
 				xml = result.writeXml();
 			else
