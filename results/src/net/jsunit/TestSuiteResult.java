@@ -48,7 +48,7 @@ import javax.servlet.http.HttpServletRequest;
    @author Edward Hieatt
  */
 public class TestSuiteResult {
-	public static final String LOGS_DIRECTORY = "logs";
+	public static final String LOGS_DIRECTORY = "results"+File.separator+"logs";
 	private String remoteAddress, id, jsUnitVersion, userAgent;
 	private List testCaseResults = new ArrayList();
 	private double time;
@@ -57,7 +57,7 @@ public class TestSuiteResult {
 		this.id = String.valueOf(System.currentTimeMillis());
 	}
 	public static File logFileForId(String id) {
-		return new File(LOGS_DIRECTORY + File.separator + id + ".xml");
+		return new File(Utility.resourceBaseFromProperties() + File.separator + LOGS_DIRECTORY + File.separator + id + ".xml");
 	}
 	public String getId() {
 		return id;

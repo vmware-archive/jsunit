@@ -73,6 +73,9 @@ public class Utility {
 		}
 		return result;
 	}
+    public static Properties jsUnitProperties() {
+        return propertiesFromFileName("jsunit.properties");
+    }
 	public static List listFromCommaDelimitedString(String string) {
 		List result = new ArrayList();
 		StringTokenizer toker = new StringTokenizer(string, ",");
@@ -80,4 +83,10 @@ public class Utility {
 			result.add(toker.nextToken());
 		return result;
 	}
+    public static String resourceBaseFromProperties() {
+        String result = jsUnitProperties().getProperty(ResultAcceptor.RESOURCE_BASE);
+        if (Utility.isEmpty(result))
+            result = ResultAcceptor.DEFAULT_RESOURCE_BASE;
+        return result;
+    }
 }

@@ -54,18 +54,24 @@ public class ResultAcceptor {
 	private static ResultAcceptor instance;
 	private List results = new ArrayList();
 	public static final int DEFAULT_PORT = 8080;
+    public static final String DEFAULT_RESOURCE_BASE=".";
 	public static HttpServer server;
-	public static void main(String args[]) throws Exception {
+    public static String RESOURCE_BASE="resourceBase";
+
+    public static void main(String args[]) throws Exception {
 		if (args.length > 0) {
 			int port = Integer.parseInt(args[0]);
-			startServer(port);
+            String resourceBase = DEFAULT_RESOURCE_BASE;
+            if (args.length>1)
+                resourceBase=args[1];
+			startServer(port, resourceBase);
 		} else
 			startServer();
 	}
 	public static void startServer() throws Exception {
-		startServer(DEFAULT_PORT);
+		startServer(DEFAULT_PORT, Utility.resourceBaseFromProperties());
 	}
-	public static void startServer(int port) throws Exception {
+	public static void startServer(int port, String resourceBase) throws Exception {
 		server = new HttpServer();
 		server.addListener(":" + port);
 		HttpContext context = server.getContext("/jsunit");
@@ -74,7 +80,7 @@ public class ResultAcceptor {
 		handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
 		context.addHandler(handler);
 
-        context.setResourceBase(".");
+        context.setResourceBase(resourceBase);
         context.addHandler(new ResourceHandler());
 
         server.addContext(context);
