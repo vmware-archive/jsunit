@@ -4,7 +4,7 @@ import net.jsunit.JsUnitServer;
 
 import javax.servlet.http.HttpServlet;
 
-public class JsUnitServlet extends HttpServlet {
+public abstract class JsUnitServlet extends HttpServlet {
     protected static JsUnitServer server;
 
     public static void setServer(JsUnitServer aServer) {

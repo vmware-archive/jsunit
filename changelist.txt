@@ -2,4 +2,4 @@
 - Traces are now prefixed with the Test Page and Test Function from which the trace is made
 - assertArrayEquals(array1, array2) introduced (NEED TO ADD TO DOCS)
 - bug 1070436
-- bug with multiple browsers and resultId specified 
+- bug with multiple browsers and resultId specified
