@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.TestCase;
 
 import java.util.Iterator;
+import java.util.Date;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -46,9 +47,9 @@ public class StandaloneTest extends TestCase {
         Iterator it = server.getLocalBrowserFileNames().iterator();
         while (it.hasNext()) {
             String next = (String) it.next();
-            int currentResultCount = server.resultsCount();
+            Date dateLaunched = new Date();
             launchBrowser(next);
-            waitForResultToBeSubmitted(next, currentResultCount);
+            waitForResultToBeSubmitted(next, dateLaunched);
             destroyBrowserProcess();
             verifyLastResult();
         }
@@ -69,10 +70,10 @@ public class StandaloneTest extends TestCase {
         }
     }
 
-    private void waitForResultToBeSubmitted(String browser, int initialResultCount) throws Exception {
+    private void waitForResultToBeSubmitted(String browser, Date dateBrowserLaunched) throws Exception {
         Utility.log("StandaloneTest: waiting for " + browser + " to submit result");
         long secondsWaited = 0;
-        while (server.getResults().size() == initialResultCount) {
+        while (!server.hasReceivedResultSince(dateBrowserLaunched)) {
             Thread.sleep(1000);
             secondsWaited ++;
             if (secondsWaited > MAX_SECONDS_TO_WAIT)

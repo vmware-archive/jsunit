@@ -10,7 +10,7 @@ public class StandaloneTestTest extends StandaloneTest {
 
     public void setUp() throws Exception {
         System.setProperty(Configuration.BROWSER_FILE_NAMES, "c:\\program files\\internet explorer\\iexplore.exe,c:\\program files\\Mozilla Firefox\\firefox.exe");
-        System.setProperty(Configuration.URL, "file:///c:/dev/jsunit/testRunner.html?testPage=c:\\dev\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true");
+        System.setProperty(Configuration.URL, "file:///c:/dev/jsunit/testRunner.html?testPage=c:\\dev\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true&resultId=foobar");
         super.setUp();
     }
 

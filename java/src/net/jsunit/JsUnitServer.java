@@ -15,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -32,6 +30,7 @@ public class JsUnitServer extends HttpServer {
     private List localBrowserFileNames;
     private URL testURL;
     private boolean initialized;
+    private Date dateLastResultReceived;
 
     public static void main(String args[]) {
         JsUnitServer server = new JsUnitServer();
@@ -90,6 +89,7 @@ public class JsUnitServer extends HttpServer {
     }
 
     public TestSuiteResult accept(HttpServletRequest request) {
+        dateLastResultReceived = new Date();
         TestSuiteResult result = TestSuiteResult.fromRequest(request, logsDirectory);
         TestSuiteResult existingResultWithSameId =
                 findResultWithId(result.getId());
@@ -194,4 +194,7 @@ public class JsUnitServer extends HttpServer {
         stop();
     }
 
+    public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+        return dateLastResultReceived != null && dateLastResultReceived.after(dateBrowserLaunched);
+    }
 }
