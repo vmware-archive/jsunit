@@ -41,21 +41,44 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
-    <title>JsUnit main-errors.html</title>
-    <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
-  </head>
+    <title>jsUnit External Data Document loader</title>
+<script language="JavaScript">
 
-  <body>
-    <hr>
-    <form name="testRunnerForm" action="">
-      <p>Errors and failures:&nbsp;</p>
-      <select size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
-      </select>
-      <br>
-      <input type="button" value="Show selected" onclick="top.testManager.showMessageForSelectedProblemTest()">
-      &nbsp;&nbsp;&nbsp;
-      <input type="button" value="Show all" onclick="top.testManager.showMessagesForAllProblemTests()">
-    </form>
-  </body>
+  var loadStatus;
+  var callback = function () {};
+
+  function buffer()
+  {
+    return window.frames.documentBuffer;
+  }
+
+  function load(uri)
+  {
+    loadStatus = 'loading';
+    buffer().document.location.href = uri;
+  }
+
+  function loadComplete()
+  {
+    if (loadStatus == 'loading')
+    {
+      loadStatus = 'complete';
+      callback();
+      callback = function () {};
+    }
+  }
+
+  if (top.xbDEBUG.on)
+  {
+    top.xbDebugTraceFunction('top.frames.documentLoader', 'buffer');
+    top.xbDebugTraceFunction('top.frames.documentLoader', 'load');
+    top.xbDebugTraceFunction('top.frames.documentLoader', 'loadComplete');
+  }
+  
+</script>
+</head>
+<body>
+<iframe name="documentBuffer" onload="loadComplete()"></iframe>
+</body>
 </html>
 

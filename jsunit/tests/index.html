@@ -24,7 +24,7 @@
    -
    - Contributor(s):
    - Edward Hieatt, edward@jsunit.net (original author)
-   - Bob Clary, bc@bclary.com
+   - Bob Clary, bc@bclary.comn
    -
    - Alternatively, the contents of this file may be used under the terms of
    - either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -41,21 +41,50 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
-    <title>JsUnit main-errors.html</title>
+    <title>jsUnit Standard Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
   </head>
-
   <body>
-    <hr>
-    <form name="testRunnerForm" action="">
-      <p>Errors and failures:&nbsp;</p>
-      <select size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
-      </select>
-      <br>
-      <input type="button" value="Show selected" onclick="top.testManager.showMessageForSelectedProblemTest()">
-      &nbsp;&nbsp;&nbsp;
-      <input type="button" value="Show all" onclick="top.testManager.showMessagesForAllProblemTests()">
-    </form>
+      <table width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information">
+        <tr>
+          <th align="left" valign="top">JsUnit 1.3.0 alpha Standard Tests</td>
+
+          <td align="right" valign="top">
+           <a href="http://www.jsunit.net/" target="_blank">JsUnit Home</a><br>
+           <a href="mailto:edward@jsunit.net">edward@jsunit.net</a><br>
+           <a href="../licenses/index.html" target="blank">Licenses MPL1.1/GPL2/LGPL2.1</a> </td>
+        </tr>
+      </table>
+
+      <h2>Standard Tests using Autodiscovery</h2>
+
+      <p><a href="jsUnitAutoDiscoveryTestsIndex.html">jsUnitAutoDiscoveryTestsIndex.html</a></p>
+
+      <p>
+      A Test Suite which runs internal tests of jsUnit.
+      These tests use the ability of jsUnit to discover test names
+      which begin with 'test' and to automatically execute them. 
+      </p>
+
+      <p>
+      This is
+      not possible in all browsers. 
+      If your browser does not support
+      test auto-discovery, please use the other version of these tests
+      which expose the names of test functions through a function which
+      returns an array of test function names
+      </p>
+
+    <h2>Standard Tests using Test Declaration</h2>
+      <p>
+      A Test Suite which runs internal tests of jsUnit.
+      These tests use a function which returns an array of test function names
+      and may be supported by a larger range of browsers than the autodiscovery
+      form of the tests.
+      </p>
+
+      <p><a href="jsUnitDeclarationTestsIndex.html">jsUnitDeclarationTestsIndex.html</a></p>
+
+
   </body>
 </html>
-

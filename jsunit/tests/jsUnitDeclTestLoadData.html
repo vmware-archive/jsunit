@@ -24,7 +24,7 @@
    -
    - Contributor(s):
    - Edward Hieatt, edward@jsunit.net (original author)
-   - Bob Clary, bc@bclary.com
+   - Bob Clary, bc@bclary.comn
    -
    - Alternatively, the contents of this file may be used under the terms of
    - either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -40,22 +40,47 @@
    -
    - ***** END LICENSE BLOCK ***** -->
 
-  <head>
-    <title>JsUnit main-errors.html</title>
-    <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
-  </head>
+<head>
+<title>Test loading a local HTML Document</title>
+<link rel="stylesheet" href="../css/jsUnitStyle.css">
+<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript">
+// expose test function names
+function exposeTestFunctionNames()
+{
+return ['testDocumentGetElementsByTagName'];
+}
 
-  <body>
-    <hr>
-    <form name="testRunnerForm" action="">
-      <p>Errors and failures:&nbsp;</p>
-      <select size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
-      </select>
-      <br>
-      <input type="button" value="Show selected" onclick="top.testManager.showMessageForSelectedProblemTest()">
-      &nbsp;&nbsp;&nbsp;
-      <input type="button" value="Show all" onclick="top.testManager.showMessagesForAllProblemTests()">
-    </form>
-  </body>
+
+  var setUpPageStatus;
+  var uri = 'tests/data/data.html';
+
+  function setUpPage()
+  {
+    setUpPageStatus = 'running';
+    top.testManager.documentLoader.callback = setUpPageComplete;
+    top.testManager.documentLoader.load(uri);
+  }
+
+  function setUpPageComplete()
+  {
+    if (setUpPageStatus == 'running')
+      setUpPageStatus = 'complete';
+  }
+
+  function testDocumentGetElementsByTagName()
+  {
+    assertEquals(setUpPageStatus, 'complete');
+    var buffer = top.testManager.documentLoader.buffer();
+    var elms = buffer.document.getElementsByTagName('P');
+    assert('getElementsByTagName("P") returned is null', elms != null);
+    assert('getElementsByTagName("P") is empty', elms.length > 0);
+  }
+
+</script>
+</head>
+<body>
+<h1>JsUnit Asynchronous Load Tests</h1>
+<p>This page tests loading data documents asynchronously.  To see them, take a look at the source.</p>
+</body>
 </html>
-

@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-            "http://www.w3.org/TR/html4/loose.dtd">
+"http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <!-- JsUnit -->
 <!-- ***** BEGIN LICENSE BLOCK *****
@@ -24,7 +25,7 @@
    -
    - Contributor(s):
    - Edward Hieatt, edward@jsunit.net (original author)
-   - Bob Clary, bc@bclary.com
+   - Bob Clary, bc@bclary.comn
    -
    - Alternatively, the contents of this file may be used under the terms of
    - either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -41,21 +42,48 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
-    <title>JsUnit main-errors.html</title>
+    <title>JsUnit Framework tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
+<script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript" type="text/javascript">
+// expose test function names
+function exposeTestFunctionNames()
+{
+  return ['testSetUp', 'testTearDown'];
+}
+
+
+// JsUnit setUp/tearDown/test order tests
+
+var aVar=null;
+var anotherVar=null;
+
+function setUp() {
+  aVar="foo";
+}
+
+function tearDown() {
+  anotherVar="bar";
+}
+
+function testSetUp() {
+  assertEquals("foo", aVar);
+  assertEquals(null, anotherVar);
+}
+
+function testTearDown() {
+  assertEquals("foo", aVar);
+  assertEquals("bar", anotherVar);
+}
+</script>
   </head>
 
   <body>
-    <hr>
-    <form name="testRunnerForm" action="">
-      <p>Errors and failures:&nbsp;</p>
-      <select size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
-      </select>
-      <br>
-      <input type="button" value="Show selected" onclick="top.testManager.showMessageForSelectedProblemTest()">
-      &nbsp;&nbsp;&nbsp;
-      <input type="button" value="Show all" onclick="top.testManager.showMessagesForAllProblemTests()">
-    </form>
+    <h1>JsUnit Framework tests</h1>
+
+    <p>This page contains tests for the JsUnit setUp and
+    tearDown framework, including testing the order of the tests. To see them,
+    take a look at the source.</p>
   </body>
 </html>
 

@@ -1,198 +1,271 @@
-/*
-  JsUnit
-  Copyright (C) 2002 Edward Hieatt, edward@jsunit.net
+/* jsUnit */
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Edward Hieatt code.
+ *
+ * The Initial Developer of the Original Code is
+ * Edward Hieatt, edward@jsunit.net.
+ * Portions created by the Initial Developer are Copyright (C) 2001
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ * Edward Hieatt, edward@jsunit.net (original author)
+ * Bob Clary, bc@bclary.com
+ *
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
 
-  This program is free software; you can redistribute it and/or
-  modify it under the terms of the GNU General Public License
-  as published by the Free Software Foundation; either version 2
-  of the License, or (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
-*/
 
 var JSUNIT_UNDEFINED_VALUE;
-var isTestPageLoaded=false;
-var tracer=null;
+var isTestPageLoaded = false;
+
 function _displayStringForValue(aVar) {
-	if (aVar===null) return "null";
-	if (aVar===JSUNIT_UNDEFINED_VALUE) return "undefined";
-	return aVar;
+  if (aVar === null) 
+    return 'null';
+    
+  if (aVar === top.JSUNIT_UNDEFINED_VALUE) 
+    return 'undefined';
+    
+  return aVar;
 }
+
 function fail(failureMessage) {
-        throw new JsUnitException(null, failureMessage);
+  throw new JsUnitException(null, failureMessage);
 }
+
 function error(errorMessage) {
-        var errorObject=new Object();
-        errorObject.description=errorMessage;
-        throw errorObject;
+  var errorObject         = new Object();
+  errorObject.description = errorMessage;
+  throw errorObject;
 }
+
 function argumentsIncludeComments(expectedNumberOfNonCommentArgs, args) {
-        return args.length==expectedNumberOfNonCommentArgs+1;
+  return args.length == expectedNumberOfNonCommentArgs + 1;
 }
+
 function commentArg(expectedNumberOfNonCommentArgs, args) {
-        if (argumentsIncludeComments(expectedNumberOfNonCommentArgs, args))
-                return args[0];
-        else
-                return null;
+  if (argumentsIncludeComments(expectedNumberOfNonCommentArgs, args))
+    return args[0];
+
+  return null;
 }
+
 function nonCommentArg(desiredNonCommentArgIndex, expectedNumberOfNonCommentArgs, args) {
-        return argumentsIncludeComments(expectedNumberOfNonCommentArgs, args) ?
-               args[desiredNonCommentArgIndex] :
-               args[desiredNonCommentArgIndex-1];
+  return argumentsIncludeComments(expectedNumberOfNonCommentArgs, args) ?
+    args[desiredNonCommentArgIndex] :
+    args[desiredNonCommentArgIndex - 1];
 }
+
 function _validateArguments(expectedNumberOfNonCommentArgs, args) {
-        if (!(  args.length==expectedNumberOfNonCommentArgs ||
-                (args.length==expectedNumberOfNonCommentArgs+1 && typeof(args[0])=="string") ))
-                error("Incorrect arguments passed to assert function");
+  if (!( args.length == expectedNumberOfNonCommentArgs ||
+        (args.length == expectedNumberOfNonCommentArgs + 1 && typeof(args[0]) == 'string') ))
+    error('Incorrect arguments passed to assert function');
 }
+
 function _assert(comment, booleanValue, failureMessage) {
-        if (!booleanValue)
-                throw new JsUnitException(comment, failureMessage);
+  if (!booleanValue)
+    throw new JsUnitException(comment, failureMessage);
 }
+
 function assert() {
-        _validateArguments(1, arguments);
-        var booleanValue=nonCommentArg(1, 1, arguments);
-        if (typeof(booleanValue)!="boolean")
-                error("Bad argument to assert(boolean)");
-        _assert(commentArg(1, arguments), booleanValue===true, "Call to assert(boolean) with false");
+  _validateArguments(1, arguments);
+  var booleanValue=nonCommentArg(1, 1, arguments);
+
+  if (typeof(booleanValue) != 'boolean')
+    error('Bad argument to assert(boolean)');
+
+  _assert(commentArg(1, arguments), booleanValue === true, 'Call to assert(boolean) with false');
 }
+
 function assertTrue() {
-        _validateArguments(1, arguments);
-        var booleanValue=nonCommentArg(1, 1, arguments);
-        if (typeof(booleanValue)!="boolean")
-                error("Bad argument to assertTrue(boolean)");
-        _assert(commentArg(1, arguments), booleanValue===true, "Call to assertTrue(boolean) with false");
+  _validateArguments(1, arguments);
+  var booleanValue=nonCommentArg(1, 1, arguments);
+
+  if (typeof(booleanValue) != 'boolean')
+    error('Bad argument to assertTrue(boolean)');
+
+  _assert(commentArg(1, arguments), booleanValue === true, 'Call to assertTrue(boolean) with false');
 }
+
 function assertFalse() {
-        _validateArguments(1, arguments);
-        var booleanValue=nonCommentArg(1, 1, arguments);
-        if (typeof(booleanValue)!="boolean")
-                error("Bad argument to assertFalse(boolean)");
-        _assert(commentArg(1, arguments), booleanValue===false, "Call to assertFalse(boolean) with true");
+  _validateArguments(1, arguments);
+  var booleanValue=nonCommentArg(1, 1, arguments);
+
+  if (typeof(booleanValue) != 'boolean')
+    error('Bad argument to assertFalse(boolean)');
+
+  _assert(commentArg(1, arguments), booleanValue === false, 'Call to assertFalse(boolean) with true');
 }
+
 function assertEquals() {
-        _validateArguments(2, arguments);
-        var var1=nonCommentArg(1, 2, arguments);
-        var var2=nonCommentArg(2, 2, arguments);
-        _assert(commentArg(2, arguments), var1===var2, "Expected " + var1 + " (" + typeof(var1) + ") but was "+_displayStringForValue(var2) +" ("+typeof(var2)+")");
+  _validateArguments(2, arguments);
+  var var1=nonCommentArg(1, 2, arguments);
+  var var2=nonCommentArg(2, 2, arguments);
+  _assert(commentArg(2, arguments), var1 === var2, 'Expected ' + var1 + ' (' + typeof(var1) + ') but was ' + _displayStringForValue(var2) + ' (' + typeof(var2) + ')');
 }
+
 function assertNotEquals() {
-        _validateArguments(2, arguments);
-        var var1=nonCommentArg(1, 2, arguments);
-        var var2=nonCommentArg(2, 2, arguments);
-        _assert(commentArg(2, arguments), var1!==var2, "Expected not to be "+_displayStringForValue(var2));
+  _validateArguments(2, arguments);
+  var var1=nonCommentArg(1, 2, arguments);
+  var var2=nonCommentArg(2, 2, arguments);
+  _assert(commentArg(2, arguments), var1 !== var2, 'Expected not to be ' + _displayStringForValue(var2));
 }
+
 function assertNull() {
-        _validateArguments(1, arguments);
-        var aVar=nonCommentArg(1, 1, arguments);
-        _assert(commentArg(1, arguments), aVar===null, "Expected null but was "+_displayStringForValue(aVar));
+  _validateArguments(1, arguments);
+  var aVar=nonCommentArg(1, 1, arguments);
+  _assert(commentArg(1, arguments), aVar === null, 'Expected null but was ' + _displayStringForValue(aVar));
 }
+
 function assertNotNull() {
-        _validateArguments(1, arguments);
-        var aVar=nonCommentArg(1, 1, arguments);
-        _assert(commentArg(1, arguments), aVar!==null, "Expected not to be null");
+  _validateArguments(1, arguments);
+  var aVar=nonCommentArg(1, 1, arguments);
+  _assert(commentArg(1, arguments), aVar !== null, 'Expected not to be null');
 }
+
 function assertUndefined(aVar) {
-        _validateArguments(1, arguments);
-        var aVar=nonCommentArg(1, 1, arguments);
-        _assert(commentArg(1, arguments), aVar===JSUNIT_UNDEFINED_VALUE, "Expected undefined but was "+_displayStringForValue(aVar));
+  _validateArguments(1, arguments);
+  var aVar=nonCommentArg(1, 1, arguments);
+  _assert(commentArg(1, arguments), aVar === top.JSUNIT_UNDEFINED_VALUE, 'Expected undefined but was ' + _displayStringForValue(aVar));
 }
+
 function assertNotUndefined(aVar) {
-        _validateArguments(1, arguments);
-        var aVar=nonCommentArg(1, 1, arguments);
-        _assert(commentArg(1, arguments), aVar!==JSUNIT_UNDEFINED_VALUE, "Expected not to be undefined");
+  _validateArguments(1, arguments);
+  var aVar=nonCommentArg(1, 1, arguments);
+  _assert(commentArg(1, arguments), aVar !== top.JSUNIT_UNDEFINED_VALUE, 'Expected not to be undefined');
 }
+
 function assertNaN(aVar) {
-        _validateArguments(1, arguments);
-        var aVar=nonCommentArg(1, 1, arguments);
-        _assert(commentArg(1, arguments), isNaN(aVar), "Expected NaN");
+  _validateArguments(1, arguments);
+  var aVar=nonCommentArg(1, 1, arguments);
+  _assert(commentArg(1, arguments), isNaN(aVar), 'Expected NaN');
 }
+
 function assertNotNaN(aVar) {
-        _validateArguments(1, arguments);
-        var aVar=nonCommentArg(1, 1, arguments);
-        _assert(commentArg(1, arguments), !isNaN(aVar), "Expected not NaN");
+  _validateArguments(1, arguments);
+  var aVar=nonCommentArg(1, 1, arguments);
+  _assert(commentArg(1, arguments), !isNaN(aVar), 'Expected not NaN');
 }
+
 function isLoaded() {
-        return isTestPageLoaded;
+  return isTestPageLoaded;
 }
+
 function setUp() {
 }
+
 function tearDown() {
 }
-function getFunctionName(aFunction) {
-        var name = aFunction.toString().match(/function (\w*)/)[1];
-        if ((name == null) || (name.length==0))
-                name = "anonymous";
-        return name;
-}
-function getStackTrace() {
-        var result = "";
-        for (var a = arguments.caller; a !=null; a = a.caller) {
-                result += "> "+getFunctionName(a.callee) + "\n";
-                if (a.caller == a) {
-                        result+="*";
-                        break;
-                }
-        }
-        return result;
-}
-function JsUnitException(comment, message) {
-        this.isJsUnitException=true;
-        this.comment=comment;
-        this.jsUnitMessage=message;
-        this.stackTrace=getStackTrace();
-}
-function JsUnitTestSuite() {
-        this.isJsUnitTestSuite=true;
-        this.testPages=Array();
-        this.pageIndex=0;
-}
-function addTestPage(pageName) {
-        with (this)
-        testPages[testPages.length]=pageName;
-}
-function addTestSuite(suite) {
-        with (this)
-        for (var i=0; i<suite.testPages.length; i++)
-                addTestPage(suite.testPages[i]);
-}
-function containsTestPages() {
-        return this.testPages.length>0;
-}
-function nextPage() {
-        return this.testPages[this.pageIndex++];
-}
-function hasMorePages() {
-        return this.pageIndex<this.testPages.length;
-}
-JsUnitTestSuite.prototype.addTestPage=addTestPage;
-JsUnitTestSuite.prototype.addTestSuite=addTestSuite;
-JsUnitTestSuite.prototype.containsTestPages=containsTestPages;
-JsUnitTestSuite.prototype.nextPage=nextPage;
-JsUnitTestSuite.prototype.hasMorePages=hasMorePages;
 
-function newOnLoadEvent() {
-        isTestPageLoaded=true;
+function getFunctionName(aFunction) {
+  var name = aFunction.toString().match(/function (\w*)/)[1];
+
+  if ((name == null) || (name.length == 0))
+    name = 'anonymous';
+
+  return name;
+}
+
+function getStackTrace() {
+  var result = '';
+
+  for (var a = arguments.caller; a != null; a = a.caller) {
+    result += '> ' + getFunctionName(a.callee) + '\n';
+    if (a.caller == a) {
+      result += '*';
+      break;
+    }
+  }
+
+  return result;
+}
+
+function JsUnitException(comment, message) {
+  this.isJsUnitException = true;
+  this.comment           = comment;
+  this.jsUnitMessage     = message;
+  this.stackTrace        = getStackTrace();
 }
 
 function warn() {
-        if (tracer!=null) tracer.warn(arguments[0], arguments[1]);
-}
-function inform() {
-        if (tracer!=null) tracer.inform(arguments[0], arguments[1]);
-}
-function debug() {
-        if (tracer!=null) tracer.debug(arguments[0], arguments[1]);
-}
-function setTracer(aTracer) {
-        tracer=aTracer;
+  if (top.tracer != null) 
+    top.tracer.warn(arguments[0], arguments[1]);
 }
 
+function inform() {
+  if (top.tracer != null) 
+    top.tracer.inform(arguments[0], arguments[1]);
+}
+
+function debug() {
+  if (top.tracer != null) 
+    top.tracer.debug(arguments[0], arguments[1]);
+}
+
+function setjsUnitTracer(ajsUnitTracer) {
+  top.tracer=ajsUnitTracer;
+}
+
+function trim(str) {
+  if (str == null) 
+    return null;
+
+  var startingIndex = 0;
+  var endingIndex   = str.length-1;
+  
+  while (str.substring(startingIndex, startingIndex+1) == ' ')
+    startingIndex++;
+
+  while (str.substring(endingIndex, endingIndex+1) == ' ')
+    endingIndex--;
+
+  if (endingIndex < startingIndex) 
+    return '';
+
+  return str.substring(startingIndex, endingIndex+1);
+}
+
+function isBlank(str) {
+  return trim(str) == '';
+}
+
+function newOnLoadEvent() {
+  isTestPageLoaded = true;
+}
+
+// the functions push(anArray, anObject) and pop(anArray) 
+// exist because the JavaScript Array.push(anObject) and Array.pop() 
+// functions are not available in IE 5.0
+
+function push(anArray, anObject) {
+  anArray[anArray.length]=anObject;
+}
+function pop(anArray) {
+  if (anArray.length>=1) {
+    delete anArray[anArray.length - 1];
+    anArray.length--;
+  }
+}
 window.onload=newOnLoadEvent;
