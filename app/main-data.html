@@ -100,7 +100,9 @@ function  kickOffTests() {
                 if (top.jsUnitParmHash.testpage)
                 {
                   inputStr += 'value="';
-                  if (top.getDocumentProtocol() == 'http://' && top.jsUnitParmHash.testpage.indexOf('/') == 0)
+                  if (
+                  	(top.getDocumentProtocol() == 'http://' || top.getDocumentProtocol() == 'http://') && 
+                  	top.jsUnitParmHash.testpage.indexOf('/') == 0)
                   {
                     inputStr += top.location.host;
                   }
