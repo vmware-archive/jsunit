@@ -44,7 +44,7 @@
     <title>JsUnit</title>
     <script language="JavaScript" type="text/javascript" src="app/xbDebug.js"></script>
 <script type="text/javascript">
-
+  var DEFAULT_TEST_FRAME_HEIGHT=250;
   var jsUnitParmHash = new Object();
 
   jsUnitParseParms(document.location.search);
@@ -148,11 +148,11 @@
   }
 
   function shouldShowTestFrame() {
-    return jsUnitParmHash.showtestframe=="true";
+    	return jsUnitParmHash.showtestframe;
   }
   
   function shouldSubmitResults() {
-  	return jsUnitParmHash.submitresults=="true";
+  	return jsUnitParmHash.submitresults;
   }
   
   function submitResults() {
@@ -163,7 +163,12 @@
   function init()
   {
     if (shouldShowTestFrame() && window.testRunnerFrameset) {
-        window.testRunnerFrameset.rows="*,0,250";
+    	var testFrameHeight;
+    	if (jsUnitParmHash.showtestframe=="true") 
+    		testFrameHeight=DEFAULT_TEST_FRAME_HEIGHT;    	
+    	else 
+    		testFrameHeight=jsUnitParmHash.showtestframe;
+       	window.testRunnerFrameset.rows="*,0," + testFrameHeight;
     }
     testManager = new jsUnitTestManager();
     tracer      = new jsUnitTracer();    
