@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="jsunit/results/src"/>
+    <classpathentry kind="src" path="results/src"/>
     <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-    <classpathentry kind="lib" path="C:/eclipse/plugins/org.junit_3.8.1/junit.jar"/>
-    <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/javax.servlet.jar"/>
-    <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/jdom.jar"/>
-    <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/org.mortbay.jetty-jdk1.2.jar"/>
-    <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/xercesImpl.jar"/>
-    <classpathentry kind="output" path="jsunit/results/bin"/>
+    <classpathentry kind="lib" path="C:/jsunit/results/lib/xercesImpl.jar"/>
+    <classpathentry kind="lib" path="C:/jsunit/results/lib/javax.servlet.jar"/>
+    <classpathentry kind="lib" path="C:/jsunit/results/lib/jdom.jar"/>
+    <classpathentry kind="lib" path="C:/jsunit/results/lib/jsunit.jar"/>
+    <classpathentry kind="lib" path="C:/jsunit/results/lib/junit.jar"/>
+    <classpathentry kind="lib" path="C:/jsunit/results/lib/org.mortbay.jetty-jdk1.2.jar"/>
+    <classpathentry kind="output" path="results/bin"/>
 </classpath>
