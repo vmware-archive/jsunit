@@ -157,7 +157,14 @@
       </entry>
       <entry file="file://$PROJECT_DIR$/../licenses/index.html" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="44" column="28" selection-start="2103" selection-end="2103" vertical-scroll-proportion="0.37961596">
+          <state line="46" column="9" selection-start="2191" selection-end="2191" vertical-scroll-proportion="0.4239291">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../app/css/jsUnitStyle.css" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
             <folding />
           </state>
         </provider>
@@ -165,20 +172,6 @@
       <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/ResultAcceptorServlet.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
           <state line="12" column="0" selection-start="352" selection-end="405" vertical-scroll-proportion="0.0650289">
-            <folding />
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/ResultDisplayerServlet.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="12" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0650289">
-            <folding />
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../licenses/mpl-tri-license-c.txt" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
             <folding />
           </state>
         </provider>
@@ -206,7 +199,6 @@
   </component>
   <component name="ProjectPane">
     <expanded_node url="file://$PROJECT_DIR$/.." module="JsUnit" type="directory" />
-    <expanded_node url="file://$PROJECT_DIR$/../licenses" module="JsUnit" type="directory" />
     <expanded_node url="" module="JsUnit" type="module" />
   </component>
   <component name="ProjectView">
@@ -432,23 +424,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="0" selection-start="93" selection-end="128" vertical-scroll-proportion="0.17937219">
-          <folding>
-            <element signature="method#setUp#0;class#DistributedTestTest#0" expanded="true" />
-            <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DummyHttpRequest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="0" selection-start="474" selection-end="474" vertical-scroll-proportion="0.17937219">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/EndToEndTestSuite.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="10" column="0" selection-start="162" selection-end="162" vertical-scroll-proportion="0.1734104">
@@ -544,7 +519,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../licenses/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="28" selection-start="2103" selection-end="2103" vertical-scroll-proportion="0.37961596">
+        <state line="46" column="9" selection-start="2191" selection-end="2191" vertical-scroll-proportion="0.4239291">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../app/css/jsUnitStyle.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
