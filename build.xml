@@ -44,6 +44,9 @@
     </target>
 
     <target name="stop_server" description="Stops the JsUnit Server">
+        <java fork="true" classname="org.mortbay.stop.Main" failonerror="true">
+            <classpath refid="classpath"/>
+        </java>
     </target>
 
     <target name="create_distribution" depends="create_jar,run_self_tests" description="Creates and tests the JsUnit distribution"/>

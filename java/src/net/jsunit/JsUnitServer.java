@@ -6,11 +6,15 @@ import net.jsunit.servlet.ResultDisplayerServlet;
 import net.jsunit.servlet.TestRunnerServlet;
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
+import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHandler;
+import org.mortbay.util.MultiException;
+import org.mortbay.start.Monitor;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,9 +24,8 @@ import java.util.List;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class JsUnitServer {
+public class JsUnitServer extends HttpServer {
     private List results = new ArrayList();
-    private HttpServer httpServer;
 
     private int port;
     private File resourceBase;
@@ -31,10 +34,14 @@ public class JsUnitServer {
     private URL testURL;
     private boolean initialized;
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String args[]) {
         JsUnitServer server = new JsUnitServer();
         server.initialize(args);
-        server.start();
+        try {
+            server.start();
+        } catch (MultiException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initialize(String[] args) {
@@ -50,20 +57,24 @@ public class JsUnitServer {
         }
     }
 
-    public void start() throws Exception {
+    public void start() throws MultiException {
         if (!initialized) {
             System.err.println("Cannot start server: not initialized");
             return;
         }
         Utility.log(toString(), false);
-        setUpHttpServer();
-        httpServer.start();
+        try {
+            setUpHttpServer();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        super.start();
     }
 
-    private void setUpHttpServer() throws Exception {
-        httpServer = new HttpServer();
-        httpServer.addListener(":" + port);
-        HttpContext context = httpServer.getContext("/jsunit");
+    private void setUpHttpServer() throws IOException {
+        addListener(":" + port);
+        HttpContext context = getContext("/jsunit");
         ServletHandler handler;
         handler = new ServletHandler();
         handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
@@ -72,8 +83,9 @@ public class JsUnitServer {
         context.addHandler(handler);
         context.setResourceBase(resourceBase.toString());
         context.addHandler(new ResourceHandler());
-        httpServer.addContext(context);
+        addContext(context);
         JsUnitServlet.setServer(this);
+        Monitor.monitor();
     }
 
     public void initialize() {
@@ -125,13 +137,6 @@ public class JsUnitServer {
 
     public int resultsCount() {
         return getResults().size();
-    }
-
-    public void stop() throws InterruptedException {
-        if (httpServer != null) {
-            httpServer.stop();
-            httpServer = null;
-        }
     }
 
     public String toString() {
