@@ -1,32 +1,46 @@
 package net.jsunit;
 import java.util.*;
 import junit.framework.*;
-public class JsUnitStandaloneTest extends TestCase {
-	private Process ie, netscape;
-	public final static String ieExecutable = "\"c:\\program files\\internet explorer\\iexplore.exe\"";
-	public final static String netscapeExecutable = "\"c:\\program files\\netscape\\netscape\\Netscp.exe\"";
-	public final static String url = "file:///c:/jsunit/jsunit/testRunner.html?testPage=c:\\jsunit\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitResults=true";
-	
+public abstract class JsUnitStandaloneTest extends TestCase {
+	protected JsUnitResultAcceptor acceptor = JsUnitResultAcceptor.instance();
+	protected List browserProcesses = new ArrayList();
+	protected abstract List browserFileNames();
+	protected abstract String url();
+	protected int maxSecondsToWait() {
+		return 2 * 60;
+	}
 	public void setUp() throws Exception {
 		super.setUp();
 		JsUnitResultAcceptor.startServer();
-		JsUnitTestSuiteResult.setLogsDirectory("c:\\jsunit\\jsunit\\results\\logs\\");
 	}
 	public void tearDown() throws Exception {
 		super.tearDown();
-		if (ie != null)
-			ie.destroy();
-		if (netscape != null)
-			netscape.destroy();
+		Iterator it = browserProcesses.iterator();
+		while (it.hasNext()) {
+			Process next = (Process) it.next();
+			next.destroy();
+		}
 		JsUnitResultAcceptor.stopServer();
 	}
-	public void testExample() throws Exception {
-		ie = Runtime.getRuntime().exec(ieExecutable + " " + url);
-		netscape = Runtime.getRuntime().exec(netscapeExecutable + " " + url);
-		JsUnitResultAcceptor acceptor = JsUnitResultAcceptor.instance();
-		long timeWaited = 0;
-		while (acceptor.getResults().size() != 2)
+	public void testStandaloneRun() throws Exception {
+		Iterator it = browserFileNames().iterator();
+		while (it.hasNext()) {
+			String next = (String) it.next();
+			browserProcesses.add(Runtime.getRuntime().exec("\"" + next + "\" \"" + url()+"\""));
+		}
+		waitForResultsToBeSubmitted();
+		verifyResults();
+	}
+	protected void waitForResultsToBeSubmitted() throws Exception {
+		long secondsWaited = 0;
+		while (acceptor.getResults().size() != browserFileNames().size()) {
 			Thread.sleep(1000);
+			secondsWaited += 1;
+			if (secondsWaited > maxSecondsToWait())
+				fail("Waited more than " + maxSecondsToWait() + " seconds");
+		}
+	}
+	protected void verifyResults() {
 		Iterator it = acceptor.getResults().iterator();
 		while (it.hasNext()) {
 			JsUnitTestSuiteResult result = (JsUnitTestSuiteResult) it.next();
