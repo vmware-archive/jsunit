@@ -15,15 +15,27 @@ public class TestCaseResultWriter {
 	}
 	public Element createTestCaseElement() {
 		Element testCaseElement = new Element(TEST_CASE);
-		testCaseElement.setAttribute(NAME, result.getName());
+		try {
+		    testCaseElement.setAttribute(NAME, result.getName().replace('\u0000', ' '));
+		} catch (Exception ex) {
+		    ex.printStackTrace();
+		}
 		testCaseElement.setAttribute(TIME, String.valueOf(result.getTime()));
 		if (result.hadFailure()) {
 			Element failureElement = new Element(FAILURE);
-			failureElement.setAttribute(MESSAGE, result.getFailure());
+			try {
+			    failureElement.setAttribute(MESSAGE, result.getFailure().replace('\u0000', ' '));
+			} catch(Exception ex) {
+			    ex.printStackTrace();
+			}
 			testCaseElement.addContent(failureElement);
 		} else if (result.hadError()) {
 			Element errorElement = new Element(ERROR);
-			errorElement.setAttribute(MESSAGE, result.getError());
+			try {
+			    errorElement.setAttribute(MESSAGE, result.getError().replace('\u0000', ' '));
+			} catch(Exception ex) {
+			    ex.printStackTrace();
+			}
 			testCaseElement.addContent(errorElement);
 		}
 		return testCaseElement;
