@@ -11,6 +11,7 @@ import org.mortbay.jetty.servlet.ServletHandler;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,7 +33,7 @@ public class JsUnitServer {
     private HttpServer httpServer;
 
     private JsUnitServer() {
-        resolveJsUnitProperties();        
+        resolveJsUnitProperties();
     }
 
     public static void main(String args[]) throws Exception {
@@ -40,23 +41,22 @@ public class JsUnitServer {
     }
 
     public void start() throws Exception {
-        printProperties();
+        Utility.log(properties.toString(), false);
+        setUpHttpServer();
+        httpServer.start();
+    }
 
-        httpServer.addListener(":" + port());
+    private void setUpHttpServer() throws IOException {
+        httpServer.addListener(":" + properties.port());
         HttpContext context = httpServer.getContext("/jsunit");
         ServletHandler handler = new ServletHandler();
         handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
         handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
         handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         context.addHandler(handler);
-        context.setResourceBase(resourceBase().toString());
+        context.setResourceBase(properties.resourceBase().toString());
         context.addHandler(new ResourceHandler());
         httpServer.addContext(context);
-        httpServer.start();
-    }
-
-    private void printProperties() {
-        Utility.log(properties.toString(), false);
     }
 
     public static JsUnitServer instance() {
@@ -105,18 +105,6 @@ public class JsUnitServer {
         if (properties == null)
             properties = new JsUnitProperties(PROPERTIES_FILE_NAME);
         return properties;
-    }
-
-    public File resourceBase() {
-        return properties.resourceBase();
-    }
-
-    public File logsDirectory() {
-        return properties.logsDirectory();
-    }
-
-    public int port() {
-        return properties.port();
     }
 
     public TestSuiteResult lastResult() {
