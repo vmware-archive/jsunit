@@ -48,6 +48,7 @@ import java.util.StringTokenizer;
    @author Edward Hieatt
  */
 public class Utility {
+	private static boolean logToStandardOut = true;
 	public static boolean isEmpty(String s) {
 		return s == null || s.trim().equals("");
 	}
@@ -74,7 +75,22 @@ public class Utility {
 			result.add(toker.nextToken());
 		return result;
 	}
-	public static void log(String string) {
-		System.out.println(new Date() + ": " + string);
+	public static void log(String message, boolean includeDate) {
+		if (logToStandardOut) {
+			StringBuffer buffer = new StringBuffer();
+			if (includeDate) {
+				buffer.append(new Date());
+				buffer.append(": ");
+			}
+			buffer.append(message);
+			System.out.println(buffer.toString());
+		}
+	}
+	
+	public static void log(String message) {
+		log(message, true);
+	}
+	public static void setShouldLogToStandardOut(boolean b) {
+		logToStandardOut = b;
 	}
 }

@@ -28,6 +28,14 @@ public class TestCaseResultWriter {
 		}
 		return testCaseElement;
 	}
+	
+	public String writeProblemSummary() {
+		if (result.hadFailure())
+			return result.getName() + " failed:\n" + result.getFailure();
+		else if (result.hadError())
+			return result.getName() + " had an error:\n" + result.getError();
+		return null;
+	}
 	public String writeXmlFragment() {
 		return new XMLOutputter().outputString(createTestCaseElement());
 	}

@@ -100,4 +100,8 @@ public class TestCaseResult {
 	public String writeXmlFragment() {
 		return new TestCaseResultWriter(this).writeXmlFragment();
 	}
+
+	public String writeProblemSummary() {
+		return new TestCaseResultWriter(this).writeProblemSummary();
+	}
 }

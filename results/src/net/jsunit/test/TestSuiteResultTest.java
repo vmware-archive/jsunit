@@ -57,10 +57,10 @@ public class TestSuiteResultTest extends JsUnitTest {
 			+ "</properties>"
 			+ "<testcase name=\"testFoo\" time=\"1.3\" />"
 			+ "<testcase name=\"testFoo\" time=\"1.3\">"
-			+ "<error message=\"Error Message\" />"
+			+ "<error message=\"Test Error Message\" />"
 			+ "</testcase>"
 			+ "<testcase name=\"testFoo\" time=\"1.3\">"
-			+ "<failure message=\"Failure Message\" />"
+			+ "<failure message=\"Test Failure Message\" />"
 			+ "</testcase>"
 			+ "</testsuite>";
 	private String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
@@ -75,7 +75,7 @@ public class TestSuiteResultTest extends JsUnitTest {
 		result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		result.setRemoteAddress("Dummy Remote Address");
 		result.setTime(4.3);
-		result.setTestCaseStrings(new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Error Message|", "testFoo|1.3|F|Failure Message|" });
+		result.setTestCaseStrings(new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Test Error Message|", "testFoo|1.3|F|Test Failure Message|" });
 	}
 	public void testId() {
 		assertNotNull(result.getId());

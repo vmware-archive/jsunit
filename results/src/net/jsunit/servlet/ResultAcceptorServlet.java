@@ -54,13 +54,13 @@ import net.jsunit.Utility;
  */
 public class ResultAcceptorServlet extends HttpServlet {
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Utility.log("ResultAcceptorServlet: Received request...");		
+		Utility.log("ResultAcceptorServlet: Received request");
 		TestSuiteResult result = JsUnitServer.instance().accept(request);
 		String xml = result.writeXml();
 		response.setContentType("text/xml");
 		OutputStream out = response.getOutputStream();
 		out.write(xml.getBytes());
 		out.close();
-		Utility.log("ResultAcceptorServlet: ...Done");
+		Utility.log("ResultAcceptorServlet: Done");
 	}
 }

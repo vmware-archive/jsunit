@@ -121,7 +121,13 @@ public class StandaloneTest extends TestCase {
 	private void verifyLastResult() {
 		TestSuiteResult result = server.lastResult();
 		if (!result.hadSuccess()) {
-			fail("Result with ID " + result.getId() + " failed");
+			StringBuffer buffer = new StringBuffer();
+			buffer.append("Result with ID ");
+			buffer.append(result.getId());
+			buffer.append(" had problems: ");
+			buffer.append(result.errorCount()+" errors, ");
+			buffer.append(result.failureCount()+" failures ");
+			fail(buffer.toString());
 		}
 	}
 	public void setStartAndStopServer(boolean b) {

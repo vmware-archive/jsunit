@@ -390,7 +390,7 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
   var timeTaken = (new Date() - timeBefore) / 1000;
   if (excep != null)
     this._handleTestException(excep);
-  var serializedTestCaseString = functionName+"|"+timeTaken+"|";
+  var serializedTestCaseString = this._fullyQualifiedCurrentTestFunctionName()+"|"+timeTaken+"|";
   if (excep==null)
   	serializedTestCaseString+="S||";
   else {
@@ -405,9 +405,13 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
   this.testCaseResultsField[this.testCaseResultsField.length]=newOption;  
 }
 
+jsUnitTestManager.prototype._fullyQualifiedCurrentTestFunctionName = function() {
+	return this.containerTestFrame.location.href + ':' + this._testFunctionName;
+}
+
 jsUnitTestManager.prototype._handleTestException = function (excep) 
 {
-  var problemMessage = this.containerTestFrame.location.href + ':' + this._testFunctionName + ' ';
+  var problemMessage = this._fullyQualifiedCurrentTestFunctionName() + ' ';
   if (!excep.isJsUnitException) {
     problemMessage += 'had an error';
     this.errorCount++;

@@ -61,4 +61,18 @@ public class TestSuiteResultWriter {
 			new TestCaseResultWriter(next).addXmlTo(element);
 		}
 	}
+	public String writeProblems() {
+		StringBuffer buffer = new StringBuffer();
+		Iterator it = result.getTestCaseResults().iterator();
+		while (it.hasNext()) {
+			TestCaseResult next = (TestCaseResult) it.next();
+			if (!next.hadSuccess()) {
+				if (buffer.length() > 0)
+					buffer.append("\n");
+				String problemMessage = next.writeProblemSummary();
+				buffer.append(problemMessage);
+			}
+		}
+		return buffer.toString();
+	}
 }

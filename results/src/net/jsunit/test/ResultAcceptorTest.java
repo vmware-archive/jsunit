@@ -52,6 +52,7 @@ public class ResultAcceptorTest extends JsUnitTest {
 	}
 	public void setUp() throws Exception {
 		super.setUp();
+		Utility.setShouldLogToStandardOut(false);
 		requestMap = new HashMap();
 		requestMap.put(TestSuiteResultWriter.ID, "ID_foo");
 		requestMap.put(TestSuiteResultWriter.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
@@ -63,10 +64,11 @@ public class ResultAcceptorTest extends JsUnitTest {
 		File logFile = TestSuiteResult.logFileForId("ID_foo");
 		if (logFile.exists())
 			logFile.delete();
+		Utility.setShouldLogToStandardOut(true);			
 		super.tearDown();
 	}
 	protected String[] dummyTestCaseStrings() {
-		return new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Error Message|", "testFoo|1.3|F|Failure Message|" };
+		return new String[] { "file:///dummy/path/dummyPage.html:testFoo|1.3|S||", "testFoo|1.3|E|Test Error Message|", "testFoo|1.3|F|Test Failure Message|" };
 	}
 	protected void submit() {
 		HttpServletRequest request = new DummyHttpRequest(requestMap);

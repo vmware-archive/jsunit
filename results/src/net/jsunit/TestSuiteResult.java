@@ -51,6 +51,7 @@ public class TestSuiteResult {
 	private String remoteAddress, id, jsUnitVersion, userAgent;
 	private List testCaseResults = new ArrayList();
 	private double time;
+	private String SEPARATOR = "---------------------";
 	public TestSuiteResult() {
 		this.id = String.valueOf(System.currentTimeMillis());
 	}
@@ -153,6 +154,19 @@ public class TestSuiteResult {
 		return new TestSuiteResultWriter(this).writeXmlFragment();
 	}
 	public void writeLog() {
+		writeXmlToFile();
+		logProblems();
+	}
+	private void logProblems() {
+		String problems = new TestSuiteResultWriter(this).writeProblems();
+		if (!Utility.isEmpty(problems)) {
+			Utility.log("Problems:");
+			Utility.log(SEPARATOR, false);
+			Utility.log(problems, false);
+			Utility.log(SEPARATOR, false);
+		}
+	}
+	private void writeXmlToFile() {
 		String xml = writeXml();
 		Utility.writeFile(xml, logFileForId(getId()));
 	}
