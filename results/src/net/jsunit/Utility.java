@@ -62,7 +62,6 @@ public class Utility {
 			out.write(contents.getBytes());
 			out.close();
 		} catch (Exception e) {
-			log("Failed to write file: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}

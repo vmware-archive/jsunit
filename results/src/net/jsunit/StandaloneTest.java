@@ -78,6 +78,7 @@ public class StandaloneTest extends TestCase {
 			String next = (String) it.next();
 			int currentResultCount = acceptor.resultsCount();
 			Process process = null;
+			Utility.log("StandaloneTest: launching "+next);
 			try {
 				try {
 					process = Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
@@ -94,6 +95,7 @@ public class StandaloneTest extends TestCase {
 		}
 	}
 	private void waitForResultToBeSubmitted(String browserProcess, int initialResultCount) throws Exception {
+		Utility.log("StandaloneTest: waiting for " + browserProcess + " to submit result");
 		long secondsWaited = 0;
 		while (acceptor.getResults().size() == initialResultCount) {
 			Thread.sleep(1000);

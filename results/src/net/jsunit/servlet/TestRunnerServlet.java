@@ -11,11 +11,11 @@ import net.jsunit.StandaloneTest;
 import net.jsunit.Utility;
 public class TestRunnerServlet extends HttpServlet {
 	protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Utility.log("Received request to run standalone test...");
+		Utility.log("TestRunnerServlet: Received request to run standalone test...");
 		StandaloneTest test = createTest();
 		TestResult result = TestRunner.run(test);
 		writeResponse(response, result);
-		Utility.log("...Done");
+		Utility.log("TestRunnerServlet: ...Done");
 	}
 	protected void writeResponse(HttpServletResponse response, TestResult result) throws IOException {
 		response.setContentType("text/xml");

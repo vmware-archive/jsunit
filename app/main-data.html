@@ -66,13 +66,14 @@ function  kickOffTests() {
       <table width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information" bgcolor="#DDDDDD">
         <tr>
 	  <td align="left" valign="top"><img src="../images/logo_jsunit.gif"></td>
-          <th nowrap align="left" valign="center">JsUnit 2.0alpha TestRunner</th>
+          <th nowrap align="left" valign="center">
+          	JsUnit 2.0alpha TestRunner<br>
+          	<font size="-2"><i>Running on <script language="javascript">document.write(navigator.userAgent);</script></i></font>
+          </th>
 
-          <td nowrap align="right" valign="top">
+          <td nowrap align="right" valign="middle">
            <a href="http://www.jsunit.net/" target="_blank">JsUnit Home</a><br>
            <a href="mailto:edward@jsunit.net">edward@jsunit.net</a><br>
-           <a href="../licenses/index.html" target="blank">Licenses MPL1.1/GPL2/LGPL2.1</a><br>
-           <a href="../tests/" target="tests">View Standard Tests</a> </td>
         </tr>
       </table>
 
@@ -124,7 +125,7 @@ function  kickOffTests() {
 
       <table cellpadding="0" cellspacing="0" border="0" summary="Choose Trace Level">
         <tr>
-          <td nowrap>Use trace level:</td>
+          <td nowrap>Trace level:</td>
 
           <td><select name="traceLevel">
             <option value="0" selected>
@@ -160,7 +161,7 @@ function  kickOffTests() {
 
           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-          <td nowrap>setUpPage timeout:</td>
+          <td nowrap>Setup page timeout:</td>
           <td>&nbsp;
             <script language="javascript" type="text/javascript">
             document.write('<input type="text" size="2" name="setUpPageTimeout" value="'+top.jsUnitTestManager.SETUPPAGE_TIMEOUT+'">');
