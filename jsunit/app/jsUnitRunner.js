@@ -24,6 +24,7 @@ var pageLoader=new PageLoader();
 var uiUpdater=new UiUpdater();
 var loadedPageInvestigator=new LoadedPageInvestigator();
 var utility=new Utility();
+var tracer=new Tracer();
 
 /*************************************************************/
 function TestManager(initialTestFile) {
@@ -38,10 +39,12 @@ function TestManager(initialTestFile) {
 }
 function start() {
         this._timeRunStarted=new Date();
-        uiUpdater.initialize();
+        uiUpdater.initializeUiUpdater();
+        tracer.initializeTracer();
         setTimeout("testManager._nextPage();", TIMEOUT_LENGTH);
 }
 function doneLoadingPage(pageName) {
+        containerTestFrame().setTracer(tracer);
         this._testFileName=pageName;
         if (!loadedPageInvestigator.isLoadedTestPageATestSuitePage()) {
                 this._testIndex=0;
@@ -115,7 +118,8 @@ function abort() {
 }
 function _cleanUp() {
         containerController().setTestPage("./emptyPage.html");
-        uiUpdater.finalize();
+        uiUpdater.finalizeUiUpdater();
+        tracer.finalizeTracer();
 }
 TestManager.prototype.start=start;
 TestManager.prototype.doneLoadingPage=doneLoadingPage;
@@ -271,7 +275,7 @@ function showMessagesForAllProblemTests() {
         this._windowForAllProblemMessages = window.open("","","width=600, height=350,status=no,resizable=yes,scrollbars=yes");
         var resDoc = this._windowForAllProblemMessages.document;
         resDoc.write("<html><head><link rel=\"stylesheet\" href=\"jsUnitStyle.css\"><title>Tests with problems - JsUnit</title><head><body>");
-        resDoc.write("<p class=\"jsUnitSubHeading\">Tests with problems ("+problemsListField().length+" total)</p>");
+        resDoc.write("<p class=\"jsUnitSubHeading\">Tests with problems ("+problemsListField().length+" total) - JsUnit</p>");
         for (var i=0; i<problemsListField().length; i++) {
                 resDoc.write("<p class=\"jsUnitDefault\">");
                 resDoc.write("<b>" + (i+1) + ". ");
@@ -289,14 +293,14 @@ function _clearProblemsList() {
         for (var i=0; i<initialLength; i++)
                 listField.remove(0);
 }
-function initialize() {
+function initializeUiUpdater() {
         this.setStatus("Initializing...");
         this._setRunButtonEnabled(false);
         this._clearProblemsList();
         this.updateProgressIndicators();
         this.setStatus("Done initializing");
 }
-function finalize() {
+function finalizeUiUpdater() {
         this._setRunButtonEnabled(true);
 }
 function _setRunButtonEnabled(b) {
@@ -312,8 +316,8 @@ UiUpdater.prototype._setProgressBarWidth=_setProgressBarWidth;
 UiUpdater.prototype.updateProgressIndicators=updateProgressIndicators;
 UiUpdater.prototype.showMessageForSelectedProblemTest=showMessageForSelectedProblemTest;
 UiUpdater.prototype._clearProblemsList=_clearProblemsList;
-UiUpdater.prototype.initialize=initialize;
-UiUpdater.prototype.finalize=finalize;
+UiUpdater.prototype.initializeUiUpdater=initializeUiUpdater;
+UiUpdater.prototype.finalizeUiUpdater=finalizeUiUpdater;
 UiUpdater.prototype._setRunButtonEnabled=_setRunButtonEnabled;
 
 /*******************************************/
@@ -381,6 +385,69 @@ function resolveUserEnteredTestFileName(rawText) {
 }
 Utility.prototype.copySuite=copySuite;
 Utility.prototype.resolveUserEnteredTestFileName=resolveUserEnteredTestFileName;
+
+/********************************************/
+
+function Tracer() {
+        this._traceWindow=null;
+        this.TRACE_LEVEL_WARNING=1;
+        this.TRACE_LEVEL_INFO=2;
+        this.TRACE_LEVEL_DEBUG=3;
+}
+function _trace(message, value, traceLevel) {
+        if (_getChosenTraceLevel() >= traceLevel) {
+                var traceString=message;
+                if (value)
+                        traceString+=": "+value;
+                this._writeToTraceWindow(traceString, traceLevel);
+        }
+}
+function _getChosenTraceLevel() {
+        return eval(document.testRunnerForm.traceLevel.value);
+}
+function _writeToTraceWindow(traceString, traceLevel) {
+        var htmlToAppend = "<p class=\"jsUnitDefault\">" + traceString + "</p>\n";
+        this._getTraceWindow().document.write(htmlToAppend);
+}
+function _getTraceWindow() {
+        if (this._traceWindow==null) {
+                this._traceWindow = window.open("","","width=600, height=350,status=no,resizable=yes,scrollbars=yes");
+                var resDoc = this._traceWindow.document;
+                resDoc.write("<html>\n<head>\n<link rel=\"stylesheet\" href=\"jsUnitStyle.css\">\n<title>Tracing - JsUnit</title>\n<head>\n<body>");
+                resDoc.write("<p class=\"jsUnitSubHeading\">Tracing - JsUnit</p>\n");
+        }
+        return this._traceWindow;
+}
+function initializeTracer() {
+        if (this._traceWindow!=null && document.testRunnerForm.closeTraceWindowOnNewRun.checked)
+                this._traceWindow.close();
+        this._traceWindow=null;
+}
+function finalizeTracer() {
+        if (this._traceWindow!=null) {
+                this._traceWindow.document.write("</body>\n</html>");
+                this._traceWindow.document.close();
+        }
+}
+function warn() {
+        this._trace(arguments[0], arguments[1], this.TRACE_LEVEL_WARNING);
+}
+function inform() {
+        this._trace(arguments[0], arguments[1], this.TRACE_LEVEL_INFO);
+}
+function debug() {
+        this._trace(arguments[0], arguments[1], this.TRACE_LEVEL_DEBUG);
+}
+Tracer.prototype.initializeTracer=initializeTracer;
+Tracer.prototype.finalizeTracer=finalizeTracer;
+Tracer.prototype.warn=warn;
+Tracer.prototype.inform=inform;
+Tracer.prototype.debug=debug;
+Tracer.prototype._trace=_trace;
+Tracer.prototype._getChosenTraceLevel=_getChosenTraceLevel;
+Tracer.prototype._writeToTraceWindow=_writeToTraceWindow;
+Tracer.prototype._getTraceWindow=_getTraceWindow;
+
 
 /***********************************************/
 

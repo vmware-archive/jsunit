@@ -55,6 +55,14 @@ function testJsUnitTestSuiteClass() {
   assertEquals("foo2.html", aSuite.testPages[2]);
   assertEquals("bar2.html", aSuite.testPages[3]);
 }
+function testTracing() {
+  warn("This is warning 1", "foo");
+  warn("This is warning 2");
+  inform("This is info 1", "foo");
+  inform("This is info 2");
+  debug("This is debug 1", "foo");
+  debug("This is debug 2");
+}
 </script>
 </head>
 <body>

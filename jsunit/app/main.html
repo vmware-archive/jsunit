@@ -40,7 +40,7 @@
               return isIE5Plus() || isNetscape6();
       }
       if (!isBrowserSupported()) {
-        alert("Sorry, your browser is not supported by this version of JsUnit.\nSupported browsers are Interner Explorer 5.0+ and Netscape 6.\nJsUnit will not function.");
+        alert("Sorry, your browser is not supported by this version of JsUnit.\nSupported browsers are Interner Explorer 5.0+ and Netscape 6.0+\nJsUnit will not function.");
       }
     </script>
     <script language="JavaScript1.4" TYPE="text/javascript" src="jsUnitCore.js"></script>
@@ -52,7 +52,7 @@
     		<p>
 		<table width="100%">
 		<tr>
-    <td class="jsUnitHeading" valign="left">JsUnit 1.2.3 TestRunner</td>
+    <td class="jsUnitHeading" valign="left">JsUnit 1.2.4 TestRunner</td>
     <td class="jsUnitDefault" valign="right">
     <a href="http://www.jsunit.net/" target="_blank">JsUnit Home</a><br>
     <a href="mailto:edward@jsunit.net">edward@jsunit.net</a><br>
@@ -62,7 +62,7 @@
 		</table>
 		</p>
     <p class="jsUnitDefault">
-    			Enter the filename of the Test Page you want to run:
+          Enter the filename of the Test Page to be run:
 		</p>
     <table>
       <tr>
@@ -74,12 +74,31 @@
         <td nowrap>
           <script language="JavaScript1.4" type="text/javascript">
             var inputType = (getDocumentProtocol()=="file:///") ? "file" : "text";
-              document.write("<input class=\"jsUnitDefault\" type=\""+inputType+"\" name=\"testFileName\" size=\"60\">");
+            document.write("<input class=\"jsUnitDefault\" type=\""+inputType+"\" name=\"testFileName\" size=\"60\">");
           </script>
           <input type="button" name="runButton" value="Run" onClick="kickOffTests()">
         </td>
       </tr>
     </table>
+    <hr>
+      <table>
+        <tr>
+          <td class="jsUnitDefault">Use trace level:</td>
+          <td>
+            <select name="traceLevel">
+              <option value="0" selected>no tracing</option>
+              <option value="1">warning (lowest)</option>
+              <option value="2">info</option>
+              <option value="3">debug (highest)</option>
+            </select>
+          </td>
+          <td>&nbsp;&nbsp;&nbsp;</td>
+          <td class="jsUnitDefault">
+            <input type="checkbox" name="closeTraceWindowOnNewRun" checked>
+            Close old trace window on new run
+          </td>
+        </tr>
+      </table>
     <hr>
 		<p>
         <table width="100%"><tr>

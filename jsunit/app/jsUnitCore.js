@@ -19,6 +19,7 @@
 
 var JSUNIT_UNDEFINED_VALUE;
 var isTestPageLoaded=false;
+var tracer=null;
 function _displayStringForValue(aVar) {
 	if (aVar===null) return "null";
 	if (aVar===JSUNIT_UNDEFINED_VALUE) return "undefined";
@@ -165,6 +166,19 @@ JsUnitTestSuite.prototype.hasMorePages=hasMorePages;
 
 function newOnLoadEvent() {
         isTestPageLoaded=true;
+}
+
+function warn() {
+        if (tracer!=null) tracer.warn(arguments[0], arguments[1]);
+}
+function inform() {
+        if (tracer!=null) tracer.inform(arguments[0], arguments[1]);
+}
+function debug() {
+        if (tracer!=null) tracer.debug(arguments[0], arguments[1]);
+}
+function setTracer(aTracer) {
+        tracer=aTracer;
 }
 
 window.onload=newOnLoadEvent;
