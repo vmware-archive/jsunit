@@ -1,4 +1,5 @@
 <project name="JsUnit" default="test" basedir=".">
+
     <property name="src" location="java/src"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
@@ -34,5 +35,11 @@
             <arg value="net.jsunit.test.Suite"/>
         </java>
     </target>
-</project>
 
+    <target name="standalonetest" description="Runs JsUnit tests">
+        <junit>
+            <test name="net.jsunit.StandaloneTest"/>
+        </junit>
+    </target>
+
+</project>
