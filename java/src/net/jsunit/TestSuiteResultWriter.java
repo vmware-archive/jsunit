@@ -82,7 +82,7 @@ public class TestSuiteResultWriter {
         Iterator it = result.getTestCaseResults().iterator();
         while (it.hasNext()) {
             TestCaseResult next = (TestCaseResult) it.next();
-            if (!next.hadSuccess()) {
+            if (!next.wasSuccessful()) {
                 if (buffer.length() > 0)
                     buffer.append("\n");
                 String problemMessage = next.writeProblemSummary();

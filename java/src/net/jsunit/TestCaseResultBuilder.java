@@ -18,7 +18,7 @@ public class TestCaseResultBuilder {
 
     private void updateWithHeaders(TestCaseResult result, Element element) {
         result.setName(element.getAttributeValue(TestCaseResultWriter.NAME));
-        result.setTime(Double.parseDouble(element.getAttributeValue(TestCaseResultWriter.TIME)));
+        result.setTimeTaken(Double.parseDouble(element.getAttributeValue(TestCaseResultWriter.TIME)));
     }
 
     private void updateWithMessage(TestCaseResult result, Element element) {

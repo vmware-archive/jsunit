@@ -20,7 +20,7 @@ public class TestCaseResultTest extends TestCase {
         assertEquals(1.3d, result.getTime(), .001d);
         assertFalse(result.hadError());
         assertFalse(result.hadFailure());
-        assertTrue(result.hadSuccess());
+        assertTrue(result.wasSuccessful());
         assertNull(result.getError());
         assertNull(result.getFailure());
         assertEquals("<testcase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\" />", result.writeXmlFragment());
@@ -37,7 +37,7 @@ public class TestCaseResultTest extends TestCase {
         assertEquals(1.3d, result.getTime(), .001d);
         assertTrue(result.hadError());
         assertFalse(result.hadFailure());
-        assertFalse(result.hadSuccess());
+        assertFalse(result.wasSuccessful());
         assertEquals("Test Error Message", result.getError());
         assertNull(result.getFailure());
         assertEquals("<testcase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><error message=\"Test Error Message\" /></testcase>", result.writeXmlFragment());
@@ -49,7 +49,7 @@ public class TestCaseResultTest extends TestCase {
         assertEquals(1.3d, result.getTime(), .001d);
         assertFalse(result.hadError());
         assertTrue(result.hadFailure());
-        assertFalse(result.hadSuccess());
+        assertFalse(result.wasSuccessful());
         assertNull(result.getError());
         assertEquals("Test Failure Message", result.getFailure());
         assertEquals("<testcase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><failure message=\"Test Failure Message\" /></testcase>", result.writeXmlFragment());
@@ -63,7 +63,7 @@ public class TestCaseResultTest extends TestCase {
         assertEquals(1.3d, reconstitutedResult.getTime(), .001d);
         assertFalse(reconstitutedResult.hadError());
         assertTrue(reconstitutedResult.hadFailure());
-        assertFalse(reconstitutedResult.hadSuccess());
+        assertFalse(reconstitutedResult.wasSuccessful());
         assertNull(reconstitutedResult.getError());
         assertEquals("Test Failure Message", reconstitutedResult.getFailure());
     }

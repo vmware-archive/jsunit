@@ -194,7 +194,7 @@ public class JsUnitServer extends HttpServer {
         stop();
     }
 
-    public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-        return dateLastResultReceived != null && dateLastResultReceived.after(dateBrowserLaunched);
+    public boolean hasReceivedResultSince(Date aDate) {
+        return dateLastResultReceived != null && dateLastResultReceived.after(aDate);
     }
 }

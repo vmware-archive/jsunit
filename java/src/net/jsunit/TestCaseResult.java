@@ -3,6 +3,7 @@ package net.jsunit;
 import org.jdom.Element;
 
 import java.util.StringTokenizer;
+import java.util.NoSuchElementException;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -42,7 +43,7 @@ public class TestCaseResult {
         return time;
     }
 
-    public void setTime(double time) {
+    public void setTimeTaken(double time) {
         this.time = time;
     }
 
@@ -54,7 +55,7 @@ public class TestCaseResult {
         return failure != null;
     }
 
-    public boolean hadSuccess() {
+    public boolean wasSuccessful() {
         return !hadError() && !hadFailure();
     }
 
@@ -63,13 +64,13 @@ public class TestCaseResult {
         StringTokenizer toker = new StringTokenizer(string, DELIMITER);
         try {
             result.setName(toker.nextToken());
-            result.setTime(Double.parseDouble(toker.nextToken()));
+            result.setTimeTaken(Double.parseDouble(toker.nextToken()));
             String successString = toker.nextToken();
             if (successString.equals(ERROR_INDICATOR))
                 result.setError(toker.nextToken());
             else if (successString.equals(FAILURE_INDICATOR))
                 result.setFailure(toker.nextToken());
-        } catch (java.util.NoSuchElementException ex) {
+        } catch (NoSuchElementException ex) {
             result.setError("Incomplete test result: '" + string + "'.");
         }
         return result;

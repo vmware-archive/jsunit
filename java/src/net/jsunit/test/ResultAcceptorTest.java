@@ -1,13 +1,13 @@
 package net.jsunit.test;
 
+import junit.framework.TestCase;
 import net.jsunit.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-
-import junit.framework.TestCase;
+import java.util.Date;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -78,6 +78,16 @@ public class ResultAcceptorTest extends TestCase {
         submit();
         TestSuiteResult result = (TestSuiteResult) server.getResults().get(0);
         assertEquals(3, result.getTestCaseResults().size());
+    }
+
+    public void testHasReceivedResultSinceDate() throws InterruptedException {
+        assertFalse(server.hasReceivedResultSince(new Date()));
+        submit();
+        assertFalse(server.hasReceivedResultSince(new Date()));
+        Date aDate = new Date();
+        Thread.sleep(100);
+        submit();
+        assertTrue(server.hasReceivedResultSince(aDate));
     }
 
     public void testFindResultById() {

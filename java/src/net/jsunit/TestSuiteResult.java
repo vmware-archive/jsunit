@@ -175,7 +175,7 @@ public class TestSuiteResult {
         Iterator it = testCaseResults.iterator();
         while (it.hasNext()) {
             TestCaseResult next = (TestCaseResult) it.next();
-            if (!next.hadSuccess())
+            if (!next.wasSuccessful())
                 return false;
         }
         return true;
