@@ -26,21 +26,28 @@
               return navigator.appName.indexOf(make)!=-1;
       }
       function isBrowserVersion(version) {
-              return navigator.appVersion.indexOf(version)!=-1;
+              return navigator.appVersion.indexOf(version)==0;
+      }
+      function isMSBrowserVersion(version) {
+              return navigator.appVersion.indexOf("MSIE "+version)!=-1;
       }
       function isIE5Plus() {
               return  isBrowserMake("Microsoft Internet Explorer") &&
-                      (isBrowserVersion("MSIE 5") || isBrowserVersion("MSIE 6"));
+                      (isMSBrowserVersion("5") || isMSBrowserVersion("6"));
       }
       function isNetscape6() {
               return  isBrowserMake("Netscape") &&
-                      isBrowserVersion("5.0 ");
+                      isBrowserVersion("5");
+      }
+      function isKonqueror5() {
+              return isBrowserMake("Konqueror") &&
+                     isBrowserVersion("5");
       }
       function isBrowserSupported() {
-              return isIE5Plus() || isNetscape6();
+              return isIE5Plus() || isNetscape6() || isKonqueror5();
       }
       if (!isBrowserSupported()) {
-        alert("Sorry, your browser is not supported by this version of JsUnit.\nSupported browsers are Interner Explorer 5.0+ and Netscape 6.0+\nJsUnit will not function.");
+        alert("Sorry, your browser is not supported by this version of JsUnit.\nSupported browsers are Interner Explorer 5+, Netscape 6+ and Konqueror 5+.\nJsUnit will not function.");
       }
     </script>
     <script language="JavaScript" TYPE="text/javascript" src="jsUnitCore.js"></script>
