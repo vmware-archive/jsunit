@@ -1,2 +1,2 @@
 set CLASSPATH=%CLASSPATH%;.\lib\jsunit.jar;.\lib\org.mortbay.jetty-jdk1.2.jar;.\lib\jdom.jar;.\lib\javax.servlet.jar;.\lib\junit.jar
-java junit.swingui.TestRunner -noloading net.jsunit.example.ExampleStandaloneTest
+java junit.swingui.TestRunner -noloading net.jsunit.StandaloneTest
