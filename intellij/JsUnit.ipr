@@ -76,7 +76,7 @@
       <module fileurl="file://$PROJECT_DIR$/JsUnit.iml" filepath="$PROJECT_DIR$/JsUnit.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="false" project-jdk-name="java version &quot;1.4.2&quot;" />
+  <component name="ProjectRootManager" version="2" assert-keyword="false" project-jdk-name="java version &quot;1.4.2_03&quot;" />
   <component name="libraryTable" />
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="true" />

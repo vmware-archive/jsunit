@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
 
+/**
+ * @author Edward Hieatt, edward@jsunit.net
+ */
+
 public class TestRunnerServlet extends HttpServlet {
     protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utility.log("TestRunnerServlet: Received request to run standalone test...");

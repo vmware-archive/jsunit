@@ -12,6 +12,10 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * @author Edward Hieatt, edward@jsunit.net
+ */
+
 public class DistributedTest extends TestCase {
     public static final String PROPERTY_REMOTE_MACHINE_NAMES = "remoteMachineNames";
 

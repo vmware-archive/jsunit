@@ -6,6 +6,10 @@ import org.jdom.output.XMLOutputter;
 
 import java.util.Iterator;
 
+/**
+ * @author Edward Hieatt, edward@jsunit.net
+ */
+
 public class TestSuiteResultWriter {
     public static final String ID = "id",
     USER_AGENT = "userAgent",

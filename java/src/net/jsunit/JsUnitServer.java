@@ -17,45 +17,9 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * @author Edward Hieatt
- *         <p/>
- *         ***** BEGIN LICENSE BLOCK *****
- *         - Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *         -
- *         - The contents of this file are subject to the Mozilla Public License Version
- *         - 1.1 (the "License"); you may not use this file except in compliance with
- *         - the License. You may obtain a copy of the License at
- *         - http://www.mozilla.org/MPL/
- *         -
- *         - Software distributed under the License is distributed on an "AS IS" basis,
- *         - WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- *         - for the specific language governing rights and limitations under the
- *         - License.
- *         -
- *         - The Original Code is Edward Hieatt code.
- *         -
- *         - The Initial Developer of the Original Code is
- *         - Edward Hieatt, edward@jsunit.net.
- *         - Portions created by the Initial Developer are Copyright (C) 2003
- *         - the Initial Developer. All Rights Reserved.
- *         -
- *         - Author Edward Hieatt, edward@jsunit.net
- *         -
- *         - Alternatively, the contents of this file may be used under the terms of
- *         - either the GNU General Public License Version 2 or later (the "GPL"), or
- *         - the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- *         - in which case the provisions of the GPL or the LGPL are applicable instead
- *         - of those above. If you wish to allow use of your version of this file only
- *         - under the terms of either the GPL or the LGPL, and not to allow others to
- *         - use your version of this file under the terms of the MPL, indicate your
- *         - decision by deleting the provisions above and replace them with the notice
- *         - and other provisions required by the LGPL or the GPL. If you do not delete
- *         - the provisions above, a recipient may use your version of this file under
- *         - the terms of any one of the MPL, the GPL or the LGPL.
- *         -
- *         - ***** END LICENSE BLOCK *****
- * @author Edward Hieatt
+ * @author Edward Hieatt, edward@jsunit.net
  */
+
 public class JsUnitServer {
     private static Properties properties;
     private static JsUnitServer instance;
@@ -72,45 +36,29 @@ public class JsUnitServer {
     }
 
     public static void main(String args[]) throws Exception {
-        JsUnitServer.start();
+        new JsUnitServer().start();
     }
 
-    private void myStart() throws Exception {
-        if (httpServer == null) {
-            httpServer = new HttpServer();
-            httpServer.addListener(":" + port());
-            HttpContext context = httpServer.getContext("/jsunit");
-            ServletHandler handler = new ServletHandler();
-            handler.addServlet("JsUnitResultAcceptor",
-                    "/acceptor",
-                    ResultAcceptorServlet.class.getName());
-            handler.addServlet("JsUnitResultDisplayer",
-                    "/displayer",
-                    ResultDisplayerServlet.class.getName());
-            handler.addServlet("JsUnitTestRunner",
-                    "/runner",
-                    TestRunnerServlet.class.getName());
-            context.addHandler(handler);
-            context.setResourceBase(resourceBase());
-            context.addHandler(new ResourceHandler());
-            httpServer.addContext(context);
-            httpServer.start();
-        }
+    public void start() throws Exception {
+        httpServer = new HttpServer();
+        httpServer.addListener(":" + port());
+        HttpContext context = httpServer.getContext("/jsunit");
+        ServletHandler handler = new ServletHandler();
+        handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
+        handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
+        handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
+        context.addHandler(handler);
+        context.setResourceBase(resourceBase());
+        context.addHandler(new ResourceHandler());
+        httpServer.addContext(context);
+        httpServer.start();
     }
 
-    private void myStop() throws Exception {
+    public void stop() throws Exception {
         if (httpServer != null) {
             httpServer.stop();
             httpServer = null;
         }
-    }
-
-    public static void start() throws Exception {
-        instance().myStart();
-    }
-
-    public static void stop() throws Exception {
-        instance().myStop();
     }
 
     public static JsUnitServer instance() {
@@ -184,7 +132,7 @@ public class JsUnitServer {
             result =
                     resourceBase()
                     + File.separator
-                    + "results"
+                    + "java"
                     + File.separator
                     + "logs";
         return result;

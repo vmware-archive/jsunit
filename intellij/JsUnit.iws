@@ -105,7 +105,87 @@
     <option name="HIDE_WARNINGS" value="false" />
   </component>
   <component name="FileEditorManager" split-orientation="vertical" split-proportion="0.5">
-    <first-group />
+    <first-group selected-file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="8" column="0" selection-start="144" selection-end="144" vertical-scroll-proportion="0.1517341">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/ResultAcceptorTest.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="14" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.1517341">
+            <folding>
+              <element signature="method#dummyTestCaseStrings#0;class#ResultAcceptorTest#0" expanded="true" />
+              <element signature="method#testFindResultById#0;class#ResultAcceptorTest#0" expanded="true" />
+              <element signature="method#submit#0;class#ResultAcceptorTest#0" expanded="true" />
+              <element signature="method#testLog#0;class#ResultAcceptorTest#0" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/Suite.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="6" column="3" selection-start="101" selection-end="141" vertical-scroll-proportion="0.1083815">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/DistributedTest.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="68" column="0" selection-start="2355" selection-end="2355" vertical-scroll-proportion="0.4552023">
+            <folding>
+              <element signature="method#DistributedTest#0;class#DistributedTest#0" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestCaseResultTest.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="6" column="0" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0650289">
+            <folding>
+              <element signature="method#TestCaseResultTest#0;class#TestCaseResultTest#0" expanded="true" />
+            </folding>
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="13" column="0" selection-start="257" selection-end="257" vertical-scroll-proportion="0.1517341">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/ResultAcceptorServlet.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="12" column="0" selection-start="352" selection-end="405" vertical-scroll-proportion="0.0650289">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/ResultDisplayerServlet.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="12" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0650289">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../licenses/mpl-tri-license-c.txt" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/TestRunnerServlet.java" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="17" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.1517341">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+    </first-group>
     <second-group />
   </component>
   <component name="HierarchyBrowserManager">
@@ -120,15 +200,19 @@
   </component>
   <component name="J2EEProjectPane" />
   <component name="PackagesPane">
-    <expanded_node url="net.jsunit" module="JsUnit" type="package" />
     <expanded_node url="net" module="JsUnit" type="package" />
+    <expanded_node url="net.jsunit" module="JsUnit" type="package" />
     <expanded_node url="" module="JsUnit" type="module" />
+    <expanded_node url="net.jsunit.test" module="JsUnit" type="package" />
+    <expanded_node url="net.jsunit.servlet" module="JsUnit" type="package" />
   </component>
   <component name="ProjectPane">
+    <expanded_node url="file://$PROJECT_DIR$/.." module="JsUnit" type="directory" />
+    <expanded_node url="file://$PROJECT_DIR$/../licenses" module="JsUnit" type="directory" />
     <expanded_node url="" module="JsUnit" type="module" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="PackagesPane" splitterProportion="0.5">
+    <navigator currentView="ProjectPane" splitterProportion="0.5">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -148,27 +232,19 @@
   </component>
   <component name="RunManager">
     <activeType name="JUnit" />
-    <tempConfiguration name="ResultAcceptorTest" type="JUnit" default="false" selected="true">
-      <module name="JsUnit" />
-      <option name="PACKAGE_NAME" value="net.jsunit.test" />
-      <option name="MAIN_CLASS_NAME" value="net.jsunit.test.ResultAcceptorTest" />
-      <option name="METHOD_NAME" value="" />
-      <option name="TEST_OBJECT" value="class" />
+    <tempConfiguration name="JsUnitServer" type="Application" default="false" selected="true">
+      <option name="MAIN_CLASS_NAME" value="net.jsunit.JsUnitServer" />
       <option name="VM_PARAMETERS" value="" />
-      <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="C:\dev\jsunit" />
-      <option name="ADDITIONAL_CLASS_PATH">
-        <value>
-          <Item type="Marker" value="" />
-        </value>
-      </option>
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <module name="JsUnit" />
     </tempConfiguration>
     <configuration name="&lt;template&gt;" type="Application" default="true" selected="false">
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <module name="" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
+      <module name="JsUnit" />
     </configuration>
     <configuration name="&lt;template&gt;" type="Applet" default="true" selected="false">
       <module name="" />
@@ -181,14 +257,14 @@
       <option name="VM_PARAMETERS" />
     </configuration>
     <configuration name="&lt;template&gt;" type="JUnit" default="true" selected="false">
-      <module name="" />
+      <module name="JsUnit" />
       <option name="PACKAGE_NAME" />
       <option name="MAIN_CLASS_NAME" value="" />
       <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="C:\dev\jsunit" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
       <option name="ADDITIONAL_CLASS_PATH" />
     </configuration>
     <configuration name="&lt;template&gt;" type="Remote" default="true" selected="false">
@@ -208,7 +284,7 @@
     <configuration name="&lt;template&gt;" type="WebLogic Instance" default="true" selected="false">
       <setting name="WEBLOGIC_INSTANCE_CONFIGURATION_NAME" value="" />
     </configuration>
-    <configuration name="Suite" type="JUnit" default="false" selected="false">
+    <configuration name="Suite" type="JUnit" default="false" selected="true">
       <module name="JsUnit" />
       <option name="PACKAGE_NAME" value="net.jsunit.test" />
       <option name="MAIN_CLASS_NAME" value="net.jsunit.test.Suite" />
@@ -216,7 +292,7 @@
       <option name="TEST_OBJECT" value="class" />
       <option name="VM_PARAMETERS" value="" />
       <option name="PARAMETERS" value="" />
-      <option name="WORKING_DIRECTORY" value="C:\dev\jsunit" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/.." />
       <option name="ADDITIONAL_CLASS_PATH">
         <value>
           <Item type="Marker" value="" />
@@ -270,20 +346,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1600" height="1172" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.31271878" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="7" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.34132123" order="0" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3908985" order="1" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.22085492" order="0" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3906844" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24959481" order="1" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3092182" order="9" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.30893537" order="9" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4" order="6" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.27421236" order="2" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.27376425" order="2" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.12722853" order="2" />
       <window_info id="CVS File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.23803967" order="4" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25570342" order="4" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="sliding" type="sliding" visible="false" weight="0.4" order="0" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="2" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="0" />
@@ -358,79 +434,119 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../build.xml">
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/Utility.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="30" selection-start="1041" selection-end="1041" vertical-scroll-proportion="0.8278261">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../jsunit.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="558" selection-end="558" vertical-scroll-proportion="0.37777779">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/EndToEndTestSuite.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="13" selection-start="2253" selection-end="2253" vertical-scroll-proportion="0.6684142">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestCaseResultTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="20" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.37876803">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/DistributedTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="19" selection-start="516" selection-end="516" vertical-scroll-proportion="0.3928113">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/JsUnitServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="157" column="62" selection-start="6018" selection-end="6018" vertical-scroll-proportion="0.35648754">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/StandaloneTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="7" selection-start="28" selection-end="28" vertical-scroll-proportion="-0.96330273">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/ResultAcceptorTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="76" column="0" selection-start="3335" selection-end="3335" vertical-scroll-proportion="0.41284403">
+        <state line="13" column="0" selection-start="254" selection-end="254" vertical-scroll-proportion="0.15695067">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.42606518">
+        <state line="9" column="0" selection-start="93" selection-end="128" vertical-scroll-proportion="0.17937219">
+          <folding>
+            <element signature="method#setUp#0;class#DistributedTestTest#0" expanded="true" />
+            <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DummyHttpRequest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="0" selection-start="474" selection-end="474" vertical-scroll-proportion="0.17937219">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/EndToEndTestSuite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="162" selection-end="162" vertical-scroll-proportion="0.1734104">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestCaseResultTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="0" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0650289">
+          <folding>
+            <element signature="method#TestCaseResultTest#0;class#TestCaseResultTest#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="49" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.23017903">
+        <state line="13" column="0" selection-start="257" selection-end="257" vertical-scroll-proportion="0.1517341">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/TestRunnerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.1517341">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/ResultDisplayerServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="366" selection-end="366" vertical-scroll-proportion="0.0650289">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../licenses/mpl-tri-license-c.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../licenses/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="74" column="27" selection-start="3226" selection-end="3226" vertical-scroll-proportion="0.5760709">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/Suite.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="3" selection-start="101" selection-end="141" vertical-scroll-proportion="0.1083815">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/DistributedTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="68" column="0" selection-start="2355" selection-end="2355" vertical-scroll-proportion="0.4552023">
+          <folding>
+            <element signature="method#DistributedTest#0;class#DistributedTest#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/ResultAcceptorServlet.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="0" selection-start="352" selection-end="405" vertical-scroll-proportion="0.0650289">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/ResultAcceptorTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="0" selection-start="298" selection-end="298" vertical-scroll-proportion="0.1517341">
+          <folding>
+            <element signature="method#dummyTestCaseStrings#0;class#ResultAcceptorTest#0" expanded="true" />
+            <element signature="method#testFindResultById#0;class#ResultAcceptorTest#0" expanded="true" />
+            <element signature="method#submit#0;class#ResultAcceptorTest#0" expanded="true" />
+            <element signature="method#testLog#0;class#ResultAcceptorTest#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="35" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.7869674">
+        <state line="8" column="0" selection-start="144" selection-end="144" vertical-scroll-proportion="0.1517341">
           <folding />
         </state>
       </provider>

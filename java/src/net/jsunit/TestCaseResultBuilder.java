@@ -4,6 +4,10 @@ import org.jdom.Element;
 
 import java.util.Iterator;
 
+/**
+ * @author Edward Hieatt, edward@jsunit.net
+ */
+
 public class TestCaseResultBuilder {
     public TestCaseResult build(Element element) {
         TestCaseResult result = new TestCaseResult();
