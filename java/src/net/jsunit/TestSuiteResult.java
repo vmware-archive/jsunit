@@ -23,7 +23,7 @@ public class TestSuiteResult {
     }
 
     public static File logFileForId(File logsDirectory, String id) {
-        return new File(logsDirectory + File.separator + id + ".xml");
+        return new File(logsDirectory+File.separator+ id + ".xml");
     }
 
     public String getId() {

@@ -29,7 +29,6 @@ public class ResultAcceptorTest extends JsUnitTestCase {
         requestMap.put(TestSuiteResultWriter.TIME, "4.3");
         requestMap.put(TestSuiteResultWriter.JSUNIT_VERSION, "2.5");
         requestMap.put(TestSuiteResultWriter.TEST_CASES, dummyTestCaseStrings());
-        server.setLogsDirectory(new File("."));
     }
 
     public void tearDown() throws Exception {

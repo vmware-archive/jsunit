@@ -40,6 +40,8 @@
     <target name="start_server" description="Starts the JsUnit Server">
         <java fork="true" classname="net.jsunit.JsUnitServer">
             <classpath refid="classpath"/>
+            <sysproperty key="browserFileNames" value="c:\program files\internet explorer\iexplore.exe,c:\program files\Mozilla Firefox\firefox.exe"/>
+            <sysproperty key="url" value="file:///c:/jsunit/testRunner.html?testPage=c:\jsunit\tests\jsUnitTestSuite.html&amp;autoRun=true&amp;submitresults=true"/>
         </java>
     </target>
 
@@ -54,6 +56,8 @@
     <target name="standalone_test" description="Runs JsUnit tests on the local machine as configured by the url and browserfilenames properties">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <classpath refid="classpath"/>
+            <sysproperty key="browserFileNames" value="c:\program files\internet explorer\iexplore.exe,c:\program files\Mozilla Firefox\firefox.exe"/>
+            <sysproperty key="url" value="file:///c:/jsunit/testRunner.html?testPage=c:\jsunit\tests\jsUnitTestSuite.html&amp;autoRun=true&amp;submitresults=true"/>
             <test name="net.jsunit.StandaloneTest"/>
         </junit>
     </target>
@@ -61,7 +65,7 @@
     <target name="distributed_test" description="Runs JsUnit tests on remote machines">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <classpath refid="classpath"/>
-            <sysproperty key="remoteMachineURLs" value="http://localhost:8080"/>
+            <sysproperty key="remoteMachineURLs" value="http://localhost:8080,http://localhost:8080"/>
             <test name="net.jsunit.DistributedTest"/>
         </junit>
     </target>

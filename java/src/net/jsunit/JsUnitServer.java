@@ -45,7 +45,8 @@ public class JsUnitServer extends HttpServer {
 
     private void initialize(String[] args) {
         try {
-            JsUnitConfiguration.configure(this, args);
+            Configuration configuration = Configuration.resolve(args);
+            configuration.configure(this);
             initialized = true;
         } catch (ConfigurationException ce) {
             System.err.println("Server initialization failed because property " + ce.getPropertyInError() + " is invalid:");
@@ -140,11 +141,11 @@ public class JsUnitServer extends HttpServer {
 
     public String toString() {
         StringBuffer result = new StringBuffer();
-        result.append(JsUnitConfiguration.PORT).append(": ").append(port).append("\n");
-        result.append(JsUnitConfiguration.RESOURCE_BASE).append(": ").append(resourceBase.getAbsolutePath()).append("\n");
-        result.append(JsUnitConfiguration.LOGS_DIRECTORY).append(": ").append(logsDirectory.getAbsolutePath()).append("\n");
-        result.append(JsUnitConfiguration.BROWSER_FILE_NAMES).append(": ").append(localBrowserFileNames).append("\n");
-        result.append(JsUnitConfiguration.URL).append(": ").append(testURL);
+        result.append(Configuration.PORT).append(": ").append(port).append("\n");
+        result.append(Configuration.RESOURCE_BASE).append(": ").append(resourceBase.getAbsolutePath()).append("\n");
+        result.append(Configuration.LOGS_DIRECTORY).append(": ").append(logsDirectory.getAbsolutePath()).append("\n");
+        result.append(Configuration.BROWSER_FILE_NAMES).append(": ").append(localBrowserFileNames).append("\n");
+        result.append(Configuration.URL).append(": ").append(testURL);
         return result.toString();
     }
 

@@ -1,4 +1,9 @@
-#jsunit.properties specifies the various properties used by the JsUnitServer.
+#jsunit.properties is one way to specify the various properties used by the JsUnitServer
+#Its use is discouraged.
+#If you are running tests using the ant script build.xml, the properties are set in its targets.
+#If you are running JsUnit programmatically, use System.setProperty(String, String) to specify properties.
+
+#To use this file, rename it to jsunit.properties
 
 #browserFileNames is the list of browsers in which to run tests when StandaloneTest is invoked on this machine.  This is a mandatory property.
 #For example: browserFileNames=c:\\program files\\internet explorer\\iexplore.exe,c:\\program files\\netscape\\netscape7.1\\netscp.exe,C:\\Program Files\\Netscape\\Netscape7.01\\netscp.exe,C:\\Program Files\\Netscape\\Netscape6.2.3\\netscp6.exe,browserFileNames=c:\\MozillaFirebird\\MozillaFirebird.exe

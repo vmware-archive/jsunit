@@ -15,7 +15,7 @@ public class DistributedTestTest extends JsUnitTestCase {
         server.start();
     }
 
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         server.stop();
         super.tearDown();
     }

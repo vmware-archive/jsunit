@@ -11,7 +11,7 @@ import net.jsunit.StandaloneTest;
 public class EndToEndTestSuite extends TestCase {
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
-        result.addTestSuite(StandaloneTest.class);
+        result.addTestSuite(StandaloneTestTest.class);
         result.addTestSuite(DistributedTestTest.class);
         return result;
     }

@@ -65,4 +65,14 @@ public class Utility {
     public static List listWith(Object object1, Object object2) {
         return Arrays.asList(new Object[]{object1, object2});
     }
+
+    public static void deleteFile(String fileName) {
+        File file = new File(".", fileName);
+        file.delete();
+    }
+
+    public static void deleteDirectory(String directoryName) {
+        File file = new File(directoryName);
+        file.delete();
+    }
 }

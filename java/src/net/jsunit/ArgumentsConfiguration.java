@@ -7,11 +7,10 @@ import java.util.List;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class ArgumentsConfiguration extends JsUnitConfiguration {
+public class ArgumentsConfiguration extends Configuration {
     private String port;
     private String resourceBase;
     private String logsDirectory;
-    private String remoteMachineNames;
     private String url;
     private String browserFileNames;
 
@@ -35,27 +34,23 @@ public class ArgumentsConfiguration extends JsUnitConfiguration {
         }
     }
 
-    protected String resourceBase() {
+    public String resourceBase() {
         return resourceBase;
     }
 
-    protected String port() {
+    public String port() {
         return port;
     }
 
-    protected String logsDirectory() {
+    public String logsDirectory() {
         return logsDirectory;
     }
 
-    protected String remoteMachineNames() {
-        return remoteMachineNames;
-    }
-
-    protected String browserFileNames() {
+    public String browserFileNames() {
         return browserFileNames;
     }
 
-    protected String url() {
+    public String url() {
         return url;
     }
 }
