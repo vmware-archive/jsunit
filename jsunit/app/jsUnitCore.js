@@ -269,3 +269,41 @@ function pop(anArray) {
   }
 }
 window.onload=newOnLoadEvent;
+
+if (top.xbDEBUG.on && top.testManager)
+{
+  top.xbDebugTraceObject('top.testManager.containerTestFrame', 'JSUnitException');
+  // asserts
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', '_displayStringForValue');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'error');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'argumentsIncludeComments');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'commentArg');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'nonCommentArg');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', '_validateArguments');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', '_assert');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assert');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertTrue');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertEquals');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertNotEquals');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertNull');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertNotNull');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertUndefined');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertNotUndefined');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertNaN');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'assertNotNaN');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'isLoaded');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'setUp');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'tearDown');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'getFunctionName');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'getStackTrace');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'warn');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'inform');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'debug');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'setjsUnitTracer');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'trim');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'isBlank');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'newOnLoadEvent');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'push');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'pop');
+}
+
