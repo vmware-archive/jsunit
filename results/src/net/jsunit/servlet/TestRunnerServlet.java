@@ -13,10 +13,7 @@ import junit.textui.TestRunner;
 import net.jsunit.StandaloneTest;
 
 public class TestRunnerServlet extends HttpServlet {
-	protected synchronized void service(
-		HttpServletRequest request,
-		HttpServletResponse response)
-		throws ServletException, IOException {
+	protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		StandaloneTest test = new StandaloneTest("testStandaloneRun");
 		test.setStartAndStopServer(false);
 		TestResult result = TestRunner.run(test);

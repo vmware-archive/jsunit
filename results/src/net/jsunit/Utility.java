@@ -67,6 +67,8 @@ public class Utility {
 	}
 	public static List listFromCommaDelimitedString(String string) {
 		List result = new ArrayList();
+		if (isEmpty(string))
+			return result;
 		StringTokenizer toker = new StringTokenizer(string, ",");
 		while (toker.hasMoreTokens())
 			result.add(toker.nextToken());
