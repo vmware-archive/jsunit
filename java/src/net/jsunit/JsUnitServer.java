@@ -66,6 +66,7 @@ public class JsUnitServer extends HttpServer {
             return;
         }
         super.start();
+        Utility.log(asString());
     }
 
     private void setUpHttpServer() throws IOException {
@@ -135,7 +136,7 @@ public class JsUnitServer extends HttpServer {
         return getResults().size();
     }
 
-    public String toString() {
+    public String asString() {
         StringBuffer result = new StringBuffer();
         result.append(Configuration.PORT).append(": ").append(port).append("\n");
         result.append(Configuration.RESOURCE_BASE).append(": ").append(resourceBase.getAbsolutePath()).append("\n");
@@ -143,6 +144,10 @@ public class JsUnitServer extends HttpServer {
         result.append(Configuration.BROWSER_FILE_NAMES).append(": ").append(localBrowserFileNames).append("\n");
         result.append(Configuration.URL).append(": ").append(testURL);
         return result.toString();
+    }
+
+    public String toString() {
+        return "JsUnit Server";
     }
 
     public void setResourceBase(File resourceBase) {

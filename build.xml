@@ -1,7 +1,7 @@
 <project name="JsUnit" default="create_distribution" basedir=".">
 
     <property name="browserFileNames" value="c:\program files\internet explorer\iexplore.exe,c:\program files\Mozilla Firefox\firefox.exe"/>
-    <property name="url" value="file:///c:/jsunit/testRunner.html?testPage=c:\jsunit\tests\jsUnitTestSuite.html&amp;autoRun=true&amp;submitresults=true"/>
+    <property name="url" value="file:///c:/dev/jsunit/testRunner.html?testPage=c:\dev\jsunit\tests\jsUnitTestSuite.html&amp;autoRun=true&amp;submitresults=true"/>
     <property name="remoteMachineURLs" value="http://localhost:8080,http://localhost:8080"/>
     <property name="port" value=""/>
     <property name="resourceBase" value=""/>
