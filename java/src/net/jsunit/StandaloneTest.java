@@ -14,6 +14,7 @@ public class StandaloneTest extends TestCase {
     private boolean shouldStartAndStopServer = true;
     public static final String PROPERTY_URL = "url";
     public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
+    public static final int MAX_SECONDS_TO_WAIT = 2 * 60;
     private JsUnitServer server = JsUnitServer.instance();
     private Properties properties;
 
@@ -27,10 +28,6 @@ public class StandaloneTest extends TestCase {
 
     protected String url() {
         return properties.getProperty(PROPERTY_URL);
-    }
-
-    private int maxSecondsToWait() {
-        return 2 * 60;
     }
 
     public void setUp() throws Exception {
@@ -81,9 +78,9 @@ public class StandaloneTest extends TestCase {
         while (server.getResults().size() == initialResultCount) {
             Thread.sleep(1000);
             secondsWaited += 1;
-            if (secondsWaited > maxSecondsToWait())
+            if (secondsWaited > MAX_SECONDS_TO_WAIT)
                 fail("Waited more than "
-                        + maxSecondsToWait()
+                        + MAX_SECONDS_TO_WAIT
                         + " seconds for browser "
                         + browserProcess);
         }

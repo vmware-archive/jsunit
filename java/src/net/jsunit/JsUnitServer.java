@@ -9,14 +9,11 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHandler;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
-import java.awt.image.renderable.RenderableImage;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -47,6 +44,7 @@ public class JsUnitServer {
     }
 
     private void setUpHttpServer() throws IOException {
+        httpServer = new HttpServer();
         httpServer.addListener(":" + properties.port());
         HttpContext context = httpServer.getContext("/jsunit");
         ServletHandler handler = new ServletHandler();
