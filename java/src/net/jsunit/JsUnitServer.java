@@ -32,7 +32,9 @@ public class JsUnitServer extends HttpServer {
     private boolean initialized;
     private Date dateLastResultReceived;
 
-    public static void main(String args[]) {
+  public static final String DEFAULT_BROWSER = "htmlview";
+
+  public static void main(String args[]) {
         JsUnitServer server = new JsUnitServer();
         try {
             server.initialize(args);

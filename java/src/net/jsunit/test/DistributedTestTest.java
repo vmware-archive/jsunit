@@ -19,7 +19,9 @@ public class DistributedTestTest extends TestCase {
         super.setUp();
         System.setProperty(Configuration.BROWSER_FILE_NAMES, "htmlview");
         server = new JsUnitServer();
-        System.setProperty(Configuration.URL, "http://localhost:8080/jsunit/testRunner.html?testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true");
+        System.setProperty(Configuration.URL,
+           "http://localhost:8080/jsunit/testRunner.html?"
+           + "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true");
         server.initialize();
         server.start();
     }
