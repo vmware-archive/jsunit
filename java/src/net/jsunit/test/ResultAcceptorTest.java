@@ -1,20 +1,21 @@
 package net.jsunit.test;
 
-import net.jsunit.TestSuiteResult;
-import net.jsunit.TestSuiteResultWriter;
-import net.jsunit.Utility;
+import net.jsunit.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import junit.framework.TestCase;
+
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class ResultAcceptorTest extends JsUnitTestCase {
+public class ResultAcceptorTest extends TestCase {
     protected Map requestMap;
+    private JsUnitServer server;
 
     public ResultAcceptorTest(String name) {
         super(name);
@@ -22,6 +23,10 @@ public class ResultAcceptorTest extends JsUnitTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
+        server = new JsUnitServer();
+        System.setProperty(Configuration.BROWSER_FILE_NAMES, "foo");
+        System.setProperty(Configuration.URL, "http://bar");
+        server.initialize();
         Utility.setLogToStandardOut(false);
         requestMap = new HashMap();
         requestMap.put(TestSuiteResultWriter.ID, "ID_foo");
@@ -32,6 +37,8 @@ public class ResultAcceptorTest extends JsUnitTestCase {
     }
 
     public void tearDown() throws Exception {
+        System.getProperties().remove(Configuration.BROWSER_FILE_NAMES);
+        System.getProperties().remove(Configuration.URL);
         File logFile = TestSuiteResult.logFileForId(server.getLogsDirectory(), "ID_foo");
         if (logFile.exists())
             logFile.delete();

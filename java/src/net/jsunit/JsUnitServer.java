@@ -35,25 +35,22 @@ public class JsUnitServer extends HttpServer {
 
     public static void main(String args[]) {
         JsUnitServer server = new JsUnitServer();
-        server.initialize(args);
         try {
+            server.initialize(args);
             server.start();
-        } catch (MultiException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void initialize(String[] args) {
+    private void initialize(String[] args) throws ConfigurationException {
         try {
             Configuration configuration = Configuration.resolve(args);
             configuration.configure(this);
             initialized = true;
         } catch (ConfigurationException ce) {
-            System.err.println("Server initialization failed because property " + ce.getPropertyInError() + " is invalid:");
-            ce.printStackTrace();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            e.printStackTrace();
+            System.err.println("Server initialization failed because property \"" + ce.getPropertyInError() + "\" has an invalid value of \"" + ce.getInvalidValue() + "\"");
+            throw ce;
         }
     }
 
@@ -62,7 +59,6 @@ public class JsUnitServer extends HttpServer {
             System.err.println("Cannot start server: not initialized");
             return;
         }
-        Utility.log(toString(), false);
         try {
             setUpHttpServer();
         } catch (IOException e) {
@@ -88,7 +84,7 @@ public class JsUnitServer extends HttpServer {
         Monitor.monitor();
     }
 
-    public void initialize() {
+    public void initialize() throws ConfigurationException {
         initialize(new String[]{});
     }
 
