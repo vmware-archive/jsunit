@@ -644,7 +644,8 @@ jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText)
 {
   var userEnteredTestFileName = top.testManager.getTestFileName();
   
-  if (userEnteredTestFileName.indexOf('http://') == 0 || userEnteredTestFileName.indexOf('https://') == 0 || userEnteredTestFileName.indexOf('file:///') == 0)
+  // only test for file:// since Opera uses a different format
+  if (userEnteredTestFileName.indexOf('http://') == 0 || userEnteredTestFileName.indexOf('https://') == 0 || userEnteredTestFileName.indexOf('file://') == 0)
     return userEnteredTestFileName;
     
   return getTestFileProtocol() + this.getTestFileName();
