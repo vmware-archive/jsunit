@@ -15,9 +15,9 @@ public class StandaloneTest extends TestCase {
     private JsUnitServer server;
     private Process process;
 
-  public static final String DEFAULT_SYSTEM_BROWSER = "htmlview";
+    public static final String DEFAULT_SYSTEM_BROWSER = "default";
 
-  public StandaloneTest(String name) {
+    public StandaloneTest(String name) {
         super(name);
     }
 
@@ -49,12 +49,23 @@ public class StandaloneTest extends TestCase {
         Iterator it = server.getLocalBrowserFileNames().iterator();
         while (it.hasNext()) {
             String browserFileName = (String) it.next();
+            String[] browserCommand = determineOpenBrowserCommand(browserFileName);
             Date dateLaunched = new Date();
-            launchBrowser(browserFileName);
+            launchBrowser(browserCommand);
             waitForResultToBeSubmitted(browserFileName, dateLaunched);
             destroyBrowserProcess();
             verifyLastResult();
         }
+    }
+
+    private String[] determineOpenBrowserCommand(String browserFileName) {
+        if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
+            if (isWindows()) {
+                return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
+            }
+            else return new String[] {"htmlview"};
+        }
+        return new String[] {browserFileName};
     }
 
     private void destroyBrowserProcess() {
@@ -62,30 +73,27 @@ public class StandaloneTest extends TestCase {
         process = null;
     }
 
-    private void launchBrowser(String browserFileName) {
-        Utility.log("StandaloneTest: launching " + browserDisplayName(browserFileName));
+    private void launchBrowser(String[] browserCommand) {
+        Utility.log("StandaloneTest: launching " + browserCommand[0]);
         try {
-            process = Runtime.getRuntime().exec(new String[] {browserFileName, server.getTestURL().toString()});
+            String[] commandWithUrl = new String[browserCommand.length + 1];
+            System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
+            commandWithUrl[browserCommand.length] = server.getTestURL().toString();
+            process = Runtime.getRuntime().exec(commandWithUrl);
         } catch (Throwable t) {
             t.printStackTrace();
-            fail("All browser processes should start, but the following did not: " + browserDisplayName(browserFileName));
+            fail("All browser processes should start, but the following did not: " + browserCommand[0]);
         }
     }
 
-  private String browserDisplayName(String browserFileName) {
-    if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER))
-        return "<Default System Browser>";
-    return browserFileName;
-  }
-
-  private void waitForResultToBeSubmitted(String browserFileName, Date dateBrowserLaunched) throws Exception {
-        Utility.log("StandaloneTest: waiting for " + browserDisplayName(browserFileName) + " to submit result");
+    private void waitForResultToBeSubmitted(String browserFileName, Date dateBrowserLaunched) throws Exception {
+        Utility.log("StandaloneTest: waiting for " + browserFileName + " to submit result");
         long secondsWaited = 0;
         while (!server.hasReceivedResultSince(dateBrowserLaunched)) {
             Thread.sleep(1000);
-            secondsWaited ++;
+            secondsWaited++;
             if (secondsWaited > MAX_SECONDS_TO_WAIT)
-                fail("Waited more than " + MAX_SECONDS_TO_WAIT + " seconds for browser " + browserDisplayName(browserFileName));
+                fail("Waited more than " + MAX_SECONDS_TO_WAIT + " seconds for browser " + browserFileName);
         }
     }
 
@@ -100,6 +108,11 @@ public class StandaloneTest extends TestCase {
             buffer.append(result.failureCount() + " failures ");
             fail(buffer.toString());
         }
+    }
+
+    private boolean isWindows() {
+        String os = System.getProperty("os.name");
+        return os != null && os.startsWith("Windows");
     }
 
 }
