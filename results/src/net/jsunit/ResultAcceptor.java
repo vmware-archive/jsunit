@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
+import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHandler;
 /**
  * @author Edward Hieatt
@@ -67,11 +68,16 @@ public class ResultAcceptor {
 	public static void startServer(int port) throws Exception {
 		server = new HttpServer();
 		server.addListener(":" + port);
-		HttpContext context = server.getContext("/");
+		HttpContext context = server.getContext("/jsunit");
 		ServletHandler handler = new ServletHandler();
-		handler.addServlet("JsUnitResultAcceptor", "/jsunit/acceptor", ResultAcceptorServlet.class.getName());
-		handler.addServlet("JsUnitResultDisplayer", "/jsunit/displayer", ResultDisplayerServlet.class.getName());
+		handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
+		handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
 		context.addHandler(handler);
+
+        context.setResourceBase(".");
+        context.addHandler(new ResourceHandler());
+
+        server.addContext(context);
 		server.start();
 	}
 	public static void stopServer() throws Exception {
