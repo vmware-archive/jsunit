@@ -41,9 +41,10 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
     <title>JsUnit</title>
     <script language="JavaScript" type="text/javascript" src="app/xbDebug.js"></script>
-<script type="text/javascript">
+<script  language="JavaScript" type="text/javascript">
   var DEFAULT_TEST_FRAME_HEIGHT=250;
   var JSUNIT_VERSION="2.0beta";
 
@@ -135,7 +136,7 @@
 <script language="JavaScript" type="text/javascript" src="app/jsUnitTestManager.js"></script>
 <script language="JavaScript" type="text/javascript" src="app/jsUnitTracer.js"></script>
 <script language="JavaScript" type="text/javascript" src="app/jsUnitTestSuite.js"></script>
-<script type="text/javascript">
+<script language="JavaScript" type="text/javascript">
 
   var testManager;
   var utility;
@@ -216,11 +217,11 @@
 </script>
   </head>
 
-    <frameset name="testRunnerFrameset" id="testRunnerFrameset" rows="*,0,0" frameborder="0" onload="init()">
+    <frameset id="testRunnerFrameset" rows="*,0,0" onload="init()">
 
-    <frame name="mainFrame"      src="./app/main-frame.html">
-    <frame name="documentLoader" src="./app/main-loader.html">
-    <frame name="testContainer"  src="./app/testContainer.html">
+    <frame frameborder="0" name="mainFrame"      src="./app/main-frame.html">
+    <frame frameborder="0" name="documentLoader" src="./app/main-loader.html">
+    <frame frameborder="0" name="testContainer"  src="./app/testContainer.html">
 
     <noframes>
       <body>

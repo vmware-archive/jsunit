@@ -41,8 +41,9 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
     <title>jsUnit External Data Document loader</title>
-<script language="JavaScript">
+<script language="JavaScript" type="text/javascript">
 
   var loadStatus;
   var callback = function () {};
@@ -57,7 +58,7 @@
     loadStatus = 'loading';
     buffer().document.location.href = uri;
   }
-
+  
   function loadComplete()
   {
     top.xbDEBUG.dump('main-loader.html:loadComplete(): loadStatus = ' + loadStatus + ' href=' + buffer().document.location.href);
