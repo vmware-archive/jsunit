@@ -12,6 +12,7 @@ public class StandaloneTest extends TestCase {
     private boolean needToStopServer = false;
     public static final int MAX_SECONDS_TO_WAIT = 2 * 60;
     private JsUnitServer server;
+    private Process process;
 
     public StandaloneTest(String name) {
         super(name);
@@ -34,6 +35,8 @@ public class StandaloneTest extends TestCase {
     public void tearDown() throws Exception {
         if (needToStopServer)
             server.stop();
+        if (process != null)
+            process.destroy();
         super.tearDown();
     }
 
@@ -42,41 +45,31 @@ public class StandaloneTest extends TestCase {
         while (it.hasNext()) {
             String next = (String) it.next();
             int currentResultCount = server.resultsCount();
-            Process process = null;
-            Utility.log("StandaloneTest: launching " + next);
-            try {
-                try {
-                    process =
-                            Runtime.getRuntime().exec("\"" + next + "\" \"" + server.getTestURL() + "\"");
-                } catch (Throwable t) {
-                    t.printStackTrace();
-                    fail("All browser processes should start, but the following did not: "
-                            + next);
-                }
-                waitForResultToBeSubmitted(next, currentResultCount);
-                verifyLastResult();
-            } finally {
-                if (process != null)
-                    process.destroy();
-            }
+            launchBrowser(next);
+            waitForResultToBeSubmitted(next, currentResultCount);
+            process.destroy();
+            verifyLastResult();
         }
     }
 
-    private void waitForResultToBeSubmitted(String browserProcess,
-                                            int initialResultCount)
-            throws Exception {
-        Utility.log("StandaloneTest: waiting for "
-                + browserProcess
-                + " to submit result");
+    private void launchBrowser(String browser) {
+        Utility.log("StandaloneTest: launching " + browser);
+        try {
+            process = Runtime.getRuntime().exec("\"" + browser + "\" \"" + server.getTestURL() + "\"");
+        } catch (Throwable t) {
+            t.printStackTrace();
+            fail("All browser processes should start, but the following did not: " + browser);
+        }
+    }
+
+    private void waitForResultToBeSubmitted(String browser, int initialResultCount) throws Exception {
+        Utility.log("StandaloneTest: waiting for " + browser + " to submit result");
         long secondsWaited = 0;
         while (server.getResults().size() == initialResultCount) {
             Thread.sleep(1000);
-            secondsWaited += 1;
+            secondsWaited ++;
             if (secondsWaited > MAX_SECONDS_TO_WAIT)
-                fail("Waited more than "
-                        + MAX_SECONDS_TO_WAIT
-                        + " seconds for browser "
-                        + browserProcess);
+                fail("Waited more than " + MAX_SECONDS_TO_WAIT + " seconds for browser " + browser);
         }
     }
 

@@ -1,8 +1,6 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
-import junit.framework.TestResult;
-import junit.textui.TestRunner;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -11,7 +9,6 @@ import sun.net.www.protocol.http.HttpURLConnection;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 

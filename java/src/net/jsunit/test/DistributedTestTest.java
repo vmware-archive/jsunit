@@ -1,9 +1,9 @@
 package net.jsunit.test;
 
 
-import net.jsunit.DistributedTest;
-import junit.textui.TestRunner;
 import junit.framework.TestResult;
+import junit.textui.TestRunner;
+import net.jsunit.DistributedTest;
 
 public class DistributedTestTest extends JsUnitTestCase {
     public DistributedTestTest(String name) {

@@ -6,11 +6,10 @@ import net.jsunit.servlet.ResultDisplayerServlet;
 import net.jsunit.servlet.TestRunnerServlet;
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
-import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHandler;
-import org.mortbay.util.MultiException;
 import org.mortbay.start.Monitor;
+import org.mortbay.util.MultiException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

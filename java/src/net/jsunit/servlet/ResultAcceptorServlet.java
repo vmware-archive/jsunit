@@ -23,6 +23,6 @@ public class ResultAcceptorServlet extends JsUnitServlet {
         OutputStream out = response.getOutputStream();
         out.write(xml.getBytes());
         out.close();
-        Utility.log("Result AcceptorServlet: Done");
+        Utility.log("ResultAcceptorServlet: Done");
     }
 }

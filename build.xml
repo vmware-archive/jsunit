@@ -3,7 +3,7 @@
     <property name="src" location="java/src"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
-    
+
     <path id="classpath">
         <fileset dir="${lib}">
             <include name="*.jar"/>
@@ -13,7 +13,7 @@
         </fileset>
     </path>
 
-    <target name="compile" description="Compile the source">
+    <target name="compile" description="Compiles the source">
         <delete dir="${bin}/net"/>
         <javac srcdir="${src}" destdir="${bin}" target="1.1">
             <classpath>
@@ -24,7 +24,7 @@
         </javac>
     </target>
 
-    <target name="create_jar" depends="compile" description="Generate jsunit.jar">
+    <target name="create_jar" depends="compile" description="Creates jsunit.jar">
         <delete file="${bin}/jsunit.jar"/>
         <jar jarfile="${bin}/jsunit.jar" basedir="${bin}"/>
         <delete dir="${bin}/net"/>
@@ -61,7 +61,7 @@
     <target name="distributed_test" description="Runs JsUnit tests on remote machines">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <classpath refid="classpath"/>
-            <sysproperty key="remoteMachineURLs" value="http://localhost:8080,http://localhost:8080"/>
+            <sysproperty key="remoteMachineURLs" value="http://localhost:8080"/>
             <test name="net.jsunit.DistributedTest"/>
         </junit>
     </target>
