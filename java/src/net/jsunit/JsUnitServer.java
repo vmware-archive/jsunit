@@ -39,9 +39,9 @@ public class JsUnitServer {
     public static void main(String args[]) throws Exception {
         JsUnitServer server = new JsUnitServer();
         if (args.length == 0) {
-            new JsUnitConfiguration().configureFromPropertiesFile(server);
-        } //else
-            //new JsUnitConfiguration().configureFromArguments(server, Arrays.asList(args));
+            new PropertiesConfiguration().configure(server);
+        } else
+            new ArgumentsConfiguration(Arrays.asList(args)).configure(server);
         server.start();
     }
 
@@ -149,7 +149,7 @@ public class JsUnitServer {
         this.logsDirectory = logsDirectory;
     }
 
-    public void setRemoteMachineURLs(List names) {
+    public void setRemoteMachineNames(List names) {
         this.remoteMachineURLs = names;
     }
 
@@ -171,6 +171,10 @@ public class JsUnitServer {
 
     public File getLogsDirectory() {
         return logsDirectory;
+    }
+
+    public int getPort() {
+        return port;
     }
 
 }

@@ -45,7 +45,7 @@ public class TestSuiteResultWriter {
         root.setAttribute(ID, result.getId());
         root.setAttribute("errors", "" + result.errorCount());
         root.setAttribute("failures", "" + result.failureCount());
-        root.setAttribute("name", "JsUnitTest");
+        root.setAttribute("name", "JsUnitTestCase");
         root.setAttribute(TEST_COUNT, "" + result.count());
         root.setAttribute(TIME, String.valueOf(result.getTime()));
         addPropertiesElementTo(root);

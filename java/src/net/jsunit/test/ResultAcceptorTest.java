@@ -13,7 +13,7 @@ import java.util.Map;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class ResultAcceptorTest extends JsUnitTest {
+public class ResultAcceptorTest extends JsUnitTestCase {
     protected Map requestMap;
 
     public ResultAcceptorTest(String name) {

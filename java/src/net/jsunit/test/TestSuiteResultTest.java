@@ -15,7 +15,7 @@ import java.util.Iterator;
 public class TestSuiteResultTest extends TestCase {
     private TestSuiteResult result;
     private String expectedXmlFragment =
-            "<testsuite id=\"An ID\" errors=\"1\" failures=\"1\" name=\"JsUnitTest\" tests=\"3\" time=\"4.3\">"
+            "<testsuite id=\"An ID\" errors=\"1\" failures=\"1\" name=\"JsUnitTestCase\" tests=\"3\" time=\"4.3\">"
             + "<properties>"
             + "<property name=\"JsUnitVersion\" value=\"2.5\" />"
             + "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />"

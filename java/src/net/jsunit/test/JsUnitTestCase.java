@@ -7,7 +7,7 @@ import net.jsunit.JsUnitServer;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public abstract class JsUnitTest extends TestCase {
+public abstract class JsUnitTestCase extends TestCase {
     protected JsUnitServer server;
 
     public void setUp() throws Exception {
@@ -20,7 +20,7 @@ public abstract class JsUnitTest extends TestCase {
         super.tearDown();
     }
 
-    public JsUnitTest(String name) {
+    public JsUnitTestCase(String name) {
         super(name);
     }
 }

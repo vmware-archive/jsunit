@@ -13,6 +13,7 @@ public class Suite extends TestCase {
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestSuiteResultTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
+        result.addTestSuite(ArgumentsConfigurationTest.class);
         return result;
     }
 }
