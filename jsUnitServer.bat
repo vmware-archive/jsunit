@@ -1,2 +1,2 @@
-@set CLASSPATH=%CLASSPATH%;.\results\bin\jsunit.jar;.\results\lib\org.mortbay.jetty-jdk1.2.jar;.\results\lib\jdom.jar;.\results\lib\javax.servlet.jar;.\results\lib\junit.jar;.\results\lib\xerces.jar;.\results\lib\junit.jar
+@set CLASSPATH=%CLASSPATH%;.\java\bin\jsunit.jar;.\java\lib\org.mortbay.jetty-jdk1.2.jar;.\java\lib\jdom.jar;.\java\lib\javax.servlet.jar;.\java\lib\junit.jar;.\java\lib\xerces.jar;.\java\lib\junit.jar
 @java net.jsunit.JsUnitServer
