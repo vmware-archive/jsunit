@@ -47,15 +47,23 @@
 
   <body>
     <hr>
-    <form name="testRunnerForm" action="net.jsunit.ResultServlet" method="post">
+    <form name="testRunnerForm" action="/jsunitservlet/net.jsunit.ResultServlet" method="post">
       <p>Errors and failures:&nbsp;</p>
-      <select size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
+      <select multiple size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
       </select>
       <br>
       <input type="button" value="Show selected" onclick="top.testManager.showMessageForSelectedProblemTest()">
       &nbsp;&nbsp;&nbsp;
       <input type="button" value="Show all" onclick="top.testManager.showMessagesForAllProblemTests()">
     </form>
+    <script language="javascript">
+	function submitResults() {
+		for (var i=0; i<document.testRunnerForm.problemsList.options.length; i++) {
+			document.testRunnerForm.problemsList.options[i].selected=true;
+		}
+		document.testRunnerForm.submit();
+	}
+    </script>
   </body>
 </html>
 
