@@ -42,16 +42,25 @@ import junit.framework.*;
    
    @author Edward Hieatt
  */
-public abstract class StandaloneTest extends TestCase {
+public class StandaloneTest extends TestCase {
+	public static final String PROPERTY_URL = "url";
+	public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
+	public static final String PROPERTIES_FILE_NAME = "jsunit.properties";
 	private ResultAcceptor acceptor = ResultAcceptor.instance();
 	private List browserProcesses = new ArrayList();
-	protected abstract List browserFileNames();
-	protected abstract String url();
+	private Properties properties;
+	protected List browserFileNames() {
+		return Utility.listFromCommaDelimitedString(properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
+	}
+	protected String url() {
+		return properties.getProperty(PROPERTY_URL);
+	}
 	private int maxSecondsToWait() {
 		return 2 * 60;
 	}
 	public void setUp() throws Exception {
 		super.setUp();
+		this.properties = Utility.propertiesFromFileName(PROPERTIES_FILE_NAME);
 		ResultAcceptor.startServer();
 	}
 	public void tearDown() throws Exception {
@@ -67,7 +76,13 @@ public abstract class StandaloneTest extends TestCase {
 		Iterator it = browserFileNames().iterator();
 		while (it.hasNext()) {
 			String next = (String) it.next();
-			browserProcesses.add(Runtime.getRuntime().exec("\"" + next + "\" \"" + url()+"\""));
+			try {
+				Process process = Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
+				browserProcesses.add(process);
+			} catch (Throwable t) {
+				fail("Not all browser processes could be started: " + next);
+				t.printStackTrace();
+			}
 		}
 		waitForResultsToBeSubmitted();
 		verifyResults();

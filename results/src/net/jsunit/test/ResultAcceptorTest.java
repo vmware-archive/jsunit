@@ -52,7 +52,6 @@ public class ResultAcceptorTest extends JsUnitTest {
 	}
 	public void setUp() throws Exception {
 		super.setUp();
-		TestSuiteResult.setLogsDirectory("");
 		requestMap = new HashMap();
 		requestMap.put(TestSuiteResultWriter.ID, "ID_foo");
 		requestMap.put(TestSuiteResultWriter.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
@@ -61,7 +60,7 @@ public class ResultAcceptorTest extends JsUnitTest {
 		requestMap.put(TestSuiteResultWriter.TEST_CASES, dummyTestCaseStrings());
 	}
 	public void tearDown() throws Exception {
-		File logFile = new File("ID_foo.xml");
+		File logFile = TestSuiteResult.logFileForId("ID_foo");
 		if (logFile.exists())
 			logFile.delete();
 		super.tearDown();
@@ -107,7 +106,7 @@ public class ResultAcceptorTest extends JsUnitTest {
 		assertNull(acceptor.findResultWithId("Invalid ID"));
 	}
 	public void testLog() {
-		File logFile = new File("ID_foo.xml");
+		File logFile = TestSuiteResult.logFileForId("ID_foo");
 		assertFalse(logFile.exists());
 		submit();
 		assertTrue(logFile.exists());

@@ -1,5 +1,9 @@
 package net.jsunit;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import java.util.StringTokenizer;
 /**
  * @author Edward Hieatt
  * 
@@ -46,8 +50,10 @@ public class Utility {
 		return s == null || s.trim().equals("");
 	}
 	public static void writeFile(String contents, String fileName) {
+		writeFile(contents, new File(fileName));
+	}
+	public static void writeFile(String contents, File file) {
 		try {
-			File file = new File(fileName);
 			if (file.exists())
 				file.delete();
 			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
@@ -57,5 +63,21 @@ public class Utility {
 			System.out.println("Failed to write file: " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+	public static Properties propertiesFromFileName(String fileName) {
+		Properties result = new Properties();
+		try {
+			result.load(new FileInputStream(fileName));
+		} catch (Exception e) {
+			throw new RuntimeException("Could not load " + fileName);
+		}
+		return result;
+	}
+	public static List listFromCommaDelimitedString(String string) {
+		List result = new ArrayList();
+		StringTokenizer toker = new StringTokenizer(string, ",");
+		while (toker.hasMoreTokens())
+			result.add(toker.nextToken());
+		return result;
 	}
 }

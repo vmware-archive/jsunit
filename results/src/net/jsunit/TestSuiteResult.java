@@ -48,21 +48,16 @@ import javax.servlet.http.HttpServletRequest;
    @author Edward Hieatt
  */
 public class TestSuiteResult {
+	public static final String LOGS_DIRECTORY = "logs";
 	private String remoteAddress, id, jsUnitVersion, userAgent;
 	private List testCaseResults = new ArrayList();
 	private double time;
-	private static String logsDirectory = "logs" + File.separator;
+	
 	public TestSuiteResult() {
 		this.id = String.valueOf(System.currentTimeMillis());
 	}
-	public static void setLogsDirectory(String directory) {
-		logsDirectory = directory;
-	}
-	public static File fileForId(String id) {
-		return new File(getLogsDirectory() + id + ".xml");
-	}
-	public static String getLogsDirectory() {
-		return logsDirectory;
+	public static File logFileForId(String id) {
+		return new File(LOGS_DIRECTORY + File.separator + id + ".xml");
 	}
 	public String getId() {
 		return id;
@@ -124,9 +119,8 @@ public class TestSuiteResult {
 		for (int i = 0; i < testCaseResultStrings.length; i++)
 			testCaseResults.add(TestCaseResult.fromString(testCaseResultStrings[i]));
 	}
-	
 	public static TestSuiteResult findResultWithIdInResultLogs(String id) {
-		File logFile = fileForId(id);
+		File logFile = logFileForId(id);
 		if (logFile.exists())
 			return fromXmlFile(logFile);
 		return null;
@@ -160,10 +154,9 @@ public class TestSuiteResult {
 	public String writeXmlFragment() {
 		return new TestSuiteResultWriter(this).writeXmlFragment();
 	}
-
 	public void writeLog() {
 		String xml = writeXml();
-		Utility.writeFile(xml, logsDirectory + getId() + ".xml");
+		Utility.writeFile(xml, logFileForId(getId()));
 	}
 	public boolean hadSuccess() {
 		Iterator it = testCaseResults.iterator();
