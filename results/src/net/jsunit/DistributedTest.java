@@ -39,7 +39,7 @@ public class DistributedTest extends TestCase {
 	private String submitRequestTo(String next) {
 		HttpURLConnection connection = null;
 		try {
-			URL url = new URL("http://" + next + "/jsunit/runner");
+			URL url = new URL(next + "/jsunit/runner");
 			connection = new HttpURLConnection(url, "", 0);
 			InputStream in = connection.getInputStream();
 			byte[] buffer = new byte[in.available()];
