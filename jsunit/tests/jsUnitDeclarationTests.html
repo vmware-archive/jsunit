@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
   <!--
@@ -25,39 +24,32 @@
     <meta name="generator" content="HTML Tidy, see www.w3.org">
     <link rel="stylesheet" type="text/css" href="../app/jsUnitStyle.css">
 
-    <title>JsUnit Test Suite</title>
+    <title>JsUnit Declaration Tests</title>
 <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js">
 </script>
 <script language="JavaScript" type="text/javascript" src="../app/jsUnitUtility.js">
 </script>
 <script language="JavaScript" type="text/javascript">
-function coreTestSuite() {
-  var coreTestSuite=new JsUnitTestSuite();
-  coreTestSuite.addTestPage("../tests/jsUnitAssertionTests.html");
-  coreTestSuite.addTestPage("../tests/jsUnitSetUpTearDownTests.html");
-  coreTestSuite.addTestPage("../tests/jsUnitDeclarationTests.html");
-  return coreTestSuite;
+
+// JsUnit Declaration Tests
+var counter=0;
+
+function aTestWhoseNameDoesNotStartWithTest() {
+  counter++;
 }
-function utilityTestSuite() {
-  var utilityTestSuite=new JsUnitTestSuite();
-  utilityTestSuite.addTestPage("../tests/jsUnitUtilityTests.html");
-  utilityTestSuite.addTestPage("../tests/jsUnitFrameworkUtilityTests.html");
-  return utilityTestSuite;
+function testDeclarationOfTestFunctions() {
+  assertEquals(1, counter);
 }
-function suite() {
-  var testSuite=new JsUnitTestSuite();
-  testSuite.addTestSuite(coreTestSuite());
-  testSuite.addTestSuite(utilityTestSuite());
-  return testSuite;
+function getTestFunctionNames() {
+  return Array("aTestWhoseNameDoesNotStartWithTest", "testDeclarationOfTestFunctions");
 }
 </script>
   </head>
 
   <body>
-    <p class="jsUnitHeading">JsUnit Test Suite</p>
+    <p class="jsUnitHeading">JsUnit Declaration Tests</p>
 
-    <p class="jsUnitDefault">This page contains a suite of tests for testing
-    JsUnit.</p>
+    <p class="jsUnitDefault">This page tests the Declaration of Test Functions as opposed to reflecting for them.</p>
   </body>
 </html>
 

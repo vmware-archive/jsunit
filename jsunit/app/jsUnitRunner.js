@@ -288,6 +288,8 @@ function isLoadedTestPageATestSuitePage() {
 function getTestFunctionNamesInLoadedTestPage() {
   var testFrame = containerTestFrame();
 	var testFunctionNames=new Array();
+  if (testFrame && testFrame.getTestFunctionNames)
+        return testFrame.getTestFunctionNames();
   if (testFrame && testFrame.document && testFrame.document.scripts) { // IE5 and up
 		var scriptsInTestFrame=testFrame.document.scripts;
 		for (var i=0; i<scriptsInTestFrame.length; i++) {
