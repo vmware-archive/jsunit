@@ -1,0 +1,21 @@
+<project name="JsUnit" default="dist" basedir=".">
+  <property name="src" location="src"/>
+  <property name="bin" location="bin"/>
+  <property name="lib"  location="lib"/>
+
+  <target name="compile" description="Compile the source">
+    <javac srcdir="${src}" destdir="${bin}">
+      <classpath>
+        <fileset dir="${lib}">
+          <include name="*.jar"/> 
+        </fileset>
+      </classpath>
+    </javac>	
+  </target>
+
+  <target name="dist" depends="compile" description="Generate the distribution" >
+    <jar jarfile="${lib}/jsunit.jar" basedir="${bin}"/>
+  </target>
+
+</project>
+
