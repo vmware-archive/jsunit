@@ -1,5 +1,5 @@
 JsUnit
-Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+Copyright (C) 2002 Edward Hieatt, edward@jsunit.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License

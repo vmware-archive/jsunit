@@ -3,7 +3,7 @@
 <html>
   <!--
     JsUnit
-    Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+    Copyright (C) 2002 Edward Hieatt, edward@jsunit.net
 
     This program is free software; you can redistribute it and/or
     modify it under the terms of the GNU General Public License
@@ -30,28 +30,28 @@ function init()
 {
   containerReady = true;
 }
-function testFrame() 
+function testFrame()
 {
     return top.uiFrames.testFrame;
 }
 
-function isPageLoaded() 
+function isPageLoaded()
 {
-  if (!containerReady) 
+  if (!containerReady)
     return false;
 
     var isTestPageLoaded=false;
-  try 
+  try
   {
     // attempt to access the var isTestPageLoaded in the testFrame
     isTestPageLoaded=top.uiFrames.testFrame.isTestPageLoaded;
 
-    // ok, if the above did not throw an exception, then the 
+    // ok, if the above did not throw an exception, then the
     // variable is defined. If the onload has not fired in the
     // testFrame then isTestPageLoaded is still false. Otherwise
     // the testFrame has set it to true
     }
-  catch (e) 
+  catch (e)
   {
     // an error occured while attempting to access the isTestPageLoaded
     // in the testFrame, therefore the testFrame has not loaded yet
@@ -60,20 +60,20 @@ function isPageLoaded()
     return isTestPageLoaded;
 }
 
-function isContainerReady() 
+function isContainerReady()
 {
     return containerReady;
 }
 
-function setNotReady() 
+function setNotReady()
 {
-  try 
+  try
   {
     // attempt to set the isTestPageLoaded variable
-    // in the test frame to false. 
+    // in the test frame to false.
     top.uiFrames.testFrame.isTestPageLoaded=false;
-  } 
-  catch (e) 
+  }
+  catch (e)
   {
     // testFrame.isTestPageLoaded not available... ignore
   }
