@@ -3,33 +3,49 @@
 <html>
 <!-- @author Edward Hieatt, edward@jsunit.net -->
   <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit main-results.html</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
   </head>
   <body>
   	<script language="javascript" type="text/javascript">
-  	  var url="http://";
+  	  var DEFAULT_SUBMIT_WEBSERVER = "localhost:8080";
+
+      function submitUrlFromSpecifiedUrl() {
+        var result = "";
+        var specifiedUrl = top.getSpecifiedResultUrl();
+        if (specifiedUrl.indexOf("http://")!=0)
+            result = "http://";
+        result += specifiedUrl;
+        return result;
+      }
+
+      function submitUrlFromTestRunnerLocation() {
+        var result = "http://";
+        var webserver=top.getWebserver();
+        if (webserver==null) // running over file:///
+          webserver=DEFAULT_SUBMIT_WEBSERVER;
+        result += webserver;
+        result += "/jsunit/acceptor";
+        return result;
+      }
+
+  	  var submitUrl = "";
   	  if (top.wasResultUrlSpecified()) {
-		  url += top.getSpecifiedResultUrl();
+  	      submitUrl = submitUrlFromSpecifiedUrl();
   	  } else {
-	  	  var webserver=top.getWebserver();
-	  	  if (webserver==null)
-	  	  	webserver="localhost";
-	      url+=webserver;
-	      if (webserver.indexOf(":")==-1)
-	      	url+=":8080";
-	      url+="/jsunit/acceptor";
+  	      submitUrl = submitUrlFromTestRunnerLocation();
    	  }
-  	  var formString = "<form name=\"resultsForm\" action=\""+url+"\" method=\"post\" target=\"_top\">";
+
+  	  var formString = "<form name=\"resultsForm\" action=\""+submitUrl+"\" method=\"post\" target=\"_top\">";
 	  document.write(formString);
-  	</script>    
+  	</script>
       <input type="hidden" name="id">
       <input type="hidden" name="userAgent">
       <input type="hidden" name="JsUnitVersion">
       <input type="hidden" name="time">
       <input type="hidden" name="baseURL">
-      <select size="5" name="testCases" multiple></select>      
+      <select size="5" name="testCases" multiple></select>
     </form>
     <script language="javascript" type="text/javascript">
 		function populateHeaderFields(id, userAgent, jsUnitVersion, baseURL) {
@@ -41,10 +57,10 @@
 		function submitResults() {
 		  var testCasesField = document.resultsForm.testCases;
 		  for (var i=0; i<testCasesField.length; i++) {
-			  testCasesField[i].selected=true;  
+			  testCasesField[i].selected=true;
 		  }
 		  document.resultsForm.submit();
-		
+
 		}
     </script>
   </body>
