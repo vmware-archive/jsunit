@@ -155,7 +155,7 @@ jsUnitTestManager.prototype._runTest = function ()
       this.containerTestFrame.startTime = new Date();
       this.containerTestFrame.setUpPage();
       // try test again later
-      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPAGE_INTERVAL);
+      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
       return;
     }
 
@@ -173,7 +173,7 @@ jsUnitTestManager.prototype._runTest = function ()
         this.containerTestFrame.startTime = (new Date());
       }
       // try test again later
-      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPAGE_INTERVAL);
+      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
       return;
     }
   }
