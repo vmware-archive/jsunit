@@ -218,6 +218,11 @@
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
+  <component name="TDDConfig">
+    <option name="idleMsBeforeTimerPause" value="300000" />
+    <option name="masterSuiteConfigurationName" value="Suite" />
+    <option name="rollingActivityCycleTimelineSampleSize" value="40" />
+  </component>
   <component name="libraryTable" />
   <component name="uidesigner-configuration">
     <option name="INSTRUMENT_CLASSES" value="true" />
