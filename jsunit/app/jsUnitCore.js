@@ -239,6 +239,10 @@ function inform() {
     top.tracer.inform(arguments[0], arguments[1]);
 }
 
+function info() {
+  inform(arguments[0], arguments[1]);
+}
+
 function debug() {
   if (top.tracer != null) 
     top.tracer.debug(arguments[0], arguments[1]);
