@@ -1,2 +1,0 @@
-- Write custom ant tasks
-- Have the distributed test get back the result xml of each browser, not just success or failure
