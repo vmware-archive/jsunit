@@ -55,6 +55,22 @@
     <option name="IS_EMACS_ERRORS_MODE" value="true" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
+  <component name="PerforceDirect.Settings">
+    <option name="enabled" value="false" />
+    <option name="useP4CONFIG" value="true" />
+    <option name="port" value="jasper:1666" />
+    <option name="client" value="" />
+    <option name="user" value="" />
+    <option name="passwd" value="" />
+    <option name="useExtDiff" value="false" />
+    <option name="extDiff" value="" />
+    <option name="showCmds" value="false" />
+    <option name="autoCheckoutAdd" value="true" />
+    <option name="promptCheckoutAdd" value="true" />
+    <option name="promptP4MoveRenameDelete" value="true" />
+    <option name="allowNoP4MoveRenameDelete" value="false" />
+    <option name="simpleP4Commands" value="false" />
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JsUnit.iml" filepath="$PROJECT_DIR$/JsUnit.iml" />
