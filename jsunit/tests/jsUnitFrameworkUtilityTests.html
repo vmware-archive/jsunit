@@ -1,0 +1,64 @@
+<html>
+<!--
+  JsUnit
+  Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<head>
+<link rel="stylesheet" href="../app/jsUnitStyle.css">
+<title>JsUnit Utility Tests</title>
+<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript">
+// JsUnit Utility Tests
+function testStackTrace() {
+  doStackTraceTest(3);
+}
+function doStackTraceTest(numberLeft) {
+  if (!arguments.caller) {
+    //This browser doesn't support the stack trace functionality; that's ok, just let it go.
+    return;
+  }
+  if (numberLeft>0) {
+    doStackTraceTest(numberLeft-1);
+    return;
+  }
+  assertEquals("> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> testStackTrace\n", getStackTrace());
+}
+function testJsUnitTestSuiteClass() {
+  var aSuite=new JsUnitTestSuite();
+  aSuite.addTestPage("foo.html");
+  aSuite.addTestPage("bar.html");
+  assertEquals(2, aSuite.testPages.length);
+  assertEquals("foo.html", aSuite.testPages[0]);
+  assertEquals("bar.html", aSuite.testPages[1]);
+  var anotherSuite=new JsUnitTestSuite();
+  anotherSuite.addTestPage("foo2.html");
+  anotherSuite.addTestPage("bar2.html");
+  aSuite.addTestSuite(anotherSuite);
+  assertEquals(4, aSuite.testPages.length);
+  assertEquals("foo.html", aSuite.testPages[0]);
+  assertEquals("bar.html", aSuite.testPages[1]);
+  assertEquals("foo2.html", aSuite.testPages[2]);
+  assertEquals("bar2.html", aSuite.testPages[3]);
+}
+</script>
+</head>
+<body>
+<p class="jsUnitHeading">JsUnit Utility Tests</p>
+<p class="jsUnitDefault">This page contains tests for the utility functions and classes that the JsUnit framework uses.  To see them, take a look at the source.</p>
+</body>
+</html>

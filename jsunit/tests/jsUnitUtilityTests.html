@@ -1,0 +1,74 @@
+<html>
+<!--
+  JsUnit
+  Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<head>
+<link rel="stylesheet" href="../app/jsUnitStyle.css">
+<title>JsUnit Utility Tests</title>
+<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript" src="../app/jsUnitUtility.js"></script>
+<script language="JavaScript">
+// JsUnit Utility Tests
+function testTrim() {
+  assertEquals(null, trim(null));
+	assertEquals(null, trim(JSUNIT_UNDEFINED_VALUE));
+  assertEquals("", trim(""));
+	assertEquals("", trim("    "));
+	assertEquals("string", trim("string"));
+	assertEquals("str  ing", trim("str  ing"));
+	assertEquals("string", trim(" string   "));
+}
+function testIsBlank() {
+	assert(!isBlank("  string "));
+  assert(isBlank(""));
+	assert(isBlank("    "));
+}
+function testPushAndPop() {
+  //the functions push(anArray, anObject) and pop(anArray) exist because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
+  var anArray=Array();
+  anArray[0]="element 0";
+  anArray[1]="element 1";
+  push(anArray, "element 2");
+  push(anArray, "element 3");
+
+  assertEquals("There should be 4 elements after 2 are pushed onto an array of size 2", 4, anArray.length);
+  assertEquals("element 0", anArray[0]);
+  assertEquals("element 1", anArray[1]);
+  assertEquals("element 2", anArray[2]);
+  assertEquals("element 3", anArray[3]);
+
+  pop(anArray);
+  assertEquals("Should be 3 elements after popping 1 from an array of size 4", 3, anArray.length);
+  assertEquals("element 0", anArray[0]);
+  assertEquals("element 1", anArray[1]);
+  assertEquals("element 2", anArray[2]);
+  pop(anArray);
+  pop(anArray);
+  pop(anArray);
+  assertEquals("Should be 0 elements after popping 3 from an array of size 3", 0, anArray.length);
+  pop(anArray);
+  assertEquals("Should be 0 elements after trying to pop an array of size 0", 0, anArray.length);
+}
+</script>
+</head>
+<body>
+<p class="jsUnitHeading">JsUnit Utility Tests</p>
+<p class="jsUnitDefault">This page contains tests for the utility functions that JsUnit uses.  To see them, take a look at the source.</p>
+</body>
+</html>

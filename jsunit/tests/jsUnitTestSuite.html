@@ -1,0 +1,51 @@
+<html>
+<!--
+  JsUnit
+  Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<head>
+<link rel="stylesheet" href="../app/jsUnitStyle.css">
+<title>JsUnit Test Suite</title>
+<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript" src="../app/jsUnitUtility.js"></script>
+<script language="JavaScript">
+function coreTestSuite() {
+  var coreTestSuite=new JsUnitTestSuite();
+  coreTestSuite.addTestPage("../tests/jsUnitAssertionTests.html");
+  coreTestSuite.addTestPage("../tests/jsUnitSetUpTearDownTests.html");
+  return coreTestSuite;
+}
+function utilityTestSuite() {
+  var utilityTestSuite=new JsUnitTestSuite();
+  utilityTestSuite.addTestPage("../tests/jsUnitUtilityTests.html");
+  utilityTestSuite.addTestPage("../tests/jsUnitFrameworkUtilityTests.html");
+  return utilityTestSuite;
+}
+function suite() {
+  var testSuite=new JsUnitTestSuite();
+  testSuite.addTestSuite(coreTestSuite());
+  testSuite.addTestSuite(utilityTestSuite());
+  return testSuite;
+}
+</script>
+</head>
+<body>
+<p class="jsUnitHeading">JsUnit Test Suite</p>
+<p class="jsUnitDefault">This page contains a suite of tests for testing JsUnit.</p>
+</body>
+</html>

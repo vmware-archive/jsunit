@@ -1,0 +1,53 @@
+<html>
+<!--
+  JsUnit
+  Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<head>
+<link rel="stylesheet" href="../app/jsUnitStyle.css">
+<title>JsUnit Framework tests</title>
+<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript" src="../app/jsUnitUtility.js"></script>
+<script language="JavaScript">
+
+// JsUnit setUp/tearDown/test order tests
+
+var aVar=null;
+var anotherVar=null;
+
+function setUp() {
+  aVar="foo";
+}
+function tearDown() {
+  anotherVar="bar";
+}
+function testSetUp() {
+  assertEquals("foo", aVar);
+  assertEquals(null, anotherVar);
+}
+function testTearDown() {
+  assertEquals("foo", aVar);
+  assertEquals("bar", anotherVar);
+}
+</script>
+</head>
+<body>
+<p class="jsUnitHeading">JsUnit Framework tests</p>
+<p class="jsUnitDefault">This page contains tests for the JsUnit setUp and tearDown framework, including testing the order of the tests.  To see them, take a look at the source.</p>
+</body>
+</html>

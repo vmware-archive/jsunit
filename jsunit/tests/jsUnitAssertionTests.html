@@ -1,0 +1,127 @@
+<html>
+<!--
+  JsUnit
+  Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program; if not, write to the Free Software
+  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+-->
+
+<head>
+<link rel="stylesheet" href="../app/jsUnitStyle.css">
+<title>JsUnit Assertion Tests</title>
+<script language="JavaScript" src="../app/jsUnitCore.js"></script>
+<script language="JavaScript" src="../app/jsUnitUtility.js"></script>
+<script language="JavaScript">
+
+// JsUnit Assertion Tests
+function testAssert() {
+  assert("true should be true", true);
+  assert(true);
+}
+function testAssertEquals() {
+  assertEquals("1 should equal 1", 1, 1);
+  assertEquals(1, 1);
+}
+function testAssertNotEquals() {
+  assertNotEquals("1 should not equal 2", 1, 2);
+  assertNotEquals(1, 2);
+}
+function testAssertNull() {
+  assertNull("null should be null", null);
+  assertNull(null);
+}
+function testAssertNotNull() {
+  assertNotNull("1 should not be null", 1);
+  assertNotNull(1);
+}
+function testAssertUndefined() {
+	var myVar;
+  assertUndefined("A declared but unassigned variable should have the undefined value", myVar);
+  assertUndefined(myVar);
+}
+function testAssertNotUndefined() {
+  assertNotUndefined("1 should not be undefined", 1);
+  assertNotUndefined(1);
+}
+function testAssertNaN() {
+  assertNaN("a string should not be a number", "string");
+  assertNaN("string");
+}
+function testAssertNotNaN() {
+  assertNotNaN("1 should not be not a number", 1);
+	assertNotNaN(1);
+}
+function testFail() {
+  var excep=null;
+	try {
+		fail("Failure message");
+	} catch (e) {
+    excep=e;
+	}
+  assertJsUnitException("fail(string) should throw a JsUnitException", excep);
+}
+function testTooFewArguments() {
+  var excep=null;
+  try {
+    assert();
+  } catch (e1) {
+    excep=e1;
+  }
+  assertNonJsUnitException("Calling an assertion function with too few arguments should throw an exception", excep);
+}
+function testTooManyArguments() {
+  var excep=null;
+  try {
+    assertEquals("A comment", true, true, true);
+  } catch (e2) {
+    excep=e2;
+  }
+  assertNonJsUnitException("Calling an assertion function with too many arguments should throw an exception", excep);
+}
+function testInvalidCommentArgumentType() {
+  var excep=null;
+  try {
+    assertNull(1, true);
+  } catch (e3) {
+    excep=e3;
+  }
+  assertNonJsUnitException("Calling an assertion function with a non-string comment should throw an exception", excep);
+}
+function testInvalidArgumentType() {
+  var excep=null;
+  try {
+		assert("string");
+	} catch (e) {
+    excep=e;
+  }
+  assertNonJsUnitException("Calling an assertion function with an invalid argument should throw an exception", excep);
+}
+function assertJsUnitException(comment, allegedJsUnitException) {
+  assertNotNull(comment, allegedJsUnitException);
+  assert(comment, allegedJsUnitException.isJsUnitException);
+  assertNotUndefined(comment, allegedJsUnitException.comment);
+}
+function assertNonJsUnitException(comment, allegedNonJsUnitException) {
+  assertNotNull(comment, allegedNonJsUnitException);
+  assertUndefined(comment, allegedNonJsUnitException.isJsUnitException);
+  assertNotUndefined(comment, allegedNonJsUnitException.description);
+}
+</script>
+</head>
+<body>
+<p class="jsUnitHeading">JsUnit Assertion Tests</p>
+<p class="jsUnitDefault">This page contains tests for the JsUnit Assertion functions.  To see them, take a look at the source.</p>
+</body>
+</html>
