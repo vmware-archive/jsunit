@@ -1,5 +1,5 @@
 JsUnit
-Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+Copyright (C) 2001-4 Edward Hieatt, edward@jsunit.net
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -15,4 +15,5 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
-Please see http://www.jsunit.net/ for JsUnit documentation.
+Please see http://www.jsunit.net/ for JsUnit documentation and
+the licenses directory for license information.
