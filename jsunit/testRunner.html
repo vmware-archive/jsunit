@@ -164,6 +164,8 @@
 
   function submitResults() {
     window.mainFrame.mainData.document.testRunnerForm.runButton.disabled=true;
+	if (jsUnitParmHash.submitresults!='true')
+	    window.mainFrame.mainResults.document.resultsForm.action="http://"+jsUnitParmHash.submitresults;
     window.mainFrame.mainResults.populateHeaderFields(getResultId(), navigator.userAgent, JSUNIT_VERSION);  
   	window.mainFrame.mainResults.document.resultsForm.submit();
   }
