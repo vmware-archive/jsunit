@@ -170,7 +170,7 @@
        	window.testRunnerFrameset.rows="*,0," + testFrameHeight;
     }
     testManager = new jsUnitTestManager();
-    tracer      = new JsUnitTracer();
+    tracer      = new JsUnitTracer(testManager);
     if (shouldKickOffTestsAutomatically()) {
     	window.mainFrame.mainData.kickOffTests();
     }

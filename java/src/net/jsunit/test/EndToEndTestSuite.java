@@ -2,7 +2,6 @@ package net.jsunit.test;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import net.jsunit.StandaloneTest;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

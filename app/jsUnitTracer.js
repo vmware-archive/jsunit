@@ -5,7 +5,8 @@ var TRACE_LEVEL_WARNING = new JsUnitTraceLevel(1, "#FF0000");
 var TRACE_LEVEL_INFO    = new JsUnitTraceLevel(2, "#009966");
 var TRACE_LEVEL_DEBUG   = new JsUnitTraceLevel(3, "#0000FF");
 
-function JsUnitTracer() {
+function JsUnitTracer(testManager) {
+    this._testManager = testManager;
     this._traceWindow        = null;
     this.popupWindowsBlocked = false;
 }
@@ -40,7 +41,9 @@ JsUnitTracer.prototype._trace = function(message, value, traceLevel) {
         var traceString = message;
         if (value)
             traceString +=  ': ' + value;
-        this._writeToTraceWindow(traceString, traceLevel);
+        var prefix = this._testManager.getTestFileName() + ":" +
+            this._testManager.getTestFunctionName() + " - ";
+        this._writeToTraceWindow(prefix, traceString, traceLevel);
     }
 }
 
@@ -49,8 +52,8 @@ JsUnitTracer.prototype._getChosenTraceLevel = function() {
     return traceLevelByLevelNumber(levelNumber);
 }
 
-JsUnitTracer.prototype._writeToTraceWindow  = function(traceString, traceLevel) {
-  var htmlToAppend = '<p class="jsUnitDefault"><font color="'+traceLevel.getColor()+'">' + traceString + '</font><\/p>\n';
+JsUnitTracer.prototype._writeToTraceWindow  = function(prefix, traceString, traceLevel) {
+  var htmlToAppend = '<p class="jsUnitDefault">' + prefix + '<font color="'+traceLevel.getColor()+'">' + traceString + '</font><\/p>\n';
   this._getTraceWindow().document.write(htmlToAppend);
 }
 

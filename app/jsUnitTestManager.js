@@ -603,6 +603,11 @@ jsUnitTestManager.prototype.getTestFileName = function ()
   return result;
 }
 
+jsUnitTestManager.prototype.getTestFunctionName = function ()
+{
+    return this._testFunctionName;
+}
+
 jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText) 
 {
   var userEnteredTestFileName = top.testManager.getTestFileName();
