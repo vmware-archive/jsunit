@@ -84,9 +84,15 @@ public class Utility {
 		return result;
 	}
     public static String resourceBaseFromProperties() {
-        String result = jsUnitProperties().getProperty(ResultAcceptor.RESOURCE_BASE);
+        String result = jsUnitProperties().getProperty(ResultAcceptor.PROPERTY_RESOURCE_BASE);
         if (Utility.isEmpty(result))
             result = ResultAcceptor.DEFAULT_RESOURCE_BASE;
+        return result;
+    }
+    public static String logsDirectoryFromProperties() {
+        String result = jsUnitProperties().getProperty(ResultAcceptor.PROPERTY_LOGS_DIRECTORY);
+        if (Utility.isEmpty(result))
+            result = resourceBaseFromProperties()+File.separator+"results"+File.separator+"logs";
         return result;
     }
 }

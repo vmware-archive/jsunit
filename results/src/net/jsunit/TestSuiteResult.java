@@ -57,7 +57,7 @@ public class TestSuiteResult {
 		this.id = String.valueOf(System.currentTimeMillis());
 	}
 	public static File logFileForId(String id) {
-		return new File(Utility.resourceBaseFromProperties() + File.separator + LOGS_DIRECTORY + File.separator + id + ".xml");
+		return new File(Utility.logsDirectoryFromProperties()+ File.separator+ id + ".xml");
 	}
 	public String getId() {
 		return id;

@@ -56,7 +56,8 @@ public class ResultAcceptor {
 	public static final int DEFAULT_PORT = 8080;
     public static final String DEFAULT_RESOURCE_BASE=".";
 	public static HttpServer server;
-    public static String RESOURCE_BASE="resourceBase";
+    public static String PROPERTY_RESOURCE_BASE="resourceBase";
+    public static String PROPERTY_LOGS_DIRECTORY="logsDirectory";
 
     public static void main(String args[]) throws Exception {
 		if (args.length > 0) {
