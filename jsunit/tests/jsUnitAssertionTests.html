@@ -30,6 +30,14 @@ function testAssert() {
   assert("true should be true", true);
   assert(true);
 }
+function testAssertTrue() {
+  assertTrue("true should be true", true);
+  assertTrue(true);
+}
+function testAssertFalse() {
+  assertFalse("false should be false", false);
+  assertFalse(false);
+}
 function testAssertEquals() {
   assertEquals("1 should equal 1", 1, 1);
   assertEquals(1, 1);

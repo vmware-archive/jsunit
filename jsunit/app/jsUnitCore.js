@@ -63,6 +63,20 @@ function assert() {
                 error("Bad argument to assert(boolean)");
         _assert(commentArg(1, arguments), booleanValue===true, "Call to assert(boolean) with false");
 }
+function assertTrue() {
+        _validateArguments(1, arguments);
+        var booleanValue=nonCommentArg(1, 1, arguments);
+        if (typeof(booleanValue)!="boolean")
+                error("Bad argument to assertTrue(boolean)");
+        _assert(commentArg(1, arguments), booleanValue===true, "Call to assertTrue(boolean) with false");
+}
+function assertFalse() {
+        _validateArguments(1, arguments);
+        var booleanValue=nonCommentArg(1, 1, arguments);
+        if (typeof(booleanValue)!="boolean")
+                error("Bad argument to assertFalse(boolean)");
+        _assert(commentArg(1, arguments), booleanValue===false, "Call to assertFalse(boolean) with true");
+}
 function assertEquals() {
         _validateArguments(2, arguments);
         var var1=nonCommentArg(1, 2, arguments);
