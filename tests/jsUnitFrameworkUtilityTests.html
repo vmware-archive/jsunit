@@ -68,6 +68,29 @@ function testTraceLevel() {
     assertEquals("bar", levelB.getColor());
 }
 
+function testDisplayStringForNumber() {
+    assertEquals("<3> (number)", _displayStringForValue(3));
+}
+
+function testDisplayStringForString() {
+    assertEquals("<foo> (string)", _displayStringForValue("foo"));
+}
+
+function testDisplayStringForNull() {
+    assertEquals("<null>", _displayStringForValue(null));
+}
+
+function testDisplayStringForUndefined() {
+    assertEquals("<undefined>", _displayStringForValue(JSUNIT_UNDEFINED_VALUE));
+}
+
+function testDisplayStringForArray() {
+    var anArray = new Array();
+    anArray[0] = "foo";
+    anArray[1] = "bar";
+    assertEquals("<foo,bar> (object)", _displayStringForValue(anArray));
+}
+
 </script>
   </head>
 

@@ -178,11 +178,13 @@ function testAssertArrayEquals() {
         assertArrayEquals(array1, array3);
         fail("Should not be equal");
     } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
     }
     try {
         assertArrayEquals(array1, array4);
         fail("Should not be equal");
     } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
     }
 }
 
