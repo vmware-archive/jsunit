@@ -9,50 +9,58 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHandler;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Properties;
+import java.net.URL;
+
+import com.sun.corba.se.internal.iiop.BufferManagerWriteCollect;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
 public class JsUnitServer {
-    private static JsUnitProperties properties;
     private static JsUnitServer instance;
 
     private List results = new ArrayList();
-    public static String PROPERTIES_FILE_NAME = "jsunit.properties";
-    public static final int DEFAULT_PORT = 8080;
-    public static final String DEFAULT_RESOURCE_BASE = ".";
     private HttpServer httpServer;
 
-    private JsUnitServer() {
-        resolveJsUnitProperties();
-    }
+    private int port;
+    private File resourceBase;
+    private File logsDirectory;
+    private List remoteMachineURLs;
+    private List localBrowserFileNames;
+    private URL testURL;
 
     public static void main(String args[]) throws Exception {
-        new JsUnitServer().start();
+        JsUnitServer server = new JsUnitServer();
+        if (args.length == 0) {
+            new JsUnitConfiguration().configureFromPropertiesFile(server);
+        } //else
+            //new JsUnitConfiguration().configureFromArguments(server, Arrays.asList(args));
+        server.start();
     }
 
     public void start() throws Exception {
-        Utility.log(properties.toString(), false);
+        Utility.log(toString(), false);
         setUpHttpServer();
         httpServer.start();
     }
 
     private void setUpHttpServer() throws IOException {
         httpServer = new HttpServer();
-        httpServer.addListener(":" + properties.port());
+        httpServer.addListener(":" + port);
         HttpContext context = httpServer.getContext("/jsunit");
         ServletHandler handler = new ServletHandler();
-        handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
+        handler.addServlet("JsUnitResultAcceptor", "/server", ResultAcceptorServlet.class.getName());
         handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
         handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         context.addHandler(handler);
-        context.setResourceBase(properties.resourceBase().toString());
+        context.setResourceBase(resourceBase.toString());
         context.addHandler(new ResourceHandler());
         httpServer.addContext(context);
     }
@@ -99,12 +107,6 @@ public class JsUnitServer {
         return null;
     }
 
-    public Properties resolveJsUnitProperties() {
-        if (properties == null)
-            properties = new JsUnitProperties(PROPERTIES_FILE_NAME);
-        return properties;
-    }
-
     public TestSuiteResult lastResult() {
         List results = getResults();
         return results.isEmpty()
@@ -121,10 +123,54 @@ public class JsUnitServer {
             httpServer.stop();
             httpServer = null;
         }
-
     }
 
-    public JsUnitProperties getJsUnitProperties() {
-        return properties;
+    public String toString() {
+        StringBuffer result = new StringBuffer();
+        result.append("port").append(": ").append(port).append("\n");
+        result.append("resourceBase").append(": ").append(resourceBase.getAbsolutePath()).append("\n");
+        result.append("logsDirectory").append(": ").append(logsDirectory.getAbsolutePath());
+        return result.toString();
     }
+
+    public List getRemoteMachineURLs() {
+        return remoteMachineURLs;
+    }
+
+    public void setResourceBase(File resourceBase) {
+        this.resourceBase = resourceBase;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public void setLogsDirectory(File logsDirectory) {
+        this.logsDirectory = logsDirectory;
+    }
+
+    public void setRemoteMachineURLs(List names) {
+        this.remoteMachineURLs = names;
+    }
+
+    public List getLocalBrowserFileNames() {
+        return localBrowserFileNames;
+    }
+
+    public void setLocalBrowserFileNames(List names) {
+        this.localBrowserFileNames = names;
+    }
+
+    public void setTestURL(URL url) {
+        this.testURL = url;
+    }
+
+    public URL getTestURL() {
+        return testURL;
+    }
+
+    public File getLogsDirectory() {
+        return logsDirectory;
+    }
+
 }

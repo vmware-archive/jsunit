@@ -17,14 +17,12 @@ import java.util.List;
  */
 
 public class DistributedTest extends TestCase {
-    public static final String PROPERTY_REMOTE_MACHINE_NAMES = "remoteMachineNames";
-
     public DistributedTest(String name) {
         super(name);
     }
 
     public void testCollectResults() {
-        Iterator it = remoteMachineNames().iterator();
+        Iterator it = JsUnitServer.instance().getRemoteMachineURLs().iterator();
         while (it.hasNext()) {
             String next = (String) it.next();
             String result = submitRequestTo(next);
@@ -61,8 +59,4 @@ public class DistributedTest extends TestCase {
         }
     }
 
-    private List remoteMachineNames() {
-        String remoteMachineNamesCommaDelimitedList = JsUnitServer.instance().getJsUnitProperties().getProperty(PROPERTY_REMOTE_MACHINE_NAMES);
-        return Utility.listFromCommaDelimitedString(remoteMachineNamesCommaDelimitedList);
-    }
 }

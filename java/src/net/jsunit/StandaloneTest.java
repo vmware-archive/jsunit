@@ -3,8 +3,6 @@ package net.jsunit;
 import junit.framework.TestCase;
 
 import java.util.Iterator;
-import java.util.List;
-import java.util.Properties;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -12,27 +10,15 @@ import java.util.Properties;
 
 public class StandaloneTest extends TestCase {
     private boolean shouldStartAndStopServer = true;
-    public static final String PROPERTY_URL = "url";
-    public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
     public static final int MAX_SECONDS_TO_WAIT = 2 * 60;
     private JsUnitServer server = JsUnitServer.instance();
-    private Properties properties;
 
     public StandaloneTest(String name) {
         super(name);
     }
 
-    protected List browserFileNames() {
-        return Utility.listFromCommaDelimitedString(properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
-    }
-
-    protected String url() {
-        return properties.getProperty(PROPERTY_URL);
-    }
-
     public void setUp() throws Exception {
         super.setUp();
-        this.properties = server.getJsUnitProperties();
         if (shouldStartAndStopServer)
             server.start();
     }
@@ -44,7 +30,7 @@ public class StandaloneTest extends TestCase {
     }
 
     public void testStandaloneRun() throws Exception {
-        Iterator it = browserFileNames().iterator();
+        Iterator it = server.getLocalBrowserFileNames().iterator();
         while (it.hasNext()) {
             String next = (String) it.next();
             int currentResultCount = server.resultsCount();
@@ -53,7 +39,7 @@ public class StandaloneTest extends TestCase {
             try {
                 try {
                     process =
-                            Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
+                            Runtime.getRuntime().exec("\"" + next + "\" \"" + server.getTestURL() + "\"");
                 } catch (Throwable t) {
                     t.printStackTrace();
                     fail("All browser processes should start, but the following did not: "

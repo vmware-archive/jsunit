@@ -8,15 +8,15 @@ import net.jsunit.JsUnitServer;
  */
 
 public abstract class JsUnitTest extends TestCase {
-    protected JsUnitServer acceptor;
+    protected JsUnitServer server;
 
     public void setUp() throws Exception {
         super.setUp();
-        acceptor = JsUnitServer.instance();
+        server = JsUnitServer.instance();
     }
 
     public void tearDown() throws Exception {
-        acceptor.clearResults();
+        server.clearResults();
         super.tearDown();
     }
 

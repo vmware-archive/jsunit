@@ -61,7 +61,7 @@ public class Utility {
         log(message, true);
     }
 
-    public static void setShouldLogToStandardOut(boolean b) {
+    public static void setLogToStandardOut(boolean b) {
         logToStandardOut = b;
     }
 }

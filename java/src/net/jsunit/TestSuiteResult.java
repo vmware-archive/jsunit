@@ -21,7 +21,7 @@ public class TestSuiteResult {
     }
 
     public static File logFileForId(String id) {
-        return new File(JsUnitServer.instance().getJsUnitProperties().logsDirectory() + File.separator + id + ".xml");
+        return new File(JsUnitServer.instance().getLogsDirectory() + File.separator + id + ".xml");
     }
 
     public String getId() {
