@@ -43,9 +43,9 @@
         alert("Sorry, your browser is not supported by this version of JsUnit.\nSupported browsers are Interner Explorer 5.0+ and Netscape 6.0+\nJsUnit will not function.");
       }
     </script>
-    <script language="JavaScript1.4" TYPE="text/javascript" src="jsUnitCore.js"></script>
-    <script language="JavaScript1.4" TYPE="text/javascript" src="jsUnitRunner.js"></script>
-    <script language="JavaScript1.4" TYPE="text/javascript" src="jsUnitUtility.js"></script>
+    <script language="JavaScript" TYPE="text/javascript" src="jsUnitCore.js"></script>
+    <script language="JavaScript" TYPE="text/javascript" src="jsUnitRunner.js"></script>
+    <script language="JavaScript" TYPE="text/javascript" src="jsUnitUtility.js"></script>
   </head>
   <body onload="document.testRunnerForm.testFileName.focus()">
 		<form name="testRunnerForm">
@@ -67,12 +67,12 @@
     <table>
       <tr>
         <td valign="center" class="jsUnitDefault">
-          <script language="JavaScript1.4" type="text/javascript">
+          <script language="JavaScript" type="text/javascript">
             document.write(getDocumentProtocol());
           </script>
         </td>
         <td nowrap>
-          <script language="JavaScript1.4" type="text/javascript">
+          <script language="JavaScript" type="text/javascript">
             var inputType = (getDocumentProtocol()=="file:///") ? "file" : "text";
             document.write("<input class=\"jsUnitDefault\" type=\""+inputType+"\" name=\"testFileName\" size=\"60\">");
           </script>
