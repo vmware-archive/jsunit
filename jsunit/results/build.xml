@@ -15,6 +15,7 @@
 
   <target name="dist" depends="compile" description="Generate the distribution" >
     <jar jarfile="${lib}/jsunit.jar" basedir="${bin}"/>
+    <delete dir="${bin}/net" />
   </target>
   <target name="test" depends="dist" description="Runs the JUnit tests for JsUnit">
     <java classname="junit.textui.TestRunner">
