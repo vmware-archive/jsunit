@@ -62,7 +62,7 @@ public class DistributedTest extends TestCase {
     }
 
     private List remoteMachineNames() {
-        String remoteMachineNamesCommaDelimitedList = JsUnitServer.instance().jsUnitProperties().getProperty(PROPERTY_REMOTE_MACHINE_NAMES);
+        String remoteMachineNamesCommaDelimitedList = JsUnitServer.instance().getJsUnitProperties().getProperty(PROPERTY_REMOTE_MACHINE_NAMES);
         return Utility.listFromCommaDelimitedString(remoteMachineNamesCommaDelimitedList);
     }
 }

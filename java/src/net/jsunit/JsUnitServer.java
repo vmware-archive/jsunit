@@ -15,24 +15,24 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
+import java.awt.image.renderable.RenderableImage;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
 public class JsUnitServer {
-    private static Properties properties;
+    private static JsUnitProperties properties;
     private static JsUnitServer instance;
+
     private List results = new ArrayList();
-    public static String PROPERTY_PORT = "port";
-    public static String PROPERTY_RESOURCE_BASE = "resourceBase";
-    public static String PROPERTY_LOGS_DIRECTORY = "logsDirectory";
     public static String PROPERTIES_FILE_NAME = "jsunit.properties";
     public static final int DEFAULT_PORT = 8080;
     public static final String DEFAULT_RESOURCE_BASE = ".";
-    public static HttpServer httpServer;
+    private HttpServer httpServer;
 
     private JsUnitServer() {
+        resolveJsUnitProperties();        
     }
 
     public static void main(String args[]) throws Exception {
@@ -40,7 +40,8 @@ public class JsUnitServer {
     }
 
     public void start() throws Exception {
-        httpServer = new HttpServer();
+        printProperties();
+
         httpServer.addListener(":" + port());
         HttpContext context = httpServer.getContext("/jsunit");
         ServletHandler handler = new ServletHandler();
@@ -48,17 +49,14 @@ public class JsUnitServer {
         handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
         handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         context.addHandler(handler);
-        context.setResourceBase(resourceBase());
+        context.setResourceBase(resourceBase().toString());
         context.addHandler(new ResourceHandler());
         httpServer.addContext(context);
         httpServer.start();
     }
 
-    public void stop() throws Exception {
-        if (httpServer != null) {
-            httpServer.stop();
-            httpServer = null;
-        }
+    private void printProperties() {
+        Utility.log(properties.toString(), false);
     }
 
     public static JsUnitServer instance() {
@@ -103,49 +101,22 @@ public class JsUnitServer {
         return null;
     }
 
-    public Properties propertiesFromFileName(String fileName) {
-        if (properties == null) {
-            properties = new Properties();
-            try {
-                properties.load(new FileInputStream(fileName));
-            } catch (Exception e) {
-                throw new RuntimeException("Could not load " + fileName);
-            }
-        }
+    public Properties resolveJsUnitProperties() {
+        if (properties == null)
+            properties = new JsUnitProperties(PROPERTIES_FILE_NAME);
         return properties;
     }
 
-    public Properties jsUnitProperties() {
-        return propertiesFromFileName(PROPERTIES_FILE_NAME);
+    public File resourceBase() {
+        return properties.resourceBase();
     }
 
-    public String resourceBase() {
-        String result = jsUnitProperties().getProperty(PROPERTY_RESOURCE_BASE);
-        if (Utility.isEmpty(result))
-            result = JsUnitServer.DEFAULT_RESOURCE_BASE;
-        return result;
-    }
-
-    public String logsDirectory() {
-        String result = jsUnitProperties().getProperty(PROPERTY_LOGS_DIRECTORY);
-        if (Utility.isEmpty(result))
-            result =
-                    resourceBase()
-                    + File.separator
-                    + "java"
-                    + File.separator
-                    + "logs";
-        return result;
+    public File logsDirectory() {
+        return properties.logsDirectory();
     }
 
     public int port() {
-        int result;
-        String portString = jsUnitProperties().getProperty(PROPERTY_PORT);
-        if (Utility.isEmpty(portString))
-            result = DEFAULT_PORT;
-        else
-            result = Integer.parseInt(portString);
-        return result;
+        return properties.port();
     }
 
     public TestSuiteResult lastResult() {
@@ -157,5 +128,17 @@ public class JsUnitServer {
 
     public int resultsCount() {
         return getResults().size();
+    }
+
+    public void stop() throws InterruptedException {
+        if (httpServer != null) {
+            httpServer.stop();
+            httpServer = null;
+        }
+
+    }
+
+    public JsUnitProperties getJsUnitProperties() {
+        return properties;
     }
 }

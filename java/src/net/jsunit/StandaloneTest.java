@@ -35,7 +35,7 @@ public class StandaloneTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        this.properties = server.jsUnitProperties();
+        this.properties = server.getJsUnitProperties();
         if (shouldStartAndStopServer)
             server.start();
     }
