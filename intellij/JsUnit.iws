@@ -172,7 +172,7 @@
       </entry>
       <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="5" column="13" selection-start="107" selection-end="107" vertical-scroll-proportion="0.10911425">
+          <state line="20" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.436457">
             <folding>
               <element signature="imports" expanded="true" />
               <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
@@ -351,11 +351,11 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-4" y="-4" width="1288" height="979" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.31271878" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="7" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.29983792" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.29983792" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3908985" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24959481" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3092182" order="9" />
@@ -506,7 +506,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="107" selection-end="107" vertical-scroll-proportion="0.10911425">
+        <state line="20" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.436457">
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
