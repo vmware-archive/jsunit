@@ -46,7 +46,6 @@ import org.jdom.output.XMLOutputter;
 public class JsUnitTestCaseResult {
 	protected String name;
 	protected double time;
-	protected boolean isFailure, isError;
 	protected String failure, error;
 	public String getName() {
 		return name;
@@ -77,6 +76,9 @@ public class JsUnitTestCaseResult {
 	}
 	public boolean hadFailure() {
 		return failure != null;
+	}
+	public boolean hadSuccess() {
+		return !hadError() && !hadFailure();
 	}
 	public static JsUnitTestCaseResult fromString(String string) {
 		JsUnitTestCaseResult result = new JsUnitTestCaseResult();

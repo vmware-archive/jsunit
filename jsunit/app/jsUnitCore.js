@@ -165,25 +165,25 @@ function assertNotNull() {
   _assert(commentArg(1, arguments), aVar !== null, 'Expected not to be null');
 }
 
-function assertUndefined(aVar) {
+function assertUndefined() {
   _validateArguments(1, arguments);
   var aVar=nonCommentArg(1, 1, arguments);
   _assert(commentArg(1, arguments), aVar === top.JSUNIT_UNDEFINED_VALUE, 'Expected undefined but was ' + _displayStringForValue(aVar));
 }
 
-function assertNotUndefined(aVar) {
+function assertNotUndefined() {
   _validateArguments(1, arguments);
   var aVar=nonCommentArg(1, 1, arguments);
   _assert(commentArg(1, arguments), aVar !== top.JSUNIT_UNDEFINED_VALUE, 'Expected not to be undefined');
 }
 
-function assertNaN(aVar) {
+function assertNaN() {
   _validateArguments(1, arguments);
   var aVar=nonCommentArg(1, 1, arguments);
   _assert(commentArg(1, arguments), isNaN(aVar), 'Expected NaN');
 }
 
-function assertNotNaN(aVar) {
+function assertNotNaN() {
   _validateArguments(1, arguments);
   var aVar=nonCommentArg(1, 1, arguments);
   _assert(commentArg(1, arguments), !isNaN(aVar), 'Expected not NaN');

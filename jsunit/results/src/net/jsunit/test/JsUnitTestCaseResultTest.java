@@ -11,10 +11,11 @@ public class JsUnitTestCaseResultTest extends JsUnitTest {
 		assertEquals(1.3d, result.getTime(), .001d);
 		assertFalse(result.hadError());
 		assertFalse(result.hadFailure());
-		assertNull(result.getError());
+		assertTrue(result.hadSuccess());
+		assertNull(result.getError());				
 		assertNull(result.getFailure());
 		//
-		assertEquals("<testcase name=\"testFoo\" time=\"1.3\" />", result.writeXmlFragment());
+		assertEquals("<testcase name=\"testFoo\" time=\"1.3\" />", result.writeXmlFragment());		
 	}
 	public void testBuildErrorResultFromString() {
 		JsUnitTestCaseResult result = JsUnitTestCaseResult.fromString("testFoo|1.3|E|Error Message|");
@@ -22,6 +23,7 @@ public class JsUnitTestCaseResultTest extends JsUnitTest {
 		assertEquals(1.3d, result.getTime(), .001d);
 		assertTrue(result.hadError());
 		assertFalse(result.hadFailure());
+		assertFalse(result.hadSuccess());
 		assertEquals("Error Message", result.getError());
 		assertNull(result.getFailure());
 		//
@@ -33,6 +35,7 @@ public class JsUnitTestCaseResultTest extends JsUnitTest {
 		assertEquals(1.3d, result.getTime(), .001d);
 		assertFalse(result.hadError());
 		assertTrue(result.hadFailure());
+		assertFalse(result.hadSuccess());
 		assertNull(result.getError());
 		assertEquals("Failure Message", result.getFailure());
 		//

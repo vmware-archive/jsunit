@@ -1,4 +1,5 @@
 package net.jsunit.test;
+import java.io.File;
 import java.util.*;
 import javax.servlet.http.*;
 import net.jsunit.*;
@@ -50,35 +51,38 @@ public class JsUnitResultAcceptorTest extends JsUnitTest {
 	}
 	public void setUp() throws Exception {
 		super.setUp();
+		JsUnitTestSuiteResult.setLogsDirectory("");
 		requestMap = new HashMap();
-		requestMap.put(JsUnitTestSuiteResult.TEST_ID, "ID foo");		
+		requestMap.put(JsUnitTestSuiteResult.TEST_ID, "ID_foo");
 		requestMap.put(JsUnitTestSuiteResult.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		requestMap.put(JsUnitTestSuiteResult.TIME, "4.3");
 		requestMap.put(JsUnitTestSuiteResult.JSUNIT_VERSION, "2.5");
 		requestMap.put(JsUnitTestSuiteResult.TEST_CASES, dummyTestCaseStrings());
 	}
+	public void tearDown() throws Exception {
+		File logFile = new File("ID_foo.xml");
+		if (logFile.exists())
+			logFile.delete();
+		super.tearDown();
+	}
 	protected String[] dummyTestCaseStrings() {
-		return new String[] {
-			"testFoo|1.3|S||",
-			"testFoo|1.3|E|Error Message|",
-			"testFoo|1.3|F|Failure Message|"
-		};
+		return new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Error Message|", "testFoo|1.3|F|Failure Message|" };
 	}
 	protected void submit() {
 		HttpServletRequest request = new DummyHttpRequest(requestMap);
-		acceptor.accept(request);		
+		acceptor.accept(request);
 	}
 	public void testSubmitResults() {
 		assertEquals(0, acceptor.getResults().size());
 		submit();
 		assertEquals(1, acceptor.getResults().size());
 		submit();
-		assertEquals(2, acceptor.getResults().size());
+		assertEquals(1, acceptor.getResults().size());
 	}
 	public void testSubmittedResultHeaders() {
 		submit();
 		JsUnitTestSuiteResult result = (JsUnitTestSuiteResult) acceptor.getResults().get(0);
-		assertEquals("ID foo", result.getId());		
+		assertEquals("ID_foo", result.getId());
 		assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
 		assertEquals("2.5", result.getJsUnitVersion());
 		assertEquals(1, result.errorCount());
@@ -93,7 +97,13 @@ public class JsUnitResultAcceptorTest extends JsUnitTest {
 	}
 	public void testFindResultById() {
 		submit();
-		assertNotNull(acceptor.findResultWithId("ID foo"));
+		assertNotNull(acceptor.findResultWithId("ID_foo"));
 		assertNull(acceptor.findResultWithId("Invalid ID"));
+	}
+	public void testLog() {
+		File logFile = new File("ID_foo.xml");
+		assertFalse(logFile.exists());
+		submit();
+		assertTrue(logFile.exists());
 	}
 }

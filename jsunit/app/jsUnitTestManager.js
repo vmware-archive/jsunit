@@ -60,10 +60,11 @@ function jsUnitTestManager()
   this.setUpPageTimeout      = mainData.document.testRunnerForm.setUpPageTimeout;
 
   // image output
-	this.progressBar         = this.mainFrame.frames.mainProgress.document.progress;
+  this.progressBar         = this.mainFrame.frames.mainProgress.document.progress;
 
-  // form elements on mainErrors frame
   this.problemsListField           = this.mainFrame.frames.mainErrors.document.testRunnerForm.problemsList;
+  this.testCaseResultsField        = this.mainFrame.frames.mainResults.document.resultsForm.testCases;  
+  this.resultsTimeField			   = this.mainFrame.frames.mainResults.document.resultsForm.time;  
 
   // 'layer' output frames
   this.uiFrames                    = new Object();
@@ -192,8 +193,10 @@ jsUnitTestManager.prototype._done = function ()
   var secondsSinceRunBegan=(new Date() - this._timeRunStarted)/1000;
   this.setStatus('Done (' + secondsSinceRunBegan + ' seconds)');
   this._cleanUp();
-  if (top.shouldSubmitResults())
+  if (top.shouldSubmitResults()) {
+    this.resultsTimeField.value = secondsSinceRunBegan;
   	top.submitResults();
+  }
 }
 
 jsUnitTestManager.prototype._nextPage = function () 
@@ -368,6 +371,7 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
   this._testFunctionName=functionName;
   this.setStatus('Running test "' + this._testFunctionName + '"');
   var excep=null;
+  var timeBefore = new Date();  
   try {
     this.containerTestFrame.setUp();
     eval('this.containerTestFrame.' + this._testFunctionName + '();');
@@ -383,8 +387,23 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
       excep = e2;
     }
   }
+  var timeTaken = (new Date() - timeBefore) / 1000;
   if (excep != null)
     this._handleTestException(excep);
+  var serializedTestCaseString = functionName+"|"+timeTaken+"|";
+  if (excep==null)
+  	serializedTestCaseString+="S||";
+  else {
+  	if (excep.isJsUnitException)
+  		serializedTestCaseString+="F|";
+  	else {
+  		serializedTestCaseString+="E|";
+  	}
+  	serializedTestCaseString+=this._problemDetailMessageFor(excep);
+  }  	
+  var newOption = new Option(serializedTestCaseString);
+  newOption.selected=true;
+  this.testCaseResultsField[this.testCaseResultsField.length]=newOption;  
 }
 
 jsUnitTestManager.prototype._handleTestException = function (excep) 

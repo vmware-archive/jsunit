@@ -50,6 +50,7 @@ public class JsUnitTestSuiteResultTest extends JsUnitTest {
 		super.setUp();
 		result = new JsUnitTestSuiteResult();
 		result.setJsUnitVersion("2.5");
+		result.setId("An ID");
 		result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		result.setTime(4.3);
 		result.setTestCaseStrings(new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Error Message|", "testFoo|1.3|F|Failure Message|" });
@@ -68,7 +69,7 @@ public class JsUnitTestSuiteResultTest extends JsUnitTest {
 	}
 	public void testXml() {
 		assertEquals(
-			"<testsuite errors=\"1\" failures=\"1\" name=\"JsUnitTest\" tests=\"3\" time=\"4.3\">"+
+			"<testsuite id=\"An ID\" errors=\"1\" failures=\"1\" name=\"JsUnitTest\" tests=\"3\" time=\"4.3\">"+
 				"<properties><property name=\"JsUnitVersion\" value=\"2.5\" />"+
 					"<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />"+
 					"</properties>"+
@@ -81,5 +82,8 @@ public class JsUnitTestSuiteResultTest extends JsUnitTest {
 				"</testcase>"+
 			"</testsuite>",
 			result.writeXmlFragment());
+	}
+	public void testSuccess() {
+		assertFalse(result.hadSuccess());
 	}
 }

@@ -48,11 +48,19 @@ public class JsUnitResultAcceptor {
 	protected static JsUnitResultAcceptor instance;
 	protected List results = new ArrayList();
 	public static final int DEFAULT_PORT = 8080;
+	public static HttpServer server;
 	public static void main(String args[]) throws Exception {
-		HttpServer server = new HttpServer();
-		int port = DEFAULT_PORT;
-		if (args.length > 0)
-			port = Integer.parseInt(args[0]);
+		if (args.length > 0) {
+			int port = Integer.parseInt(args[0]);
+			startServer(port);
+		} else
+			startServer();
+	}
+	public static void startServer() throws Exception {
+		startServer(DEFAULT_PORT);
+	}
+	public static void startServer(int port) throws Exception {
+		server = new HttpServer();
 		server.addListener(":" + port);
 		HttpContext context = server.getContext("/");
 		ServletHandler handler = new ServletHandler();
@@ -61,6 +69,9 @@ public class JsUnitResultAcceptor {
 		context.addHandler(handler);
 		server.start();
 	}
+	public static void stopServer() throws Exception {
+		server.stop();
+	}
 	public static JsUnitResultAcceptor instance() {
 		if (instance == null)
 			instance = new JsUnitResultAcceptor();
@@ -68,7 +79,11 @@ public class JsUnitResultAcceptor {
 	}
 	public JsUnitTestSuiteResult accept(HttpServletRequest request) {
 		JsUnitTestSuiteResult result = JsUnitTestSuiteResult.fromRequest(request);
+		JsUnitTestSuiteResult existingResultWithSameId = findResultWithId(result.getId());
+		if (existingResultWithSameId != null)
+			results.remove(existingResultWithSameId);
 		results.add(result);
+		result.writeLog();
 		return result;
 	}
 	public List getResults() {

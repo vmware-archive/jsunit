@@ -1,4 +1,5 @@
 package net.jsunit;
+import java.io.File;
 import java.util.*;
 import javax.servlet.http.*;
 import org.jdom.*;
@@ -48,9 +49,13 @@ public class JsUnitTestSuiteResult {
 	protected String id, jsUnitVersion, userAgent;
 	protected List testCaseResults = new ArrayList();
 	protected double time;
+	protected static String logsDirectory = "logs" + File.separator;
 	public static final String TEST_ID = "testId", USER_AGENT = "userAgent", TIME = "time", TEST_CASES = "testCases", JSUNIT_VERSION = "jsUnitVersion";
 	public JsUnitTestSuiteResult() {
 		this.id = "" + System.currentTimeMillis();
+	}
+	public static void setLogsDirectory(String directory) {
+		logsDirectory = directory;
 	}
 	public String getId() {
 		return id;
@@ -166,5 +171,18 @@ public class JsUnitTestSuiteResult {
 			JsUnitTestCaseResult next = (JsUnitTestCaseResult) it.next();
 			next.addXmlTo(element);
 		}
+	}
+	public void writeLog() {
+		String xml = writeXml();
+		JsUnitUtility.writeToFile(xml, logsDirectory + getId() + ".xml");
+	}
+	public boolean hadSuccess() {
+		Iterator it = testCaseResults.iterator();
+		while (it.hasNext()) {
+			JsUnitTestCaseResult next = (JsUnitTestCaseResult) it.next();
+			if (!next.hadSuccess())
+				return false;
+		}
+		return true;
 	}
 }
