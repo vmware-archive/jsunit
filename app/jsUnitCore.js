@@ -275,10 +275,6 @@ function isBlank(str) {
   return trim(str) == '';
 }
 
-function newOnLoadEvent() {
-  isTestPageLoaded = true;
-}
-
 // the functions push(anArray, anObject) and pop(anArray) 
 // exist because the JavaScript Array.push(anObject) and Array.pop() 
 // functions are not available in IE 5.0
@@ -292,7 +288,6 @@ function pop(anArray) {
     anArray.length--;
   }
 }
-window.onload=newOnLoadEvent;
 
 if (top.xbDEBUG && top.xbDEBUG.on && top.testManager)
 {
@@ -331,3 +326,14 @@ if (top.xbDEBUG && top.xbDEBUG.on && top.testManager)
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'pop');
 }
 
+function newOnLoadEvent() {
+  isTestPageLoaded = true;
+}
+
+if (window.attachEvent) {
+	window.attachEvent("onload", newOnLoadEvent);
+} else if (window.addEventListener) {
+	window.addEventListener("load", newOnLoadEvent, false);
+} else {
+	alert("Neither window.attachEvent nor window.addEventListener found; JsUnit will not fuction");
+}

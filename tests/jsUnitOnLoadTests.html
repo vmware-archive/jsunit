@@ -42,39 +42,26 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
-    <title>JsUnit Test Suite</title>
+    <title>JsUnit OnLoad Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
 <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
 <script language="JavaScript" type="text/javascript">
-function coreTestSuite() {
-  var newsuite = new top.jsUnitTestSuite();
-  newsuite.addTestPage("tests/jsUnitAssertionTests.html");
-  newsuite.addTestPage("tests/jsUnitSetUpTearDownTests.html");
-  return newsuite;
-}
 
-function utilityTestSuite() {
-  var newsuite = new top.jsUnitTestSuite();
-  newsuite.addTestPage("tests/jsUnitUtilityTests.html");
-  newsuite.addTestPage("tests/jsUnitFrameworkUtilityTests.html");
-  newsuite.addTestPage("tests/jsUnitOnLoadTests.html");  
-  return newsuite;
-}
+var aVar=null;
 
-function suite() {
-  var newsuite = new top.jsUnitTestSuite();
-  newsuite.addTestSuite(coreTestSuite());
-  newsuite.addTestSuite(utilityTestSuite());
-  return newsuite;
+function testOnLoadFired() {
+    assertEquals("foo", aVar);
+}
+function myOnLoadEvent() {
+	aVar="foo";
 }
 </script>
-  </head>
+</head>
 
-  <body>
-    <h1>JsUnit Test Suite</h1>
+<body onload="myOnLoadEvent()">
+  <h1>JsUnit OnLoad Tests</h1>
 
-    <p>This page contains a suite of tests for testing
-    JsUnit.</p>
-  </body>
+  <p>This page contains tests for the JsUnit Framework.
+  To see them, take a look at the source.</p>
+</body>
 </html>
-
