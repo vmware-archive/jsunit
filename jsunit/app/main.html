@@ -30,7 +30,7 @@
       }
       function isIE5Plus() {
               return  isBrowserMake("Microsoft Internet Explorer") &&
-                      isBrowserVersion("MSIE 5");
+                      (isBrowserVersion("MSIE 5") || isBrowserVersion("MSIE 6"));
       }
       function isNetscape6() {
               return  isBrowserMake("Netscape") &&
