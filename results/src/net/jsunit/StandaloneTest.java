@@ -85,10 +85,10 @@ public class StandaloneTest extends TestCase {
 						Runtime.getRuntime().exec(
 							"\"" + next + "\" \"" + url() + "\"");
 				} catch (Throwable t) {
+					t.printStackTrace();
 					fail(
 						"All browser processes should start, but the following did not: "
 							+ next);
-					t.printStackTrace();
 				}
 				waitForResultToBeSubmitted(next, currentResultCount);
 				verifyLastResult();
