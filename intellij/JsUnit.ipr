@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="4" relativePaths="false">
+<project version="4" relativePaths="true">
   <component name="AntConfiguration" />
   <component name="CodeStyleSettingsManager">
     <option name="PER_PROJECT_SETTINGS" />

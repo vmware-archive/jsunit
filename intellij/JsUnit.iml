@@ -2,17 +2,17 @@
 <module version="4" relativePaths="false">
   <component name="ModuleRootManager" />
   <component name="NewModuleRootManager">
-    <output url="file://C:/dev/jsunit/results/bin" />
+    <output url="file://C:/dev/jsunit/java/bin" />
     <exclude-output />
     <content url="file://C:/dev/jsunit">
-      <sourceFolder url="file://C:/dev/jsunit/results/src" isTestSource="false" />
+      <sourceFolder url="file://C:/dev/jsunit/java/src" isTestSource="false" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/dev/jsunit/results/lib/org.mortbay.jetty-jdk1.2.jar!/" />
+          <root url="jar://C:/dev/jsunit/java/lib/xerces.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -21,7 +21,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/dev/jsunit/results/lib/jdom.jar!/" />
+          <root url="jar://C:/dev/jsunit/java/lib/junit.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -30,7 +30,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/dev/jsunit/results/lib/javax.servlet.jar!/" />
+          <root url="jar://C:/dev/jsunit/java/lib/javax.servlet.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -39,7 +39,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/dev/jsunit/results/lib/junit.jar!/" />
+          <root url="jar://C:/dev/jsunit/java/lib/jdom.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -48,7 +48,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://C:/dev/jsunit/results/lib/xerces.jar!/" />
+          <root url="jar://C:/dev/jsunit/java/lib/org.mortbay.jetty-jdk1.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
