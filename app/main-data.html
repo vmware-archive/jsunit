@@ -55,9 +55,22 @@ function  kickOffTests() {
   top.testManager.setup();
 
   top.testManager._currentSuite().addTestPage(top.testManager.resolveUserEnteredTestFileName());
+  top.tracer.initialize();
+
+  var traceLevel = document.forms.testRunnerForm.traceLevel;
+  if (traceLevel.value != '0')
+  {
+    var traceWindow = top.tracer._getTraceWindow();
+    if (traceWindow) {
+      traceWindow.focus();
+    }
+    else {
+      alert('Tracing requires popup windows which are blocked in your browser.\n\nPlease enable popups if you wish to use tracing.');
+    }
+  }
+
   top.testManager.start();
 }
-
     </script>
   </head>
 
@@ -90,23 +103,23 @@ function  kickOffTests() {
           <td nowrap align="center" valign="bottom">
             &nbsp;
             <script language="JavaScript" type="text/javascript">
-              if (top.getDocumentProtocol() == 'file:///' && !top.jsUnitParmHash.testpage)
+              if (top.getDocumentProtocol() == 'file:///' && !jsUnitGetParm('testpage'))
               {
                 document.write('<input type="file" name="testFileName" size="60">');
               }
               else
               {
                 var inputStr = '<input type="text" name="testFileName" size="60" ';
-                if (top.jsUnitParmHash.testpage)
+                if (jsUnitGetParm('testpage'))
                 {
                   inputStr += 'value="';
                   if (
                   	(top.getDocumentProtocol() == 'http://' || top.getDocumentProtocol() == 'https://') && 
-                  	top.jsUnitParmHash.testpage.indexOf('/') == 0)
+                  	jsUnitGetParm('testpage').indexOf('/') == 0)
                   {
                     inputStr += top.location.host;
                   }
-                  inputStr += top.jsUnitParmHash.testpage;
+                  inputStr += jsUnitGetParm('testpage');
                   var testParms = top.jsUnitConstructTestParms();
                   if (testParms!='') {
                   	inputStr += '?';

@@ -60,7 +60,10 @@ function isPageLoaded()
   try 
   {
     // attempt to access the var isTestPageLoaded in the testFrame
-    isTestPageLoaded=top.testManager.containerTestFrame.isTestPageLoaded;
+    if (typeof(top.testManager.containerTestFrame.isTestPageLoaded) != 'undefined')
+    {
+      isTestPageLoaded=top.testManager.containerTestFrame.isTestPageLoaded;
+    }
 
     // ok, if the above did not throw an exception, then the 
     // variable is defined. If the onload has not fired in the

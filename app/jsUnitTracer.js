@@ -42,6 +42,7 @@ function jsUnitTracer() {
   this.TRACE_LEVEL_WARNING = 1;
   this.TRACE_LEVEL_INFO    = 2;
   this.TRACE_LEVEL_DEBUG   = 3;
+  this.popupWindowsBlocked = false;
 }
 
 jsUnitTracer.prototype.initialize = function () 
@@ -98,11 +99,16 @@ jsUnitTracer.prototype._writeToTraceWindow  = function (traceString, traceLevel)
 
 jsUnitTracer.prototype._getTraceWindow = function () 
 {
-  if (this._traceWindow == null) {
+  if (this._traceWindow == null && !this.popupWindowsBlocked) {
     this._traceWindow = window.open('','','width=600, height=350,status=no,resizable=yes,scrollbars=yes');
-    var resDoc = this._traceWindow.document;
-    resDoc.write('<html>\n<head>\n<link rel="stylesheet" href="css/jsUnitStyle.css">\n<title>Tracing - JsUnit<\/title>\n<head>\n<body>');
-    resDoc.write('<h2>Tracing - JsUnit<\/h2>\n');
+    if (!this._traceWindow) {
+      this.popupWindowsBlocked = true;
+    }
+    else {
+      var resDoc = this._traceWindow.document;
+      resDoc.write('<html>\n<head>\n<link rel="stylesheet" href="css/jsUnitStyle.css">\n<title>Tracing - JsUnit<\/title>\n<head>\n<body>');
+      resDoc.write('<h2>Tracing - JsUnit<\/h2>\n');
+    }
   }
   return this._traceWindow;
 }

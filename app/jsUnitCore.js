@@ -78,6 +78,7 @@ function fail(failureMessage) {
 function error(errorMessage) {
   var errorObject         = new Object();
   errorObject.description = errorMessage;
+  errorObject.stackTrace  = getStackTrace();
   throw errorObject;
 }
 
@@ -211,15 +212,67 @@ function getFunctionName(aFunction) {
 function getStackTrace() {
   var result = '';
 
-  for (var a = arguments.caller; a != null; a = a.caller) {
-    result += '> ' + getFunctionName(a.callee) + '\n';
-    if (a.caller == a) {
-      result += '*';
-      break;
+  if (typeof(arguments.caller) != 'undefined') { // IE, not ECMA
+    for (var a = arguments.caller; a != null; a = a.caller) {
+      result += '> ' + getFunctionName(a.callee) + '\n';
+      if (a.caller == a) {
+        result += '*';
+        break;
+      }
+    }
+  }
+  else { // Mozilla, not ECMA
+    // fake an exception so we can get Mozilla's error stack
+    var testExcp;
+    try
+    {
+      foo.bar;
+    }
+    catch(testExcp)
+    {
+      var stack = parseErrorStack(testExcp);
+      for (var i = 1; i < stack.length; i++)
+      {
+        result += '> ' + stack[i] + '\n';
+        // result = stack.join('\n');
+      }
     }
   }
 
   return result;
+
+}
+
+function parseErrorStack(excp)
+{
+  var stack = [];
+  var name;
+  
+  if (!excp || !excp.stack)
+  {
+    return stack;
+  }
+  
+  var stacklist = excp.stack.split('\n');
+
+  for (var i = 0; i < stacklist.length - 1; i++)
+  {
+    var framedata = stacklist[i];
+
+    name = framedata.match(/^(\w*)/)[1];
+    if (!name) {
+      name = 'anonymous';
+    }
+
+    stack[stack.length] = name;
+  }
+  // remove top level anonymous functions to match IE
+
+  while (stack.length && stack[stack.length - 1] == 'anonymous')
+  {
+    stack.length = stack.length - 1;
+  }
+  return stack;
 }
 
 function JsUnitException(comment, message) {
@@ -289,7 +342,17 @@ function pop(anArray) {
   }
 }
 
-if (top.xbDEBUG && top.xbDEBUG.on && top.testManager)
+// safe, strict access to jsUnitParmHash
+function jsUnitGetParm(name)
+{
+  if (typeof(top.jsUnitParmHash[name]) != 'undefined')
+  {
+    return top.jsUnitParmHash[name];
+  }
+  return null;
+}
+
+if (top && typeof(top.xbDEBUG) != 'undefined' && top.xbDEBUG.on && top.testManager)
 {
   top.xbDebugTraceObject('top.testManager.containerTestFrame', 'JSUnitException');
   // asserts
@@ -330,11 +393,29 @@ function newOnLoadEvent() {
   isTestPageLoaded = true;
 }
 
-if (window.attachEvent) {
-	window.attachEvent("onload", newOnLoadEvent);
-} else if (window.addEventListener) {
-	window.addEventListener("load", newOnLoadEvent, false);
-} else {
-    // browsers that do not support window.attachEvent or window.addEventListener will not override a page's own onload event
-	window.onload=newOnLoadEvent; 
+function jsUnitSetOnLoad(windowRef, onloadHandler)
+{
+  var isKonqueror = navigator.userAgent.indexOf('Konqueror/') != -1;
+
+  if (typeof(windowRef.attachEvent) != 'undefined') {
+    // Internet Explorer, Opera
+    windowRef.attachEvent("onload", onloadHandler);
+  } else if (typeof(windowRef.addEventListener) != 'undefined' && !isKonqueror){
+    // Mozilla, Konqueror
+    // exclude Konqueror due to load issues
+    windowRef.addEventListener("load", onloadHandler, false);
+  } else if (typeof(windowRef.document.addEventListener) != 'undefined' && !isKonqueror) {
+    // DOM 2 Events
+    // exclude Mozilla, Konqueror due to load issues
+    windowRef.document.addEventListener("load", onloadHandler, false);
+  } else if (typeof(windowRef.onload) != 'undefined' && windowRef.onload) {
+    windowRef.jsunit_original_onload = windowRef.onload;
+    windowRef.onload = function() { windowRef.jsunit_original_onload(); onloadHandler(); };
+  } else {
+    // browsers that do not support windowRef.attachEvent or 
+    // windowRef.addEventListener will override a page's own onload event
+    windowRef.onload=onloadHandler; 
+  }
 }
+
+jsUnitSetOnLoad(window, newOnLoadEvent);

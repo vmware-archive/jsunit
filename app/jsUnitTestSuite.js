@@ -45,15 +45,13 @@ function jsUnitTestSuite() {
 
 jsUnitTestSuite.prototype.addTestPage = function (pageName) 
 {
-  with (this)
-  testPages[testPages.length] = pageName;
+  this.testPages[this.testPages.length] = pageName;
 }
 
 jsUnitTestSuite.prototype.addTestSuite = function (suite) 
 {
-  with (this)
   for (var i = 0; i < suite.testPages.length; i++)
-    addTestPage(suite.testPages[i]);
+    this.addTestPage(suite.testPages[i]);
 }
 
 jsUnitTestSuite.prototype.containsTestPages = function () 

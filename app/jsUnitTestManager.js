@@ -104,7 +104,6 @@ jsUnitTestManager.prototype.start = function ()
 {
   this._timeRunStarted = new Date();
   this.initialize();
-  top.tracer.initialize();
   setTimeout('top.testManager._nextPage();', jsUnitTestManager.TIMEOUT_LENGTH);
 }
 
@@ -156,7 +155,7 @@ jsUnitTestManager.prototype._runTest = function ()
       this.containerTestFrame.startTime = new Date();
       this.containerTestFrame.setUpPage();
       // try test again later
-      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPAGE_INTERVAL);
+      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
       return;
     }
 
@@ -174,7 +173,7 @@ jsUnitTestManager.prototype._runTest = function ()
         this.containerTestFrame.startTime = (new Date());
       }
       // try test again later
-      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPAGE_INTERVAL);
+      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
       return;
     }
   }
@@ -276,12 +275,10 @@ jsUnitTestManager.prototype.getsetUpPageTimeout = function ()
 
 jsUnitTestManager.prototype.isTestPageSuite = function () 
 {
-  var result = true;
-  try {
-    this.containerTestFrame.suite();
-  }
-  catch (e) {
-    result = false;
+  var result = false;
+  if (typeof(this.containerTestFrame.suite) == 'function')
+  {
+    result = true;
   }
   return result;
 }
@@ -292,13 +289,15 @@ jsUnitTestManager.prototype.getTestFunctionNames = function ()
   var testFunctionNames = new Array();
   var i;
   
-  if (testFrame && testFrame.exposeTestFunctionNames)
+  if (testFrame && typeof(testFrame.exposeTestFunctionNames) == 'function')
         return testFrame.exposeTestFunctionNames();
   
-  if (testFrame && testFrame.document && testFrame.document.scripts) { // IE5 and up
+  if (testFrame && 
+      testFrame.document && 
+      typeof(testFrame.document.scripts) != 'undefined') { // IE5 and up
     var scriptsInTestFrame = testFrame.document.scripts;
     
-    for (var i = 0; i < scriptsInTestFrame.length; i++) {
+    for (i = 0; i < scriptsInTestFrame.length; i++) {
       var someNames = this._extractTestFunctionNamesFromScript(scriptsInTestFrame[i]);
       if (someNames)
         testFunctionNames=testFunctionNames.concat(someNames);
@@ -394,7 +393,7 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
   if (excep==null)
   	serializedTestCaseString+="S||";
   else {
-  	if (excep.isJsUnitException)
+  	if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException)
   		serializedTestCaseString+="F|";
   	else {
   		serializedTestCaseString+="E|";
@@ -412,7 +411,8 @@ jsUnitTestManager.prototype._fullyQualifiedCurrentTestFunctionName = function() 
 jsUnitTestManager.prototype._handleTestException = function (excep) 
 {
   var problemMessage = this._fullyQualifiedCurrentTestFunctionName() + ' ';
-  if (!excep.isJsUnitException) {
+  var errOption;
+  if (typeof(excep.isJsUnitException) == 'undefined' || !excep.isJsUnitException) {
     problemMessage += 'had an error';
     this.errorCount++;
   } 
@@ -421,13 +421,39 @@ jsUnitTestManager.prototype._handleTestException = function (excep)
     this.failureCount++;
   }
   var listField = this.problemsListField;
-  listField.options[listField.length]=new Option(problemMessage, this._problemDetailMessageFor(excep));
+  var problemDocument = this.mainFrame.frames.mainErrors.document;
+  if (typeof(problemDocument.createElement) != 'undefined') {
+    // DOM Level 2 HTML method.
+    // this is required for Opera 7 since appending to the end of the 
+    // options array does not work, and adding an Option created by new Option()
+    // and appended by listField.options.add() fails due to WRONG_DOCUMENT_ERR
+    errOption = problemDocument.createElement('option');
+    errOption.setAttribute('value', this._problemDetailMessageFor(excep));
+    errOption.appendChild(problemDocument.createTextNode(problemMessage));
+    listField.appendChild(errOption);
+  }
+  else {
+    // new Option() is DOM 0
+    errOption = new Option(problemMessage, this._problemDetailMessageFor(excep));
+    if (typeof(listField.add) != 'undefined') {
+      // DOM 2 HTML 
+      listField.add( errOption , null);
+    }
+    else if (typeof(listField.options.add) != 'undefined') {
+      // DOM 0
+      listField.options.add( errOption, null);
+    }
+    else {
+      // DOM 0
+      listField.options[listField.length]= errOption;
+    }
+  }
 }
 
 jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) 
 {
   var result=null;
-  if (excep.isJsUnitException) {
+  if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException) {
     result = '';
     if (excep.comment != null)
       result+=('"'+excep.comment+'"\n');
@@ -440,10 +466,12 @@ jsUnitTestManager.prototype._problemDetailMessageFor = function (excep)
   else {
     result = 'Error message is:\n"';
     result +=
-      (excep.description == top.JSUNIT_UNDEFINED_VALUE) ?
+      (typeof(excep.description) == 'undefined') ?
       excep :
       excep.description;
     result += '"';
+    if (typeof(excep.stack) != 'undefined') // Mozilla only
+      result+='\n\nStack trace follows:\n'+excep.stack;
   }
   return result;
 }
@@ -623,7 +651,7 @@ function isBeingRunOverHTTP() {
 
 function getWebserver() {
 	if (isBeingRunOverHTTP()) {
-		var myUrl = loc = location.href;
+		var myUrl = location.href;
 		var myUrlWithProtocolStripped = myUrl.substring(myUrl.indexOf("/") + 2);
 		return myUrlWithProtocolStripped.substring(0, myUrlWithProtocolStripped.indexOf("/"));
 	}
