@@ -1,6 +1,7 @@
 /* @author Edward Hieatt, edward@jsunit.net */
 
 var JSUNIT_UNDEFINED_VALUE;
+var JSUNIT_VERSION="2.1";
 var isTestPageLoaded = false;
 
 //hack for NS62 bug

@@ -2,3 +2,4 @@
 - Removed all shell scripts
 - Upgraded Jetty
 - Distributed test run is no longer part of the JsUnitServer - it's just a test to which you pass the remoteURLs
+- Preferred way to specify properties is no longer using jsunit.properties

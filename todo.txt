@@ -1,3 +1,2 @@
 - Write custom ant tasks
-- Change version and find a way to specify the version in only 1 place
 - Have the distributed test get back the result xml of each browser, not just success or failure
