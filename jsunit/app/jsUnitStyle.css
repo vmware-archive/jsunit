@@ -16,6 +16,9 @@
   along with this program; if not, write to the Free Software
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
+body { margin-top: 0; margin-bottom: 0; }
+td { padding: 0; margin: 0;}
+td img { padding: 0; margin: 0; vertical-align: baseline; display: block;}
 
 .jsUnitDefault { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: .7em; color: #000000}
 .jsUnitHeading { font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 1.3em; font-weight: bold; color: #003399}

@@ -19,6 +19,7 @@
 
 var MAX_SECONDS_WAITING_FOR_TEST_PAGE_TO_OPEN=5;
 var TIMEOUT_LENGTH=1;
+var PRETEST_INTERVAL = 100;
 var testManager=null;
 var pageLoader=new PageLoader();
 var uiUpdater=new UiUpdater();
@@ -69,15 +70,51 @@ function _handleNewSuite() {
         }
 }
 function _runTest() {
-        if (this._testIndex+1>this._numberOfTestsInPage)
-                this._nextPage();
-        else {
-                this._testExecutor.executeTestFunction(this._testsInPage[this._testIndex]);
-                this.totalCount++;
-                uiUpdater.updateProgressIndicators();
-                this._testIndex++;
-                setTimeout("testManager._runTest()", TIMEOUT_LENGTH);
+  if (this._testIndex+1>this._numberOfTestsInPage)
+  {
+    this._nextPage();
+    return;
+  }
+
+  if (this._testIndex == 0 && typeof(top.uiFrames.testFrame.preTest) == 'function')
+  {
+    // first test for this page and a preTest is defined 
+    if (typeof(top.uiFrames.testFrame.preTestStatus) == 'undefined')
+    {
+      // preTest() not called yet, so call it
+      top.uiFrames.testFrame.preTestStatus = false;
+      top.uiFrames.testFrame.startTime = (new Date());
+      top.uiFrames.testFrame.preTest();
+      // try test again later
+      setTimeout("testManager._runTest()", PRETEST_INTERVAL);
+      return;
+    }
+
+    if (top.uiFrames.testFrame.preTestStatus != 'complete')
+    {
+      // preTest called, but not complete yet
+      top.status = 'preTest not completed... ' + top.uiFrames.testFrame.preTestStatus + ' ' + (new Date());
+      if ((new Date() - top.uiFrames.testFrame.startTime) > PRETEST_TIMEOUT) {
+        if (prompt('Test Pre-Condition timed out without completing., Retry or Cancel', 'Retry') != 'Retry')
+        {
+          testManager.abort();
+          return;
         }
+        top.uiFrames.testFrame.startTime = (new Date());
+      }
+      // try test again later
+      setTimeout("testManager._runTest()", PRETEST_INTERVAL);
+      return;
+    }
+  }
+
+  top.status = '';
+  // either not first test, or no preTest defined, or preTest completed
+  this._testExecutor.executeTestFunction(this._testsInPage[this._testIndex]);
+  this.totalCount++;
+  uiUpdater.updateProgressIndicators();
+  this._testIndex++;
+  setTimeout("testManager._runTest()", TIMEOUT_LENGTH);
 }
 function _nextPage() {
         if (this._currentSuite().hasMorePages()) {
@@ -225,101 +262,6 @@ TestExecutor.prototype.executeTestFunction=executeTestFunction;
 TestExecutor.prototype._handleTestException=_handleTestException;
 TestExecutor.prototype._problemDetailMessageFor=_problemDetailMessageFor;
 
-/**************************************************************/
-
-function UiUpdater() {
-        this._windowForAllProblemMessages=null;
-}
-function _setTextOnLayer(layerName, str) {
-	document.getElementById(layerName).innerHTML=str;
-}
-function setStatus(str) {
-        this._setTextOnLayer("statusDiv", str);
-}
-function _setErrors(n) {
-        this._setTextOnLayer("errorsDiv", n);
-}
-function _setFailures(n) {
-        this._setTextOnLayer("failuresDiv", n);
-}
-function _setTotal(n) {
-        this._setTextOnLayer("totalDiv", n);
-}
-function _setProgressBarImage(imgName) {
-	progressBar().src=imgName;
-}
-function _setProgressBarWidth(w) {
-        progressBar().width=w;
-}
-function updateProgressIndicators() {
-        this._setTotal(testManager.totalCount);
-        this._setErrors(testManager.errorCount);
-        this._setFailures(testManager.failureCount);
-        this._setProgressBarWidth(300*testManager.calculateProgressBarProportion());
-        if (testManager.errorCount>0 || testManager.failureCount>0)
-                this._setProgressBarImage("../images/red.gif");
-        else
-                this._setProgressBarImage("../images/green.gif");
-}
-function showMessageForSelectedProblemTest() {
-	var problemTestIndex=problemsListField().selectedIndex;
-        if (problemTestIndex!=-1)
-		alert(problemsListField()[problemTestIndex].value);
-}
-function showMessagesForAllProblemTests() {
-        if (problemsListField().length==0) return;
-        try {
-                this._windowForAllProblemMessages.close();
-        } catch(e) {
-        }
-        this._windowForAllProblemMessages = window.open("","","width=600, height=350,status=no,resizable=yes,scrollbars=yes");
-        var resDoc = this._windowForAllProblemMessages.document;
-        resDoc.write("<html><head><link rel=\"stylesheet\" href=\"jsUnitStyle.css\"><title>Tests with problems - JsUnit</title><head><body>");
-        resDoc.write("<p class=\"jsUnitSubHeading\">Tests with problems ("+problemsListField().length+" total) - JsUnit</p>");
-        for (var i=0; i<problemsListField().length; i++) {
-                resDoc.write("<p class=\"jsUnitDefault\">");
-                resDoc.write("<b>" + (i+1) + ". ");
-                resDoc.write(problemsListField()[i].text);
-                resDoc.write("</b></p><p><pre>");
-                resDoc.write(problemsListField()[i].value);
-                resDoc.write("</pre></p>");
-        }
-        resDoc.write("</body></html>");
-        resDoc.close();
-}
-function _clearProblemsList() {
-	var listField=problemsListField();
-	var initialLength=listField.options.length;
-        for (var i=0; i<initialLength; i++)
-                listField.remove(0);
-}
-function initializeUiUpdater() {
-        this.setStatus("Initializing...");
-        this._setRunButtonEnabled(false);
-        this._clearProblemsList();
-        this.updateProgressIndicators();
-        this.setStatus("Done initializing");
-}
-function finalizeUiUpdater() {
-        this._setRunButtonEnabled(true);
-}
-function _setRunButtonEnabled(b) {
-        runButton().disabled=!b;
-}
-UiUpdater.prototype._setTextOnLayer=_setTextOnLayer;
-UiUpdater.prototype.setStatus=setStatus;
-UiUpdater.prototype._setErrors=_setErrors;
-UiUpdater.prototype._setFailures=_setFailures;
-UiUpdater.prototype._setTotal=_setTotal;
-UiUpdater.prototype._setProgressBarImage=_setProgressBarImage;
-UiUpdater.prototype._setProgressBarWidth=_setProgressBarWidth;
-UiUpdater.prototype.updateProgressIndicators=updateProgressIndicators;
-UiUpdater.prototype.showMessageForSelectedProblemTest=showMessageForSelectedProblemTest;
-UiUpdater.prototype._clearProblemsList=_clearProblemsList;
-UiUpdater.prototype.initializeUiUpdater=initializeUiUpdater;
-UiUpdater.prototype.finalizeUiUpdater=finalizeUiUpdater;
-UiUpdater.prototype._setRunButtonEnabled=_setRunButtonEnabled;
-
 /*******************************************/
 
 function LoadedPageInvestigator() {
@@ -335,20 +277,21 @@ function isLoadedTestPageATestSuitePage() {
         return result;
 }
 function getTestFunctionNamesInLoadedTestPage() {
+  var testFrame = containerTestFrame();
 	var testFunctionNames=new Array();
-        if (isIE5Plus()) {
-		var scriptsInTestFrame=containerTestFrame().document.scripts;
+  if (testFrame && testFrame.document && testFrame.document.scripts) { // IE5 and up
+		var scriptsInTestFrame=testFrame.document.scripts;
 		for (var i=0; i<scriptsInTestFrame.length; i++) {
-                        var someNames=this._extractTestFunctionNamesFromScript(scriptsInTestFrame[i]);
+      var someNames=this._extractTestFunctionNamesFromScript(scriptsInTestFrame[i]);
 			if (someNames)
 				testFunctionNames=testFunctionNames.concat(someNames);
-                }
+    }
 	} else {
-                for (var i in containerTestFrame()) {
-                        if (i.substring(0, 4)=="test" && typeof(containerTestFrame()[i])=="function")
-                                push(testFunctionNames, i);
-                }
-        }
+    for (var i in testFrame) {
+      if (i.substring(0, 4)=="test" && typeof(testFrame[i])=="function")
+        push(testFunctionNames, i);
+    }
+  }
 	return testFunctionNames;
 }
 function _extractTestFunctionNamesFromScript(aScript) {
@@ -460,38 +403,4 @@ function  kickOffTests() {
         testManager.start();
 }
 
-/********************************************************/
-function container() {
-	return parent.frames[0];
-}
-function containerController() {
-	return container().frames[0];
-}
-function containerTestFrame() {
-	return container().frames[1];
-}
-function getTestFileName() {
-        var rawEnteredFileName=document.testRunnerForm.testFileName.value;
-        var result=rawEnteredFileName;
-        while (result.indexOf("\\")!=-1)
-                result=result.replace("\\", "/");
-        return result;
-}
-function getTestFileProtocol() {
-        return getDocumentProtocol();
-}
-function problemsListField() {
-	return document.testRunnerForm.problemsList;
-}
-function progressBar() {
-	return document.progress;
-}
-function runButton() {
-        return document.testRunnerForm.runButton;
-}
-function getDocumentProtocol() {
-        var protocol=document.location.protocol;
-        if (protocol=="file:") return "file:///";
-        if (protocol=="http:") return "http://";
-        return null;
-}
+

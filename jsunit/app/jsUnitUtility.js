@@ -17,6 +17,9 @@
   Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 */
 
+var GECKO_FILE_TIMEOUT = 3000; // milliseconds
+var PRETEST_TIMEOUT    = 60000; // milliseconds
+
 function trim(str) {
         if (str==null) return null;
         var startingIndex=0, endingIndex=str.length-1;
@@ -39,4 +42,13 @@ function pop(anArray) {
                 delete anArray[anArray.length - 1];
                 anArray.length--;
         }
+}
+function getTestFileProtocol() {
+        return getDocumentProtocol();
+}
+function getDocumentProtocol() {
+        var protocol=top.document.location.protocol;
+        if (protocol=="file:") return "file:///";
+        if (protocol=="http:") return "http://";
+        return null;
 }
