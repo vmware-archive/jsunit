@@ -79,7 +79,7 @@ function jsUnitTestManager()
 }
 
 // seconds to wait for each test page to load
-jsUnitTestManager.TESTPAGE_WAIT_SEC  = 5;
+jsUnitTestManager.TESTPAGE_WAIT_SEC  = 20;
 jsUnitTestManager.TIMEOUT_LENGTH     = 20;
 
 // seconds to wait for setUpPage to complete
