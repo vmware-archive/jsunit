@@ -48,6 +48,14 @@
     <script language="JavaScript" type="text/javascript">
 
 function  kickOffTests() {
+  //
+  //    Check if Init was called by onload handler
+  //      
+  if (typeof(top.testManager) == 'undefined') {
+     top.init();
+  }  
+
+
   if (isBlank(top.testManager.getTestFileName())) {
     alert('Please enter a file name.');
     return;
