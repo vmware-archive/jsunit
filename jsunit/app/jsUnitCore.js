@@ -294,7 +294,7 @@ function pop(anArray) {
 }
 window.onload=newOnLoadEvent;
 
-if (top.xbDEBUG.on && top.testManager)
+if (top.xbDEBUG && top.xbDEBUG.on && top.testManager)
 {
   top.xbDebugTraceObject('top.testManager.containerTestFrame', 'JSUnitException');
   // asserts
