@@ -86,7 +86,7 @@ public class StandaloneTest extends TestCase {
 		while (it.hasNext()) {
 			String next = (String) it.next();
 			try {
-				System.out.println("Starting process " + next);
+				Utility.log("Starting process " + next);
 				Process process =
 					Runtime.getRuntime().exec(
 						"\"" + next + "\" \"" + url() + "\"");
@@ -100,10 +100,10 @@ public class StandaloneTest extends TestCase {
 		}
 		waitForResultsToBeSubmitted();
 		verifyResults();
-		System.out.println("...Done");
+		Utility.log("...Done");
 	}
 	private void waitForResultsToBeSubmitted() throws Exception {
-		System.out.println("Waiting for results to be submitted...");
+		Utility.log("Waiting for results to be submitted...");
 		long secondsWaited = 0;
 		while (acceptor.getResults().size()
 			!= this.initialResultsSize + browserFileNames().size()) {
@@ -114,7 +114,7 @@ public class StandaloneTest extends TestCase {
 		}
 	}
 	private void verifyResults() {
-		System.out.println("Verifying results...");
+		Utility.log("Verifying results...");
 		Iterator it = acceptor.getResults().iterator();
 		while (it.hasNext()) {
 			TestSuiteResult result = (TestSuiteResult) it.next();

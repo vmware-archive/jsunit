@@ -402,7 +402,6 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
   	serializedTestCaseString+=this._problemDetailMessageFor(excep);
   }  	
   var newOption = new Option(serializedTestCaseString);
-  newOption.selected=true;
   this.testCaseResultsField[this.testCaseResultsField.length]=newOption;  
 }
 
@@ -615,8 +614,8 @@ function isBeingRunOverHTTP() {
 function getWebserver() {
 	if (isBeingRunOverHTTP()) {
 		var myUrl = loc = location.href;
-		var myUrlWithHttpStripped = myUrl.substring(7);
-		return myUrlWithHttpStripped.substring(0, myUrlWithHttpStripped.indexOf("/"));
+		var myUrlWithProtocolStripped = myUrl.substring(myUrl.indexOf("/") + 2);
+		return myUrlWithProtocolStripped.substring(0, myUrlWithProtocolStripped.indexOf("/"));
 	}
 	return null;
 }

@@ -3,6 +3,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 /**
@@ -61,7 +62,7 @@ public class Utility {
 			out.write(contents.getBytes());
 			out.close();
 		} catch (Exception e) {
-			System.out.println("Failed to write file: " + e.getMessage());
+			log("Failed to write file: " + e.getMessage());
 			e.printStackTrace();
 		}
 	}
@@ -73,5 +74,8 @@ public class Utility {
 		while (toker.hasMoreTokens())
 			result.add(toker.nextToken());
 		return result;
+	}
+	public static void log(String string) {
+		System.out.println(new Date() + ": " + string);
 	}
 }

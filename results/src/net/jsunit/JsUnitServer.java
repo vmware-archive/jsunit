@@ -98,12 +98,14 @@ public class JsUnitServer {
 		return instance;
 	}
 	public TestSuiteResult accept(HttpServletRequest request) {
+		Utility.log("Accepting result from " + request.getRemoteAddr() + "...");
 		TestSuiteResult result = TestSuiteResult.fromRequest(request);
 		TestSuiteResult existingResultWithSameId = findResultWithId(result.getId());
 		if (existingResultWithSameId != null)
 			results.remove(existingResultWithSameId);
 		results.add(result);
 		result.writeLog();
+		Utility.log("...Done");
 		return result;
 	}
 	public List getResults() {

@@ -8,9 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
 import net.jsunit.StandaloneTest;
+import net.jsunit.Utility;
 public class TestRunnerServlet extends HttpServlet {
 	protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Received request to run standalone test...");
+		Utility.log("Received request to run standalone test...");
 		StandaloneTest test = new StandaloneTest("testStandaloneRun");
 		test.setStartAndStopServer(false);
 		TestResult result = TestRunner.run(test);
@@ -19,6 +20,6 @@ public class TestRunnerServlet extends HttpServlet {
 		String resultString = result.wasSuccessful() ? "success" : "failure";
 		out.write(("<result>" + resultString + "</result>").getBytes());
 		out.close();
-		System.out.println("...done");
+		Utility.log("...Done");
 	}
 }
