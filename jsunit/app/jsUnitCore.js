@@ -41,6 +41,26 @@
 var JSUNIT_UNDEFINED_VALUE;
 var isTestPageLoaded = false;
 
+//hack for NS62 bug
+function jsUnitFixTop() {
+  var tempTop = top;
+  if (!tempTop) {
+    tempTop = window;
+    while (tempTop.parent) {
+      tempTop = tempTop.parent;
+      if (tempTop.top && tempTop.top.jsUnitTestSuite) {
+        tempTop = tempTop.top;
+        break;
+      }
+    }
+  }
+  try {
+    window.top = tempTop;
+  } catch (e) {}
+}
+
+jsUnitFixTop();
+
 function _displayStringForValue(aVar) {
   if (aVar === null) 
     return 'null';
