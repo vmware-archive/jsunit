@@ -55,7 +55,7 @@ public class StandaloneTest extends TestCase {
     private void launchBrowser(String browser) {
         Utility.log("StandaloneTest: launching " + browser);
         try {
-            process = Runtime.getRuntime().exec("\"" + browser + "\" \"" + server.getTestURL() + "\"");
+            process = Runtime.getRuntime().exec(new String[] {browser, server.getTestURL().toString()});
         } catch (Throwable t) {
             t.printStackTrace();
             fail("All browser processes should start, but the following did not: " + browser);

@@ -18,7 +18,7 @@ public class DistributedTestTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         System.setProperty(Configuration.BROWSER_FILE_NAMES, "c:\\program files\\internet explorer\\iexplore.exe");
-        System.setProperty(Configuration.URL, "file:///c:/jsunit/testRunner.html?testPage=c:\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true");
+        System.setProperty(Configuration.URL, "file:///c:/dev/jsunit/testRunner.html?testPage=c:\\dev\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true");
         server = new JsUnitServer();
         server.initialize();
         server.start();
