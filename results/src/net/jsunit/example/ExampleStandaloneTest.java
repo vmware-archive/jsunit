@@ -45,7 +45,7 @@ import net.jsunit.*;
 public class ExampleStandaloneTest extends StandaloneTest {
 	public void setUp() throws Exception {
 		super.setUp();
-		TestSuiteResult.setLogsDirectory("c:\\jsunit\\jsunit\\results\\logs\\");
+		TestSuiteResult.setLogsDirectory("c:\\jsunit\\results\\logs\\");
 	}
 	protected List browserFileNames() {
 		return Arrays.asList(new String[] {
@@ -54,6 +54,6 @@ public class ExampleStandaloneTest extends StandaloneTest {
 		});
 	}
 	protected String url() {
-		return "file:///c:/jsunit/jsunit/testRunner.html?testPage=c:\\jsunit\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitResults=true";
+		return "file:///c:/jsunit/testRunner.html?testPage=c:\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitResults=true";
 	}
 }
