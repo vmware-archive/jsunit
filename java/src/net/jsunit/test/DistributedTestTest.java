@@ -17,7 +17,7 @@ public class DistributedTestTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(Configuration.BROWSER_FILE_NAMES, "htmlview");
+        System.setProperty(Configuration.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_BROWSER);
         server = new JsUnitServer();
         System.setProperty(Configuration.URL,
            "http://localhost:8080/jsunit/testRunner.html?"
