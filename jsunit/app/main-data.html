@@ -100,7 +100,17 @@
 
           <td>&nbsp;&nbsp;&nbsp;</td>
 
-          <td class="jsUnitDefault"><input type="checkbox" name="closeTraceWindowOnNewRun" checked> Close old trace window on new run</td>
+          <td><input type="checkbox" name="closeTraceWindowOnNewRun" checked></td>
+          <td class="jsUnitDefault">Close old trace window on new run</td>
+
+          <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+
+          <td class="jsUnitDefault">Page load timeout:</td>
+          <td>&nbsp;
+            <script language="javascript" type="text/javascript">
+            document.write('<input type="text" size="2" name="timeout" value="'+MAX_SECONDS_WAITING_FOR_TEST_PAGE_TO_OPEN+'">');
+            </script>
+          </td>
         </tr>
       </table>
       <hr>

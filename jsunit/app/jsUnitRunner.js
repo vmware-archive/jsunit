@@ -78,12 +78,12 @@ function _runTest() {
 
   if (this._testIndex == 0 && typeof(top.uiFrames.testFrame.preTest) == 'function')
   {
-    // first test for this page and a preTest is defined 
+    // first test for this page and a preTest is defined
     if (typeof(top.uiFrames.testFrame.preTestStatus) == 'undefined')
     {
       // preTest() not called yet, so call it
       top.uiFrames.testFrame.preTestStatus = false;
-      top.uiFrames.testFrame.startTime = (new Date());
+      top.uiFrames.testFrame.startTime = new Date();
       top.uiFrames.testFrame.preTest();
       // try test again later
       setTimeout("testManager._runTest()", PRETEST_INTERVAL);
@@ -158,6 +158,14 @@ function _cleanUp() {
         uiUpdater.finalizeUiUpdater();
         tracer.finalizeTracer();
 }
+function timeout() {
+        var result=MAX_SECONDS_WAITING_FOR_TEST_PAGE_TO_OPEN;
+        try {
+                result = eval(document.testRunnerForm.timeout.value);
+        } catch (e) {
+        }
+        return result;
+}
 TestManager.prototype.start=start;
 TestManager.prototype.doneLoadingPage=doneLoadingPage;
 TestManager.prototype._handleNewSuite=_handleNewSuite;
@@ -168,6 +176,7 @@ TestManager.prototype._currentSuite=_currentSuite;
 TestManager.prototype.calculateProgressBarProportion=calculateProgressBarProportion;
 TestManager.prototype._cleanUp=_cleanUp;
 TestManager.prototype.abort=abort;
+TestManager.prototype.timeout=timeout;
 
 /**************************************************************/
 
@@ -181,7 +190,7 @@ function loadPage(testFileName) {
         this._callBackWhenPageIsLoaded();
 }
 function _callBackWhenPageIsLoaded() {
-        if ((new Date() - this._loadAttemptStartTime) / 1000 > MAX_SECONDS_WAITING_FOR_TEST_PAGE_TO_OPEN) {
+        if ((new Date() - this._loadAttemptStartTime) / 1000 > testManager.timeout()) {
                 alert("Reading Test Page "+this._testFileName+" timed out.\nMake sure that the file exists and is a Test Page.");
                 testManager.abort();
                 return;
