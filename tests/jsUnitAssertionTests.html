@@ -186,6 +186,31 @@ function testAssertArrayEquals() {
     }
 }
 
+function testAssertEvaluatesToTrue() {
+    assertEvaluatesToTrue("foo");
+    assertEvaluatesToTrue(true);
+    assertEvaluatesToTrue(1);
+    try {
+        assertEvaluatesToTrue(null);
+        fail("Should have thrown a JsUnitException");
+    } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
+    }
+}
+
+function testAssertEvaluatesToFalse() {
+    assertEvaluatesToFalse("");
+    assertEvaluatesToFalse(null);
+    assertEvaluatesToFalse(false);
+    assertEvaluatesToFalse(0);
+    try {
+        assertEvaluatesToFalse("foo");
+        fail("Should have thrown a JsUnitException");
+    } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
+    }
+}
+
 function assertJsUnitException(comment, allegedJsUnitException) {
   assertNotNull(comment, allegedJsUnitException);
   assert(comment, allegedJsUnitException.isJsUnitException);

@@ -171,6 +171,20 @@ function assertArrayEquals(){
     typeof(var2) + ')');
 }
 
+function assertEvaluatesToTrue() {
+  _validateArguments(1, arguments);
+  var value=nonCommentArg(1, 1, arguments);
+  if (!value)
+    fail(commentArg(1, arguments));
+}
+
+function assertEvaluatesToFalse() {
+  _validateArguments(1, arguments);
+  var value=nonCommentArg(1, 1, arguments);
+  if (value)
+    fail(commentArg(1, arguments));
+}
+
 function isLoaded() {
   return isTestPageLoaded;
 }
