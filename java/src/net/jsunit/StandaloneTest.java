@@ -15,7 +15,9 @@ public class StandaloneTest extends TestCase {
     private JsUnitServer server;
     private Process process;
 
-    public StandaloneTest(String name) {
+  public static final String DEFAULT_SYSTEM_BROWSER = "htmlview";
+
+  public StandaloneTest(String name) {
         super(name);
     }
 
@@ -46,10 +48,10 @@ public class StandaloneTest extends TestCase {
     public void testStandaloneRun() throws Exception {
         Iterator it = server.getLocalBrowserFileNames().iterator();
         while (it.hasNext()) {
-            String next = (String) it.next();
+            String browserFileName = (String) it.next();
             Date dateLaunched = new Date();
-            launchBrowser(next);
-            waitForResultToBeSubmitted(next, dateLaunched);
+            launchBrowser(browserFileName);
+            waitForResultToBeSubmitted(browserFileName, dateLaunched);
             destroyBrowserProcess();
             verifyLastResult();
         }
@@ -60,24 +62,30 @@ public class StandaloneTest extends TestCase {
         process = null;
     }
 
-    private void launchBrowser(String browser) {
-        Utility.log("StandaloneTest: launching " + browser);
+    private void launchBrowser(String browserFileName) {
+        Utility.log("StandaloneTest: launching " + browserDisplayName(browserFileName));
         try {
-            process = Runtime.getRuntime().exec(new String[] {browser, server.getTestURL().toString()});
+            process = Runtime.getRuntime().exec(new String[] {browserFileName, server.getTestURL().toString()});
         } catch (Throwable t) {
             t.printStackTrace();
-            fail("All browser processes should start, but the following did not: " + browser);
+            fail("All browser processes should start, but the following did not: " + browserDisplayName(browserFileName));
         }
     }
 
-    private void waitForResultToBeSubmitted(String browser, Date dateBrowserLaunched) throws Exception {
-        Utility.log("StandaloneTest: waiting for " + browser + " to submit result");
+  private String browserDisplayName(String browserFileName) {
+    if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER))
+        return "<Default System Browser>";
+    return browserFileName;
+  }
+
+  private void waitForResultToBeSubmitted(String browserFileName, Date dateBrowserLaunched) throws Exception {
+        Utility.log("StandaloneTest: waiting for " + browserDisplayName(browserFileName) + " to submit result");
         long secondsWaited = 0;
         while (!server.hasReceivedResultSince(dateBrowserLaunched)) {
             Thread.sleep(1000);
             secondsWaited ++;
             if (secondsWaited > MAX_SECONDS_TO_WAIT)
-                fail("Waited more than " + MAX_SECONDS_TO_WAIT + " seconds for browser " + browser);
+                fail("Waited more than " + MAX_SECONDS_TO_WAIT + " seconds for browser " + browserDisplayName(browserFileName));
         }
     }
 

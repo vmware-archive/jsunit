@@ -7,6 +7,7 @@ import junit.textui.TestRunner;
 import net.jsunit.DistributedTest;
 import net.jsunit.JsUnitServer;
 import net.jsunit.Configuration;
+import net.jsunit.StandaloneTest;
 
 public class DistributedTestTest extends TestCase {
     private JsUnitServer server;
@@ -17,7 +18,7 @@ public class DistributedTestTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(Configuration.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_BROWSER);
+        System.setProperty(Configuration.BROWSER_FILE_NAMES, StandaloneTest.DEFAULT_SYSTEM_BROWSER);
         server = new JsUnitServer();
         System.setProperty(Configuration.URL,
            "http://localhost:8080/jsunit/testRunner.html?"

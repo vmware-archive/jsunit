@@ -4,6 +4,7 @@ import net.jsunit.servlet.JsUnitServlet;
 import net.jsunit.servlet.ResultAcceptorServlet;
 import net.jsunit.servlet.ResultDisplayerServlet;
 import net.jsunit.servlet.TestRunnerServlet;
+
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.handler.ResourceHandler;
@@ -11,11 +12,15 @@ import org.mortbay.jetty.servlet.ServletHandler;
 import org.mortbay.start.Monitor;
 import org.mortbay.util.MultiException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -31,8 +36,6 @@ public class JsUnitServer extends HttpServer {
     private URL testURL;
     private boolean initialized;
     private Date dateLastResultReceived;
-
-  public static final String DEFAULT_BROWSER = "htmlview";
 
   public static void main(String args[]) {
         JsUnitServer server = new JsUnitServer();
