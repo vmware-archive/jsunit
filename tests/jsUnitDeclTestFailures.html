@@ -45,6 +45,12 @@
 <link rel="stylesheet" href="../css/jsUnitStyle.css">
 <script language="JavaScript" src="../app/jsUnitCore.js"></script>
 <script language="JavaScript">
+// expose test function names
+function exposeTestFunctionNames()
+{
+return ['testTrim', 'testIsBlank', 'testPushAndPop' ];
+}
+
 // JsUnit Utility Tests
 function testTrim() {
   assertEquals(null, trim(null));
