@@ -48,16 +48,14 @@ import javax.servlet.http.HttpServletRequest;
    @author Edward Hieatt
  */
 public class TestSuiteResult {
-	public static final String LOGS_DIRECTORY = "results"+File.separator+"logs";
 	private String remoteAddress, id, jsUnitVersion, userAgent;
 	private List testCaseResults = new ArrayList();
 	private double time;
-	
 	public TestSuiteResult() {
 		this.id = String.valueOf(System.currentTimeMillis());
 	}
 	public static File logFileForId(String id) {
-		return new File(Utility.logsDirectoryFromProperties()+ File.separator+ id + ".xml");
+		return new File(ResultAcceptor.instance().logsDirectory() + File.separator + id + ".xml");
 	}
 	public String getId() {
 		return id;

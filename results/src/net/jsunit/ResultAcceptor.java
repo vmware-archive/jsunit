@@ -1,10 +1,11 @@
 package net.jsunit;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
+import java.util.Properties;
 import javax.servlet.http.HttpServletRequest;
-
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.handler.ResourceHandler;
@@ -51,40 +52,34 @@ import org.mortbay.jetty.servlet.ServletHandler;
    @author Edward Hieatt
  */
 public class ResultAcceptor {
+	private static Properties properties;
 	private static ResultAcceptor instance;
 	private List results = new ArrayList();
+	public static String PROPERTY_PORT = "port";
+	public static String PROPERTY_RESOURCE_BASE = "resourceBase";
+	public static String PROPERTY_LOGS_DIRECTORY = "logsDirectory";
+	public static String PROPERTIES_FILE_NAME = "jsunit.properties";
 	public static final int DEFAULT_PORT = 8080;
-    public static final String DEFAULT_RESOURCE_BASE=".";
+	public static final String DEFAULT_RESOURCE_BASE = ".";
 	public static HttpServer server;
-    public static String PROPERTY_RESOURCE_BASE="resourceBase";
-    public static String PROPERTY_LOGS_DIRECTORY="logsDirectory";
-
-    public static void main(String args[]) throws Exception {
-		if (args.length > 0) {
-			int port = Integer.parseInt(args[0]);
-            String resourceBase = DEFAULT_RESOURCE_BASE;
-            if (args.length>1)
-                resourceBase=args[1];
-			startServer(port, resourceBase);
-		} else
-			startServer();
+	private ResultAcceptor() {
 	}
-	public static void startServer() throws Exception {
-		startServer(DEFAULT_PORT, Utility.resourceBaseFromProperties());
+	public static void main(String args[]) throws Exception {
+		ResultAcceptor.instance().startServer();
 	}
-	public static void startServer(int port, String resourceBase) throws Exception {
+	public void startServer() throws Exception {
+		if (server != null)
+			throw new RuntimeException("Server already started");
 		server = new HttpServer();
-		server.addListener(":" + port);
+		server.addListener(":" + port());
 		HttpContext context = server.getContext("/jsunit");
 		ServletHandler handler = new ServletHandler();
 		handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
 		handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
 		context.addHandler(handler);
-
-        context.setResourceBase(resourceBase);
-        context.addHandler(new ResourceHandler());
-
-        server.addContext(context);
+		context.setResourceBase(resourceBase());
+		context.addHandler(new ResourceHandler());
+		server.addContext(context);
 		server.start();
 	}
 	public static void stopServer() throws Exception {
@@ -124,5 +119,40 @@ public class ResultAcceptor {
 				return result;
 		}
 		return null;
+	}
+	public Properties propertiesFromFileName(String fileName) {
+		if (properties == null) {
+			properties = new Properties();
+			try {
+				properties.load(new FileInputStream(fileName));
+			} catch (Exception e) {
+				throw new RuntimeException("Could not load " + fileName);
+			}
+		}
+		return properties;
+	}
+	public Properties jsUnitProperties() {
+		return propertiesFromFileName(PROPERTIES_FILE_NAME);
+	}
+	public String resourceBase() {
+		String result = jsUnitProperties().getProperty(PROPERTY_RESOURCE_BASE);
+		if (Utility.isEmpty(result))
+			result = ResultAcceptor.DEFAULT_RESOURCE_BASE;
+		return result;
+	}
+	public String logsDirectory() {
+		String result = jsUnitProperties().getProperty(PROPERTY_LOGS_DIRECTORY);
+		if (Utility.isEmpty(result))
+			result = resourceBase() + File.separator + "results" + File.separator + "logs";
+		return result;
+	}
+	public int port() {
+		int result;
+		String portString = jsUnitProperties().getProperty(PROPERTY_PORT);
+		if (Utility.isEmpty(portString))
+			result = DEFAULT_PORT;
+		else
+			result = Integer.parseInt(portString);
+		return result;
 	}
 }

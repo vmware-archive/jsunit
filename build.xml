@@ -1,7 +1,7 @@
 <project name="JsUnit" default="test" basedir=".">
-  <property name="src" location="src"/>
-  <property name="bin" location="bin"/>
-  <property name="lib"  location="lib"/>
+  <property name="src" location="results/src"/>
+  <property name="bin" location="results/bin"/>
+  <property name="lib"  location="results/lib"/>
 
   <target name="compile" description="Compile the source">
     <javac srcdir="${src}" destdir="${bin}">
@@ -14,7 +14,8 @@
   </target>
 
   <target name="dist" depends="compile" description="Generate the distribution" >
-    <jar jarfile="${lib}/jsunit.jar" basedir="${bin}"/>
+    <delete file="${bin}/jsunit.jar" />  
+    <jar jarfile="${bin}/jsunit.jar" basedir="${bin}"/>
     <delete dir="${bin}/net" />
   </target>
   <target name="test" depends="dist" description="Runs the JUnit tests for JsUnit">
@@ -22,6 +23,9 @@
       <classpath>
         <fileset dir="${lib}">
           <include name="*.jar"/> 
+        </fileset>
+        <fileset dir="${bin}">
+          <include name="jsunit.jar"/> 
         </fileset>
       </classpath>
       <arg value="net.jsunit.test.Suite" /> 

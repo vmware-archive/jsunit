@@ -45,7 +45,6 @@ import junit.framework.*;
 public class StandaloneTest extends TestCase {
 	public static final String PROPERTY_URL = "url";
 	public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
-	public static final String PROPERTIES_FILE_NAME = "jsunit.properties";
 	private ResultAcceptor acceptor = ResultAcceptor.instance();
 	private List browserProcesses = new ArrayList();
 	private Properties properties;
@@ -60,8 +59,9 @@ public class StandaloneTest extends TestCase {
 	}
 	public void setUp() throws Exception {
 		super.setUp();
-		this.properties = Utility.propertiesFromFileName(PROPERTIES_FILE_NAME);
-		ResultAcceptor.startServer();
+		ResultAcceptor acceptor = ResultAcceptor.instance();
+		this.properties = acceptor.jsUnitProperties();
+		acceptor.startServer();
 	}
 	public void tearDown() throws Exception {
 		super.tearDown();
@@ -77,17 +77,20 @@ public class StandaloneTest extends TestCase {
 		while (it.hasNext()) {
 			String next = (String) it.next();
 			try {
+				System.out.println("Starting process "+next);
 				Process process = Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
 				browserProcesses.add(process);
 			} catch (Throwable t) {
-				fail("Not all browser processes could be started: " + next);
+				fail("All browser processes should started, but the following did not: " + next);
 				t.printStackTrace();
 			}
-		}
+		}		
 		waitForResultsToBeSubmitted();
 		verifyResults();
+		System.out.println("...Done");
 	}
 	private void waitForResultsToBeSubmitted() throws Exception {
+		System.out.println("Waiting for results to be submitted...");
 		long secondsWaited = 0;
 		while (acceptor.getResults().size() != browserFileNames().size()) {
 			Thread.sleep(1000);
@@ -97,12 +100,13 @@ public class StandaloneTest extends TestCase {
 		}
 	}
 	private void verifyResults() {
+		System.out.println("Verifying results...");
 		Iterator it = acceptor.getResults().iterator();
 		while (it.hasNext()) {
 			TestSuiteResult result = (TestSuiteResult) it.next();
 			if (!result.hadSuccess()) {
 				fail("Result with ID " + result.getId() + " failed");
 			}
-		}
+		}		
 	}
 }

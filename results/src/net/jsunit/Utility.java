@@ -1,8 +1,9 @@
 package net.jsunit;
-import java.io.*;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.StringTokenizer;
 /**
  * @author Edward Hieatt
@@ -64,18 +65,6 @@ public class Utility {
 			e.printStackTrace();
 		}
 	}
-	public static Properties propertiesFromFileName(String fileName) {
-		Properties result = new Properties();
-		try {
-			result.load(new FileInputStream(fileName));
-		} catch (Exception e) {
-			throw new RuntimeException("Could not load " + fileName);
-		}
-		return result;
-	}
-    public static Properties jsUnitProperties() {
-        return propertiesFromFileName("jsunit.properties");
-    }
 	public static List listFromCommaDelimitedString(String string) {
 		List result = new ArrayList();
 		StringTokenizer toker = new StringTokenizer(string, ",");
@@ -83,16 +72,4 @@ public class Utility {
 			result.add(toker.nextToken());
 		return result;
 	}
-    public static String resourceBaseFromProperties() {
-        String result = jsUnitProperties().getProperty(ResultAcceptor.PROPERTY_RESOURCE_BASE);
-        if (Utility.isEmpty(result))
-            result = ResultAcceptor.DEFAULT_RESOURCE_BASE;
-        return result;
-    }
-    public static String logsDirectoryFromProperties() {
-        String result = jsUnitProperties().getProperty(ResultAcceptor.PROPERTY_LOGS_DIRECTORY);
-        if (Utility.isEmpty(result))
-            result = resourceBaseFromProperties()+File.separator+"results"+File.separator+"logs";
-        return result;
-    }
 }
