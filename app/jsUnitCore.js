@@ -335,5 +335,6 @@ if (window.attachEvent) {
 } else if (window.addEventListener) {
 	window.addEventListener("load", newOnLoadEvent, false);
 } else {
-	alert("Neither window.attachEvent nor window.addEventListener found; JsUnit will not fuction");
+    // browsers that do not support window.attachEvent or window.addEventListener will not override a page's own onload event
+	window.onload=newOnLoadEvent; 
 }
