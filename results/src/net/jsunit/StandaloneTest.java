@@ -46,13 +46,14 @@ public class StandaloneTest extends TestCase {
 	private boolean shouldStartAndStopServer = true;
 	public static final String PROPERTY_URL = "url";
 	public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
-	private JsUnitServer acceptor = JsUnitServer.instance();
+	private JsUnitServer server = JsUnitServer.instance();
 	private Properties properties;
 	public StandaloneTest(String name) {
 		super(name);
 	}
 	protected List browserFileNames() {
-		return Utility.listFromCommaDelimitedString(properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
+		return Utility.listFromCommaDelimitedString(
+			properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
 	}
 	protected String url() {
 		return properties.getProperty(PROPERTY_URL);
@@ -62,28 +63,31 @@ public class StandaloneTest extends TestCase {
 	}
 	public void setUp() throws Exception {
 		super.setUp();
-		JsUnitServer acceptor = JsUnitServer.instance();
-		this.properties = acceptor.jsUnitProperties();
+		this.properties = server.jsUnitProperties();
 		if (shouldStartAndStopServer)
-			acceptor.startServer();
+			JsUnitServer.start();
 	}
 	public void tearDown() throws Exception {
 		super.tearDown();
 		if (shouldStartAndStopServer)
-			JsUnitServer.stopServer();
+			JsUnitServer.stop();
 	}
 	public void testStandaloneRun() throws Exception {
 		Iterator it = browserFileNames().iterator();
 		while (it.hasNext()) {
 			String next = (String) it.next();
-			int currentResultCount = acceptor.resultsCount();
+			int currentResultCount = server.resultsCount();
 			Process process = null;
-			Utility.log("StandaloneTest: launching "+next);
+			Utility.log("StandaloneTest: launching " + next);
 			try {
 				try {
-					process = Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
+					process =
+						Runtime.getRuntime().exec(
+							"\"" + next + "\" \"" + url() + "\"");
 				} catch (Throwable t) {
-					fail("All browser processes should start, but the following did not: " + next);
+					fail(
+						"All browser processes should start, but the following did not: "
+							+ next);
 					t.printStackTrace();
 				}
 				waitForResultToBeSubmitted(next, currentResultCount);
@@ -94,18 +98,28 @@ public class StandaloneTest extends TestCase {
 			}
 		}
 	}
-	private void waitForResultToBeSubmitted(String browserProcess, int initialResultCount) throws Exception {
-		Utility.log("StandaloneTest: waiting for " + browserProcess + " to submit result");
+	private void waitForResultToBeSubmitted(
+		String browserProcess,
+		int initialResultCount)
+		throws Exception {
+		Utility.log(
+			"StandaloneTest: waiting for "
+				+ browserProcess
+				+ " to submit result");
 		long secondsWaited = 0;
-		while (acceptor.getResults().size() == initialResultCount) {
+		while (server.getResults().size() == initialResultCount) {
 			Thread.sleep(1000);
 			secondsWaited += 1;
 			if (secondsWaited > maxSecondsToWait())
-				fail("Waited more than " + maxSecondsToWait() + " seconds for browser " + browserProcess);
+				fail(
+					"Waited more than "
+						+ maxSecondsToWait()
+						+ " seconds for browser "
+						+ browserProcess);
 		}
 	}
 	private void verifyLastResult() {
-		TestSuiteResult result = acceptor.lastResult();
+		TestSuiteResult result = server.lastResult();
 		if (!result.hadSuccess()) {
 			fail("Result with ID " + result.getId() + " failed");
 		}

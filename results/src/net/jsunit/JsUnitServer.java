@@ -67,30 +67,49 @@ public class JsUnitServer {
 	public static String PROPERTIES_FILE_NAME = "jsunit.properties";
 	public static final int DEFAULT_PORT = 8080;
 	public static final String DEFAULT_RESOURCE_BASE = ".";
-	public static HttpServer server;
+	public static HttpServer httpServer;
 	private JsUnitServer() {
 	}
 	public static void main(String args[]) throws Exception {
-		JsUnitServer.instance().startServer();
+		JsUnitServer.start();
 	}
-	public void startServer() throws Exception {
-		if (server == null) {
-			server = new HttpServer();
-			server.addListener(":" + port());
-			HttpContext context = server.getContext("/jsunit");
+	private void myStart() throws Exception {
+		if (httpServer == null) {
+			httpServer = new HttpServer();
+			httpServer.addListener(":" + port());
+			HttpContext context = httpServer.getContext("/jsunit");
 			ServletHandler handler = new ServletHandler();
-			handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
-			handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
-			handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
+			handler.addServlet(
+				"JsUnitResultAcceptor",
+				"/acceptor",
+				ResultAcceptorServlet.class.getName());
+			handler.addServlet(
+				"JsUnitResultDisplayer",
+				"/displayer",
+				ResultDisplayerServlet.class.getName());
+			handler.addServlet(
+				"JsUnitTestRunner",
+				"/runner",
+				TestRunnerServlet.class.getName());
 			context.addHandler(handler);
 			context.setResourceBase(resourceBase());
 			context.addHandler(new ResourceHandler());
-			server.addContext(context);
-			server.start();
+			httpServer.addContext(context);
+			httpServer.start();
 		}
 	}
-	public static void stopServer() throws Exception {
-		server.stop();
+	private void myStop() throws Exception {
+		if (httpServer != null) {
+			httpServer.stop();
+			httpServer = null;
+		}
+	}
+
+	public static void start() throws Exception {
+		instance().myStart();
+	}
+	public static void stop() throws Exception {
+		instance().myStop();
 	}
 	public static JsUnitServer instance() {
 		if (instance == null)
@@ -99,7 +118,8 @@ public class JsUnitServer {
 	}
 	public TestSuiteResult accept(HttpServletRequest request) {
 		TestSuiteResult result = TestSuiteResult.fromRequest(request);
-		TestSuiteResult existingResultWithSameId = findResultWithId(result.getId());
+		TestSuiteResult existingResultWithSameId =
+			findResultWithId(result.getId());
 		if (existingResultWithSameId != null)
 			results.remove(existingResultWithSameId);
 		results.add(result);
@@ -150,7 +170,12 @@ public class JsUnitServer {
 	public String logsDirectory() {
 		String result = jsUnitProperties().getProperty(PROPERTY_LOGS_DIRECTORY);
 		if (Utility.isEmpty(result))
-			result = resourceBase() + File.separator + "results" + File.separator + "logs";
+			result =
+				resourceBase()
+					+ File.separator
+					+ "results"
+					+ File.separator
+					+ "logs";
 		return result;
 	}
 	public int port() {
@@ -164,7 +189,9 @@ public class JsUnitServer {
 	}
 	public TestSuiteResult lastResult() {
 		List results = getResults();
-		return results.isEmpty() ? null : (TestSuiteResult) results.get(results.size() - 1);
+		return results.isEmpty()
+			? null
+			: (TestSuiteResult) results.get(results.size() - 1);
 	}
 	public int resultsCount() {
 		return getResults().size();
