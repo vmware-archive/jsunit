@@ -1,7 +1,7 @@
 <project name="JsUnit" default="test" basedir=".">
-  <property name="src" location="results/src"/>
-  <property name="bin" location="results/bin"/>
-  <property name="lib"  location="results/lib"/>
+  <property name="src" location="java/src"/>
+  <property name="bin" location="java/bin"/>
+  <property name="lib"  location="java/lib"/>
   <property name="debug" value="yes"/>
   
   <target name="compile" description="Compile the source">
