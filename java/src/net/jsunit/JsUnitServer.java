@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.servlet.JsUnitServlet;
 import net.jsunit.servlet.ResultAcceptorServlet;
 import net.jsunit.servlet.ResultDisplayerServlet;
 import net.jsunit.servlet.TestRunnerServlet;
@@ -10,69 +11,77 @@ import org.mortbay.jetty.servlet.ServletHandler;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
-import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.net.URL;
-
-import com.sun.corba.se.internal.iiop.BufferManagerWriteCollect;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
 public class JsUnitServer {
-    private static JsUnitServer instance;
-
     private List results = new ArrayList();
     private HttpServer httpServer;
 
     private int port;
     private File resourceBase;
     private File logsDirectory;
-    private List remoteMachineURLs;
     private List localBrowserFileNames;
     private URL testURL;
+    private boolean initialized;
 
     public static void main(String args[]) throws Exception {
         JsUnitServer server = new JsUnitServer();
-        if (args.length == 0) {
-            new PropertiesConfiguration().configure(server);
-        } else
-            new ArgumentsConfiguration(Arrays.asList(args)).configure(server);
+        server.initialize(args);
         server.start();
     }
 
+    private void initialize(String[] args) {
+        try {
+            JsUnitConfiguration.configure(this, args);
+            initialized = true;
+        } catch (ConfigurationException ce) {
+            System.err.println("Server initialization failed because property " + ce.getPropertyInError() + " is invalid:");
+            ce.printStackTrace();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     public void start() throws Exception {
+        if (!initialized) {
+            System.err.println("Cannot start server: not initialized");
+            return;
+        }
         Utility.log(toString(), false);
         setUpHttpServer();
         httpServer.start();
     }
 
-    private void setUpHttpServer() throws IOException {
+    private void setUpHttpServer() throws Exception {
         httpServer = new HttpServer();
         httpServer.addListener(":" + port);
         HttpContext context = httpServer.getContext("/jsunit");
-        ServletHandler handler = new ServletHandler();
-        handler.addServlet("JsUnitResultAcceptor", "/server", ResultAcceptorServlet.class.getName());
+        ServletHandler handler;
+        handler = new ServletHandler();
+        handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
         handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
         handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         context.addHandler(handler);
         context.setResourceBase(resourceBase.toString());
         context.addHandler(new ResourceHandler());
         httpServer.addContext(context);
+        JsUnitServlet.setServer(this);
     }
 
-    public static JsUnitServer instance() {
-        if (instance == null)
-            instance = new JsUnitServer();
-        return instance;
+    public void initialize() {
+        initialize(new String[]{});
     }
 
     public TestSuiteResult accept(HttpServletRequest request) {
-        TestSuiteResult result = TestSuiteResult.fromRequest(request);
+        TestSuiteResult result = TestSuiteResult.fromRequest(request, logsDirectory);
         TestSuiteResult existingResultWithSameId =
                 findResultWithId(result.getId());
         if (existingResultWithSameId != null)
@@ -93,7 +102,7 @@ public class JsUnitServer {
     public TestSuiteResult findResultWithId(String id) {
         TestSuiteResult result = findResultWithIdInResultList(id);
         if (result == null)
-            result = TestSuiteResult.findResultWithIdInResultLogs(id);
+            result = TestSuiteResult.findResultWithIdInResultLogs(logsDirectory, id);
         return result;
     }
 
@@ -127,14 +136,12 @@ public class JsUnitServer {
 
     public String toString() {
         StringBuffer result = new StringBuffer();
-        result.append("port").append(": ").append(port).append("\n");
-        result.append("resourceBase").append(": ").append(resourceBase.getAbsolutePath()).append("\n");
-        result.append("logsDirectory").append(": ").append(logsDirectory.getAbsolutePath());
+        result.append(JsUnitConfiguration.PORT).append(": ").append(port).append("\n");
+        result.append(JsUnitConfiguration.RESOURCE_BASE).append(": ").append(resourceBase.getAbsolutePath()).append("\n");
+        result.append(JsUnitConfiguration.LOGS_DIRECTORY).append(": ").append(logsDirectory.getAbsolutePath()).append("\n");
+        result.append(JsUnitConfiguration.BROWSER_FILE_NAMES).append(": ").append(localBrowserFileNames).append("\n");
+        result.append(JsUnitConfiguration.URL).append(": ").append(testURL);
         return result.toString();
-    }
-
-    public List getRemoteMachineURLs() {
-        return remoteMachineURLs;
     }
 
     public void setResourceBase(File resourceBase) {
@@ -147,10 +154,6 @@ public class JsUnitServer {
 
     public void setLogsDirectory(File logsDirectory) {
         this.logsDirectory = logsDirectory;
-    }
-
-    public void setRemoteMachineNames(List names) {
-        this.remoteMachineURLs = names;
     }
 
     public List getLocalBrowserFileNames() {
@@ -179,6 +182,10 @@ public class JsUnitServer {
 
     public File getResourceBase() {
         return resourceBase;
+    }
+
+    public void finalize() throws Exception {
+        stop();
     }
 
 }

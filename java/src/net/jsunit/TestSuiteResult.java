@@ -15,13 +15,15 @@ public class TestSuiteResult {
     private List testCaseResults = new ArrayList();
     private double time;
     private String SEPARATOR = "---------------------";
+    private File logsDirectory;
 
-    public TestSuiteResult() {
+    public TestSuiteResult(File logsDirectory) {
         this.id = String.valueOf(System.currentTimeMillis());
+        this.logsDirectory = logsDirectory;
     }
 
-    public static File logFileForId(String id) {
-        return new File(JsUnitServer.instance().getLogsDirectory() + File.separator + id + ".xml");
+    public static File logFileForId(File logsDirectory, String id) {
+        return new File(logsDirectory + File.separator + id + ".xml");
     }
 
     public String getId() {
@@ -77,8 +79,8 @@ public class TestSuiteResult {
         buildTestCaseResults(testCaseResultStrings);
     }
 
-    public static TestSuiteResult fromRequest(HttpServletRequest request) {
-        TestSuiteResult result = new TestSuiteResult();
+    public static TestSuiteResult fromRequest(HttpServletRequest request, File logsDirectory) {
+        TestSuiteResult result = new TestSuiteResult(logsDirectory);
         String testId = request.getParameter(TestSuiteResultWriter.ID);
         if (!Utility.isEmpty(testId))
             result.setId(testId);
@@ -108,8 +110,8 @@ public class TestSuiteResult {
             testCaseResults.add(TestCaseResult.fromString(testCaseResultStrings[i]));
     }
 
-    public static TestSuiteResult findResultWithIdInResultLogs(String id) {
-        File logFile = logFileForId(id);
+    public static TestSuiteResult findResultWithIdInResultLogs(File logsDirectory, String id) {
+        File logFile = logFileForId(logsDirectory, id);
         if (logFile.exists())
             return fromXmlFile(logFile);
         return null;
@@ -166,7 +168,7 @@ public class TestSuiteResult {
 
     private void writeXmlToFile() {
         String xml = writeXml();
-        Utility.writeFile(xml, logFileForId(getId()));
+        Utility.writeFile(xml, logFileForId(logsDirectory, getId()));
     }
 
     public boolean hadSuccess() {
@@ -180,7 +182,7 @@ public class TestSuiteResult {
     }
 
     public static TestSuiteResult fromXmlFile(File aFile) {
-        return new TestSuiteResultBuilder().build(aFile);
+        return new TestSuiteResultBuilder(aFile.getParentFile()).build(aFile);
     }
 
     public void addTestCaseResult(TestCaseResult result) {

@@ -9,24 +9,32 @@ import java.util.Iterator;
  */
 
 public class StandaloneTest extends TestCase {
-    private boolean shouldStartAndStopServer = true;
+    private boolean needToStopServer = false;
     public static final int MAX_SECONDS_TO_WAIT = 2 * 60;
-    private JsUnitServer server = JsUnitServer.instance();
+    private JsUnitServer server;
 
     public StandaloneTest(String name) {
         super(name);
     }
 
+    public void setServer(JsUnitServer server) {
+        this.server = server;
+    }
+
     public void setUp() throws Exception {
         super.setUp();
-        if (shouldStartAndStopServer)
+        if (server == null) {
+            server = new JsUnitServer();
+            server.initialize();
             server.start();
+            needToStopServer = true;
+        }
     }
 
     public void tearDown() throws Exception {
-        super.tearDown();
-        if (shouldStartAndStopServer)
+        if (needToStopServer)
             server.stop();
+        super.tearDown();
     }
 
     public void testStandaloneRun() throws Exception {
@@ -85,7 +93,4 @@ public class StandaloneTest extends TestCase {
         }
     }
 
-    public void setStartAndStopServer(boolean b) {
-        this.shouldStartAndStopServer = b;
-    }
 }

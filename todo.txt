@@ -1,0 +1,5 @@
+- Implement the stop_server target - upgrade jetty
+- Change the tests to pass in args
+- Test various possible args
+- Write an ant task
+- Change version and find a way to specify the version in only 1 place

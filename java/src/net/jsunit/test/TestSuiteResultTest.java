@@ -30,7 +30,6 @@ public class TestSuiteResultTest extends TestCase {
             + "<failure message=\"Test Failure Message\" />"
             + "</testcase>"
             + "</testsuite>";
-    private String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
     public TestSuiteResultTest(String name) {
         super(name);
@@ -38,7 +37,7 @@ public class TestSuiteResultTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        result = new TestSuiteResult();
+        result = new TestSuiteResult(null);
         result.setJsUnitVersion("2.5");
         result.setId("An ID");
         result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
@@ -50,7 +49,7 @@ public class TestSuiteResultTest extends TestCase {
 
     public void testId() {
         assertNotNull(result.getId());
-        result = new TestSuiteResult();
+        result = new TestSuiteResult(null);
         result.setId("foo");
         assertEquals("foo", result.getId());
     }

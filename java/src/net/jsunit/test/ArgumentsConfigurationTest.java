@@ -22,11 +22,10 @@ public class ArgumentsConfigurationTest extends JsUnitTestCase {
             "-browserFileNames", "fu,bar"
         });
         ArgumentsConfiguration configuration = new ArgumentsConfiguration(args);
-        configuration.configure(server);
+        configuration.doConfigure(server);
         assertEquals(12345, server.getPort());
         assertEquals(new File("/foo/bar/"), server.getResourceBase());
         assertEquals(new File("/bar/foo/"), server.getLogsDirectory());
-        assertEquals(Utility.listWith("foo", "bar"), server.getRemoteMachineURLs());
         assertEquals(Utility.listWith("fu", "bar"), server.getLocalBrowserFileNames());
         assertEquals("http://www.jsunit.net/", server.getTestURL().toString());
     }

@@ -12,12 +12,8 @@ public abstract class JsUnitTestCase extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        server = JsUnitServer.instance();
-    }
-
-    public void tearDown() throws Exception {
-        server.clearResults();
-        super.tearDown();
+        server = new JsUnitServer();
+        server.initialize();
     }
 
     public JsUnitTestCase(String name) {

@@ -6,7 +6,6 @@ import net.jsunit.StandaloneTest;
 import net.jsunit.Utility;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -16,7 +15,8 @@ import java.io.OutputStream;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class TestRunnerServlet extends HttpServlet {
+public class TestRunnerServlet extends JsUnitServlet {
+
     protected synchronized void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Utility.log("TestRunnerServlet: Received request to run standalone test...");
         StandaloneTest test = createTest();
@@ -34,8 +34,8 @@ public class TestRunnerServlet extends HttpServlet {
     }
 
     protected StandaloneTest createTest() {
-        StandaloneTest test = new StandaloneTest("testStandaloneRun");
-        test.setStartAndStopServer(false);
-        return test;
+        StandaloneTest standaloneTest = new StandaloneTest("testStandaloneRun");
+        standaloneTest.setServer(server);
+        return standaloneTest;
     }
 }

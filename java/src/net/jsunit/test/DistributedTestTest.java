@@ -1,24 +1,35 @@
 package net.jsunit.test;
 
+
 import net.jsunit.DistributedTest;
-import net.jsunit.JsUnitServer;
+import junit.textui.TestRunner;
+import junit.framework.TestResult;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
-public class DistributedTestTest extends DistributedTest {
+public class DistributedTestTest extends JsUnitTestCase {
     public DistributedTestTest(String name) {
         super(name);
     }
 
     public void setUp() throws Exception {
         super.setUp();
-        JsUnitServer.instance().start();
+        server.start();
     }
 
-    public void tearDown() throws Exception {
-        JsUnitServer.instance().stop();
+    protected void tearDown() throws Exception {
+        server.stop();
         super.tearDown();
     }
+
+    public void testDistributedRunWithTwoLocalhosts() {
+        System.setProperty(DistributedTest.REMOTE_MACHINE_URLS, "http://localhost:8080, http://localhost:8080");
+        TestResult result = TestRunner.run(new DistributedTest("testCollectResults"));
+        assertTrue(result.wasSuccessful());
+    }
+
+    public void testDistributedRunWithInvalidHosts() {
+        System.setProperty(DistributedTest.REMOTE_MACHINE_URLS, "http://fooXXX:1234, http://barXXX:5678");
+        TestResult result = TestRunner.run(new DistributedTest("testCollectResults"));
+        assertFalse(result.wasSuccessful());
+    }
+
 }

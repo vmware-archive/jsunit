@@ -1,17 +1,13 @@
 package net.jsunit;
 
-import java.io.File;
 import java.io.FileInputStream;
-import java.util.List;
 import java.util.Properties;
-import java.net.URL;
-import java.net.MalformedURLException;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class PropertiesConfiguration extends AbstractConfiguration {
+public class PropertiesConfiguration extends JsUnitConfiguration {
 
     public static final String PROPERTIES_FILE_NAME = "jsunit.properties";
 
@@ -44,10 +40,6 @@ public class PropertiesConfiguration extends AbstractConfiguration {
 
     protected String browserFileNames() {
         return properties.getProperty(BROWSER_FILE_NAMES);
-    }
-
-    protected String remoteMachineNames() {
-        return properties.getProperty(REMOTE_MACHINE_NAMES);
     }
 
 }

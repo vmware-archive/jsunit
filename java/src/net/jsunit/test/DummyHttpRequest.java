@@ -17,7 +17,6 @@ import java.util.Map;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-
 public class DummyHttpRequest implements HttpServletRequest {
     protected Map parametersToValues;
 

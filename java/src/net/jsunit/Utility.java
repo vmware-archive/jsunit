@@ -17,7 +17,7 @@ public class Utility {
     }
 
     public static void writeFile(String contents, String fileName) {
-        writeFile(contents, new File(fileName));
+        writeFile(contents, new File(".", fileName));
     }
 
     public static void writeFile(String contents, File file) {
@@ -63,6 +63,6 @@ public class Utility {
     }
 
     public static List listWith(Object object1, Object object2) {
-        return Arrays.asList(new Object[] {object1, object2});
+        return Arrays.asList(new Object[]{object1, object2});
     }
 }

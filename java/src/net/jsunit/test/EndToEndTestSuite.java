@@ -8,7 +8,6 @@ import net.jsunit.StandaloneTest;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-
 public class EndToEndTestSuite extends TestCase {
     public static TestSuite suite() {
         TestSuite result = new TestSuite();

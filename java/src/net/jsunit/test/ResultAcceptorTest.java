@@ -33,10 +33,9 @@ public class ResultAcceptorTest extends JsUnitTestCase {
     }
 
     public void tearDown() throws Exception {
-        File logFile = TestSuiteResult.logFileForId("ID_foo");
+        File logFile = TestSuiteResult.logFileForId(server.getLogsDirectory(), "ID_foo");
         if (logFile.exists())
             logFile.delete();
-        Utility.setLogToStandardOut(true);
         super.tearDown();
     }
 
@@ -87,7 +86,7 @@ public class ResultAcceptorTest extends JsUnitTestCase {
     }
 
     public void testLog() {
-        File logFile = TestSuiteResult.logFileForId("ID_foo");
+        File logFile = TestSuiteResult.logFileForId(server.getLogsDirectory(), "ID_foo");
         assertFalse(logFile.exists());
         submit();
         assertTrue(logFile.exists());

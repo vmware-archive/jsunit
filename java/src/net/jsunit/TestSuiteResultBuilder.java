@@ -13,10 +13,16 @@ import java.util.List;
  */
 
 public class TestSuiteResultBuilder {
+    private File logsDirectory;
+
+    public TestSuiteResultBuilder(File logsDirectory) {
+        this.logsDirectory = logsDirectory;
+    }
+
     public TestSuiteResult build(File file) {
         try {
             Document document = new SAXBuilder().build(file);
-            return new TestSuiteResultBuilder().build(document);
+            return build(document);
         } catch (Exception e) {
             System.err.println("Failed to read file " + file + ": " + e.getMessage());
             e.printStackTrace();
@@ -25,7 +31,7 @@ public class TestSuiteResultBuilder {
     }
 
     public TestSuiteResult build(Document document) {
-        TestSuiteResult result = new TestSuiteResult();
+        TestSuiteResult result = new TestSuiteResult(logsDirectory);
         Element root = document.getRootElement();
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(TestSuiteResultWriter.PROPERTIES), result);

@@ -3,7 +3,11 @@ package net.jsunit;
 import java.util.Iterator;
 import java.util.List;
 
-public class ArgumentsConfiguration extends AbstractConfiguration {
+/**
+ * @author Edward Hieatt, edward@jsunit.net
+ */
+
+public class ArgumentsConfiguration extends JsUnitConfiguration {
     private String port;
     private String resourceBase;
     private String logsDirectory;
@@ -24,8 +28,6 @@ public class ArgumentsConfiguration extends AbstractConfiguration {
                 this.resourceBase = (String) it.next();
             if (argument.equals("-" + LOGS_DIRECTORY))
                 this.logsDirectory = (String) it.next();
-            if (argument.equals("-" + REMOTE_MACHINE_NAMES))
-                this.remoteMachineNames = (String) it.next();
             if (argument.equals("-" + URL))
                 this.url = (String) it.next();
             if (argument.equals("-" + BROWSER_FILE_NAMES))
