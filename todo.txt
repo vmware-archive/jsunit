@@ -1,4 +1,3 @@
-- Implement the stop_server target - upgrade jetty
 - Change the tests to pass in args
 - Test various possible args
 - Write an ant task

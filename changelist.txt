@@ -1,0 +1,4 @@
+- Ant script does everything now - compile, create jar, run self-tests, start/stop server, standalone test, distributed test
+- Removed all shell scripts
+- Upgraded Jetty
+- Distributed test run is no longer part of the JsUnitServer - it's just a test that you pass the remoteURLs
