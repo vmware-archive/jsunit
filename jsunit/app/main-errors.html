@@ -47,7 +47,7 @@
 
   <body>
     <hr>
-    <form name="testRunnerForm" action="/jsunitservlet/net.jsunit.ResultServlet" method="post">
+    <form name="testRunnerForm">
       <p>Errors and failures:&nbsp;</p>
       <select size="5" ondblclick="top.testManager.showMessageForSelectedProblemTest()" name="problemsList">
       </select>
@@ -56,17 +56,6 @@
       &nbsp;&nbsp;&nbsp;
       <input type="button" value="Show all" onclick="top.testManager.showMessagesForAllProblemTests()">
     </form>
-    <script language="javascript">
-	function submitResults() {
-		document.testRunnerForm.problemsList.multiple=true;
-		setTimeout("selectAllProblemsAndSubmit()", 500);
-	}
-	function selectAllProblemsAndSubmit() {
-		for (var i=0; i<document.testRunnerForm.problemsList.options.length; i++) {
-			document.testRunnerForm.problemsList.options[i].selected=true;
-		}
-		document.testRunnerForm.submit();
-	}
     </script>
   </body>
 </html>

@@ -2,6 +2,9 @@ package net.jsunit;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+
+import org.jdom.*;
+import org.jdom.output.XMLOutputter;
 /**
  * @author Edward Hieatt
  * 
@@ -48,7 +51,12 @@ public class JsUnitResultAcceptorServlet extends HttpServlet {
 		JsUnitTestSuiteResult result = JsUnitResultAcceptor.instance().accept(request);
 		response.setContentType("text/xml");
 		OutputStream out = response.getOutputStream();
-		out.write(("<success>Result accepted.  ID is " + result.getId() + "</success>").getBytes());
+		out.write(responseString(result).getBytes());
 		out.close();
+	}
+	protected String responseString(JsUnitTestSuiteResult result) {
+		Element successElement = new Element("success");
+		successElement.addContent("Result accepted.  ID is " + result.getId() + ".");
+		return new XMLOutputter().outputString(new Document(successElement));
 	}
 }

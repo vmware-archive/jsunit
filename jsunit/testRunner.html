@@ -45,6 +45,7 @@
     <script language="JavaScript" type="text/javascript" src="app/xbDebug.js"></script>
 <script type="text/javascript">
   var DEFAULT_TEST_FRAME_HEIGHT=250;
+  var JSUNIT_VERSION="1.4.0";
   var jsUnitParmHash = new Object();
 
   jsUnitParseParms(document.location.search);
@@ -91,7 +92,7 @@
 
      for (p in jsUnitParmHash)
      {
-       if (p != 'testpage' && p!='autorun' && p!='submitresults' && p!='showtestframe')
+       if (p != 'testpage' && p!='autorun' && p!='submitresults' && p!='showtestframe' && p!='resultid')
        {
          if (parms)
          {
@@ -155,9 +156,16 @@
   	return jsUnitParmHash.submitresults;
   }
   
+  function getResultId() {
+  	if (jsUnitParmHash.resultid) 
+  		return jsUnitParmHash.resultid;
+  	return "";
+  }
+
   function submitResults() {
-    window.mainFrame.mainData.testRunnerForm.runButton.disabled=true;
-  	window.mainFrame.mainErrors.submitResults();
+    window.mainFrame.mainData.document.testRunnerForm.runButton.disabled=true;
+    window.mainFrame.mainResults.populateHeaderFields(getResultId(), navigator.userAgent, JSUNIT_VERSION, "");  
+  	window.mainFrame.mainResults.document.resultsForm.submit();
   }
   
   function init()
@@ -189,7 +197,7 @@
 
     <noframes>
       <body>
-        <p>Sorry: JsUnit requires support for frames.</p>
+        <p>Sorry, JsUnit requires support for frames.</p>
       </body>
     </noframes>
   </frameset>

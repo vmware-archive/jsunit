@@ -52,8 +52,7 @@ public class JsUnitResultAcceptorTest extends JsUnitTest {
 		super.setUp();
 		requestMap = new HashMap();
 		requestMap.put(JsUnitTestSuiteResult.TEST_ID, "ID foo");		
-		requestMap.put(JsUnitTestSuiteResult.OS, "Windows 2000");
-		requestMap.put(JsUnitTestSuiteResult.BROWSER, "IE 6.0");
+		requestMap.put(JsUnitTestSuiteResult.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		requestMap.put(JsUnitTestSuiteResult.TIME, "4.3");
 		requestMap.put(JsUnitTestSuiteResult.JSUNIT_VERSION, "2.5");
 		requestMap.put(JsUnitTestSuiteResult.TEST_CASES, dummyTestCaseStrings());
@@ -80,8 +79,7 @@ public class JsUnitResultAcceptorTest extends JsUnitTest {
 		submit();
 		JsUnitTestSuiteResult result = (JsUnitTestSuiteResult) acceptor.getResults().get(0);
 		assertEquals("ID foo", result.getId());		
-		assertEquals("Windows 2000", result.getOs());
-		assertEquals("IE 6.0", result.getBrowser());
+		assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
 		assertEquals("2.5", result.getJsUnitVersion());
 		assertEquals(1, result.errorCount());
 		assertEquals(1, result.failureCount());

@@ -50,8 +50,7 @@ public class JsUnitTestSuiteResultTest extends JsUnitTest {
 		super.setUp();
 		result = new JsUnitTestSuiteResult();
 		result.setJsUnitVersion("2.5");
-		result.setOs("Windows 2000");
-		result.setBrowser("IE 6.0");
+		result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
 		result.setTime(4.3);
 		result.setTestCaseStrings(new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Error Message|", "testFoo|1.3|F|Failure Message|" });
 	}
@@ -63,8 +62,7 @@ public class JsUnitTestSuiteResultTest extends JsUnitTest {
 	}
 	public void testFields() {
 		assertEquals("2.5", result.getJsUnitVersion());
-		assertEquals("Windows 2000", result.getOs());
-		assertEquals("IE 6.0", result.getBrowser());
+		assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)" , result.getUserAgent());
 		assertEquals(4.3d, result.getTime(), 0.001d);
 		assertEquals(3, result.getTestCaseResults().size());
 	}
@@ -72,8 +70,7 @@ public class JsUnitTestSuiteResultTest extends JsUnitTest {
 		assertEquals(
 			"<testsuite errors=\"1\" failures=\"1\" name=\"JsUnitTest\" tests=\"3\" time=\"4.3\">"+
 				"<properties><property name=\"JsUnitVersion\" value=\"2.5\" />"+
-					"<property name=\"os\" value=\"Windows 2000\" />"+
-					"<property name=\"browser\" value=\"IE 6.0\" />"+
+					"<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />"+
 					"</properties>"+
 				"<testcase name=\"testFoo\" time=\"1.3\" />"+
 				"<testcase name=\"testFoo\" time=\"1.3\">"+

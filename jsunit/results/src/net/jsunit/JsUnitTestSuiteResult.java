@@ -45,10 +45,10 @@ import org.jdom.output.*;
    @author Edward Hieatt
  */
 public class JsUnitTestSuiteResult {
-	protected String id, jsUnitVersion, os, browser;
+	protected String id, jsUnitVersion, userAgent;
 	protected List testCaseResults = new ArrayList();
 	protected double time;
-	public static final String TEST_ID = "testId", OS = "os", BROWSER = "browser", TIME = "time", TEST_CASES = "testCases", JSUNIT_VERSION = "jsUnitVersion";
+	public static final String TEST_ID = "testId", USER_AGENT = "userAgent", TIME = "time", TEST_CASES = "testCases", JSUNIT_VERSION = "jsUnitVersion";
 	public JsUnitTestSuiteResult() {
 		this.id = "" + System.currentTimeMillis();
 	}
@@ -68,17 +68,11 @@ public class JsUnitTestSuiteResult {
 	public void setJsUnitVersion(String jsUnitVersion) {
 		this.jsUnitVersion = jsUnitVersion;
 	}
-	public String getOs() {
-		return os;
+	public String getUserAgent() {
+		return userAgent;
 	}
-	public void setOs(String os) {
-		this.os = os;
-	}
-	public String getBrowser() {
-		return browser;
-	}
-	public void setBrowser(String browser) {
-		this.browser = browser;
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
 	}
 	public double getTime() {
 		return time;
@@ -94,16 +88,20 @@ public class JsUnitTestSuiteResult {
 	}
 	public static JsUnitTestSuiteResult fromRequest(HttpServletRequest request) {
 		JsUnitTestSuiteResult result = new JsUnitTestSuiteResult();
-		result.setId(request.getParameter(TEST_ID));
-		result.setOs(request.getParameter(OS));
-		result.setBrowser(request.getParameter(BROWSER));
-		if (request.getParameter(TIME) != null)
-			result.setTime(Double.parseDouble(request.getParameter(TIME)));
+		String testId = request.getParameter(TEST_ID);
+		if (!JsUnitUtility.isEmpty(testId))
+			result.setId(testId);
+		result.setUserAgent(request.getParameter(USER_AGENT));
+		String time = request.getParameter(TIME);
+		if (!JsUnitUtility.isEmpty(time))
+			result.setTime(Double.parseDouble(time));
 		result.setJsUnitVersion(request.getParameter(JSUNIT_VERSION));
 		result.setTestCaseStrings(request.getParameterValues(TEST_CASES));
 		return result;
 	}
 	protected void buildTestCaseResults(String[] testCaseResultStrings) {
+		if (testCaseResultStrings == null)
+			return;
 		for (int i = 0; i < testCaseResultStrings.length; i++)
 			testCaseResults.add(JsUnitTestCaseResult.fromString(testCaseResultStrings[i]));
 	}
@@ -140,6 +138,7 @@ public class JsUnitTestSuiteResult {
 	}
 	protected Element createRootElement() {
 		Element result = new Element("testsuite");
+		result.setAttribute("id", id);
 		result.setAttribute("errors", "" + errorCount());
 		result.setAttribute("failures", "" + failureCount());
 		result.setAttribute("name", "JsUnitTest");
@@ -156,14 +155,10 @@ public class JsUnitTestSuiteResult {
 		jsUnitVersionProperty.setAttribute("name", "JsUnitVersion");
 		jsUnitVersionProperty.setAttribute("value", jsUnitVersion == null ? "" : jsUnitVersion);
 		properties.addContent(jsUnitVersionProperty);
-		Element osProperty = new Element("property");
-		osProperty.setAttribute("name", "os");
-		osProperty.setAttribute("value", os == null ? "" : os);
-		properties.addContent(osProperty);
-		Element browserProperty = new Element("property");
-		browserProperty.setAttribute("name", "browser");
-		browserProperty.setAttribute("value", browser == null ? "" : browser);
-		properties.addContent(browserProperty);
+		Element userAgentProperty = new Element("property");
+		userAgentProperty.setAttribute("name", "userAgent");
+		userAgentProperty.setAttribute("value", userAgent == null ? "" : userAgent);
+		properties.addContent(userAgentProperty);
 	}
 	protected void addTestResultElementsTo(Element element) {
 		Iterator it = testCaseResults.iterator();
