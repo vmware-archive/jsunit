@@ -47,15 +47,12 @@ public class StandaloneTest extends TestCase {
 	public static final String PROPERTY_URL = "url";
 	public static final String PROPERTY_BROWSER_FILE_NAMES = "browserFileNames";
 	private JsUnitServer acceptor = JsUnitServer.instance();
-	private int initialResultsSize;
-	private List browserProcesses = new ArrayList();
 	private Properties properties;
 	public StandaloneTest(String name) {
 		super(name);
 	}
 	protected List browserFileNames() {
-		return Utility.listFromCommaDelimitedString(
-			properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
+		return Utility.listFromCommaDelimitedString(properties.getProperty(PROPERTY_BROWSER_FILE_NAMES));
 	}
 	protected String url() {
 		return properties.getProperty(PROPERTY_URL);
@@ -69,15 +66,9 @@ public class StandaloneTest extends TestCase {
 		this.properties = acceptor.jsUnitProperties();
 		if (shouldStartAndStopServer)
 			acceptor.startServer();
-		this.initialResultsSize = acceptor.getResults().size();
 	}
 	public void tearDown() throws Exception {
 		super.tearDown();
-		Iterator it = browserProcesses.iterator();
-		while (it.hasNext()) {
-			Process next = (Process) it.next();
-			next.destroy();
-		}
 		if (shouldStartAndStopServer)
 			JsUnitServer.stopServer();
 	}
@@ -85,42 +76,36 @@ public class StandaloneTest extends TestCase {
 		Iterator it = browserFileNames().iterator();
 		while (it.hasNext()) {
 			String next = (String) it.next();
+			int currentResultCount = acceptor.resultsCount();
+			Process process = null;
 			try {
-				Utility.log("Starting process " + next);
-				Process process =
-					Runtime.getRuntime().exec(
-						"\"" + next + "\" \"" + url() + "\"");
-				browserProcesses.add(process);
-			} catch (Throwable t) {
-				fail(
-					"All browser processes should start, but the following did not: "
-						+ next);
-				t.printStackTrace();
+				try {
+					process = Runtime.getRuntime().exec("\"" + next + "\" \"" + url() + "\"");
+				} catch (Throwable t) {
+					fail("All browser processes should start, but the following did not: " + next);
+					t.printStackTrace();
+				}
+				waitForResultToBeSubmitted(next, currentResultCount);
+				verifyLastResult();
+			} finally {
+				if (process != null)
+					process.destroy();
 			}
 		}
-		waitForResultsToBeSubmitted();
-		verifyResults();
-		Utility.log("...Done");
 	}
-	private void waitForResultsToBeSubmitted() throws Exception {
-		Utility.log("Waiting for results to be submitted...");
+	private void waitForResultToBeSubmitted(String browserProcess, int initialResultCount) throws Exception {
 		long secondsWaited = 0;
-		while (acceptor.getResults().size()
-			!= this.initialResultsSize + browserFileNames().size()) {
+		while (acceptor.getResults().size() == initialResultCount) {
 			Thread.sleep(1000);
 			secondsWaited += 1;
 			if (secondsWaited > maxSecondsToWait())
-				fail("Waited more than " + maxSecondsToWait() + " seconds");
+				fail("Waited more than " + maxSecondsToWait() + " seconds for browser " + browserProcess);
 		}
 	}
-	private void verifyResults() {
-		Utility.log("Verifying results...");
-		Iterator it = acceptor.getResults().iterator();
-		while (it.hasNext()) {
-			TestSuiteResult result = (TestSuiteResult) it.next();
-			if (!result.hadSuccess()) {
-				fail("Result with ID " + result.getId() + " failed");
-			}
+	private void verifyLastResult() {
+		TestSuiteResult result = acceptor.lastResult();
+		if (!result.hadSuccess()) {
+			fail("Result with ID " + result.getId() + " failed");
 		}
 	}
 	public void setStartAndStopServer(boolean b) {

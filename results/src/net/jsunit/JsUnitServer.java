@@ -74,7 +74,7 @@ public class JsUnitServer {
 		JsUnitServer.instance().startServer();
 	}
 	public void startServer() throws Exception {
-		if (server == null) {			
+		if (server == null) {
 			server = new HttpServer();
 			server.addListener(":" + port());
 			HttpContext context = server.getContext("/jsunit");
@@ -163,5 +163,12 @@ public class JsUnitServer {
 		else
 			result = Integer.parseInt(portString);
 		return result;
+	}
+	public TestSuiteResult lastResult() {
+		List results = getResults();
+		return results.isEmpty() ? null : (TestSuiteResult) results.get(results.size() - 1);
+	}
+	public int resultsCount() {
+		return getResults().size();
 	}
 }
