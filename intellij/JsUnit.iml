@@ -7,6 +7,7 @@
     <content url="file://$MODULE_DIR$/..">
       <sourceFolder url="file://$MODULE_DIR$/../java/src" isTestSource="false" />
     </content>
+    <content url="file://C:/temp" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
@@ -49,15 +50,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../java/lib/jetty.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://C:/ant-1.5.2/lib/ant.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

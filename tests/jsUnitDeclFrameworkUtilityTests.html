@@ -42,7 +42,7 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit StackTrace Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
 <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
@@ -50,7 +50,7 @@
 // expose test function names
 function exposeTestFunctionNames()
 {
-  return ['testStackTrace', 'testjsUnitTestSuiteClass', 'testTracing'];
+  return ['testStackTrace', 'testJsUnitTestSuiteClass', 'testTracing'];
 }
 
 // JsUnit StackTrace Tests
@@ -66,7 +66,7 @@ function doStackTraceTest(numberLeft) {
   assertEquals("> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> testStackTrace\n", getStackTrace());
 }
 
-function testjsUnitTestSuiteClass() {
+function testJsUnitTestSuiteClass() {
   var aSuite=new top.jsUnitTestSuite();
   aSuite.addTestPage("foo.html");
   aSuite.addTestPage("bar.html");
@@ -94,6 +94,7 @@ function testTracing() {
   info("This is info 3", "foo");
   info("This is info 4");
 }
+
 </script>
   </head>
 

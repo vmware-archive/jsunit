@@ -1,7 +1,7 @@
 /* @author Edward Hieatt, edward@jsunit.net */
 
 var JSUNIT_UNDEFINED_VALUE;
-var JSUNIT_VERSION="2.1";
+var JSUNIT_VERSION="2.2";
 var isTestPageLoaded = false;
 
 //hack for NS62 bug
@@ -19,18 +19,19 @@ function jsUnitFixTop() {
   }
   try {
     window.top = tempTop;
-  } catch (e) {}
+  } catch (e) {
+  }
 }
 
 jsUnitFixTop();
 
 function _displayStringForValue(aVar) {
-  if (aVar === null) 
+  if (aVar === null)
     return 'null';
-    
-  if (aVar === top.JSUNIT_UNDEFINED_VALUE) 
+
+  if (aVar === top.JSUNIT_UNDEFINED_VALUE)
     return 'undefined';
-    
+
   return aVar;
 }
 
@@ -208,12 +209,12 @@ function parseErrorStack(excp)
 {
   var stack = [];
   var name;
-  
+
   if (!excp || !excp.stack)
   {
     return stack;
   }
-  
+
   var stacklist = excp.stack.split('\n');
 
   for (var i = 0; i < stacklist.length - 1; i++)
@@ -244,12 +245,12 @@ function JsUnitException(comment, message) {
 }
 
 function warn() {
-  if (top.tracer != null) 
+  if (top.tracer != null)
     top.tracer.warn(arguments[0], arguments[1]);
 }
 
 function inform() {
-  if (top.tracer != null) 
+  if (top.tracer != null)
     top.tracer.inform(arguments[0], arguments[1]);
 }
 
@@ -258,28 +259,28 @@ function info() {
 }
 
 function debug() {
-  if (top.tracer != null) 
+  if (top.tracer != null)
     top.tracer.debug(arguments[0], arguments[1]);
 }
 
-function setjsUnitTracer(ajsUnitTracer) {
-  top.tracer=ajsUnitTracer;
+function setJsUnitTracer(aJsUnitTracer) {
+  top.tracer = aJsUnitTracer;
 }
 
 function trim(str) {
-  if (str == null) 
+  if (str == null)
     return null;
 
   var startingIndex = 0;
   var endingIndex   = str.length-1;
-  
+
   while (str.substring(startingIndex, startingIndex+1) == ' ')
     startingIndex++;
 
   while (str.substring(endingIndex, endingIndex+1) == ' ')
     endingIndex--;
 
-  if (endingIndex < startingIndex) 
+  if (endingIndex < startingIndex)
     return '';
 
   return str.substring(startingIndex, endingIndex+1);
@@ -289,8 +290,8 @@ function isBlank(str) {
   return trim(str) == '';
 }
 
-// the functions push(anArray, anObject) and pop(anArray) 
-// exist because the JavaScript Array.push(anObject) and Array.pop() 
+// the functions push(anArray, anObject) and pop(anArray)
+// exist because the JavaScript Array.push(anObject) and Array.pop()
 // functions are not available in IE 5.0
 
 function push(anArray, anObject) {
@@ -342,7 +343,7 @@ if (top && typeof(top.xbDEBUG) != 'undefined' && top.xbDEBUG.on && top.testManag
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'warn');
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'inform');
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'debug');
-  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'setjsUnitTracer');
+  top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'setJsUnitTracer');
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'trim');
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'isBlank');
   top.xbDebugTraceFunction('top.testManager.containerTestFrame', 'newOnLoadEvent');
@@ -374,9 +375,9 @@ function jsUnitSetOnLoad(windowRef, onloadHandler)
     windowRef.jsunit_original_onload = windowRef.onload;
     windowRef.onload = function() { windowRef.jsunit_original_onload(); onloadHandler(); };
   } else {
-    // browsers that do not support windowRef.attachEvent or 
+    // browsers that do not support windowRef.attachEvent or
     // windowRef.addEventListener will override a page's own onload event
-    windowRef.onload=onloadHandler; 
+    windowRef.onload=onloadHandler;
   }
 }
 

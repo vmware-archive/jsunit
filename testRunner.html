@@ -3,7 +3,7 @@
 <html>
 
   <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit</title>
     <script language="JavaScript" type="text/javascript" src="app/xbDebug.js"></script>
     <script language="JavaScript" type="text/javascript" src="app/jsUnitCore.js"></script>
@@ -65,10 +65,10 @@
        var value = jsUnitParmHash[p];
 
        if (!value ||
-           p == 'testpage' || 
-           p == 'autorun'  || 
-           p == 'submitresults' || 
-           p == 'showtestframe' || 
+           p == 'testpage' ||
+           p == 'autorun'  ||
+           p == 'submitresults' ||
+           p == 'showtestframe' ||
            p == 'resultid')
        {
          continue;
@@ -126,7 +126,7 @@
       }
     }
   }
-  
+
   function shouldKickOffTestsAutomatically() {
   	return jsUnitGetParm('autorun')=="true";
   }
@@ -134,48 +134,48 @@
   function shouldShowTestFrame() {
     return jsUnitGetParm('showtestframe');
   }
-  
+
   function shouldSubmitResults() {
   	return jsUnitGetParm('submitresults');
   }
-  
+
   function getResultId() {
-    if (jsUnitGetParm('resultid')) 
+    if (jsUnitGetParm('resultid'))
   		return jsUnitGetParm('resultid');
   	return "";
   }
 
   function submitResults() {
     window.mainFrame.mainData.document.testRunnerForm.runButton.disabled=true;
-    window.mainFrame.mainResults.populateHeaderFields(getResultId(), navigator.userAgent, JSUNIT_VERSION, testManager.resolveUserEnteredTestFileName());  
+    window.mainFrame.mainResults.populateHeaderFields(getResultId(), navigator.userAgent, JSUNIT_VERSION, testManager.resolveUserEnteredTestFileName());
   	window.mainFrame.mainResults.submitResults();
   }
-  
+
   function wasResultUrlSpecified() {
   	return shouldSubmitResults() && jsUnitGetParm('submitresults')!='true';
   }
-  
+
   function getSpecifiedResultUrl() {
-	return jsUnitGetParm('submitresults');  
+	return jsUnitGetParm('submitresults');
   }
-  
+
   function init()
   {
     if (shouldShowTestFrame() && window.testRunnerFrameset) {
     	var testFrameHeight;
-    	if (jsUnitGetParm('showtestframe')=="true") 
-    		testFrameHeight=DEFAULT_TEST_FRAME_HEIGHT;    	
-    	else 
+    	if (jsUnitGetParm('showtestframe')=="true")
+    		testFrameHeight=DEFAULT_TEST_FRAME_HEIGHT;
+    	else
     		testFrameHeight=jsUnitGetParm('showtestframe');
        	window.testRunnerFrameset.rows="*,0," + testFrameHeight;
     }
     testManager = new jsUnitTestManager();
-    tracer      = new jsUnitTracer();    
+    tracer      = new JsUnitTracer();
     if (shouldKickOffTestsAutomatically()) {
     	window.mainFrame.mainData.kickOffTests();
     }
   }
-  
+
 </script>
   </head>
 

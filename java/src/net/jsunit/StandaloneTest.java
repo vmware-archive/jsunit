@@ -35,8 +35,10 @@ public class StandaloneTest extends TestCase {
     public void tearDown() throws Exception {
         if (needToStopServer)
             server.stop();
-        if (process != null)
-            process.destroy();
+        if (process != null) {
+            destroyBrowserProcess();
+
+        }
         super.tearDown();
     }
 
@@ -47,9 +49,14 @@ public class StandaloneTest extends TestCase {
             int currentResultCount = server.resultsCount();
             launchBrowser(next);
             waitForResultToBeSubmitted(next, currentResultCount);
-            process.destroy();
+            destroyBrowserProcess();
             verifyLastResult();
         }
+    }
+
+    private void destroyBrowserProcess() {
+        process.destroy();
+        process = null;
     }
 
     private void launchBrowser(String browser) {

@@ -1,83 +1,101 @@
 /* @author Edward Hieatt, edward@jsunit.net */
 
-function jsUnitTracer() {
-  this._traceWindow        = null;
-  this.TRACE_LEVEL_WARNING = 1;
-  this.TRACE_LEVEL_INFO    = 2;
-  this.TRACE_LEVEL_DEBUG   = 3;
-  this.popupWindowsBlocked = false;
+var TRACE_LEVEL_NONE    = new JsUnitTraceLevel(0, null);
+var TRACE_LEVEL_WARNING = new JsUnitTraceLevel(1, "#FF0000");
+var TRACE_LEVEL_INFO    = new JsUnitTraceLevel(2, "#009966");
+var TRACE_LEVEL_DEBUG   = new JsUnitTraceLevel(3, "#0000FF");
+
+function JsUnitTracer() {
+    this._traceWindow        = null;
+    this.popupWindowsBlocked = false;
 }
 
-jsUnitTracer.prototype.initialize = function () 
-{
-  if (this._traceWindow != null && top.testManager.closeTraceWindowOnNewRun.checked)
-    this._traceWindow.close();
-
-  this._traceWindow = null;
+JsUnitTracer.prototype.initialize = function() {
+    if (this._traceWindow != null && top.testManager.closeTraceWindowOnNewRun.checked)
+        this._traceWindow.close();
+    this._traceWindow = null;
 }
 
-jsUnitTracer.prototype.finalize = function () 
-{
-  if (this._traceWindow!=null) {
-    this._traceWindow.document.write('<\/body>\n<\/html>');
-    this._traceWindow.document.close();
-  }
+JsUnitTracer.prototype.finalize = function() {
+    if (this._traceWindow!=null) {
+        this._traceWindow.document.write('<\/body>\n<\/html>');
+        this._traceWindow.document.close();
+    }
 }
 
-jsUnitTracer.prototype.warn = function () 
-{
-  this._trace(arguments[0], arguments[1], this.TRACE_LEVEL_WARNING);
+JsUnitTracer.prototype.warn = function() {
+    this._trace(arguments[0], arguments[1], TRACE_LEVEL_WARNING);
 }
 
-jsUnitTracer.prototype.inform = function () 
-{
-  this._trace(arguments[0], arguments[1], this.TRACE_LEVEL_INFO);
+JsUnitTracer.prototype.inform = function() {
+    this._trace(arguments[0], arguments[1], TRACE_LEVEL_INFO);
 }
 
-jsUnitTracer.prototype.debug = function () 
-{
-  this._trace(arguments[0], arguments[1], this.TRACE_LEVEL_DEBUG);
+JsUnitTracer.prototype.debug = function() {
+    this._trace(arguments[0], arguments[1], TRACE_LEVEL_DEBUG);
 }
 
-jsUnitTracer.prototype._trace = function (message, value, traceLevel) 
-{
-  if (this._getChosenTraceLevel() >= traceLevel) {
-    var traceString = message;
-    if (value)
-      traceString += ': ' + value;
-    this._writeToTraceWindow(traceString, traceLevel);
-  }
+JsUnitTracer.prototype._trace = function(message, value, traceLevel) {
+    if (this._getChosenTraceLevel().matches(traceLevel)) {
+        var traceString = message;
+        if (value)
+            traceString +=  ': ' + value;
+        this._writeToTraceWindow(traceString, traceLevel);
+    }
 }
 
-jsUnitTracer.prototype._getChosenTraceLevel = function () 
-{
-  return eval(top.testManager.traceLevel.value);
+JsUnitTracer.prototype._getChosenTraceLevel = function() {
+    var levelNumber = eval(top.testManager.traceLevel.value);
+    return traceLevelByLevelNumber(levelNumber);
 }
 
-jsUnitTracer.prototype._writeToTraceWindow  = function (traceString, traceLevel) 
-{
-  var htmlToAppend = '<p class="jsUnitDefault">' + traceString + '<\/p>\n';
+JsUnitTracer.prototype._writeToTraceWindow  = function(traceString, traceLevel) {
+  var htmlToAppend = '<p class="jsUnitDefault"><font color="'+traceLevel.getColor()+'">' + traceString + '</font><\/p>\n';
   this._getTraceWindow().document.write(htmlToAppend);
 }
 
-jsUnitTracer.prototype._getTraceWindow = function () 
-{
+JsUnitTracer.prototype._getTraceWindow = function() {
   if (this._traceWindow == null && !this.popupWindowsBlocked) {
     this._traceWindow = window.open('','','width=600, height=350,status=no,resizable=yes,scrollbars=yes');
-    if (!this._traceWindow) {
+    if (!this._traceWindow)
       this.popupWindowsBlocked = true;
-    }
     else {
       var resDoc = this._traceWindow.document;
       resDoc.write('<html>\n<head>\n<link rel="stylesheet" href="css/jsUnitStyle.css">\n<title>Tracing - JsUnit<\/title>\n<head>\n<body>');
       resDoc.write('<h2>Tracing - JsUnit<\/h2>\n');
+      resDoc.write('<p class="jsUnitDefault"><i>(Traces are color coded: ');
+      resDoc.write('<font color="'+TRACE_LEVEL_WARNING.getColor()+'">Warning</font> - ');
+      resDoc.write('<font color="'+TRACE_LEVEL_INFO.getColor()+'">Information</font> - ');
+      resDoc.write('<font color="'+TRACE_LEVEL_DEBUG.getColor()+'">Debug</font>');
+      resDoc.write(')</i></p>');
     }
   }
   return this._traceWindow;
 }
 
-if (xbDEBUG.on)
-{
-  xbDebugTraceObject('window', 'jsUnitTracer');
+if (xbDEBUG.on) {
+  xbDebugTraceObject('window', 'JsUnitTracer');
 }
 
+function JsUnitTraceLevel(levelNumber, color) {
+    this._levelNumber = levelNumber;
+    this._color = color;
+}
+
+JsUnitTraceLevel.prototype.matches = function(anotherTraceLevel) {
+    return this._levelNumber >= anotherTraceLevel._levelNumber;
+}
+
+JsUnitTraceLevel.prototype.getColor = function() {
+    return this._color;
+}
+
+function traceLevelByLevelNumber(levelNumber) {
+    switch (levelNumber) {
+        case 0: return TRACE_LEVEL_NONE;
+        case 1: return TRACE_LEVEL_WARNING;
+        case 2: return TRACE_LEVEL_INFO;
+        case 3: return TRACE_LEVEL_DEBUG;
+    }
+    return null;
+}
