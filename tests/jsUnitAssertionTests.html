@@ -42,7 +42,7 @@
    - ***** END LICENSE BLOCK ***** -->
 
   <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit Assertion Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
 <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
@@ -153,6 +153,37 @@ function testInvalidArgumentType() {
     excep=e;
   }
   assertNonJsUnitException("Calling an assertion function with an invalid argument should throw an exception", excep);
+}
+
+function testAssertArrayEquals() {
+    var array1 = Array();
+    array1[0] = "foo";
+    array1[1] = "bar";
+    array1[2] = "foobar";
+    var array2 = Array();
+    array2[0] = "foo";
+    array2[1] = "bar";
+    array2[2] = "foobar";
+    var array3 = Array();
+    array3[0] = "foo";
+    array3[1] = "bar";
+    var array4 = Array();
+    array4[0] = "bar";
+    array4[1] = "foo";
+    array4[2] = "foobar";
+
+    assertArrayEquals(array1, array1);
+    assertArrayEquals(array1, array2);
+    try {
+        assertArrayEquals(array1, array3);
+        fail("Should not be equal");
+    } catch (e) {
+    }
+    try {
+        assertArrayEquals(array1, array4);
+        fail("Should not be equal");
+    } catch (e) {
+    }
 }
 
 function assertJsUnitException(comment, allegedJsUnitException) {

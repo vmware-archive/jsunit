@@ -154,6 +154,23 @@ function assertNotNaN() {
   _assert(commentArg(1, arguments), !isNaN(aVar), 'Expected not NaN');
 }
 
+function assertArrayEquals(){
+  _validateArguments(2, arguments);
+  var var1=nonCommentArg(1, 2, arguments);
+  var var2=nonCommentArg(2, 2, arguments);
+  var i;
+  var isEqual = (var1.length==var2.length);
+  if(isEqual){
+      for(i=0;i<var1.length;i++){
+          isEqual = (var1[i]===var2[i]);
+          if(!isEqual){break;}
+      }
+  }
+  _assert(commentArg(2, arguments), isEqual, 'Expected ' + var1 + ' (' +
+    typeof(var1) + ') but was ' + _displayStringForValue(var2) + ' (' +
+    typeof(var2) + ')');
+}
+
 function isLoaded() {
   return isTestPageLoaded;
 }
