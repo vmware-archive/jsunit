@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+            "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+  <!--
+    JsUnit
+    Copyright (C) 2001 Edward Hieatt, edward@jsunit.net
+
+    This program is free software; you can redistribute it and/or
+    modify it under the terms of the GNU General Public License
+    as published by the Free Software Foundation; either version 2
+    of the License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+  -->
+
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <title>jsUnit Main Frame</title>
+<script type="text/javascript">
+  window.name = 'mainFrame';
+
+  function init()
+  {
+    top.uiFrames.main               = window;
+    top.uiFrames.mainData           = top.uiFrames.main.frames.mainData;
+    top.uiFrames.mainStatus         = top.uiFrames.main.frames.mainStatus;
+    top.uiFrames.mainProgress       = top.uiFrames.main.frames.mainProgress;
+    top.uiFrames.mainCounts         = top.uiFrames.main.frames.mainCounts;
+    top.uiFrames.mainErrors         = top.uiFrames.main.frames.mainErrors;
+  }
+</script>
+  </head>
+
+  <frameset rows="165,25,25,25,*" frameborder="0" onload="init()">
+    <frame name="mainData" src="main-data.html" scrolling="no">
+    <frame name="mainStatus" src="main-status.html" scrolling="no">
+    <frame name="mainProgress" src="main-progress.html" scrolling="no">
+    <frame name="mainCounts" src="main-counts.html" scrolling="no">
+    <frame name="mainErrors" src="main-errors.html" scrolling="no">
+
+    <noframes>
+      <body>
+        <p>jsUnit has been modified to use frames in order to remove
+        dependencies upon a browser's implementation of document.getElementById
+        and HTMLElement.innerHTML.</p>
+      </body>
+    </noframes>
+  </frameset>
+</html>
+

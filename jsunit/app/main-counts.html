@@ -1,0 +1,34 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+            "http://www.w3.org/TR/html4/frameset.dtd">
+<html>
+  <head>
+    <meta name="generator" content="HTML Tidy, see www.w3.org">
+    <title></title>
+<script type="text/javascript">
+  window.name = 'mainCounts';
+
+  function init()
+  {
+    top.uiFrames.mainCounts         = window;
+    top.uiFrames.mainCountsRuns      = top.uiFrames.mainCounts.frames.mainCountsRuns;
+    top.uiFrames.mainCountsErrors   = top.uiFrames.mainCounts.frames.mainCountsErrors;
+    top.uiFrames.mainCountsFailures = top.uiFrames.mainCounts.frames.mainCountsFailures;
+  }
+</script>
+  </head>
+
+  <frameset cols="200,200,*" frameborder="0" onload="init()">
+    <frame name="mainCountsRuns" src="main-counts-runs.html" scrolling="no">
+    <frame name="mainCountsErrors" src="main-counts-errors.html" scrolling="no">
+    <frame name="mainCountsFailures" src="main-counts-failures.html" scrolling="no">
+
+    <noframes>
+      <body>
+        <p>jsUnit has been modified to use frames in order to remove
+        dependencies upon a browser's implementation of document.getElementById
+        and HTMLElement.innerHTML.</p>
+      </body>
+    </noframes>
+  </frameset>
+</html>
+
