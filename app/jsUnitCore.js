@@ -182,12 +182,11 @@ function tearDown() {
 }
 
 function getFunctionName(aFunction) {
-  var name = aFunction.toString().match(/function (\w*)/)[1];
-
-  if ((name == null) || (name.length == 0))
-    name = 'anonymous';
-
-  return name;
+  var regexpResult = aFunction.toString().match(/function (\w*)/);
+  if (regexpResult && regexpResult[1]) {
+    return regexpResult[1];
+  }
+  return 'anonymous';
 }
 
 function getStackTrace() {
