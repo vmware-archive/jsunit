@@ -18,7 +18,7 @@
 */
 
 var GECKO_FILE_TIMEOUT = 3000; // milliseconds
-var PRETEST_TIMEOUT    = 60000; // milliseconds
+var PRETEST_TIMEOUT    = 60; // seconds
 
 function trim(str) {
         if (str==null) return null;

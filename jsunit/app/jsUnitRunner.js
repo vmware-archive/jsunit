@@ -94,7 +94,7 @@ function _runTest() {
     {
       // preTest called, but not complete yet
       top.status = 'preTest not completed... ' + top.uiFrames.testFrame.preTestStatus + ' ' + (new Date());
-      if ((new Date() - top.uiFrames.testFrame.startTime) > PRETEST_TIMEOUT) {
+      if ((new Date() - top.uiFrames.testFrame.startTime) /1000 > testManager.pretestTimeout()) {
         if (prompt('Test Pre-Condition timed out without completing., Retry or Cancel', 'Retry') != 'Retry')
         {
           testManager.abort();
@@ -166,6 +166,14 @@ function timeout() {
         }
         return result;
 }
+function preTestTimeout() {
+        var result=PRETEST_TIMEOUT;
+        try {
+                result = eval(document.testRunnerForm.preTestTimeout.value);
+        } catch (e) {
+        }
+        return result;
+}
 TestManager.prototype.start=start;
 TestManager.prototype.doneLoadingPage=doneLoadingPage;
 TestManager.prototype._handleNewSuite=_handleNewSuite;
@@ -177,6 +185,7 @@ TestManager.prototype.calculateProgressBarProportion=calculateProgressBarProport
 TestManager.prototype._cleanUp=_cleanUp;
 TestManager.prototype.abort=abort;
 TestManager.prototype.timeout=timeout;
+TestManager.prototype.preTestTimeout=preTestTimeout;
 
 /**************************************************************/
 
