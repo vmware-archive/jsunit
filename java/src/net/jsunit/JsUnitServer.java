@@ -177,4 +177,8 @@ public class JsUnitServer {
         return port;
     }
 
+    public File getResourceBase() {
+        return resourceBase;
+    }
+
 }

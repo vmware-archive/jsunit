@@ -3,10 +3,7 @@ package net.jsunit;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -63,5 +60,9 @@ public class Utility {
 
     public static void setLogToStandardOut(boolean b) {
         logToStandardOut = b;
+    }
+
+    public static List listWith(Object object1, Object object2) {
+        return Arrays.asList(new Object[] {object1, object2});
     }
 }

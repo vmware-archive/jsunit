@@ -1,9 +1,7 @@
 package net.jsunit;
 
-import java.util.List;
 import java.util.Iterator;
-import java.io.File;
-import java.net.URL;
+import java.util.List;
 
 public class ArgumentsConfiguration extends AbstractConfiguration {
     private String port;
@@ -20,17 +18,17 @@ public class ArgumentsConfiguration extends AbstractConfiguration {
     private void init(List args) {
         for (Iterator it = args.iterator(); it.hasNext();) {
             String argument = (String) it.next();
-            if (argument.equals(PORT))
+            if (argument.equals("-" + PORT))
                 this.port = (String) it.next();
-            if (argument.equals(RESOURCE_BASE))
+            if (argument.equals("-" + RESOURCE_BASE))
                 this.resourceBase = (String) it.next();
-            if (argument.equals(LOGS_DIRECTORY))
+            if (argument.equals("-" + LOGS_DIRECTORY))
                 this.logsDirectory = (String) it.next();
-            if (argument.equals(REMOTE_MACHINE_NAMES))
+            if (argument.equals("-" + REMOTE_MACHINE_NAMES))
                 this.remoteMachineNames = (String) it.next();
-            if (argument.equals(URL))
+            if (argument.equals("-" + URL))
                 this.url = (String) it.next();
-            if (argument.equals(BROWSER_FILE_NAMES))
+            if (argument.equals("-" + BROWSER_FILE_NAMES))
                 this.browserFileNames = (String) it.next();
         }
     }
