@@ -603,6 +603,9 @@ function getDocumentProtocol()
 
   if (protocol == "http:") 
     return "http://";
+    
+  if (protocol == "chrome:") 
+    return "chrome://";
 
   return null;
 }
