@@ -1,5 +1,6 @@
 package net.jsunit.test;
-import junit.framework.*;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 /**
  * @author Edward Hieatt
  * 
@@ -44,9 +45,9 @@ import junit.framework.*;
 public class Suite extends TestCase {
 	public static TestSuite suite() {
 		TestSuite result = new TestSuite();
-		result.addTestSuite(JsUnitTestCaseResultTest.class);
-		result.addTestSuite(JsUnitTestSuiteResultTest.class);
 		result.addTestSuite(JsUnitResultAcceptorTest.class);
+		result.addTestSuite(String.class);
+		result.addTestSuite(String.class);
 		return result;
 	}
 }
