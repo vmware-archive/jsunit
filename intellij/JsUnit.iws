@@ -105,106 +105,7 @@
     <option name="HIDE_WARNINGS" value="false" />
   </component>
   <component name="FileEditorManager" split-orientation="vertical" split-proportion="0.5">
-    <first-group selected-file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/StandaloneTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="2" column="7" selection-start="28" selection-end="28" vertical-scroll-proportion="-0.96330273">
-            <folding>
-              <element signature="method#browserFileNames#0;class#StandaloneTest#0" expanded="true" />
-              <element signature="method#url#0;class#StandaloneTest#0" expanded="true" />
-              <element signature="method#tearDown#0;class#StandaloneTest#0" expanded="true" />
-              <element signature="method#setUp#0;class#StandaloneTest#0" expanded="true" />
-              <element signature="method#testStandaloneRun#0;class#StandaloneTest#0" expanded="true" />
-              <element signature="method#maxSecondsToWait#0;class#StandaloneTest#0" expanded="true" />
-              <element signature="method#StandaloneTest#0;class#StandaloneTest#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/ResultAcceptorTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="76" column="0" selection-start="3335" selection-end="3335" vertical-scroll-proportion="0.41284403">
-            <folding>
-              <element signature="method#testLog#0;class#ResultAcceptorTest#0" expanded="true" />
-              <element signature="method#testFindResultById#0;class#ResultAcceptorTest#0" expanded="true" />
-              <element signature="method#testSubmitResults#0;class#ResultAcceptorTest#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/JsUnitServer.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="157" column="62" selection-start="6018" selection-end="6018" vertical-scroll-proportion="0.35648754">
-            <folding>
-              <element signature="method#propertiesFromFileName#0;class#JsUnitServer#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/EndToEndTestSuite.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="44" column="13" selection-start="2253" selection-end="2253" vertical-scroll-proportion="0.6684142">
-            <folding>
-              <element signature="method#suite#0;class#EndToEndTestSuite#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestCaseResultTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="49" column="20" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.37876803">
-            <folding>
-              <element signature="method#TestCaseResultTest#0;class#TestCaseResultTest#0" expanded="true" />
-              <element signature="method#testBuildSuccessfulResultFromString#0;class#TestCaseResultTest#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/DistributedTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="18" column="19" selection-start="516" selection-end="516" vertical-scroll-proportion="0.3928113">
-            <folding>
-              <element signature="method#DistributedTest#0;class#DistributedTest#0" expanded="true" />
-              <element signature="imports" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="20" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.436457">
-            <folding>
-              <element signature="imports" expanded="true" />
-              <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
-              <element signature="method#setUp#0;class#DistributedTestTest#0" expanded="true" />
-              <element signature="method#DistributedTestTest#0;class#DistributedTestTest#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="44" column="49" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.23591088">
-            <folding>
-              <element signature="method#testId#0;class#TestSuiteResultTest#0" expanded="true" />
-              <element signature="method#testFields#0;class#TestSuiteResultTest#0" expanded="true" />
-              <element signature="method#assertFields#0;class#TestSuiteResultTest#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="58" column="35" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.80209696">
-            <folding>
-              <element signature="method#JsUnitTest#0;class#JsUnitTest#0" expanded="true" />
-              <element signature="method#setUp#0;class#JsUnitTest#0" expanded="true" />
-              <element signature="method#tearDown#0;class#JsUnitTest#0" expanded="true" />
-            </folding>
-          </state>
-        </provider>
-      </entry>
-    </first-group>
+    <first-group />
     <second-group />
   </component>
   <component name="HierarchyBrowserManager">
@@ -355,14 +256,14 @@
     <layout>
       <window_info id="CVS" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.31271878" order="8" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="7" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.29983792" order="0" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.34683955" order="0" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3908985" order="1" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.24959481" order="1" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.3092182" order="9" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.4" order="6" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="1" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.27421236" order="2" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="true" weight="0.12722853" order="2" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.12722853" order="2" />
       <window_info id="CVS File View" active="false" anchor="right" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.33" order="3" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.23803967" order="4" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="sliding" type="sliding" visible="false" weight="0.4" order="0" />
@@ -462,17 +363,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="58" column="35" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.80209696">
-          <folding>
-            <element signature="method#JsUnitTest#0;class#JsUnitTest#0" expanded="true" />
-            <element signature="method#setUp#0;class#JsUnitTest#0" expanded="true" />
-            <element signature="method#tearDown#0;class#JsUnitTest#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestCaseResultTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="49" column="20" selection-start="2416" selection-end="2416" vertical-scroll-proportion="0.37876803">
@@ -483,35 +373,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="49" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.23591088">
-          <folding>
-            <element signature="method#testId#0;class#TestSuiteResultTest#0" expanded="true" />
-            <element signature="method#testFields#0;class#TestSuiteResultTest#0" expanded="true" />
-            <element signature="method#assertFields#0;class#TestSuiteResultTest#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/DistributedTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="19" selection-start="516" selection-end="516" vertical-scroll-proportion="0.3928113">
           <folding>
             <element signature="method#DistributedTest#0;class#DistributedTest#0" expanded="true" />
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.436457">
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
-            <element signature="method#setUp#0;class#DistributedTestTest#0" expanded="true" />
-            <element signature="method#DistributedTestTest#0;class#DistributedTestTest#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -547,6 +414,40 @@
             <element signature="method#testLog#0;class#ResultAcceptorTest#0" expanded="true" />
             <element signature="method#testFindResultById#0;class#ResultAcceptorTest#0" expanded="true" />
             <element signature="method#testSubmitResults#0;class#ResultAcceptorTest#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.42606518">
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#tearDown#0;class#DistributedTestTest#0" expanded="true" />
+            <element signature="method#setUp#0;class#DistributedTestTest#0" expanded="true" />
+            <element signature="method#DistributedTestTest#0;class#DistributedTestTest#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="49" selection-start="2156" selection-end="2156" vertical-scroll-proportion="0.23017903">
+          <folding>
+            <element signature="method#testId#0;class#TestSuiteResultTest#0" expanded="true" />
+            <element signature="method#testFields#0;class#TestSuiteResultTest#0" expanded="true" />
+            <element signature="method#assertFields#0;class#TestSuiteResultTest#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="58" column="35" selection-start="2587" selection-end="2587" vertical-scroll-proportion="0.7869674">
+          <folding>
+            <element signature="method#JsUnitTest#0;class#JsUnitTest#0" expanded="true" />
+            <element signature="method#setUp#0;class#JsUnitTest#0" expanded="true" />
+            <element signature="method#tearDown#0;class#JsUnitTest#0" expanded="true" />
           </folding>
         </state>
       </provider>
