@@ -60,6 +60,7 @@
 
   function loadComplete()
   {
+    top.xbDEBUG.dump('main-loader.html:loadComplete(): loadStatus = ' + loadStatus + ' href=' + buffer().document.location.href);
     if (loadStatus == 'loading')
     {
       loadStatus = 'complete';
@@ -70,9 +71,11 @@
 
   if (top.xbDEBUG.on)
   {
-    top.xbDebugTraceFunction('top.frames.documentLoader', 'buffer');
-    top.xbDebugTraceFunction('top.frames.documentLoader', 'load');
-    top.xbDebugTraceFunction('top.frames.documentLoader', 'loadComplete');
+    var scopeName = 'main_loader_' + (new Date()).getTime();
+    top[scopeName] = window;
+    top.xbDebugTraceFunction(scopeName, 'buffer');
+    top.xbDebugTraceFunction(scopeName, 'load');
+    top.xbDebugTraceFunction(scopeName, 'loadComplete');
   }
   
 </script>
