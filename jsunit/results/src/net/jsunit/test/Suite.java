@@ -1,4 +1,5 @@
 package net.jsunit.test;
+import net.jsunit.JsUnitStandaloneTest;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 /**
@@ -46,8 +47,9 @@ public class Suite extends TestCase {
 	public static TestSuite suite() {
 		TestSuite result = new TestSuite();
 		result.addTestSuite(JsUnitResultAcceptorTest.class);
-		result.addTestSuite(String.class);
-		result.addTestSuite(String.class);
+		result.addTestSuite(JsUnitTestCaseResultTest.class);
+		result.addTestSuite(JsUnitTestSuiteResultTest.class);
+		result.addTestSuite(JsUnitStandaloneTest.class);
 		return result;
 	}
 }
