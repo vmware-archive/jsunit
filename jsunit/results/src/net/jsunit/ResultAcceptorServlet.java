@@ -1,5 +1,8 @@
-package net.jsunit.test;
-import net.jsunit.*;
+package net.jsunit;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
 /**
  * @author Edward Hieatt
  * 
@@ -41,49 +44,13 @@ import net.jsunit.*;
    
    @author Edward Hieatt
  */
-public class JsUnitTestSuiteResultTest extends JsUnitTest {
-	protected JsUnitTestSuiteResult result;
-	public JsUnitTestSuiteResultTest(String name) {
-		super(name);
-	}
-	public void setUp() throws Exception {
-		super.setUp();
-		result = new JsUnitTestSuiteResult();
-		result.setJsUnitVersion("2.5");
-		result.setId("An ID");
-		result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-		result.setTime(4.3);
-		result.setTestCaseStrings(new String[] { "testFoo|1.3|S||", "testFoo|1.3|E|Error Message|", "testFoo|1.3|F|Failure Message|" });
-	}
-	public void testId() {
-		assertNotNull(result.getId());
-		result = new JsUnitTestSuiteResult();
-		result.setId("foo");
-		assertEquals("foo", result.getId());
-	}
-	public void testFields() {
-		assertEquals("2.5", result.getJsUnitVersion());
-		assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)" , result.getUserAgent());
-		assertEquals(4.3d, result.getTime(), 0.001d);
-		assertEquals(3, result.getTestCaseResults().size());
-	}
-	public void testXml() {
-		assertEquals(
-			"<testsuite id=\"An ID\" errors=\"1\" failures=\"1\" name=\"JsUnitTest\" tests=\"3\" time=\"4.3\">"+
-				"<properties><property name=\"JsUnitVersion\" value=\"2.5\" />"+
-					"<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />"+
-					"</properties>"+
-				"<testcase name=\"testFoo\" time=\"1.3\" />"+
-				"<testcase name=\"testFoo\" time=\"1.3\">"+
-					"<error message=\"Error Message\" />"+
-				"</testcase>"+
-				"<testcase name=\"testFoo\" time=\"1.3\">"+
-					"<failure message=\"Failure Message\" />"+
-				"</testcase>"+
-			"</testsuite>",
-			result.writeXmlFragment());
-	}
-	public void testSuccess() {
-		assertFalse(result.hadSuccess());
+public class ResultAcceptorServlet extends HttpServlet {
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		TestSuiteResult result = ResultAcceptor.instance().accept(request);
+		String xml = result.writeXml();
+		response.setContentType("text/xml");
+		OutputStream out = response.getOutputStream();
+		out.write(xml.getBytes());
+		out.close();
 	}
 }

@@ -1,9 +1,5 @@
 package net.jsunit;
-
 import java.io.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-
 /**
  * @author Edward Hieatt
  * 
@@ -45,12 +41,21 @@ import javax.servlet.http.*;
    
    @author Edward Hieatt
  */
-public class JsUnitResultDisplayerServlet extends HttpServlet {
-	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String xml = JsUnitResultAcceptor.instance().writeResultWithId(request.getParameter(JsUnitTestSuiteResult.TEST_ID));	
-		response.setContentType("text/xml");	
-		OutputStream out = response.getOutputStream();
-		out.write(xml.getBytes());
-		out.close();
+public class Utility {
+	public static boolean isEmpty(String s) {
+		return s == null || s.trim().equals("");
+	}
+	public static void writeFile(String contents, String fileName) {
+		try {
+			File file = new File(fileName);
+			if (file.exists())
+				file.delete();
+			BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file));
+			out.write(contents.getBytes());
+			out.close();
+		} catch (Exception e) {
+			System.out.println("Failed to write file: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

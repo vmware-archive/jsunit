@@ -1,9 +1,11 @@
 package net.jsunit;
 import java.io.File;
-import java.util.*;
-import javax.servlet.http.*;
-import org.jdom.*;
-import org.jdom.output.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Edward Hieatt
  * 
@@ -45,17 +47,22 @@ import org.jdom.output.*;
    
    @author Edward Hieatt
  */
-public class JsUnitTestSuiteResult {
-	protected String id, jsUnitVersion, userAgent;
-	protected List testCaseResults = new ArrayList();
-	protected double time;
-	protected static String logsDirectory = "logs" + File.separator;
-	public static final String TEST_ID = "testId", USER_AGENT = "userAgent", TIME = "time", TEST_CASES = "testCases", JSUNIT_VERSION = "jsUnitVersion";
-	public JsUnitTestSuiteResult() {
-		this.id = "" + System.currentTimeMillis();
+public class TestSuiteResult {
+	private String remoteAddress, id, jsUnitVersion, userAgent;
+	private List testCaseResults = new ArrayList();
+	private double time;
+	private static String logsDirectory = "logs" + File.separator;
+	public TestSuiteResult() {
+		this.id = String.valueOf(System.currentTimeMillis());
 	}
 	public static void setLogsDirectory(String directory) {
 		logsDirectory = directory;
+	}
+	public static File fileForId(String id) {
+		return new File(getLogsDirectory() + id + ".xml");
+	}
+	public static String getLogsDirectory() {
+		return logsDirectory;
 	}
 	public String getId() {
 		return id;
@@ -91,30 +98,44 @@ public class JsUnitTestSuiteResult {
 	public void setTestCaseStrings(String[] testCaseResultStrings) {
 		buildTestCaseResults(testCaseResultStrings);
 	}
-	public static JsUnitTestSuiteResult fromRequest(HttpServletRequest request) {
-		JsUnitTestSuiteResult result = new JsUnitTestSuiteResult();
-		String testId = request.getParameter(TEST_ID);
-		if (!JsUnitUtility.isEmpty(testId))
+	public static TestSuiteResult fromRequest(HttpServletRequest request) {
+		TestSuiteResult result = new TestSuiteResult();
+		String testId = request.getParameter(TestSuiteResultWriter.ID);
+		if (!Utility.isEmpty(testId))
 			result.setId(testId);
-		result.setUserAgent(request.getParameter(USER_AGENT));
-		String time = request.getParameter(TIME);
-		if (!JsUnitUtility.isEmpty(time))
+		result.setRemoteAddress(request.getRemoteAddr());
+		result.setUserAgent(request.getParameter(TestSuiteResultWriter.USER_AGENT));
+		String time = request.getParameter(TestSuiteResultWriter.TIME);
+		if (!Utility.isEmpty(time))
 			result.setTime(Double.parseDouble(time));
-		result.setJsUnitVersion(request.getParameter(JSUNIT_VERSION));
-		result.setTestCaseStrings(request.getParameterValues(TEST_CASES));
+		result.setJsUnitVersion(request.getParameter(TestSuiteResultWriter.JSUNIT_VERSION));
+		result.setTestCaseStrings(request.getParameterValues(TestSuiteResultWriter.TEST_CASES));
 		return result;
 	}
-	protected void buildTestCaseResults(String[] testCaseResultStrings) {
+	public String getRemoteAddress() {
+		return remoteAddress;
+	}
+	public void setRemoteAddress(String remoteAddress) {
+		this.remoteAddress = remoteAddress;
+	}
+	private void buildTestCaseResults(String[] testCaseResultStrings) {
 		if (testCaseResultStrings == null)
 			return;
 		for (int i = 0; i < testCaseResultStrings.length; i++)
-			testCaseResults.add(JsUnitTestCaseResult.fromString(testCaseResultStrings[i]));
+			testCaseResults.add(TestCaseResult.fromString(testCaseResultStrings[i]));
+	}
+	
+	public static TestSuiteResult findResultWithIdInResultLogs(String id) {
+		File logFile = fileForId(id);
+		if (logFile.exists())
+			return fromXmlFile(logFile);
+		return null;
 	}
 	public int errorCount() {
 		int result = 0;
 		Iterator it = testCaseResults.iterator();
 		while (it.hasNext()) {
-			JsUnitTestCaseResult next = (JsUnitTestCaseResult) it.next();
+			TestCaseResult next = (TestCaseResult) it.next();
 			if (next.hadError())
 				result++;
 		}
@@ -124,7 +145,7 @@ public class JsUnitTestSuiteResult {
 		int result = 0;
 		Iterator it = testCaseResults.iterator();
 		while (it.hasNext()) {
-			JsUnitTestCaseResult next = (JsUnitTestCaseResult) it.next();
+			TestCaseResult next = (TestCaseResult) it.next();
 			if (next.hadFailure())
 				result++;
 		}
@@ -134,55 +155,29 @@ public class JsUnitTestSuiteResult {
 		return testCaseResults.size();
 	}
 	public String writeXml() {
-		Element root = createRootElement();
-		Document document = new Document(root);
-		return new XMLOutputter().outputString(document);
+		return new TestSuiteResultWriter(this).writeXml();
 	}
 	public String writeXmlFragment() {
-		return new XMLOutputter().outputString(createRootElement());
+		return new TestSuiteResultWriter(this).writeXmlFragment();
 	}
-	protected Element createRootElement() {
-		Element result = new Element("testsuite");
-		result.setAttribute("id", id);
-		result.setAttribute("errors", "" + errorCount());
-		result.setAttribute("failures", "" + failureCount());
-		result.setAttribute("name", "JsUnitTest");
-		result.setAttribute("tests", "" + count());
-		result.setAttribute("time", "" + getTime());
-		addPropertiesElementTo(result);
-		addTestResultElementsTo(result);
-		return result;
-	}
-	protected void addPropertiesElementTo(Element element) {
-		Element properties = new Element("properties");
-		element.addContent(properties);
-		Element jsUnitVersionProperty = new Element("property");
-		jsUnitVersionProperty.setAttribute("name", "JsUnitVersion");
-		jsUnitVersionProperty.setAttribute("value", jsUnitVersion == null ? "" : jsUnitVersion);
-		properties.addContent(jsUnitVersionProperty);
-		Element userAgentProperty = new Element("property");
-		userAgentProperty.setAttribute("name", "userAgent");
-		userAgentProperty.setAttribute("value", userAgent == null ? "" : userAgent);
-		properties.addContent(userAgentProperty);
-	}
-	protected void addTestResultElementsTo(Element element) {
-		Iterator it = testCaseResults.iterator();
-		while (it.hasNext()) {
-			JsUnitTestCaseResult next = (JsUnitTestCaseResult) it.next();
-			next.addXmlTo(element);
-		}
-	}
+
 	public void writeLog() {
 		String xml = writeXml();
-		JsUnitUtility.writeToFile(xml, logsDirectory + getId() + ".xml");
+		Utility.writeFile(xml, logsDirectory + getId() + ".xml");
 	}
 	public boolean hadSuccess() {
 		Iterator it = testCaseResults.iterator();
 		while (it.hasNext()) {
-			JsUnitTestCaseResult next = (JsUnitTestCaseResult) it.next();
+			TestCaseResult next = (TestCaseResult) it.next();
 			if (!next.hadSuccess())
 				return false;
 		}
 		return true;
+	}
+	public static TestSuiteResult fromXmlFile(File aFile) {
+		return new TestSuiteResultBuilder().build(aFile);
+	}
+	public void addTestCaseResult(TestCaseResult result) {
+		testCaseResults.add(result);
 	}
 }

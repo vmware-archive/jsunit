@@ -1,5 +1,6 @@
-package net.jsunit.test;
-import net.jsunit.*;
+package net.jsunit;
+import java.util.*;
+import junit.framework.*;
 /**
  * @author Edward Hieatt
  * 
@@ -41,44 +42,52 @@ import net.jsunit.*;
    
    @author Edward Hieatt
  */
-public class JsUnitTestCaseResultTest extends JsUnitTest {
-	public JsUnitTestCaseResultTest(String name) {
-		super(name);
+public abstract class StandaloneTest extends TestCase {
+	private ResultAcceptor acceptor = ResultAcceptor.instance();
+	private List browserProcesses = new ArrayList();
+	protected abstract List browserFileNames();
+	protected abstract String url();
+	private int maxSecondsToWait() {
+		return 2 * 60;
 	}
-	public void testBuildSuccessfulResultFromString() {
-		JsUnitTestCaseResult result = JsUnitTestCaseResult.fromString("testFoo|1.3|S||");
-		assertEquals("testFoo", result.getName());
-		assertEquals(1.3d, result.getTime(), .001d);
-		assertFalse(result.hadError());
-		assertFalse(result.hadFailure());
-		assertTrue(result.hadSuccess());
-		assertNull(result.getError());				
-		assertNull(result.getFailure());
-		//
-		assertEquals("<testcase name=\"testFoo\" time=\"1.3\" />", result.writeXmlFragment());		
+	public void setUp() throws Exception {
+		super.setUp();
+		ResultAcceptor.startServer();
 	}
-	public void testBuildErrorResultFromString() {
-		JsUnitTestCaseResult result = JsUnitTestCaseResult.fromString("testFoo|1.3|E|Error Message|");
-		assertEquals("testFoo", result.getName());
-		assertEquals(1.3d, result.getTime(), .001d);
-		assertTrue(result.hadError());
-		assertFalse(result.hadFailure());
-		assertFalse(result.hadSuccess());
-		assertEquals("Error Message", result.getError());
-		assertNull(result.getFailure());
-		//
-		assertEquals("<testcase name=\"testFoo\" time=\"1.3\"><error message=\"Error Message\" /></testcase>", result.writeXmlFragment());
+	public void tearDown() throws Exception {
+		super.tearDown();
+		Iterator it = browserProcesses.iterator();
+		while (it.hasNext()) {
+			Process next = (Process) it.next();
+			next.destroy();
+		}
+		ResultAcceptor.stopServer();
 	}
-	public void testBuildFailureResultFromString() {
-		JsUnitTestCaseResult result = JsUnitTestCaseResult.fromString("testFoo|1.3|F|Failure Message|");
-		assertEquals("testFoo", result.getName());
-		assertEquals(1.3d, result.getTime(), .001d);
-		assertFalse(result.hadError());
-		assertTrue(result.hadFailure());
-		assertFalse(result.hadSuccess());
-		assertNull(result.getError());
-		assertEquals("Failure Message", result.getFailure());
-		//
-		assertEquals("<testcase name=\"testFoo\" time=\"1.3\"><failure message=\"Failure Message\" /></testcase>", result.writeXmlFragment());
+	public void testStandaloneRun() throws Exception {
+		Iterator it = browserFileNames().iterator();
+		while (it.hasNext()) {
+			String next = (String) it.next();
+			browserProcesses.add(Runtime.getRuntime().exec("\"" + next + "\" \"" + url()+"\""));
+		}
+		waitForResultsToBeSubmitted();
+		verifyResults();
+	}
+	private void waitForResultsToBeSubmitted() throws Exception {
+		long secondsWaited = 0;
+		while (acceptor.getResults().size() != browserFileNames().size()) {
+			Thread.sleep(1000);
+			secondsWaited += 1;
+			if (secondsWaited > maxSecondsToWait())
+				fail("Waited more than " + maxSecondsToWait() + " seconds");
+		}
+	}
+	private void verifyResults() {
+		Iterator it = acceptor.getResults().iterator();
+		while (it.hasNext()) {
+			TestSuiteResult result = (TestSuiteResult) it.next();
+			if (!result.hadSuccess()) {
+				fail("Result with ID " + result.getId() + " failed");
+			}
+		}
 	}
 }

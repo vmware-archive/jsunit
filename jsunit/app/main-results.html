@@ -46,16 +46,28 @@
   </head>
 
   <body>
-    <form name="resultsForm" action="http://localhost:8080/jsunit/acceptor" method="post" target="_top">
-      <input type="hidden" name="testId">
+  	<script language="javascript">
+  	  var url="http://";
+  	  if (top.wasResultUrlSpecified()) {
+		  url += top.getSpecifiedResultUrl();
+  	  } else {
+	  	  var webserver=top.getWebserver();
+	  	  if (webserver==null)
+	  	  	webserver="localhost";
+	      url+=webserver+":8080/jsunit/acceptor";
+   	  }
+  	  var formString = "<form name=\"resultsForm\" action=\""+url+"\" method=\"post\" target=\"_top\">";
+	  document.write(formString);
+  	</script>    
+      <input type="hidden" name="id">
       <input type="hidden" name="userAgent">
       <input type="hidden" name="jsUnitVersion">
       <input type="hidden" name="time">
       <select size="5" name="testCases" multiple></select>      
     </form>
     <script language="javascript">
-		function populateHeaderFields(testId, userAgent, jsUnitVersion) {
-	    	document.resultsForm.testId.value=testId;
+		function populateHeaderFields(id, userAgent, jsUnitVersion) {
+	    	document.resultsForm.id.value=id;
 	    	document.resultsForm.userAgent.value=userAgent;
 	    	document.resultsForm.jsUnitVersion.value=jsUnitVersion;
 		}

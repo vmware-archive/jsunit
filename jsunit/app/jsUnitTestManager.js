@@ -599,14 +599,27 @@ function getDocumentProtocol()
 {
   var protocol = top.document.location.protocol;
     
-  if (protocol == 'file:') 
-    return 'file:///';
+  if (protocol == "file:") 
+    return "file:///";
 
-  if (protocol == 'http:') 
-    return 'http://';
+  if (protocol == "http:") 
+    return "http://";
 
   return null;
+}
+
+function isBeingRunOverHTTP() {
+	return getDocumentProtocol()=="http://";
 }   
+
+function getWebserver() {
+	if (isBeingRunOverHTTP()) {
+		var myUrl = loc = location.href;
+		var myUrlWithHttpStripped = myUrl.substring(7);
+		return myUrlWithHttpStripped.substring(0, myUrlWithHttpStripped.indexOf("/"));
+	}
+	return null;
+}
 
 // the functions push(anArray, anObject) and pop(anArray) 
 // exist because the JavaScript Array.push(anObject) and Array.pop() 

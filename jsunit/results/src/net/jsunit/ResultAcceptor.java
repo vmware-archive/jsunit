@@ -1,8 +1,13 @@
 package net.jsunit;
-import java.util.*;
-import javax.servlet.http.*;
-import org.mortbay.http.*;
-import org.mortbay.jetty.servlet.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.mortbay.http.HttpContext;
+import org.mortbay.http.HttpServer;
+import org.mortbay.jetty.servlet.ServletHandler;
 /**
  * @author Edward Hieatt
  * 
@@ -44,9 +49,9 @@ import org.mortbay.jetty.servlet.*;
    
    @author Edward Hieatt
  */
-public class JsUnitResultAcceptor {
-	protected static JsUnitResultAcceptor instance;
-	protected List results = new ArrayList();
+public class ResultAcceptor {
+	private static ResultAcceptor instance;
+	private List results = new ArrayList();
 	public static final int DEFAULT_PORT = 8080;
 	public static HttpServer server;
 	public static void main(String args[]) throws Exception {
@@ -64,22 +69,22 @@ public class JsUnitResultAcceptor {
 		server.addListener(":" + port);
 		HttpContext context = server.getContext("/");
 		ServletHandler handler = new ServletHandler();
-		handler.addServlet("JsUnitResultAcceptor", "/jsunit/acceptor", JsUnitResultAcceptorServlet.class.getName());
-		handler.addServlet("JsUnitResultDisplayer", "/jsunit/displayer", JsUnitResultDisplayerServlet.class.getName());
+		handler.addServlet("JsUnitResultAcceptor", "/jsunit/acceptor", ResultAcceptorServlet.class.getName());
+		handler.addServlet("JsUnitResultDisplayer", "/jsunit/displayer", ResultDisplayerServlet.class.getName());
 		context.addHandler(handler);
 		server.start();
 	}
 	public static void stopServer() throws Exception {
 		server.stop();
 	}
-	public static JsUnitResultAcceptor instance() {
+	public static ResultAcceptor instance() {
 		if (instance == null)
-			instance = new JsUnitResultAcceptor();
+			instance = new ResultAcceptor();
 		return instance;
 	}
-	public JsUnitTestSuiteResult accept(HttpServletRequest request) {
-		JsUnitTestSuiteResult result = JsUnitTestSuiteResult.fromRequest(request);
-		JsUnitTestSuiteResult existingResultWithSameId = findResultWithId(result.getId());
+	public TestSuiteResult accept(HttpServletRequest request) {
+		TestSuiteResult result = TestSuiteResult.fromRequest(request);
+		TestSuiteResult existingResultWithSameId = findResultWithId(result.getId());
 		if (existingResultWithSameId != null)
 			results.remove(existingResultWithSameId);
 		results.add(result);
@@ -92,17 +97,16 @@ public class JsUnitResultAcceptor {
 	public void clearResults() {
 		results.clear();
 	}
-	public String writeResultWithId(String id) {
-		JsUnitTestSuiteResult result = findResultWithId(id);
-		if (result == null) {
-			return "<error>No Test Result has been submitted with id " + id + "</error>";
-		} else
-			return result.writeXml();
+	public TestSuiteResult findResultWithId(String id) {
+		TestSuiteResult result = findResultWithIdInResultList(id);
+		if (result == null)
+			result = TestSuiteResult.findResultWithIdInResultLogs(id);
+		return result;
 	}
-	public JsUnitTestSuiteResult findResultWithId(String id) {
+	private TestSuiteResult findResultWithIdInResultList(String id) {
 		Iterator it = getResults().iterator();
 		while (it.hasNext()) {
-			JsUnitTestSuiteResult result = (JsUnitTestSuiteResult) it.next();
+			TestSuiteResult result = (TestSuiteResult) it.next();
 			if (result.hasId(id))
 				return result;
 		}

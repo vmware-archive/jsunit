@@ -45,9 +45,9 @@ import junit.framework.TestSuite;
 public class Suite extends TestCase {
 	public static TestSuite suite() {
 		TestSuite result = new TestSuite();
-		result.addTestSuite(JsUnitTestCaseResultTest.class);
-		result.addTestSuite(JsUnitTestSuiteResultTest.class);
-		result.addTestSuite(JsUnitResultAcceptorTest.class);
+		result.addTestSuite(TestCaseResultTest.class);
+		result.addTestSuite(TestSuiteResultTest.class);
+		result.addTestSuite(ResultAcceptorTest.class);
 		return result;
 	}
 }

@@ -42,10 +42,10 @@ import net.jsunit.*;
    
    @author Edward Hieatt
  */
-public class ExampleStandaloneTest extends JsUnitStandaloneTest {
+public class ExampleStandaloneTest extends StandaloneTest {
 	public void setUp() throws Exception {
 		super.setUp();
-		JsUnitTestSuiteResult.setLogsDirectory("c:\\jsunit\\jsunit\\results\\logs\\");
+		TestSuiteResult.setLogsDirectory("c:\\jsunit\\jsunit\\results\\logs\\");
 	}
 	protected List browserFileNames() {
 		return Arrays.asList(new String[] {

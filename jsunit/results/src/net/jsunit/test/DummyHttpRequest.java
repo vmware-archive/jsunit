@@ -176,7 +176,7 @@ public class DummyHttpRequest implements HttpServletRequest {
 		return null;
 	}
 	public String getRemoteAddr() {
-		return null;
+		return "Dummy Remote Address";
 	}
 	public String getRemoteHost() {
 		return null;

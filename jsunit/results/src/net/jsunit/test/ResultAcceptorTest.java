@@ -45,20 +45,20 @@ import net.jsunit.*;
    
    @author Edward Hieatt
  */
-public class JsUnitResultAcceptorTest extends JsUnitTest {
+public class ResultAcceptorTest extends JsUnitTest {
 	protected Map requestMap;
-	public JsUnitResultAcceptorTest(String name) {
+	public ResultAcceptorTest(String name) {
 		super(name);
 	}
 	public void setUp() throws Exception {
 		super.setUp();
-		JsUnitTestSuiteResult.setLogsDirectory("");
+		TestSuiteResult.setLogsDirectory("");
 		requestMap = new HashMap();
-		requestMap.put(JsUnitTestSuiteResult.TEST_ID, "ID_foo");
-		requestMap.put(JsUnitTestSuiteResult.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-		requestMap.put(JsUnitTestSuiteResult.TIME, "4.3");
-		requestMap.put(JsUnitTestSuiteResult.JSUNIT_VERSION, "2.5");
-		requestMap.put(JsUnitTestSuiteResult.TEST_CASES, dummyTestCaseStrings());
+		requestMap.put(TestSuiteResultWriter.ID, "ID_foo");
+		requestMap.put(TestSuiteResultWriter.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+		requestMap.put(TestSuiteResultWriter.TIME, "4.3");
+		requestMap.put(TestSuiteResultWriter.JSUNIT_VERSION, "2.5");
+		requestMap.put(TestSuiteResultWriter.TEST_CASES, dummyTestCaseStrings());
 	}
 	public void tearDown() throws Exception {
 		File logFile = new File("ID_foo.xml");
@@ -82,7 +82,7 @@ public class JsUnitResultAcceptorTest extends JsUnitTest {
 	}
 	public void testSubmittedResultHeaders() {
 		submit();
-		JsUnitTestSuiteResult result = (JsUnitTestSuiteResult) acceptor.getResults().get(0);
+		TestSuiteResult result = (TestSuiteResult) acceptor.getResults().get(0);
 		assertEquals("ID_foo", result.getId());
 		assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
 		assertEquals("2.5", result.getJsUnitVersion());
@@ -93,11 +93,16 @@ public class JsUnitResultAcceptorTest extends JsUnitTest {
 	}
 	public void testSubmittedTestCaseResults() {
 		submit();
-		JsUnitTestSuiteResult result = (JsUnitTestSuiteResult) acceptor.getResults().get(0);
+		TestSuiteResult result = (TestSuiteResult) acceptor.getResults().get(0);
 		assertEquals(3, result.getTestCaseResults().size());
 	}
 	public void testFindResultById() {
+		assertNull(acceptor.findResultWithId("ID_foo"));
 		submit();
+		assertNotNull(acceptor.findResultWithId("ID_foo"));
+		assertNull(acceptor.findResultWithId("Invalid ID"));
+		acceptor.clearResults();
+		//should look on disk when not in memory
 		assertNotNull(acceptor.findResultWithId("ID_foo"));
 		assertNull(acceptor.findResultWithId("Invalid ID"));
 	}

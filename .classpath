@@ -6,5 +6,6 @@
     <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/javax.servlet.jar"/>
     <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/jdom.jar"/>
     <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/org.mortbay.jetty-jdk1.2.jar"/>
+    <classpathentry kind="lib" path="C:/jsunit/jsunit/results/lib/xercesImpl.jar"/>
     <classpathentry kind="output" path="jsunit/results/bin"/>
 </classpath>
