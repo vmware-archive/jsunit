@@ -91,7 +91,7 @@
 
      for (p in jsUnitParmHash)
      {
-       if (p != 'testpage' && p!='autorun' && p!='submitresults')
+       if (p != 'testpage' && p!='autorun' && p!='submitresults' && p!='showtestframe')
        {
          if (parms)
          {
@@ -146,6 +146,10 @@
   function shouldKickOffTestsAutomatically() {
   	return jsUnitParmHash.autorun=="true";
   }
+
+  function shouldShowTestFrame() {
+    return jsUnitParmHash.showtestframe=="true";
+  }
   
   function shouldSubmitResults() {
   	return jsUnitParmHash.submitresults=="true";
@@ -158,20 +162,25 @@
   
   function init()
   {
+    if (shouldShowTestFrame() && window.testRunnerFrameset) {
+        window.testRunnerFrameset.rows="*,0,250";
+    }
     testManager = new jsUnitTestManager();
     tracer      = new jsUnitTracer();    
     if (shouldKickOffTestsAutomatically()) {
     	window.mainFrame.mainData.kickOffTests();
     }
   }
+  
 
 </script>
   </head>
 
-  <frameset rows="0,0,*" frameborder="0" onload="init()">
-    <frame name="testContainer"  src="./app/testContainer.html">
-    <frame name="documentLoader" src="./app/main-loader.html">
+    <frameset name="testRunnerFrameset" id="testRunnerFrameset" rows="*,0,0" frameborder="0" onload="init()">
+
     <frame name="mainFrame"      src="./app/main-frame.html">
+    <frame name="documentLoader" src="./app/main-loader.html">
+    <frame name="testContainer"  src="./app/testContainer.html">
 
     <noframes>
       <body>
@@ -179,4 +188,5 @@
       </body>
     </noframes>
   </frameset>
+
 </html>
