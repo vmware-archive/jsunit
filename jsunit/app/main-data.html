@@ -101,9 +101,9 @@ function  kickOffTests() {
                   {
                     inputStr += top.location.host;
                   }
-                  inputStr += top.jsUnitParmHash.testpage + '?' + top.jsUnitConstructTestParms();
+                  inputStr += top.jsUnitParmHash.testpage + '?' + top.jsUnitConstructTestParms() + '"';
                 }
-                inputStr += '">';
+                inputStr += '>';
                 document.write(inputStr);
               }
 
