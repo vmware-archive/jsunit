@@ -155,7 +155,7 @@ jsUnitTestManager.prototype._runTest = function ()
       this.containerTestFrame.startTime = new Date();
       this.containerTestFrame.setUpPage();
       // try test again later
-      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
+      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPAGE_INTERVAL);
       return;
     }
 
@@ -173,7 +173,7 @@ jsUnitTestManager.prototype._runTest = function ()
         this.containerTestFrame.startTime = (new Date());
       }
       // try test again later
-      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
+      setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPAGE_INTERVAL);
       return;
     }
   }
@@ -192,6 +192,8 @@ jsUnitTestManager.prototype._done = function ()
   var secondsSinceRunBegan=(new Date() - this._timeRunStarted)/1000;
   this.setStatus('Done (' + secondsSinceRunBegan + ' seconds)');
   this._cleanUp();
+  if (top.shouldSubmitResults())
+  	top.submitResults();
 }
 
 jsUnitTestManager.prototype._nextPage = function () 
@@ -610,4 +612,3 @@ if (xbDEBUG.on)
   xbDebugTraceFunction('window', 'getTestFileProtocol');
   xbDebugTraceFunction('window', 'getDocumentProtocol');
 }
-

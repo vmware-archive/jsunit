@@ -91,7 +91,7 @@
 
      for (p in jsUnitParmHash)
      {
-       if (p != 'testpage')
+       if (p != 'testpage' && p!='autorun' && p!='submitresults')
        {
          if (parms)
          {
@@ -142,11 +142,26 @@
       }
     }
   }
-
+  
+  function shouldKickOffTestsAutomatically() {
+  	return jsUnitParmHash.autorun=="true";
+  }
+  
+  function shouldSubmitResults() {
+  	return jsUnitParmHash.submitresults=="true";
+  }
+  
+  function submitResults() {
+  	window.mainFrame.mainErrors.document.testRunnerForm.submit();
+  }
+  
   function init()
   {
-    testManager            = new jsUnitTestManager();
-    tracer                 = new jsUnitTracer();
+    testManager = new jsUnitTestManager();
+    tracer      = new jsUnitTracer();    
+    if (shouldKickOffTestsAutomatically()) {
+    	window.mainFrame.mainData.kickOffTests();
+    }
   }
 
 </script>
