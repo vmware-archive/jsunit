@@ -105,7 +105,7 @@
     <option name="HIDE_WARNINGS" value="false" />
   </component>
   <component name="FileEditorManager" split-orientation="vertical" split-proportion="0.5">
-    <first-group selected-file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
+    <first-group selected-file="file://$PROJECT_DIR$/../licenses/index.html">
       <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
           <state line="8" column="0" selection-start="144" selection-end="144" vertical-scroll-proportion="0.1517341">
@@ -141,18 +141,23 @@
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestCaseResultTest.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="6" column="0" selection-start="158" selection-end="158" vertical-scroll-proportion="0.0650289">
-            <folding>
-              <element signature="method#TestCaseResultTest#0;class#TestCaseResultTest#0" expanded="true" />
-            </folding>
+          <state line="16" column="40" selection-start="386" selection-end="386" vertical-scroll-proportion="0.216763">
+            <folding />
           </state>
         </provider>
       </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java" pinned="false">
+      <entry file="file://$PROJECT_DIR$/../licenses/Jetty_license.html" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
-          <state line="13" column="0" selection-start="257" selection-end="257" vertical-scroll-proportion="0.1517341">
+          <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+            <folding />
+          </state>
+        </provider>
+      </entry>
+      <entry file="file://$PROJECT_DIR$/../licenses/index.html" pinned="false">
+        <provider selected="true" editor-type-id="text-editor">
+          <state line="44" column="28" selection-start="2103" selection-end="2103" vertical-scroll-proportion="0.37961596">
             <folding />
           </state>
         </provider>
@@ -174,13 +179,6 @@
       <entry file="file://$PROJECT_DIR$/../licenses/mpl-tri-license-c.txt" pinned="false">
         <provider selected="true" editor-type-id="text-editor">
           <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-            <folding />
-          </state>
-        </provider>
-      </entry>
-      <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/TestRunnerServlet.java" pinned="false">
-        <provider selected="true" editor-type-id="text-editor">
-          <state line="17" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.1517341">
             <folding />
           </state>
         </provider>
@@ -434,13 +432,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/Utility.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="254" selection-end="254" vertical-scroll-proportion="0.15695067">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/DistributedTestTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="0" selection-start="93" selection-end="128" vertical-scroll-proportion="0.17937219">
@@ -474,13 +465,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="0" selection-start="257" selection-end="257" vertical-scroll-proportion="0.1517341">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/servlet/TestRunnerServlet.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="17" column="0" selection-start="439" selection-end="439" vertical-scroll-proportion="0.1517341">
@@ -498,13 +482,6 @@
     <entry file="file://$PROJECT_DIR$/../licenses/mpl-tri-license-c.txt">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../licenses/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="27" selection-start="3226" selection-end="3226" vertical-scroll-proportion="0.5760709">
           <folding />
         </state>
       </provider>
@@ -547,6 +524,27 @@
     <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/JsUnitTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="8" column="0" selection-start="144" selection-end="144" vertical-scroll-proportion="0.1517341">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../licenses/Jetty_license.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../java/src/net/jsunit/test/TestSuiteResultTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="40" selection-start="386" selection-end="386" vertical-scroll-proportion="0.216763">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../licenses/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="44" column="28" selection-start="2103" selection-end="2103" vertical-scroll-proportion="0.37961596">
           <folding />
         </state>
       </provider>
