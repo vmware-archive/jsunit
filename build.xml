@@ -22,7 +22,7 @@
 
     <target name="compile" description="Compiles the source">
         <delete dir="${bin}/net"/>
-        <javac srcdir="${src}" destdir="${bin}" target="1.1" debug="true">
+        <javac srcdir="${src}" destdir="${bin}" debug="true">
             <classpath>
                 <fileset dir="${lib}">
                     <include name="*.jar"/>
