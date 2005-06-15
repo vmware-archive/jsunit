@@ -1,14 +1,15 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-import sun.net.www.protocol.http.HttpURLConnection;
 
 import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -47,23 +48,21 @@ public class DistributedTest extends TestCase {
     }
 
     private String submitRequestTo(String remoteMachineName) {
-        HttpURLConnection connection = null;
+        byte buffer[];
+        InputStream in;
         try {
             URL url = new URL(remoteMachineName + "/jsunit/runner");
-            connection = new HttpURLConnection(url, "", 0);
-            InputStream in = connection.getInputStream();
-            byte[] buffer = new byte[in.available()];
+            URLConnection connection = url.openConnection();
+            in = connection.getInputStream();
+            buffer = new byte[in.available()];
             in.read(buffer);
             in.close();
             return new String(buffer);
         } catch (Exception e) {
             e.printStackTrace();
             fail("Could not submit request to " + remoteMachineName);
-            return null;
-        } finally {
-            if (connection != null)
-                connection.disconnect();
         }
+        return null;
     }
 
 }
