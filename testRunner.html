@@ -160,13 +160,14 @@
   }
 
   function init() {
-    if (shouldShowTestFrame() && window.testRunnerFrameset) {
+    var testRunnerFrameset = document.getElementById('testRunnerFrameset');
+    if (shouldShowTestFrame() && testRunnerFrameset) {
     	var testFrameHeight;
-    	if (jsUnitGetParm('showtestframe')=="true")
+    	if (jsUnitGetParm('showtestframe')=='true')
     		testFrameHeight=DEFAULT_TEST_FRAME_HEIGHT;
     	else
     		testFrameHeight=jsUnitGetParm('showtestframe');
-       	window.testRunnerFrameset.rows="*,0," + testFrameHeight;
+    	testRunnerFrameset.rows='*,0,' + testFrameHeight;
     }
     testManager = new jsUnitTestManager();
     tracer      = new JsUnitTracer(testManager);
@@ -174,6 +175,7 @@
     	window.mainFrame.mainData.kickOffTests();
     }
   }
+
 
 </script>
   </head>

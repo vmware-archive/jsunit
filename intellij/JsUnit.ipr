@@ -43,6 +43,9 @@
   </component>
   <component name="DataSourceManager" />
   <component name="DataSourceManagerImpl" />
+  <component name="DependenciesAnalyzeManager">
+    <option name="myForwardDirection" value="false" />
+  </component>
   <component name="DependencyValidationManager" />
   <component name="EntryPointsManager">
     <entry_points />
@@ -189,28 +192,12 @@
       </item>
     </group>
   </component>
-  <component name="PerforceDirect.Settings">
-    <option name="enabled" value="false" />
-    <option name="useP4CONFIG" value="true" />
-    <option name="port" value="jasper:1666" />
-    <option name="client" value="" />
-    <option name="user" value="" />
-    <option name="passwd" value="" />
-    <option name="useExtDiff" value="false" />
-    <option name="extDiff" value="" />
-    <option name="showCmds" value="false" />
-    <option name="autoCheckoutAdd" value="true" />
-    <option name="promptCheckoutAdd" value="true" />
-    <option name="promptP4MoveRenameDelete" value="true" />
-    <option name="allowNoP4MoveRenameDelete" value="false" />
-    <option name="simpleP4Commands" value="false" />
-  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JsUnit.iml" filepath="$PROJECT_DIR$/JsUnit.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="false" project-jdk-name="java version &quot;1.4.2_06&quot;" />
+  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="java version &quot;1.5.0_01&quot;" />
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
     <option name="DEBUGGING_INFO" value="true" />
