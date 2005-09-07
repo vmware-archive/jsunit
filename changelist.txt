@@ -7,3 +7,4 @@
 - changed expected/actual values display strings to use angle brackets, rather than square brackets
 - added support for launching the default system browser on Windows and UNIX (see the constant on net.jsunit.StandaloneTest)
 - changed StandaloneTestTest and DistributedTestTest to use the default system browser
+- Bug 1281427: Fixed test submission for Opera.

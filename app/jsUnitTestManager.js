@@ -382,9 +382,10 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName)
   		serializedTestCaseString+="E|";
   	}
   	serializedTestCaseString+=this._problemDetailMessageFor(excep);
-  }  	
-  var newOption = new Option(serializedTestCaseString);
-  this.testCaseResultsField[this.testCaseResultsField.length]=newOption;  
+  } 
+  this._addOption(this.testCaseResultsField,
+     serializedTestCaseString,
+     serializedTestCaseString);
 }
 
 jsUnitTestManager.prototype._fullyQualifiedCurrentTestFunctionName = function() {
@@ -399,6 +400,36 @@ jsUnitTestManager.prototype._fullyQualifiedCurrentTestFunctionName = function() 
     return testURL + ':' + this._testFunctionName;
 }
 
+jsUnitTestManager.prototype._addOption = function(listField, problemValue, problemMessage) {
+  if (typeof(listField.ownerDocument) != 'undefined' 
+      && typeof(listField.ownerDocument.createElement) != 'undefined') {
+    // DOM Level 2 HTML method.
+    // this is required for Opera 7 since appending to the end of the 
+    // options array does not work, and adding an Option created by new Option()
+    // and appended by listField.options.add() fails due to WRONG_DOCUMENT_ERR
+    var problemDocument = listField.ownerDocument;
+    errOption = problemDocument.createElement('option');
+    errOption.setAttribute('value', problemValue);
+    errOption.appendChild(problemDocument.createTextNode(problemMessage));
+    listField.appendChild(errOption);
+  }
+  else {
+    // new Option() is DOM 0
+    errOption = new Option(problemMessage, problemValue);
+    if (typeof(listField.add) != 'undefined') {
+      // DOM 2 HTML 
+      listField.add( errOption , null);
+    }
+    else if (typeof(listField.options.add) != 'undefined') {
+      // DOM 0
+      listField.options.add( errOption, null);
+    }
+    else {
+      // DOM 0
+      listField.options[listField.length]= errOption;
+    }
+  }
+}
 
 jsUnitTestManager.prototype._handleTestException = function (excep) 
 {
@@ -413,33 +444,9 @@ jsUnitTestManager.prototype._handleTestException = function (excep)
     this.failureCount++;
   }
   var listField = this.problemsListField;
-  var problemDocument = this.mainFrame.frames.mainErrors.document;
-  if (typeof(problemDocument.createElement) != 'undefined') {
-    // DOM Level 2 HTML method.
-    // this is required for Opera 7 since appending to the end of the 
-    // options array does not work, and adding an Option created by new Option()
-    // and appended by listField.options.add() fails due to WRONG_DOCUMENT_ERR
-    errOption = problemDocument.createElement('option');
-    errOption.setAttribute('value', this._problemDetailMessageFor(excep));
-    errOption.appendChild(problemDocument.createTextNode(problemMessage));
-    listField.appendChild(errOption);
-  }
-  else {
-    // new Option() is DOM 0
-    errOption = new Option(problemMessage, this._problemDetailMessageFor(excep));
-    if (typeof(listField.add) != 'undefined') {
-      // DOM 2 HTML 
-      listField.add( errOption , null);
-    }
-    else if (typeof(listField.options.add) != 'undefined') {
-      // DOM 0
-      listField.options.add( errOption, null);
-    }
-    else {
-      // DOM 0
-      listField.options[listField.length]= errOption;
-    }
-  }
+  this._addOption(listField,
+     this._problemDetailMessageFor(excep),
+     problemMessage);
 }
 
 jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) 
