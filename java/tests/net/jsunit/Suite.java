@@ -2,6 +2,10 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import net.jsunit.configuration.ConfigurationTest;
+import net.jsunit.configuration.ArgumentsConfigurationTest;
+import net.jsunit.configuration.PropertiesConfigurationTest;
+import net.jsunit.configuration.EnvironmentVariablesConfigurationTest;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

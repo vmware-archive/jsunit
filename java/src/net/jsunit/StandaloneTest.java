@@ -46,9 +46,7 @@ public class StandaloneTest extends TestCase {
     }
 
     public void testStandaloneRun() throws Exception {
-        Iterator it = server.getLocalBrowserFileNames().iterator();
-        while (it.hasNext()) {
-            String browserFileName = (String) it.next();
+        for (String browserFileName : server.getLocalBrowserFileNames()) {
             String[] browserCommand = determineOpenBrowserCommand(browserFileName);
             Date dateLaunched = new Date();
             launchBrowser(browserCommand);

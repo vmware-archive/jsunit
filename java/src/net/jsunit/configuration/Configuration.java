@@ -1,4 +1,7 @@
-package net.jsunit;
+package net.jsunit.configuration;
+
+import net.jsunit.JsUnitServer;
+import net.jsunit.Utility;
 
 import java.io.File;
 import java.net.URL;

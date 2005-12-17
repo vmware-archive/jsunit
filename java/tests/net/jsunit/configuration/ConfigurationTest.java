@@ -1,7 +1,10 @@
-package net.jsunit;
+package net.jsunit.configuration;
 
 import junit.framework.TestCase;
-import net.jsunit.*;
+import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ArgumentsConfiguration;
+import net.jsunit.configuration.EnvironmentVariablesConfiguration;
+import net.jsunit.configuration.PropertiesFileConfiguration;
 
 public class ConfigurationTest extends TestCase {
 

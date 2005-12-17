@@ -1,8 +1,8 @@
-package net.jsunit;
+package net.jsunit.configuration;
 
 import junit.framework.TestCase;
-import net.jsunit.EnvironmentVariablesConfiguration;
-import net.jsunit.Configuration;
+import net.jsunit.configuration.EnvironmentVariablesConfiguration;
+import net.jsunit.configuration.Configuration;
 
 public class EnvironmentVariablesConfigurationTest extends TestCase {
     private EnvironmentVariablesConfiguration config;

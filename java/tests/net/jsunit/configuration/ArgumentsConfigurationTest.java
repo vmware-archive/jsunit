@@ -1,6 +1,6 @@
-package net.jsunit;
+package net.jsunit.configuration;
 
-import net.jsunit.ArgumentsConfiguration;
+import net.jsunit.configuration.ArgumentsConfiguration;
 import net.jsunit.Utility;
 import net.jsunit.JsUnitServer;
 

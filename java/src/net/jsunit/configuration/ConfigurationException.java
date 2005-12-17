@@ -1,4 +1,4 @@
-package net.jsunit;
+package net.jsunit.configuration;
 
 public class ConfigurationException extends Exception {
     private String propertyInError;

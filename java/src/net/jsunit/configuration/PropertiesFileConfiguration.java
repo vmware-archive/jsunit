@@ -1,4 +1,6 @@
-package net.jsunit;
+package net.jsunit.configuration;
+
+import net.jsunit.configuration.Configuration;
 
 import java.io.FileInputStream;
 import java.util.Properties;

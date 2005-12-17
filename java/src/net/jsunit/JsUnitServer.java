@@ -4,6 +4,8 @@ import net.jsunit.servlet.JsUnitServlet;
 import net.jsunit.servlet.ResultAcceptorServlet;
 import net.jsunit.servlet.ResultDisplayerServlet;
 import net.jsunit.servlet.TestRunnerServlet;
+import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationException;
 
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
@@ -167,7 +169,7 @@ public class JsUnitServer extends HttpServer {
         this.logsDirectory = logsDirectory;
     }
 
-    public List getLocalBrowserFileNames() {
+    public List<String> getLocalBrowserFileNames() {
         return localBrowserFileNames;
     }
 
