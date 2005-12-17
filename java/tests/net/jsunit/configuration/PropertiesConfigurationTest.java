@@ -1,9 +1,7 @@
 package net.jsunit.configuration;
 
 import junit.framework.TestCase;
-import net.jsunit.configuration.Configuration;
 import net.jsunit.JsUnitServer;
-import net.jsunit.configuration.PropertiesFileConfiguration;
 import net.jsunit.Utility;
 
 public class PropertiesConfigurationTest extends TestCase {

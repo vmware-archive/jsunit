@@ -2,8 +2,8 @@ package net.jsunit;
 
 import org.jdom.Element;
 
-import java.util.StringTokenizer;
 import java.util.NoSuchElementException;
+import java.util.StringTokenizer;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

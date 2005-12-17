@@ -1,12 +1,13 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import net.jsunit.configuration.Configuration;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Date;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

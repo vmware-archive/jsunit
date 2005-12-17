@@ -1,9 +1,6 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
-import net.jsunit.TestCaseResult;
-import net.jsunit.TestSuiteResult;
-import net.jsunit.Utility;
 
 import java.io.File;
 import java.util.Iterator;

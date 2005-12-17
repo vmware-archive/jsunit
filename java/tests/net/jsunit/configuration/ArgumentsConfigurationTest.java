@@ -1,14 +1,12 @@
 package net.jsunit.configuration;
 
-import net.jsunit.configuration.ArgumentsConfiguration;
-import net.jsunit.Utility;
+import junit.framework.TestCase;
 import net.jsunit.JsUnitServer;
+import net.jsunit.Utility;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 public class ArgumentsConfigurationTest extends TestCase {
     public ArgumentsConfigurationTest(String name) {

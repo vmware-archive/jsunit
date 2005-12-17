@@ -1,7 +1,6 @@
 package net.jsunit;
 
-import net.jsunit.Configuration;
-import net.jsunit.StandaloneTest;
+import net.jsunit.configuration.Configuration;
 
 public class StandaloneTestTest extends StandaloneTest {
 

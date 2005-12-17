@@ -1,13 +1,10 @@
 package net.jsunit;
 
 
-import junit.framework.TestResult;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
 import junit.textui.TestRunner;
-import net.jsunit.DistributedTest;
-import net.jsunit.JsUnitServer;
-import net.jsunit.Configuration;
-import net.jsunit.StandaloneTest;
+import net.jsunit.configuration.Configuration;
 
 public class DistributedTestTest extends TestCase {
     private JsUnitServer server;

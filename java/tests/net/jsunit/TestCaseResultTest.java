@@ -1,8 +1,6 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
-import net.jsunit.TestCaseResult;
-import net.jsunit.TestCaseResultWriter;
 import org.jdom.Element;
 
 /**

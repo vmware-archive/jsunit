@@ -2,7 +2,6 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 
-import java.util.Iterator;
 import java.util.Date;
 
 /**
