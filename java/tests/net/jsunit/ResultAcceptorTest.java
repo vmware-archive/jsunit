@@ -1,7 +1,6 @@
-package net.jsunit.test;
+package net.jsunit;
 
 import junit.framework.TestCase;
-import net.jsunit.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;

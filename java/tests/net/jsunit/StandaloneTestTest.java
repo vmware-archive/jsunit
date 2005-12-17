@@ -1,4 +1,4 @@
-package net.jsunit.test;
+package net.jsunit;
 
 import net.jsunit.Configuration;
 import net.jsunit.StandaloneTest;

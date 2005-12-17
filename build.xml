@@ -40,7 +40,7 @@
     <target name="run_self_tests" description="Runs the Java tests for JsUnit itself">
         <java classname="junit.textui.TestRunner">
             <classpath refid="classpath"/>
-            <arg value="net.jsunit.test.Suite"/>
+            <arg value="net.jsunit.Suite"/>
         </java>
     </target>
 
