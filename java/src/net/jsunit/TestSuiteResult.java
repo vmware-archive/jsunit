@@ -12,7 +12,7 @@ import java.util.List;
 
 public class TestSuiteResult {
     private String remoteAddress, id, jsUnitVersion, userAgent, baseURL;
-    private List testCaseResults = new ArrayList();
+    private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
     private double time;
     private String SEPARATOR = "---------------------";
     private File logsDirectory;
@@ -71,7 +71,7 @@ public class TestSuiteResult {
         this.time = time;
     }
 
-    public List getTestCaseResults() {
+    public List<TestCaseResult> getTestCaseResults() {
         return testCaseResults;
     }
 

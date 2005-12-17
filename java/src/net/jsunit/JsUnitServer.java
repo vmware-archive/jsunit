@@ -27,12 +27,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 
 public class JsUnitServer extends HttpServer {
-    private List results = new ArrayList();
+    private List<TestSuiteResult> results = new ArrayList<TestSuiteResult>();
 
     private int port;
     private File resourceBase;
     private File logsDirectory;
-    private List localBrowserFileNames;
+    private List<String> localBrowserFileNames;
     private URL testURL;
     private boolean initialized;
     private Date dateLastResultReceived;
@@ -105,7 +105,7 @@ public class JsUnitServer extends HttpServer {
         return result;
     }
 
-    public List getResults() {
+    public List<TestSuiteResult> getResults() {
         return results;
     }
 
@@ -171,7 +171,7 @@ public class JsUnitServer extends HttpServer {
         return localBrowserFileNames;
     }
 
-    public void setLocalBrowserFileNames(List names) {
+    public void setLocalBrowserFileNames(List<String> names) {
         this.localBrowserFileNames = names;
     }
 

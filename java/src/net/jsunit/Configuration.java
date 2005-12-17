@@ -55,7 +55,7 @@ public abstract class Configuration {
     private void configureBrowserFileNames(JsUnitServer server) throws ConfigurationException {
         String browserFileNamesString = browserFileNames();
         try {
-            List browserFileNames = Utility.listFromCommaDelimitedString(browserFileNamesString);
+            List<String> browserFileNames = Utility.listFromCommaDelimitedString(browserFileNamesString);
             server.setLocalBrowserFileNames(browserFileNames);
         } catch (Exception e) {
             throw new ConfigurationException(BROWSER_FILE_NAMES, browserFileNamesString, e);

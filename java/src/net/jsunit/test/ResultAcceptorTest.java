@@ -14,7 +14,7 @@ import java.util.Date;
  */
 
 public class ResultAcceptorTest extends TestCase {
-    protected Map requestMap;
+    protected Map<String, String[]> requestMap;
     private JsUnitServer server;
 
     public ResultAcceptorTest(String name) {
@@ -28,11 +28,11 @@ public class ResultAcceptorTest extends TestCase {
         System.setProperty(Configuration.URL, "http://bar");
         server.initialize();
         Utility.setLogToStandardOut(false);
-        requestMap = new HashMap();
-        requestMap.put(TestSuiteResultWriter.ID, "ID_foo");
-        requestMap.put(TestSuiteResultWriter.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-        requestMap.put(TestSuiteResultWriter.TIME, "4.3");
-        requestMap.put(TestSuiteResultWriter.JSUNIT_VERSION, "2.5");
+        requestMap = new HashMap<String, String[]>();
+        requestMap.put(TestSuiteResultWriter.ID, new String[] {"ID_foo"});
+        requestMap.put(TestSuiteResultWriter.USER_AGENT, new String[] {"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
+        requestMap.put(TestSuiteResultWriter.TIME, new String[] {"4.3"});
+        requestMap.put(TestSuiteResultWriter.JSUNIT_VERSION, new String[] {"2.5"});
         requestMap.put(TestSuiteResultWriter.TEST_CASES, dummyTestCaseStrings());
     }
 

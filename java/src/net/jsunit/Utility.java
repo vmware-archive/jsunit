@@ -32,8 +32,8 @@ public class Utility {
         }
     }
 
-    public static List listFromCommaDelimitedString(String string) {
-        List result = new ArrayList();
+    public static List<String> listFromCommaDelimitedString(String string) {
+        List<String> result = new ArrayList<String>();
         if (isEmpty(string))
             return result;
         StringTokenizer toker = new StringTokenizer(string, ",");
