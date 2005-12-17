@@ -48,28 +48,35 @@
 <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
 <script language="JavaScript" type="text/javascript">
 
-// JsUnit setUp/tearDown/test order tests
-
-var aVar=null;
-var anotherVar=null;
+var atLeastOneTestHasRun = false;
+var aVariable = null;
 
 function setUp() {
-  aVar="foo";
+  aVariable = "foo";
 }
 
 function tearDown() {
-  anotherVar="bar";
+  atLeastOneTestHasRun = true;
+  aVariable = null;
+}
+
+function testEmpty1() {
 }
 
 function testSetUp() {
-  assertEquals("foo", aVar);
-  assertEquals(null, anotherVar);
+  assertEquals("foo", aVariable);
+}
+
+function testEmpty2() {
 }
 
 function testTearDown() {
-  assertEquals("foo", aVar);
-  assertEquals("bar", anotherVar);
+  assertTrue(atLeastOneTestHasRun);
 }
+
+function testEmpty3() {
+}
+
 </script>
   </head>
 
@@ -77,8 +84,6 @@ function testTearDown() {
     <h1>JsUnit Framework tests</h1>
 
     <p>This page contains tests for the JsUnit setUp and
-    tearDown framework, including testing the order of the tests. To see them,
-    take a look at the source.</p>
+    tearDown framework. To see them, take a look at the source.</p>
   </body>
 </html>
-
