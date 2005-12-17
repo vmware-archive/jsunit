@@ -64,7 +64,7 @@ public class ResultAcceptorTest extends TestCase {
 
     public void testSubmittedResultHeaders() {
         submit();
-        TestSuiteResult result = (TestSuiteResult) server.getResults().get(0);
+        TestSuiteResult result = server.getResults().get(0);
         assertEquals("ID_foo", result.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
         assertEquals("2.5", result.getJsUnitVersion());
@@ -76,7 +76,7 @@ public class ResultAcceptorTest extends TestCase {
 
     public void testSubmittedTestCaseResults() {
         submit();
-        TestSuiteResult result = (TestSuiteResult) server.getResults().get(0);
+        TestSuiteResult result = server.getResults().get(0);
         assertEquals(3, result.getTestCaseResults().size());
     }
 
