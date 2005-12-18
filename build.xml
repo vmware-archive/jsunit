@@ -7,7 +7,7 @@
     <property name="resourceBase" value=""/>
     <property name="logsDirectory" value=""/>
 
-    <property name="src" location="java/src"/>
+    <property name="src" location="java/source"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
 
