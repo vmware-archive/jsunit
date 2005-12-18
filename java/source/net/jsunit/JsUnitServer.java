@@ -121,9 +121,7 @@ public class JsUnitServer extends HttpServer {
     }
 
     private TestSuiteResult findResultWithIdInResultList(String id) {
-        Iterator it = getResults().iterator();
-        while (it.hasNext()) {
-            TestSuiteResult result = (TestSuiteResult) it.next();
+        for (TestSuiteResult result : getResults()) {
             if (result.hasId(id))
                 return result;
         }

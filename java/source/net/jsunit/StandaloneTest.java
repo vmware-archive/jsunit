@@ -101,8 +101,8 @@ public class StandaloneTest extends TestCase {
             buffer.append("Result with ID ");
             buffer.append(result.getId());
             buffer.append(" had problems: ");
-            buffer.append(result.errorCount() + " errors, ");
-            buffer.append(result.failureCount() + " failures ");
+            buffer.append(result.errorCount()).append(" errors, ");
+            buffer.append(result.failureCount()).append(" failures ");
             fail(buffer.toString());
         }
     }

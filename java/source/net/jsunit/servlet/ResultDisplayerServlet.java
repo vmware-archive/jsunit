@@ -13,7 +13,7 @@ public class ResultDisplayerServlet extends JsUnitServlet {
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String id = request.getParameter(TestSuiteResultWriter.ID);
-        String xml = null;
+        String xml;
         if (id == null) {
             xml = "<error>No id specified</error>";
         } else {

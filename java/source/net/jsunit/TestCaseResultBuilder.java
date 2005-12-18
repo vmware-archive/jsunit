@@ -22,9 +22,8 @@ public class TestCaseResultBuilder {
     }
 
     private void updateWithMessage(TestCaseResult result, Element element) {
-        Iterator it = element.getChildren().iterator();
-        while (it.hasNext()) {
-            Element next = (Element) it.next();
+        for (Object o : element.getChildren()) {
+            Element next = (Element) o;
             String type = next.getName();
             String message = next.getAttributeValue(TestCaseResultWriter.MESSAGE);
             if (TestCaseResultWriter.FAILURE.equals(type))

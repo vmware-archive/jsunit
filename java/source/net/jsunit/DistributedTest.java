@@ -9,7 +9,6 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -19,7 +18,7 @@ import java.util.List;
 public class DistributedTest extends TestCase {
     public static final String REMOTE_MACHINE_URLS = "remoteMachineURLs";
 
-    private List remoteMachineURLs;
+    private List<String> remoteMachineURLs;
 
     public DistributedTest(String name) {
         super(name);
@@ -28,21 +27,19 @@ public class DistributedTest extends TestCase {
     }
 
     public void testCollectResults() {
-        Iterator it = remoteMachineURLs.iterator();
-        while (it.hasNext()) {
-            String next = (String) it.next();
-            String result = submitRequestTo(next);
+        for (String remoteMachineName : remoteMachineURLs) {
+            String result = submitRequestTo(remoteMachineName);
             Element resultElement = null;
             try {
                 Document document = new SAXBuilder().build(new StringReader(result));
                 resultElement = document.getRootElement();
                 if (!"result".equals(resultElement.getName()))
-                    fail("Unrecognized response from " + next + ": " + result);
+                    fail("Unrecognized response from " + remoteMachineName + ": " + result);
             } catch (Exception e) {
                 e.printStackTrace();
-                fail("Could not parse XML response from " + next + ": " + result);
+                fail("Could not parse XML response from " + remoteMachineName + ": " + result);
             }
-            assertEquals(next + " failed", "success", resultElement.getText());
+            assertEquals(remoteMachineName + " failed", "success", resultElement.getText());
         }
     }
 

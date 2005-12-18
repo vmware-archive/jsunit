@@ -8,6 +8,7 @@
     <property name="logsDirectory" value=""/>
 
     <property name="source" location="java/source"/>
+    <property name="tests" location="java/tests"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
 
@@ -20,7 +21,7 @@
         </fileset>
     </path>
 
-    <target name="compile" description="Compiles the source">
+    <target name="compile_source" description="Compiles the source">
         <delete dir="${bin}/net"/>
         <javac srcdir="${source}" destdir="${bin}" debug="true">
             <classpath>
@@ -31,17 +32,29 @@
         </javac>
     </target>
 
-    <target name="create_jar" depends="compile" description="Creates jsunit.jar">
+    <target name="compile_tests" description="Compiles the self-tests">
+        <javac srcdir="${tests}" destdir="${bin}" debug="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+                <fileset file="${bin}/jsunit.jar"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="create_jar" depends="compile_source" description="Creates jsunit.jar">
         <delete file="${bin}/jsunit.jar"/>
         <jar jarfile="${bin}/jsunit.jar" basedir="${bin}"/>
         <delete dir="${bin}/net"/>
     </target>
 
-    <target name="run_self_tests" description="Runs the Java tests for JsUnit itself">
-        <java classname="junit.textui.TestRunner">
+    <target name="run_self_tests" depends="compile_tests" description="Runs the Java tests for JsUnit itself">
+        <junit showoutput="yes" printsummary="yes" haltonfailure="yes" haltonerror="yes">
             <classpath refid="classpath"/>
-            <arg value="net.jsunit.Suite"/>
-        </java>
+            <classpath path="${bin}"/>
+            <test name="net.jsunit.Suite"/>
+        </junit>
     </target>
 
     <target name="start_server" description="Starts the JsUnit Server">

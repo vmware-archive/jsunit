@@ -84,7 +84,7 @@ public abstract class Configuration {
     private void configurePort(JsUnitServer server) throws ConfigurationException {
         String portString = port();
         try {
-            int port = 0;
+            int port;
             if (Utility.isEmpty(portString))
                 port = DEFAULT_PORT;
             else

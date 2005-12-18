@@ -62,10 +62,8 @@ public class TestSuiteResultTest extends TestCase {
         assertEquals("Dummy Remote Address", aResult.getRemoteAddress());
         assertEquals(4.3d, aResult.getTime(), 0.001d);
         assertEquals(3, aResult.getTestCaseResults().size());
-        Iterator it = aResult.getTestCaseResults().iterator();
-        while (it.hasNext()) {
-            TestCaseResult next = (TestCaseResult) it.next();
-            assertNotNull(next);
+        for (TestCaseResult testCaseResult : aResult.getTestCaseResults()) {
+            assertNotNull(testCaseResult);
         }
     }
 
@@ -84,4 +82,5 @@ public class TestSuiteResultTest extends TestCase {
         assertFields(reconstitutedResult);
         file.delete();
     }
+
 }

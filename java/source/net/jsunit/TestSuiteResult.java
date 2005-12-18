@@ -106,8 +106,8 @@ public class TestSuiteResult {
     private void buildTestCaseResults(String[] testCaseResultStrings) {
         if (testCaseResultStrings == null)
             return;
-        for (int i = 0; i < testCaseResultStrings.length; i++)
-            testCaseResults.add(TestCaseResult.fromString(testCaseResultStrings[i]));
+        for (String testCaseResultString : testCaseResultStrings)
+            testCaseResults.add(TestCaseResult.fromString(testCaseResultString));
     }
 
     public static TestSuiteResult findResultWithIdInResultLogs(File logsDirectory, String id) {
@@ -119,10 +119,8 @@ public class TestSuiteResult {
 
     public int errorCount() {
         int result = 0;
-        Iterator it = testCaseResults.iterator();
-        while (it.hasNext()) {
-            TestCaseResult next = (TestCaseResult) it.next();
-            if (next.hadError())
+        for (TestCaseResult testCaseResult : testCaseResults) {
+            if (testCaseResult.hadError())
                 result++;
         }
         return result;
@@ -130,10 +128,8 @@ public class TestSuiteResult {
 
     public int failureCount() {
         int result = 0;
-        Iterator it = testCaseResults.iterator();
-        while (it.hasNext()) {
-            TestCaseResult next = (TestCaseResult) it.next();
-            if (next.hadFailure())
+        for (TestCaseResult testCaseResult : testCaseResults) {
+            if (testCaseResult.hadFailure())
                 result++;
         }
         return result;
@@ -172,10 +168,8 @@ public class TestSuiteResult {
     }
 
     public boolean hadSuccess() {
-        Iterator it = testCaseResults.iterator();
-        while (it.hasNext()) {
-            TestCaseResult next = (TestCaseResult) it.next();
-            if (!next.wasSuccessful())
+        for (TestCaseResult testCaseResult : testCaseResults) {
+            if (!testCaseResult.wasSuccessful())
                 return false;
         }
         return true;

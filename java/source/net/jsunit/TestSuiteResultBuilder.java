@@ -5,7 +5,6 @@ import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
 import java.io.File;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -47,26 +46,25 @@ public class TestSuiteResultBuilder {
     }
 
     private void updateWithProperties(Element element, TestSuiteResult result) {
-        Iterator it = element.getChildren().iterator();
-        while (it.hasNext()) {
-            Element next = (Element) it.next();
+        for (Object o : element.getChildren()) {
+            Element next = (Element) o;
             if (TestSuiteResultWriter.JSUNIT_VERSION.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
                 result.setJsUnitVersion(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
-            else if (TestSuiteResultWriter.USER_AGENT.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
+            else
+            if (TestSuiteResultWriter.USER_AGENT.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
                 result.setUserAgent(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
-            else if (TestSuiteResultWriter.REMOTE_ADDRESS.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
+            else
+            if (TestSuiteResultWriter.REMOTE_ADDRESS.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
                 result.setRemoteAddress(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
             else if (TestSuiteResultWriter.BASE_URL.equals(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_KEY)))
                 result.setBaseURL(next.getAttributeValue(TestSuiteResultWriter.PROPERTY_VALUE));
         }
     }
 
-    private void updateWithTestCaseResults(List testCaseElements, TestSuiteResult result) {
+    private void updateWithTestCaseResults(List<Element> testCaseElements, TestSuiteResult result) {
         TestCaseResultBuilder testCaseBuilder = new TestCaseResultBuilder();
-        Iterator it = testCaseElements.iterator();
-        while (it.hasNext()) {
-            Element next = (Element) it.next();
-            result.addTestCaseResult(testCaseBuilder.build(next));
+        for (Element element : testCaseElements) {
+            result.addTestCaseResult(testCaseBuilder.build(element));
         }
     }
 }

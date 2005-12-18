@@ -4,8 +4,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
-import java.util.Iterator;
-
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
@@ -70,22 +68,18 @@ public class TestSuiteResultWriter {
     }
 
     private void addTestResultElementsTo(Element element) {
-        Iterator it = result.getTestCaseResults().iterator();
-        while (it.hasNext()) {
-            TestCaseResult next = (TestCaseResult) it.next();
-            new TestCaseResultWriter(next).addXmlTo(element);
+        for (TestCaseResult result : this.result.getTestCaseResults()) {
+            new TestCaseResultWriter(result).addXmlTo(element);
         }
     }
 
     public String writeProblems() {
         StringBuffer buffer = new StringBuffer();
-        Iterator it = result.getTestCaseResults().iterator();
-        while (it.hasNext()) {
-            TestCaseResult next = (TestCaseResult) it.next();
-            if (!next.wasSuccessful()) {
+        for (TestCaseResult result : this.result.getTestCaseResults()) {
+            if (!result.wasSuccessful()) {
                 if (buffer.length() > 0)
                     buffer.append("\n");
-                String problemMessage = next.writeProblemSummary();
+                String problemMessage = result.writeProblemSummary();
                 buffer.append(problemMessage);
             }
         }
