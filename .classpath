@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="java/src"/>
+	<classpathentry kind="src" path="java/tests"/>
+	<classpathentry kind="src" path="java/source"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="java/lib/javax.servlet.jar"/>
 	<classpathentry kind="lib" path="java/lib/jdom.jar"/>
