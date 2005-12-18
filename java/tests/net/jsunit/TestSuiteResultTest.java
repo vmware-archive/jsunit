@@ -3,7 +3,6 @@ package net.jsunit;
 import junit.framework.TestCase;
 
 import java.io.File;
-import java.util.Iterator;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

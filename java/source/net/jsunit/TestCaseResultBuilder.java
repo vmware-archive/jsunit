@@ -2,8 +2,6 @@ package net.jsunit;
 
 import org.jdom.Element;
 
-import java.util.Iterator;
-
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
