@@ -1,10 +1,10 @@
 package net.jsunit;
-
+ 
 import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationException;
+import net.jsunit.model.BrowserResult;
 import net.jsunit.servlet.JsUnitServlet;
-import net.jsunit.servlet.ResultAcceptorServlet;
-import net.jsunit.servlet.ResultDisplayerServlet;
+import net.jsunit.servlet.BrowserResultAcceptorServlet;
+import net.jsunit.servlet.BrowserResultDisplayerServlet;
 import net.jsunit.servlet.TestRunnerServlet;
 import org.mortbay.http.HttpContext;
 import org.mortbay.http.HttpServer;
@@ -13,7 +13,6 @@ import org.mortbay.jetty.servlet.ServletHandler;
 import org.mortbay.start.Monitor;
 import org.mortbay.util.MultiException;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -26,42 +25,37 @@ import java.util.List;
  */
 
 public class JsUnitServer extends HttpServer {
-    private List<TestSuiteResult> results = new ArrayList<TestSuiteResult>();
 
-    private int port;
-    private File resourceBase;
-    private File logsDirectory;
-    private List<String> localBrowserFileNames;
-    private URL testURL;
-    private boolean initialized;
+    public static final String DEFAULT_SYSTEM_BROWSER = "default";
+
+	private Configuration configuration;
+    private Process browserProcess;
+    private String browserFileName;
+	private List<BrowserResult> results = new ArrayList<BrowserResult>();
+    private List<BrowserTestRunListener> browserTestRunListeners = new ArrayList<BrowserTestRunListener>();
     private Date dateLastResultReceived;
+	private ProcessStarter processStarter = new DefaultProcessStarter();
 
-  public static void main(String args[]) {
-        JsUnitServer server = new JsUnitServer();
-        try {
-            server.initialize(args);
-            server.start();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	public JsUnitServer(Configuration configuration) {
+		this.configuration = configuration;
+		if (configuration.needsLogging())
+			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
+	}
 
-    private void initialize(String[] args) throws ConfigurationException {
-        try {
-            Configuration configuration = Configuration.resolve(args);
-            configuration.configure(this);
-            initialized = true;
-        } catch (ConfigurationException ce) {
-            System.err.println("Server initialization failed because property \"" + ce.getPropertyInError() + "\" has an invalid value of \"" + ce.getInvalidValue() + "\"");
-            throw ce;
-        }
+  	public JsUnitServer() {
+		this(Configuration.resolve());
+	}
+
+	public static void main(String args[]) {
+  		try {
+	  		JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
+	        server.start();
+  		} catch (Throwable t) {
+  			t.printStackTrace();
+  		}
     }
 
     public void start() throws MultiException {
-        if (!initialized) {
-            System.err.println("Cannot start server: not initialized");
-            return;
-        }
         try {
             setUpHttpServer();
         } catch (IOException e) {
@@ -69,42 +63,44 @@ public class JsUnitServer extends HttpServer {
             return;
         }
         super.start();
-        Utility.log(asString());
+        log(configuration.toString());
     }
 
     private void setUpHttpServer() throws IOException {
-        addListener(":" + port);
+        addListener(":" + configuration.getPort());
         HttpContext context = getContext("/jsunit");
         ServletHandler handler;
         handler = new ServletHandler();
-        handler.addServlet("JsUnitResultAcceptor", "/acceptor", ResultAcceptorServlet.class.getName());
-        handler.addServlet("JsUnitResultDisplayer", "/displayer", ResultDisplayerServlet.class.getName());
+        handler.addServlet("JsUnitResultAcceptor", "/acceptor", BrowserResultAcceptorServlet.class.getName());
+        handler.addServlet("JsUnitResultDisplayer", "/displayer", BrowserResultDisplayerServlet.class.getName());
         handler.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         context.addHandler(handler);
-        context.setResourceBase(resourceBase.toString());
+        context.setResourceBase(configuration.getResourceBase().toString());
         context.addHandler(new ResourceHandler());
         addContext(context);
         JsUnitServlet.setServer(this);
-        Monitor.monitor();
+        if (Monitor.activeCount() == 0)
+        	Monitor.monitor();
     }
 
-    public void initialize() throws ConfigurationException {
-        initialize(new String[]{});
-    }
-
-    public TestSuiteResult accept(HttpServletRequest request) {
+    public void accept(BrowserResult result) {
         dateLastResultReceived = new Date();
-        TestSuiteResult result = TestSuiteResult.fromRequest(request, logsDirectory);
-        TestSuiteResult existingResultWithSameId =
-                findResultWithId(result.getId());
+        BrowserResult existingResultWithSameId = findResultWithId(result.getId());
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
         results.add(result);
-        result.writeLog();
-        return result;
+        
+        for (BrowserTestRunListener listener : browserTestRunListeners) {
+        	listener.browserTestRunFinished(browserFileName, result);
+        }
+        endBrowser();
     }
 
-    public List<TestSuiteResult> getResults() {
+    public File getLogsDirectory() {
+		return configuration.getLogsDirectory();
+	}
+
+	public List<BrowserResult> getResults() {
         return results;
     }
 
@@ -112,84 +108,38 @@ public class JsUnitServer extends HttpServer {
         results.clear();
     }
 
-    public TestSuiteResult findResultWithId(String id) {
-        TestSuiteResult result = findResultWithIdInResultList(id);
+    public BrowserResult findResultWithId(String id) {
+        BrowserResult result = findResultWithIdInResultList(id);
         if (result == null)
-            result = TestSuiteResult.findResultWithIdInResultLogs(logsDirectory, id);
+            result = BrowserResult.findResultWithIdInResultLogs(getLogsDirectory(), id);
         return result;
     }
 
-    private TestSuiteResult findResultWithIdInResultList(String id) {
-        for (TestSuiteResult result : getResults()) {
+    private BrowserResult findResultWithIdInResultList(String id) {
+        for (BrowserResult result : getResults()) {
             if (result.hasId(id))
                 return result;
         }
         return null;
     }
 
-    public TestSuiteResult lastResult() {
+    public BrowserResult lastResult() {
         List results = getResults();
         return results.isEmpty()
                 ? null
-                : (TestSuiteResult) results.get(results.size() - 1);
+                : (BrowserResult) results.get(results.size() - 1);
     }
 
     public int resultsCount() {
         return getResults().size();
     }
 
-    public String asString() {
-        StringBuffer result = new StringBuffer();
-        result.append(Configuration.PORT).append(": ").append(port).append("\n");
-        result.append(Configuration.RESOURCE_BASE).append(": ").append(resourceBase.getAbsolutePath()).append("\n");
-        result.append(Configuration.LOGS_DIRECTORY).append(": ").append(logsDirectory.getAbsolutePath()).append("\n");
-        result.append(Configuration.BROWSER_FILE_NAMES).append(": ").append(localBrowserFileNames).append("\n");
-        result.append(Configuration.URL).append(": ").append(testURL);
-        return result.toString();
-    }
-
     public String toString() {
         return "JsUnit Server";
     }
 
-    public void setResourceBase(File resourceBase) {
-        this.resourceBase = resourceBase;
-    }
-
-    public void setPort(int port) {
-        this.port = port;
-    }
-
-    public void setLogsDirectory(File logsDirectory) {
-        this.logsDirectory = logsDirectory;
-    }
-
-    public List<String> getLocalBrowserFileNames() {
-        return localBrowserFileNames;
-    }
-
-    public void setLocalBrowserFileNames(List<String> names) {
-        this.localBrowserFileNames = names;
-    }
-
-    public void setTestURL(URL url) {
-        this.testURL = url;
-    }
-
-    public URL getTestURL() {
-        return testURL;
-    }
-
-    public File getLogsDirectory() {
-        return logsDirectory;
-    }
-
-    public int getPort() {
-        return port;
-    }
-
-    public File getResourceBase() {
-        return resourceBase;
+    public List<String> getBrowserFileNames() {
+        return configuration.getBrowserFileNames();
     }
 
     public void finalize() throws Exception {
@@ -199,4 +149,73 @@ public class JsUnitServer extends HttpServer {
     public boolean hasReceivedResultSince(Date aDate) {
         return dateLastResultReceived != null && dateLastResultReceived.after(aDate);
     }
+
+	public boolean shouldCloseBrowsersAfterTestRuns() {
+		return configuration.shouldCloseBrowsersAfterTestRuns();
+	}
+	
+	public void addBrowserTestRunListener(BrowserTestRunListener listener) {
+		browserTestRunListeners.add(listener);
+	}
+	
+	public List<BrowserTestRunListener> getBrowserTestRunListeners() {
+		return browserTestRunListeners;
+	}
+
+	public URL getTestURL() {
+		return configuration.getTestURL();
+	}
+	
+    private String[] openBrowserCommand(String browserFileName) {
+        if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
+            if (isWindows()) {
+                return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
+            }
+            else return new String[] {"htmlview"};
+        }
+        return new String[] {browserFileName};
+    }
+
+    private void endBrowser() {
+    	if (browserProcess != null && shouldCloseBrowsersAfterTestRuns())
+    		browserProcess.destroy();
+        browserProcess = null;
+        browserFileName = null;
+    }
+
+    public void launchTestRunForBrowserWithFileName(String browserFileName) throws JsUnitServerException {
+        String[] browserCommand = openBrowserCommand(browserFileName);
+        log("StandaloneTest: launching " + browserCommand[0]);
+		try {
+		    String[] commandWithUrl = new String[browserCommand.length + 1];
+		    System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
+		    commandWithUrl[browserCommand.length] = configuration.getTestURL().toString();
+		    this.browserProcess = processStarter.execute(commandWithUrl);
+		    this.browserFileName = browserFileName;
+		    for (BrowserTestRunListener listener : browserTestRunListeners)
+		    	listener.browserTestRunStarted(browserFileName);
+		} catch (Throwable t) {
+		    t.printStackTrace();
+		    throw new JsUnitServerException("Failed to start browser browserProcess: " + browserCommand[0]);
+		}
+	}
+
+	private void log(String message) {
+		if (configuration.needsLogging())
+			Utility.log(message);
+	}
+
+	private boolean isWindows() {
+        String os = System.getProperty("os.name");
+        return os != null && os.startsWith("Windows");
+    }
+
+	public Configuration getConfiguration() {
+		return configuration;
+	}
+	
+	void setProcessStarter(ProcessStarter starter) {
+		this.processStarter = starter;
+	}
+	
 }

@@ -10,4 +10,4 @@ public abstract class JsUnitServlet extends HttpServlet {
     public static void setServer(JsUnitServer aServer) {
         server = aServer;
     }
-}
+} 

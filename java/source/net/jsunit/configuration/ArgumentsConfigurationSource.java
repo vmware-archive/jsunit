@@ -2,19 +2,20 @@ package net.jsunit.configuration;
 
 import java.util.Iterator;
 import java.util.List;
-
+ 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class ArgumentsConfiguration extends Configuration {
+public class ArgumentsConfigurationSource implements ConfigurationSource {
     private String port;
     private String resourceBase;
     private String logsDirectory;
     private String url;
     private String browserFileNames;
+    private String closeBrowsersAfterTestRuns;
 
-    public ArgumentsConfiguration(List args) {
+    public ArgumentsConfigurationSource(List args) {
         init(args);
     }
 
@@ -23,14 +24,16 @@ public class ArgumentsConfiguration extends Configuration {
             String argument = (String) it.next();
             if (argument.equals("-" + PORT))
                 this.port = (String) it.next();
-            if (argument.equals("-" + RESOURCE_BASE))
+            else if (argument.equals("-" + RESOURCE_BASE))
                 this.resourceBase = (String) it.next();
-            if (argument.equals("-" + LOGS_DIRECTORY))
+            else if (argument.equals("-" + LOGS_DIRECTORY))
                 this.logsDirectory = (String) it.next();
-            if (argument.equals("-" + URL))
+            else if (argument.equals("-" + URL))
                 this.url = (String) it.next();
-            if (argument.equals("-" + BROWSER_FILE_NAMES))
+            else if (argument.equals("-" + BROWSER_FILE_NAMES))
                 this.browserFileNames = (String) it.next();
+            else if (argument.equals("-" + CLOSE_BROWSERS_AFTER_TEST_RUNS))
+                this.closeBrowsersAfterTestRuns= (String) it.next();
         }
     }
 
@@ -53,4 +56,10 @@ public class ArgumentsConfiguration extends Configuration {
     public String url() {
         return url;
     }
+
+	public String closeBrowsersAfterTestRuns() {
+		return closeBrowsersAfterTestRuns;
+	}
+    
+    
 }

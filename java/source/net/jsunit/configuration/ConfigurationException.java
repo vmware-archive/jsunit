@@ -1,9 +1,9 @@
 package net.jsunit.configuration;
 
-public class ConfigurationException extends Exception {
+public class ConfigurationException extends RuntimeException {
     private String propertyInError;
     private String invalidValue;
-
+ 
     public ConfigurationException(String property, String invalidValue, Exception exception) {
         super(exception);
         this.propertyInError = property;

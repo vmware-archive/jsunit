@@ -5,7 +5,6 @@ import java.util.List;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.plugin.eclipse.MockBrowserTestRunListener;
 
 public class JsUnitServerTest extends TestCase {
 

@@ -1,7 +1,7 @@
 package net.jsunit.configuration;
 
-public class EnvironmentVariablesConfiguration extends Configuration {
-
+public class EnvironmentVariablesConfigurationSource implements ConfigurationSource {
+ 
     public String resourceBase() {
         return System.getProperty(RESOURCE_BASE);
     }
@@ -22,7 +22,12 @@ public class EnvironmentVariablesConfiguration extends Configuration {
         return System.getProperty(URL);
     }
 
-    public boolean isAppropriate() {
+    public String closeBrowsersAfterTestRuns() {
+		return System.getProperty(CLOSE_BROWSERS_AFTER_TEST_RUNS);
+	}
+
+	public boolean isAppropriate() {
         return url() != null;
     }
+
 }

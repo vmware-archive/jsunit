@@ -1,5 +1,5 @@
 package net.jsunit;
-
+ 
 import junit.framework.TestCase;
 import org.jdom.Document;
 import org.jdom.Element;

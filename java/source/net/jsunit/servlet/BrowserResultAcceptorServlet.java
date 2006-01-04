@@ -1,7 +1,7 @@
 package net.jsunit.servlet;
 
-import net.jsunit.TestSuiteResult;
 import net.jsunit.Utility;
+import net.jsunit.model.BrowserResult;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -11,18 +11,19 @@ import java.io.OutputStream;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
- */
+ */ 
 
-public class ResultAcceptorServlet extends JsUnitServlet {
+public class BrowserResultAcceptorServlet extends JsUnitServlet {
 
     protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Utility.log("ResultAcceptorServlet: Received request");
-        TestSuiteResult result = server.accept(request);
-        String xml = result.writeXml();
+        Utility.log("BrowserResultAcceptorServlet: Received request");
+        BrowserResult result = BrowserResult.fromRequest(request);
+        server.accept(result);
+        String xml = result.asXml();
         response.setContentType("text/xml");
         OutputStream out = response.getOutputStream();
         out.write(xml.getBytes());
         out.close();
-        Utility.log("ResultAcceptorServlet: Done");
+        Utility.log("BrowserResultAcceptorServlet: Done");
     }
 }

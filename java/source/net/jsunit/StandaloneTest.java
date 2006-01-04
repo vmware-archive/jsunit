@@ -1,20 +1,21 @@
 package net.jsunit;
-
+ 
 import junit.framework.TestCase;
 
 import java.util.Date;
+
+import net.jsunit.model.BrowserResult;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
 public class StandaloneTest extends TestCase {
-    private boolean needToStopServer = false;
-    public static final int MAX_SECONDS_TO_WAIT = 2 * 60;
+    private boolean shouldStopServer = false;
+    public static final int MAX_SECONDS_TO_WAIT = 60;
     private JsUnitServer server;
-    private Process process;
-
-    public static final String DEFAULT_SYSTEM_BROWSER = "default";
+	private int errorCount;
+	private int failureCount;
 
     public StandaloneTest(String name) {
         super(name);
@@ -28,58 +29,30 @@ public class StandaloneTest extends TestCase {
         super.setUp();
         if (server == null) {
             server = new JsUnitServer();
-            server.initialize();
             server.start();
-            needToStopServer = true;
+            shouldStopServer = true;
         }
     }
 
     public void tearDown() throws Exception {
-        if (needToStopServer)
+        if (shouldStopServer)
             server.stop();
-        if (process != null) {
-            destroyBrowserProcess();
-
-        }
         super.tearDown();
     }
 
     public void testStandaloneRun() throws Exception {
-        for (String browserFileName : server.getLocalBrowserFileNames()) {
-            String[] browserCommand = determineOpenBrowserCommand(browserFileName);
+        for (String browserFileName : server.getBrowserFileNames()) {
             Date dateLaunched = new Date();
-            launchBrowser(browserCommand);
+        	server.launchTestRunForBrowserWithFileName(browserFileName);
             waitForResultToBeSubmitted(browserFileName, dateLaunched);
-            destroyBrowserProcess();
             verifyLastResult();
         }
-    }
-
-    private String[] determineOpenBrowserCommand(String browserFileName) {
-        if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
-            if (isWindows()) {
-                return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
-            }
-            else return new String[] {"htmlview"};
-        }
-        return new String[] {browserFileName};
-    }
-
-    private void destroyBrowserProcess() {
-        process.destroy();
-        process = null;
-    }
-
-    private void launchBrowser(String[] browserCommand) {
-        Utility.log("StandaloneTest: launching " + browserCommand[0]);
-        try {
-            String[] commandWithUrl = new String[browserCommand.length + 1];
-            System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
-            commandWithUrl[browserCommand.length] = server.getTestURL().toString();
-            process = Runtime.getRuntime().exec(commandWithUrl);
-        } catch (Throwable t) {
-            t.printStackTrace();
-            fail("All browser processes should start, but the following did not: " + browserCommand[0]);
+        if (errorCount>0 || failureCount>0) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("The Test Run had problems: ");
+            buffer.append(errorCount).append(" errors, ");
+            buffer.append(failureCount).append(" failures ");
+            fail(buffer.toString());
         }
     }
 
@@ -95,21 +68,15 @@ public class StandaloneTest extends TestCase {
     }
 
     private void verifyLastResult() {
-        TestSuiteResult result = server.lastResult();
-        if (!result.hadSuccess()) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("Result with ID ");
-            buffer.append(result.getId());
-            buffer.append(" had problems: ");
-            buffer.append(result.errorCount()).append(" errors, ");
-            buffer.append(result.failureCount()).append(" failures ");
-            fail(buffer.toString());
+        BrowserResult result = server.lastResult();
+        if (!result.wasSuccessful()) {
+        	errorCount += result.errorCount();
+        	failureCount += result.errorCount();
         }
     }
 
-    private boolean isWindows() {
-        String os = System.getProperty("os.name");
-        return os != null && os.startsWith("Windows");
-    }
+	public JsUnitServer getJsUnitServer() {
+		return server;
+	}
 
 }

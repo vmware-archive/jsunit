@@ -7,22 +7,23 @@ import java.util.Properties;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class PropertiesFileConfiguration extends Configuration {
-
+public class PropertiesFileConfigurationSource implements ConfigurationSource {
+ 
     public static final String PROPERTIES_FILE_NAME = "jsunit.properties";
 
     private Properties properties;
     private String propertiesFileName;
 
-    public PropertiesFileConfiguration(String propertiesFileName) {
+    public PropertiesFileConfigurationSource(String propertiesFileName) {
         this.propertiesFileName = propertiesFileName;
+        loadProperties();
     }
 
-    public PropertiesFileConfiguration() {
+    public PropertiesFileConfigurationSource() {
         this(PROPERTIES_FILE_NAME);
     }
 
-    public void initialize() {
+    private void loadProperties() {
         properties = new Properties();
         try {
             FileInputStream fileInputStream = new FileInputStream(propertiesFileName);
@@ -33,24 +34,32 @@ public class PropertiesFileConfiguration extends Configuration {
         }
     }
 
+	private String getProperty(String propertyName) {
+		return properties.getProperty(propertyName);
+	}
+
     public String resourceBase() {
-        return properties.getProperty(RESOURCE_BASE);
+        return getProperty(RESOURCE_BASE);
     }
 
     public String logsDirectory() {
-        return properties.getProperty(LOGS_DIRECTORY);
+        return getProperty(LOGS_DIRECTORY);
     }
 
     public String port() {
-        return properties.getProperty(PORT);
+        return getProperty(PORT);
     }
 
     public String url() {
-        return properties.getProperty(URL);
+        return getProperty(URL);
     }
 
     public String browserFileNames() {
-        return properties.getProperty(BROWSER_FILE_NAMES);
+        return getProperty(BROWSER_FILE_NAMES);
+    }
+
+    public String closeBrowsersAfterTestRuns() {
+        return getProperty(CLOSE_BROWSERS_AFTER_TEST_RUNS);
     }
 
 }

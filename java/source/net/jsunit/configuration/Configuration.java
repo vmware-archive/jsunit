@@ -1,8 +1,7 @@
 package net.jsunit.configuration;
 
-import net.jsunit.JsUnitServer;
 import net.jsunit.Utility;
-
+ 
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
@@ -12,61 +11,58 @@ import java.util.List;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public abstract class Configuration {
+public final class Configuration {
+	
+    private ConfigurationSource source;
+	private boolean needsLogging = true;
+	public static final String DEFAULT_RESOURCE_BASE = ".";
+	public static final int DEFAULT_PORT = 8080;
 
-    public static final String PORT = "port";
-    public static final String RESOURCE_BASE = "resourceBase";
-    public static final String LOGS_DIRECTORY = "logsDirectory";
-    public static final String URL = "url";
-    public static final String BROWSER_FILE_NAMES = "browserFileNames";
-
-    public static final int DEFAULT_PORT = 8080;
-    public static final String DEFAULT_RESOURCE_BASE = ".";
-
-    public static Configuration resolve(String[] args) {
-        if (args.length > 0)
-            return new ArgumentsConfiguration(Arrays.asList(args));
+    public Configuration(ConfigurationSource source) {
+    	this.source = source;
+    }
+    
+    public static Configuration resolve(String[] arguments) {
+    	ConfigurationSource source;
+        if (arguments.length > 0)
+            source = new ArgumentsConfigurationSource(Arrays.asList(arguments));
         else {
-            EnvironmentVariablesConfiguration evConfig = new EnvironmentVariablesConfiguration();
-            if (evConfig.isAppropriate())
-                return evConfig;
-            return new PropertiesFileConfiguration();
+            source = resolveSource();
         }
+        return new Configuration(source);
     }
 
-    public void configure(JsUnitServer server) throws ConfigurationException {
-        initialize();
-        configureResourceBase(server);
-        configurePort(server);
-        configureLogsDirectory(server);
-        configureBrowserFileNames(server);
-        configureTestURL(server);
-    }
+	private static ConfigurationSource resolveSource() {
+		EnvironmentVariablesConfigurationSource evConfig = new EnvironmentVariablesConfigurationSource();
+		if (evConfig.isAppropriate())
+		    return evConfig;
+		return new PropertiesFileConfigurationSource();
+	}
+	
+	public static Configuration resolve() {
+		return new Configuration(resolveSource());
+	}
 
-    public void initialize() {
-    }
-
-    private void configureTestURL(JsUnitServer server) throws ConfigurationException {
-        String urlString = url();
+    public URL getTestURL() throws ConfigurationException {
+        String urlString = source.url();
         try {
-            server.setTestURL(new URL(urlString));
+            return new URL(urlString);
         } catch (Exception e) {
-            throw new ConfigurationException(URL, urlString, e);
+            throw new ConfigurationException(ConfigurationSource.URL, urlString, e);
         }
     }
 
-    private void configureBrowserFileNames(JsUnitServer server) throws ConfigurationException {
-        String browserFileNamesString = browserFileNames();
+    public List<String> getBrowserFileNames() throws ConfigurationException {
+        String browserFileNamesString = source.browserFileNames();
         try {
-            List<String> browserFileNames = Utility.listFromCommaDelimitedString(browserFileNamesString);
-            server.setLocalBrowserFileNames(browserFileNames);
+            return Utility.listFromCommaDelimitedString(browserFileNamesString);
         } catch (Exception e) {
-            throw new ConfigurationException(BROWSER_FILE_NAMES, browserFileNamesString, e);
+            throw new ConfigurationException(ConfigurationSource.BROWSER_FILE_NAMES, browserFileNamesString, e);
         }
     }
 
-    private void configureLogsDirectory(JsUnitServer server) throws ConfigurationException {
-        String logsDirectoryString = logsDirectory();
+    public File getLogsDirectory() throws ConfigurationException {
+        String logsDirectoryString = source.logsDirectory();
         try {
             if (Utility.isEmpty(logsDirectoryString))
                 logsDirectoryString = resourceBaseCheckForDefault() + File.separator + "logs";
@@ -75,49 +71,68 @@ public abstract class Configuration {
                 Utility.log("Creating logs directory " + logsDirectory, false);
                 logsDirectory.mkdir();
             }
-            server.setLogsDirectory(logsDirectory);
+            return logsDirectory;
         } catch (Exception e) {
-            throw new ConfigurationException(LOGS_DIRECTORY, logsDirectoryString, e);
+            throw new ConfigurationException(ConfigurationSource.LOGS_DIRECTORY, logsDirectoryString, e);
         }
     }
 
-    private void configurePort(JsUnitServer server) throws ConfigurationException {
-        String portString = port();
+    public int getPort() throws ConfigurationException {
+        String portString = source.port();
         try {
             int port;
             if (Utility.isEmpty(portString))
-                port = DEFAULT_PORT;
+                port = Configuration.DEFAULT_PORT;
             else
                 port = Integer.parseInt(portString);
-            server.setPort(port);
+            return port;
         } catch (Exception e) {
-            throw new ConfigurationException(PORT, portString, e);
+            throw new ConfigurationException(ConfigurationSource.PORT, portString, e);
         }
     }
 
-    private void configureResourceBase(JsUnitServer server) throws ConfigurationException {
+    public boolean shouldCloseBrowsersAfterTestRuns() throws ConfigurationException {
+        String string = source.closeBrowsersAfterTestRuns();
+        if (string == null)
+        	return true;
+        return Boolean.valueOf(string);
+    }
+
+    public File getResourceBase() throws ConfigurationException {
         String resourceBaseString = resourceBaseCheckForDefault();
         try {
-            server.setResourceBase(new File(resourceBaseString));
+            return new File(resourceBaseString);
         } catch (Exception e) {
-            throw new ConfigurationException(RESOURCE_BASE, resourceBaseString, e);
+            throw new ConfigurationException(ConfigurationSource.RESOURCE_BASE, resourceBaseString, e);
         }
     }
 
     private String resourceBaseCheckForDefault() {
-        String result = resourceBase();
+        String result = source.resourceBase();
         if (Utility.isEmpty(result))
-            result = DEFAULT_RESOURCE_BASE;
+            result = Configuration.DEFAULT_RESOURCE_BASE;
         return result;
     }
 
-    public abstract String resourceBase();
+    public String toString() {
+    	StringBuffer result = new StringBuffer();
+        result.append(ConfigurationSource.PORT).append(": ").append(getPort()).append("\n");
+        result.append(ConfigurationSource.RESOURCE_BASE).append(": ").append(getResourceBase().getAbsolutePath()).append("\n");
+        result.append(ConfigurationSource.LOGS_DIRECTORY).append(": ").append(getLogsDirectory().getAbsolutePath()).append("\n");
+        result.append(ConfigurationSource.BROWSER_FILE_NAMES).append(": ").append(getBrowserFileNames()).append("\n");
+        result.append(ConfigurationSource.URL).append(": ").append(getTestURL());
+        return result.toString();
+    }
 
-    public abstract String port();
+	public ConfigurationSource getSource() {
+		return source;
+	}
 
-    public abstract String logsDirectory();
-
-    public abstract String browserFileNames();
-
-    public abstract String url();
+	public boolean needsLogging() {
+		return needsLogging ;
+	}
+	
+	public void setNeedsLogging(boolean b) {
+		needsLogging = b;
+	}
 }
