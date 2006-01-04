@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="java/tests"/>
+	<classpathentry kind="src" path="java/tests_eclipse_plugin"/>
+	<classpathentry kind="src" path="java/source_eclipse_plugin"/>
 	<classpathentry kind="src" path="java/source"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="java/lib/javax.servlet.jar"/>
 	<classpathentry kind="lib" path="java/lib/jdom.jar"/>
 	<classpathentry kind="lib" path="java/lib/jetty.jar"/>

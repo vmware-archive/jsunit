@@ -1,6 +1,6 @@
 package net.jsunit;
 
-import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationSource;
 
 public class StandaloneTestTest extends StandaloneTest {
 
@@ -9,16 +9,16 @@ public class StandaloneTestTest extends StandaloneTest {
   }
 
   public void setUp() throws Exception {
-      System.setProperty(Configuration.BROWSER_FILE_NAMES, DEFAULT_SYSTEM_BROWSER + "," + DEFAULT_SYSTEM_BROWSER);
-      System.setProperty(Configuration.URL,
+      System.setProperty(ConfigurationSource.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_SYSTEM_BROWSER + "," + JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+      System.setProperty(ConfigurationSource.URL,
          "http://localhost:8080/jsunit/testRunner.html?"
-         + "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true&resultId=foobar");
+         + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
       super.setUp();
   }
 
   public void tearDown() throws Exception {
-      System.getProperties().remove(Configuration.BROWSER_FILE_NAMES);
-      System.getProperties().remove(Configuration.URL);
       super.tearDown();
+      System.getProperties().remove(ConfigurationSource.BROWSER_FILE_NAMES);
+      System.getProperties().remove(ConfigurationSource.URL);
   }
 }

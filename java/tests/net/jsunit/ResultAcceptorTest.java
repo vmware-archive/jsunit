@@ -1,7 +1,9 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
-import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.model.BrowserResult;
+import net.jsunit.model.BrowserResultWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -23,35 +25,34 @@ public class ResultAcceptorTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
+        System.setProperty(ConfigurationSource.BROWSER_FILE_NAMES, "foo");
+        System.setProperty(ConfigurationSource.URL, "http://bar");
         server = new JsUnitServer();
-        System.setProperty(Configuration.BROWSER_FILE_NAMES, "foo");
-        System.setProperty(Configuration.URL, "http://bar");
-        server.initialize();
         Utility.setLogToStandardOut(false);
         requestMap = new HashMap<String, String[]>();
-        requestMap.put(TestSuiteResultWriter.ID, new String[] {"ID_foo"});
-        requestMap.put(TestSuiteResultWriter.USER_AGENT, new String[] {"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
-        requestMap.put(TestSuiteResultWriter.TIME, new String[] {"4.3"});
-        requestMap.put(TestSuiteResultWriter.JSUNIT_VERSION, new String[] {"2.5"});
-        requestMap.put(TestSuiteResultWriter.TEST_CASES, dummyTestCaseStrings());
+        requestMap.put(BrowserResultWriter.ID, new String[] {"ID_foo"});
+        requestMap.put(BrowserResultWriter.USER_AGENT, new String[] {"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
+        requestMap.put(BrowserResultWriter.TIME, new String[] {"4.3"});
+        requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[] {"2.5"});
+        requestMap.put(BrowserResultWriter.TEST_CASES, dummyTestCaseStrings());
     }
 
     public void tearDown() throws Exception {
-        System.getProperties().remove(Configuration.BROWSER_FILE_NAMES);
-        System.getProperties().remove(Configuration.URL);
-        File logFile = TestSuiteResult.logFileForId(server.getLogsDirectory(), "ID_foo");
+        System.getProperties().remove(ConfigurationSource.BROWSER_FILE_NAMES);
+        System.getProperties().remove(ConfigurationSource.URL);
+        File logFile = BrowserResult.logFileForId(server.getLogsDirectory(), "ID_foo");
         if (logFile.exists())
             logFile.delete();
         super.tearDown();
     }
 
     protected String[] dummyTestCaseStrings() {
-        return new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||", "testFoo|1.3|E|Test Error Message|", "testFoo|1.3|F|Test Failure Message|"};
+        return new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||", "file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|", "file:///dummy/path/dummyPage.html:testFoo|1.3|F|Test Failure Message|"};
     }
 
     protected void submit() {
         HttpServletRequest request = new DummyHttpRequest(requestMap);
-        server.accept(request);
+        server.accept(BrowserResult.fromRequest(request));
     }
 
     public void testSubmitResults() {
@@ -64,7 +65,7 @@ public class ResultAcceptorTest extends TestCase {
 
     public void testSubmittedResultHeaders() {
         submit();
-        TestSuiteResult result = server.getResults().get(0);
+        BrowserResult result = server.getResults().get(0);
         assertEquals("ID_foo", result.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
         assertEquals("2.5", result.getJsUnitVersion());
@@ -76,7 +77,7 @@ public class ResultAcceptorTest extends TestCase {
 
     public void testSubmittedTestCaseResults() {
         submit();
-        TestSuiteResult result = server.getResults().get(0);
+        BrowserResult result = server.getResults().get(0);
         assertEquals(3, result.getTestCaseResults().size());
     }
 
@@ -102,7 +103,7 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void testLog() {
-        File logFile = TestSuiteResult.logFileForId(server.getLogsDirectory(), "ID_foo");
+        File logFile = BrowserResult.logFileForId(server.getLogsDirectory(), "ID_foo");
         assertFalse(logFile.exists());
         submit();
         assertTrue(logFile.exists());

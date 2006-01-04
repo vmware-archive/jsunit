@@ -1,7 +1,6 @@
 package net.jsunit.configuration;
 
 import junit.framework.TestCase;
-import net.jsunit.JsUnitServer;
 import net.jsunit.Utility;
 
 import java.io.File;
@@ -20,16 +19,17 @@ public class ArgumentsConfigurationTest extends TestCase {
             "-resourceBase", "foo",
             "-logsDirectory", "bar",
             "-remoteMachineNames", "foo,bar",
-            "-browserFileNames", "fu,bar"
+            "-browserFileNames", "fu,bar",
+            "-closeBrowsersAfterTestRuns", "true"
         });
-        JsUnitServer server = new JsUnitServer();
-        ArgumentsConfiguration configuration = new ArgumentsConfiguration(args);
-        configuration.configure(server);
-        assertEquals(12345, server.getPort());
-        assertEquals(new File("foo"), server.getResourceBase());
-        assertEquals(new File("bar"), server.getLogsDirectory());
-        assertEquals(Utility.listWith("fu", "bar"), server.getLocalBrowserFileNames());
-        assertEquals("http://www.jsunit.net/", server.getTestURL().toString());
+        ArgumentsConfigurationSource source = new ArgumentsConfigurationSource(args);
+        Configuration configuration = new Configuration(source);
+        assertEquals(12345, configuration.getPort());
+        assertEquals(new File("foo"), configuration.getResourceBase());
+        assertEquals(new File("bar"), configuration.getLogsDirectory());
+        assertEquals(Utility.listWith("fu", "bar"), configuration.getBrowserFileNames());
+        assertEquals("http://www.jsunit.net/", configuration.getTestURL().toString());
+        assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
     }
 
     public void tearDown() throws Exception {

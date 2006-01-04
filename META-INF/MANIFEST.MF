@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: JsUnit
+Bundle-SymbolicName: net.jsunit; singleton:=true
+Bundle-Version: 2.3
+Bundle-Localization: plugin
+Bundle-Vendor: Edward Hieatt, edward@jsunit.net
+Require-Bundle: org.eclipse.core.resources,
+ org.eclipse.core.runtime,
+ org.eclipse.jface,
+ org.eclipse.debug.core,
+ org.eclipse.debug.ui,
+ org.eclipse.ui,
+ org.eclipse.jdt.junit,
+ org.eclipse.jdt.core
+Bundle-Activator: net.jsunit.plugin.eclipse.JsUnitPlugin
+Eclipse-AutoStart: true
+Bundle-ClassPath: 
+ JsUnitPlugin.jar,
+ java/lib/javax.servlet.jar,
+ java/lib/jdom.jar,
+ java/lib/jetty.jar,
+ java/lib/junit.jar,
+ java/lib/xerces.jar

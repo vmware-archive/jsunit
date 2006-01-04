@@ -9,3 +9,5 @@
 - changed StandaloneTestTest and DistributedTestTest to use the default system browser
 - Bug 1281427: Fixed test submission for Opera.
 - Migration of Java code to require Java 5.0
+- Addition of new configuration parameter, "attempt to close browsers after test runs"
+- StandaloneTest now runs tests in all specified browsers, even after an earlier browser failed

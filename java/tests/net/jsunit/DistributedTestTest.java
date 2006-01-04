@@ -1,10 +1,9 @@
 package net.jsunit;
 
-
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
-import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationSource;
 
 public class DistributedTestTest extends TestCase {
     private JsUnitServer server;
@@ -15,19 +14,18 @@ public class DistributedTestTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(Configuration.BROWSER_FILE_NAMES, StandaloneTest.DEFAULT_SYSTEM_BROWSER);
-        server = new JsUnitServer();
-        System.setProperty(Configuration.URL,
+        System.setProperty(ConfigurationSource.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+        System.setProperty(ConfigurationSource.URL,
            "http://localhost:8080/jsunit/testRunner.html?"
-           + "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true");
-        server.initialize();
+           + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true");
+        server = new JsUnitServer();
         server.start();
     }
 
     public void tearDown() throws Exception {
         server.stop();
-        System.getProperties().remove(Configuration.BROWSER_FILE_NAMES);
-        System.getProperties().remove(Configuration.URL);
+        System.getProperties().remove(ConfigurationSource.BROWSER_FILE_NAMES);
+        System.getProperties().remove(ConfigurationSource.URL);
         super.tearDown();
     }
 
