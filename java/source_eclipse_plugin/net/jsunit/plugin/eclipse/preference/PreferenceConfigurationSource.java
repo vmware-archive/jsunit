@@ -1,9 +1,8 @@
-package net.jsunit.plugin.eclipse.launching;
+package net.jsunit.plugin.eclipse.preference;
 
 import java.util.List;
 
 import net.jsunit.configuration.ConfigurationSource;
-import net.jsunit.plugin.eclipse.preference.JsUnitPreferenceStore;
 
 import org.eclipse.core.resources.IFile;
 

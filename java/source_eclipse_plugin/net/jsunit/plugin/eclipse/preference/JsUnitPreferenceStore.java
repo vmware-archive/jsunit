@@ -3,7 +3,6 @@ package net.jsunit.plugin.eclipse.preference;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jsunit.plugin.eclipse.launching.PreferenceConfigurationSource;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.preference.IPreferenceStore;

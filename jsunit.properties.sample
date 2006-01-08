@@ -24,3 +24,7 @@ logsDirectory=
 #port is the port on which the JsUnitServer runs.  If not specified, 8080 is assumed.  This is not a mandatory property.
 #For example, port=8080
 port=
+
+#closeBrowsersAfterTestRuns is whether to attempt to close browsers after test runs.  This is not a mandatory property.  The default is true.
+#For example, closeBrowsersAfterTestRuns=false
+closeBrowsersAfterTestRuns=true

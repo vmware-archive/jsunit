@@ -10,8 +10,8 @@ import net.jsunit.plugin.eclipse.MockErrorMessageRenderer;
 import net.jsunit.plugin.eclipse.MockFile;
 import net.jsunit.plugin.eclipse.MockStandaloneTestRunner;
 import net.jsunit.plugin.eclipse.launching.JsUnitLauncher;
-import net.jsunit.plugin.eclipse.launching.PreferenceConfigurationSource;
 import net.jsunit.plugin.eclipse.preference.JsUnitPreferenceStore;
+import net.jsunit.plugin.eclipse.preference.PreferenceConfigurationSource;
 import net.jsunit.plugin.eclipse.preference.PreferenceConstants;
 
 import org.eclipse.core.resources.IFile;

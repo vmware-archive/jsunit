@@ -10,6 +10,7 @@ import net.jsunit.plugin.eclipse.ErrorMessageRenderer;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 import net.jsunit.plugin.eclipse.StandaloneTestRunner;
 import net.jsunit.plugin.eclipse.preference.JsUnitPreferenceStore;
+import net.jsunit.plugin.eclipse.preference.PreferenceConfigurationSource;
 
 import org.eclipse.core.resources.IFile;
 
