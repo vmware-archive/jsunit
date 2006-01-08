@@ -11,6 +11,7 @@ import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.ILaunchShortcut;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 
 public class JsUnitLaunchShortcut implements ILaunchShortcut {
@@ -24,12 +25,18 @@ public class JsUnitLaunchShortcut implements ILaunchShortcut {
 	public void launch(ISelection selection, String mode) {
 		IStructuredSelection structuredSelection = (IStructuredSelection) selection;
 		IFile file = (IFile) structuredSelection.getFirstElement();
-		ILaunchConfiguration config = createConfiguration(file);
-		DebugUITools.launch(config, mode);
+		launch(file, mode);
 	}
 
 	public void launch(IEditorPart editor, String mode) {
-		throw new RuntimeException("not implemented");
+		IEditorInput input = editor.getEditorInput();
+		IFile file = (IFile) input.getAdapter(IFile.class);
+		launch(file, mode);
+	}
+
+	private void launch(IFile file, String mode) {
+		ILaunchConfiguration config = createConfiguration(file);
+		DebugUITools.launch(config, mode);
 	}
 
 	private ILaunchConfiguration createConfiguration(IFile file) {
