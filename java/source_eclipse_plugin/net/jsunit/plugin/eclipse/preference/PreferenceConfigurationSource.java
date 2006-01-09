@@ -36,9 +36,15 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	}
 
 	public String url() {
+		String installationDirectory = preferenceStore.installationDirectory();
+		String protocol = "file:";
+		if (installationDirectory.startsWith("/"))
+			protocol += "//";
+		else
+			protocol += "///";
 		return 
-		        "file:///"+
-		        preferenceStore.installationDirectory() +
+		        protocol+
+		        installationDirectory +
 		        java.io.File.separator +
 		        "testRunner.html?" + 
 		        "testPage=" +
