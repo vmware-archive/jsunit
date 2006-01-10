@@ -8,7 +8,10 @@ import java.util.List;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.servlet.BrowserResultAcceptorServlet;
+import net.jsunit.servlet.BrowserResultDisplayerServlet;
 import net.jsunit.servlet.JsUnitServlet;
+import net.jsunit.servlet.TestRunnerServlet;
 
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -79,9 +82,9 @@ public class JsUnitServer implements BrowserTestRunner {
 	       	"com.opensymphony.webwork.dispatcher.ServletDispatcher");
 		server.addContext(servletContext);
 
-//        servletContext.addServlet("JsUnitResultAcceptor", "/acceptor", BrowserResultAcceptorServlet.class.getName());
-//        servletContext.addServlet("JsUnitResultDisplayer", "/displayer", BrowserResultDisplayerServlet.class.getName());
-//        servletContext.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
+        servletContext.addServlet("JsUnitResultAcceptor", "/acceptor", BrowserResultAcceptorServlet.class.getName());
+        servletContext.addServlet("JsUnitResultDisplayer", "/displayer", BrowserResultDisplayerServlet.class.getName());
+        servletContext.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         if (Monitor.activeCount() == 0)
         	Monitor.monitor();
     }
