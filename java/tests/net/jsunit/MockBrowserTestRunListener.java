@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import net.jsunit.BrowserTestRunListener;
 import net.jsunit.model.BrowserResult;
 
 public class MockBrowserTestRunListener implements BrowserTestRunListener {

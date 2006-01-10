@@ -1,15 +1,16 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
-import net.jsunit.configuration.ConfigurationSource;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.BrowserResultWriter;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import junit.framework.TestCase;
+import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.model.BrowserResult;
+import net.jsunit.model.BrowserResultWriter;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

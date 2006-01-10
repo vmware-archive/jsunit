@@ -11,5 +11,6 @@
 	<classpathentry kind="lib" path="java/lib/jetty.jar"/>
 	<classpathentry kind="lib" path="java/lib/junit.jar"/>
 	<classpathentry kind="lib" path="java/lib/xerces.jar"/>
+	<classpathentry kind="lib" path="java/lib/webwork-2.1.7.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>

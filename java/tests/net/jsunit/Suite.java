@@ -14,16 +14,19 @@ import net.jsunit.model.TestCaseResultTest;
  */
 
 public class Suite extends TestCase {
+	
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
-        result.addTestSuite(TestCaseResultTest.class);
-        result.addTestSuite(BrowserResultTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
-        result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(ArgumentsConfigurationTest.class);
-        result.addTestSuite(PropertiesConfigurationTest.class);
+        result.addTestSuite(BrowserResultTest.class);
+        result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
         result.addTestSuite(JsUnitServerTest.class);
+        result.addTestSuite(PropertiesConfigurationTest.class);
+        result.addTestSuite(TestCaseResultTest.class);
+        result.addTestSuite(TestRunManagerTest.class);
         return result;
     }
+    
 }

@@ -1,5 +1,6 @@
 package net.jsunit.model;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
@@ -77,7 +78,12 @@ public class TestCaseResult {
         TestCaseResult result = new TestCaseResult();
         StringTokenizer toker = new StringTokenizer(string, DELIMITER);
         try {
-        	String fullyQualifiedName = URLDecoder.decode(toker.nextToken());
+        	String fullyQualifiedName;
+			try {
+				fullyQualifiedName = URLDecoder.decode(toker.nextToken(), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				throw new RuntimeException(e);
+			}
         	int colonIndex = fullyQualifiedName.lastIndexOf(TEST_PAGE_TEST_NAME_DELIMITER);
         	result.setTestPageName(fullyQualifiedName.substring(0, colonIndex));
         	result.setName(fullyQualifiedName.substring(colonIndex + 1));

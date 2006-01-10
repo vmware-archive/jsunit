@@ -4,7 +4,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.model.BrowserResult;
 
 public class JsUnitServerTest extends TestCase {
 
@@ -21,7 +20,7 @@ public class JsUnitServerTest extends TestCase {
 		assertTrue(listeners.get(0) instanceof BrowserResultLogWriter);
 	}
 	
-	public void testLaunchingBrowser() throws JsUnitServerException {
+	public void testLaunchingBrowser() throws FailedToLaunchBrowserException {
 		JsUnitServer server = new JsUnitServer(new Configuration(new DummyConfigurationSource()));
 		MockProcessStarter starter = new MockProcessStarter();
 		server.setProcessStarter(starter);
@@ -34,7 +33,7 @@ public class JsUnitServerTest extends TestCase {
 		assertEquals("dummy name", starter.commandPassed[0]);
 		assertEquals(DummyConfigurationSource.DUMMY_URL, starter.commandPassed[1]);
 		assertFalse(listener.testRunFinishedCalled);
-		server.accept(new BrowserResult());
+		server.accept(new DummyBrowserResult(true, 0, 0));
 		assertTrue(listener.testRunFinishedCalled);		
 	}
 
