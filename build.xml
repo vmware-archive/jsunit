@@ -13,6 +13,7 @@
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
     <property name="testlib" location="java/testlib"/>
+    <property name="config" location="java/config"/>
 
     <path id="classpath">
         <fileset dir="${lib}">
@@ -21,6 +22,9 @@
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>
         </fileset>
+        <filelist dir="${config}">
+            <file name="xwork.xml"/>
+        </filelist>
     </path>
 
     <path id="self_tests_classpath">
@@ -85,7 +89,7 @@
 
     <target name="create_distribution" depends="create_jar,run_self_tests" description="Creates and tests the JsUnit distribution"/>
 
-    <target name="standalone_test" description="Runs JsUnit tests on the local machine as configured by the url and browserfilenames properties">
+    <target name="standalone_test" description="Runs tests on the local machine">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <classpath refid="classpath"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
@@ -97,7 +101,7 @@
         </junit>
     </target>
 
-    <target name="distributed_test" description="Runs JsUnit tests on remote machines">
+    <target name="distributed_test" description="Runs tests the remote machines">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <classpath refid="classpath"/>
             <sysproperty key="remoteMachineURLs" value="${remoteMachineURLs}"/>
