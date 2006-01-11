@@ -13,13 +13,8 @@
 	<classpathentry kind="lib" path="java/lib/webwork-2.1.7.jar"/>
 	<classpathentry kind="lib" path="java/lib/xwork.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-logging.jar"/>
-	<classpathentry kind="lib" path="java/lib/commons-fileupload.jar"/>
-	<classpathentry kind="lib" path="java/lib/cos-multipart.jar"/>
-	<classpathentry kind="lib" path="java/lib/mail.jar"/>
 	<classpathentry kind="lib" path="java/lib/ognl.jar"/>
 	<classpathentry kind="lib" path="java/lib/oscore.jar"/>
-	<classpathentry kind="lib" path="java/lib/pell-multipart.jar"/>
-	<classpathentry kind="lib" path="java/lib/velocity-dep.jar"/>
 	<classpathentry kind="lib" path="java/config"/>
 	<classpathentry kind="lib" path="java/testlib/httpunit-1.5.4.jar"/>
 	<classpathentry kind="lib" path="java/testlib/js-1.5R4.1.jar"/>
