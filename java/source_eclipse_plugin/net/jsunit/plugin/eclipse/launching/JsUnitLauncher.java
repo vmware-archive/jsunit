@@ -40,14 +40,14 @@ public class JsUnitLauncher {
 		}
 		JsUnitServer server = createAndStartServer(source);
 		StandaloneTest test = new StandaloneTest("testStandaloneRun");
-		test.setServer(server);
+		test.setBrowserTestRunner(server);
 		testRunner.runStandaloneTest(test);
 		stopServer(server);
 	}
 
 	private void stopServer(JsUnitServer server) {
 		try {
-			server.stop();
+			server.dispose();
 		} catch (Throwable t) {
 			throw new RuntimeException(t);
 		}

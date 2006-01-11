@@ -7,17 +7,16 @@ import java.util.Date;
 import java.util.List;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.interceptor.BrowserTestRunnerInterceptor;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.servlet.BrowserResultAcceptorServlet;
-import net.jsunit.servlet.BrowserResultDisplayerServlet;
-import net.jsunit.servlet.JsUnitServlet;
-import net.jsunit.servlet.TestRunnerServlet;
 
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
+
+import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -40,7 +39,7 @@ public class JsUnitServer implements BrowserTestRunner {
 		this.configuration = configuration;
 		if (configuration.needsLogging())
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
-        JsUnitServlet.setServer(this);
+        BrowserTestRunnerInterceptor.setBrowserTestRunner(this);
 	}
 
   	public JsUnitServer() {
@@ -50,16 +49,12 @@ public class JsUnitServer implements BrowserTestRunner {
 	public static void main(String args[]) {
   		try {
 	  		JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
-	        server.start();
+	  		server.start();
   		} catch (Throwable t) {
   			t.printStackTrace();
   		}
     }
 
-	public void stop() throws InterruptedException {
-		server.stop();
-	}
-	
     public void start() throws Exception {
         setUpHttpServer();
         server.start();
@@ -76,18 +71,21 @@ public class JsUnitServer implements BrowserTestRunner {
 		servletContext.setContextPath("jsunit");
 		servletContext.setResourceBase(configuration.getResourceBase().toString());
 		servletContext.addHandler(new ResourceHandler());
-		servletContext.addServlet(
-			"webwork",
-			"*.action",
-	       	"com.opensymphony.webwork.dispatcher.ServletDispatcher");
+		addWebworkServlet(servletContext, "acceptor");
+		addWebworkServlet(servletContext, "displayer");
+		addWebworkServlet(servletContext, "runner");
 		server.addContext(servletContext);
 
-        servletContext.addServlet("JsUnitResultAcceptor", "/acceptor", BrowserResultAcceptorServlet.class.getName());
-        servletContext.addServlet("JsUnitResultDisplayer", "/displayer", BrowserResultDisplayerServlet.class.getName());
-        servletContext.addServlet("JsUnitTestRunner", "/runner", TestRunnerServlet.class.getName());
         if (Monitor.activeCount() == 0)
         	Monitor.monitor();
     }
+
+	private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
+		servletContext.addServlet(
+				"webwork",
+				name,
+		       	ServletDispatcher.class.getName());
+	}
 
     public void accept(BrowserResult result) {
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
@@ -149,7 +147,7 @@ public class JsUnitServer implements BrowserTestRunner {
     }
 
     public void finalize() throws Exception {
-        stop();
+        dispose();
     }
 
     public boolean hasReceivedResultSince(Date aDate) {
@@ -222,6 +220,16 @@ public class JsUnitServer implements BrowserTestRunner {
 	
 	void setProcessStarter(ProcessStarter starter) {
 		this.processStarter = starter;
+	}
+
+	public void dispose() {
+		try {
+			if (server!=null)
+				server.stop();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 }

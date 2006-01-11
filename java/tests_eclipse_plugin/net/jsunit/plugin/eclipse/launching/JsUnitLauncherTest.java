@@ -59,7 +59,7 @@ public class JsUnitLauncherTest extends TestCase {
 	public void testValid() {
 		launcher.launch(testPage);
 		StandaloneTest test = mockStandaloneTestRunner.test;
-		JsUnitServer server = test.getJsUnitServer();
+		JsUnitServer server = (JsUnitServer) test.getBrowserTestRunner();
 		PreferenceConfigurationSource source = (PreferenceConfigurationSource) server.getConfiguration().getSource();
 		assertEquals("c:\\jsunit", source.resourceBase());
 		assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", source.browserFileNames());

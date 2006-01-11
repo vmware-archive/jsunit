@@ -10,7 +10,23 @@
 	<classpathentry kind="lib" path="java/lib/jdom.jar"/>
 	<classpathentry kind="lib" path="java/lib/jetty.jar"/>
 	<classpathentry kind="lib" path="java/lib/junit.jar"/>
-	<classpathentry kind="lib" path="java/lib/xerces.jar"/>
 	<classpathentry kind="lib" path="java/lib/webwork-2.1.7.jar"/>
+	<classpathentry kind="lib" path="java/lib/xwork.jar"/>
+	<classpathentry kind="lib" path="java/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="java/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="java/lib/cos-multipart.jar"/>
+	<classpathentry kind="lib" path="java/lib/mail.jar"/>
+	<classpathentry kind="lib" path="java/lib/ognl.jar"/>
+	<classpathentry kind="lib" path="java/lib/oscore.jar"/>
+	<classpathentry kind="lib" path="java/lib/pell-multipart.jar"/>
+	<classpathentry kind="lib" path="java/lib/velocity-dep.jar"/>
+	<classpathentry kind="lib" path="java/config"/>
+	<classpathentry kind="lib" path="java/testlib/httpunit-1.5.4.jar"/>
+	<classpathentry kind="lib" path="java/testlib/js-1.5R4.1.jar"/>
+	<classpathentry kind="lib" path="java/testlib/jwebunit-1.2.jar"/>
+	<classpathentry kind="lib" path="java/testlib/nekohtml-0.8.1.jar"/>
+	<classpathentry kind="lib" path="java/testlib/xercesImpl-2.6.2.jar"/>
+	<classpathentry kind="lib" path="java/testlib/xml-apis-1.0.b2.jar"/>
+	<classpathentry kind="lib" path="java/lib/xerces.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>

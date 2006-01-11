@@ -3,6 +3,7 @@ package net.jsunit.model;
 import javax.servlet.http.HttpServletRequest;
 
 import net.jsunit.Utility;
+import net.jsunit.XmlRenderable;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class BrowserResult {
+public class BrowserResult implements XmlRenderable {
     private String remoteAddress, id, jsUnitVersion, userAgent, baseURL;
     private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
     private double time;

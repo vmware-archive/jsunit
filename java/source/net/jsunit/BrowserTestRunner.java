@@ -15,4 +15,10 @@ public interface BrowserTestRunner {
 
 	BrowserResult lastResult();
 
+	void accept(BrowserResult result);
+
+	void dispose();
+
+	BrowserResult findResultWithId(String id);
+
 }

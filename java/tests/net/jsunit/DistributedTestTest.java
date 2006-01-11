@@ -23,7 +23,7 @@ public class DistributedTestTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        server.stop();
+        server.dispose();
         System.getProperties().remove(ConfigurationSource.BROWSER_FILE_NAMES);
         System.getProperties().remove(ConfigurationSource.URL);
         super.tearDown();
@@ -37,7 +37,7 @@ public class DistributedTestTest extends TestCase {
     }
 
     public void testDistributedRunWithInvalidHosts() {
-        System.setProperty(DistributedTest.REMOTE_MACHINE_URLS, "http://fooXXX:1234, http://barXXX:5678");
+        System.setProperty(DistributedTest.REMOTE_MACHINE_URLS, "http://invalid_host1:1234, http://invalid_host2:5678");
         TestResult result = TestRunner.run(new DistributedTest("testCollectResults"));
         assertEquals(1, result.runCount());
         assertFalse(result.wasSuccessful());

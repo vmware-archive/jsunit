@@ -23,7 +23,7 @@ public class ConfigurationResolutionTest extends TestCase {
     }
 
     protected void tearDown() throws Exception {
-        System.getProperties().clear();
+        System.getProperties().remove(ConfigurationSource.URL);
         Utility.deleteFile(PropertiesFileConfigurationSource.PROPERTIES_FILE_NAME);
         super.tearDown();
     }

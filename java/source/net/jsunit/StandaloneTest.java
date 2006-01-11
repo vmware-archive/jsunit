@@ -7,31 +7,32 @@ import junit.framework.TestCase;
  */
 
 public class StandaloneTest extends TestCase {
-    private boolean shouldStopServer = false;
-    private JsUnitServer server;
+    private boolean shouldDisposeOfRunner = false;
+    private BrowserTestRunner runner;
 	private TestRunManager testRunManager;
 
     public StandaloneTest(String name) {
     	super(name);
 	}
 
-	public void setServer(JsUnitServer server) {
-        this.server = server;
+	public void setBrowserTestRunner(BrowserTestRunner runner) {
+        this.runner = runner;
     }
 
     public void setUp() throws Exception {
         super.setUp();
-        if (server == null) {
-            server = new JsUnitServer();
-            server.start();
-            shouldStopServer = true;
+        if (runner == null) {
+        	JsUnitServer server = new JsUnitServer();
+        	server.start();
+            runner = server;
+            shouldDisposeOfRunner = true;
         }
-        testRunManager = new TestRunManager(server);
+        testRunManager = new TestRunManager(runner);
     }
 
     public void tearDown() throws Exception {
-        if (shouldStopServer)
-            server.stop();
+        if (shouldDisposeOfRunner)
+            runner.dispose();
         super.tearDown();
     }
 
@@ -46,8 +47,8 @@ public class StandaloneTest extends TestCase {
     	}
     }
 
-	public JsUnitServer getJsUnitServer() {
-		return server;
+	public BrowserTestRunner getBrowserTestRunner() {
+		return runner;
 	}
 
 }

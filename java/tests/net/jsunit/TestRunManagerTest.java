@@ -51,6 +51,16 @@ public class TestRunManagerTest extends TestCase {
 			return new DummyBrowserResult(true, 0, 0);
 		}
 
+		public void accept(BrowserResult result) {
+		}
+
+		public void dispose() {
+		}
+
+		public BrowserResult findResultWithId(String id) {
+			return null;
+		}
+
 	}
 	
 	static class FailingBrowserTestRunner implements BrowserTestRunner {
@@ -77,6 +87,16 @@ public class TestRunManagerTest extends TestCase {
 			else
 				return new DummyBrowserResult(false, 2, 3);
 		}
+
+		public void accept(BrowserResult result) {
+		}
+
+		public void dispose() {
+		}
+
+		public BrowserResult findResultWithId(String id) {
+			return null;
+		}
 	}
 	
 	static class CrashingBrowserTestRunner implements BrowserTestRunner {
@@ -94,6 +114,16 @@ public class TestRunManagerTest extends TestCase {
 		}
 
 		public BrowserResult lastResult() {
+			return null;
+		}
+
+		public void accept(BrowserResult result) {
+		}
+
+		public void dispose() {
+		}
+
+		public BrowserResult findResultWithId(String id) {
 			return null;
 		}
 		

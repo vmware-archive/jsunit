@@ -9,7 +9,7 @@ public class MockStandaloneTestRunner implements StandaloneTestRunner {
 
 	public void runStandaloneTest(StandaloneTest test) {
 		this.test = test;
-		this.test.getJsUnitServer().accept(new BrowserResult());
+		this.test.getBrowserTestRunner().accept(new BrowserResult());
 	}
 
 }
