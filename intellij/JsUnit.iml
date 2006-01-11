@@ -13,15 +13,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../java/testlib/xercesImpl-2.6.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../java/lib/junit.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -32,15 +23,6 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../java/lib/jdom.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../java/lib/xerces.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -194,6 +176,24 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../java/testlib/nekohtml-0.8.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../java/config" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../java/lib/xercesImpl-2.6.2.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
