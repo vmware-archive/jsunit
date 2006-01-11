@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.jsunit.configuration.Configuration;
-import net.jsunit.interceptor.BrowserTestRunnerInterceptor;
 import net.jsunit.model.BrowserResult;
 
 import org.mortbay.http.HttpServer;
@@ -25,7 +24,8 @@ import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 public class JsUnitServer implements BrowserTestRunner {
 
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
-
+    private static JsUnitServer instance;
+    
     private HttpServer server;
 	private Configuration configuration;
     private Process browserProcess;
@@ -35,11 +35,15 @@ public class JsUnitServer implements BrowserTestRunner {
     private Date dateLastResultReceived;
 	private ProcessStarter processStarter = new DefaultProcessStarter();
 
+	public static JsUnitServer instance() {
+		return instance;
+	}
+	
 	public JsUnitServer(Configuration configuration) {
 		this.configuration = configuration;
 		if (configuration.needsLogging())
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
-        BrowserTestRunnerInterceptor.setBrowserTestRunner(this);
+        instance = this;
 	}
 
   	public JsUnitServer() {

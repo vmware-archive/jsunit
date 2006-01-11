@@ -14,8 +14,13 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
 
 	public void testSimple() throws Exception {
 		MockJsUnitAction action = new MockJsUnitAction();
-		BrowserTestRunner mockRunner = new MockBrowserTestRunner();
-		BrowserTestRunnerInterceptor.setBrowserTestRunner(mockRunner);
+		final BrowserTestRunner mockRunner = new MockBrowserTestRunner();
+		BrowserTestRunnerInterceptor.setBrowserTestRunnerSource(new BrowserTestRunnerSource() {
+			public BrowserTestRunner getRunner() {
+				return mockRunner;
+			}
+			
+		});
 		assertNull(action.getBrowserTestRunner());
 		BrowserTestRunnerInterceptor interceptor = new BrowserTestRunnerInterceptor();
 		
@@ -24,6 +29,11 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
 		
 		assertSame(mockRunner, action.getBrowserTestRunner());
 		assertTrue(mockInvocation.wasInvokeCalled);
+	}
+	
+	public void tearDown() throws Exception {
+		BrowserTestRunnerInterceptor.setBrowserTestRunnerSource(new DefaultBrowserTestRunnerSource());
+		super.tearDown();
 	}
 	
 	static class MockBrowserTestRunner implements BrowserTestRunner {

@@ -1,20 +1,22 @@
 package net.jsunit.interceptor;
 
-import com.opensymphony.xwork.Action;
-
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.action.JsUnitAction;
 
+import com.opensymphony.xwork.Action;
+
 public class BrowserTestRunnerInterceptor extends InterceptorSupport {
 
-	private static BrowserTestRunner runner;
+	private static BrowserTestRunnerSource source = new DefaultBrowserTestRunnerSource();
 
-	public static void setBrowserTestRunner(BrowserTestRunner aRunner) {
-		runner = aRunner;
+	public static void setBrowserTestRunnerSource(BrowserTestRunnerSource aSource) {
+		source = aSource;
 	}
 
 	protected void execute(Action action) {
-		((JsUnitAction) action).setBrowserTestRunner(runner);
+		JsUnitAction jsUnitAction = ((JsUnitAction) action);
+		BrowserTestRunner runner = source.getRunner();
+		jsUnitAction.setBrowserTestRunner(runner);
 	}
 
 }

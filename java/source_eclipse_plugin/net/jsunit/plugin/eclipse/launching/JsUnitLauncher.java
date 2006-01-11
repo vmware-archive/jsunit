@@ -2,13 +2,11 @@ package net.jsunit.plugin.eclipse.launching;
 
 import net.jsunit.BrowserTestRunListener;
 import net.jsunit.JsUnitServer;
-import net.jsunit.StandaloneTest;
+import net.jsunit.TestRunManager;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.plugin.eclipse.DefaultErrorMessageRenderer;
-import net.jsunit.plugin.eclipse.DefaultStandaloneTestRunner;
 import net.jsunit.plugin.eclipse.ErrorMessageRenderer;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
-import net.jsunit.plugin.eclipse.StandaloneTestRunner;
 import net.jsunit.plugin.eclipse.preference.JsUnitPreferenceStore;
 import net.jsunit.plugin.eclipse.preference.PreferenceConfigurationSource;
 
@@ -17,19 +15,19 @@ import org.eclipse.core.resources.IFile;
 public class JsUnitLauncher {
 	
 	private JsUnitPreferenceStore preferenceStore;
-	private StandaloneTestRunner testRunner;
 	private ErrorMessageRenderer errorMessageRenderer;
 	private BrowserTestRunListener browserTestRunListener;
+	private BrowserTestRunnerFactory serverFactory;
 
 	public JsUnitLauncher() {
-		this(JsUnitPlugin.soleInstance().getJsUnitPreferenceStore(), new DefaultStandaloneTestRunner(), new DefaultErrorMessageRenderer(), JsUnitPlugin.soleInstance().getTestRunViewPart());
+		this(JsUnitPlugin.soleInstance().getJsUnitPreferenceStore(), new DefaultErrorMessageRenderer(), JsUnitPlugin.soleInstance().getTestRunViewPart(), new DefaultJsUnitServerFactory());
 	}
 	
-	public JsUnitLauncher(JsUnitPreferenceStore preferenceStore, StandaloneTestRunner testRunner, ErrorMessageRenderer errorMessageRenderer, BrowserTestRunListener browserTestRunListener) {
+	public JsUnitLauncher(JsUnitPreferenceStore preferenceStore, ErrorMessageRenderer errorMessageRenderer, BrowserTestRunListener browserTestRunListener, BrowserTestRunnerFactory factory) {
 		this.preferenceStore = preferenceStore;
-		this.testRunner = testRunner;
 		this.errorMessageRenderer = errorMessageRenderer;
 		this.browserTestRunListener = browserTestRunListener;
+		this.serverFactory = factory;
 	}
 	
 	public void launch(IFile testPage) {
@@ -38,11 +36,22 @@ public class JsUnitLauncher {
 			showConfigurationErrorMessage(source.getErrorMessage());
 			return;
 		}
+		disposeOfExistingJsUnitServer();
 		JsUnitServer server = createAndStartServer(source);
-		StandaloneTest test = new StandaloneTest("testStandaloneRun");
-		test.setBrowserTestRunner(server);
-		testRunner.runStandaloneTest(test);
-		stopServer(server);
+		TestRunManager manager = new TestRunManager(server);
+		try {
+			manager.runTests();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			stopServer(server);
+		}
+	}
+
+	private void disposeOfExistingJsUnitServer() {
+		JsUnitServer instance = JsUnitServer.instance();
+		if (instance != null)
+			instance.dispose();
 	}
 
 	private void stopServer(JsUnitServer server) {
@@ -56,7 +65,7 @@ public class JsUnitLauncher {
 	private JsUnitServer createAndStartServer(PreferenceConfigurationSource source) {
 		Configuration configuration = new Configuration(source);
 		configuration.setNeedsLogging(false);
-		JsUnitServer server = new JsUnitServer(configuration);
+		JsUnitServer server = serverFactory.create(configuration);
 		server.addBrowserTestRunListener(browserTestRunListener);
 		try {
 			server.start();
