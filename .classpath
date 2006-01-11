@@ -25,8 +25,7 @@
 	<classpathentry kind="lib" path="java/testlib/js-1.5R4.1.jar"/>
 	<classpathentry kind="lib" path="java/testlib/jwebunit-1.2.jar"/>
 	<classpathentry kind="lib" path="java/testlib/nekohtml-0.8.1.jar"/>
-	<classpathentry kind="lib" path="java/testlib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="lib" path="java/testlib/xml-apis-1.0.b2.jar"/>
-	<classpathentry kind="lib" path="java/lib/xerces.jar"/>
+	<classpathentry kind="lib" path="java/lib/xercesImpl-2.6.2.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>
