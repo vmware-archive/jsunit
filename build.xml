@@ -12,9 +12,22 @@
     <property name="tests" location="java/tests"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
+    <property name="testlib" location="java/testlib"/>
 
     <path id="classpath">
         <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${bin}">
+            <include name="jsunit.jar"/>
+        </fileset>
+    </path>
+
+    <path id="self_tests_classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+        </fileset>
+        <fileset dir="${testlib}">
             <include name="*.jar"/>
         </fileset>
         <fileset dir="${bin}">
@@ -35,12 +48,7 @@
 
     <target name="compile_tests" description="Compiles the self-tests">
         <javac srcdir="${tests}" destdir="${bin}" debug="true">
-            <classpath>
-                <fileset dir="${lib}">
-                    <include name="*.jar"/>
-                </fileset>
-                <fileset file="${bin}/jsunit.jar"/>
-            </classpath>
+            <classpath refid="self_tests_classpath"/>
         </javac>
     </target>
 
@@ -52,7 +60,7 @@
 
     <target name="run_self_tests" depends="compile_tests" description="Runs the Java tests for JsUnit itself">
         <junit showoutput="yes" printsummary="yes" haltonfailure="yes" haltonerror="yes">
-            <classpath refid="classpath"/>
+            <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
             <test name="net.jsunit.Suite"/>
         </junit>

@@ -71,9 +71,9 @@ public class JsUnitServer implements BrowserTestRunner {
 		servletContext.setContextPath("jsunit");
 		servletContext.setResourceBase(configuration.getResourceBase().toString());
 		servletContext.addHandler(new ResourceHandler());
-		addWebworkServlet(servletContext, "acceptor");
-		addWebworkServlet(servletContext, "displayer");
-		addWebworkServlet(servletContext, "runner");
+		addWebworkServlet(servletContext, "/acceptor");
+		addWebworkServlet(servletContext, "/displayer");
+		addWebworkServlet(servletContext, "/runner");
 		server.addContext(servletContext);
 
         if (Monitor.activeCount() == 0)
