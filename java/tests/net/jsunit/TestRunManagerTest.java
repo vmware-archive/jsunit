@@ -61,7 +61,10 @@ public class TestRunManagerTest extends TestCase {
 			return null;
 		}
 
-	}
+        public String asXml() {
+            return null;
+        }
+    }
 	
 	static class FailingBrowserTestRunner implements BrowserTestRunner {
 
@@ -97,7 +100,11 @@ public class TestRunManagerTest extends TestCase {
 		public BrowserResult findResultWithId(String id) {
 			return null;
 		}
-	}
+
+        public String asXml() {
+            return null;
+        }
+    }
 	
 	static class CrashingBrowserTestRunner implements BrowserTestRunner {
 
@@ -126,7 +133,10 @@ public class TestRunManagerTest extends TestCase {
 		public BrowserResult findResultWithId(String id) {
 			return null;
 		}
-		
-	}
+
+        public String asXml() {
+            return null;
+        }
+    }
 	
 }

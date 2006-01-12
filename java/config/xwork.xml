@@ -40,9 +40,13 @@
 			<interceptor-ref name="standaloneTest" />				
 		</action> 
 
-		<action name="displayer" class="net.jsunit.action.ResultDisplayerAction"> 
-			<result name="success" type="jsUnitXml"/>
-		</action> 
+        <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">
+            <result name="success" type="jsUnitXml"/>
+        </action>
+
+        <action name="config" class="net.jsunit.action.ServerConfigurationAction">
+            <result name="success" type="jsUnitXml"/>
+        </action>
 
 	</package>
 

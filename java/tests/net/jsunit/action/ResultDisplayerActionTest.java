@@ -71,6 +71,9 @@ public class ResultDisplayerActionTest extends TestCase {
 			idPassed = id;
 			return result;
 		}
-		
-	}
+
+        public String asXml() {
+            return null;
+        }
+    }
 }

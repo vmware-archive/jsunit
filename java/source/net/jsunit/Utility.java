@@ -1,8 +1,9 @@
 package net.jsunit;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import org.jdom.Document;
+import org.jdom.output.XMLOutputter;
+
+import java.io.*;
 import java.util.*;
 
 /**
@@ -74,5 +75,17 @@ public class Utility {
     public static void deleteDirectory(String directoryName) {
         File file = new File(directoryName);
         file.delete();
+    }
+
+    public static String asString(Document document) {
+        StringWriter writer = new StringWriter();
+        XMLOutputter outputter = new XMLOutputter();
+        try {
+          outputter.output(document, writer);
+        }
+        catch (IOException e) {
+          System.err.println(e);
+        }
+        return writer.toString();        
     }
 }

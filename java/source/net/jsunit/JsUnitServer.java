@@ -38,8 +38,8 @@ public class JsUnitServer implements BrowserTestRunner {
 	public static JsUnitServer instance() {
 		return instance;
 	}
-	
-	public JsUnitServer(Configuration configuration) {
+
+    public JsUnitServer(Configuration configuration) {
 		this.configuration = configuration;
 		if (configuration.needsLogging())
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
@@ -78,6 +78,7 @@ public class JsUnitServer implements BrowserTestRunner {
 		addWebworkServlet(servletContext, "/acceptor");
 		addWebworkServlet(servletContext, "/displayer");
 		addWebworkServlet(servletContext, "/runner");
+		addWebworkServlet(servletContext, "/config");
 		server.addContext(servletContext);
 
         if (Monitor.activeCount() == 0)
@@ -150,7 +151,8 @@ public class JsUnitServer implements BrowserTestRunner {
         return configuration.getBrowserFileNames();
     }
 
-    public void finalize() throws Exception {
+    public void finalize() throws Throwable {
+        super.finalize();
         dispose();
     }
 
@@ -235,5 +237,9 @@ public class JsUnitServer implements BrowserTestRunner {
 		}
 		
 	}
-	
+
+    public String asXml() {
+        return getConfiguration().asXml();
+    }
+
 }

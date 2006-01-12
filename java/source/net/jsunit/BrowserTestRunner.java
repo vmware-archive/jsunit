@@ -4,21 +4,22 @@ import java.util.Date;
 import java.util.List;
 
 import net.jsunit.model.BrowserResult;
+import net.jsunit.configuration.Configuration;
 
-public interface BrowserTestRunner {
+public interface BrowserTestRunner extends XmlRenderable {
 
-	List<String> getBrowserFileNames();
+    List<String> getBrowserFileNames();
 
-	void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException;
+    void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException;
 
-	boolean hasReceivedResultSince(Date dateBrowserLaunched);
+    boolean hasReceivedResultSince(Date dateBrowserLaunched);
 
-	BrowserResult lastResult();
+    BrowserResult lastResult();
 
-	void accept(BrowserResult result);
+    void accept(BrowserResult result);
 
-	void dispose();
+    void dispose();
 
-	BrowserResult findResultWithId(String id);
+    BrowserResult findResultWithId(String id);
 
 }

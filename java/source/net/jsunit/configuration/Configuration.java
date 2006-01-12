@@ -1,29 +1,36 @@
 package net.jsunit.configuration;
 
 import net.jsunit.Utility;
- 
+import net.jsunit.XmlRenderable;
+
 import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.XMLOutputter;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public final class Configuration {
-	
+public final class Configuration implements XmlRenderable {
+
     private ConfigurationSource source;
-	private boolean needsLogging = true;
-	public static final String DEFAULT_RESOURCE_BASE = ".";
-	public static final int DEFAULT_PORT = 8080;
+    private boolean needsLogging = true;
+    public static final String DEFAULT_RESOURCE_BASE = ".";
+    public static final int DEFAULT_PORT = 8080;
 
     public Configuration(ConfigurationSource source) {
-    	this.source = source;
+        this.source = source;
     }
-    
+
     public static Configuration resolve(String[] arguments) {
-    	ConfigurationSource source;
+        ConfigurationSource source;
         if (arguments.length > 0)
             source = new ArgumentsConfigurationSource(Arrays.asList(arguments));
         else {
@@ -32,16 +39,16 @@ public final class Configuration {
         return new Configuration(source);
     }
 
-	private static ConfigurationSource resolveSource() {
-		EnvironmentVariablesConfigurationSource evConfig = new EnvironmentVariablesConfigurationSource();
-		if (evConfig.isAppropriate())
-		    return evConfig;
-		return new PropertiesFileConfigurationSource();
-	}
-	
-	public static Configuration resolve() {
-		return new Configuration(resolveSource());
-	}
+    private static ConfigurationSource resolveSource() {
+        EnvironmentVariablesConfigurationSource evConfig = new EnvironmentVariablesConfigurationSource();
+        if (evConfig.isAppropriate())
+            return evConfig;
+        return new PropertiesFileConfigurationSource();
+    }
+
+    public static Configuration resolve() {
+        return new Configuration(resolveSource());
+    }
 
     public URL getTestURL() throws ConfigurationException {
         String urlString = source.url();
@@ -93,8 +100,8 @@ public final class Configuration {
 
     public boolean shouldCloseBrowsersAfterTestRuns() throws ConfigurationException {
         String string = source.closeBrowsersAfterTestRuns();
-        if (string == null)
-        	return true;
+        if (Utility.isEmpty(string))
+            return true;
         return Boolean.valueOf(string);
     }
 
@@ -115,7 +122,7 @@ public final class Configuration {
     }
 
     public String toString() {
-    	StringBuffer result = new StringBuffer();
+        StringBuffer result = new StringBuffer();
         result.append(ConfigurationSource.PORT).append(": ").append(getPort()).append("\n");
         result.append(ConfigurationSource.RESOURCE_BASE).append(": ").append(getResourceBase().getAbsolutePath()).append("\n");
         result.append(ConfigurationSource.LOGS_DIRECTORY).append(": ").append(getLogsDirectory().getAbsolutePath()).append("\n");
@@ -124,15 +131,50 @@ public final class Configuration {
         return result.toString();
     }
 
-	public ConfigurationSource getSource() {
-		return source;
-	}
+    public ConfigurationSource getSource() {
+        return source;
+    }
 
-	public boolean needsLogging() {
-		return needsLogging ;
-	}
-	
-	public void setNeedsLogging(boolean b) {
-		needsLogging = b;
-	}
+    public boolean needsLogging() {
+        return needsLogging ;
+    }
+
+    public void setNeedsLogging(boolean b) {
+        needsLogging = b;
+    }
+
+    public String asXml() {
+        Element configuration = new Element("configuration");
+
+        Element resourceBase = new Element("resourceBase");
+        resourceBase.setText(getResourceBase().toString());
+        configuration.addContent(resourceBase);
+
+        Element port = new Element("port");
+        port.setText(String.valueOf(getPort()));
+        configuration.addContent(port);
+
+        Element logsDirectory = new Element("logsDirectory");
+        logsDirectory.setText(getLogsDirectory().toString());
+        configuration.addContent(logsDirectory);
+
+        Element browserFileNames = new Element("browserFileNames");
+        for (String name : getBrowserFileNames()) {
+            Element browserFileName = new Element("browserFileName");
+            browserFileName.setText(name);
+            browserFileNames.addContent(browserFileName);
+        }
+        configuration.addContent(browserFileNames);
+
+        Element url = new Element("url");
+        url.setText(getTestURL().toString());
+        configuration.addContent(url);
+
+        Element closeBrowsers = new Element("closeBrowsersAfterTestRuns");
+        closeBrowsers.setText(String.valueOf(shouldCloseBrowsersAfterTestRuns()));
+        configuration.addContent(closeBrowsers);
+
+        Document document = new Document(configuration);
+        return Utility.asString(document);
+    }
 }

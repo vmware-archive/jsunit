@@ -50,7 +50,10 @@ public class ResultAcceptorActionTest extends TestCase {
 		public BrowserResult findResultWithId(String id) {
 			return null;
 		}
-		
-	}
+
+        public String asXml() {
+            return null;
+        }
+    }
 	
 }
