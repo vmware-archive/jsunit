@@ -1,7 +1,9 @@
 package net.jsunit;
 
+import org.jdom.Element;
+
 public interface XmlRenderable {
 
-	String asXml();
+    Element asXml();
 
 }

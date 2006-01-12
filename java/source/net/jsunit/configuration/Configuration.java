@@ -2,17 +2,12 @@ package net.jsunit.configuration;
 
 import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
+import org.jdom.Element;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
-
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.output.XMLOutputter;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -143,7 +138,7 @@ public final class Configuration implements XmlRenderable {
         needsLogging = b;
     }
 
-    public String asXml() {
+    public Element asXml() {
         Element configuration = new Element("configuration");
 
         Element resourceBase = new Element("resourceBase");
@@ -174,7 +169,6 @@ public final class Configuration implements XmlRenderable {
         closeBrowsers.setText(String.valueOf(shouldCloseBrowsersAfterTestRuns()));
         configuration.addContent(closeBrowsers);
 
-        Document document = new Document(configuration);
-        return Utility.asString(document);
+        return configuration;
     }
 }

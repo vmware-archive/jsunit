@@ -85,4 +85,8 @@ public class BrowserResultWriter {
         }
         return buffer.toString();
     }
+
+    public Element asXml() {
+        return createRootElement();
+    }
 }

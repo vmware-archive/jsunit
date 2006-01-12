@@ -8,52 +8,53 @@ import net.jsunit.DummyBrowserResult;
 import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.model.BrowserResult;
 import junit.framework.TestCase;
+import org.jdom.Element;
 
 public class ResultAcceptorActionTest extends TestCase {
 
-	public void testSimple() throws Exception {
-		ResultAcceptorAction action = new ResultAcceptorAction();
-		DummyBrowserResult dummyResult = new DummyBrowserResult(false, 1, 2);
-		action.setBrowserResult(dummyResult);
-		MockBrowserTestRunner mockRunner = new MockBrowserTestRunner();
-		action.setBrowserTestRunner(mockRunner);
-		assertEquals(ResultAcceptorAction.SUCCESS, action.execute());
-		assertSame(dummyResult, mockRunner.acceptedResult);
-	}
-	
-	static class MockBrowserTestRunner implements BrowserTestRunner {
+    public void testSimple() throws Exception {
+        ResultAcceptorAction action = new ResultAcceptorAction();
+        DummyBrowserResult dummyResult = new DummyBrowserResult(false, 1, 2);
+        action.setBrowserResult(dummyResult);
+        MockBrowserTestRunner mockRunner = new MockBrowserTestRunner();
+        action.setBrowserTestRunner(mockRunner);
+        assertEquals(ResultAcceptorAction.SUCCESS, action.execute());
+        assertSame(dummyResult, mockRunner.acceptedResult);
+    }
 
-		public BrowserResult acceptedResult;
+    static class MockBrowserTestRunner implements BrowserTestRunner {
 
-		public List<String> getBrowserFileNames() {
-			return null;
-		}
+        public BrowserResult acceptedResult;
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
-		}
+        public List<String> getBrowserFileNames() {
+            return null;
+        }
 
-		public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-			return false;
-		}
+        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        }
 
-		public BrowserResult lastResult() {
-			return null;
-		}
+        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+            return false;
+        }
 
-		public void accept(BrowserResult result) {
-			this.acceptedResult = result;
-		}
+        public BrowserResult lastResult() {
+            return null;
+        }
 
-		public void dispose() {			
-		}
+        public void accept(BrowserResult result) {
+            this.acceptedResult = result;
+        }
 
-		public BrowserResult findResultWithId(String id) {
-			return null;
-		}
+        public void dispose() {
+        }
 
-        public String asXml() {
+        public BrowserResult findResultWithId(String id) {
+            return null;
+        }
+
+        public Element asXml() {
             return null;
         }
     }
-	
+
 }

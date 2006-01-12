@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.io.File;
 import java.net.URL;
 
+import net.jsunit.Utility;
+
 public class ConfigurationTest extends TestCase {
 
     public void testFull() throws Exception {
@@ -40,9 +42,7 @@ public class ConfigurationTest extends TestCase {
 
     public void testAsXml() throws Exception {
         Configuration configuration = new Configuration(new FullConfigurationSource());
-        System.out.println(configuration.asXml());
         assertEquals(
-                "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n"+
                 "<configuration>" +
                   "<resourceBase>c:\\resource\\base</resourceBase>" +
                   "<port>1234</port>" +
@@ -53,8 +53,8 @@ public class ConfigurationTest extends TestCase {
                   "</browserFileNames>" +
                   "<url>http://www.example.com</url>" +
                   "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
-                "</configuration>\r\n",
-                configuration.asXml()
+                "</configuration>",
+                Utility.asString(configuration.asXml())
         );
     }
 

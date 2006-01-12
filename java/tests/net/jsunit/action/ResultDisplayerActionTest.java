@@ -5,74 +5,76 @@ import java.util.List;
 
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.FailedToLaunchBrowserException;
+import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
 import junit.framework.TestCase;
+import org.jdom.Element;
 
 public class ResultDisplayerActionTest extends TestCase {
 
-	private ResultDisplayerAction action;
-	private MockBrowserTestRunner mockRunner;
+    private ResultDisplayerAction action;
+    private MockBrowserTestRunner mockRunner;
 
-	public void setUp() throws Exception {
-		super.setUp();
-		action = new ResultDisplayerAction();
-		mockRunner = new MockBrowserTestRunner();
-		action.setBrowserTestRunner(mockRunner);
-		action.setId("12345");
-	}
-	
-	public void testResultFound() throws Exception {
-		mockRunner.result = new BrowserResult();
-		assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
-		assertEquals("12345", mockRunner.idPassed);
-		assertEquals(mockRunner.result, action.getXmlRenderable());
-	}
-	
-	public void testResultNotFound() throws Exception {
-		assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
-		assertEquals("12345", mockRunner.idPassed);
-		assertEquals("<error>No Test Result has been submitted with ID 12345</error>", action.getXmlRenderable().asXml());		
-	}
+    public void setUp() throws Exception {
+        super.setUp();
+        action = new ResultDisplayerAction();
+        mockRunner = new MockBrowserTestRunner();
+        action.setBrowserTestRunner(mockRunner);
+        action.setId("12345");
+    }
 
-	public void testIdNotGiven() throws Exception {
-		action.setId(null);
-		assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
-		assertNull(mockRunner.idPassed);
-		assertEquals("<error>No ID given</error>", action.getXmlRenderable().asXml());		
-	}
+    public void testResultFound() throws Exception {
+        mockRunner.result = new BrowserResult();
+        assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
+        assertEquals("12345", mockRunner.idPassed);
+        assertEquals(mockRunner.result, action.getXmlRenderable());
+    }
 
-	static class MockBrowserTestRunner implements BrowserTestRunner {
+    public void testResultNotFound() throws Exception {
+        assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
+        assertEquals("12345", mockRunner.idPassed);
+        assertEquals("<error>No Test Result has been submitted with ID 12345</error>", Utility.asString(action.getXmlRenderable().asXml()));
+    }
 
-		private String idPassed;
-		private BrowserResult result;
+    public void testIdNotGiven() throws Exception {
+        action.setId(null);
+        assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
+        assertNull(mockRunner.idPassed);
+        assertEquals("<error>No ID given</error>", Utility.asString(action.getXmlRenderable().asXml()));
+    }
 
-		public List<String> getBrowserFileNames() {
-			return null;
-		}
+    static class MockBrowserTestRunner implements BrowserTestRunner {
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {		
-		}
+        private String idPassed;
+        private BrowserResult result;
 
-		public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-			return false;
-		}
+        public List<String> getBrowserFileNames() {
+            return null;
+        }
 
-		public BrowserResult lastResult() {
-			return null;
-		}
+        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        }
 
-		public void accept(BrowserResult result) {
-		}
+        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+            return false;
+        }
 
-		public void dispose() {
-		}
+        public BrowserResult lastResult() {
+            return null;
+        }
 
-		public BrowserResult findResultWithId(String id) {
-			idPassed = id;
-			return result;
-		}
+        public void accept(BrowserResult result) {
+        }
 
-        public String asXml() {
+        public void dispose() {
+        }
+
+        public BrowserResult findResultWithId(String id) {
+            idPassed = id;
+            return result;
+        }
+
+        public Element asXml() {
             return null;
         }
     }

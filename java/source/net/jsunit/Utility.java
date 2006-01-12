@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
 import java.io.*;
@@ -77,15 +78,11 @@ public class Utility {
         file.delete();
     }
 
+    public static String asString(Element element) {
+        return new XMLOutputter().outputString(element);
+    }
+
     public static String asString(Document document) {
-        StringWriter writer = new StringWriter();
-        XMLOutputter outputter = new XMLOutputter();
-        try {
-          outputter.output(document, writer);
-        }
-        catch (IOException e) {
-          System.err.println(e);
-        }
-        return writer.toString();        
+        return new XMLOutputter().outputString(document);
     }
 }

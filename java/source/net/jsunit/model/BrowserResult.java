@@ -8,7 +8,9 @@ import net.jsunit.XmlRenderable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
- 
+
+import org.jdom.Element;
+
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
@@ -140,8 +142,8 @@ public class BrowserResult implements XmlRenderable {
         return testCaseResults.size();
     }
 
-    public String asXml() {
-        return new BrowserResultWriter(this).writeXml();
+    public Element asXml() {
+        return new BrowserResultWriter(this).asXml();
     }
 
     public String asXmlFragment() {
@@ -164,8 +166,9 @@ public class BrowserResult implements XmlRenderable {
     }
 
     private void writeXmlToFile(File logsDirectory) {
-        String xml = asXml();
-        Utility.writeFile(xml, logFileForId(logsDirectory, getId()));
+        Element element = asXml();
+        String string = Utility.asString(element);
+        Utility.writeFile(string, logFileForId(logsDirectory, getId()));
     }
 
     public boolean wasSuccessful() {
@@ -180,12 +183,12 @@ public class BrowserResult implements XmlRenderable {
         testCaseResults.add(result);
     }
 
-	public ResultType getResultType() {
-		if (errorCount() > 0)
-			return ResultType.ERROR;
-		if (failureCount() > 0)
-			return ResultType.FAILURE;
-		return ResultType.SUCCESS;
-	}
+    public ResultType getResultType() {
+        if (errorCount() > 0)
+            return ResultType.ERROR;
+        if (failureCount() > 0)
+            return ResultType.FAILURE;
+        return ResultType.SUCCESS;
+    }
 
 }

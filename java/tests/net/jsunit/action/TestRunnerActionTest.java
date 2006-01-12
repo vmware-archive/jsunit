@@ -1,6 +1,7 @@
 package net.jsunit.action;
 
 import net.jsunit.StandaloneTest;
+import net.jsunit.Utility;
 import junit.framework.TestCase;
 
 public class TestRunnerActionTest extends TestCase {
@@ -17,7 +18,7 @@ public class TestRunnerActionTest extends TestCase {
 		action.setStandaloneTest(test);
 		assertEquals(TestRunnerAction.SUCCESS, action.execute());
 		assertTrue(test.wasExecuted);
-		assertEquals("<result>success</result>", action.getXmlRenderable().asXml());
+		assertEquals("<result>success</result>", Utility.asString(action.getXmlRenderable().asXml()));
 	}
 	
 	public void testFailure() {
@@ -26,7 +27,7 @@ public class TestRunnerActionTest extends TestCase {
 		action.setStandaloneTest(test);
 		assertEquals(TestRunnerAction.SUCCESS, action.execute());
 		assertTrue(test.wasExecuted);
-		assertEquals("<result>failure</result>", action.getXmlRenderable().asXml());
+		assertEquals("<result>failure</result>", Utility.asString(action.getXmlRenderable().asXml()));
 	}
 	
 	public static class DummySuccessfulStandaloneTest extends StandaloneTest {

@@ -14,6 +14,7 @@ import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
+import org.jdom.Element;
 
 import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 
@@ -238,7 +239,7 @@ public class JsUnitServer implements BrowserTestRunner {
 		
 	}
 
-    public String asXml() {
+    public Element asXml() {
         return getConfiguration().asXml();
     }
 
