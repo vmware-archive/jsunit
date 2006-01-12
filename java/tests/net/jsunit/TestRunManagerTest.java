@@ -6,137 +6,138 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
+import org.jdom.Element;
 
 public class TestRunManagerTest extends TestCase {
-	
-	public void testSuccess() throws Exception {
-		TestRunManager manager = new TestRunManager(new SuccessfulBrowserTestRunner());
-		manager.runTests();
-		assertFalse(manager.hadProblems());
-		assertEquals(0, manager.getErrorCount());
-		assertEquals(0, manager.getFailureCount());
-	}
-	
-	public void testFailure() throws Exception {
-		TestRunManager manager = new TestRunManager(new FailingBrowserTestRunner());
-		manager.runTests();
-		assertTrue(manager.hadProblems());
-		assertEquals(4, manager.getErrorCount());
-		assertEquals(3, manager.getFailureCount());		
-	}
-	
-	public void testCrash() throws Exception {
-		TestRunManager manager = new TestRunManager(new CrashingBrowserTestRunner());
-		try {
-			manager.runTests();
-			fail("Should have crashed");
-		} catch (FailedToLaunchBrowserException e) {
-		}
-	}
-	
-	static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
 
-		public List<String> getBrowserFileNames() {
-			return Arrays.asList(new String[] {"browser1.exe", "browser2.exe"});
-		}
+    public void testSuccess() throws Exception {
+        TestRunManager manager = new TestRunManager(new SuccessfulBrowserTestRunner());
+        manager.runTests();
+        assertFalse(manager.hadProblems());
+        assertEquals(0, manager.getErrorCount());
+        assertEquals(0, manager.getFailureCount());
+    }
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
-		}
+    public void testFailure() throws Exception {
+        TestRunManager manager = new TestRunManager(new FailingBrowserTestRunner());
+        manager.runTests();
+        assertTrue(manager.hadProblems());
+        assertEquals(4, manager.getErrorCount());
+        assertEquals(3, manager.getFailureCount());
+    }
 
-		public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-			return true;
-		}
+    public void testCrash() throws Exception {
+        TestRunManager manager = new TestRunManager(new CrashingBrowserTestRunner());
+        try {
+            manager.runTests();
+            fail("Should have crashed");
+        } catch (FailedToLaunchBrowserException e) {
+        }
+    }
 
-		public BrowserResult lastResult() {
-			return new DummyBrowserResult(true, 0, 0);
-		}
+    static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
 
-		public void accept(BrowserResult result) {
-		}
+        public List<String> getBrowserFileNames() {
+            return Arrays.asList(new String[] {"browser1.exe", "browser2.exe"});
+        }
 
-		public void dispose() {
-		}
+        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        }
 
-		public BrowserResult findResultWithId(String id) {
-			return null;
-		}
+        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+            return true;
+        }
 
-        public String asXml() {
+        public BrowserResult lastResult() {
+            return new DummyBrowserResult(true, 0, 0);
+        }
+
+        public void accept(BrowserResult result) {
+        }
+
+        public void dispose() {
+        }
+
+        public BrowserResult findResultWithId(String id) {
+            return null;
+        }
+
+        public Element asXml() {
             return null;
         }
     }
-	
-	static class FailingBrowserTestRunner implements BrowserTestRunner {
 
-		private String currentBrowser;
+    static class FailingBrowserTestRunner implements BrowserTestRunner {
 
-		public List<String> getBrowserFileNames() {
-			return Arrays.asList(new String[] {"browser1.exe", "browser2.exe", "browser3.exe"});
-		}
+        private String currentBrowser;
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
-			currentBrowser = browserFileName;
-		}
+        public List<String> getBrowserFileNames() {
+            return Arrays.asList(new String[] {"browser1.exe", "browser2.exe", "browser3.exe"});
+        }
 
-		public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-			return true;
-		}
+        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+            currentBrowser = browserFileName;
+        }
 
-		public BrowserResult lastResult() {
-			if (currentBrowser.indexOf("1") !=-1)
-				return new DummyBrowserResult(false, 0, 1); 
-			else if (currentBrowser.indexOf("2") !=-1)
-				return new DummyBrowserResult(false, 1, 0);
-			else
-				return new DummyBrowserResult(false, 2, 3);
-		}
+        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+            return true;
+        }
 
-		public void accept(BrowserResult result) {
-		}
+        public BrowserResult lastResult() {
+            if (currentBrowser.indexOf("1") !=-1)
+                return new DummyBrowserResult(false, 0, 1);
+            else if (currentBrowser.indexOf("2") !=-1)
+                return new DummyBrowserResult(false, 1, 0);
+            else
+                return new DummyBrowserResult(false, 2, 3);
+        }
 
-		public void dispose() {
-		}
+        public void accept(BrowserResult result) {
+        }
 
-		public BrowserResult findResultWithId(String id) {
-			return null;
-		}
+        public void dispose() {
+        }
 
-        public String asXml() {
+        public BrowserResult findResultWithId(String id) {
+            return null;
+        }
+
+        public Element asXml() {
             return null;
         }
     }
-	
-	static class CrashingBrowserTestRunner implements BrowserTestRunner {
 
-		public List<String> getBrowserFileNames() {
-			return Arrays.asList(new String[] {"browser.exe"});
-		}
+    static class CrashingBrowserTestRunner implements BrowserTestRunner {
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
-			throw new FailedToLaunchBrowserException("dummy");
-		}
+        public List<String> getBrowserFileNames() {
+            return Arrays.asList(new String[] {"browser.exe"});
+        }
 
-		public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-			return false;
-		}
+        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+            throw new FailedToLaunchBrowserException("dummy");
+        }
 
-		public BrowserResult lastResult() {
-			return null;
-		}
+        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+            return false;
+        }
 
-		public void accept(BrowserResult result) {
-		}
+        public BrowserResult lastResult() {
+            return null;
+        }
 
-		public void dispose() {
-		}
+        public void accept(BrowserResult result) {
+        }
 
-		public BrowserResult findResultWithId(String id) {
-			return null;
-		}
+        public void dispose() {
+        }
 
-        public String asXml() {
+        public BrowserResult findResultWithId(String id) {
+            return null;
+        }
+
+        public Element asXml() {
             return null;
         }
     }
-	
+
 }

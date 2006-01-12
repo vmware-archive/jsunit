@@ -33,7 +33,7 @@ public class DisplayerFunctionalTest extends FunctionalTestCase {
 		browserResult.setId(id);
 		server.accept(browserResult);
 		webTester.beginAt("displayer?id="+id);
-		assertEquals(browserResult.asXml(), webTester.getDialog().getResponseText());
+		assertEquals(Utility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
 	}
 	
 }

@@ -22,7 +22,7 @@ public class XmlResult implements Result {
         Document document = new Document(element);
         String xmlString = Utility.asString(document);
         HttpServletResponse response = ServletActionContext.getResponse();
-        response.setContentType("text/element");
+        response.setContentType("text/xml");
         OutputStream out = response.getOutputStream();
         out.write(xmlString.getBytes());
         out.close();
