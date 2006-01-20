@@ -124,6 +124,13 @@ jsUnitTestManager.prototype._runTest = function ()
 {
   if (this._testIndex + 1 > this._numberOfTestsInPage)
   {
+    // execute tearDownPage *synchronously*
+    // (unlike setUpPage which is asynchronous)
+    if (typeof this.containerTestFrame.tearDownPage == 'function')
+    {
+      this.containerTestFrame.tearDownPage();
+    }
+    
     this._nextPage();
     return;
   }
@@ -277,7 +284,8 @@ jsUnitTestManager.prototype.getTestFunctionNames = function ()
   
   if (testFrame && 
       testFrame.document && 
-      typeof(testFrame.document.scripts) != 'undefined') { // IE5 and up
+      typeof(testFrame.document.scripts) != 'undefined' &&
+      testFrame.document.scripts.length > 0) { // IE5 and up
     var scriptsInTestFrame = testFrame.document.scripts;
     
     for (i = 0; i < scriptsInTestFrame.length; i++) {
