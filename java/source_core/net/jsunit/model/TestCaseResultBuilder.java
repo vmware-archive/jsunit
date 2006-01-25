@@ -15,7 +15,8 @@ public class TestCaseResultBuilder {
     }
  
     private void updateWithHeaders(TestCaseResult result, Element element) {
-        result.setName(element.getAttributeValue(TestCaseResultWriter.NAME));
+        String fullyQualifiedName = element.getAttributeValue(TestCaseResultWriter.NAME);
+		result.setFullyQualifiedName(fullyQualifiedName);
         result.setTimeTaken(Double.parseDouble(element.getAttributeValue(TestCaseResultWriter.TIME)));
     }
 

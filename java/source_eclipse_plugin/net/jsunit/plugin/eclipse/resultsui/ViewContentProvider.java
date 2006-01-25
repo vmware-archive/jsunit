@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.jsunit.TestRunListener;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 
@@ -12,7 +13,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IViewSite;
 
-class ViewContentProvider implements IStructuredContentProvider, ITreeContentProvider {
+class ViewContentProvider implements IStructuredContentProvider, ITreeContentProvider, TestRunListener {
 	
 	private IViewSite viewSite;
 
@@ -71,23 +72,7 @@ class ViewContentProvider implements IStructuredContentProvider, ITreeContentPro
 			invisibleRoot.addChild(new BrowserResultNode(browser));
 	}
 
-	public void browserTestRunStarted(String browserFileName) {
-		BrowserResultNode node = findBrowserNode(browserFileName);
-		if (node!=null)
-			node.setRunning();
-	}
-
-	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
-		BrowserResultNode node = findBrowserNode(browserFileName);
-		if (node != null)
-			node.setResult(result);
-		testCount += result.count();
-		testErrorCount += result.errorCount();
-		testFailureCount += result.failureCount();
-	}
-
 	public void reset() {
-		initialize();
 	}
 	
 	public List<BrowserResultNode> getBrowserResultNodes() {
@@ -142,5 +127,31 @@ class ViewContentProvider implements IStructuredContentProvider, ITreeContentPro
 		}
 		return result;
 	}
+
+	public boolean isReady() {
+		return true;
+	}
+
+	public void testRunStarted() {
+		initialize();
+	}
+
+	public void testRunFinished() {
+	}
 	
+	public void browserTestRunStarted(String browserFileName) {
+		BrowserResultNode node = findBrowserNode(browserFileName);
+		if (node != null)
+			node.setRunning();
+	}
+
+	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+		BrowserResultNode node = findBrowserNode(browserFileName);
+		if (node != null)
+			node.setResult(result);
+		testCount += result.count();
+		testErrorCount += result.errorCount();
+		testFailureCount += result.failureCount();
+	}
+
 }

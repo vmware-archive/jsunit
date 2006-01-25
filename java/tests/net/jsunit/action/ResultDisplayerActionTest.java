@@ -77,5 +77,11 @@ public class ResultDisplayerActionTest extends TestCase {
         public Element asXml() {
             return null;
         }
+
+		public void startTestRun() {
+		}
+
+		public void finishTestRun() {
+		}
     }
 }

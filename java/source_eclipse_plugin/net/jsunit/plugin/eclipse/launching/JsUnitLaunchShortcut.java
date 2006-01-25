@@ -49,7 +49,7 @@ public class JsUnitLaunchShortcut implements ILaunchShortcut {
 			);
 			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_TEST_PAGE_PATH, testPagePath);
 			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PROJECT_NAME, file.getProject().getName());
-			config = wc.doSave();		
+			config = wc.doSave();
 		} catch (CoreException ce) {
 			throw new RuntimeException(ce);
 		}

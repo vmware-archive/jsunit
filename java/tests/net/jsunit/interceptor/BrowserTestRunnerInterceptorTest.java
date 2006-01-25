@@ -67,6 +67,12 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
         public Element asXml() {
             return null;
         }
+
+		public void startTestRun() {
+		}
+
+		public void finishTestRun() {
+		}
     }
 
     static class MockJsUnitAction extends JsUnitAction {

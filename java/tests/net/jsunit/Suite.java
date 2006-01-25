@@ -22,8 +22,10 @@ public class Suite extends TestCase {
         result.addTestSuite(AcceptorFunctionalTest.class);
         result.addTestSuite(ArgumentsConfigurationTest.class);
         result.addTestSuite(BrowserResultInterceptorTest.class);
+        result.addTestSuite(BrowserResultLogWriterTest.class);
         result.addTestSuite(BrowserResultTest.class);
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
+        result.addTestSuite(ClientServerInteractionTest.class);
         result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);
@@ -31,10 +33,12 @@ public class Suite extends TestCase {
         result.addTestSuite(ServerConfigurationFunctionalTest.class);
         result.addTestSuite(JsUnitServerTest.class);
         result.addTestSuite(PropertiesConfigurationTest.class);
+        result.addTestSuite(RemoteTestRunClientTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
+        result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestRunManagerTest.class);
         result.addTestSuite(TestRunnerActionTest.class);

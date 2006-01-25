@@ -105,6 +105,7 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 			getDisplay().syncExec(new Runnable() {
 				public void run() {
 					testRunViewPart = showTestRunPart();
+					testRunViewPart.connectToRemoteRunner();
 				}
 			});
 			testRunViewPart.reset();

@@ -3,27 +3,27 @@ package net.jsunit.configuration;
 public class EnvironmentVariablesConfigurationSource implements ConfigurationSource {
  
     public String resourceBase() {
-        return System.getProperty(RESOURCE_BASE);
+        return System.getProperty(ConfigurationConstants.RESOURCE_BASE);
     }
 
     public String port() {
-        return System.getProperty(PORT);
+        return System.getProperty(ConfigurationConstants.PORT);
     }
 
     public String logsDirectory() {
-        return System.getProperty(LOGS_DIRECTORY);
+        return System.getProperty(ConfigurationConstants.LOGS_DIRECTORY);
     }
 
     public String browserFileNames() {
-        return System.getProperty(BROWSER_FILE_NAMES);
+        return System.getProperty(ConfigurationConstants.BROWSER_FILE_NAMES);
     }
 
     public String url() {
-        return System.getProperty(URL);
+        return System.getProperty(ConfigurationConstants.URL);
     }
 
     public String closeBrowsersAfterTestRuns() {
-		return System.getProperty(CLOSE_BROWSERS_AFTER_TEST_RUNS);
+		return System.getProperty(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
 	}
 
 	public boolean isAppropriate() {

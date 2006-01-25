@@ -2,6 +2,9 @@ package net.jsunit;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.DOMBuilder;
+import org.jdom.input.JDOMFactory;
 import org.jdom.output.XMLOutputter;
 
 import java.io.*;
@@ -85,4 +88,12 @@ public class Utility {
     public static String asString(Document document) {
         return new XMLOutputter().outputString(document);
     }
+
+	public static Document asXmlDocument(String xmlDocumentString) {
+		try {
+			return new DOMBuilder().build(new ByteArrayInputStream(xmlDocumentString.getBytes()));
+		} catch (JDOMException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+	}
 }

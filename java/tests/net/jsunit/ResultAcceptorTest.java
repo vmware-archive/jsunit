@@ -8,7 +8,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import junit.framework.TestCase;
-import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.interceptor.BrowserResultInterceptor;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 
@@ -26,8 +27,8 @@ public class ResultAcceptorTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(ConfigurationSource.BROWSER_FILE_NAMES, "foo");
-        System.setProperty(ConfigurationSource.URL, "http://bar");
+        System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, "foo");
+        System.setProperty(ConfigurationConstants.URL, "http://bar");
         server = new JsUnitServer();
         Utility.setLogToStandardOut(false);
         requestMap = new HashMap<String, String[]>();
@@ -39,8 +40,8 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        System.getProperties().remove(ConfigurationSource.BROWSER_FILE_NAMES);
-        System.getProperties().remove(ConfigurationSource.URL);
+        System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
+        System.getProperties().remove(ConfigurationConstants.URL);
         File logFile = BrowserResult.logFileForId(server.getLogsDirectory(), "ID_foo");
         if (logFile.exists())
             logFile.delete();
@@ -53,7 +54,7 @@ public class ResultAcceptorTest extends TestCase {
 
     protected void submit() {
         HttpServletRequest request = new DummyHttpRequest(requestMap);
-        server.accept(BrowserResult.fromRequest(request));
+        server.accept(BrowserResultInterceptor.resultFromRequest(request));
     }
 
     public void testSubmitResults() {

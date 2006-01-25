@@ -57,6 +57,24 @@ public class ConfigurationTest extends TestCase {
                 Utility.asString(configuration.asXml())
         );
     }
+    
+    public void testAsArgumentsArray() throws Exception {
+        Configuration configuration = new Configuration(new FullConfigurationSource());
+        String[] arguments = configuration.asArgumentsArray();
+        assertEquals(12, arguments.length);
+        assertEquals("-resourceBase", arguments[0]);
+        assertEquals("c:\\resource\\base", arguments[1]);
+        assertEquals("-port", arguments[2]);
+        assertEquals("1234", arguments[3]);
+        assertEquals("-logsDirectory", arguments[4]);
+        assertEquals("c:\\logs\\directory", arguments[5]);
+        assertEquals("-browserFileNames", arguments[6]);
+        assertEquals("browser1.exe,browser2.exe", arguments[7]);
+        assertEquals("-url", arguments[8]);
+        assertEquals("http://www.example.com", arguments[9]);
+        assertEquals("-closeBrowsersAfterTestRuns", arguments[10]);
+        assertEquals("true", arguments[11]);
+    }
 
     static class FullConfigurationSource implements ConfigurationSource {
 

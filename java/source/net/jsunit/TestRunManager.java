@@ -2,6 +2,7 @@ package net.jsunit;
 
 import java.util.Date;
 
+import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
 
 public class TestRunManager {
@@ -10,6 +11,16 @@ public class TestRunManager {
 	private int errorCount;
 	private int failureCount;
 
+	public static void main(String[] args) throws Exception {
+		JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
+		server.addBrowserTestRunListener(new TestRunNotifierServer(8083));//TODO: use a real port
+		server.start();
+		TestRunManager manager = new TestRunManager(server);
+		manager.runTests();
+		server.dispose();
+		System.exit(manager.hadProblems() ? 1 : 0);
+	}
+	
 	private BrowserTestRunner testRunner;
 
 	public TestRunManager(BrowserTestRunner testRunner) {
@@ -17,12 +28,17 @@ public class TestRunManager {
 	}
 
 	public void runTests() throws Exception {
-        for (String browserFileName : testRunner.getBrowserFileNames()) {
-            Date dateLaunched = new Date();
-            testRunner.launchTestRunForBrowserWithFileName(browserFileName);
-            waitForResultToBeSubmitted(browserFileName, dateLaunched);
-            verifyLastResult();
-        }
+		testRunner.startTestRun();
+		try {
+	        for (String browserFileName : testRunner.getBrowserFileNames()) {
+	            Date dateLaunched = new Date();
+	            testRunner.launchTestRunForBrowserWithFileName(browserFileName);
+	            waitForResultToBeSubmitted(browserFileName, dateLaunched);
+	            verifyLastResult();
+	        }
+		} finally {
+			testRunner.finishTestRun();
+		}
 	}
 
 	public boolean hadProblems() {

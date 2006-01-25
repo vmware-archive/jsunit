@@ -55,6 +55,12 @@ public class ResultAcceptorActionTest extends TestCase {
         public Element asXml() {
             return null;
         }
+
+		public void startTestRun() {
+		}
+
+		public void finishTestRun() {
+		}
     }
 
 }

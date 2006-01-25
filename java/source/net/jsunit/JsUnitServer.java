@@ -32,7 +32,7 @@ public class JsUnitServer implements BrowserTestRunner {
     private Process browserProcess;
     private String browserFileName;
 	private List<BrowserResult> results = new ArrayList<BrowserResult>();
-    private List<BrowserTestRunListener> browserTestRunListeners = new ArrayList<BrowserTestRunListener>();
+    private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
     private Date dateLastResultReceived;
 	private ProcessStarter processStarter = new DefaultProcessStarter();
 
@@ -40,15 +40,15 @@ public class JsUnitServer implements BrowserTestRunner {
 		return instance;
 	}
 
+  	public JsUnitServer() {
+		this(Configuration.resolve());
+	}
+  	
     public JsUnitServer(Configuration configuration) {
 		this.configuration = configuration;
 		if (configuration.needsLogging())
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
         instance = this;
-	}
-
-  	public JsUnitServer() {
-		this(Configuration.resolve());
 	}
 
 	public static void main(String args[]) {
@@ -88,9 +88,10 @@ public class JsUnitServer implements BrowserTestRunner {
 
 	private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
 		servletContext.addServlet(
-				"webwork",
-				name,
-		       	ServletDispatcher.class.getName());
+			"webwork",
+			name,
+			ServletDispatcher.class.getName()
+		);
 	}
 
     public void accept(BrowserResult result) {
@@ -99,7 +100,7 @@ public class JsUnitServer implements BrowserTestRunner {
             results.remove(existingResultWithSameId);
         results.add(result);
         
-        for (BrowserTestRunListener listener : browserTestRunListeners) {
+        for (TestRunListener listener : browserTestRunListeners) {
         	listener.browserTestRunFinished(browserFileName, result);
         }
         dateLastResultReceived = new Date();
@@ -165,11 +166,11 @@ public class JsUnitServer implements BrowserTestRunner {
 		return configuration.shouldCloseBrowsersAfterTestRuns();
 	}
 	
-	public void addBrowserTestRunListener(BrowserTestRunListener listener) {
+	public void addBrowserTestRunListener(TestRunListener listener) {
 		browserTestRunListeners.add(listener);
 	}
 	
-	public List<BrowserTestRunListener> getBrowserTestRunListeners() {
+	public List<TestRunListener> getBrowserTestRunListeners() {
 		return browserTestRunListeners;
 	}
 
@@ -203,7 +204,7 @@ public class JsUnitServer implements BrowserTestRunner {
 		    commandWithUrl[browserCommand.length] = configuration.getTestURL().toString();
 		    this.browserProcess = processStarter.execute(commandWithUrl);
 		    this.browserFileName = browserFileName;
-		    for (BrowserTestRunListener listener : browserTestRunListeners)
+		    for (TestRunListener listener : browserTestRunListeners)
 		    	listener.browserTestRunStarted(browserFileName);
 		} catch (Throwable t) {
 		    t.printStackTrace();
@@ -230,6 +231,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
 	public void dispose() {
+		endBrowser();
 		try {
 			if (server!=null)
 				server.stop();
@@ -242,5 +244,24 @@ public class JsUnitServer implements BrowserTestRunner {
     public Element asXml() {
         return getConfiguration().asXml();
     }
+
+	public void startTestRun() {
+		for (TestRunListener listener : browserTestRunListeners) {
+			listener.testRunStarted();
+			while (!listener.isReady())
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					throw new RuntimeException(e);
+				}
+		}
+	}
+
+	public void finishTestRun() {
+		for (TestRunListener listener : browserTestRunListeners) {
+			listener.testRunFinished();
+		}
+		
+	}
 
 }

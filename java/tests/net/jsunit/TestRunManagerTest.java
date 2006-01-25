@@ -65,6 +65,12 @@ public class TestRunManagerTest extends TestCase {
         public Element asXml() {
             return null;
         }
+
+		public void startTestRun() {
+		}
+
+		public void finishTestRun() {
+		}
     }
 
     static class FailingBrowserTestRunner implements BrowserTestRunner {
@@ -105,6 +111,12 @@ public class TestRunManagerTest extends TestCase {
         public Element asXml() {
             return null;
         }
+
+		public void startTestRun() {
+		}
+
+		public void finishTestRun() {
+		}
     }
 
     static class CrashingBrowserTestRunner implements BrowserTestRunner {
@@ -138,6 +150,12 @@ public class TestRunManagerTest extends TestCase {
         public Element asXml() {
             return null;
         }
+
+		public void startTestRun() {
+		}
+
+		public void finishTestRun() {
+		}
     }
 
 }

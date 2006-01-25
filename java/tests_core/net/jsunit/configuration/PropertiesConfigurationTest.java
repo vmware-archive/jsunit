@@ -31,12 +31,12 @@ public class PropertiesConfigurationTest extends TestCase {
 
     static void writePropertiesFile(String fileName) {
         String contents =
-                ConfigurationSource.BROWSER_FILE_NAMES + "=aaa\n" +
-                ConfigurationSource.LOGS_DIRECTORY + "=bbb\n" +
-                ConfigurationSource.PORT + "=1234\n" +
-                ConfigurationSource.RESOURCE_BASE + "=ccc\n" +
-                ConfigurationSource.URL + "=ddd\n" +
-                ConfigurationSource.CLOSE_BROWSERS_AFTER_TEST_RUNS + "=false\n";
+                ConfigurationConstants.BROWSER_FILE_NAMES + "=aaa\n" +
+                ConfigurationConstants.LOGS_DIRECTORY + "=bbb\n" +
+                ConfigurationConstants.PORT + "=1234\n" +
+                ConfigurationConstants.RESOURCE_BASE + "=ccc\n" +
+                ConfigurationConstants.URL + "=ddd\n" +
+                ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS + "=false\n";
         Utility.writeFile(contents, fileName);
     }
 

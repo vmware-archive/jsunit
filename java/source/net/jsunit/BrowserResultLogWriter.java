@@ -4,7 +4,7 @@ import java.io.File;
 
 import net.jsunit.model.BrowserResult;
 
-public class BrowserResultLogWriter implements BrowserTestRunListener {
+public class BrowserResultLogWriter implements TestRunListener {
 
 	private File logsDirectory;
 	
@@ -17,6 +17,16 @@ public class BrowserResultLogWriter implements BrowserTestRunListener {
 	}
 
 	public void browserTestRunStarted(String browserFileName) {
+	}
+
+	public boolean isReady() {
+		return true;
+	}
+
+	public void testRunStarted() {
+	}
+
+	public void testRunFinished() {
 	}
 
 }

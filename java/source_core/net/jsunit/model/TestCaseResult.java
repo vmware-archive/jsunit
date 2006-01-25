@@ -84,9 +84,7 @@ public class TestCaseResult {
 			} catch (UnsupportedEncodingException e) {
 				throw new RuntimeException(e);
 			}
-        	int colonIndex = fullyQualifiedName.lastIndexOf(TEST_PAGE_TEST_NAME_DELIMITER);
-        	result.setTestPageName(fullyQualifiedName.substring(0, colonIndex));
-        	result.setName(fullyQualifiedName.substring(colonIndex + 1));
+			result.setFullyQualifiedName(fullyQualifiedName);
             result.setTimeTaken(Double.parseDouble(toker.nextToken()));
             String successString = toker.nextToken();
             if (successString.equals(ERROR_INDICATOR))
@@ -99,7 +97,13 @@ public class TestCaseResult {
         return result;
     }
 
-    public static TestCaseResult fromXmlElement(Element testCaseElement) {
+    public void setFullyQualifiedName(String fullyQualifiedName) {
+    	int colonIndex = fullyQualifiedName.lastIndexOf(TEST_PAGE_TEST_NAME_DELIMITER);
+    	setTestPageName(fullyQualifiedName.substring(0, colonIndex));
+    	setName(fullyQualifiedName.substring(colonIndex + 1));		
+	}
+
+	public static TestCaseResult fromXmlElement(Element testCaseElement) {
         return new TestCaseResultBuilder().build(testCaseElement);
     }
 

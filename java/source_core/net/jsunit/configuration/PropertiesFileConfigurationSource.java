@@ -39,27 +39,27 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
 	}
 
     public String resourceBase() {
-        return getProperty(RESOURCE_BASE);
+        return getProperty(ConfigurationConstants.RESOURCE_BASE);
     }
 
     public String logsDirectory() {
-        return getProperty(LOGS_DIRECTORY);
+        return getProperty(ConfigurationConstants.LOGS_DIRECTORY);
     }
 
     public String port() {
-        return getProperty(PORT);
+        return getProperty(ConfigurationConstants.PORT);
     }
 
     public String url() {
-        return getProperty(URL);
+        return getProperty(ConfigurationConstants.URL);
     }
 
     public String browserFileNames() {
-        return getProperty(BROWSER_FILE_NAMES);
+        return getProperty(ConfigurationConstants.BROWSER_FILE_NAMES);
     }
 
     public String closeBrowsersAfterTestRuns() {
-        return getProperty(CLOSE_BROWSERS_AFTER_TEST_RUNS);
+        return getProperty(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
     }
 
 }

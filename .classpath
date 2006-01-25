@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="java/tests"/>
+	<classpathentry kind="src" path="java/source_core"/>
+	<classpathentry kind="src" path="java/tests_core"/>
 	<classpathentry kind="src" path="java/tests_eclipse_plugin"/>
 	<classpathentry kind="src" path="java/source_eclipse_plugin"/>
 	<classpathentry kind="src" path="java/source"/>

@@ -22,17 +22,17 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
     private void init(List args) {
         for (Iterator it = args.iterator(); it.hasNext();) {
             String argument = (String) it.next();
-            if (argument.equals("-" + PORT))
+            if (argument.equals("-" + ConfigurationConstants.PORT))
                 this.port = (String) it.next();
-            else if (argument.equals("-" + RESOURCE_BASE))
+            else if (argument.equals("-" + ConfigurationConstants.RESOURCE_BASE))
                 this.resourceBase = (String) it.next();
-            else if (argument.equals("-" + LOGS_DIRECTORY))
+            else if (argument.equals("-" + ConfigurationConstants.LOGS_DIRECTORY))
                 this.logsDirectory = (String) it.next();
-            else if (argument.equals("-" + URL))
+            else if (argument.equals("-" + ConfigurationConstants.URL))
                 this.url = (String) it.next();
-            else if (argument.equals("-" + BROWSER_FILE_NAMES))
+            else if (argument.equals("-" + ConfigurationConstants.BROWSER_FILE_NAMES))
                 this.browserFileNames = (String) it.next();
-            else if (argument.equals("-" + CLOSE_BROWSERS_AFTER_TEST_RUNS))
+            else if (argument.equals("-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS))
                 this.closeBrowsersAfterTestRuns= (String) it.next();
         }
     }

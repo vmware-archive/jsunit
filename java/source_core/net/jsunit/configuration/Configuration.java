@@ -7,6 +7,7 @@ import org.jdom.Element;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -50,7 +51,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return new URL(urlString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationSource.URL, urlString, e);
+            throw new ConfigurationException(ConfigurationConstants.URL, urlString, e);
         }
     }
 
@@ -59,7 +60,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return Utility.listFromCommaDelimitedString(browserFileNamesString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationSource.BROWSER_FILE_NAMES, browserFileNamesString, e);
+            throw new ConfigurationException(ConfigurationConstants.BROWSER_FILE_NAMES, browserFileNamesString, e);
         }
     }
 
@@ -75,7 +76,7 @@ public final class Configuration implements XmlRenderable {
             }
             return logsDirectory;
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationSource.LOGS_DIRECTORY, logsDirectoryString, e);
+            throw new ConfigurationException(ConfigurationConstants.LOGS_DIRECTORY, logsDirectoryString, e);
         }
     }
 
@@ -89,7 +90,7 @@ public final class Configuration implements XmlRenderable {
                 port = Integer.parseInt(portString);
             return port;
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationSource.PORT, portString, e);
+            throw new ConfigurationException(ConfigurationConstants.PORT, portString, e);
         }
     }
 
@@ -105,7 +106,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return new File(resourceBaseString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationSource.RESOURCE_BASE, resourceBaseString, e);
+            throw new ConfigurationException(ConfigurationConstants.RESOURCE_BASE, resourceBaseString, e);
         }
     }
 
@@ -118,11 +119,11 @@ public final class Configuration implements XmlRenderable {
 
     public String toString() {
         StringBuffer result = new StringBuffer();
-        result.append(ConfigurationSource.PORT).append(": ").append(getPort()).append("\n");
-        result.append(ConfigurationSource.RESOURCE_BASE).append(": ").append(getResourceBase().getAbsolutePath()).append("\n");
-        result.append(ConfigurationSource.LOGS_DIRECTORY).append(": ").append(getLogsDirectory().getAbsolutePath()).append("\n");
-        result.append(ConfigurationSource.BROWSER_FILE_NAMES).append(": ").append(getBrowserFileNames()).append("\n");
-        result.append(ConfigurationSource.URL).append(": ").append(getTestURL());
+        result.append(ConfigurationConstants.PORT).append(": ").append(getPort()).append("\n");
+        result.append(ConfigurationConstants.RESOURCE_BASE).append(": ").append(getResourceBase().getAbsolutePath()).append("\n");
+        result.append(ConfigurationConstants.LOGS_DIRECTORY).append(": ").append(getLogsDirectory().getAbsolutePath()).append("\n");
+        result.append(ConfigurationConstants.BROWSER_FILE_NAMES).append(": ").append(getBrowserFileNames()).append("\n");
+        result.append(ConfigurationConstants.URL).append(": ").append(getTestURL());
         return result.toString();
     }
 
@@ -131,7 +132,7 @@ public final class Configuration implements XmlRenderable {
     }
 
     public boolean needsLogging() {
-        return needsLogging ;
+        return needsLogging;
     }
 
     public void setNeedsLogging(boolean b) {
@@ -171,4 +172,25 @@ public final class Configuration implements XmlRenderable {
 
         return configuration;
     }
+
+	public String[] asArgumentsArray() {
+		return new String[] {
+			"-" + ConfigurationConstants.RESOURCE_BASE, getResourceBase().getAbsolutePath(),
+			"-" + ConfigurationConstants.PORT, String.valueOf(getPort()),
+			"-" + ConfigurationConstants.LOGS_DIRECTORY, getLogsDirectory().getAbsolutePath(),
+			"-" + ConfigurationConstants.BROWSER_FILE_NAMES, commaSeparatedBrowserFileNames(),
+			"-" + ConfigurationConstants.URL, getTestURL().toString(),
+			"-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS, String.valueOf(shouldCloseBrowsersAfterTestRuns())
+		};
+	}
+
+	private String commaSeparatedBrowserFileNames() {
+		StringBuffer result = new StringBuffer();
+		for (Iterator it = getBrowserFileNames().iterator(); it.hasNext();) {
+			result.append(it.next());
+			if (it.hasNext())
+				result.append(",");
+		}
+		return result.toString();
+	}
 }

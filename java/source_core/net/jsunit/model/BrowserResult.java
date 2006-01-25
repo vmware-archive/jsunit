@@ -1,14 +1,13 @@
 package net.jsunit.model;
 
-import javax.servlet.http.HttpServletRequest;
-
-import net.jsunit.Utility;
-import net.jsunit.XmlRenderable;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.jsunit.Utility;
+import net.jsunit.XmlRenderable;
+
+import org.jdom.Document;
 import org.jdom.Element;
 
 /**
@@ -80,22 +79,6 @@ public class BrowserResult implements XmlRenderable {
 
     public void setTestCaseStrings(String[] testCaseResultStrings) {
         buildTestCaseResults(testCaseResultStrings);
-    }
-
-    public static BrowserResult fromRequest(HttpServletRequest request) {
-        BrowserResult result = new BrowserResult();
-        String testId = request.getParameter(BrowserResultWriter.ID);
-        if (!Utility.isEmpty(testId))
-            result.setId(testId);
-        result.setRemoteAddress(request.getRemoteAddr());
-        result.setUserAgent(request.getParameter(BrowserResultWriter.USER_AGENT));
-        result.setBaseURL(request.getParameter(BrowserResultWriter.BASE_URL));
-        String time = request.getParameter(BrowserResultWriter.TIME);
-        if (!Utility.isEmpty(time))
-            result.setTime(Double.parseDouble(time));
-        result.setJsUnitVersion(request.getParameter(BrowserResultWriter.JSUNIT_VERSION));
-        result.setTestCaseStrings(request.getParameterValues(BrowserResultWriter.TEST_CASES));
-        return result;
     }
 
     public String getRemoteAddress() {
@@ -190,5 +173,9 @@ public class BrowserResult implements XmlRenderable {
             return ResultType.FAILURE;
         return ResultType.SUCCESS;
     }
+
+	public Document asXmlDocument() {
+		return new Document(asXml());
+	}
 
 }

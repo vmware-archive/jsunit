@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.List;
 
 import net.jsunit.model.BrowserResult;
-import net.jsunit.configuration.Configuration;
 
 public interface BrowserTestRunner extends XmlRenderable {
 
@@ -21,5 +20,9 @@ public interface BrowserTestRunner extends XmlRenderable {
     void dispose();
 
     BrowserResult findResultWithId(String id);
+
+	void startTestRun();
+
+	void finishTestRun();
 
 }

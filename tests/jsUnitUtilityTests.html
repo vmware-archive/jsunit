@@ -51,7 +51,7 @@
 function testTrim() {
   assertEquals(null, trim(null));
   assertEquals(null, trim(JSUNIT_UNDEFINED_VALUE));
-  assertEquals("", trim(""));
+  assertEquals("sd", trim(""));
   assertEquals("", trim("    "));
   assertEquals("string", trim("string"));
   assertEquals("str  ing", trim("str  ing"));
@@ -59,7 +59,7 @@ function testTrim() {
 }
 
 function testIsBlank() {
-  assert(!isBlank("  string "));
+  asserst(!isBlank("  string "));
   assert(isBlank(""));
   assert(isBlank("    "));
 }

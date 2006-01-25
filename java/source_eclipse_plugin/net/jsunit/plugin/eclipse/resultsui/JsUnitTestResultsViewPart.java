@@ -3,7 +3,8 @@ package net.jsunit.plugin.eclipse.resultsui;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jsunit.BrowserTestRunListener;
+import net.jsunit.RemoteTestRunClient;
+import net.jsunit.TestRunListener;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 
@@ -24,7 +25,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 
-public class JsUnitTestResultsViewPart extends ViewPart implements BrowserTestRunListener {
+public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListener {
 	
 	static public final String ID = "net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart";
 
@@ -39,6 +40,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements BrowserTestRu
 	private List<TestResultsTab> testResultsTabs;
 	private TestResultsTab activeTab;
 	private StopAction stopAction;
+	private RemoteTestRunClient client;
 
 	public void createPartControl(Composite parent) {
 		contentProvider = new ViewContentProvider(getViewSite());
@@ -128,27 +130,6 @@ public class JsUnitTestResultsViewPart extends ViewPart implements BrowserTestRu
 		activeTab.setFocus();
 	}
 
-	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
-		contentProvider.browserTestRunFinished(browserFileName, result);
-		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
-			public void run() {
-				progressBar.step(contentProvider.getTestFailureCount() + contentProvider.getTestErrorCount());
-				counterPanel.setBrowserRunCount(contentProvider.getCompletedBrowserTestRunCount());
-				counterPanel.setTestRunCount(contentProvider.getCompletedTestCount());
-				counterPanel.setTestErrorCount(contentProvider.getTestErrorCount());
-				counterPanel.setTestFailureCount(contentProvider.getTestFailureCount());
-			}
-		});
-		stopAction.setEnabled(false);
-		refreshActiveTab();
-	}
-
-	public void browserTestRunStarted(String browserFileName) {
-		contentProvider.browserTestRunStarted(browserFileName);
-		refreshActiveTab();
-		stopAction.setEnabled(true);
-	}
-
 	private void refreshActiveTab() {
 		activeTab.refresh();
 	}
@@ -185,9 +166,51 @@ public class JsUnitTestResultsViewPart extends ViewPart implements BrowserTestRu
 		}
 
 		public void run() {
-			System.out.println("XXXX Stop");
+			hitServer("stop");
 			setEnabled(false);
 		}
+
+		private void hitServer(String string) {
+			//TODO
+			
+		}
+	}
+
+	public boolean isReady() {
+		return true;
+	}
+
+	public void testRunStarted() {
+		contentProvider.testRunStarted();
+	}
+
+	public void testRunFinished() {
+	}
+
+	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+		contentProvider.browserTestRunFinished(browserFileName, result);
+		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				progressBar.step(contentProvider.getTestFailureCount() + contentProvider.getTestErrorCount());
+				counterPanel.setBrowserRunCount(contentProvider.getCompletedBrowserTestRunCount());
+				counterPanel.setTestRunCount(contentProvider.getCompletedTestCount());
+				counterPanel.setTestErrorCount(contentProvider.getTestErrorCount());
+				counterPanel.setTestFailureCount(contentProvider.getTestFailureCount());
+			}
+		});
+		stopAction.setEnabled(false);
+		refreshActiveTab();
+	}
+
+	public void browserTestRunStarted(String browserFileName) {
+		contentProvider.browserTestRunStarted(browserFileName);
+		refreshActiveTab();
+		stopAction.setEnabled(true);
+	}
+
+	public void connectToRemoteRunner() {
+		client = new RemoteTestRunClient(this);
+		client.startListening();
 	}
 
 }

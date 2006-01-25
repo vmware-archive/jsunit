@@ -9,9 +9,9 @@ public class ResultAcceptorAction extends JsUnitAction implements BrowserResultA
 	protected BrowserResult result;
 
 	public String execute() throws Exception {
-        Utility.log("ResultAcceptor: Received submission");
+        Utility.log("Received submission");
 		runner.accept(result);
-        Utility.log("ResultAcceptor: Done");
+        Utility.log("Done");
         return SUCCESS;
 	}
 

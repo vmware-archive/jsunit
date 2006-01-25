@@ -1,5 +1,8 @@
 package net.jsunit;
 
+import org.jdom.Document;
+import org.jdom.Element;
+
 import net.jsunit.model.BrowserResult;
 
 public class DummyBrowserResult extends BrowserResult {
@@ -24,6 +27,10 @@ public class DummyBrowserResult extends BrowserResult {
 	
 	public int errorCount() {
 		return errorCount;
+	}
+
+	public Document asXmlDocument() {
+		return new Document(asXml());
 	}
 
 }
