@@ -31,7 +31,7 @@ public class TestCaseResultWriter {
         if (result.hadFailure()) {
             Element failureElement = new Element(FAILURE);
             try {
-                failureElement.setAttribute(MESSAGE, result.getFailure().replace('\u0000', ' '));
+                failureElement.setText(result.getFailure().replace('\u0000', ' '));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -39,7 +39,7 @@ public class TestCaseResultWriter {
         } else if (result.hadError()) {
             Element errorElement = new Element(ERROR);
             try {
-                errorElement.setAttribute(MESSAGE, result.getError().replace('\u0000', ' '));
+                errorElement.setText(result.getError().replace('\u0000', ' '));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }

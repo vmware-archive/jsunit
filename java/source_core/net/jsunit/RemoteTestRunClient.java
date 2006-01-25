@@ -29,7 +29,6 @@ public class RemoteTestRunClient {
 	}
 
 	public void messageReceived(String message) {
-		System.out.println(message);
 		if (message.equals(TestRunNotifierServer.TEST_RUN_STARTED))
 			listener.testRunStarted();
 		else if (message.equals(TestRunNotifierServer.TEST_RUN_FINISHED))
@@ -67,7 +66,7 @@ public class RemoteTestRunClient {
 				listener.browserTestRunFinished(browserFileName, result);
 			} else if (message.trim().length() > 0){
 				xmlString += message;
-				xmlString += "\r\n";
+				xmlString += "\n";
 			}
 		}
 		

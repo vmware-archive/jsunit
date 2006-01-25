@@ -26,10 +26,10 @@ public class BrowserResultTest extends TestCase {
                 + "</properties>"
                     + "<testcase name=\"page1.html:testFoo\" time=\"1.3\" />"
                     + "<testcase name=\"page1.html:testFoo\" time=\"1.3\">"
-                        + "<error message=\"Test Error Message\" />"
+                        + "<error>Test Error Message</error>"
                     + "</testcase>"
                     + "<testcase name=\"page2.html:testFoo\" time=\"1.3\">"
-                        + "<failure message=\"Test Failure Message\" />"
+                        + "<failure>Test Failure Message</failure>"
                     + "</testcase>"
             + "</testrun>";
 

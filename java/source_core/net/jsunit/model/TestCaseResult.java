@@ -127,4 +127,8 @@ public class TestCaseResult {
 		return testPageName;
 	}
 	
+	public String toString() {
+		return getFullyQualifiedName() + ": " + getResultType().getDisplayString();
+	}
+	
 }

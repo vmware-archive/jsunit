@@ -7,6 +7,7 @@ import org.jdom.Element;
  */
 
 public class TestCaseResultBuilder {
+	
     public TestCaseResult build(Element element) {
         TestCaseResult result = new TestCaseResult();
         updateWithHeaders(result, element);
@@ -21,14 +22,15 @@ public class TestCaseResultBuilder {
     }
 
     private void updateWithMessage(TestCaseResult result, Element element) {
-        for (Object o : element.getChildren()) {
-            Element next = (Element) o;
+        for (Object object : element.getChildren()) {
+            Element next = (Element) object;
             String type = next.getName();
-            String message = next.getAttributeValue(TestCaseResultWriter.MESSAGE);
+            String message = next.getText();
             if (TestCaseResultWriter.FAILURE.equals(type))
                 result.setFailure(message);
             else if (TestCaseResultWriter.ERROR.equals(type))
                 result.setError(message);
         }
     }
+
 }

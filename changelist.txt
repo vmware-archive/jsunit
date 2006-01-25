@@ -12,3 +12,4 @@
 - Addition of new configuration parameter, "attempt to close browsers after test runs"
 - StandaloneTest now runs tests in all specified browsers, even after an earlier browser failed
 - New "config" servlet that shows the configuration as XML of the server
+- Safari fix
