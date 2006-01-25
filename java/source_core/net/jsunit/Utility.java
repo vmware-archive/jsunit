@@ -1,14 +1,20 @@
 package net.jsunit;
 
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import java.util.StringTokenizer;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.DOMBuilder;
-import org.jdom.input.JDOMFactory;
 import org.jdom.output.XMLOutputter;
-
-import java.io.*;
-import java.util.*;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

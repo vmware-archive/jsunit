@@ -1,7 +1,6 @@
 package net.jsunit;
 
 import org.jdom.Document;
-import org.jdom.Element;
 
 import net.jsunit.model.BrowserResult;
 
