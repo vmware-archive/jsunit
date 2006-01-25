@@ -17,6 +17,7 @@ import org.jdom.Element;
 public class BrowserResult implements XmlRenderable {
     private String remoteAddress, id, jsUnitVersion, userAgent, baseURL;
     private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
+	private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
     private double time;
     private String SEPARATOR = "---------------------";
 
@@ -93,7 +94,7 @@ public class BrowserResult implements XmlRenderable {
         if (testCaseResultStrings == null)
             return;
         for (String testCaseResultString : testCaseResultStrings)
-            testCaseResults.add(TestCaseResult.fromString(testCaseResultString));
+            addTestCaseResult(TestCaseResult.fromString(testCaseResultString));
     }
 
     public static BrowserResult findResultWithIdInResultLogs(File logsDirectory, String id) {
@@ -162,11 +163,25 @@ public class BrowserResult implements XmlRenderable {
         return new BrowserResultBuilder().build(aFile);
     }
 
-    public void addTestCaseResult(TestCaseResult result) {
-        testCaseResults.add(result);
+    public void addTestCaseResult(TestCaseResult testCaseResult) {
+        testCaseResults.add(testCaseResult);
+        String testPageName = testCaseResult.getTestPageName();
+		TestPageResult testPageResult = findTestPageResultForTestPageWithName(testPageName);
+        if (testPageResult == null) {
+        	testPageResult = new TestPageResult(testPageName);
+        	testPageResults.add(testPageResult);
+        }
+        testPageResult.addTestCaseResult(testCaseResult);
     }
 
-    public ResultType getResultType() {
+    private TestPageResult findTestPageResultForTestPageWithName(String testPageName) {
+    	for (TestPageResult testPageResult : testPageResults)
+    		if (testPageResult.getTestPageName().equals(testPageName))
+    			return testPageResult;
+		return null;
+	}
+
+	public ResultType getResultType() {
         if (errorCount() > 0)
             return ResultType.ERROR;
         if (failureCount() > 0)
@@ -176,6 +191,10 @@ public class BrowserResult implements XmlRenderable {
 
 	public Document asXmlDocument() {
 		return new Document(asXml());
+	}
+
+	public List<TestPageResult> getTestPageResults() {
+		return testPageResults;
 	}
 
 }

@@ -13,11 +13,11 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IViewSite;
 
-class ViewContentProvider implements IStructuredContentProvider, ITreeContentProvider, TestRunListener {
+class ContentProvider implements IStructuredContentProvider, ITreeContentProvider, TestRunListener {
 	
 	private IViewSite viewSite;
 
-	ViewContentProvider(IViewSite site) {
+	ContentProvider(IViewSite site) {
 		this.viewSite = site;
 	}
 	
@@ -67,9 +67,6 @@ class ViewContentProvider implements IStructuredContentProvider, ITreeContentPro
 		testErrorCount = 0;
 		testCount = 0;
 		invisibleRoot = new InvisibleRootNode();
-		List<String> browserFileNames = JsUnitPlugin.soleInstance().getJsUnitPreferenceStore().browserFileNames();
-		for (String browser : browserFileNames)
-			invisibleRoot.addChild(new BrowserResultNode(browser));
 	}
 
 	public void reset() {
@@ -134,6 +131,9 @@ class ViewContentProvider implements IStructuredContentProvider, ITreeContentPro
 
 	public void testRunStarted() {
 		initialize();
+		List<String> browserFileNames = JsUnitPlugin.soleInstance().getJsUnitPreferenceStore().browserFileNames();
+		for (String browser : browserFileNames)
+			invisibleRoot.addChild(new BrowserResultNode(browser));
 	}
 
 	public void testRunFinished() {

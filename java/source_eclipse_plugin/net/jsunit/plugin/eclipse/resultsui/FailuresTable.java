@@ -8,9 +8,9 @@ import org.eclipse.swt.widgets.TableItem;
 
 public class FailuresTable extends Table {
 
-	private ViewContentProvider contentProvider;
+	private ContentProvider contentProvider;
 
-	public FailuresTable(Composite parent, int style, ViewContentProvider provider) {
+	public FailuresTable(Composite parent, int style, ContentProvider provider) {
 		super(parent, style);
 		this.contentProvider = provider;
 	}

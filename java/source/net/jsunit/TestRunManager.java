@@ -13,7 +13,8 @@ public class TestRunManager {
 
 	public static void main(String[] args) throws Exception {
 		JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
-		server.addBrowserTestRunListener(new TestRunNotifierServer(8083));//TODO: use a real port
+		int port = Integer.parseInt(args[args.length - 1]);
+		server.addBrowserTestRunListener(new TestRunNotifierServer(port));
 		server.start();
 		TestRunManager manager = new TestRunManager(server);
 		manager.runTests();

@@ -3,6 +3,7 @@ package net.jsunit.model;
 import junit.framework.TestCase;
 
 import java.io.File;
+import java.util.List;
 
 import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
@@ -23,11 +24,11 @@ public class BrowserResultTest extends TestCase {
                     + "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />"
                     + "<property name=\"baseURL\" value=\"http://www.example.com/\" />"
                 + "</properties>"
-                    + "<testcase name=\"page.html:testFoo\" time=\"1.3\" />"
-                    + "<testcase name=\"page.html:testFoo\" time=\"1.3\">"
+                    + "<testcase name=\"page1.html:testFoo\" time=\"1.3\" />"
+                    + "<testcase name=\"page1.html:testFoo\" time=\"1.3\">"
                         + "<error message=\"Test Error Message\" />"
                     + "</testcase>"
-                    + "<testcase name=\"page.html:testFoo\" time=\"1.3\">"
+                    + "<testcase name=\"page2.html:testFoo\" time=\"1.3\">"
                         + "<failure message=\"Test Failure Message\" />"
                     + "</testcase>"
             + "</testrun>";
@@ -36,9 +37,9 @@ public class BrowserResultTest extends TestCase {
         super.setUp();
         result = createBrowserResult();
         result.setTestCaseStrings(new String[] {
-            "page.html:testFoo|1.3|S||",
-            "page.html:testFoo|1.3|E|Test Error Message|",
-            "page.html:testFoo|1.3|F|Test Failure Message|"}
+            "page1.html:testFoo|1.3|S||",
+            "page1.html:testFoo|1.3|E|Test Error Message|",
+            "page2.html:testFoo|1.3|F|Test Failure Message|"}
         );
     }
 
@@ -90,6 +91,17 @@ public class BrowserResultTest extends TestCase {
         });
         assertTrue(result.wasSuccessful());
         assertEquals(ResultType.SUCCESS, result.getResultType());
+    }
+    
+    public void testGetTestPageResults() {
+    	List<TestPageResult> testPageResults = result.getTestPageResults();
+    	assertEquals(2, testPageResults.size());
+    	TestPageResult result1 = testPageResults.get(0);
+    	assertEquals("page1.html", result1.getTestPageName());
+    	assertEquals(2, result1.getTestCaseResults().size());
+    	TestPageResult result2 = testPageResults.get(1);
+    	assertEquals("page2.html", result2.getTestPageName());
+    	assertEquals(1, result2.getTestCaseResults().size());
     }
 
     private BrowserResult createBrowserResult() {

@@ -1,5 +1,7 @@
 package net.jsunit;
 
+import net.jsunit.model.TestCaseResult;
+
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 

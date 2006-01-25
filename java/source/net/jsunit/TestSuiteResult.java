@@ -1,6 +1,9 @@
 package net.jsunit;
 
 import javax.servlet.http.HttpServletRequest;
+
+import net.jsunit.model.TestCaseResult;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

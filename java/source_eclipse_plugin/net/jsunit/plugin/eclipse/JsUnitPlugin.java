@@ -98,14 +98,20 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 	public void launchRemoved(ILaunch launch) {
 	}
 
-	public void launchAdded(ILaunch launch) {
-		ILaunchConfiguration launchConfiguration = launch.getLaunchConfiguration();
+	public void launchAdded(final ILaunch launch) {
+		final ILaunchConfiguration launchConfiguration = launch.getLaunchConfiguration();
 		boolean isJsUnitLaunch = isJsUnitLaunch(launchConfiguration);
 		if (isJsUnitLaunch) {
 			getDisplay().syncExec(new Runnable() {
 				public void run() {
 					testRunViewPart = showTestRunPart();
-					testRunViewPart.connectToRemoteRunner();
+					int port;
+					try {
+						port = launchConfiguration.getAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PORT, -1);
+					} catch (CoreException e) {
+						throw new RuntimeException(e);
+					}
+					testRunViewPart.connectToRemoteRunner(port);
 				}
 			});
 			testRunViewPart.reset();

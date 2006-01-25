@@ -1,5 +1,7 @@
 package net.jsunit;
 
+import net.jsunit.model.TestCaseResult;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -79,7 +81,7 @@ public class TestSuiteResultWriter {
             if (!result.wasSuccessful()) {
                 if (buffer.length() > 0)
                     buffer.append("\n");
-                String problemMessage = result.writeProblemSummary();
+                String problemMessage = result.getProblemSummary();
                 buffer.append(problemMessage);
             }
         }

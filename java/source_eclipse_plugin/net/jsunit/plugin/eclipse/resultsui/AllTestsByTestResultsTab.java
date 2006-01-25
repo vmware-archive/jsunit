@@ -9,7 +9,7 @@ import org.eclipse.ui.IViewSite;
 
 public class AllTestsByTestResultsTab extends TestResultsTab {
 
-	public AllTestsByTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ViewContentProvider contentProvider, FailureTrace failureTrace) {
+	public AllTestsByTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
 		super(tabFolder, viewSite, contentProvider, failureTrace);
 	}
 
@@ -24,7 +24,7 @@ public class AllTestsByTestResultsTab extends TestResultsTab {
 	protected void hookSelectionChangedEventTo(Action action) {
 	}
 
-	protected void addControlToPanel(IViewSite viewSite, ViewContentProvider contentProvider, Composite panel) {
+	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel) {
 	}
 
 	protected String getToolTipText() {

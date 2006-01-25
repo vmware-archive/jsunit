@@ -17,11 +17,11 @@ public class FailuresTestResultsTab extends TestResultsTab {
 
 	private FailuresTable table;
 
-	public FailuresTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ViewContentProvider contentProvider, FailureTrace failureTrace) {
+	public FailuresTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
 		super(tabFolder, viewSite, contentProvider, failureTrace);
 	}
 
-	protected void addControlToPanel(IViewSite viewSite, ViewContentProvider contentProvider, Composite panel) {
+	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel) {
 		table = new FailuresTable(panel, SWT.NONE, contentProvider);
 		GridLayout gridLayout= new GridLayout();
 		gridLayout.marginHeight= 0;

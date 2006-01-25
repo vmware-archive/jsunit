@@ -18,11 +18,11 @@ public class AllTestsByBrowserResultsTab extends TestResultsTab {
 
 	private TreeViewer treeViewer;
 
-	public AllTestsByBrowserResultsTab(CTabFolder tabFolder, IViewSite viewSite, ViewContentProvider contentProvider, FailureTrace failureTrace) {
+	public AllTestsByBrowserResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
 		super(tabFolder, viewSite, contentProvider, failureTrace);
 	}
 
-	protected void addControlToPanel(IViewSite viewSite, ViewContentProvider contentProvider, Composite panel) {
+	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel) {
 		treeViewer = new TreeViewer(panel, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gridData= new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
 		treeViewer.getControl().setLayoutData(gridData);

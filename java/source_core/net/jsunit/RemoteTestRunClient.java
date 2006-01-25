@@ -16,9 +16,11 @@ public class RemoteTestRunClient {
 	private final TestRunListener listener;
 	private ComplexMessageReceiver receiver;
 	private ServerConnection serverConnection;
+	private int serverPort;
 
-	public RemoteTestRunClient(TestRunListener listener) {
+	public RemoteTestRunClient(TestRunListener listener, int serverPort) {
 		this.listener = listener;
+		this.serverPort = serverPort;
 	}
 	
 	public void startListening() {
@@ -79,7 +81,7 @@ public class RemoteTestRunClient {
 		
 		public void run() {
 			try {
-				serverSocket = new ServerSocket(8083);
+				serverSocket = new ServerSocket(serverPort);
 				socket = serverSocket.accept();
 			    bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 				String message;

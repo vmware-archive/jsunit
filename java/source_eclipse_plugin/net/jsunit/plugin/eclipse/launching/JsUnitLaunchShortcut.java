@@ -9,6 +9,7 @@ import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.ILaunchShortcut;
+import org.eclipse.jdt.launching.SocketUtil;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IEditorInput;
@@ -49,6 +50,7 @@ public class JsUnitLaunchShortcut implements ILaunchShortcut {
 			);
 			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_TEST_PAGE_PATH, testPagePath);
 			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PROJECT_NAME, file.getProject().getName());
+			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PORT, SocketUtil.findFreePort());
 			config = wc.doSave();
 		} catch (CoreException ce) {
 			throw new RuntimeException(ce);

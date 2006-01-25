@@ -30,7 +30,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	static public final String ID = "net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart";
 
 	private JsUnitProgressBar progressBar;
-	private ViewContentProvider contentProvider;
+	private ContentProvider contentProvider;
 	private Composite counterComposite;
 	private CounterPanel counterPanel;
 	private SashForm sashForm;
@@ -43,7 +43,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	private RemoteTestRunClient client;
 
 	public void createPartControl(Composite parent) {
-		contentProvider = new ViewContentProvider(getViewSite());
+		contentProvider = new ContentProvider(getViewSite());
 		GridLayout gridLayout= new GridLayout(); 
 		gridLayout.marginWidth= 0;
 		gridLayout.marginHeight= 0;
@@ -182,6 +182,11 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 
 	public void testRunStarted() {
 		contentProvider.testRunStarted();
+		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				counterPanel.redraw();				
+			}
+		});		
 	}
 
 	public void testRunFinished() {
@@ -208,8 +213,8 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		stopAction.setEnabled(true);
 	}
 
-	public void connectToRemoteRunner() {
-		client = new RemoteTestRunClient(this);
+	public void connectToRemoteRunner(int serverPort) {
+		client = new RemoteTestRunClient(this, serverPort);
 		client.startListening();
 	}
 

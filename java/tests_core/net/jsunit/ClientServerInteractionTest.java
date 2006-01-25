@@ -6,7 +6,7 @@ public class ClientServerInteractionTest extends TestCase {
 	
 	public void testSimple() throws InterruptedException {
 		MockTestRunListener mockTestRunListener = new MockTestRunListener();
-		RemoteTestRunClient client = new RemoteTestRunClient(mockTestRunListener);
+		RemoteTestRunClient client = new RemoteTestRunClient(mockTestRunListener, 8083);
 		TestRunNotifierServer server = new TestRunNotifierServer(8083);
 		client.startListening();
 		server.testRunStarted();

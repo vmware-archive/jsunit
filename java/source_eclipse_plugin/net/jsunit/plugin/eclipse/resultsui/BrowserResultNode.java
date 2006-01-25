@@ -8,7 +8,7 @@ import java.util.Map;
 
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
-import net.jsunit.model.TestCaseResult;
+import net.jsunit.model.TestPageResult;
 
 public class BrowserResultNode extends ParentNode {
 
@@ -30,8 +30,8 @@ public class BrowserResultNode extends ParentNode {
 	public void setResult(BrowserResult result) {
 		this.result = result;
 		this.running = false;
-		for (TestCaseResult testCaseResult : result.getTestCaseResults())
-			addChild(new TestCaseResultNode(testCaseResult));
+		for (TestPageResult testPageResult : result.getTestPageResults())
+			addChild(new TestPageResultNode(testPageResult));
 	}
 	
 	public String getStatus() {

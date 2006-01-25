@@ -16,7 +16,7 @@ public abstract class TestResultsTab {
 	
 	private FailureTrace failureTrace;
 
-	public TestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ViewContentProvider contentProvider, FailureTrace failureTrace) {
+	public TestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
 		this.failureTrace = failureTrace;
 		CTabItem tab= new CTabItem(tabFolder, SWT.NONE);
 		tab.setText(getName());
@@ -58,7 +58,7 @@ public abstract class TestResultsTab {
 	
 	protected abstract void hookSelectionChangedEventTo(Action action);
 	
-	protected abstract void addControlToPanel(IViewSite viewSite, ViewContentProvider contentProvider, Composite panel);
+	protected abstract void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel);
 
 	protected abstract String getToolTipText();
 	
