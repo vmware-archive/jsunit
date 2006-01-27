@@ -148,6 +148,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 				counterPanel.reset();
 				progressBar.setMaximum(browserCount);
 				counterPanel.setTotalBrowserCount(browserCount);
+				failureTrace.clear();
 			}
 		});
 	}
