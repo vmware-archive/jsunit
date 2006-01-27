@@ -136,6 +136,11 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 
 	public void reset() {
 		contentProvider.reset();
+		resetBrowserCountAndProgressBar();
+		refreshActiveTab();
+	}
+
+	private void resetBrowserCountAndProgressBar() {
 		final int browserCount = contentProvider.getBrowserResultNodes().size();
 		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
 			public void run() {
@@ -145,7 +150,6 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 				counterPanel.setTotalBrowserCount(browserCount);
 			}
 		});
-		refreshActiveTab();
 	}
 	
 	private void configureToolBar() {
@@ -182,14 +186,12 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 
 	public void testRunStarted() {
 		contentProvider.testRunStarted();
-		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
-			public void run() {
-				counterPanel.redraw();				
-			}
-		});		
-	}
+		resetBrowserCountAndProgressBar();
+		refreshActiveTab();
+}
 
 	public void testRunFinished() {
+		contentProvider.testRunFinished();
 	}
 
 	public void browserTestRunFinished(String browserFileName, BrowserResult result) {

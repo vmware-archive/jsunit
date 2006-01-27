@@ -27,6 +27,10 @@ public class RemoteTestRunClient {
 		serverConnection = new ServerConnection();
 		serverConnection.start();
 	}
+	
+	public void stopListening() {
+		serverConnection.shutdown();
+	}
 
 	public void messageReceived(String message) {
 		if (message.equals(TestRunNotifierServer.TEST_RUN_STARTED))
