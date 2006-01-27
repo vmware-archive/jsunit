@@ -1,5 +1,7 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
+import java.util.List;
+
 abstract class Node {
 	
 	private String name;
@@ -36,5 +38,7 @@ abstract class Node {
 	}
 
 	public abstract String getImageName();
+	
+	public abstract List<TestCaseResultNode> getProblemTestCaseResultNodes();
 
 }

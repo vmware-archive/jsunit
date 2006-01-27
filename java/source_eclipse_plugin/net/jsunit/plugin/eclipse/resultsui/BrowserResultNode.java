@@ -1,9 +1,6 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import net.jsunit.model.BrowserResult;
@@ -54,14 +51,6 @@ public class BrowserResultNode extends ParentNode {
 
 	public boolean hasCompletedTestRun() {
 		return result != null;
-	}
-
-	public List<TestCaseResultNode> getTestCaseChildrenNodes() {
-		List<TestCaseResultNode> result = new ArrayList<TestCaseResultNode>();
-		for (Iterator it = getChildren().iterator(); it.hasNext();) {
-			result.add((TestCaseResultNode) it.next());
-		}
-		return result;
 	}
 
 }

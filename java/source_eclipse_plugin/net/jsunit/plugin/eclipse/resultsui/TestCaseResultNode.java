@@ -1,6 +1,8 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import net.jsunit.model.ResultType;
@@ -44,8 +46,15 @@ public class TestCaseResultNode extends Node {
 	}
 
 	public String getDisplayStringWithBrowserFileName() {
-		BrowserResultNode browserNode = (BrowserResultNode) getParent();
+		BrowserResultNode browserNode = (BrowserResultNode) getParent().getParent();
 		return browserNode.getName() + ":" + getDisplayString();
+	}
+
+	public List<TestCaseResultNode> getProblemTestCaseResultNodes() {
+		List<TestCaseResultNode> result = new ArrayList<TestCaseResultNode>();
+		if (!wasSuccessful())
+			result.add(this);
+		return result;
 	}
 
 }

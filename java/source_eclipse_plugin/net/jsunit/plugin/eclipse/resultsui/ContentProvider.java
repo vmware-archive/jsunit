@@ -110,18 +110,8 @@ class ContentProvider implements IStructuredContentProvider, ITreeContentProvide
 
 	public List<TestCaseResultNode> getProblemTestCaseResultNodes() {
 		List<TestCaseResultNode> result = new ArrayList<TestCaseResultNode>();
-		for (TestCaseResultNode node : allTestCaseResultNodes()) {
-			if (!node.wasSuccessful())
-				result.add(node);
-		}
-		return result;
-	}
-
-	private List<TestCaseResultNode> allTestCaseResultNodes() {
-		List<TestCaseResultNode> result = new ArrayList<TestCaseResultNode>();
-		for (BrowserResultNode node: getBrowserResultNodes()) {
-			result.addAll(node.getTestCaseChildrenNodes());
-		}
+		for (BrowserResultNode browserNode : getBrowserResultNodes())
+			result.addAll(browserNode.getProblemTestCaseResultNodes());
 		return result;
 	}
 

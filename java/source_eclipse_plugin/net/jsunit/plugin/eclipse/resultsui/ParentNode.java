@@ -30,4 +30,11 @@ abstract class ParentNode extends Node {
 		return children.size()>0;
 	}
 	
+	public List<TestCaseResultNode> getProblemTestCaseResultNodes() {
+		List<TestCaseResultNode> result = new ArrayList<TestCaseResultNode>();
+		for (Node node : getChildren())
+			result.addAll(node.getProblemTestCaseResultNodes());
+		return result;
+	}
+	
 }
