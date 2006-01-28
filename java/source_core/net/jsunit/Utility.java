@@ -1,9 +1,9 @@
 package net.jsunit;
 
 import java.io.BufferedOutputStream;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -11,8 +11,8 @@ import java.util.StringTokenizer;
 
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.DOMBuilder;
+import org.jdom.input.SAXBuilder;
+import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 /**
@@ -69,15 +69,19 @@ public class Utility {
         return new XMLOutputter().outputString(element);
     }
 
+    public static String asPrettyString(Element element) {
+        return new XMLOutputter(Format.getPrettyFormat()).outputString(element);
+    }
+
     public static String asString(Document document) {
         return new XMLOutputter().outputString(document);
     }
 
 	public static Document asXmlDocument(String xmlDocumentString) {
 		try {
-			return new DOMBuilder().build(new ByteArrayInputStream(xmlDocumentString.getBytes()));
-		} catch (JDOMException e) {
-			throw new RuntimeException(e.getMessage());
+			return new SAXBuilder().build(new StringReader(xmlDocumentString));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
 		}
 	}
 }
