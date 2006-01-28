@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.NoOpStatusLogger;
@@ -51,6 +53,7 @@ public class JsUnitServer implements BrowserTestRunner {
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
 			statusLogger = new SystemOutStatusLogger();
 			Log.instance().disableLog();
+			Logger.global.setLevel(Level.OFF);
 		} else {
 			statusLogger = new NoOpStatusLogger();
 		}
@@ -69,7 +72,7 @@ public class JsUnitServer implements BrowserTestRunner {
     public void start() throws Exception {
         setUpHttpServer();
         server.start();
-        logStatus(Utility.asPrettyString(configuration.asXml()));
+        logStatus("Starting server with configuration:\r\n" + Utility.asPrettyString(configuration.asXml()));
     }
 
     private void setUpHttpServer() throws Exception {

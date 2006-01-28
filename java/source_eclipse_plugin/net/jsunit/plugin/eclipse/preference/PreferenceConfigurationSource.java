@@ -119,7 +119,7 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	}
 
 	public String logStatus() {
-		return String.valueOf(true);
+		return String.valueOf(false);
 	}
 	
 }
