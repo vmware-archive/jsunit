@@ -6,6 +6,7 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
+
 import org.jdom.Element;
 
 public class TestRunManagerTest extends TestCase {
@@ -71,6 +72,9 @@ public class TestRunManagerTest extends TestCase {
 
 		public void finishTestRun() {
 		}
+
+		public void logStatus(String message) {
+		}
     }
 
     static class FailingBrowserTestRunner implements BrowserTestRunner {
@@ -117,6 +121,9 @@ public class TestRunManagerTest extends TestCase {
 
 		public void finishTestRun() {
 		}
+
+		public void logStatus(String message) {
+		}
     }
 
     static class CrashingBrowserTestRunner implements BrowserTestRunner {
@@ -155,6 +162,9 @@ public class TestRunManagerTest extends TestCase {
 		}
 
 		public void finishTestRun() {
+		}
+
+		public void logStatus(String message) {
 		}
     }
 

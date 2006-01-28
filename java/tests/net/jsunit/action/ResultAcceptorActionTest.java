@@ -3,11 +3,12 @@ package net.jsunit.action;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.DummyBrowserResult;
 import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.model.BrowserResult;
-import junit.framework.TestCase;
+
 import org.jdom.Element;
 
 public class ResultAcceptorActionTest extends TestCase {
@@ -60,6 +61,9 @@ public class ResultAcceptorActionTest extends TestCase {
 		}
 
 		public void finishTestRun() {
+		}
+
+		public void logStatus(String message) {
 		}
     }
 

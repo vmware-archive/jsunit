@@ -13,7 +13,7 @@ public class ArgumentsConfigurationTest extends TestCase {
     }
 
     public void testSimple() throws Exception {
-        List args = Arrays.asList(new String[] {
+        List<String> args = Arrays.asList(new String[] {
             "-port", "12345",
             "-url", "http://www.jsunit.net/",
             "-resourceBase", "foo",

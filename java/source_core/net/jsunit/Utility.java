@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -21,7 +20,6 @@ import org.jdom.output.XMLOutputter;
  */
 
 public class Utility {
-    private static boolean logToStandardOut = true;
 
     public static boolean isEmpty(String s) {
         return s == null || s.trim().equals("");
@@ -51,26 +49,6 @@ public class Utility {
         while (toker.hasMoreTokens())
             result.add(toker.nextToken());
         return result;
-    }
-
-    public static void log(String message, boolean includeDate) {
-        if (logToStandardOut) {
-            StringBuffer buffer = new StringBuffer();
-            if (includeDate) {
-                buffer.append(new Date());
-                buffer.append(": ");
-            }
-            buffer.append(message);
-            System.out.println(buffer.toString());
-        }
-    }
-
-    public static void log(String message) {
-        log(message, true);
-    }
-
-    public static void setLogToStandardOut(boolean b) {
-        logToStandardOut = b;
     }
 
     public static List listWith(Object object1, Object object2) {

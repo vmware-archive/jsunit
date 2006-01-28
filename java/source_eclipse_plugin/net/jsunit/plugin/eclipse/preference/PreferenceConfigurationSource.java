@@ -117,5 +117,9 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	public String closeBrowsersAfterTestRuns() {
 		return String.valueOf(preferenceStore.closeBrowsersAfterTestRuns());
 	}
+
+	public String logStatus() {
+		return String.valueOf(false);
+	}
 	
 }

@@ -1,5 +1,6 @@
 package net.jsunit;
  
+import net.jsunit.configuration.Configuration;
 import junit.framework.TestCase;
 
 /**
@@ -22,7 +23,7 @@ public class StandaloneTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         if (runner == null) {
-        	JsUnitServer server = new JsUnitServer();
+        	JsUnitServer server = new JsUnitServer(Configuration.resolve());
         	server.start();
             runner = server;
             shouldDisposeOfRunner = true;

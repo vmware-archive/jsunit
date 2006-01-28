@@ -1,6 +1,5 @@
 package net.jsunit.action;
 
-import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
 import net.jsunit.model.BrowserResult;
 
@@ -9,9 +8,9 @@ public class ResultAcceptorAction extends JsUnitAction implements BrowserResultA
 	protected BrowserResult result;
 
 	public String execute() throws Exception {
-        Utility.log("Received submission");
+        runner.logStatus("Received submission");
 		runner.accept(result);
-        Utility.log("Done");
+        runner.logStatus("Done");
         return SUCCESS;
 	}
 

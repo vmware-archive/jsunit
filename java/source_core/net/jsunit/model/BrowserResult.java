@@ -16,10 +16,8 @@ import org.jdom.Element;
 
 public class BrowserResult implements XmlRenderable {
     private String remoteAddress, id, jsUnitVersion, userAgent, baseURL;
-    private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
 	private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
     private double time;
-    private String SEPARATOR = "---------------------";
 
     public BrowserResult() {
         this.id = String.valueOf(System.currentTimeMillis());
@@ -75,7 +73,10 @@ public class BrowserResult implements XmlRenderable {
     }
 
     public List<TestCaseResult> getTestCaseResults() {
-        return testCaseResults;
+    	List<TestCaseResult> result = new ArrayList<TestCaseResult>();
+    	for (TestPageResult pageResult : getTestPageResults())
+    		result.addAll(pageResult.getTestCaseResults());
+        return result;
     }
 
     public void setTestCaseStrings(String[] testCaseResultStrings) {
@@ -106,24 +107,23 @@ public class BrowserResult implements XmlRenderable {
 
     public int errorCount() {
         int result = 0;
-        for (TestCaseResult testCaseResult : testCaseResults) {
-            if (testCaseResult.hadError())
-                result++;
-        }
+        for (TestPageResult testPageResult : testPageResults)
+            result += testPageResult.errorCount();
         return result;
     }
 
     public int failureCount() {
         int result = 0;
-        for (TestCaseResult testCaseResult : testCaseResults) {
-            if (testCaseResult.hadFailure())
-                result++;
-        }
+        for (TestPageResult testPageResult : testPageResults)
+            result+=testPageResult.failureCount();
         return result;
     }
 
     public int count() {
-        return testCaseResults.size();
+        int result = 0;
+        for (TestPageResult testPageResult : testPageResults)
+            result+=testPageResult.count();
+        return result;
     }
 
     public Element asXml() {
@@ -136,17 +136,6 @@ public class BrowserResult implements XmlRenderable {
 
     public void writeLog(File logsDirectory) {
         writeXmlToFile(logsDirectory);
-        logProblems();
-    }
-
-    private void logProblems() {
-        String problems = new BrowserResultWriter(this).writeProblems();
-        if (!Utility.isEmpty(problems)) {
-            Utility.log("Problems:");
-            Utility.log(SEPARATOR, false);
-            Utility.log(problems, false);
-            Utility.log(SEPARATOR, false);
-        }
     }
 
     private void writeXmlToFile(File logsDirectory) {
@@ -164,7 +153,6 @@ public class BrowserResult implements XmlRenderable {
     }
 
     public void addTestCaseResult(TestCaseResult testCaseResult) {
-        testCaseResults.add(testCaseResult);
         String testPageName = testCaseResult.getTestPageName();
 		TestPageResult testPageResult = findTestPageResultForTestPageWithName(testPageName);
         if (testPageResult == null) {

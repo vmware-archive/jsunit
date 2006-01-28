@@ -8,5 +8,6 @@ public interface ConfigurationSource {
     String browserFileNames();
     String url();
     String closeBrowsersAfterTestRuns();
+    String logStatus();
     
 }

@@ -3,12 +3,13 @@ package net.jsunit.interceptor;
 import java.util.Date;
 import java.util.List;
 
+import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.XmlRenderable;
 import net.jsunit.action.JsUnitAction;
 import net.jsunit.model.BrowserResult;
-import junit.framework.TestCase;
+
 import org.jdom.Element;
 
 public class BrowserTestRunnerInterceptorTest extends TestCase {
@@ -72,6 +73,9 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
 		}
 
 		public void finishTestRun() {
+		}
+
+		public void logStatus(String message) {
 		}
     }
 

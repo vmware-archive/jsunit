@@ -53,6 +53,7 @@ public class ConfigurationTest extends TestCase {
                   "</browserFileNames>" +
                   "<url>http://www.example.com</url>" +
                   "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
+                  "<logStatus>true</logStatus>" +                  
                 "</configuration>",
                 Utility.asString(configuration.asXml())
         );
@@ -61,7 +62,7 @@ public class ConfigurationTest extends TestCase {
     public void testAsArgumentsArray() throws Exception {
         Configuration configuration = new Configuration(new FullConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
-        assertEquals(12, arguments.length);
+        assertEquals(14, arguments.length);
         assertEquals("-resourceBase", arguments[0]);
         assertEquals("c:\\resource\\base", arguments[1]);
         assertEquals("-port", arguments[2]);
@@ -74,6 +75,8 @@ public class ConfigurationTest extends TestCase {
         assertEquals("http://www.example.com", arguments[9]);
         assertEquals("-closeBrowsersAfterTestRuns", arguments[10]);
         assertEquals("true", arguments[11]);
+        assertEquals("-logStatus", arguments[12]);
+        assertEquals("true", arguments[13]);
     }
 
     static class FullConfigurationSource implements ConfigurationSource {
@@ -101,6 +104,10 @@ public class ConfigurationTest extends TestCase {
         public String closeBrowsersAfterTestRuns() {
             return "true";
         }
+
+		public String logStatus() {
+			return String.valueOf(true);
+		}
     }
 
     static class MinimalConfigurationSource implements ConfigurationSource {
@@ -128,5 +135,9 @@ public class ConfigurationTest extends TestCase {
         public String closeBrowsersAfterTestRuns() {
             return "";
         }
+
+		public String logStatus() {
+			return "";
+		}
     }
 }

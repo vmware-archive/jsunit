@@ -30,4 +30,8 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
         return url() != null;
     }
 
+	public String logStatus() {
+		return System.getProperty(ConfigurationConstants.LOG_STATUS);
+	}
+
 }

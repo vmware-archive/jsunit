@@ -30,4 +30,8 @@ public class DummyConfigurationSource implements ConfigurationSource {
 		return "true";
 	}
 
+	public String logStatus() {
+		return "false";
+	}
+
 }

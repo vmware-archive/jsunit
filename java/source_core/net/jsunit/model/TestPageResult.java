@@ -32,7 +32,7 @@ public class TestPageResult {
         return ResultType.SUCCESS;
 	}
 
-	private int failureCount() {
+	public int failureCount() {
 		int failureCount = 0;
 		for (TestCaseResult testCaseResult : testCaseResults)
 			if (testCaseResult.hadFailure())
@@ -40,12 +40,16 @@ public class TestPageResult {
 		return failureCount;
 	}
 
-	private int errorCount() {
+	public int errorCount() {
 		int errorCount = 0;
 		for (TestCaseResult testCaseResult : testCaseResults)
 			if (testCaseResult.hadError())
 				errorCount++;
 		return errorCount;
+	}
+
+	public int count() {
+		return testCaseResults.size();
 	}
 
 }

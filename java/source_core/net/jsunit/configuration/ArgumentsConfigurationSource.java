@@ -8,58 +8,48 @@ import java.util.List;
  */
 
 public class ArgumentsConfigurationSource implements ConfigurationSource {
-    private String port;
-    private String resourceBase;
-    private String logsDirectory;
-    private String url;
-    private String browserFileNames;
-    private String closeBrowsersAfterTestRuns;
 
-    public ArgumentsConfigurationSource(List args) {
-        init(args);
+    private List<String> arguments;
+
+	public ArgumentsConfigurationSource(List<String> arguments) {
+        this.arguments = arguments;
     }
 
-    private void init(List args) {
-        for (Iterator it = args.iterator(); it.hasNext();) {
+    private String getArgumentValue(String argumentName) {
+        for (Iterator<String> it = arguments.iterator(); it.hasNext();) {
             String argument = (String) it.next();
-            if (argument.equals("-" + ConfigurationConstants.PORT))
-                this.port = (String) it.next();
-            else if (argument.equals("-" + ConfigurationConstants.RESOURCE_BASE))
-                this.resourceBase = (String) it.next();
-            else if (argument.equals("-" + ConfigurationConstants.LOGS_DIRECTORY))
-                this.logsDirectory = (String) it.next();
-            else if (argument.equals("-" + ConfigurationConstants.URL))
-                this.url = (String) it.next();
-            else if (argument.equals("-" + ConfigurationConstants.BROWSER_FILE_NAMES))
-                this.browserFileNames = (String) it.next();
-            else if (argument.equals("-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS))
-                this.closeBrowsersAfterTestRuns= (String) it.next();
+            if (argument.equals("-" + argumentName))
+                return it.next();
         }
+        return null;
     }
 
     public String resourceBase() {
-        return resourceBase;
+        return getArgumentValue(ConfigurationConstants.RESOURCE_BASE);
     }
 
     public String port() {
-        return port;
+        return getArgumentValue(ConfigurationConstants.PORT);
     }
 
     public String logsDirectory() {
-        return logsDirectory;
+        return getArgumentValue(ConfigurationConstants.LOGS_DIRECTORY);
     }
 
     public String browserFileNames() {
-        return browserFileNames;
+        return getArgumentValue(ConfigurationConstants.BROWSER_FILE_NAMES);
     }
 
     public String url() {
-        return url;
+        return getArgumentValue(ConfigurationConstants.URL);
     }
 
 	public String closeBrowsersAfterTestRuns() {
-		return closeBrowsersAfterTestRuns;
+		return getArgumentValue(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
 	}
-    
+
+	public String logStatus() {
+		return getArgumentValue(ConfigurationConstants.LOG_STATUS);
+	}    
     
 }

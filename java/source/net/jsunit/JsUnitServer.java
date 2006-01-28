@@ -7,14 +7,17 @@ import java.util.Date;
 import java.util.List;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.logging.StatusLogger;
+import net.jsunit.logging.NoOpStatusLogger;
+import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.model.BrowserResult;
 
+import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
-import org.jdom.Element;
 
 import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 
@@ -35,19 +38,20 @@ public class JsUnitServer implements BrowserTestRunner {
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
     private Date dateLastResultReceived;
 	private ProcessStarter processStarter = new DefaultProcessStarter();
+	private StatusLogger statusLogger;
 
 	public static JsUnitServer instance() {
 		return instance;
 	}
 
-  	public JsUnitServer() {
-		this(Configuration.resolve());
-	}
-  	
     public JsUnitServer(Configuration configuration) {
 		this.configuration = configuration;
-		if (configuration.needsLogging())
+		if (configuration.logStatus()) {
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
+			statusLogger = new SystemOutStatusLogger();
+		} else {
+			statusLogger = new NoOpStatusLogger();
+		}
         instance = this;
 	}
 
@@ -63,7 +67,7 @@ public class JsUnitServer implements BrowserTestRunner {
     public void start() throws Exception {
         setUpHttpServer();
         server.start();
-        log(configuration.toString());
+        logStatus(configuration.asXml().toString());
     }
 
     private void setUpHttpServer() throws Exception {
@@ -197,7 +201,7 @@ public class JsUnitServer implements BrowserTestRunner {
 
     public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
         String[] browserCommand = openBrowserCommand(browserFileName);
-        log("Launching " + browserCommand[0]);
+        logStatus("Launching " + browserCommand[0]);
 		try {
 		    String[] commandWithUrl = new String[browserCommand.length + 1];
 		    System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
@@ -210,11 +214,6 @@ public class JsUnitServer implements BrowserTestRunner {
 		    t.printStackTrace();
 		    throw new FailedToLaunchBrowserException("Failed to start browser browserProcess: " + browserCommand[0]);
 		}
-	}
-
-	private void log(String message) {
-		if (configuration.needsLogging())
-			Utility.log(message);
 	}
 
 	private boolean isWindows() {
@@ -262,6 +261,10 @@ public class JsUnitServer implements BrowserTestRunner {
 			listener.testRunFinished();
 		}
 		
+	}
+
+	public void logStatus(String message) {
+		statusLogger.log(message);
 	}
 
 }

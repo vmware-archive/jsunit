@@ -87,7 +87,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	}
 	
 	protected CTabFolder createTestRunTabs(Composite parent) {
-		CTabFolder tabFolder= new CTabFolder(parent, SWT.TOP);
+		CTabFolder tabFolder = new CTabFolder(parent, SWT.TOP);
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_VERTICAL));
 		testResultsTabs = new ArrayList<TestResultsTab>();
 

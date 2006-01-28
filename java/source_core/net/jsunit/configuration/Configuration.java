@@ -17,7 +17,6 @@ import java.util.List;
 public final class Configuration implements XmlRenderable {
 
     private ConfigurationSource source;
-    private boolean needsLogging = true;
     public static final String DEFAULT_RESOURCE_BASE = ".";
     public static final int DEFAULT_PORT = 8080;
 
@@ -71,7 +70,6 @@ public final class Configuration implements XmlRenderable {
                 logsDirectoryString = resourceBaseCheckForDefault() + File.separator + "logs";
             File logsDirectory = new File(logsDirectoryString);
             if (!logsDirectory.exists()) {
-                Utility.log("Creating logs directory " + logsDirectory, false);
                 logsDirectory.mkdir();
             }
             return logsDirectory;
@@ -117,26 +115,15 @@ public final class Configuration implements XmlRenderable {
         return result;
     }
 
-    public String toString() {
-        StringBuffer result = new StringBuffer();
-        result.append(ConfigurationConstants.PORT).append(": ").append(getPort()).append("\n");
-        result.append(ConfigurationConstants.RESOURCE_BASE).append(": ").append(getResourceBase().getAbsolutePath()).append("\n");
-        result.append(ConfigurationConstants.LOGS_DIRECTORY).append(": ").append(getLogsDirectory().getAbsolutePath()).append("\n");
-        result.append(ConfigurationConstants.BROWSER_FILE_NAMES).append(": ").append(getBrowserFileNames()).append("\n");
-        result.append(ConfigurationConstants.URL).append(": ").append(getTestURL());
-        return result.toString();
-    }
-
     public ConfigurationSource getSource() {
         return source;
     }
 
-    public boolean needsLogging() {
-        return needsLogging;
-    }
-
-    public void setNeedsLogging(boolean b) {
-        needsLogging = b;
+    public boolean logStatus() {
+    	String logStatus = source.logStatus();
+    	if (Utility.isEmpty(logStatus))
+    		return true;
+    	return Boolean.valueOf(logStatus);
     }
 
     public Element asXml() {
@@ -170,6 +157,10 @@ public final class Configuration implements XmlRenderable {
         closeBrowsers.setText(String.valueOf(shouldCloseBrowsersAfterTestRuns()));
         configuration.addContent(closeBrowsers);
 
+        Element logStatus = new Element("logStatus");
+        logStatus.setText(String.valueOf(logStatus()));
+        configuration.addContent(logStatus);
+
         return configuration;
     }
 
@@ -180,7 +171,8 @@ public final class Configuration implements XmlRenderable {
 			"-" + ConfigurationConstants.LOGS_DIRECTORY, getLogsDirectory().getAbsolutePath(),
 			"-" + ConfigurationConstants.BROWSER_FILE_NAMES, commaSeparatedBrowserFileNames(),
 			"-" + ConfigurationConstants.URL, getTestURL().toString(),
-			"-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS, String.valueOf(shouldCloseBrowsersAfterTestRuns())
+			"-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS, String.valueOf(shouldCloseBrowsersAfterTestRuns()),
+			"-" + ConfigurationConstants.LOG_STATUS, String.valueOf(logStatus())
 		};
 	}
 

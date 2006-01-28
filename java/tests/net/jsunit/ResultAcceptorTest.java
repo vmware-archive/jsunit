@@ -8,7 +8,9 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import junit.framework.TestCase;
+import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.configuration.EnvironmentVariablesConfigurationSource;
 import net.jsunit.interceptor.BrowserResultInterceptor;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
@@ -29,8 +31,7 @@ public class ResultAcceptorTest extends TestCase {
         super.setUp();
         System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, "foo");
         System.setProperty(ConfigurationConstants.URL, "http://bar");
-        server = new JsUnitServer();
-        Utility.setLogToStandardOut(false);
+        server = new JsUnitServer(new Configuration(new EnvironmentVariablesConfigurationSource()));
         requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[] {"ID_foo"});
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[] {"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});

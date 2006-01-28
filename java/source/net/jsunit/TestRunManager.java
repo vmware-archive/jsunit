@@ -8,8 +8,10 @@ import net.jsunit.model.BrowserResult;
 public class TestRunManager {
 
     public static final int MAX_SECONDS_TO_WAIT = 60;
-	private int errorCount;
+
+    private int errorCount;
 	private int failureCount;
+	private BrowserTestRunner testRunner;
 
 	public static void main(String[] args) throws Exception {
 		JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
@@ -22,8 +24,6 @@ public class TestRunManager {
 		System.exit(manager.hadProblems() ? 1 : 0);
 	}
 	
-	private BrowserTestRunner testRunner;
-
 	public TestRunManager(BrowserTestRunner testRunner) {
 		this.testRunner = testRunner;
 	}
@@ -47,7 +47,7 @@ public class TestRunManager {
 	}
 
     private void waitForResultToBeSubmitted(String browserFileName, Date dateBrowserLaunched) throws Exception {
-        Utility.log("Waiting for " + browserFileName + " to submit result");
+        testRunner.logStatus("Waiting for " + browserFileName + " to submit result");
         long secondsWaited = 0;
         while (!testRunner.hasReceivedResultSince(dateBrowserLaunched)) {
             Thread.sleep(1000);

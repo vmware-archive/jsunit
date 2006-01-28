@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
+import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationConstants;
 
 public class DistributedTestTest extends TestCase {
@@ -18,7 +19,7 @@ public class DistributedTestTest extends TestCase {
         System.setProperty(ConfigurationConstants.URL,
            "http://localhost:8080/jsunit/testRunner.html?"
            + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true");
-        server = new JsUnitServer();
+        server = new JsUnitServer(Configuration.resolve());
         server.start();
     }
 

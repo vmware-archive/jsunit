@@ -65,6 +65,11 @@ public abstract class FunctionalTestCase extends TestCase {
 		public String closeBrowsersAfterTestRuns() {
 			return String.valueOf(Boolean.TRUE);
 		}
+
+		public String logStatus() {
+			return String.valueOf(false);
+		}
+		
 	}
 
 }

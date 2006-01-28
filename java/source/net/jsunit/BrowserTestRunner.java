@@ -7,22 +7,24 @@ import net.jsunit.model.BrowserResult;
 
 public interface BrowserTestRunner extends XmlRenderable {
 
-    List<String> getBrowserFileNames();
+	void startTestRun();
 
-    void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException;
+	void finishTestRun();
+
+	void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException;
+
+    void accept(BrowserResult result);
 
     boolean hasReceivedResultSince(Date dateBrowserLaunched);
 
     BrowserResult lastResult();
 
-    void accept(BrowserResult result);
-
     void dispose();
 
     BrowserResult findResultWithId(String id);
+	
+	void logStatus(String message);
 
-	void startTestRun();
-
-	void finishTestRun();
+	List<String> getBrowserFileNames();
 
 }

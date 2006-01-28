@@ -3,8 +3,8 @@ package net.jsunit.action;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
 import net.jsunit.StandaloneTest;
-import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
+
 import org.jdom.Element;
 
 public class TestRunnerAction extends JsUnitAction implements StandaloneTestAware {
@@ -13,9 +13,9 @@ public class TestRunnerAction extends JsUnitAction implements StandaloneTestAwar
     private StandaloneTest test;
 
     public String execute() {
-        Utility.log("Received request to run standalone test");
+        runner.logStatus("Received request to run standalone test");
         result = TestRunner.run(test);//TODO: change this to instead just use a testrunmanager, not a standalone test
-        Utility.log("Done running standalone test");
+        runner.logStatus("Done running standalone test");
         return SUCCESS;
     }
 

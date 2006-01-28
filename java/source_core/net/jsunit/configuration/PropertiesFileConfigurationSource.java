@@ -62,4 +62,8 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         return getProperty(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
     }
 
+	public String logStatus() {
+		return getProperty(ConfigurationConstants.LOG_STATUS);
+	}
+
 }
