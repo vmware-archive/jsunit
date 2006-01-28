@@ -54,6 +54,7 @@ public class JsUnitServer implements BrowserTestRunner {
 			statusLogger = new SystemOutStatusLogger();
 			Log.instance().disableLog();
 			Logger.global.setLevel(Level.OFF);
+			Logger.getLogger("com.opensymphony.webwork.config.DefaultConfiguration").setLevel(Level.OFF);
 		} else {
 			statusLogger = new NoOpStatusLogger();
 		}
