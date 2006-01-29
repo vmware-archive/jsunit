@@ -84,4 +84,9 @@ public class Utility {
 			throw new RuntimeException(e);
 		}
 	}
+
+	public static boolean isWindows() {
+        String os = System.getProperty("os.name");
+        return os != null && os.startsWith("Windows");
+    }
 }

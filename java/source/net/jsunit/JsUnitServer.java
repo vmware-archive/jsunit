@@ -190,7 +190,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	
     private String[] openBrowserCommand(String browserFileName) {
         if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
-            if (isWindows()) {
+            if (Utility.isWindows()) {
                 return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
             }
             else return new String[] {"htmlview"};
@@ -222,15 +222,6 @@ public class JsUnitServer implements BrowserTestRunner {
 		}
 	}
 
-	private boolean isWindows() {
-        String os = System.getProperty("os.name");
-        return os != null && os.startsWith("Windows");
-    }
-
-	public Configuration getConfiguration() {
-		return configuration;
-	}
-	
 	void setProcessStarter(ProcessStarter starter) {
 		this.processStarter = starter;
 	}
@@ -247,7 +238,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
     public Element asXml() {
-        return getConfiguration().asXml();
+        return configuration.asXml();
     }
 
 	public void startTestRun() {

@@ -24,6 +24,7 @@ public class BrowserResultBuilder {
         }
     }
 
+	@SuppressWarnings("unchecked")
 	public BrowserResult build(Document document) {
         BrowserResult result = new BrowserResult();
         Element root = document.getRootElement();
@@ -41,8 +42,8 @@ public class BrowserResultBuilder {
     }
 
     private void updateWithProperties(Element element, BrowserResult result) {
-        for (Object o : element.getChildren()) {
-            Element next = (Element) o;
+        for (Object child : element.getChildren()) {
+            Element next = (Element) child;
             if (BrowserResultWriter.JSUNIT_VERSION.equals(next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY)))
                 result.setJsUnitVersion(next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE));
             else
