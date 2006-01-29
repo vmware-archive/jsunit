@@ -8,7 +8,9 @@
     <property name="logsDirectory" value=""/>
 	<property name="closeBrowsersAfterTestRuns" value="true"/>
 
+    <property name="source_core" location="java/source_core"/>
     <property name="source" location="java/source"/>
+    <property name="tests_core" location="java/tests_core"/>
     <property name="tests" location="java/tests"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
@@ -40,16 +42,27 @@
 
     <target name="compile_source" description="Compiles the source">
         <delete dir="${bin}/net"/>
-        <javac srcdir="${source}" destdir="${bin}" debug="true">
+        <javac srcdir="${source_core}" destdir="${bin}" debug="true">
             <classpath>
                 <fileset dir="${lib}">
                     <include name="*.jar"/>
                 </fileset>
             </classpath>
         </javac>
+        <javac srcdir="${source}" destdir="${bin}" debug="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+                <path location="${bin}"/>
+            </classpath>
+        </javac>
     </target>
 
     <target name="compile_tests" description="Compiles the self-tests">
+        <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+        </javac>
         <javac srcdir="${tests}" destdir="${bin}" debug="true">
             <classpath refid="self_tests_classpath"/>
         </javac>
