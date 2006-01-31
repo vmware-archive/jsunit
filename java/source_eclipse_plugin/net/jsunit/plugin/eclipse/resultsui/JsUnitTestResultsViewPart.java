@@ -197,9 +197,9 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		public ExpandAllAction() {
 			setText("Expand all");
 			setToolTipText("Expand all browsers and test pages");
-			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("plusdisabled.gif"));
-			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("plus.gif"));
-			setImageDescriptor(JsUnitPlugin.createImageDescriptor("plus.gif"));
+			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("expandalldisabled.png"));
+			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("expandallenabled.png"));
+			setImageDescriptor(JsUnitPlugin.createImageDescriptor("expandallenabled.png"));
 		}
 
 		public void run() {
@@ -211,9 +211,9 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		public CollapseAllAction() {
 			setText("Collapse all");
 			setToolTipText("Collapse all browsers and test pages");
-			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("minusdisabled.gif"));
-			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("minus.gif"));
-			setImageDescriptor(JsUnitPlugin.createImageDescriptor("minus.gif"));
+			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("collapsealldisabled.png"));
+			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("collapseallenabled.png"));
+			setImageDescriptor(JsUnitPlugin.createImageDescriptor("collapseallenabled.png"));
 		}
 
 		public void run() {

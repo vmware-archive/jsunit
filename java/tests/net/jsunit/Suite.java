@@ -2,6 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import net.jsunit.action.DisposeActionTest;
 import net.jsunit.action.ResultAcceptorActionTest;
 import net.jsunit.action.ResultDisplayerActionTest;
 import net.jsunit.action.TestRunnerActionTest;
@@ -30,6 +31,7 @@ public class Suite extends TestCase {
         result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);
+        result.addTestSuite(DisposeActionTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
         result.addTestSuite(ServerConfigurationFunctionalTest.class);
         result.addTestSuite(JsUnitServerTest.class);
