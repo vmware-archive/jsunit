@@ -144,4 +144,8 @@ class ContentProvider implements IStructuredContentProvider, ITreeContentProvide
 		testFailureCount += result.failureCount();
 	}
 
+	public void expandAll() {
+		
+	}
+
 }

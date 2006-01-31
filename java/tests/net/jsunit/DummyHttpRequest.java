@@ -226,4 +226,20 @@ public class DummyHttpRequest implements HttpServletRequest {
     public boolean isRequestedSessionIdFromUrl() {
         return false;
     }
+
+	public int getRemotePort() {
+		return 0;
+	}
+
+	public String getLocalName() {
+		return null;
+	}
+
+	public String getLocalAddr() {
+		return null;
+	}
+
+	public int getLocalPort() {
+		return 0;
+	}
 }

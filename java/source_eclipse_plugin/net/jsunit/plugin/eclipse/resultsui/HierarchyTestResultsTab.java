@@ -61,4 +61,17 @@ public abstract class HierarchyTestResultsTab extends TestResultsTab {
 		return null;
 	}
 	
+	public void expandAll() {
+		treeViewer.expandAll();
+	}
+	
+	public void collapseAll() {
+		treeViewer.collapseAll();
+	}
+	
+	public boolean isHierarchical() {
+		return true;
+	}
+
+
 }

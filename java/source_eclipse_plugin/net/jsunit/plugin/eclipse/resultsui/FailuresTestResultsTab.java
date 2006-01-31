@@ -64,4 +64,14 @@ public class FailuresTestResultsTab extends TestResultsTab {
 		return "failures.gif";
 	}
 
+	public void expandAll() {
+	}
+
+	public void collapseAll() {
+	}
+
+	public boolean isHierarchical() {
+		return false;
+	}
+
 }

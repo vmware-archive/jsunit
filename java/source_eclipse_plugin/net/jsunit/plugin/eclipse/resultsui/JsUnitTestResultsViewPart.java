@@ -1,5 +1,6 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +41,10 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	private List<TestResultsTab> testResultsTabs;
 	private TestResultsTab activeTab;
 	private StopAction stopAction;
+	private CollapseAllAction collapseAllAction;
+	private ExpandAllAction expandAllAction;
 	private RemoteTestRunClient client;
+	private long startTime;
 
 	public void createPartControl(Composite parent) {
 		contentProvider = new ContentProvider(getViewSite());
@@ -57,6 +61,8 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		sashForm.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
 		stopAction = new StopAction();
+		expandAllAction = new ExpandAllAction();
+		collapseAllAction = new CollapseAllAction();
 		configureToolBar();
 	}
 	
@@ -111,6 +117,8 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 			if (((CTabFolder) event.widget).getSelection().getText() == tab.getName())
 				activeTab= tab;
 				activeTab.refresh();
+				collapseAllAction.setEnabled(activeTab.isHierarchical());
+				expandAllAction.setEnabled(activeTab.isHierarchical());
 		}
 	}
 	
@@ -158,6 +166,10 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		IToolBarManager toolBar= actionBars.getToolBarManager();
 		stopAction.setEnabled(false);
 		toolBar.add(stopAction);
+		expandAllAction.setEnabled(true);
+		toolBar.add(expandAllAction);
+		collapseAllAction.setEnabled(true);
+		toolBar.add(collapseAllAction);
 		actionBars.updateActionBars();
 	}
 	
@@ -181,6 +193,34 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		}
 	}
 
+	private class ExpandAllAction extends Action {
+		public ExpandAllAction() {
+			setText("Expand all");
+			setToolTipText("Expand all browsers and test pages");
+			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("plusdisabled.gif"));
+			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("plus.gif"));
+			setImageDescriptor(JsUnitPlugin.createImageDescriptor("plus.gif"));
+		}
+
+		public void run() {
+			activeTab.expandAll();
+		}
+	}
+
+	private class CollapseAllAction extends Action {
+		public CollapseAllAction() {
+			setText("Collapse all");
+			setToolTipText("Collapse all browsers and test pages");
+			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("minusdisabled.gif"));
+			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("minus.gif"));
+			setImageDescriptor(JsUnitPlugin.createImageDescriptor("minus.gif"));
+		}
+
+		public void run() {
+			activeTab.collapseAll();
+		}
+	}
+
 	public boolean isReady() {
 		return true;
 	}
@@ -189,11 +229,25 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		contentProvider.testRunStarted();
 		resetBrowserCountAndProgressBar();
 		refreshActiveTab();
-}
+		startTime = System.currentTimeMillis();
+		setContentDescriptionMessage("Starting Test Run");
+	}
 
 	public void testRunFinished() {
 		contentProvider.testRunFinished();
+		long millisTaken = System.currentTimeMillis() - startTime;
+		String message = "Test Run took " + NumberFormat.getInstance().format(millisTaken / 1000d) + " seconds";
+		setContentDescriptionMessage(message);
 	}
+
+	private void setContentDescriptionMessage(final String message) {
+		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
+			public void run() {
+				setContentDescription(message);
+			}
+		});
+	}
+	
 
 	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
 		contentProvider.browserTestRunFinished(browserFileName, result);
@@ -208,17 +262,21 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		});
 		stopAction.setEnabled(false);
 		refreshActiveTab();
+		setContentDescriptionMessage("Done running tests in browser "+browserFileName);
 	}
 
 	public void browserTestRunStarted(String browserFileName) {
 		contentProvider.browserTestRunStarted(browserFileName);
 		refreshActiveTab();
 		stopAction.setEnabled(true);
+		setContentDescriptionMessage("Running tests in browser "+browserFileName);
 	}
 
 	public void connectToRemoteRunner(int serverPort) {
 		client = new RemoteTestRunClient(this, serverPort);
 		client.startListening();
 	}
+	
+	
 
 }

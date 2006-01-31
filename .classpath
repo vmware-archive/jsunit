@@ -10,11 +10,9 @@
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="lib" path="java/lib/javax.servlet.jar"/>
 	<classpathentry kind="lib" path="java/lib/jdom.jar"/>
-	<classpathentry kind="lib" path="java/lib/jetty.jar"/>
 	<classpathentry kind="lib" path="java/lib/junit.jar"/>
 	<classpathentry kind="lib" path="java/lib/webwork-2.1.7.jar"/>
 	<classpathentry kind="lib" path="java/lib/xwork.jar"/>
-	<classpathentry kind="lib" path="java/lib/commons-logging.jar"/>
 	<classpathentry kind="lib" path="java/lib/ognl.jar"/>
 	<classpathentry kind="lib" path="java/lib/oscore.jar"/>
 	<classpathentry kind="lib" path="java/config"/>
@@ -24,5 +22,9 @@
 	<classpathentry kind="lib" path="java/testlib/nekohtml-0.8.1.jar"/>
 	<classpathentry kind="lib" path="java/testlib/xml-apis-1.0.b2.jar"/>
 	<classpathentry kind="lib" path="java/lib/xercesImpl-2.6.2.jar"/>
+	<classpathentry kind="lib" path="java/lib/org.mortbay.jetty.jar"/>
+	<classpathentry kind="lib" path="java/lib/stop.jar"/>
+	<classpathentry kind="lib" path="java/lib/start.jar"/>
+	<classpathentry kind="lib" path="java/lib/commons-logging.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>

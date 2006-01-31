@@ -37,6 +37,7 @@ public abstract class TestResultsTab {
 		addControlToPanel(viewSite, contentProvider, panel);	
 
 		hookSelectionChangedEventTo(createSelectionChangedAction());
+
 	}
 
 	protected abstract String getImageName();
@@ -69,5 +70,11 @@ public abstract class TestResultsTab {
 	public abstract String getName();
 
 	public abstract void refresh();
+
+	public abstract void expandAll();	
+
+	public abstract void collapseAll();
+
+	public abstract boolean isHierarchical();
 	
 }

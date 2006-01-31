@@ -7,28 +7,14 @@ import net.jsunit.configuration.Configuration;
 
 public class JsUnitServerTest extends TestCase {
 
-	public void testConfigurationDeterminesAdditionOfLogWriter() {
-		Configuration configuration = new Configuration(new DummyConfigurationSource() {
-			public String logStatus() {
-				return String.valueOf(false);
-			}
-		});
-		
-		List<TestRunListener> listeners = new JsUnitServer(configuration).getBrowserTestRunListeners();
-		assertTrue(listeners.isEmpty());
-
-		configuration = new Configuration(new DummyConfigurationSource() {
-			public String logStatus() {
-				return String.valueOf(true);
-			}
-		});
-		listeners = new JsUnitServer(configuration).getBrowserTestRunListeners();
-		assertEquals(1, listeners.size());
-		assertTrue(listeners.get(0) instanceof BrowserResultLogWriter);
+	private JsUnitServer server;
+	
+	public void setUp() throws Exception {
+		super.setUp();
+		server = new JsUnitServer(new Configuration(new DummyConfigurationSource()));
 	}
 	
 	public void testStartTestRun() throws Exception {
-		final JsUnitServer server = new JsUnitServer(new Configuration(new DummyConfigurationSource()));
 		server.setProcessStarter(new MockProcessStarter());
 		MockTestRunListener listener = new MockTestRunListener();
 		server.addBrowserTestRunListener(listener);
@@ -49,7 +35,6 @@ public class JsUnitServerTest extends TestCase {
 	}
 	
 	public void testLaunchingBrowser() throws FailedToLaunchBrowserException {
-		JsUnitServer server = new JsUnitServer(new Configuration(new DummyConfigurationSource()));
 		MockProcessStarter mockProcessStarter = new MockProcessStarter();
 		server.setProcessStarter(mockProcessStarter);
 		MockTestRunListener listener = new MockTestRunListener();
@@ -66,7 +51,6 @@ public class JsUnitServerTest extends TestCase {
 	}
 	
 	public void testStartEnd() {
-		final JsUnitServer server = new JsUnitServer(new Configuration(new DummyConfigurationSource()));
 		server.setProcessStarter(new MockProcessStarter());
 		MockTestRunListener listener = new MockTestRunListener();
 		listener.isReady = true;
@@ -76,5 +60,25 @@ public class JsUnitServerTest extends TestCase {
 		server.finishTestRun();
 		assertTrue(listener.testRunFinishedCalled);
 	}
+	
+	public void testConfigurationDeterminesAdditionOfLogWriter() {
+		Configuration configuration = new Configuration(new DummyConfigurationSource() {
+			public String logStatus() {
+				return String.valueOf(false);
+			}
+		});
+		
+		List<TestRunListener> listeners = new JsUnitServer(configuration).getBrowserTestRunListeners();
+		assertTrue(listeners.isEmpty());
 
+		configuration = new Configuration(new DummyConfigurationSource() {
+			public String logStatus() {
+				return String.valueOf(true);
+			}
+		});
+		listeners = new JsUnitServer(configuration).getBrowserTestRunListeners();
+		assertEquals(1, listeners.size());
+		assertTrue(listeners.get(0) instanceof BrowserResultLogWriter);
+	}
+	
 }

@@ -5,8 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.NoOpStatusLogger;
@@ -20,7 +18,6 @@ import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
-import org.mortbay.util.Log;
 
 import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 
@@ -52,9 +49,6 @@ public class JsUnitServer implements BrowserTestRunner {
 		if (configuration.logStatus()) {
 			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
 			statusLogger = new SystemOutStatusLogger();
-			Log.instance().disableLog();
-			Logger.global.setLevel(Level.OFF);
-			Logger.getLogger("com.opensymphony.webwork.config.DefaultConfiguration").setLevel(Level.OFF);
 		} else {
 			statusLogger = new NoOpStatusLogger();
 		}
