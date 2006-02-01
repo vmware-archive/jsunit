@@ -13,3 +13,6 @@
 - StandaloneTest now runs tests in all specified browsers, even after an earlier browser failed
 - New "config" servlet that shows the configuration as XML of the server
 - Safari fix
+- Eclipse plugin
+- assertHTMLEquals function
+- Opera fix
