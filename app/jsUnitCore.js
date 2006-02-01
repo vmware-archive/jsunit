@@ -182,6 +182,16 @@ function assertEvaluatesToFalse() {
     fail(commentArg(1, arguments));
 }
 
+function assertHTMLEquals(expectedHTML, actualHTML) {
+    assertEquals(standardizeHTML(expectedHTML), standardizeHTML(actualHTML));
+}
+
+function standardizeHTML(html) {
+    var translator = document.createElement("DIV");
+    translator.innerHTML = html;
+    return translator.innerHTML;
+}
+
 function isLoaded() {
   return isTestPageLoaded;
 }
