@@ -36,7 +36,7 @@ public class TestRunManager {
 	            Date dateLaunched = new Date();
 	            testRunner.launchTestRunForBrowserWithFileName(browserFileName);
 	            waitForResultToBeSubmitted(browserFileName, dateLaunched);
-	            verifyLastResult();
+	            updateFromLastResult();
 	        }
 		} finally {
 			testRunner.finishTestRun();
@@ -58,7 +58,7 @@ public class TestRunManager {
         }
     }
 
-    private void verifyLastResult() {
+    private void updateFromLastResult() {
         BrowserResult result = testRunner.lastResult();
         if (!result.wasSuccessful()) {
         	errorCount += result.errorCount();

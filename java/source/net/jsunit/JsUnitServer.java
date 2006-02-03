@@ -100,6 +100,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
     public void accept(BrowserResult result) {
+    	endBrowser();
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
@@ -109,7 +110,6 @@ public class JsUnitServer implements BrowserTestRunner {
         	listener.browserTestRunFinished(browserFileName, result);
         }
         dateLastResultReceived = new Date();
-    	endBrowser();
     }
 
     public File getLogsDirectory() {
