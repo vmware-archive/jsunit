@@ -7,7 +7,6 @@ import net.jsunit.plugin.eclipse.JsUnitPlugin;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
-import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -69,16 +68,6 @@ public class PreferencePage
 		
 		createSpacer(testPageExtensionParent, 3);
 		
-		IntegerFieldEditor portField = new IntegerFieldEditor(
-				PreferenceConstants.PREFERENCE_PORT,
-				"&Run server on port:",
-				testPageExtensionParent);
-		portField.setTextLimit(4);
-
-		addField(portField);
-		
-		createSpacer(testPageExtensionParent, 3);
-
 		addField(new StringFieldEditor(
 					PreferenceConstants.PREFERENCE_TEST_PAGE_EXTENSIONS,
 					"&Test Page extensions:",

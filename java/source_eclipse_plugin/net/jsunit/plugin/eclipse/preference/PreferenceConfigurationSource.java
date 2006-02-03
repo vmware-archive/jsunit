@@ -19,20 +19,18 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	private static final String ERROR_MESSAGE_INVALID_TEST_PAGE_EXTENSION =
 		"Invalid Test Page extension.  Test Pages must be HTML files.";
 	
-	private static final String ERROR_MESSAGE_INVALID_PORT =
-		"Invalid Port for JsUnit." +
-		"Please go to Window->Preferences->JsUnit and enter a valid port.";
-
 	private static final String ERROR_MESSAGE_NO_LOGS_DIRECTORY =
 		"The logs directory for JsUnit is not configured." +
 		"Please go to Window->Preferences->JsUnit and enter a logs directory.";
 	
 	private JsUnitPreferenceStore preferenceStore;
 	private IFile testPage;
+	private int port;
 
-	public PreferenceConfigurationSource(JsUnitPreferenceStore preferenceStore, IFile testPage) {
+	public PreferenceConfigurationSource(JsUnitPreferenceStore preferenceStore, IFile testPage, int port) {
 		this.preferenceStore = preferenceStore;
 		this.testPage = testPage;
+		this.port = port;
 	}
 
 	public String url() {
@@ -69,10 +67,6 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 			return ERROR_MESSAGE_NO_BROWSER_PATH;
 		}
 		
-		if (!preferenceStore.hasValidPort()) {
-			return ERROR_MESSAGE_INVALID_PORT;
-		}
-		
 		if (isEmpty(logsDirectory())) {
 			return ERROR_MESSAGE_NO_LOGS_DIRECTORY;
 		}
@@ -103,7 +97,7 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	}
 
 	public String port() {
-		return String.valueOf(preferenceStore.port());
+		return String.valueOf(port);
 	}
 
 	public String logsDirectory() {

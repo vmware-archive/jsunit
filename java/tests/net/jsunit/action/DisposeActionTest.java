@@ -6,7 +6,6 @@ import java.util.List;
 import org.jdom.Element;
 
 import net.jsunit.BrowserTestRunner;
-import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.model.BrowserResult;
 import junit.framework.TestCase;
 
@@ -30,7 +29,7 @@ public class DisposeActionTest extends TestCase {
 		public void finishTestRun() {
 		}
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+		public void launchTestRunForBrowserWithFileName(String browserFileName) {
 		}
 
 		public void accept(BrowserResult result) {

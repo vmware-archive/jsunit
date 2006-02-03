@@ -107,7 +107,7 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 					testRunViewPart = showTestRunPart();
 					int port;
 					try {
-						port = launchConfiguration.getAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PORT, -1);
+						port = launchConfiguration.getAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_REMOTE_NOTIFIER_SERVER_PORT, -1);
 					} catch (CoreException e) {
 						throw new RuntimeException(e);
 					}

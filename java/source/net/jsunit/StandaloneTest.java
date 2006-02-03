@@ -9,7 +9,7 @@ import junit.framework.TestCase;
 
 public class StandaloneTest extends TestCase {
     private boolean shouldDisposeOfRunner = false;
-    private BrowserTestRunner runner;
+    protected BrowserTestRunner runner;
 	private TestRunManager testRunManager;
 
     public StandaloneTest(String name) {

@@ -98,7 +98,7 @@ public class BrowserResult implements XmlRenderable {
             addTestCaseResult(TestCaseResult.fromString(testCaseResultString));
     }
 
-    public static BrowserResult findResultWithIdInResultLogs(File logsDirectory, String id) {
+    public static BrowserResult findResultWithIdInLogs(File logsDirectory, String id) {
         File logFile = logFileForId(logsDirectory, id);
         if (logFile.exists())
             return fromXmlFile(logFile);
@@ -183,6 +183,10 @@ public class BrowserResult implements XmlRenderable {
 
 	public List<TestPageResult> getTestPageResults() {
 		return testPageResults;
+	}
+
+	public String getDisplayString() {
+		return getResultType().getDisplayString();
 	}
 
 }

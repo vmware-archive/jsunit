@@ -34,7 +34,7 @@ public class JsUnitServerTest extends TestCase {
 		thread.join();		
 	}
 	
-	public void testLaunchingBrowser() throws FailedToLaunchBrowserException {
+	public void testLaunchingBrowser()  {
 		MockProcessStarter mockProcessStarter = new MockProcessStarter();
 		server.setProcessStarter(mockProcessStarter);
 		MockTestRunListener listener = new MockTestRunListener();

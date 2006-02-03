@@ -50,7 +50,7 @@ public class JsUnitLaunchShortcut implements ILaunchShortcut {
 			);
 			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_TEST_PAGE_PATH, testPagePath);
 			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PROJECT_NAME, file.getProject().getName());
-			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_PORT, SocketUtil.findFreePort());
+			wc.setAttribute(JsUnitLaunchConfiguration.ATTRIBUTE_REMOTE_NOTIFIER_SERVER_PORT, SocketUtil.findFreePort());
 			config = wc.doSave();
 		} catch (CoreException ce) {
 			throw new RuntimeException(ce);

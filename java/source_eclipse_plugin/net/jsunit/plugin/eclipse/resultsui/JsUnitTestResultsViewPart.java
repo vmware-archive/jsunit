@@ -183,14 +183,11 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		}
 
 		public void run() {
-			hitServer("stop");
 			setEnabled(false);
+			client.stopListening();
+			testRunFinished(true);
 		}
 
-		private void hitServer(String string) {
-			//TODO
-			
-		}
 	}
 
 	private class ExpandAllAction extends Action {
@@ -226,6 +223,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	}
 
 	public void testRunStarted() {
+		stopAction.setEnabled(true);
 		contentProvider.testRunStarted();
 		resetBrowserCountAndProgressBar();
 		refreshActiveTab();
@@ -234,9 +232,17 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	}
 
 	public void testRunFinished() {
+		testRunFinished(false);
+	}
+
+	private void testRunFinished(boolean abortedByUser) {
+		stopAction.setEnabled(false);
 		contentProvider.testRunFinished();
+		if (activeTab.isHierarchical())
+			refreshActiveTab();
 		long millisTaken = System.currentTimeMillis() - startTime;
-		String message = "Test Run took " + NumberFormat.getInstance().format(millisTaken / 1000d) + " seconds";
+		String message = abortedByUser ? "Test Run stopped after " : "Test Run took ";
+		message += (NumberFormat.getInstance().format(millisTaken / 1000d) + " seconds");
 		setContentDescriptionMessage(message);
 	}
 
@@ -260,7 +266,6 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 				counterPanel.setTestFailureCount(contentProvider.getTestFailureCount());
 			}
 		});
-		stopAction.setEnabled(false);
 		refreshActiveTab();
 		setContentDescriptionMessage("Done running tests in browser "+browserFileName);
 	}
@@ -268,7 +273,6 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	public void browserTestRunStarted(String browserFileName) {
 		contentProvider.browserTestRunStarted(browserFileName);
 		refreshActiveTab();
-		stopAction.setEnabled(true);
 		setContentDescriptionMessage("Running tests in browser "+browserFileName);
 	}
 

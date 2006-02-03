@@ -127,12 +127,18 @@ class ContentProvider implements IStructuredContentProvider, ITreeContentProvide
 	}
 
 	public void testRunFinished() {
+		ensureAllBrowserNodesAreNotRunning();
 	}
 	
+	private void ensureAllBrowserNodesAreNotRunning() {
+		for (BrowserResultNode node : getBrowserResultNodes())
+			node.setRunning(false);
+	}
+
 	public void browserTestRunStarted(String browserFileName) {
 		BrowserResultNode node = findBrowserNode(browserFileName);
 		if (node != null)
-			node.setRunning();
+			node.setRunning(true);
 	}
 
 	public void browserTestRunFinished(String browserFileName, BrowserResult result) {

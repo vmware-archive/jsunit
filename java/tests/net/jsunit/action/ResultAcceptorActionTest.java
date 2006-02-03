@@ -6,7 +6,6 @@ import java.util.List;
 import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.DummyBrowserResult;
-import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.model.BrowserResult;
 
 import org.jdom.Element;
@@ -31,7 +30,7 @@ public class ResultAcceptorActionTest extends TestCase {
             return null;
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        public void launchTestRunForBrowserWithFileName(String browserFileName) {
         }
 
         public boolean hasReceivedResultSince(Date dateBrowserLaunched) {

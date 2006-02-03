@@ -10,8 +10,10 @@ import net.jsunit.configuration.*;
 import net.jsunit.interceptor.BrowserResultInterceptorTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.model.BrowserResultTest;
+import net.jsunit.model.FailedToLaunchBrowserResultTest;
 import net.jsunit.model.TestCaseResultTest;
 import net.jsunit.model.TestPageResultTest;
+import net.jsunit.model.TimedOutBrowerResultTest;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -33,6 +35,7 @@ public class Suite extends TestCase {
         result.addTestSuite(DisplayerFunctionalTest.class);
         result.addTestSuite(DisposeActionTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
+        result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(ServerConfigurationFunctionalTest.class);
         result.addTestSuite(JsUnitServerTest.class);
         result.addTestSuite(PropertiesConfigurationTest.class);
@@ -46,6 +49,7 @@ public class Suite extends TestCase {
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(TestRunManagerTest.class);
         result.addTestSuite(TestRunnerActionTest.class);
+        result.addTestSuite(TimedOutBrowerResultTest.class);
         return result;
     }
     

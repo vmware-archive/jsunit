@@ -62,6 +62,10 @@ public class BrowserResultTest extends TestCase {
         assertFalse(result.wasSuccessful());
         assertEquals(ResultType.ERROR, result.getResultType());
     }
+    
+    public void testDisplayString() {
+    	assertEquals(ResultType.ERROR.getDisplayString(), result.getDisplayString());
+    }
 
     public void testBuildFromXmlFile() {
         Element element = result.asXml();

@@ -27,22 +27,13 @@ public class TestRunManagerTest extends TestCase {
         assertEquals(3, manager.getFailureCount());
     }
 
-    public void testCrash() throws Exception {
-        TestRunManager manager = new TestRunManager(new CrashingBrowserTestRunner());
-        try {
-            manager.runTests();
-            fail("Should have crashed");
-        } catch (FailedToLaunchBrowserException e) {
-        }
-    }
-
     static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
 
         public List<String> getBrowserFileNames() {
             return Arrays.asList(new String[] {"browser1.exe", "browser2.exe"});
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        public void launchTestRunForBrowserWithFileName(String browserFileName) {
         }
 
         public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
@@ -85,7 +76,7 @@ public class TestRunManagerTest extends TestCase {
             return Arrays.asList(new String[] {"browser1.exe", "browser2.exe", "browser3.exe"});
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        public void launchTestRunForBrowserWithFileName(String browserFileName) {
             currentBrowser = browserFileName;
         }
 
@@ -100,48 +91,6 @@ public class TestRunManagerTest extends TestCase {
                 return new DummyBrowserResult(false, 1, 0);
             else
                 return new DummyBrowserResult(false, 2, 3);
-        }
-
-        public void accept(BrowserResult result) {
-        }
-
-        public void dispose() {
-        }
-
-        public BrowserResult findResultWithId(String id) {
-            return null;
-        }
-
-        public Element asXml() {
-            return null;
-        }
-
-		public void startTestRun() {
-		}
-
-		public void finishTestRun() {
-		}
-
-		public void logStatus(String message) {
-		}
-    }
-
-    static class CrashingBrowserTestRunner implements BrowserTestRunner {
-
-        public List<String> getBrowserFileNames() {
-            return Arrays.asList(new String[] {"browser.exe"});
-        }
-
-        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
-            throw new FailedToLaunchBrowserException("dummy");
-        }
-
-        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
-            return false;
-        }
-
-        public BrowserResult lastResult() {
-            return null;
         }
 
         public void accept(BrowserResult result) {

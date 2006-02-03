@@ -23,10 +23,6 @@ public class JsUnitPreferenceStore {
 		return preferenceStore.getString(PreferenceConstants.PREFERENCE_INSTALLATION_DIRECTORY);
 	}
 	
-	public int port() {
-		return preferenceStore.getInt(PreferenceConstants.PREFERENCE_PORT);
-	}
-
 	public String logsDirectory() {
 		return preferenceStore.getString(PreferenceConstants.PREFERENCE_LOGS_DIRECTORY);
 	}
@@ -55,12 +51,8 @@ public class JsUnitPreferenceStore {
 		return listFromDelimitedString(browserFileNamesString());
 	}
 
-	public boolean hasValidPort() {
-		return port() > 0;
-	}
-
-	public PreferenceConfigurationSource asConfigurationSource(IFile testPage) {
-		return new PreferenceConfigurationSource(this, testPage);
+	public PreferenceConfigurationSource asConfigurationSource(IFile testPage, int jsUnitServerPort) {
+		return new PreferenceConfigurationSource(this, testPage, jsUnitServerPort);
 	}
 
 }

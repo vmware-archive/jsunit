@@ -6,7 +6,6 @@ import java.util.List;
 import org.jdom.Element;
 
 import net.jsunit.BrowserTestRunner;
-import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.StandaloneTest;
 import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
@@ -86,7 +85,7 @@ public class TestRunnerActionTest extends TestCase {
 		public void finishTestRun() {
 		}
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+		public void launchTestRunForBrowserWithFileName(String browserFileName) {
 		}
 
 		public void accept(BrowserResult result) {

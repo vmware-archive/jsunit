@@ -15,6 +15,16 @@ public enum ResultType {
 		public String getDisplayString() {
 			return "success";
 		}
+	},
+	FAILED_TO_LAUNCH {
+		public String getDisplayString() {
+			return "failed to launch";
+		}
+	},
+	TIMED_OUT {
+		public String getDisplayString() {
+			return "timed out";
+		}
 	};
 
 	public abstract String getDisplayString();

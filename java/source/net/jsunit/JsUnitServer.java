@@ -11,6 +11,7 @@ import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.FailedToLaunchBrowserResult;
 
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
@@ -126,7 +127,7 @@ public class JsUnitServer implements BrowserTestRunner {
     public BrowserResult findResultWithId(String id) {
         BrowserResult result = findResultWithIdInResultList(id);
         if (result == null)
-            result = BrowserResult.findResultWithIdInResultLogs(getLogsDirectory(), id);
+            result = BrowserResult.findResultWithIdInLogs(getLogsDirectory(), id);
         return result;
     }
 
@@ -141,8 +142,8 @@ public class JsUnitServer implements BrowserTestRunner {
     public BrowserResult lastResult() {
         List results = getResults();
         return results.isEmpty()
-                ? null
-                : (BrowserResult) results.get(results.size() - 1);
+	        ? null
+	        : (BrowserResult) results.get(results.size() - 1);
     }
 
     public int resultsCount() {
@@ -199,7 +200,7 @@ public class JsUnitServer implements BrowserTestRunner {
         browserFileName = null;
     }
 
-    public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+    public void launchTestRunForBrowserWithFileName(String browserFileName) {
         String[] browserCommand = openBrowserCommand(browserFileName);
         logStatus("Launching " + browserCommand[0]);
 		try {
@@ -211,8 +212,8 @@ public class JsUnitServer implements BrowserTestRunner {
 		    for (TestRunListener listener : browserTestRunListeners)
 		    	listener.browserTestRunStarted(browserFileName);
 		} catch (Throwable t) {
-		    t.printStackTrace();
-		    throw new FailedToLaunchBrowserException("Failed to start browser browserProcess: " + browserCommand[0]);
+			t.printStackTrace();
+			accept(new FailedToLaunchBrowserResult(browserFileName, t));
 		}
 	}
 
@@ -223,12 +224,11 @@ public class JsUnitServer implements BrowserTestRunner {
 	public void dispose() {
 		endBrowser();
 		try {
-			if (server!=null)
+			if (server != null)
 				server.stop();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
 	}
 
     public Element asXml() {

@@ -2,9 +2,9 @@ package net.jsunit;
 
 import net.jsunit.configuration.ConfigurationConstants;
 
-public class StandaloneTestTest extends StandaloneTest {
+public class SuccessfulStandaloneTestTest extends StandaloneTest {
 
-  public StandaloneTestTest(String name) {
+  public SuccessfulStandaloneTestTest(String name) {
       super(name);
   }
 
@@ -14,6 +14,11 @@ public class StandaloneTestTest extends StandaloneTest {
          "http://localhost:8080/jsunit/testRunner.html?"
          + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
       super.setUp();
+  }
+  
+  public void testStandaloneRun() throws Exception {
+	  super.testStandaloneRun();
+	  assertTrue(runner.lastResult().wasSuccessful());
   }
 
   public void tearDown() throws Exception {

@@ -5,7 +5,6 @@ import java.util.List;
 
 import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
-import net.jsunit.FailedToLaunchBrowserException;
 import net.jsunit.XmlRenderable;
 import net.jsunit.action.JsUnitAction;
 import net.jsunit.model.BrowserResult;
@@ -44,7 +43,7 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
             return null;
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException {
+        public void launchTestRunForBrowserWithFileName(String browserFileName) {
         }
 
         public boolean hasReceivedResultSince(Date dateBrowserLaunched) {

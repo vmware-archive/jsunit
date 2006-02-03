@@ -4,6 +4,7 @@ import java.util.Date;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.TimedOutBrowserResult;
 
 public class TestRunManager {
 
@@ -53,7 +54,7 @@ public class TestRunManager {
             Thread.sleep(1000);
             secondsWaited++;
             if (secondsWaited > MAX_SECONDS_TO_WAIT)
-                throw new RuntimeException("Waited more than " + MAX_SECONDS_TO_WAIT + " seconds for browser " + browserFileName);
+                testRunner.accept(new TimedOutBrowserResult(browserFileName));
         }
     }
 

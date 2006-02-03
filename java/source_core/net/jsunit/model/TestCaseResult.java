@@ -12,7 +12,7 @@ import org.jdom.Element;
  */
 
 public class TestCaseResult {
-	
+
     public static final String TEST_PAGE_TEST_NAME_DELIMITER = ":";
 	public static final String DELIMITER = "|";
 	public static final String ERROR_INDICATOR = "E";

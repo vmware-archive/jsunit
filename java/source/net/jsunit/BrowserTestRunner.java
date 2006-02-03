@@ -11,7 +11,7 @@ public interface BrowserTestRunner extends XmlRenderable {
 
 	void finishTestRun();
 
-	void launchTestRunForBrowserWithFileName(String browserFileName) throws FailedToLaunchBrowserException;
+	void launchTestRunForBrowserWithFileName(String browserFileName);
 
     void accept(BrowserResult result);
 

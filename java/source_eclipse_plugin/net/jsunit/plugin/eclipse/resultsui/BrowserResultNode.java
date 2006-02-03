@@ -34,11 +34,11 @@ public class BrowserResultNode extends ParentNode {
 	public String getStatus() {
 		if (running)
 			return "running...";
-		return result == null ? null : result.getResultType().getDisplayString();
+		return result == null ? null : result.getDisplayString();
 	}
 
-	public void setRunning() {
-		running = true;		
+	public void setRunning(boolean b) {
+		running = b;
 	}
 	
 	public String getImageName() {
