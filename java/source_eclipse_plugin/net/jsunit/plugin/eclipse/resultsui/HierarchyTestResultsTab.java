@@ -1,6 +1,5 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
-import net.jsunit.model.TestCaseResult;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 
 import org.eclipse.jface.action.Action;
@@ -53,11 +52,13 @@ public abstract class HierarchyTestResultsTab extends TestResultsTab {
 		});		
 	}
 
-	protected TestCaseResult getSelectedTestCaseResult() {
+	protected Object getSelectedData() {
 		IStructuredSelection selectionList = (IStructuredSelection) treeViewer.getSelection();
 		Node node = (Node) selectionList.getFirstElement();
 		if (node instanceof TestCaseResultNode)
 			return ((TestCaseResultNode) node).getResult();
+		else if (node instanceof BrowserResultNode)
+			return ((BrowserResultNode) node).getResult();
 		return null;
 	}
 	

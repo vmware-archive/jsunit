@@ -46,7 +46,7 @@ public abstract class TestResultsTab {
 	private Action createSelectionChangedAction() {
 		return new Action() {
 			public void run() {
-				Object selection = getSelectedTestCaseResult();
+				Object selection = getSelectedData();
 				if (selection instanceof TestCaseResult) {
 					TestCaseResult result = (TestCaseResult) selection;
 					failureTrace.showFailure(result);
@@ -68,7 +68,7 @@ public abstract class TestResultsTab {
 
 	protected abstract String getToolTipText();
 	
-	protected abstract TestCaseResult getSelectedTestCaseResult();
+	protected abstract Object getSelectedData();
 
 	public abstract void setFocus();
 	

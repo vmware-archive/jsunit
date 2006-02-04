@@ -1,7 +1,5 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
-import net.jsunit.model.TestCaseResult;
-
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;
 import org.eclipse.swt.SWT;
@@ -56,8 +54,8 @@ public class FailuresTestResultsTab extends TestResultsTab {
 		table.refresh();
 	}
 	
-	protected TestCaseResult getSelectedTestCaseResult() {
-		return (TestCaseResult) table.getSelection()[0].getData();
+	protected Object getSelectedData() {
+		return table.getSelection()[0].getData();
 	}
 
 	protected String getImageName() {

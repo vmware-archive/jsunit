@@ -33,6 +33,10 @@ public class BrowserResultNode extends ParentNode {
 			addChild(new TestPageResultNode(testPageResult));
 	}
 	
+	public BrowserResult getResult() {
+		return result;
+	}
+	
 	public String getStatus() {
 		if (running)
 			return "running...";

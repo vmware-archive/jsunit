@@ -78,7 +78,7 @@ class FailureTrace implements IMenuListener {
 	}
 	
 	public void showTrace(String trace) {
-		if (inputTrace == trace)
+		if (inputTrace!=null && inputTrace.equals(trace))
 			return;
 		inputTrace= trace;
 		updateTable(trace);		
