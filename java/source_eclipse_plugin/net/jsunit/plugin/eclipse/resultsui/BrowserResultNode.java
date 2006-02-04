@@ -15,6 +15,8 @@ public class BrowserResultNode extends ParentNode {
 		resultTypeToImageName.put(ResultType.ERROR, "tsuiteerror.gif");
 		resultTypeToImageName.put(ResultType.FAILURE, "tsuitefail.gif");
 		resultTypeToImageName.put(ResultType.SUCCESS, "tsuiteok.gif");
+		resultTypeToImageName.put(ResultType.FAILED_TO_LAUNCH, "tsuiteerror.gif");
+		resultTypeToImageName.put(ResultType.TIMED_OUT, "tsuiteerror.gif");
 	}
 	
 	private BrowserResult result;

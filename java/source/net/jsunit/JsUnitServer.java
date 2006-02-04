@@ -102,16 +102,15 @@ public class JsUnitServer implements BrowserTestRunner {
 
     public void accept(BrowserResult result) {
     	killTimeoutChecker();
-    	endBrowser();
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
         results.add(result);
         
-        for (TestRunListener listener : browserTestRunListeners) {
+        for (TestRunListener listener : browserTestRunListeners)
         	listener.browserTestRunFinished(browserFileName, result);
-        }
         timeLastResultReceived = System.currentTimeMillis();
+    	endBrowser();
     }
 
     private void killTimeoutChecker() {

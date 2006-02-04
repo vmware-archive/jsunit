@@ -143,8 +143,9 @@ class ContentProvider implements IStructuredContentProvider, ITreeContentProvide
 
 	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
 		BrowserResultNode node = findBrowserNode(browserFileName);
-		if (node != null)
+		if (node != null) {
 			node.setResult(result);
+		}
 		testCount += result.count();
 		testErrorCount += result.errorCount();
 		testFailureCount += result.failureCount();
