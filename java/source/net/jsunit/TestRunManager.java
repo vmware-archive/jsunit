@@ -38,7 +38,7 @@ public class TestRunManager {
 	}
 
 	public boolean hadProblems() {
-		return errorCount>0 || failureCount>0;
+		return errorCount > 0 || failureCount > 0;
 	}
 
     private void waitForResultToBeSubmitted(String browserFileName, long launchTime) throws Exception {

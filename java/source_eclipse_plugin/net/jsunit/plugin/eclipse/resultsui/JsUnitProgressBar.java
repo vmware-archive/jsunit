@@ -20,21 +20,21 @@ public class JsUnitProgressBar extends Canvas {
 	private static final int DEFAULT_WIDTH = 160;
 	private static final int DEFAULT_HEIGHT = 18;
 
-	private int fCurrentTickCount= 0;
-	private int fMaxTickCount= 0;	
+	private int currentTickCount= 0;
+	private int maxTickCount= 0;	
 	private int fColorBarWidth= 0;
-	private Color fOKColor;
-	private Color fFailureColor;
-	private Color fStoppedColor;
-	private boolean fError;
-	private boolean fStopped= false;
+	private Color okColor;
+	private Color problemColor;
+	private Color stoppedColor;
+	private boolean hasProblems;
+	private boolean stopped= false;
 	
 	public JsUnitProgressBar(Composite parent) {
 		super(parent, SWT.NONE);
 		
 		addControlListener(new ControlAdapter() {
 			public void controlResized(ControlEvent e) {
-				fColorBarWidth= scale(fCurrentTickCount);
+				fColorBarWidth= scale(currentTickCount);
 				redraw();
 			}
 		});	
@@ -45,27 +45,27 @@ public class JsUnitProgressBar extends Canvas {
 		});
 		addDisposeListener(new DisposeListener() {
 			public void widgetDisposed(DisposeEvent e) {
-				fFailureColor.dispose();
-				fOKColor.dispose();
-				fStoppedColor.dispose();
+				problemColor.dispose();
+				okColor.dispose();
+				stoppedColor.dispose();
 			}
 		});
 		Display display= parent.getDisplay();
-		fFailureColor= new Color(display, 159, 63, 63);
-		fOKColor= new Color(display, 95, 191, 95);
-		fStoppedColor= new Color(display, 120, 120, 120);
+		problemColor= new Color(display, 159, 63, 63);
+		okColor= new Color(display, 95, 191, 95);
+		stoppedColor= new Color(display, 120, 120, 120);
 	}
 
 	public void setMaximum(int max) {
-		fMaxTickCount= max;
+		maxTickCount= max;
 	}
 		
 	public void reset() {
-		fError= false;
-		fStopped= false;
-		fCurrentTickCount= 0;
+		hasProblems= false;
+		stopped= false;
+		currentTickCount= 0;
 		fColorBarWidth= 0;
-		fMaxTickCount= 0;
+		maxTickCount= 0;
 		redraw();
 	}
 	
@@ -79,26 +79,26 @@ public class JsUnitProgressBar extends Canvas {
 	}
 
 	private void setStatusColor(GC gc) {
-		if (fStopped)
-			gc.setBackground(fStoppedColor);
-		else if (fError)
-			gc.setBackground(fFailureColor);
-		else if (fStopped)
-			gc.setBackground(fStoppedColor);
+		if (stopped)
+			gc.setBackground(stoppedColor);
+		else if (hasProblems)
+			gc.setBackground(problemColor);
+		else if (stopped)
+			gc.setBackground(stoppedColor);
 		else
-			gc.setBackground(fOKColor);
+			gc.setBackground(okColor);
 	}
 
 	public void stopped() {
-		fStopped= true;
+		stopped = true;
 		redraw();
 	}
 	
 	private int scale(int value) {
-		if (fMaxTickCount > 0) {
+		if (maxTickCount > 0) {
 			Rectangle r= getClientArea();
 			if (r.width != 0)
-				return Math.max(0, value*(r.width-2)/fMaxTickCount);
+				return Math.max(0, value*(r.width-2)/maxTickCount);
 		}
 		return value; 
 	}
@@ -136,24 +136,24 @@ public class JsUnitProgressBar extends Canvas {
 		return size;
 	}
 	
-	public void step(int failures) {
-		fCurrentTickCount++;
-		int x= fColorBarWidth;
+	public void step(int problemCount) {
+		currentTickCount++;
+		int x = fColorBarWidth;
 
-		fColorBarWidth= scale(fCurrentTickCount);
+		fColorBarWidth= scale(currentTickCount);
 
-		if (!fError && failures > 0) {
-			fError= true;
-			x= 1;
+		if (!hasProblems && problemCount > 0) {
+			hasProblems= true;
 		}
-		if (fCurrentTickCount == fMaxTickCount)
+		if (hasProblems)
+			x = 1;
+		if (currentTickCount == maxTickCount)
 			fColorBarWidth= getClientArea().width-1;
 		paintStep(x, fColorBarWidth);
 	}
-
-	public void refresh(boolean hasErrors) {
-		fError= hasErrors;
-		redraw();
-	}
 	
+	public void setError() {
+		hasProblems = true;
+	}
+
 }

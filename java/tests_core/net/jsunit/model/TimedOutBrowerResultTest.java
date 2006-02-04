@@ -11,11 +11,12 @@ public class TimedOutBrowerResultTest extends TestCase {
             "</properties>" +
         "</browserResult>";
 
-    private TimedOutBrowserResult browserResult;
+    private BrowserResult browserResult;
 	
 	public void setUp() throws Exception {
 		super.setUp();
-		browserResult = new TimedOutBrowserResult();
+		browserResult = new BrowserResult();
+		browserResult.setTimedOut();
 		browserResult.setBrowserFileName("c:\\Program Files\\Internet Explorer\\iexplore.exe");
 	}
 	
@@ -36,8 +37,10 @@ public class TimedOutBrowerResultTest extends TestCase {
 	
 	public void testReconstituteFromXml() {
 		BrowserResult reconstitutedResult = new BrowserResultBuilder().build(xml);
-		assertEquals(TimedOutBrowserResult.class, reconstitutedResult.getClass());
 		assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowserFileName());
+		assertTrue(reconstitutedResult.timedOut());
+		assertEquals(ResultType.TIMED_OUT, reconstitutedResult.getResultType());
+
 	}
 
 }

@@ -1,14 +1,14 @@
 package net.jsunit.model;
 
+import java.io.File;
+import java.util.List;
+
 import net.jsunit.Utility;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
-
-import java.io.File;
-import java.util.List;
  
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -34,13 +34,11 @@ public class BrowserResultBuilder {
 
 	public BrowserResult build(Document document) {
         Element root = document.getRootElement();
-        BrowserResult result;
+        BrowserResult result = new BrowserResult();
         if (failedToLaunch(root))
-        	result = new FailedToLaunchBrowserResult();
+        	result.setFailedToLaunch();
         else if (timedOut(root))
-        	result = new TimedOutBrowserResult();
-        else 
-        	result = new BrowserResult();
+        	result.setTimedOut();
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
         Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASES);
@@ -71,16 +69,23 @@ public class BrowserResultBuilder {
     private void updateWithProperties(Element element, BrowserResult result) {
         for (Object child : element.getChildren()) {
             Element next = (Element) child;
-            if (BrowserResultWriter.JSUNIT_VERSION.equals(next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY)))
-                result.setJsUnitVersion(next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE));
-            else if (BrowserResultWriter.BROWSER_FILE_NAME.equals(next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY)))
-                result.setBrowserFileName(next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE));
-            else if (BrowserResultWriter.USER_AGENT.equals(next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY)))
-                result.setUserAgent(next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE));
-            else if (BrowserResultWriter.REMOTE_ADDRESS.equals(next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY)))
-                result.setRemoteAddress(next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE));
-            else if (BrowserResultWriter.BASE_URL.equals(next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY)))
-                result.setBaseURL(next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE));
+            String key = next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY);
+			String value = next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE);
+			
+			if (BrowserResultWriter.JSUNIT_VERSION.equals(key))
+                result.setJsUnitVersion(value);
+            else if (BrowserResultWriter.BROWSER_FILE_NAME.equals(key))
+                result.setBrowserFileName(value);
+            else if (BrowserResultWriter.USER_AGENT.equals(key))
+                result.setUserAgent(value);
+            else if (BrowserResultWriter.REMOTE_ADDRESS.equals(key))
+                result.setRemoteAddress(value);
+            else if (BrowserResultWriter.BASE_URL.equals(key))
+                result.setBaseURL(value);
+            else if (BrowserResultWriter.SERVER_SIDE_EXCEPTION_STACK_TRACE.equals(key)) {
+            	String stackTrace = next.getText();
+                result.setServerSideExceptionStackTrace(stackTrace);
+            }
         }
     }
 

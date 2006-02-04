@@ -1,5 +1,6 @@
 package net.jsunit.model;
 
+import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
@@ -21,6 +22,7 @@ public class BrowserResultWriter {
 	    FAILED_TO_LAUNCH = "failedToLaunch",
 	    JSUNIT_VERSION = "jsUnitVersion",
 	    REMOTE_ADDRESS = "remoteAddress",
+	    SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
 	    PROPERTIES = "properties",
 	    PROPERTY = "property",
 	    PROPERTY_KEY = "name",
@@ -68,14 +70,24 @@ public class BrowserResultWriter {
 	        addProperty(properties, REMOTE_ADDRESS, browserResult.getRemoteAddress());
 	        addProperty(properties, BASE_URL, browserResult.getBaseURL());
         }
+        if (browserResult.hasServerSideExceptionStackTrace()) {
+        	Element stackTrace = createPropertyElement(SERVER_SIDE_EXCEPTION_STACK_TRACE);
+        	stackTrace.addContent(new CDATA(browserResult.getServerSideExceptionStackTrace()));
+        	properties.addContent(stackTrace);
+        }
     }
 
     private void addProperty(Element parent, String name, String value) {
-        Element property = new Element(PROPERTY);
-        property.setAttribute(PROPERTY_KEY, name);
+        Element property = createPropertyElement(name);
         property.setAttribute(PROPERTY_VALUE, value == null ? "" : value);
         parent.addContent(property);
     }
+
+	private Element createPropertyElement(String name) {
+		Element property = new Element(PROPERTY);
+        property.setAttribute(PROPERTY_KEY, name);
+		return property;
+	}
 
     private void addTestCasesElementTo(Element element) {
     	Element testCasesElement = new Element(TEST_CASES);

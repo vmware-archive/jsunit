@@ -1,6 +1,6 @@
 package net.jsunit;
 
-import net.jsunit.model.TimedOutBrowserResult;
+import net.jsunit.model.BrowserResult;
 
 public class TimeoutChecker extends Thread {
 
@@ -25,7 +25,8 @@ public class TimeoutChecker extends Thread {
 	public void run() {
 		while (alive && !runner.hasReceivedResultSince(launchTime)) {
 			if (waitedTooLong()) {
-				TimedOutBrowserResult timedOutBrowserResult = new TimedOutBrowserResult();
+				BrowserResult timedOutBrowserResult = new BrowserResult();
+				timedOutBrowserResult.setTimedOut();
 				timedOutBrowserResult.setBrowserFileName(browserFileName);
 				runner.accept(timedOutBrowserResult);
 			}

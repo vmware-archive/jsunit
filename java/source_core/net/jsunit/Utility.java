@@ -3,7 +3,9 @@ package net.jsunit;
 import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,4 +91,10 @@ public class Utility {
         String os = System.getProperty("os.name");
         return os != null && os.startsWith("Windows");
     }
+	
+	public static String stackTraceAsString(Throwable throwable) {
+		StringWriter writer = new StringWriter();
+		throwable.printStackTrace(new PrintWriter(writer));
+		return writer.toString();
+	}
 }

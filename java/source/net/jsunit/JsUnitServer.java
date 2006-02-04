@@ -10,8 +10,6 @@ import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.model.FailedToLaunchBrowserResult;
-
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -210,26 +208,35 @@ public class JsUnitServer implements BrowserTestRunner {
     }
 
     public long launchTestRunForBrowserWithFileName(String browserFileName) {
+    	waitUntilLastReceivedTimeHasPassed();
     	long launchTime = System.currentTimeMillis();
-        String[] browserCommand = openBrowserCommand(browserFileName);
+    	String[] browserCommand = openBrowserCommand(browserFileName);
         logStatus("Launching " + browserCommand[0]);
 		try {
 		    String[] commandWithUrl = new String[browserCommand.length + 1];
 		    System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
 		    commandWithUrl[browserCommand.length] = configuration.getTestURL().toString();
-		    this.browserProcess = processStarter.execute(commandWithUrl);
 		    this.browserFileName = browserFileName;
 		    for (TestRunListener listener : browserTestRunListeners)
 		    	listener.browserTestRunStarted(browserFileName);
+		    this.browserProcess = processStarter.execute(commandWithUrl);
 		    startTimeoutChecker(launchTime);
 		} catch (Throwable throwable) {
-			throwable.printStackTrace();
-			FailedToLaunchBrowserResult failedToLaunchBrowserResult = new FailedToLaunchBrowserResult();
+			BrowserResult failedToLaunchBrowserResult = new BrowserResult();
+			failedToLaunchBrowserResult.setFailedToLaunch();
 			failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
-			failedToLaunchBrowserResult.setServerSideJavaException(throwable);
+			failedToLaunchBrowserResult.setServerSideException(throwable);
 			accept(failedToLaunchBrowserResult);
 		}
 		return launchTime;
+	}
+
+	private void waitUntilLastReceivedTimeHasPassed() {
+    	while (System.currentTimeMillis() == timeLastResultReceived)
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException e) {
+			}
 	}
 
 	private void startTimeoutChecker(long launchTime) {
@@ -262,7 +269,6 @@ public class JsUnitServer implements BrowserTestRunner {
 				try {
 					Thread.sleep(100);
 				} catch (InterruptedException e) {
-					throw new RuntimeException(e);
 				}
 		}
 	}

@@ -25,12 +25,11 @@ class FailureTrace implements IMenuListener {
     private final Image jsunitIcon= JsUnitPlugin.createImage("jsunitlaunch.gif");
     private final Image stackTraceIcon= JsUnitPlugin.createImage("stkfrm_obj.gif");
     
-	private Table fTable;
-	private String fInputTrace;
-    private TestCaseResult fFailure;
+	private Table table;
+	private String inputTrace;
 
 	public FailureTrace(Composite parent, Clipboard clipboard, JsUnitTestResultsViewPart testRunner, ToolBar toolBar) {		
-		fTable= new Table(parent, SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL);
+		table= new Table(parent, SWT.SINGLE | SWT.V_SCROLL | SWT.H_SCROLL);
 		
 		initMenu();
 		
@@ -45,15 +44,15 @@ class FailureTrace implements IMenuListener {
 		MenuManager menuMgr= new MenuManager();
 		menuMgr.setRemoveAllWhenShown(true);
 		menuMgr.addMenuListener(this);
-		Menu menu= menuMgr.createContextMenu(fTable);
-		fTable.setMenu(menu);		
+		Menu menu= menuMgr.createContextMenu(table);
+		table.setMenu(menu);		
 	}
 	
 	public void menuAboutToShow(IMenuManager manager) {
 	}
 
 	public String getTrace() {
-		return fInputTrace;
+		return inputTrace;
 	}
 	
 	private void disposeIcons(){
@@ -64,26 +63,25 @@ class FailureTrace implements IMenuListener {
 	}
 	
 	Composite getComposite(){
-		return fTable;
+		return table;
 	}
 	
 	public void refresh() {
-		updateTable(fInputTrace);
+		updateTable(inputTrace);
 	}
 	
 	public void showFailure(TestCaseResult failure) {	
-	    fFailure= failure;
 	    String trace= "";
-	    updateEnablement(failure);
 	    if (failure != null && !failure.wasSuccessful()) 
 	        trace= failure.getProblemSummary();
-		if (fInputTrace == trace)
-			return;
-		fInputTrace= trace;
-		updateTable(trace);
+	    showTrace(trace);
 	}
-
-	public void updateEnablement(TestCaseResult failure) {
+	
+	public void showTrace(String trace) {
+		if (inputTrace == trace)
+			return;
+		inputTrace= trace;
+		updateTable(trace);		
 	}
 
 	private void updateTable(String trace) {
@@ -92,10 +90,10 @@ class FailureTrace implements IMenuListener {
 			return;
 		}
 		trace= trace.trim();
-		fTable.setRedraw(false);
-		fTable.removeAll();
+		table.setRedraw(false);
+		table.removeAll();
 		fillTable(filterStack(trace));
-		fTable.setRedraw(true);
+		table.setRedraw(true);
 	}
 
 	private void fillTable(String trace) {
@@ -109,7 +107,7 @@ class FailureTrace implements IMenuListener {
 			if (line == null)
 				return;
 				
-			TableItem tableItem= new TableItem(fTable, SWT.NONE);
+			TableItem tableItem= new TableItem(table, SWT.NONE);
 			tableItem.setImage(jsunitIcon);
 			String itemLabel= line.replace('\t', ' ');
 			final int labelLength= itemLabel.length();
@@ -121,7 +119,7 @@ class FailureTrace implements IMenuListener {
 				int offset= MAX_LABEL_LENGTH;
 				while (offset < labelLength) {
 					int nextOffset= Math.min(labelLength, offset + MAX_LABEL_LENGTH);
-					tableItem= new TableItem(fTable, SWT.NONE);
+					tableItem= new TableItem(table, SWT.NONE);
 					tableItem.setText(itemLabel.substring(offset, nextOffset));
 					offset= nextOffset;
 				}
@@ -131,7 +129,7 @@ class FailureTrace implements IMenuListener {
 			boolean isStackTraceLine = false;
 			while ((line= bufferedReader.readLine()) != null) {
 				itemLabel= line.replace('\t', ' ');
-				tableItem= new TableItem(fTable, SWT.NONE);
+				tableItem= new TableItem(table, SWT.NONE);
 
 				if (isStackTraceLine) {
 					tableItem.setImage(stackTraceIcon);
@@ -142,32 +140,28 @@ class FailureTrace implements IMenuListener {
 				}
 			}
 		} catch (IOException e) {
-			TableItem tableItem= new TableItem(fTable, SWT.NONE);
+			TableItem tableItem= new TableItem(table, SWT.NONE);
 			tableItem.setText(trace);
 		}			
 	}
 	
 	public void setInformation(String text) {
 		clear();
-		TableItem tableItem= new TableItem(fTable, SWT.NONE);
+		TableItem tableItem= new TableItem(table, SWT.NONE);
 		tableItem.setText(text);
 	}
 	
 	public void clear() {
-		fTable.removeAll();
-		fInputTrace= null;
+		table.removeAll();
+		inputTrace= null;
 	}
 	
 	private String filterStack(String stackTrace) {
 		return stackTrace;
 	}
 	
-    public TestCaseResult getFailedTest() {
-        return fFailure;
-    }
-
     public Shell getShell() {
-        return fTable.getShell();
+        return table.getShell();
     }
 
 }

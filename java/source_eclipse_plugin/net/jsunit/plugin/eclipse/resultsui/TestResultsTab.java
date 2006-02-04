@@ -1,5 +1,6 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
+import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestCaseResult;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 
@@ -49,6 +50,10 @@ public abstract class TestResultsTab {
 				if (selection instanceof TestCaseResult) {
 					TestCaseResult result = (TestCaseResult) selection;
 					failureTrace.showFailure(result);
+				} else if (selection instanceof BrowserResult && ((BrowserResult) selection).hasServerSideExceptionStackTrace()){
+					BrowserResult result = (BrowserResult) selection;
+					failureTrace.showTrace(result.getServerSideExceptionStackTrace());
+					
 				} else {
 					failureTrace.clear();
 				}

@@ -185,6 +185,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		public void run() {
 			setEnabled(false);
 			client.stopListening();
+			progressBar.stopped();
 			testRunFinished(true);
 		}
 
@@ -255,10 +256,12 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	}
 	
 
-	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+	public void browserTestRunFinished(String browserFileName, final BrowserResult result) {
 		contentProvider.browserTestRunFinished(browserFileName, result);
 		JsUnitPlugin.getDisplay().asyncExec(new Runnable() {
 			public void run() {
+				if (!result.completedTestRun())
+					progressBar.setError();
 				progressBar.step(contentProvider.getTestFailureCount() + contentProvider.getTestErrorCount());
 				counterPanel.setBrowserRunCount(contentProvider.getCompletedBrowserTestRunCount());
 				counterPanel.setTestRunCount(contentProvider.getCompletedTestCount());

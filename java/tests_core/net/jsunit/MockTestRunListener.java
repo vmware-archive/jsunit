@@ -35,4 +35,14 @@ public class MockTestRunListener implements TestRunListener {
 		testRunFinishedCalled = true;
 	}
 
+	public void reset() {
+		testRunStartedCalled = false;
+		testRunFinishedCalled = false;
+		browserTestRunStartedCalled = false;
+		browserTestRunFinishedCalled = false;
+		browserFileName = null;
+		isReady = false;
+		result = null;
+	}
+
 }

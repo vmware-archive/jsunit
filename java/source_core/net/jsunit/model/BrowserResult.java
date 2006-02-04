@@ -23,14 +23,15 @@ public class BrowserResult implements XmlRenderable {
     private String baseURL;
     private double time;
 	private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
-	protected String serverSideJavaExceptionMessage;
+	private String serverSideExceptionStackTrace;
+	private ResultType resultType;
 	
     public BrowserResult() {
         this.id = String.valueOf(System.currentTimeMillis());
     }
 
     public static File logFileForId(File logsDirectory, String id) {
-        return new File(logsDirectory+File.separator + id + ".xml");
+        return new File(logsDirectory + File.separator + id + ".xml");
     }
 
     public void setBrowserFileName(String browserFileName) {
@@ -180,11 +181,15 @@ public class BrowserResult implements XmlRenderable {
 	}
 
 	public ResultType getResultType() {
-        if (errorCount() > 0)
-            return ResultType.ERROR;
-        if (failureCount() > 0)
-            return ResultType.FAILURE;
-        return ResultType.SUCCESS;
+		if (resultType == null) {
+	        if (errorCount() > 0)
+	        	return ResultType.ERROR;
+	        else if (failureCount() > 0)
+	        	return ResultType.FAILURE;
+	        else 
+	        	return ResultType.SUCCESS;			
+		}
+		return resultType;
     }
 
 	public Document asXmlDocument() {
@@ -196,10 +201,7 @@ public class BrowserResult implements XmlRenderable {
 	}
 
 	public String getDisplayString() {
-		String displayString = getResultType().getDisplayString();
-		if (serverSideJavaExceptionMessage != null)
-			displayString += " (" + serverSideJavaExceptionMessage + ")";
-		return displayString;
+		return getResultType().getDisplayString();
 	}
 
 	public boolean completedTestRun() {
@@ -214,8 +216,28 @@ public class BrowserResult implements XmlRenderable {
 		return getResultType().failedToLaunch();
 	}
 
-	public void setServerSideJavaException(Throwable throwable) {
-		serverSideJavaExceptionMessage = throwable.getClass().getName();
+	public void setServerSideException(Throwable throwable) {
+		serverSideExceptionStackTrace = Utility.stackTraceAsString(throwable);
+	}
+
+	public void setFailedToLaunch() {
+		this.resultType = ResultType.FAILED_TO_LAUNCH;
+	}
+
+	public void setTimedOut() {
+		this.resultType = ResultType.TIMED_OUT;
+	}
+
+	public String getServerSideExceptionStackTrace() {
+		return serverSideExceptionStackTrace;
+	}
+
+	public void setServerSideExceptionStackTrace(String serverSideExceptionStackTrace) {
+		this.serverSideExceptionStackTrace = serverSideExceptionStackTrace;
+	}
+
+	public boolean hasServerSideExceptionStackTrace() {
+		return getServerSideExceptionStackTrace() != null;
 	}
 
 }
