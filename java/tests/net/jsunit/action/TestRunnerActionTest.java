@@ -1,15 +1,14 @@
 package net.jsunit.action;
 
-import java.util.Date;
 import java.util.List;
 
-import org.jdom.Element;
-
+import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.StandaloneTest;
 import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
-import junit.framework.TestCase;
+
+import org.jdom.Element;
 
 public class TestRunnerActionTest extends TestCase {
 
@@ -85,13 +84,14 @@ public class TestRunnerActionTest extends TestCase {
 		public void finishTestRun() {
 		}
 
-		public void launchTestRunForBrowserWithFileName(String browserFileName) {
+		public long launchTestRunForBrowserWithFileName(String browserFileName) {
+			return 0;
 		}
 
 		public void accept(BrowserResult result) {
 		}
 
-		public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+		public boolean hasReceivedResultSince(long launchTime) {
 			return false;
 		}
 

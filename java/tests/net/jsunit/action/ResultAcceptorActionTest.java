@@ -1,6 +1,5 @@
 package net.jsunit.action;
 
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -30,10 +29,11 @@ public class ResultAcceptorActionTest extends TestCase {
             return null;
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) {
+        public long launchTestRunForBrowserWithFileName(String browserFileName) {
+        	return 0;
         }
 
-        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+        public boolean hasReceivedResultSince(long launchTime) {
             return false;
         }
 

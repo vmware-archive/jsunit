@@ -8,7 +8,13 @@ import org.jdom.output.XMLOutputter;
  */
 
 public class TestCaseResultWriter {
-    public static final String TEST_CASE = "testcase", NAME = "name", TIME = "time", FAILURE = "failure", ERROR = "error", MESSAGE = "message";
+    public static final String 
+    	TEST_CASE = "testCase", 
+    	NAME = "name", 
+    	TIME = "time", 
+    	FAILURE = "failure", 
+    	ERROR = "error", 
+    	MESSAGE = "message";
 
     private  TestCaseResult result;
 

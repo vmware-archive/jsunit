@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import org.jdom.Document;
-
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultBuilder;
 
@@ -65,8 +63,7 @@ public class RemoteTestRunClient {
 			if (browserFileName == null)
 				browserFileName = message;
 			else if (message.equals(TestRunNotifierServer.END_XML)) {
-				Document document = Utility.asXmlDocument(xmlString);
-				BrowserResult result = new BrowserResultBuilder().build(document);
+				BrowserResult result = new BrowserResultBuilder().build(xmlString);
 				listener.browserTestRunFinished(browserFileName, result);
 			} else if (message.trim().length() > 0){
 				xmlString += message;

@@ -24,7 +24,7 @@ public class TestCaseResultTest extends TestCase {
         assertNull(result.getError());
         assertNull(result.getFailure());
         assertEquals(ResultType.SUCCESS, result.getResultType());
-        assertEquals("<testcase name=\"file:///dummy path/dummyPage.html:testFoo\" time=\"1.3\" />", result.getXmlFragment());
+        assertEquals("<testCase name=\"file:///dummy path/dummyPage.html:testFoo\" time=\"1.3\" />", result.getXmlFragment());
     }
 
     public void testProblemSummary() {
@@ -42,7 +42,7 @@ public class TestCaseResultTest extends TestCase {
         assertEquals("Test Error Message", result.getError());
         assertNull(result.getFailure());
         assertEquals(ResultType.ERROR, result.getResultType());
-        assertEquals("<testcase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><error>Test Error Message</error></testcase>", result.getXmlFragment());
+        assertEquals("<testCase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><error>Test Error Message</error></testCase>", result.getXmlFragment());
     }
 
     public void testBuildFailureResultFromString() {
@@ -55,7 +55,7 @@ public class TestCaseResultTest extends TestCase {
         assertNull(result.getError());
         assertEquals("Test Failure Message", result.getFailure());
         assertEquals(ResultType.FAILURE, result.getResultType());
-        assertEquals("<testcase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><failure>Test Failure Message</failure></testcase>", result.getXmlFragment());
+        assertEquals("<testCase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><failure>Test Failure Message</failure></testCase>", result.getXmlFragment());
     }
 
 }

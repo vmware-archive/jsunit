@@ -1,7 +1,6 @@
 package net.jsunit;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import junit.framework.TestCase;
@@ -33,10 +32,11 @@ public class TestRunManagerTest extends TestCase {
             return Arrays.asList(new String[] {"browser1.exe", "browser2.exe"});
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) {
+        public long launchTestRunForBrowserWithFileName(String browserFileName) {
+        	return 0;
         }
 
-        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+        public boolean hasReceivedResultSince(long launchTime) {
             return true;
         }
 
@@ -76,11 +76,12 @@ public class TestRunManagerTest extends TestCase {
             return Arrays.asList(new String[] {"browser1.exe", "browser2.exe", "browser3.exe"});
         }
 
-        public void launchTestRunForBrowserWithFileName(String browserFileName) {
+        public long launchTestRunForBrowserWithFileName(String browserFileName) {
             currentBrowser = browserFileName;
+            return 0;
         }
 
-        public boolean hasReceivedResultSince(Date dateBrowserLaunched) {
+        public boolean hasReceivedResultSince(long launchTime) {
             return true;
         }
 

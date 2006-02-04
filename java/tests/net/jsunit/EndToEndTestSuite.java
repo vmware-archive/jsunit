@@ -11,7 +11,8 @@ public class EndToEndTestSuite extends TestCase {
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
-        result.addTestSuite(NoSuchBrowserStandaloneTestTest.class);
+        result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
+        result.addTestSuite(TimedOutBrowserStandaloneTestTest.class);
         result.addTestSuite(DistributedTestTest.class);
         return result;
     }

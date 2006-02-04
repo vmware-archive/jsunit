@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import java.util.Date;
 import java.util.List;
 
 import net.jsunit.model.BrowserResult;
@@ -11,11 +10,11 @@ public interface BrowserTestRunner extends XmlRenderable {
 
 	void finishTestRun();
 
-	void launchTestRunForBrowserWithFileName(String browserFileName);
+	long launchTestRunForBrowserWithFileName(String browserFileName);
 
     void accept(BrowserResult result);
 
-    boolean hasReceivedResultSince(Date dateBrowserLaunched);
+    boolean hasReceivedResultSince(long launchTime);
 
     BrowserResult lastResult();
 

@@ -3,7 +3,6 @@ package net.jsunit;
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import net.jsunit.configuration.Configuration;
@@ -28,6 +27,7 @@ import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 
 public class JsUnitServer implements BrowserTestRunner {
 
+    public static int MAX_SECONDS_TO_WAIT = 60;
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
     private static JsUnitServer instance;
     
@@ -37,9 +37,10 @@ public class JsUnitServer implements BrowserTestRunner {
     private String browserFileName;
 	private List<BrowserResult> results = new ArrayList<BrowserResult>();
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
-    private Date dateLastResultReceived;
+    private long timeLastResultReceived;
 	private ProcessStarter processStarter = new DefaultProcessStarter();
 	private StatusLogger statusLogger;
+	private TimeoutChecker timeoutChecker;
 
 	public static JsUnitServer instance() {
 		return instance;
@@ -100,6 +101,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
     public void accept(BrowserResult result) {
+    	killTimeoutChecker();
     	endBrowser();
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
         if (existingResultWithSameId != null)
@@ -109,10 +111,17 @@ public class JsUnitServer implements BrowserTestRunner {
         for (TestRunListener listener : browserTestRunListeners) {
         	listener.browserTestRunFinished(browserFileName, result);
         }
-        dateLastResultReceived = new Date();
+        timeLastResultReceived = System.currentTimeMillis();
     }
 
-    public File getLogsDirectory() {
+    private void killTimeoutChecker() {
+    	if (timeoutChecker != null) {
+        	timeoutChecker.die();
+        	timeoutChecker = null;
+    	}
+	}
+
+	public File getLogsDirectory() {
 		return configuration.getLogsDirectory();
 	}
 
@@ -163,8 +172,8 @@ public class JsUnitServer implements BrowserTestRunner {
         dispose();
     }
 
-    public boolean hasReceivedResultSince(Date aDate) {
-        return dateLastResultReceived != null && dateLastResultReceived.after(aDate);
+    public boolean hasReceivedResultSince(long launchTime) {
+        return timeLastResultReceived>=launchTime;
     }
 
 	public boolean shouldCloseBrowsersAfterTestRuns() {
@@ -198,9 +207,11 @@ public class JsUnitServer implements BrowserTestRunner {
     		browserProcess.destroy();
         browserProcess = null;
         browserFileName = null;
+        killTimeoutChecker();
     }
 
-    public void launchTestRunForBrowserWithFileName(String browserFileName) {
+    public long launchTestRunForBrowserWithFileName(String browserFileName) {
+    	long launchTime = System.currentTimeMillis();
         String[] browserCommand = openBrowserCommand(browserFileName);
         logStatus("Launching " + browserCommand[0]);
 		try {
@@ -211,10 +222,20 @@ public class JsUnitServer implements BrowserTestRunner {
 		    this.browserFileName = browserFileName;
 		    for (TestRunListener listener : browserTestRunListeners)
 		    	listener.browserTestRunStarted(browserFileName);
-		} catch (Throwable t) {
-			t.printStackTrace();
-			accept(new FailedToLaunchBrowserResult(browserFileName, t));
+		    startTimeoutChecker(launchTime);
+		} catch (Throwable throwable) {
+			throwable.printStackTrace();
+			FailedToLaunchBrowserResult failedToLaunchBrowserResult = new FailedToLaunchBrowserResult();
+			failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
+			failedToLaunchBrowserResult.setServerSideJavaException(throwable);
+			accept(failedToLaunchBrowserResult);
 		}
+		return launchTime;
+	}
+
+	private void startTimeoutChecker(long launchTime) {
+		timeoutChecker = new TimeoutChecker(browserFileName, launchTime, this);
+		timeoutChecker.start();
 	}
 
 	void setProcessStarter(ProcessStarter starter) {

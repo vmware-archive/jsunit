@@ -1,14 +1,9 @@
 package net.jsunit;
 
-import java.util.Date;
-
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.model.TimedOutBrowserResult;
 
 public class TestRunManager {
-
-    public static final int MAX_SECONDS_TO_WAIT = 60;
 
     private int errorCount;
 	private int failureCount;
@@ -33,9 +28,8 @@ public class TestRunManager {
 		testRunner.startTestRun();
 		try {
 	        for (String browserFileName : testRunner.getBrowserFileNames()) {
-	            Date dateLaunched = new Date();
-	            testRunner.launchTestRunForBrowserWithFileName(browserFileName);
-	            waitForResultToBeSubmitted(browserFileName, dateLaunched);
+	            long launchTime = testRunner.launchTestRunForBrowserWithFileName(browserFileName);
+	            waitForResultToBeSubmitted(browserFileName, launchTime);
 	            updateFromLastResult();
 	        }
 		} finally {
@@ -47,14 +41,14 @@ public class TestRunManager {
 		return errorCount>0 || failureCount>0;
 	}
 
-    private void waitForResultToBeSubmitted(String browserFileName, Date dateBrowserLaunched) throws Exception {
+    private void waitForResultToBeSubmitted(String browserFileName, long launchTime) throws Exception {
         testRunner.logStatus("Waiting for " + browserFileName + " to submit result");
         long secondsWaited = 0;
-        while (!testRunner.hasReceivedResultSince(dateBrowserLaunched)) {
+        while (!testRunner.hasReceivedResultSince(launchTime)) {
             Thread.sleep(1000);
             secondsWaited++;
-            if (secondsWaited > MAX_SECONDS_TO_WAIT)
-                testRunner.accept(new TimedOutBrowserResult(browserFileName));
+            if (secondsWaited > JsUnitServer.MAX_SECONDS_TO_WAIT + 10)
+                throw new RuntimeException("Server not responding");
         }
     }
 

@@ -15,18 +15,32 @@ import org.jdom.Element;
  */
 
 public class BrowserResult implements XmlRenderable {
-    private String remoteAddress, id, jsUnitVersion, userAgent, baseURL;
-	private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
+    private String browserFileName;
+    private String remoteAddress;
+    private String id;
+    private String jsUnitVersion;
+    private String userAgent;
+    private String baseURL;
     private double time;
-
+	private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
+	protected String serverSideJavaExceptionMessage;
+	
     public BrowserResult() {
         this.id = String.valueOf(System.currentTimeMillis());
     }
 
     public static File logFileForId(File logsDirectory, String id) {
-        return new File(logsDirectory+File.separator+ id + ".xml");
+        return new File(logsDirectory+File.separator + id + ".xml");
     }
 
+    public void setBrowserFileName(String browserFileName) {
+		this.browserFileName = browserFileName;
+    }
+    
+    public String getBrowserFileName() {
+    	return browserFileName;
+    }
+    
     public String getId() {
         return id;
     }
@@ -101,7 +115,7 @@ public class BrowserResult implements XmlRenderable {
     public static BrowserResult findResultWithIdInLogs(File logsDirectory, String id) {
         File logFile = logFileForId(logsDirectory, id);
         if (logFile.exists())
-            return fromXmlFile(logFile);
+            return new BrowserResultBuilder().build(logFile);
         return null;
     }
 
@@ -148,10 +162,6 @@ public class BrowserResult implements XmlRenderable {
         return getResultType() == ResultType.SUCCESS;
     }
 
-    public static BrowserResult fromXmlFile(File aFile) {
-        return new BrowserResultBuilder().build(aFile);
-    }
-
     public void addTestCaseResult(TestCaseResult testCaseResult) {
         String testPageName = testCaseResult.getTestPageName();
 		TestPageResult testPageResult = findTestPageResultForTestPageWithName(testPageName);
@@ -186,7 +196,26 @@ public class BrowserResult implements XmlRenderable {
 	}
 
 	public String getDisplayString() {
-		return getResultType().getDisplayString();
+		String displayString = getResultType().getDisplayString();
+		if (serverSideJavaExceptionMessage != null)
+			displayString += " (" + serverSideJavaExceptionMessage + ")";
+		return displayString;
+	}
+
+	public boolean completedTestRun() {
+		return getResultType().completedTestRun();
+	}
+
+	public boolean timedOut() {
+		return getResultType().timedOut();
+	}
+
+	public boolean failedToLaunch() {
+		return getResultType().failedToLaunch();
+	}
+
+	public void setServerSideJavaException(Throwable throwable) {
+		serverSideJavaExceptionMessage = throwable.getClass().getName();
 	}
 
 }

@@ -49,6 +49,7 @@ public class Suite extends TestCase {
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(TestRunManagerTest.class);
         result.addTestSuite(TestRunnerActionTest.class);
+        result.addTestSuite(TimeoutCheckerTest.class);
         result.addTestSuite(TimedOutBrowerResultTest.class);
         return result;
     }

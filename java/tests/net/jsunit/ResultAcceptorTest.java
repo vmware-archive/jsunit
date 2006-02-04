@@ -1,7 +1,6 @@
 package net.jsunit;
 
 import java.io.File;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -85,13 +84,11 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void testHasReceivedResultSinceDate() throws InterruptedException {
-        assertFalse(server.hasReceivedResultSince(new Date()));
-        submit();
-        assertFalse(server.hasReceivedResultSince(new Date()));
-        Date aDate = new Date();
+        assertFalse(server.hasReceivedResultSince(System.currentTimeMillis()));
+        long time = System.currentTimeMillis();
         Thread.sleep(100);
         submit();
-        assertTrue(server.hasReceivedResultSince(aDate));
+        assertTrue(server.hasReceivedResultSince(time));
     }
 
     public void testFindResultById() {
