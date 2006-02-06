@@ -10,8 +10,8 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest{
 	}
 	
 	  public void setUp() throws Exception {
-		  JsUnitServer.MAX_SECONDS_TO_WAIT=1;
 	      System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+	      System.setProperty(ConfigurationConstants.TIMEOUT_SECONDS, "1");
 	      System.setProperty(ConfigurationConstants.URL,
 	         "http://localhost:8080/jsunit/testRunner.html?"
 	         + "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true&resultId=foobar");
@@ -25,8 +25,8 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest{
 
 	  public void tearDown() throws Exception {
 	      super.tearDown();
-	      JsUnitServer.MAX_SECONDS_TO_WAIT = 60;
 	      System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
+	      System.getProperties().remove(ConfigurationConstants.TIMEOUT_SECONDS);
 	      System.getProperties().remove(ConfigurationConstants.URL);
 	  }
 

@@ -66,6 +66,10 @@ public class TestRunManagerTest extends TestCase {
 
 		public void logStatus(String message) {
 		}
+
+		public int timeoutSeconds() {
+			return 0;
+		}
     }
 
     static class FailingBrowserTestRunner implements BrowserTestRunner {
@@ -115,6 +119,10 @@ public class TestRunManagerTest extends TestCase {
 		}
 
 		public void logStatus(String message) {
+		}
+
+		public int timeoutSeconds() {
+			return 0;
 		}
     }
 

@@ -64,6 +64,10 @@ public class ResultAcceptorActionTest extends TestCase {
 
 		public void logStatus(String message) {
 		}
+
+		public int timeoutSeconds() {
+			return 0;
+		}
     }
 
 }

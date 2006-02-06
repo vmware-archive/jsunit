@@ -9,5 +9,6 @@ public interface ConfigurationSource {
     String url();
     String closeBrowsersAfterTestRuns();
     String logStatus();
+	String timeoutSeconds();
     
 }

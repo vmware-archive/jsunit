@@ -8,4 +8,5 @@ public class ConfigurationConstants {
     public static final String BROWSER_FILE_NAMES = "browserFileNames";
     public static final String CLOSE_BROWSERS_AFTER_TEST_RUNS = "closeBrowsersAfterTestRuns";
 	public static final String LOG_STATUS = "logStatus";
+	public static final String TIMEOUT_SECONDS = "timeoutSeconds";
 }

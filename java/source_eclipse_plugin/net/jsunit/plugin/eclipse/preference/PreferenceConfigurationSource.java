@@ -115,5 +115,9 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	public String logStatus() {
 		return String.valueOf(false);
 	}
+
+	public String timeoutSeconds() {
+		return String.valueOf(preferenceStore.timeoutSeconds());
+	}
 	
 }

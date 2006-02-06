@@ -14,8 +14,8 @@ public class TimeoutCheckerTest extends TestCase {
 
 	public void setUp() throws Exception {
 		super.setUp();
-		JsUnitServer.MAX_SECONDS_TO_WAIT = Integer.MAX_VALUE;
 		mockRunner = new MockBrowserTestRunner();
+		mockRunner.timeoutSeconds = Integer.MAX_VALUE;
 		checker = new TimeoutChecker("mybrowser.exe", 1, mockRunner, 1);
 		checker.start();
 	}
@@ -24,7 +24,6 @@ public class TimeoutCheckerTest extends TestCase {
 		if (checker != null && checker.isAlive()) {
 			checker.die();
 		}
-		JsUnitServer.MAX_SECONDS_TO_WAIT=60;
 		super.tearDown();
 	}
 	
@@ -39,7 +38,7 @@ public class TimeoutCheckerTest extends TestCase {
 	}
 	
 	public void testTimeOut() throws InterruptedException {
-		JsUnitServer.MAX_SECONDS_TO_WAIT =0;
+		mockRunner.timeoutSeconds = 0;
 		Thread.sleep(10);
 		assertEquals(ResultType.TIMED_OUT, mockRunner.result.getResultType());
 	}
@@ -57,6 +56,7 @@ public class TimeoutCheckerTest extends TestCase {
 
 		public BrowserResult result;
 		private boolean hasReceivedResult;
+		private int timeoutSeconds;
 
 		public void startTestRun() {		
 		}
@@ -96,6 +96,10 @@ public class TimeoutCheckerTest extends TestCase {
 
 		public Element asXml() {
 			return null;
+		}
+
+		public int timeoutSeconds() {
+			return timeoutSeconds;
 		}
 		
 	}

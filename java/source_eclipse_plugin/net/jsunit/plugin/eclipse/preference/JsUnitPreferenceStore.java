@@ -55,4 +55,8 @@ public class JsUnitPreferenceStore {
 		return new PreferenceConfigurationSource(this, testPage, jsUnitServerPort);
 	}
 
+	public int timeoutSeconds() {
+		return 0;
+	}
+
 }

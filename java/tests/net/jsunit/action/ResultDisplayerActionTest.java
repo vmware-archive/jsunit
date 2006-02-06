@@ -86,5 +86,9 @@ public class ResultDisplayerActionTest extends TestCase {
 
 		public void logStatus(String message) {
 		}
+
+		public int timeoutSeconds() {
+			return 0;
+		}
     }
 }

@@ -69,6 +69,10 @@ public abstract class FunctionalTestCase extends TestCase {
 		public String logStatus() {
 			return String.valueOf(false);
 		}
+
+		public String timeoutSeconds() {
+			return "60";
+		}
 		
 	}
 

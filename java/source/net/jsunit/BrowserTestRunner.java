@@ -26,4 +26,6 @@ public interface BrowserTestRunner extends XmlRenderable {
 
 	List<String> getBrowserFileNames();
 
+	int timeoutSeconds();
+
 }

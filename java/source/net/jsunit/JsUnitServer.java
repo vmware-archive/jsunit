@@ -25,7 +25,6 @@ import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 
 public class JsUnitServer implements BrowserTestRunner {
 
-    public static int MAX_SECONDS_TO_WAIT = 60;
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
     private static JsUnitServer instance;
     
@@ -282,6 +281,10 @@ public class JsUnitServer implements BrowserTestRunner {
 
 	public void logStatus(String message) {
 		statusLogger.log(message);
+	}
+	
+	public int timeoutSeconds() {
+		return configuration.getTimeoutSeconds();
 	}
 
 }

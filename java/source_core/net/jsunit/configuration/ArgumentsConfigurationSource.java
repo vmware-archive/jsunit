@@ -50,6 +50,10 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
 
 	public String logStatus() {
 		return getArgumentValue(ConfigurationConstants.LOG_STATUS);
+	}
+
+	public String timeoutSeconds() {
+		return getArgumentValue(ConfigurationConstants.TIMEOUT_SECONDS);
 	}    
     
 }

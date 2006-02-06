@@ -155,8 +155,7 @@ jsUnitTestManager.prototype._runTest = function ()
       top.status = 'setUpPage not completed... ' + this.containerTestFrame.setUpPageStatus + ' ' + (new Date());
       if ((new Date() - this.containerTestFrame.startTime) /1000 > this.getsetUpPageTimeout()) {
         alert('setUpPage timed out without completing.');
-        if (prompt('Retry or Cancel ?', 'Retry') != 'Retry')
-        {
+        if (!confirm('Retry Test Run?')) {
           this.abort();
           return;
         }
@@ -333,8 +332,7 @@ jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function ()
 {
   if ((new Date() - this._loadAttemptStartTime) / 1000 > this.getTimeout()) {
     alert('Reading Test Page ' + this._testFileName + ' timed out.\nMake sure that the file exists and is a Test Page.');
-    if (prompt('Retry or Cancel ?', 'Retry') != 'Retry')
-    {
+    if (!confirm('Retry Test Run?')) {
       this.abort();
       return;
     }

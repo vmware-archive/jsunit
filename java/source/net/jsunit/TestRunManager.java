@@ -47,7 +47,7 @@ public class TestRunManager {
         while (!testRunner.hasReceivedResultSince(launchTime)) {
             Thread.sleep(1000);
             secondsWaited++;
-            if (secondsWaited > JsUnitServer.MAX_SECONDS_TO_WAIT + 10)
+            if (secondsWaited > (testRunner.timeoutSeconds())+3)
                 throw new RuntimeException("Server not responding");
         }
     }

@@ -18,26 +18,20 @@ public class ConfigurationTest extends TestCase {
         expectedBrowsers.add("browser1.exe");
         expectedBrowsers.add("browser2.exe");
         assertEquals(expectedBrowsers, configuration.getBrowserFileNames());
-
         assertEquals(new File("c:\\logs\\directory"), configuration.getLogsDirectory());
-
         assertEquals(1234, configuration.getPort());
-
         assertEquals(new File("c:\\resource\\base"), configuration.getResourceBase());
-
         assertEquals(new URL("http://www.example.com"), configuration.getTestURL());
-
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
+        assertEquals(76, configuration.getTimeoutSeconds());
     }
 
     public void testMinimal() throws Exception {
         Configuration configuration = new Configuration(new MinimalConfigurationSource());
-
         assertEquals(new File("."), configuration.getResourceBase());
-
         assertEquals(new File(".\\logs"), configuration.getLogsDirectory());
-
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
+        assertEquals(60, configuration.getTimeoutSeconds());
     }
 
     public void testAsXml() throws Exception {
@@ -108,6 +102,10 @@ public class ConfigurationTest extends TestCase {
 		public String logStatus() {
 			return String.valueOf(true);
 		}
+
+		public String timeoutSeconds() {
+			return "76";
+		}
     }
 
     static class MinimalConfigurationSource implements ConfigurationSource {
@@ -137,6 +135,10 @@ public class ConfigurationTest extends TestCase {
         }
 
 		public String logStatus() {
+			return "";
+		}
+
+		public String timeoutSeconds() {
 			return "";
 		}
     }

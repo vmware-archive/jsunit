@@ -19,6 +19,7 @@ public final class Configuration implements XmlRenderable {
     private ConfigurationSource source;
     public static final String DEFAULT_RESOURCE_BASE = ".";
     public static final int DEFAULT_PORT = 8080;
+    public static final int DEFAULT_TIMEOUT_SECONDS = 60;
 
     public Configuration(ConfigurationSource source) {
         this.source = source;
@@ -83,7 +84,7 @@ public final class Configuration implements XmlRenderable {
         try {
             int port;
             if (Utility.isEmpty(portString))
-                port = Configuration.DEFAULT_PORT;
+                port = DEFAULT_PORT;
             else
                 port = Integer.parseInt(portString);
             return port;
@@ -111,7 +112,7 @@ public final class Configuration implements XmlRenderable {
     private String resourceBaseCheckForDefault() {
         String result = source.resourceBase();
         if (Utility.isEmpty(result))
-            result = Configuration.DEFAULT_RESOURCE_BASE;
+            result = DEFAULT_RESOURCE_BASE;
         return result;
     }
 
@@ -184,5 +185,12 @@ public final class Configuration implements XmlRenderable {
 				result.append(",");
 		}
 		return result.toString();
+	}
+
+	public int getTimeoutSeconds() {
+		String timeoutSecondsString = source.timeoutSeconds();
+		if (Utility.isEmpty(timeoutSecondsString))
+			return DEFAULT_TIMEOUT_SECONDS;
+		return Integer.parseInt(timeoutSecondsString);
 	}
 }

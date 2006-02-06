@@ -16,3 +16,4 @@
 - Eclipse plugin
 - assertHTMLEquals function
 - Opera fix
+- New parameter "timeoutSeconds"; defaults to 60

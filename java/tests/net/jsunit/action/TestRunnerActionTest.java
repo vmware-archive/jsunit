@@ -116,6 +116,10 @@ public class TestRunnerActionTest extends TestCase {
 		public Element asXml() {
 			return null;
 		}
+
+		public int timeoutSeconds() {
+			return 0;
+		}
 		
 	}
 }

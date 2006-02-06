@@ -76,6 +76,10 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
 
 		public void logStatus(String message) {
 		}
+
+		public int timeoutSeconds() {
+			return 0;
+		}
     }
 
     static class MockJsUnitAction extends JsUnitAction {

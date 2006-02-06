@@ -34,4 +34,8 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
 		return System.getProperty(ConfigurationConstants.LOG_STATUS);
 	}
 
+	public String timeoutSeconds() {
+		return System.getProperty(ConfigurationConstants.TIMEOUT_SECONDS);
+	}
+
 }

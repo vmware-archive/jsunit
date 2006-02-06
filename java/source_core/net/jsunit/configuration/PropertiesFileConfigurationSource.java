@@ -66,4 +66,8 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
 		return getProperty(ConfigurationConstants.LOG_STATUS);
 	}
 
+	public String timeoutSeconds() {
+		return getProperty(ConfigurationConstants.TIMEOUT_SECONDS);
+	}
+
 }

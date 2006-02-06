@@ -34,4 +34,8 @@ public class DummyConfigurationSource implements ConfigurationSource {
 		return "false";
 	}
 
+	public String timeoutSeconds() {
+		return "60";
+	}
+
 }

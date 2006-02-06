@@ -44,7 +44,7 @@ public class TimeoutChecker extends Thread {
 
 	private boolean waitedTooLong() {
 		long secondsWaited = (System.currentTimeMillis() - launchTime) / 1000;
-		return secondsWaited > JsUnitServer.MAX_SECONDS_TO_WAIT;
+		return secondsWaited > runner.timeoutSeconds();
 	}
 	
 }
