@@ -1,8 +1,8 @@
 package net.jsunit.plugin.eclipse.preference;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import net.jsunit.Utility;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -36,27 +36,19 @@ public class JsUnitPreferenceStore {
 	}
 	
 	public List<String> testPageExtensions() {
-		return listFromDelimitedString(testPageExtensionsString());
+		return Utility.listFromDelimitedString(testPageExtensionsString());
 	}
 
-	private List<String> listFromDelimitedString(String delimitedString) {
-		String[] array = delimitedString.split(",");
-		List<String> result = new ArrayList<String>(array.length);
-		for (String element : array)
-			result.add(element.trim());
-		return result;
+	public int timeoutSeconds() {
+		return preferenceStore.getInt(PreferenceConstants.PREFERENCE_TIMEOUT_SECONDS);
 	}
-	
+
 	public List<String> browserFileNames() {
-		return listFromDelimitedString(browserFileNamesString());
+		return Utility.listFromDelimitedString(browserFileNamesString());
 	}
 
 	public PreferenceConfigurationSource asConfigurationSource(IFile testPage, int jsUnitServerPort) {
 		return new PreferenceConfigurationSource(this, testPage, jsUnitServerPort);
-	}
-
-	public int timeoutSeconds() {
-		return 0;
 	}
 
 }

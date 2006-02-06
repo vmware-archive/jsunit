@@ -7,6 +7,7 @@ import net.jsunit.plugin.eclipse.JsUnitPlugin;
 import org.eclipse.jface.preference.BooleanFieldEditor;
 import org.eclipse.jface.preference.DirectoryFieldEditor;
 import org.eclipse.jface.preference.FieldEditorPreferencePage;
+import org.eclipse.jface.preference.IntegerFieldEditor;
 import org.eclipse.jface.preference.StringFieldEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.PropertyChangeEvent;
@@ -84,6 +85,11 @@ public class PreferencePage
 
 		createSpacer(testPageExtensionParent, 3);
 
+		addField(new IntegerFieldEditor(
+					PreferenceConstants.PREFERENCE_TIMEOUT_SECONDS,
+					"&Seconds to wait before timing out browsers:",
+					testPageExtensionParent));
+		
 	}
 	
 	protected void createSpacer(Composite composite, int columnSpan) {

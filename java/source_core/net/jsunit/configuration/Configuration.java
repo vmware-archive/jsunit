@@ -130,19 +130,19 @@ public final class Configuration implements XmlRenderable {
     public Element asXml() {
         Element configuration = new Element("configuration");
 
-        Element resourceBase = new Element("resourceBase");
+        Element resourceBase = new Element(ConfigurationConstants.RESOURCE_BASE);
         resourceBase.setText(getResourceBase().toString());
         configuration.addContent(resourceBase);
 
-        Element port = new Element("port");
+        Element port = new Element(ConfigurationConstants.PORT);
         port.setText(String.valueOf(getPort()));
         configuration.addContent(port);
 
-        Element logsDirectory = new Element("logsDirectory");
+        Element logsDirectory = new Element(ConfigurationConstants.LOGS_DIRECTORY);
         logsDirectory.setText(getLogsDirectory().toString());
         configuration.addContent(logsDirectory);
 
-        Element browserFileNames = new Element("browserFileNames");
+        Element browserFileNames = new Element(ConfigurationConstants.BROWSER_FILE_NAMES);
         for (String name : getBrowserFileNames()) {
             Element browserFileName = new Element("browserFileName");
             browserFileName.setText(name);
@@ -150,17 +150,21 @@ public final class Configuration implements XmlRenderable {
         }
         configuration.addContent(browserFileNames);
 
-        Element url = new Element("url");
+        Element url = new Element(ConfigurationConstants.URL);
         url.setText(getTestURL().toString());
         configuration.addContent(url);
 
-        Element closeBrowsers = new Element("closeBrowsersAfterTestRuns");
+        Element closeBrowsers = new Element(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
         closeBrowsers.setText(String.valueOf(shouldCloseBrowsersAfterTestRuns()));
         configuration.addContent(closeBrowsers);
 
-        Element logStatus = new Element("logStatus");
+        Element logStatus = new Element(ConfigurationConstants.LOG_STATUS);
         logStatus.setText(String.valueOf(logStatus()));
         configuration.addContent(logStatus);
+
+        Element timeoutSeconds = new Element("timeoutSeconds");
+        timeoutSeconds.setText(String.valueOf(getTimeoutSeconds()));
+        configuration.addContent(timeoutSeconds);
 
         return configuration;
     }
@@ -173,7 +177,8 @@ public final class Configuration implements XmlRenderable {
 			"-" + ConfigurationConstants.BROWSER_FILE_NAMES, commaSeparatedBrowserFileNames(),
 			"-" + ConfigurationConstants.URL, getTestURL().toString(),
 			"-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS, String.valueOf(shouldCloseBrowsersAfterTestRuns()),
-			"-" + ConfigurationConstants.LOG_STATUS, String.valueOf(logStatus())
+			"-" + ConfigurationConstants.LOG_STATUS, String.valueOf(logStatus()),
+			"-" + ConfigurationConstants.TIMEOUT_SECONDS, String.valueOf(getTimeoutSeconds())
 		};
 	}
 

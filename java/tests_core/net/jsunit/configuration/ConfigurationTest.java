@@ -47,7 +47,8 @@ public class ConfigurationTest extends TestCase {
                   "</browserFileNames>" +
                   "<url>http://www.example.com</url>" +
                   "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
-                  "<logStatus>true</logStatus>" +                  
+                  "<logStatus>true</logStatus>" +
+                  "<timeoutSeconds>76</timeoutSeconds>" +
                 "</configuration>",
                 Utility.asString(configuration.asXml())
         );
@@ -56,7 +57,7 @@ public class ConfigurationTest extends TestCase {
     public void testAsArgumentsArray() throws Exception {
         Configuration configuration = new Configuration(new FullConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
-        assertEquals(14, arguments.length);
+        assertEquals(16, arguments.length);
         assertEquals("-resourceBase", arguments[0]);
         assertEquals("c:\\resource\\base", arguments[1]);
         assertEquals("-port", arguments[2]);
@@ -71,6 +72,8 @@ public class ConfigurationTest extends TestCase {
         assertEquals("true", arguments[11]);
         assertEquals("-logStatus", arguments[12]);
         assertEquals("true", arguments[13]);
+        assertEquals("-timeoutSeconds", arguments[14]);
+        assertEquals("76", arguments[15]);
     }
 
     static class FullConfigurationSource implements ConfigurationSource {

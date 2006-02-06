@@ -97,4 +97,14 @@ public class Utility {
 		throwable.printStackTrace(new PrintWriter(writer));
 		return writer.toString();
 	}
+	
+	public static List<String> listFromDelimitedString(String delimitedString) {
+		String[] array = delimitedString.split(",");
+		List<String> result = new ArrayList<String>(array.length);
+		for (String element : array)
+			result.add(element.trim());
+		return result;
+	}
+	
+
 }
