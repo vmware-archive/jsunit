@@ -16,6 +16,7 @@ public class PreferenceInitializer extends AbstractPreferenceInitializer {
 		store.setDefault(PreferenceConstants.PREFERENCE_CLOSE_BROWSERS_AFTER_TEST_RUNS, true);
 		store.setDefault(PreferenceConstants.PREFERENCE_TEST_PAGE_EXTENSIONS, "html,htm");
 		store.setDefault(PreferenceConstants.PREFERENCE_TIMEOUT_SECONDS, String.valueOf(Configuration.DEFAULT_TIMEOUT_SECONDS));
+		store.setDefault(PreferenceConstants.PREFERENCE_LOG_STATUS, false);
 	}
 
 }

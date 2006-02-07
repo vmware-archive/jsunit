@@ -10,6 +10,7 @@ import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.model.BrowserResult;
+
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -45,12 +46,11 @@ public class JsUnitServer implements BrowserTestRunner {
 
     public JsUnitServer(Configuration configuration) {
 		this.configuration = configuration;
-		if (configuration.logStatus()) {
-			addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
+		addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
+		if (configuration.logStatus())
 			statusLogger = new SystemOutStatusLogger();
-		} else {
-			statusLogger = new NoOpStatusLogger();
-		}
+		else
+			statusLogger = new NoOpStatusLogger();		
         instance = this;
 	}
 
@@ -221,6 +221,7 @@ public class JsUnitServer implements BrowserTestRunner {
 		    this.browserProcess = processStarter.execute(commandWithUrl);
 		    startTimeoutChecker(launchTime);
 		} catch (Throwable throwable) {
+			logStatus("Browser " + browserFileName + " failed to launch: " + Utility.stackTraceAsString(throwable));
 			BrowserResult failedToLaunchBrowserResult = new BrowserResult();
 			failedToLaunchBrowserResult.setFailedToLaunch();
 			failedToLaunchBrowserResult.setBrowserFileName(browserFileName);

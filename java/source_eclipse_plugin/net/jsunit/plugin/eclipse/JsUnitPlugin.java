@@ -10,7 +10,9 @@ import net.jsunit.plugin.eclipse.preference.JsUnitPreferenceStore;
 import net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
@@ -46,7 +48,7 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 		try {
 			iconBaseURL = new URL(Platform.getBundle(PLUGIN_ID).getEntry("/"), "icons/");
 		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
+			log(e);
 		}
 	}
 
@@ -91,7 +93,8 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 		try {
 			return new URL(soleInstance.iconBaseURL, fileName);
 		} catch (MalformedURLException e) {
-			throw new RuntimeException(e);
+			log(e);
+			return null;
 		}
 	}
 
@@ -149,7 +152,8 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 		try {
 			return (JsUnitTestResultsViewPart) activePage().showView(JsUnitTestResultsViewPart.ID);
 		} catch (PartInitException e) {
-			throw new RuntimeException(e);
+			log(e);
+			return null;
 		}
 	}
 
@@ -178,6 +182,14 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 	public static ImageDescriptor createImageDescriptor(String imageName) {
 		URL iconFileURL = iconFileURL(imageName);
 		return ImageDescriptor.createFromURL(iconFileURL);
+	}
+
+	public static void log(Throwable e) {
+		log(new Status(IStatus.ERROR, PLUGIN_ID, IStatus.ERROR, "Error", e));
+	}
+
+	public static void log(IStatus status) {
+		soleInstance().getLog().log(status);
 	}
 
 }

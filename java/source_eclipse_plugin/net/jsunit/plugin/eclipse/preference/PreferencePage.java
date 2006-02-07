@@ -48,7 +48,7 @@ public class PreferencePage
 
 		useDefaultLogsDirectory = new BooleanFieldEditor(
 						PreferenceConstants.PREFERENCE_USE_DEFAULT_LOGS_DIRECTORY, 
-						"&Use default logs directory (i.e. <installation directory>/logs)", 
+						"&Use default logs directory (i.e. <installation directory>"+File.separator+"logs)", 
 						testPageExtensionParent);
 		addField(useDefaultLogsDirectory);
 		
@@ -58,8 +58,6 @@ public class PreferencePage
 						"&Custom logs directory:", 
 						logsDirectoryParent);
 		addField(logsDirectory);
-		
-		createSpacer(testPageExtensionParent, 3);
 		
 		addField(new ListFileFieldEditor(
 				PreferenceConstants.PREFERENCE_BROWSER_FILE_NAMES,
@@ -75,7 +73,6 @@ public class PreferencePage
 					testPageExtensionParent));
 		
 		createFieldHelpText(testPageExtensionParent, 1, 2, "Comma-separated, e.g. \"html,htm\"");
-		createSpacer(testPageExtensionParent, 3);
 
 		addField(
 				new BooleanFieldEditor(
@@ -83,6 +80,11 @@ public class PreferencePage
 					"&Attempt to close browsers after test runs",
 					testPageExtensionParent));
 
+		addField(
+				new BooleanFieldEditor(
+					PreferenceConstants.PREFERENCE_LOG_STATUS,
+					"&Log status to console",
+					testPageExtensionParent));
 		createSpacer(testPageExtensionParent, 3);
 
 		addField(new IntegerFieldEditor(

@@ -51,4 +51,8 @@ public class JsUnitPreferenceStore {
 		return new PreferenceConfigurationSource(this, testPage, jsUnitServerPort);
 	}
 
+	public boolean logStatus() {
+		return preferenceStore.getBoolean(PreferenceConstants.PREFERENCE_LOG_STATUS);
+	}
+
 }

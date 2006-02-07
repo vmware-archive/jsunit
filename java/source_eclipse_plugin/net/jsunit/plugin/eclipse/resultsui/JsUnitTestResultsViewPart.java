@@ -48,9 +48,9 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 
 	public void createPartControl(Composite parent) {
 		contentProvider = new ContentProvider(getViewSite());
-		GridLayout gridLayout= new GridLayout(); 
-		gridLayout.marginWidth= 0;
-		gridLayout.marginHeight= 0;
+		GridLayout gridLayout = new GridLayout(); 
+		gridLayout.marginWidth = 0;
+		gridLayout.marginHeight = 0;
 		parent.setLayout(gridLayout);
 
 		counterComposite = createProgressCountPanel(parent);
@@ -114,7 +114,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	
 	private void testResultsTabChanged(SelectionEvent event) {
 		for (TestResultsTab tab : testResultsTabs) {
-			if (((CTabFolder) event.widget).getSelection().getText() == tab.getName())
+			if (((CTabFolder) event.widget).getSelection().getText().equals(tab.getName()))
 				activeTab= tab;
 				activeTab.refresh();
 				collapseAllAction.setEnabled(activeTab.isHierarchical());

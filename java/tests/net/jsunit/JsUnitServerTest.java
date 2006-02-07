@@ -1,7 +1,5 @@
 package net.jsunit;
 
-import java.util.List;
-
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 
@@ -84,25 +82,5 @@ public class JsUnitServerTest extends TestCase {
 		server.finishTestRun();
 		assertTrue(listener.testRunFinishedCalled);
 	}
-	
-	public void testConfigurationDeterminesAdditionOfLogWriter() {
-		Configuration configuration = new Configuration(new DummyConfigurationSource() {
-			public String logStatus() {
-				return String.valueOf(false);
-			}
-		});
-		
-		List<TestRunListener> listeners = new JsUnitServer(configuration).getBrowserTestRunListeners();
-		assertTrue(listeners.isEmpty());
 
-		configuration = new Configuration(new DummyConfigurationSource() {
-			public String logStatus() {
-				return String.valueOf(true);
-			}
-		});
-		listeners = new JsUnitServer(configuration).getBrowserTestRunListeners();
-		assertEquals(1, listeners.size());
-		assertTrue(listeners.get(0) instanceof BrowserResultLogWriter);
-	}
-	
 }
