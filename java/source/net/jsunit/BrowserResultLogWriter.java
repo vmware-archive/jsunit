@@ -1,8 +1,8 @@
 package net.jsunit;
- 
-import java.io.File;
 
 import net.jsunit.model.BrowserResult;
+
+import java.io.File;
 
 public class BrowserResultLogWriter implements TestRunListener {
 

@@ -36,8 +36,7 @@ public abstract class FunctionalTestCase extends TestCase {
 		String responseXml = webTester.getDialog().getResponseText();
 		SAXBuilder saxBuilder = new SAXBuilder("org.apache.xerces.parsers.SAXParser");
 		Reader stringReader = new StringReader(responseXml);
-		Document responseDocument = saxBuilder.build(stringReader);
-		return responseDocument;
+        return saxBuilder.build(stringReader);
 	}
 
 	static class TestConfigurationSource implements ConfigurationSource {

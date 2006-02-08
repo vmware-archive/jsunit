@@ -1,34 +1,25 @@
 package net.jsunit.action;
 
-import junit.framework.TestResult;
-import junit.textui.TestRunner;
-import net.jsunit.StandaloneTest;
+import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
-
 import org.jdom.Element;
 
-public class TestRunnerAction extends JsUnitAction implements StandaloneTestAware {
+public class TestRunnerAction extends JsUnitAction {
+    private TestRunManager manager;
 
-    private TestResult result;
-    private StandaloneTest test;
-
-    public String execute() {
-        runner.logStatus("Received request to run standalone test");
-        result = TestRunner.run(test);//TODO: change this to instead just use a testrunmanager, not a standalone test
-        runner.logStatus("Done running standalone test");
+    public String execute() throws Exception {
+        runner.logStatus("Received request to run tests");
+        manager = new TestRunManager(runner);
+        manager.runTests();
+        runner.logStatus("Done running tests");
         return SUCCESS;
-    }
-
-    public void setStandaloneTest(StandaloneTest test) {
-        this.test = test;
-        this.test.setBrowserTestRunner(runner);
     }
 
     public XmlRenderable getXmlRenderable() {
         return new XmlRenderable() {
             public Element asXml() {
                 Element resultElement = new Element("result");
-                String resultString = result.wasSuccessful() ? "success" : "failure";
+                String resultString = manager.hadProblems() ? "failure" : "success";
                 resultElement.setText(resultString);
                 return resultElement;
             }

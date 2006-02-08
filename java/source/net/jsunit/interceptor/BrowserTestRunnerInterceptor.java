@@ -1,9 +1,8 @@
 package net.jsunit.interceptor;
 
+import com.opensymphony.xwork.Action;
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.action.JsUnitAction;
-
-import com.opensymphony.xwork.Action;
 
 public class BrowserTestRunnerInterceptor extends InterceptorSupport {
 

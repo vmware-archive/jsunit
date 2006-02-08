@@ -1,16 +1,11 @@
 package net.jsunit;
- 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
+import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.model.BrowserResult;
-
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -18,7 +13,10 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
-import com.opensymphony.webwork.dispatcher.ServletDispatcher;
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net

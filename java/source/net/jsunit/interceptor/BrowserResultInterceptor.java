@@ -1,14 +1,13 @@
 package net.jsunit.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.opensymphony.webwork.ServletActionContext;
+import com.opensymphony.xwork.Action;
 import net.jsunit.Utility;
 import net.jsunit.action.BrowserResultAware;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 
-import com.opensymphony.webwork.ServletActionContext;
-import com.opensymphony.xwork.Action;
+import javax.servlet.http.HttpServletRequest;
 
 public class BrowserResultInterceptor extends InterceptorSupport {
 

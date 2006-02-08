@@ -3,7 +3,7 @@ package net.jsunit;
 import net.jsunit.configuration.ConfigurationConstants;
 import net.jsunit.model.ResultType;
 
-public class TimedOutBrowserStandaloneTestTest extends StandaloneTest{
+public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 
 	public TimedOutBrowserStandaloneTestTest(String name) {
 		super(name);

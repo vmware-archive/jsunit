@@ -1,17 +1,15 @@
 package net.jsunit.action;
 
-import java.io.OutputStream;
-
-import javax.servlet.http.HttpServletResponse;
-
-import net.jsunit.XmlRenderable;
-import net.jsunit.Utility;
-
 import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.Result;
-import org.jdom.Element;
+import net.jsunit.Utility;
+import net.jsunit.XmlRenderable;
 import org.jdom.Document;
+import org.jdom.Element;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.OutputStream;
 
 public class XmlResult implements Result {
 

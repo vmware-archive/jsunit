@@ -1,8 +1,7 @@
 package net.jsunit.action;
 
-import net.jsunit.BrowserTestRunner;
-
 import com.opensymphony.xwork.Action;
+import net.jsunit.BrowserTestRunner;
 
 public abstract class JsUnitAction implements Action, XmlProducer {
 

@@ -1,8 +1,8 @@
 package net.jsunit;
 
-import java.util.List;
-
 import net.jsunit.model.BrowserResult;
+
+import java.util.List;
 
 public interface BrowserTestRunner extends XmlRenderable {
 

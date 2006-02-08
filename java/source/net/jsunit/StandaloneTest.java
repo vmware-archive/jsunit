@@ -1,7 +1,7 @@
 package net.jsunit;
- 
-import net.jsunit.configuration.Configuration;
+
 import junit.framework.TestCase;
+import net.jsunit.configuration.Configuration;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -44,7 +44,7 @@ public class StandaloneTest extends TestCase {
             buffer.append("The Test Run had problems: ");
             buffer.append(testRunManager.getErrorCount()).append(" errors, ");
             buffer.append(testRunManager.getFailureCount()).append(" failures ");
-            fail(buffer.toString());    		
+            fail(buffer.toString());
     	}
     }
 

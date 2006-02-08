@@ -1,9 +1,8 @@
 package net.jsunit.interceptor;
 
+import com.opensymphony.xwork.Action;
 import net.jsunit.StandaloneTest;
 import net.jsunit.action.StandaloneTestAware;
-
-import com.opensymphony.xwork.Action;
 
 public class StandaloneTestInterceptor extends InterceptorSupport {
 

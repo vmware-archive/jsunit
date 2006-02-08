@@ -14,8 +14,7 @@
 		<interceptors>
 			<interceptor name="browserTestRunner" class="net.jsunit.interceptor.BrowserTestRunnerInterceptor" />
 			<interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor" />
-			<interceptor name="standaloneTest" class="net.jsunit.interceptor.StandaloneTestInterceptor" />
-			
+
 			<interceptor-stack name="defaultStack">
 				<interceptor-ref name="servlet-config" /> 
 				<interceptor-ref name="prepare" /> 
@@ -36,8 +35,6 @@
 
 		<action name="runner" class="net.jsunit.action.TestRunnerAction"> 
 			<result name="success" type="jsUnitXml"/>
-			<interceptor-ref name="defaultStack" />
-			<interceptor-ref name="standaloneTest" />				
 		</action> 
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">

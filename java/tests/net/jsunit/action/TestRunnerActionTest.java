@@ -1,125 +1,87 @@
 package net.jsunit.action;
 
-import java.util.List;
-
 import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
-import net.jsunit.StandaloneTest;
 import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
-
 import org.jdom.Element;
+
+import java.util.List;
+import java.util.Arrays;
 
 public class TestRunnerActionTest extends TestCase {
 
-	private TestRunnerAction action;
+    private TestRunnerAction action;
 
-	public void setUp() throws Exception {
-		super.setUp();
-		action = new TestRunnerAction();
-		action.setBrowserTestRunner(new MockBrowserTestRunner());
-	}
-	
-	public void testSuccess() {
-		DummySuccessfulStandaloneTest test = new DummySuccessfulStandaloneTest("testStandaloneRun");
-		action.setStandaloneTest(test);
-		assertEquals(TestRunnerAction.SUCCESS, action.execute());
-		assertTrue(test.wasExecuted);
-		assertEquals("<result>success</result>", Utility.asString(action.getXmlRenderable().asXml()));
-	}
-	
-	public void testFailure() {
+    public void setUp() throws Exception {
+        super.setUp();
+        action = new TestRunnerAction();
+    }
 
-		DummyFailingStandaloneTest test = new DummyFailingStandaloneTest("testStandaloneRun");
-		action.setStandaloneTest(test);
-		assertEquals(TestRunnerAction.SUCCESS, action.execute());
-		assertTrue(test.wasExecuted);
-		assertEquals("<result>failure</result>", Utility.asString(action.getXmlRenderable().asXml()));
-	}
-	
-	public static class DummySuccessfulStandaloneTest extends StandaloneTest {
-		
-		private boolean wasExecuted;
+    public void testSuccess() throws Exception {
+        action.setBrowserTestRunner(new MockBrowserTestRunner(true));
+        assertEquals(TestRunnerAction.SUCCESS, action.execute());
+        assertEquals("<result>success</result>", Utility.asString(action.getXmlRenderable().asXml()));
+    }
 
-		public DummySuccessfulStandaloneTest(String name) {
-			super(name);
-		}
-		
-		public void setUp() {
-		}
-		
-		public void tearDown() {
-		}
+    public void testFailure() throws Exception {
+        action.setBrowserTestRunner(new MockBrowserTestRunner(false));
+        assertEquals(TestRunnerAction.SUCCESS, action.execute());
+        assertEquals("<result>failure</result>", Utility.asString(action.getXmlRenderable().asXml()));
+    }
 
-		public void testStandaloneRun() {
-			wasExecuted = true;
-		}
-	}
+    static class MockBrowserTestRunner implements BrowserTestRunner {
+        private boolean shouldSucceed;
 
-	public static class DummyFailingStandaloneTest extends StandaloneTest {
-		
-		private boolean wasExecuted;
+        public MockBrowserTestRunner(boolean shouldSucceed) {
+            this.shouldSucceed = shouldSucceed;
+        }
 
-		public DummyFailingStandaloneTest(String name) {
-			super(name);
-		}
-		
-		public void setUp() {
-		}
-		
-		public void tearDown() {
-		}
+        public void startTestRun() {
+        }
 
-		public void testStandaloneRun() {
-			wasExecuted = true;
-			fail();
-		}
-	}
-	
-	static class MockBrowserTestRunner implements BrowserTestRunner {
+        public void finishTestRun() {
+        }
 
-		public void startTestRun() {
-		}
+        public long launchTestRunForBrowserWithFileName(String browserFileName) {
+            return 0;
+        }
 
-		public void finishTestRun() {
-		}
+        public void accept(BrowserResult result) {
+        }
 
-		public long launchTestRunForBrowserWithFileName(String browserFileName) {
-			return 0;
-		}
+        public boolean hasReceivedResultSince(long launchTime) {
+            return true;
+        }
 
-		public void accept(BrowserResult result) {
-		}
+        public BrowserResult lastResult() {
+            return new BrowserResult() {
+                public int failureCount() {
+                    return shouldSucceed ? 0 : 1;
+                }
+            };
+        }
 
-		public boolean hasReceivedResultSince(long launchTime) {
-			return false;
-		}
+        public void dispose() {
+        }
 
-		public BrowserResult lastResult() {
-			return null;
-		}
+        public BrowserResult findResultWithId(String id) {
+            return null;
+        }
 
-		public void dispose() {			
-		}
+        public void logStatus(String message) {
+        }
 
-		public BrowserResult findResultWithId(String id) {
-			return null;
-		}
+        public List<String> getBrowserFileNames() {
+            return Arrays.asList(new String[] {"mybrowser.exe"});
+        }
 
-		public void logStatus(String message) {
-		}
+        public int timeoutSeconds() {
+            return 0;
+        }
 
-		public List<String> getBrowserFileNames() {
-			return null;
-		}
-
-		public Element asXml() {
-			return null;
-		}
-
-		public int timeoutSeconds() {
-			return 0;
-		}
-		
-	}
+        public Element asXml() {
+            return null;
+        }
+    }
 }
