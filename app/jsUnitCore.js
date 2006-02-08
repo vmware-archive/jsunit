@@ -183,7 +183,13 @@ function assertEvaluatesToFalse() {
 }
 
 function assertHTMLEquals(expectedHTML, actualHTML) {
-    assertEquals(standardizeHTML(expectedHTML), standardizeHTML(actualHTML));
+    _validateArguments(2, arguments);
+    var var1=nonCommentArg(1, 2, arguments);
+    var var2=nonCommentArg(2, 2, arguments);
+    var var1Standardized = standardizeHTML(var1);
+    var var2Standardized = standardizeHTML(var2);
+
+    _assert(commentArg(2, arguments), var1Standardized===var2Standardized, 'Expected ' + _displayStringForValue(var1Standardized) + ' but was ' + _displayStringForValue(var2Standardized));
 }
 
 function standardizeHTML(html) {

@@ -214,9 +214,10 @@ function testAssertEvaluatesToFalse() {
 }
 
 function testAssertHTMLEquals() {
-	assertHTMLEquals("<div id=mydiv>foobar</div>", "<div id='mydiv'>foobar</div>");
+    assertHTMLEquals("<div id=mydiv>foobar</div>", "<div id='mydiv'>foobar</div>");
 	assertHTMLEquals("<p/>", "<p></p>");
 	assertHTMLEquals("foo bar", "foo bar");
+    assertHTMLEquals("a comment", "<p id='foo'>foo bar</p>", "<p id=foo>foo bar</p>");
 }
 
 function assertJsUnitException(comment, allegedJsUnitException) {
