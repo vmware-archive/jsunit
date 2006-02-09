@@ -10,7 +10,6 @@ public class ResultAcceptorAction extends JsUnitAction implements BrowserResultA
 	public String execute() throws Exception {
         runner.logStatus("Received submission");
 		runner.accept(result);
-        runner.logStatus("Done");
         return SUCCESS;
 	}
 

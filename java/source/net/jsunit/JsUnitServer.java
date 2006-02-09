@@ -247,6 +247,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
 	public void dispose() {
+		logStatus("Stopping server");
 		endBrowser();
 		try {
 			if (server != null)

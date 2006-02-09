@@ -57,12 +57,13 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 		assertEquals("endXml", ndLastMessage(0));
 	}
 	
-	public void testStopRunner() {
+	public void testStopRunner() throws InterruptedException {
 		assertFalse(mockRunner.disposeCalled);
 		clientSideConnection.sendMessage("foo");
 		assertFalse(mockRunner.disposeCalled);
 		clientSideConnection.sendMessage("stop");
-		assertTrue(mockRunner.disposeCalled);
+		while (!mockRunner.disposeCalled)
+			Thread.sleep(10);
 	}
 
 	private String ndLastMessage(int count) {

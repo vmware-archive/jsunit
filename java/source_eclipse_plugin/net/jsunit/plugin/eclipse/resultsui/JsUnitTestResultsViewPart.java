@@ -45,6 +45,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	private ExpandAllAction expandAllAction;
 	private RemoteTestRunClient client;
 	private long startTime;
+	private boolean stopped;
 
 	public void createPartControl(Composite parent) {
 		contentProvider = new ContentProvider(getViewSite());
@@ -183,11 +184,12 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		}
 
 		public void run() {
+			stopped = true;
 			setEnabled(false);
 			client.sendStopServer();
 			client.stopListening();
 			progressBar.stopped();
-			testRunFinished(true);
+			testRunFinished();
 		}
 
 	}
@@ -225,6 +227,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	}
 
 	public void testRunStarted() {
+		stopped = false;
 		stopAction.setEnabled(true);
 		contentProvider.testRunStarted();
 		resetBrowserCountAndProgressBar();
@@ -234,16 +237,12 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	}
 
 	public void testRunFinished() {
-		testRunFinished(false);
-	}
-
-	private void testRunFinished(boolean abortedByUser) {
 		stopAction.setEnabled(false);
 		contentProvider.testRunFinished();
 		if (activeTab.isHierarchical())
 			refreshActiveTab();
 		long millisTaken = System.currentTimeMillis() - startTime;
-		String message = abortedByUser ? "Test Run stopped after " : "Test Run took ";
+		String message = stopped ? "Test Run stopped after " : "Test Run took ";
 		message += (NumberFormat.getInstance().format(millisTaken / 1000d) + " seconds");
 		setContentDescriptionMessage(message);
 	}
@@ -271,7 +270,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 			}
 		});
 		refreshActiveTab();
-		setContentDescriptionMessage("Done running tests in browser "+browserFileName);
+		setContentDescriptionMessage("Done running tests in browser " + browserFileName);
 	}
 
 	public void browserTestRunStarted(String browserFileName) {

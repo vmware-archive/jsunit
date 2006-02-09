@@ -14,7 +14,8 @@ public class TestRunManager {
         server.start();
         TestRunManager manager = new TestRunManager(server);
         manager.runTests();
-        server.dispose();
+        if (server.isAlive())
+        	server.dispose();
         System.exit(manager.hadProblems() ? 1 : 0);
     }
 
@@ -23,6 +24,7 @@ public class TestRunManager {
 	}
 
 	public void runTests() {
+		testRunner.logStatus("Starting Test Run");
 		testRunner.startTestRun();
 		try {
 	        for (String browserFileName : testRunner.getBrowserFileNames()) {
@@ -36,6 +38,7 @@ public class TestRunManager {
 		} finally {
 			testRunner.finishTestRun();
 		}
+        testRunner.logStatus("Test Run Completed");
 	}
 
     public boolean hadProblems() {
