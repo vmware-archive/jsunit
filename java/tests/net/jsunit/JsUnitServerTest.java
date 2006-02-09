@@ -2,6 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.BrowserResult;
 
 public class JsUnitServerTest extends TestCase {
 
@@ -81,6 +82,14 @@ public class JsUnitServerTest extends TestCase {
 		assertTrue(listener.testRunStartedCalled);
 		server.finishTestRun();
 		assertTrue(listener.testRunFinishedCalled);
+	}
+	
+	public void testAcceptResult() {
+		server.setProcessStarter(new MockProcessStarter());
+		server.launchTestRunForBrowserWithFileName("mybrowser.exe");
+		BrowserResult result = new BrowserResult();
+		server.accept(result);
+		assertEquals("mybrowser.exe", result.getBrowserFileName());
 	}
 
 }

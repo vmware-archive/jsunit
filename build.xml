@@ -93,6 +93,9 @@
             <sysproperty key="port" value="${port}"/>
             <sysproperty key="resourceBase" value="${resourceBase}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
+            <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
+            <sysproperty key="logStatus" value="${logStatus}"/>
+            <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
         </java>
     </target>
 
@@ -112,6 +115,9 @@
             <sysproperty key="port" value="${port}"/>
             <sysproperty key="resourceBase" value="${resourceBase}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
+            <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
+            <sysproperty key="logStatus" value="${logStatus}"/>
+            <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
             <test name="net.jsunit.StandaloneTest"/>
         </junit>
     </target>

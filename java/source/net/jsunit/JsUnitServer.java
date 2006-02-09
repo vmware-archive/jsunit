@@ -97,6 +97,7 @@ public class JsUnitServer implements BrowserTestRunner {
 
     public void accept(BrowserResult result) {
     	killTimeoutChecker();
+    	result.setBrowserFileName(browserFileName);
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);

@@ -17,3 +17,4 @@
 - assertHTMLEquals function
 - Opera fix
 - New parameter "timeoutSeconds"; defaults to 60
+- Distributed Tests now send back an XML document that includes the XML for browser results as opposed to just a "success"/"failure" node
