@@ -1,7 +1,10 @@
 package net.jsunit;
 
+import org.jdom.Element;
+
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.ResultType;
 
 public class TestRunResultTest extends TestCase {
     private TestRunResult testRunResult;
@@ -34,7 +37,16 @@ public class TestRunResultTest extends TestCase {
         assertFalse(testRunResult.wasSuccessful());
         assertEquals(1, testRunResult.getErrorCount());
         assertEquals(2, testRunResult.getFailureCount());
-
+    }
+    
+    public void testAsXml() throws Exception {
+    	testRunResult.addBrowserResult(successResult());
+    	testRunResult.addBrowserResult(failureResult());
+    	testRunResult.addBrowserResult(errorResult());
+    	Element root = testRunResult.asXml();
+    	assertEquals("testRunResult", root.getName());
+    	assertEquals(ResultType.ERROR.name(), root.getAttribute("type").getValue());
+    	assertEquals(3, root.getChildren().size());
     }
 
     private BrowserResult successResult() {

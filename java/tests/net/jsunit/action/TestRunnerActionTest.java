@@ -3,6 +3,7 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.Utility;
+import net.jsunit.model.ResultType;
 
 public class TestRunnerActionTest extends TestCase {
 
@@ -20,13 +21,15 @@ public class TestRunnerActionTest extends TestCase {
     public void testSuccess() throws Exception {
     	mockRunner.shouldSucceed = true;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
-        assertEquals("<result>success</result>", Utility.asString(action.getXmlRenderable().asXml()));
+        String xmlString = Utility.asString(action.getXmlRenderable().asXml());
+		assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.SUCCESS.name()));
     }
 
     public void testFailure() throws Exception {
     	mockRunner.shouldSucceed = false;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
-        assertEquals("<result>failure</result>", Utility.asString(action.getXmlRenderable().asXml()));
+        String xmlString = Utility.asString(action.getXmlRenderable().asXml());
+		assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.FAILURE.name()));
     }
 
 }

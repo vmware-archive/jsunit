@@ -1,6 +1,8 @@
 package net.jsunit;
  
 import junit.framework.TestCase;
+import net.jsunit.model.ResultType;
+
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
@@ -33,13 +35,13 @@ public class DistributedTest extends TestCase {
             try {
                 Document document = new SAXBuilder().build(new StringReader(result));
                 resultElement = document.getRootElement();
-                if (!"result".equals(resultElement.getName()))
+                if (!"testRunResult".equals(resultElement.getName()))
                     fail("Unrecognized response from " + remoteMachineName + ": " + result);
             } catch (Exception e) {
                 e.printStackTrace();
                 fail("Could not parse XML response from " + remoteMachineName + ": " + result);
             }
-            assertEquals(remoteMachineName + " failed", "success", resultElement.getText());
+            assertEquals(remoteMachineName + " failed", ResultType.SUCCESS.name(), resultElement.getAttribute("type").getValue());
         }
     }
 

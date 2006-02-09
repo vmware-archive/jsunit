@@ -2,7 +2,6 @@ package net.jsunit.action;
 
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
-import org.jdom.Element;
 
 public class TestRunnerAction extends JsUnitAction {
     private TestRunManager manager;
@@ -16,14 +15,7 @@ public class TestRunnerAction extends JsUnitAction {
     }
 
     public XmlRenderable getXmlRenderable() {
-        return new XmlRenderable() {
-            public Element asXml() {
-                Element resultElement = new Element("result");
-                String resultString = manager.hadProblems() ? "failure" : "success";
-                resultElement.setText(resultString);
-                return resultElement;
-            }
-        };
+    	return manager.getTestRunResult();
     }
 
 }

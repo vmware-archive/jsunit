@@ -1,5 +1,7 @@
 package net.jsunit;
 
+import net.jsunit.model.ResultType;
+
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -9,8 +11,8 @@ public class RunnerFunctionalTest extends FunctionalTestCase {
 		webTester.beginAt("runner");
 		Document result = responseXmlDocument();
 		Element root = result.getRootElement();
-		assertEquals("result", root.getName());
-		assertEquals("success", root.getText());
+		assertEquals("testRunResult", root.getName());
+		assertEquals(ResultType.SUCCESS.name(), root.getAttribute("type").getValue());
 	}
 
 }

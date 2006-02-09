@@ -27,7 +27,7 @@ public class TestRunManagerTest extends TestCase {
     }
     
     public void testDisposedDuringTestRun() throws InterruptedException {
-    	StaggeredBrowserTestRunner runner = new StaggeredBrowserTestRunner();
+    	KillableBrowserTestRunner runner = new KillableBrowserTestRunner();
     	final TestRunManager manager = new TestRunManager(runner);
     	Thread thread = new Thread() {
     		public void run() {
@@ -151,7 +151,7 @@ public class TestRunManagerTest extends TestCase {
 		}
     }
     
-    static class StaggeredBrowserTestRunner implements BrowserTestRunner {
+    static class KillableBrowserTestRunner implements BrowserTestRunner {
 
 		private boolean isAlive;
 		private boolean startTestRunCalled;

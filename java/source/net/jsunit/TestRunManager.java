@@ -67,4 +67,8 @@ public class TestRunManager {
         return testRunResult.getErrorCount();
     }
 
+	public TestRunResult getTestRunResult() {
+		return testRunResult;
+	}
+
 }
