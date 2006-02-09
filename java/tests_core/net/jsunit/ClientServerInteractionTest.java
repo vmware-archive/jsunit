@@ -4,12 +4,26 @@ import junit.framework.TestCase;
 
 public class ClientServerInteractionTest extends TestCase {
 	
-	public void testSimple() throws InterruptedException {
-		MockTestRunListener mockTestRunListener = new MockTestRunListener();
-		RemoteTestRunClient client = new RemoteTestRunClient(mockTestRunListener, 8083);
-		TestRunNotifierServer server = new TestRunNotifierServer(8083);
+	private RemoteTestRunClient client;
+	private TestRunNotifierServer server;
+	private MockTestRunListener mockTestRunListener;
+
+	public void setUp() throws Exception {
+		super.setUp();
+		mockTestRunListener = new MockTestRunListener();
+		client = new RemoteTestRunClient(mockTestRunListener, 8083);
 		client.startListening();
+		server = new TestRunNotifierServer(new MockBrowserTestRunner(), 8083);
 		server.testRunStarted();
+	}
+	
+	public void tearDown() throws Exception {
+		server.testRunFinished();
+		client.stopListening();
+		super.tearDown();
+	}
+	
+	public void testSimple() throws InterruptedException {
 		
 		server.browserTestRunStarted("mybrowser.exe");
 		while (!mockTestRunListener.browserTestRunStartedCalled)

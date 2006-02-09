@@ -285,5 +285,9 @@ public class JsUnitServer implements BrowserTestRunner {
 	public int timeoutSeconds() {
 		return configuration.getTimeoutSeconds();
 	}
+	
+	public boolean isAlive() {
+		return server != null && server.isStarted();
+	}
 
 }

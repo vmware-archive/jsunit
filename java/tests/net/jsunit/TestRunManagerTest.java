@@ -10,7 +10,7 @@ import org.jdom.Element;
 
 public class TestRunManagerTest extends TestCase {
 
-    public void testSuccess() throws Exception {
+    public void testSuccess() {
         TestRunManager manager = new TestRunManager(new SuccessfulBrowserTestRunner());
         manager.runTests();
         assertFalse(manager.hadProblems());
@@ -18,12 +18,28 @@ public class TestRunManagerTest extends TestCase {
         assertEquals(0, manager.getFailureCount());
     }
 
-    public void testFailure() throws Exception {
+    public void testFailure() {
         TestRunManager manager = new TestRunManager(new FailingBrowserTestRunner());
         manager.runTests();
         assertTrue(manager.hadProblems());
         assertEquals(4, manager.getErrorCount());
         assertEquals(3, manager.getFailureCount());
+    }
+    
+    public void testDisposedDuringTestRun() throws InterruptedException {
+    	StaggeredBrowserTestRunner runner = new StaggeredBrowserTestRunner();
+    	final TestRunManager manager = new TestRunManager(runner);
+    	Thread thread = new Thread() {
+    		public void run() {
+    	    	manager.runTests();    			
+    		}
+    	};
+		thread.start();
+    	while (!runner.startTestRunCalled)
+    		Thread.sleep(10);
+    	runner.isAlive = false;
+    	thread.join();
+    	assertTrue(runner.finishTestRunCalled);
     }
 
     static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
@@ -70,6 +86,11 @@ public class TestRunManagerTest extends TestCase {
 		public int timeoutSeconds() {
 			return 0;
 		}
+		
+		public boolean isAlive() {
+			return true;
+		}
+
     }
 
     static class FailingBrowserTestRunner implements BrowserTestRunner {
@@ -124,6 +145,67 @@ public class TestRunManagerTest extends TestCase {
 		public int timeoutSeconds() {
 			return 0;
 		}
+		
+		public boolean isAlive() {
+			return true;
+		}
+    }
+    
+    static class StaggeredBrowserTestRunner implements BrowserTestRunner {
+
+		private boolean isAlive;
+		private boolean startTestRunCalled;
+		private boolean finishTestRunCalled;
+    	
+		public void startTestRun() {
+			startTestRunCalled = true;
+		}
+
+		public void finishTestRun() {
+			finishTestRunCalled = true;
+		}
+
+		public long launchTestRunForBrowserWithFileName(String browserFileName) {
+			return 0;
+		}
+
+		public void accept(BrowserResult result) {
+		}
+
+		public boolean hasReceivedResultSince(long launchTime) {
+			return false;
+		}
+
+		public BrowserResult lastResult() {
+			return null;
+		}
+
+		public void dispose() {
+		}
+
+		public BrowserResult findResultWithId(String id) {
+			return null;
+		}
+
+		public void logStatus(String message) {
+		}
+
+		public List<String> getBrowserFileNames() {
+			return Arrays.asList(new String[] {"browser1.exe"});
+		}
+
+		public int timeoutSeconds() {
+			return 0;
+		}
+
+		public boolean isAlive() {
+			return isAlive;
+		}
+
+		public Element asXml() {
+			return null;
+		}
+    	
     }
 
 }

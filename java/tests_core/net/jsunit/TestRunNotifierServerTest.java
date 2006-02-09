@@ -1,42 +1,40 @@
 package net.jsunit;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.TestCase;
 
-public class TestRunNotifierServerTest extends TestCase {
+public class TestRunNotifierServerTest extends TestCase implements MessageReceiver {
 
 	private TestRunNotifierServer server;
-	private ServerConnection serverConnection;
+	private ClientSideConnection clientSideConnection;
 	private List<String> messages = new ArrayList<String>();
+	private MockBrowserTestRunner mockRunner;
 
 	public void setUp() throws Exception {
 		super.setUp();
-		server = new TestRunNotifierServer(8083);
-		serverConnection = new ServerConnection();
-	}
-	
-	public void testSimple() throws InterruptedException {
-		assertFalse(server.isReady());
+		mockRunner = new MockBrowserTestRunner();
+		server = new TestRunNotifierServer(mockRunner, 8083);
+		clientSideConnection = new ClientSideConnection(this, 8083);
 		new Thread() {
 			public void run() {
 				server.testRunStarted();				
 			}
 		}.start();
-		assertFalse(server.isReady());
 		
-		serverConnection.start();
+		clientSideConnection.start();
 		waitForServerConnectionToStartRunning();
+	}
+
+	public void testInitialConditions() {
 		assertTrue(server.isReady());
 		
 		assertEquals(1, messages.size());
 		assertEquals("testRunStarted", ndLastMessage(0));
-
+	}
+	
+	public void testMessagesSentAsTestRunProceeds() throws InterruptedException {
 		server.browserTestRunStarted("mybrowser1.exe");
 		while (messages.size()<2) {
 			Thread.sleep(100);
@@ -58,50 +56,31 @@ public class TestRunNotifierServerTest extends TestCase {
 		
 		assertEquals("endXml", ndLastMessage(0));
 	}
+	
+	public void testStopRunner() {
+		assertFalse(mockRunner.disposeCalled);
+		clientSideConnection.sendMessage("foo");
+		assertFalse(mockRunner.disposeCalled);
+		clientSideConnection.sendMessage("stop");
+		assertTrue(mockRunner.disposeCalled);
+	}
 
 	private String ndLastMessage(int count) {
 		return messages.get(messages.size() - (count + 1));
 	}
 	
 	private void waitForServerConnectionToStartRunning() throws InterruptedException {
-		while (!serverConnection.running)
+		while (!clientSideConnection.isRunning())
 			Thread.sleep(100);		
 	}
 
-	private void receivedMessage(String message) {
+	public void messageReceived(String message) {
 		messages.add(message);
 	}
 	
 	public void tearDown() throws Exception {
 		server.testRunFinished();
-		serverConnection.shutdown();
+		clientSideConnection.shutdown();
 		super.tearDown();
-	}
-	
-	private class ServerConnection extends Thread {
-		private ServerSocket serverSocket;
-		private Socket socket;
-		private BufferedReader bufferedReader;
-		private boolean running;
-		
-		public void run() {
-			try {
-				serverSocket = new ServerSocket(8083);
-				socket= serverSocket.accept();
-			    bufferedReader= new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-				String message;
-				running = true;
-				while(running && bufferedReader != null && (message= bufferedReader.readLine()) != null)
-					receivedMessage(message);
-			} catch (Exception e) {
-				fail(e.getMessage());
-			}
-		}
-
-		public void shutdown() {
-			running = false;
-		}
-
-	}
-	
+	}	
 }

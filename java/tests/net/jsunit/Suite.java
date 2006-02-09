@@ -29,6 +29,7 @@ public class Suite extends TestCase {
         result.addTestSuite(BrowserResultTest.class);
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
         result.addTestSuite(ClientServerInteractionTest.class);
+        result.addTestSuite(ClientServerConnectionTest.class);
         result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);

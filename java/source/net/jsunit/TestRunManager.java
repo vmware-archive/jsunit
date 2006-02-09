@@ -10,7 +10,7 @@ public class TestRunManager {
     public static void main(String[] args) throws Exception {
         JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
         int port = Integer.parseInt(args[args.length - 1]);
-        server.addBrowserTestRunListener(new TestRunNotifierServer(port));
+        server.addBrowserTestRunListener(new TestRunNotifierServer(server, port));
         server.start();
         TestRunManager manager = new TestRunManager(server);
         manager.runTests();
@@ -22,13 +22,16 @@ public class TestRunManager {
 		this.testRunner = testRunner;
 	}
 
-	public void runTests() throws Exception {
+	public void runTests() {
 		testRunner.startTestRun();
 		try {
 	        for (String browserFileName : testRunner.getBrowserFileNames()) {
 	            long launchTime = testRunner.launchTestRunForBrowserWithFileName(browserFileName);
 	            waitForResultToBeSubmitted(browserFileName, launchTime);
-	            testRunResult.addBrowserResult(testRunner.lastResult());
+	            if (testRunner.isAlive())
+	            	testRunResult.addBrowserResult(testRunner.lastResult());
+	            else
+	            	return;
 	        }
 		} finally {
 			testRunner.finishTestRun();
@@ -39,11 +42,14 @@ public class TestRunManager {
         return !testRunResult.wasSuccessful();
     }
 
-    private void waitForResultToBeSubmitted(String browserFileName, long launchTime) throws Exception {
+    private void waitForResultToBeSubmitted(String browserFileName, long launchTime) {
         testRunner.logStatus("Waiting for " + browserFileName + " to submit result");
         long secondsWaited = 0;
-        while (!testRunner.hasReceivedResultSince(launchTime)) {
-            Thread.sleep(1000);
+        while (testRunner.isAlive() && !testRunner.hasReceivedResultSince(launchTime)) {
+            try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+			}
             secondsWaited++;
             if (secondsWaited > (testRunner.timeoutSeconds())+3)
                 throw new RuntimeException("Server not responding");

@@ -1,11 +1,7 @@
 package net.jsunit;
 
-import java.util.List;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.ResultType;
-
-import org.jdom.Element;
 import junit.framework.TestCase;
+import net.jsunit.model.ResultType;
 
 public class TimeoutCheckerTest extends TestCase {
 
@@ -40,7 +36,7 @@ public class TimeoutCheckerTest extends TestCase {
 	public void testTimeOut() throws InterruptedException {
 		mockRunner.timeoutSeconds = 0;
 		Thread.sleep(10);
-		assertEquals(ResultType.TIMED_OUT, mockRunner.result.getResultType());
+		assertEquals(ResultType.TIMED_OUT, mockRunner.acceptedResult.getResultType());
 	}
 	
 	public void testNotTimeOut() throws InterruptedException {
@@ -50,58 +46,6 @@ public class TimeoutCheckerTest extends TestCase {
 		mockRunner.hasReceivedResult = true;
 		Thread.sleep(10);
 		assertFalse(checker.isAlive());
-	}
-	
-	static class MockBrowserTestRunner implements BrowserTestRunner {
-
-		public BrowserResult result;
-		private boolean hasReceivedResult;
-		private int timeoutSeconds;
-
-		public void startTestRun() {		
-		}
-
-		public void finishTestRun() {		
-		}
-
-		public long launchTestRunForBrowserWithFileName(String browserFileName) {
-			return 0;
-		}
-
-		public void accept(BrowserResult result) {
-			this.result = result;
-		}
-
-		public boolean hasReceivedResultSince(long launchTime) {
-			return hasReceivedResult;
-		}
-
-		public BrowserResult lastResult() {
-			return null;
-		}
-
-		public void dispose() {
-		}
-
-		public BrowserResult findResultWithId(String id) {
-			return null;
-		}
-
-		public void logStatus(String message) {
-		}
-
-		public List<String> getBrowserFileNames() {
-			return null;
-		}
-
-		public Element asXml() {
-			return null;
-		}
-
-		public int timeoutSeconds() {
-			return timeoutSeconds;
-		}
-		
 	}
 	
 }

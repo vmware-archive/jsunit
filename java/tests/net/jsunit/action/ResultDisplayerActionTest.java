@@ -1,13 +1,9 @@
 package net.jsunit.action;
 
-import java.util.List;
-
 import junit.framework.TestCase;
-import net.jsunit.BrowserTestRunner;
+import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
-
-import org.jdom.Element;
 
 public class ResultDisplayerActionTest extends TestCase {
 
@@ -23,10 +19,10 @@ public class ResultDisplayerActionTest extends TestCase {
     }
 
     public void testResultFound() throws Exception {
-        mockRunner.result = new BrowserResult();
+        mockRunner.resultToReturn = new BrowserResult();
         assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
         assertEquals("12345", mockRunner.idPassed);
-        assertEquals(mockRunner.result, action.getXmlRenderable());
+        assertEquals(mockRunner.resultToReturn, action.getXmlRenderable());
     }
 
     public void testResultNotFound() throws Exception {
@@ -40,55 +36,5 @@ public class ResultDisplayerActionTest extends TestCase {
         assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
         assertNull(mockRunner.idPassed);
         assertEquals("<error>No ID given</error>", Utility.asString(action.getXmlRenderable().asXml()));
-    }
-
-    static class MockBrowserTestRunner implements BrowserTestRunner {
-
-        private String idPassed;
-        private BrowserResult result;
-
-        public List<String> getBrowserFileNames() {
-            return null;
-        }
-
-        public long launchTestRunForBrowserWithFileName(String browserFileName) {
-        	return 0;
-        }
-
-        public boolean hasReceivedResultSince(long launchTime) {
-            return false;
-        }
-
-        public BrowserResult lastResult() {
-            return null;
-        }
-
-        public void accept(BrowserResult result) {
-        }
-
-        public void dispose() {
-        }
-
-        public BrowserResult findResultWithId(String id) {
-            idPassed = id;
-            return result;
-        }
-
-        public Element asXml() {
-            return null;
-        }
-
-		public void startTestRun() {
-		}
-
-		public void finishTestRun() {
-		}
-
-		public void logStatus(String message) {
-		}
-
-		public int timeoutSeconds() {
-			return 0;
-		}
     }
 }

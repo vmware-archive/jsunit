@@ -184,6 +184,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 
 		public void run() {
 			setEnabled(false);
+			client.sendStopServer();
 			client.stopListening();
 			progressBar.stopped();
 			testRunFinished(true);

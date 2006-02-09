@@ -1,33 +1,26 @@
 package net.jsunit;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.net.Socket;
 
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultBuilder;
 
-public class RemoteTestRunClient {
+public class RemoteTestRunClient implements MessageReceiver {
 
 	private final TestRunListener listener;
-	private ComplexMessageReceiver receiver;
-	private ServerConnection serverConnection;
-	private int serverPort;
+	private MessageReceiver complexMessageReceiver;
+	private ClientSideConnection clientSideConnection;
 
 	public RemoteTestRunClient(TestRunListener listener, int serverPort) {
 		this.listener = listener;
-		this.serverPort = serverPort;
+		clientSideConnection = new ClientSideConnection(this, serverPort);
 	}
 	
 	public void startListening() {
-		serverConnection = new ServerConnection();
-		serverConnection.start();
+		clientSideConnection.start();
 	}
 	
 	public void stopListening() {
-		serverConnection.shutdown();
+		clientSideConnection.shutdown();
 	}
 
 	public void messageReceived(String message) {
@@ -36,25 +29,21 @@ public class RemoteTestRunClient {
 		else if (message.equals(TestRunNotifierServer.TEST_RUN_FINISHED))
 			listener.testRunFinished();
 		else if (message.equals(TestRunNotifierServer.BROWSER_TEST_RUN_STARTED))
-			receiver = new TestRunStartedReceiver();
+			complexMessageReceiver = new TestRunStartedReceiver();
 		else if (message.equals(TestRunNotifierServer.BROWSER_TEST_RUN_FINISHED))
-			receiver = new TestRunFinishedReceiver();
+			complexMessageReceiver = new TestRunFinishedReceiver();
 		else
-			receiver.messageReceived(message);
+			complexMessageReceiver.messageReceived(message);
 	}
 	
-	private interface ComplexMessageReceiver {
-		public void messageReceived(String message);
-	}
-	
-	private class TestRunStartedReceiver implements ComplexMessageReceiver {
+	private class TestRunStartedReceiver implements MessageReceiver {
 
 		public void messageReceived(String browserFileName) {
 			listener.browserTestRunStarted(browserFileName);
 		}
 	}
 	
-	private class TestRunFinishedReceiver implements ComplexMessageReceiver {
+	private class TestRunFinishedReceiver implements MessageReceiver {
 
 		private String browserFileName;
 		private String xmlString = "";
@@ -72,37 +61,9 @@ public class RemoteTestRunClient {
 		}
 		
 	}
-	
-	private class ServerConnection extends Thread {
-		private ServerSocket serverSocket;
-		private Socket socket;
-		private BufferedReader bufferedReader;
-		private boolean running;
-		
-		public void run() {
-			try {
-				serverSocket = new ServerSocket(serverPort);
-				socket = serverSocket.accept();
-			    bufferedReader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
-				String message;
-				running = true;
-				while(running && bufferedReader != null && (message = bufferedReader.readLine()) != null)
-					messageReceived(message);
-			} catch (Exception e) {
-				throw new RuntimeException(e);
-			}
-			shutdown();
-		}
 
-		public void shutdown() {
-			try {
-				serverSocket.close();
-			} catch (IOException e) {
-				throw new RuntimeException(e);
-			}
-			running = false;
-		}
-
+	public void sendStopServer() {
+		clientSideConnection.sendMessage("stop");
 	}
 
 }

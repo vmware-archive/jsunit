@@ -11,7 +11,7 @@ public class RemoteTestRunClientTest extends TestCase {
 	public void setUp() throws Exception {
 		super.setUp();
 		listener = new MockTestRunListener();
-		client = new RemoteTestRunClient(listener, 8083);
+		client = new RemoteTestRunClient(listener, -1);
 	}
 	
 	public void testTestRunStartedMessage() {

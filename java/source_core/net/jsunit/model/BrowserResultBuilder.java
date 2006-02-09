@@ -32,6 +32,7 @@ public class BrowserResultBuilder {
 		return build(document);
     }
 
+	@SuppressWarnings("unchecked")
 	public BrowserResult build(Document document) {
         Element root = document.getRootElement();
         BrowserResult result = new BrowserResult();

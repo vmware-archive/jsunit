@@ -28,4 +28,6 @@ public interface BrowserTestRunner extends XmlRenderable {
 
 	int timeoutSeconds();
 
+	boolean isAlive();
+
 }

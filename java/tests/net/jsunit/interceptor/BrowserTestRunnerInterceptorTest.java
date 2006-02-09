@@ -1,14 +1,10 @@
 package net.jsunit.interceptor;
 
-import java.util.List;
-
 import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
+import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.XmlRenderable;
 import net.jsunit.action.JsUnitAction;
-import net.jsunit.model.BrowserResult;
-
-import org.jdom.Element;
 
 public class BrowserTestRunnerInterceptorTest extends TestCase {
 
@@ -34,52 +30,6 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
     public void tearDown() throws Exception {
         BrowserTestRunnerInterceptor.setBrowserTestRunnerSource(new DefaultBrowserTestRunnerSource());
         super.tearDown();
-    }
-
-    static class MockBrowserTestRunner implements BrowserTestRunner {
-
-        public List<String> getBrowserFileNames() {
-            return null;
-        }
-
-        public long launchTestRunForBrowserWithFileName(String browserFileName) {
-        	return 0;
-        }
-
-        public boolean hasReceivedResultSince(long launchTime) {
-            return false;
-        }
-
-        public BrowserResult lastResult() {
-            return null;
-        }
-
-        public void accept(BrowserResult result) {
-        }
-
-        public void dispose() {
-        }
-
-        public BrowserResult findResultWithId(String id) {
-            return null;
-        }
-
-        public Element asXml() {
-            return null;
-        }
-
-		public void startTestRun() {
-		}
-
-		public void finishTestRun() {
-		}
-
-		public void logStatus(String message) {
-		}
-
-		public int timeoutSeconds() {
-			return 0;
-		}
     }
 
     static class MockJsUnitAction extends JsUnitAction {
