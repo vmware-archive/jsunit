@@ -2,6 +2,7 @@ package net.jsunit.model;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
 
@@ -11,7 +12,7 @@ import org.jdom.Element;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class TestCaseResult {
+public class TestCaseResult extends AbstractResult {
 
     public static final String TEST_PAGE_TEST_NAME_DELIMITER = ":";
 	public static final String DELIMITER = "|";
@@ -60,18 +61,6 @@ public class TestCaseResult {
 
     public boolean hadFailure() {
         return failure != null;
-    }
-
-    public boolean wasSuccessful() {
-        return getResultType() == ResultType.SUCCESS;
-    }
-    
-    public ResultType getResultType() {
-    	if (hadError())
-    		return ResultType.ERROR;
-    	if (hadFailure())
-    		return ResultType.FAILURE;
-    	return ResultType.SUCCESS;
     }
 
     public static TestCaseResult fromString(String string) {
@@ -130,5 +119,33 @@ public class TestCaseResult {
 	public String toString() {
 		return getFullyQualifiedName() + ": " + getResultType().getDisplayString();
 	}
+
+	public int getErrorCount() {
+		return hadError() ? 1 : 0;
+	}
+
+	public int getFailureCount() {
+		return hadFailure() ? 1 : 0;
+	}
+
+	public int getTestCount() {
+		return 1;
+	}
+
+	protected List<? extends Result> getChildren() {
+		return null;
+	}
 	
+	public boolean wasSuccessful() {
+		return !hadError() && !hadFailure();
+	}
+	
+	public ResultType getResultType() {
+		if (hadError())
+			return ResultType.ERROR;
+		if (hadFailure())
+			return ResultType.FAILURE;
+		return ResultType.SUCCESS;
+	}
+
 }

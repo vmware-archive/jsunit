@@ -14,7 +14,7 @@ import org.jdom.Element;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class BrowserResult implements XmlRenderable {
+public class BrowserResult extends AbstractResult implements XmlRenderable {
     private String browserFileName;
     private String remoteAddress;
     private String id;
@@ -120,27 +120,6 @@ public class BrowserResult implements XmlRenderable {
         return null;
     }
 
-    public int errorCount() {
-        int result = 0;
-        for (TestPageResult testPageResult : testPageResults)
-            result += testPageResult.errorCount();
-        return result;
-    }
-
-    public int failureCount() {
-        int result = 0;
-        for (TestPageResult testPageResult : testPageResults)
-            result+=testPageResult.failureCount();
-        return result;
-    }
-
-    public int count() {
-        int result = 0;
-        for (TestPageResult testPageResult : testPageResults)
-            result+=testPageResult.count();
-        return result;
-    }
-
     public Element asXml() {
         return new BrowserResultWriter(this).asXml();
     }
@@ -157,10 +136,6 @@ public class BrowserResult implements XmlRenderable {
         Element element = asXml();
         String string = Utility.asString(element);
         Utility.writeFile(string, logFileForId(logsDirectory, getId()));
-    }
-
-    public boolean wasSuccessful() {
-        return getResultType() == ResultType.SUCCESS;
     }
 
     public void addTestCaseResult(TestCaseResult testCaseResult) {
@@ -181,14 +156,8 @@ public class BrowserResult implements XmlRenderable {
 	}
 
 	public ResultType getResultType() {
-		if (resultType == null) {
-	        if (errorCount() > 0)
-	        	return ResultType.ERROR;
-	        else if (failureCount() > 0)
-	        	return ResultType.FAILURE;
-	        else 
-	        	return ResultType.SUCCESS;			
-		}
+		if (resultType == null)
+			return super.getResultType();
 		return resultType;
     }
 
@@ -215,6 +184,10 @@ public class BrowserResult implements XmlRenderable {
 	public boolean failedToLaunch() {
 		return getResultType().failedToLaunch();
 	}
+	
+	public boolean externallyShutDown() {
+		return getResultType().externallyShutDown();
+	}
 
 	public void setServerSideException(Throwable throwable) {
 		serverSideExceptionStackTrace = Utility.stackTraceAsString(throwable);
@@ -227,6 +200,10 @@ public class BrowserResult implements XmlRenderable {
 	public void setTimedOut() {
 		this.resultType = ResultType.TIMED_OUT;
 	}
+	
+	public void setExternallyShutDown() {
+		this.resultType = ResultType.EXTERNALLY_SHUT_DOWN;
+	}
 
 	public String getServerSideExceptionStackTrace() {
 		return serverSideExceptionStackTrace;
@@ -238,6 +215,10 @@ public class BrowserResult implements XmlRenderable {
 
 	public boolean hasServerSideExceptionStackTrace() {
 		return getServerSideExceptionStackTrace() != null;
+	}
+
+	protected List<? extends Result> getChildren() {
+		return testPageResults;
 	}
 
 }

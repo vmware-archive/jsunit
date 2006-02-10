@@ -13,6 +13,7 @@ public class EndToEndTestSuite extends TestCase {
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
         result.addTestSuite(TimedOutBrowserStandaloneTestTest.class);
+//        result.addTestSuite(ExternallyShutDownStandaloneTestTest.class);
         result.addTestSuite(DistributedTestTest.class);
         return result;
     }

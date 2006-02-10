@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.TestRunResult;
 
 public class TestRunManager {
 

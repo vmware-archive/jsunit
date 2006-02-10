@@ -71,9 +71,9 @@ public class ResultAcceptorTest extends TestCase {
         assertEquals("ID_foo", result.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
         assertEquals("2.5", result.getJsUnitVersion());
-        assertEquals(1, result.errorCount());
-        assertEquals(1, result.failureCount());
-        assertEquals(3, result.count());
+        assertEquals(1, result.getErrorCount());
+        assertEquals(1, result.getFailureCount());
+        assertEquals(3, result.getTestCount());
         assertEquals(4.3d, result.getTime(), .001d);
     }
 

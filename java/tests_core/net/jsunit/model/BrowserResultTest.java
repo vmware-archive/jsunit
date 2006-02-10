@@ -121,6 +121,7 @@ public class BrowserResultTest extends TestCase {
     	assertTrue(result.completedTestRun());
     	assertFalse(result.timedOut());
     	assertFalse(result.failedToLaunch());
+    	assertFalse(result.externallyShutDown());
     }
     
     private BrowserResult createBrowserResult() {

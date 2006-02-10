@@ -9,6 +9,7 @@ import net.jsunit.configuration.*;
 import net.jsunit.interceptor.BrowserResultInterceptorTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.model.BrowserResultTest;
+import net.jsunit.model.ExternallyShutDownBrowserResultTest;
 import net.jsunit.model.FailedToLaunchBrowserResultTest;
 import net.jsunit.model.TestCaseResultTest;
 import net.jsunit.model.TestPageResultTest;
@@ -34,6 +35,7 @@ public class Suite extends TestCase {
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
+        result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(ServerConfigurationFunctionalTest.class);
         result.addTestSuite(JsUnitServerTest.class);

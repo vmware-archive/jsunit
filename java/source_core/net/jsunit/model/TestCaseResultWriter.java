@@ -16,7 +16,7 @@ public class TestCaseResultWriter {
     	ERROR = "error", 
     	MESSAGE = "message";
 
-    private  TestCaseResult result;
+    private TestCaseResult result;
 
     public TestCaseResultWriter(TestCaseResult result) {
         this.result = result;

@@ -239,7 +239,7 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
 	private void startTimeoutChecker(long launchTime) {
-		timeoutChecker = new TimeoutChecker(browserFileName, launchTime, this);
+		timeoutChecker = new TimeoutChecker(browserProcess, browserFileName, launchTime, this);
 		timeoutChecker.start();
 	}
 
@@ -290,6 +290,10 @@ public class JsUnitServer implements BrowserTestRunner {
 	
 	public boolean isAlive() {
 		return server != null && server.isStarted();
+	}
+	
+	public Process getBrowserProcess() {
+		return browserProcess;
 	}
 
 }

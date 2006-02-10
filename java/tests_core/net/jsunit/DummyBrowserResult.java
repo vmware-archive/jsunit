@@ -3,6 +3,7 @@ package net.jsunit;
 import org.jdom.Document;
 
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.ResultType;
 
 public class DummyBrowserResult extends BrowserResult {
 
@@ -20,12 +21,20 @@ public class DummyBrowserResult extends BrowserResult {
 		return success;
 	}
 	
-	public int failureCount() {
+	public int getFailureCount() {
 		return failureCount;
 	}
 	
-	public int errorCount() {
+	public int getErrorCount() {
 		return errorCount;
+	}
+	
+	public ResultType getResultType() {
+		if (getErrorCount()>0)
+			return ResultType.ERROR;
+		if (getFailureCount()>0)
+			return ResultType.FAILURE;
+		return ResultType.SUCCESS;
 	}
 
 	public Document asXmlDocument() {

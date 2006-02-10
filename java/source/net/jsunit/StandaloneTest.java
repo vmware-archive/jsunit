@@ -40,11 +40,8 @@ public class StandaloneTest extends TestCase {
     public void testStandaloneRun() throws Exception {
     	testRunManager.runTests();
     	if (testRunManager.hadProblems()) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append("The Test Run had problems: ");
-            buffer.append(testRunManager.getErrorCount()).append(" errors, ");
-            buffer.append(testRunManager.getFailureCount()).append(" failures ");
-            fail(buffer.toString());
+    		System.out.println(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
+    		fail();
     	}
     }
 

@@ -146,9 +146,9 @@ class ContentProvider implements IStructuredContentProvider, ITreeContentProvide
 		if (node != null) {
 			node.setResult(result);
 		}
-		testCount += result.count();
-		testErrorCount += result.errorCount();
-		testFailureCount += result.failureCount();
+		testCount += result.getTestCount();
+		testErrorCount += result.getErrorCount();
+		testFailureCount += result.getFailureCount();
 	}
 
 	public void expandAll() {

@@ -29,6 +29,7 @@ public class TimedOutBrowerResultTest extends TestCase {
     	assertFalse(browserResult.completedTestRun());
     	assertTrue(browserResult.timedOut());
     	assertFalse(browserResult.failedToLaunch());
+    	assertFalse(browserResult.externallyShutDown());
     }
 	
 	public void testAsXml() {

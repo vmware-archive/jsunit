@@ -20,6 +20,7 @@ public class BrowserResultWriter {
 	    TEST_CASE = "testCase",
 	    TIMED_OUT = "timedOut",
 	    FAILED_TO_LAUNCH = "failedToLaunch",
+	    EXTERNALLY_SHUT_DOWN = "externallyShutDown",
 	    JSUNIT_VERSION = "jsUnitVersion",
 	    REMOTE_ADDRESS = "remoteAddress",
 	    SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
@@ -51,6 +52,8 @@ public class BrowserResultWriter {
         	root.setAttribute(TIMED_OUT, String.valueOf(true));
         if (browserResult.failedToLaunch())
         	root.setAttribute(FAILED_TO_LAUNCH, String.valueOf(true));
+        if (browserResult.externallyShutDown())
+        	root.setAttribute(EXTERNALLY_SHUT_DOWN, String.valueOf(true));
         addPropertiesElementTo(root);
         if (browserResult.completedTestRun()) {
             root.setAttribute(ID, browserResult.getId());

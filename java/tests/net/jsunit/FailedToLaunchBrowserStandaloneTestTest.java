@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import junit.framework.AssertionFailedError;
 import net.jsunit.configuration.ConfigurationConstants;
 import net.jsunit.model.ResultType;
 
@@ -18,7 +19,11 @@ public class FailedToLaunchBrowserStandaloneTestTest extends StandaloneTest {
 	  }
 	  
 	  public void testStandaloneRun() throws Exception {
-		  super.testStandaloneRun();
+		  try {
+			  super.testStandaloneRun();
+			  fail();
+		  } catch (AssertionFailedError e) {
+		  }
 		  assertEquals(ResultType.FAILED_TO_LAUNCH, runner.lastResult().getResultType());
 	  }
 

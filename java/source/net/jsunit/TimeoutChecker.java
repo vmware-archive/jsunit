@@ -9,36 +9,73 @@ public class TimeoutChecker extends Thread {
 	private final String browserFileName;
 	private boolean alive;
 	private long checkInterval;
+	private Process browserProcess;
 
-	public TimeoutChecker(String browserFileName, long launchTime, BrowserTestRunner runner) {
-		this(browserFileName, launchTime, runner, 500);
+	public TimeoutChecker(Process browserProcess, String browserFileName, long launchTime, BrowserTestRunner runner) {
+		this(browserProcess, browserFileName, launchTime, runner, 500);
 	}
 	
-	public TimeoutChecker(String browserFileName, long launchTime, BrowserTestRunner runner, long checkInterval) {
+	public TimeoutChecker(Process browserProcess, String browserFileName, long launchTime, BrowserTestRunner runner, long checkInterval) {
 		this.browserFileName = browserFileName;
 		this.runner = runner;
 		this.launchTime = launchTime;
 		this.checkInterval = checkInterval;
+		this.browserProcess = browserProcess;
 		alive = true;
 	}
 	
 	public void run() {
+
 		while (alive && !runner.hasReceivedResultSince(launchTime)) {
 			if (waitedTooLong()) {
 				runner.logStatus("Browser " + browserFileName + " timed out after " + runner.timeoutSeconds() + " seconds");
-				BrowserResult timedOutBrowserResult = new BrowserResult();
-				timedOutBrowserResult.setTimedOut();
-				timedOutBrowserResult.setBrowserFileName(browserFileName);
-				runner.accept(timedOutBrowserResult);
-			}
+				runner.accept(createTimedOutBrowserResult());
+				return;
+			} 
+//			else if (!isBrowserProcessAlive()) {
+//				if (!runner.hasReceivedResultSince(launchTime)) {
+//					runner.logStatus("Browser " + browserFileName + " was shutdown externally");
+//					runner.accept(createExternallyShutdownBrowserResult());
+//					return;
+//				}
+//			}
 			else
 				try {
 					Thread.sleep(checkInterval);
 				} catch (InterruptedException e) {
 				}
-		}		
+		}	
+	}
+
+	private BrowserResult createExternallyShutdownBrowserResult() {
+		BrowserResult result = createRawBrowserResult();
+		result.setExternallyShutDown();
+		return result;
+	}
+
+	private BrowserResult createTimedOutBrowserResult() {
+		BrowserResult result = createRawBrowserResult();
+		result.setTimedOut();
+		return result;
+	}
+
+	private BrowserResult createRawBrowserResult() {
+		BrowserResult result = new BrowserResult();
+		result.setBrowserFileName(browserFileName);
+		return result;
 	}
 	
+	private boolean isBrowserProcessAlive() {
+		try {
+			if (browserProcess == null)
+				return false;
+			browserProcess.exitValue();
+			return false;
+		} catch (IllegalThreadStateException e) {
+			return true;
+		}
+	}
+
 	public void die() {
 		alive = false;
 	}

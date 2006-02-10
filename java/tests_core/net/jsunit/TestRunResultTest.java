@@ -5,6 +5,7 @@ import org.jdom.Element;
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
+import net.jsunit.model.TestRunResult;
 
 public class TestRunResultTest extends TestCase {
     private TestRunResult testRunResult;
@@ -54,19 +55,11 @@ public class TestRunResultTest extends TestCase {
     }
 
     private BrowserResult failureResult() {
-        return new BrowserResult() {
-            public int failureCount() {
-                return 1;
-            }
-        };
+    	return new DummyBrowserResult(false, 1, 0);
     }
 
     private BrowserResult errorResult() {
-        return new BrowserResult() {
-            public int errorCount() {
-                return 1;
-            }
-        };
+        return new DummyBrowserResult(false, 0, 1);
     }
 
 }

@@ -36,11 +36,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
 	}
 
 	public BrowserResult lastResult() {
-        return new BrowserResult() {
-            public int failureCount() {
-                return shouldSucceed ? 0 : 1;
-            }
-        };
+        return new DummyBrowserResult(shouldSucceed, shouldSucceed ? 0 : 1, 0);
 	}
 
 	public void dispose() {
@@ -60,7 +56,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
 	}
 
 	public int timeoutSeconds() {
-		return 0;
+		return timeoutSeconds;
 	}
 
 	public Element asXml() {
