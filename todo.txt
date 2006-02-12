@@ -1,8 +1,6 @@
 jsunit
 ------
 REQUIRED:
-distributed test should be able to take the URL parameter
-refactor testrunresult, browserresult, testpageresult and testcaseresult so they inherit and implement some interface; make each add a type="SUCCCESS" element to the root node
 IE7beta issues
 shouldLog on configuration should turn of *all* logging
 support for multiple server clients/queuing
