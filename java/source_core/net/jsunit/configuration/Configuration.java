@@ -3,7 +3,6 @@ package net.jsunit.configuration;
 import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
 
-import org.apache.commons.beanutils.BeanMap;
 import org.jdom.Element;
 
 import java.io.File;
@@ -202,8 +201,10 @@ public final class Configuration implements XmlRenderable {
 	}
 
 	public void ensureValid() {
-		BeanMap map = new BeanMap(this);
-		for (Iterator it = map.entryIterator(); it.hasNext();)
-			map.get(it.next());
-	}
+        try {
+            asArgumentsArray();
+        } catch (ConfigurationException e) {
+            throw e;
+        }
+    }
 }

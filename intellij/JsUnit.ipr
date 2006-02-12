@@ -185,6 +185,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/JsUnit.iml" filepath="$PROJECT_DIR$/JsUnit.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" filepath="$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
