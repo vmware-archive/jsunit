@@ -9,9 +9,9 @@ jsunit source div innerHTML
 NICE-TO-HAVE
 have the config servlet show each remote server's configuraion (could cache it)
 individual testFunction= parameter to testRunner.html that makes it run only that test function
-"retry test run" immediately fails after a test page timeout
+bug: "retry test run" immediately fails after a test page timeout
 EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
-
+All SourceForge bugs
 
 eclipse plugin
 --------------
