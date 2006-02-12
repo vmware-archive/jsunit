@@ -204,17 +204,18 @@ public class JsUnitServer implements BrowserTestRunner {
         browserFileName = null;
         killTimeoutChecker();
     }
-
-    public long launchTestRunForBrowserWithFileName(String browserFileName) {
+    
+    public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
     	waitUntilLastReceivedTimeHasPassed();
     	long launchTime = System.currentTimeMillis();
-    	String[] browserCommand = openBrowserCommand(browserFileName);
+    	String[] browserCommand = openBrowserCommand(launchSpec.getBrowserFileName());
         logStatus("Launching " + browserCommand[0]);
 		try {
 		    String[] commandWithUrl = new String[browserCommand.length + 1];
 		    System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
-		    commandWithUrl[browserCommand.length] = configuration.getTestURL().toString();
-		    this.browserFileName = browserFileName;
+		    commandWithUrl[browserCommand.length] = 
+		    	launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
+		    this.browserFileName = launchSpec.getBrowserFileName();
 		    for (TestRunListener listener : browserTestRunListeners)
 		    	listener.browserTestRunStarted(browserFileName);
 		    this.browserProcess = processStarter.execute(commandWithUrl);

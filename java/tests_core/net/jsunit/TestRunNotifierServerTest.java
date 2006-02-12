@@ -71,8 +71,8 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 	}
 	
 	private void waitForServerConnectionToStartRunning() throws InterruptedException {
-		while (!clientSideConnection.isRunning())
-			Thread.sleep(100);		
+		while (!clientSideConnection.isRunning() || !server.isReady())
+			Thread.sleep(10);		
 	}
 
 	public void messageReceived(String message) {

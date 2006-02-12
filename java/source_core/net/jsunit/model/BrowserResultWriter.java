@@ -13,6 +13,7 @@ public class BrowserResultWriter {
 	
     public static final String
 	    ID = "id",
+	    BROWSER_RESULT="browserResult",
 	    BROWSER_FILE_NAME = "browserFileName",
 	    USER_AGENT = "userAgent",
 	    TIME = "time",
@@ -28,7 +29,7 @@ public class BrowserResultWriter {
 	    PROPERTY = "property",
 	    PROPERTY_KEY = "name",
 	    PROPERTY_VALUE = "value",
-	    BASE_URL = "baseURL";
+	    URL = "url";
 
     BrowserResult browserResult;
 
@@ -47,7 +48,7 @@ public class BrowserResultWriter {
     }
 
     private Element createRootElement() {
-        Element root = new Element("browserResult");
+        Element root = new Element(BROWSER_RESULT);
         if (browserResult.timedOut())
         	root.setAttribute(TIMED_OUT, String.valueOf(true));
         if (browserResult.failedToLaunch())
@@ -71,7 +72,7 @@ public class BrowserResultWriter {
 	        addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
 	        addProperty(properties, USER_AGENT, browserResult.getUserAgent());
 	        addProperty(properties, REMOTE_ADDRESS, browserResult.getRemoteAddress());
-	        addProperty(properties, BASE_URL, browserResult.getBaseURL());
+	        addProperty(properties, URL, browserResult.getBaseURL());
         }
         if (browserResult.hasServerSideExceptionStackTrace()) {
         	Element stackTrace = createPropertyElement(SERVER_SIDE_EXCEPTION_STACK_TRACE);

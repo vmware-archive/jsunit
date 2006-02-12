@@ -24,7 +24,7 @@ public abstract class FunctionalTestCase extends TestCase {
 		server = new JsUnitServer(configuration);
 		server.start();
 		webTester = new WebTester();
-		webTester.getTestContext().setBaseUrl("http://localhost:8085/jsunit");		
+		webTester.getTestContext().setBaseUrl("http://localhost:8083/jsunit");		
 	}
 	
 	public void tearDown() throws Exception {
@@ -42,11 +42,11 @@ public abstract class FunctionalTestCase extends TestCase {
 	static class TestConfigurationSource implements ConfigurationSource {
 
 		public String resourceBase() {
-			return "c:\\jsunit";
+			return ".";
 		}
 
 		public String port() {
-			return "8085";
+			return "8083";
 		}
 
 		public String logsDirectory() {
@@ -54,11 +54,11 @@ public abstract class FunctionalTestCase extends TestCase {
 		}
 
 		public String browserFileNames() {
-			return null;
+			return JsUnitServer.DEFAULT_SYSTEM_BROWSER;
 		}
 
 		public String url() {
-			return "http://localhost:8085/jsunit/";
+			return "http://localhost:8083/jsunit/testRunner.html?testPage=http://localhost:8083/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true";
 		}
 
 		public String closeBrowsersAfterTestRuns() {

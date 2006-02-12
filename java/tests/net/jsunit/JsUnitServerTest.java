@@ -39,7 +39,7 @@ public class JsUnitServerTest extends TestCase {
 		MockTestRunListener listener = new MockTestRunListener();
 		server.addBrowserTestRunListener(listener);
 		
-		server.launchTestRunForBrowserWithFileName("mybrowser.exe");
+		server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
 		assertTrue(listener.browserTestRunStartedCalled);
 		assertEquals(2, starter.commandPassed.length);
 		assertEquals("mybrowser.exe", starter.commandPassed[0]);
@@ -55,7 +55,7 @@ public class JsUnitServerTest extends TestCase {
 		MockTestRunListener listener = new MockTestRunListener();
 		server.addBrowserTestRunListener(listener);
 		
-		long launchTime = server.launchTestRunForBrowserWithFileName("mybrowser.exe");
+		long launchTime = server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
 		assertTrue(listener.browserTestRunStartedCalled);
 		assertTrue(listener.browserTestRunFinishedCalled);
 		assertTrue(listener.result.failedToLaunch());
@@ -66,7 +66,7 @@ public class JsUnitServerTest extends TestCase {
 		
 		server.setProcessStarter(new MockProcessStarter());
 		listener.reset();
-		launchTime = server.launchTestRunForBrowserWithFileName("mybrowser2.exe");
+		launchTime = server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser2.exe"));
 		assertFalse(server.hasReceivedResultSince(launchTime));
 		assertTrue(listener.browserTestRunStartedCalled);
 		assertFalse(listener.browserTestRunFinishedCalled);
@@ -86,10 +86,23 @@ public class JsUnitServerTest extends TestCase {
 	
 	public void testAcceptResult() {
 		server.setProcessStarter(new MockProcessStarter());
-		server.launchTestRunForBrowserWithFileName("mybrowser.exe");
+		server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
 		BrowserResult result = new BrowserResult();
 		server.accept(result);
 		assertEquals("mybrowser.exe", result.getBrowserFileName());
+	}
+	
+	public void testOverrideUrl() {
+		MockProcessStarter starter = new MockProcessStarter();
+		server.setProcessStarter(starter);
+		MockTestRunListener listener = new MockTestRunListener();
+		server.addBrowserTestRunListener(listener);
+		
+		String overrideUrl = "http://my.example.com:8080?param=value";
+		server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe", overrideUrl));
+		assertEquals(2, starter.commandPassed.length);
+		assertEquals("mybrowser.exe", starter.commandPassed[0]);
+		assertEquals(overrideUrl, starter.commandPassed[1]);
 	}
 
 }

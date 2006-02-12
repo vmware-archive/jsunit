@@ -88,7 +88,7 @@ public class BrowserResultBuilder {
                 result.setUserAgent(value);
             else if (BrowserResultWriter.REMOTE_ADDRESS.equals(key))
                 result.setRemoteAddress(value);
-            else if (BrowserResultWriter.BASE_URL.equals(key))
+            else if (BrowserResultWriter.URL.equals(key))
                 result.setBaseURL(value);
             else if (BrowserResultWriter.SERVER_SIDE_EXCEPTION_STACK_TRACE.equals(key)) {
             	String stackTrace = next.getText();

@@ -44,7 +44,7 @@
       <input type="hidden" name="userAgent">
       <input type="hidden" name="jsUnitVersion">
       <input type="hidden" name="time">
-      <input type="hidden" name="baseURL">
+      <input type="hidden" name="url">
       <select size="5" name="testCases" multiple></select>
     </form>
     <script language="javascript" type="text/javascript">
@@ -52,7 +52,7 @@
 	    	document.resultsForm.id.value=id;
 	    	document.resultsForm.userAgent.value=userAgent;
 	    	document.resultsForm.jsUnitVersion.value=jsUnitVersion;
-            document.resultsForm.baseURL.value = baseURL;
+            document.resultsForm.url.value = baseURL;
 		}
 		function submitResults() {
 		  var testCasesField = document.resultsForm.testCases;

@@ -10,7 +10,7 @@ public interface BrowserTestRunner extends XmlRenderable {
 
 	void finishTestRun();
 
-	long launchTestRunForBrowserWithFileName(String browserFileName);
+	long launchBrowserTestRun(BrowserLaunchSpecification launchSpec);
 
     void accept(BrowserResult result);
 

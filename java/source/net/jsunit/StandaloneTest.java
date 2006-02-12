@@ -28,8 +28,12 @@ public class StandaloneTest extends TestCase {
             runner = server;
             shouldDisposeOfRunner = true;
         }
-        testRunManager = new TestRunManager(runner);
+        testRunManager = createTestRunManager();
     }
+
+	protected TestRunManager createTestRunManager() {
+		return new TestRunManager(runner);
+	}
 
     public void tearDown() throws Exception {
         if (shouldDisposeOfRunner)

@@ -16,6 +16,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     public String idPassed;
 	public int timeoutSeconds;
 	public boolean hasReceivedResult;
+	public BrowserLaunchSpecification launchSpec;
     
 	public void startTestRun() {
 	}
@@ -23,7 +24,8 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
 	public void finishTestRun() {
 	}
 
-	public long launchTestRunForBrowserWithFileName(String browserFileName) {
+	public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
+		this.launchSpec = launchSpec;
 		return 0;
 	}
 

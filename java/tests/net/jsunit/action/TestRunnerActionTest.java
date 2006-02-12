@@ -31,5 +31,13 @@ public class TestRunnerActionTest extends TestCase {
         String xmlString = Utility.asString(action.getXmlRenderable().asXml());
 		assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.FAILURE.name()));
     }
+    
+    public void testOverrideUrl() throws Exception {
+    	String overrideUrl = "http://www.example.com:8954/jsunit/testRunner.html?testPage=http://www.example.com:8954/tests/myTests.html?autoRun=true&submitResults=http://www.example.com:8954/tests";
+		action.setUrl(overrideUrl);
+        assertEquals(TestRunnerAction.SUCCESS, action.execute());
+        assertTrue(mockRunner.launchSpec.hasOverrideUrl());
+        assertEquals(overrideUrl, mockRunner.launchSpec.getOverrideUrl());
+    }
 
 }

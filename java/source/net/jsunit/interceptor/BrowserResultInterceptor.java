@@ -24,7 +24,7 @@ public class BrowserResultInterceptor extends InterceptorSupport {
             result.setId(testId);
         result.setRemoteAddress(request.getRemoteAddr());
         result.setUserAgent(request.getParameter(BrowserResultWriter.USER_AGENT));
-        result.setBaseURL(request.getParameter(BrowserResultWriter.BASE_URL));
+        result.setBaseURL(request.getParameter(BrowserResultWriter.URL));
         String time = request.getParameter(BrowserResultWriter.TIME);
         if (!Utility.isEmpty(time))
             result.setTime(Double.parseDouble(time));

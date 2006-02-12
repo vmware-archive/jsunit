@@ -41,6 +41,24 @@ public class TestRunManagerTest extends TestCase {
     	thread.join();
     	assertTrue(runner.finishTestRunCalled);
     }
+    
+    public void testOverrideUrl() {
+    	MockBrowserTestRunner runner = new MockBrowserTestRunner();
+    	runner.hasReceivedResult = true;
+		String overrideUrl = "http://my.override.url:8080/jsunit/testRunner.html?someParam=someValue&someOtherParam=someOtherValue";
+		TestRunManager manager = new TestRunManager(runner, overrideUrl);
+    	manager.runTests();
+    	assertTrue(runner.launchSpec.hasOverrideUrl());
+    	assertEquals(overrideUrl, runner.launchSpec.getOverrideUrl());
+    }
+    
+    public void testNoOverrideUrl() {
+    	MockBrowserTestRunner runner = new MockBrowserTestRunner();
+    	runner.hasReceivedResult = true;
+		TestRunManager manager = new TestRunManager(runner, null);
+    	manager.runTests();
+    	assertFalse(runner.launchSpec.hasOverrideUrl());    	
+    }
 
     static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
 
@@ -48,7 +66,7 @@ public class TestRunManagerTest extends TestCase {
             return Arrays.asList(new String[] {"browser1.exe", "browser2.exe"});
         }
 
-        public long launchTestRunForBrowserWithFileName(String browserFileName) {
+        public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         	return 0;
         }
 
@@ -101,8 +119,8 @@ public class TestRunManagerTest extends TestCase {
             return Arrays.asList(new String[] {"browser1.exe", "browser2.exe", "browser3.exe"});
         }
 
-        public long launchTestRunForBrowserWithFileName(String browserFileName) {
-            currentBrowser = browserFileName;
+        public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
+            currentBrowser = launchSpec.getBrowserFileName();
             return 0;
         }
 
@@ -165,7 +183,7 @@ public class TestRunManagerTest extends TestCase {
 			finishTestRunCalled = true;
 		}
 
-		public long launchTestRunForBrowserWithFileName(String browserFileName) {
+		public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
 			return 0;
 		}
 

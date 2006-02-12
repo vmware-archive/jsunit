@@ -19,12 +19,12 @@ import net.jsunit.model.TimedOutBrowerResultTest;
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class Suite extends TestCase {
+public class UnitTestSuite extends TestCase {
 	
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
-        result.addTestSuite(AcceptorFunctionalTest.class);
         result.addTestSuite(ArgumentsConfigurationTest.class);
+        result.addTestSuite(BrowserLaunchSpecificationTest.class);
         result.addTestSuite(BrowserResultInterceptorTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);
         result.addTestSuite(BrowserResultTest.class);
@@ -33,18 +33,15 @@ public class Suite extends TestCase {
         result.addTestSuite(ClientServerConnectionTest.class);
         result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
-        result.addTestSuite(DisplayerFunctionalTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
-        result.addTestSuite(ServerConfigurationFunctionalTest.class);
         result.addTestSuite(JsUnitServerTest.class);
         result.addTestSuite(PropertiesConfigurationTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
-        result.addTestSuite(RunnerFunctionalTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestPageResultTest.class);

@@ -7,6 +7,7 @@ public class TestRunManager {
 
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult = new TestRunResult();
+	private final String overrideUrl;
 
     public static void main(String[] args) throws Exception {
         JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
@@ -20,8 +21,13 @@ public class TestRunManager {
         System.exit(manager.hadProblems() ? 1 : 0);
     }
 
-	public TestRunManager(BrowserTestRunner testRunner) {
+    public TestRunManager(BrowserTestRunner testRunner) {
+    	this(testRunner, null);
+    }
+    
+	public TestRunManager(BrowserTestRunner testRunner, String overrideUrl) {
 		this.testRunner = testRunner;
+		this.overrideUrl = overrideUrl;
 	}
 
 	public void runTests() {
@@ -29,7 +35,8 @@ public class TestRunManager {
 		testRunner.startTestRun();
 		try {
 	        for (String browserFileName : testRunner.getBrowserFileNames()) {
-	            long launchTime = testRunner.launchTestRunForBrowserWithFileName(browserFileName);
+	        	BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browserFileName, overrideUrl);
+	            long launchTime = testRunner.launchBrowserTestRun(launchSpec);
 	            waitForResultToBeSubmitted(browserFileName, launchTime);
 	            if (testRunner.isAlive())
 	            	testRunResult.addBrowserResult(testRunner.lastResult());
