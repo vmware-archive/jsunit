@@ -43,8 +43,8 @@ public class JsUnitServer implements BrowserTestRunner {
 	}
 
     public JsUnitServer(Configuration configuration) {
+    	configuration.ensureValid();
 		this.configuration = configuration;
-		this.configuration.ensureValid();
 		addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
 		if (configuration.logStatus())
 			statusLogger = new SystemOutStatusLogger();
