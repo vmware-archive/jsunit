@@ -2,6 +2,8 @@ package net.jsunit.configuration;
 
 import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
+
+import org.apache.commons.beanutils.BeanMap;
 import org.jdom.Element;
 
 import java.io.File;
@@ -197,5 +199,11 @@ public final class Configuration implements XmlRenderable {
 		if (Utility.isEmpty(timeoutSecondsString))
 			return DEFAULT_TIMEOUT_SECONDS;
 		return Integer.parseInt(timeoutSecondsString);
+	}
+
+	public void ensureValid() {
+		BeanMap map = new BeanMap(this);
+		for (Iterator it = map.entryIterator(); it.hasNext();)
+			map.get(it.next());
 	}
 }

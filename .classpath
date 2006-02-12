@@ -26,5 +26,8 @@
 	<classpathentry kind="lib" path="java/lib/stop.jar"/>
 	<classpathentry kind="lib" path="java/lib/start.jar"/>
 	<classpathentry kind="lib" path="java/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="java/testlib/commons-beanutils-1.7.0/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="java/testlib/commons-beanutils-1.7.0/commons-beanutils-bean-collections.jar"/>
+	<classpathentry kind="lib" path="java/testlib/commons-beanutils-1.7.0/commons-beanutils-core.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>

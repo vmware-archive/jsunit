@@ -2,6 +2,8 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationException;
+import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.BrowserResult;
 
 public class JsUnitServerTest extends TestCase {
@@ -104,5 +106,22 @@ public class JsUnitServerTest extends TestCase {
 		assertEquals("mybrowser.exe", starter.commandPassed[0]);
 		assertEquals(overrideUrl, starter.commandPassed[1]);
 	}
+	
+	public void testInvalidationConfiguration() {
+		try {
+			server = new JsUnitServer(new Configuration(new InvalidConfigurationSource()));
+			fail();
+		} catch (ConfigurationException e){
+			
+		}
+	}
 
+	static class InvalidConfigurationSource extends DummyConfigurationSource {
+		
+		public String url() {
+			return "invalid url";
+		}
+		
+	}
+	
 }
