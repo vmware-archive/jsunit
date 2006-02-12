@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+      
+   <extension point="org.eclipse.debug.core.launchConfigurationTypes">
+	  <launchConfigurationType
+		   id="net.jsunit.plugin.eclipse.launchConfiguration"
+		   delegate="net.jsunit.plugin.eclipse.launching.JsUnitLaunchConfiguration"
+		   modes="run"
+		   name="JsUnit Test Page">
+	   <fileExtension extension="html" default="true"/>
+	   <fileExtension extension="htm" default="true"/>
+	  </launchConfigurationType>
+   </extension>
+   
+  <extension point="org.eclipse.debug.ui.launchConfigurationTabGroups">
+ 	 <launchConfigurationTabGroup
+         class="net.jsunit.plugin.eclipse.launching.JsUnitTabGroup"
+         id="net.jsunit.plugin.eclipse.tabGroup"
+         type="net.jsunit.plugin.eclipse.launchConfiguration">
+	 	<launchMode description="JsUnit Test Page" mode="run"/> 
+	 </launchConfigurationTabGroup>
+  </extension>
+
+  <extension point="org.eclipse.debug.ui.launchConfigurationTypeImages">
+	<launchConfigurationTypeImage
+       configTypeID="net.jsunit.plugin.eclipse.launchConfiguration"
+       icon="icons/jsunitlaunch.gif"
+       id="net.jsunit.plugin.eclipse.image">
+	</launchConfigurationTypeImage>
+  </extension>
+
+ <extension
+		point="org.eclipse.debug.ui.launchShortcuts">
+   <shortcut 
+	   		label="JsUnit Test Page" 
+	   		icon="icons/jsunitlaunch.gif" 
+	   		class="net.jsunit.plugin.eclipse.launching.JsUnitLaunchShortcut" 
+	   		modes="run" 
+	   		id="net.jsunit.plugin.eclipse.shortcut">
+		<contextualLaunch>
+			<enablement>
+				<with variable="selection">
+					<count value="1" /> 
+					<iterate>
+						<or>
+							<test property="org.eclipse.debug.ui.matchesPattern" value="*.html" /> 
+							<test property="org.eclipse.debug.ui.matchesPattern" value="*.htm" /> 
+						</or>
+					</iterate>
+				</with>
+			</enablement>
+		</contextualLaunch>
+		<perspective id="org.eclipse.jdt.ui.ResourcePerspective" /> 
+	</shortcut>
+ </extension>
+  
+ <extension
+       point="org.eclipse.ui.preferencePages">
+    <page
+          class="net.jsunit.plugin.eclipse.preference.PreferencePage"
+          id="net.jsunit.plugin.eclipse.preference.preferencePage"
+          name="JsUnit"/>
+ </extension>
+ <extension
+       point="org.eclipse.core.runtime.preferences">
+    <initializer class="net.jsunit.plugin.eclipse.preference.PreferenceInitializer"/>
+ </extension>
+ <extension
+       point="org.eclipse.ui.views">
+    <category
+          id="net.jsunit"
+          name="JsUnit"/>
+    <view
+          category="net.jsunit"
+          class="net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart"
+          icon="icons/jsunitlaunch.gif"
+          id="net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart"
+          name="JsUnit"/>
+ </extension>
+ <extension
+       point="org.eclipse.ui.perspectiveExtensions">
+    <perspectiveExtension targetID="org.eclipse.ui.resourcePerspective">
+       <view
+             id="net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart"
+             ratio="0.5"
+             relationship="right"
+             relative="org.eclipse.ui.views.TaskList"/>
+    </perspectiveExtension>
+ </extension>
+
+</plugin>
