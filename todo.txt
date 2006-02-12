@@ -1,7 +1,7 @@
 jsunit
 ------
 REQUIRED:
-IE7beta issues
+Fix IE7beta issues
 shouldLog on configuration should turn of *all* logging
 support for multiple server clients/queuing
 jsunit source div innerHTML
@@ -16,12 +16,12 @@ All SourceForge bugs
 eclipse plugin
 --------------
 REQUIRED:
+rerun button
 
 NICE-TO-HAVE:
 checkmark/error icon on jsunit tab after run is finished
 tab title should go italic during test run
 validate no duplicate browser entries are given in preferences
-rerun button
 ability to go to source by double-clicking on stack trace
 ability to toggle between fully qualified and not fully qualified browser name
 need original images?
