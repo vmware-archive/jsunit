@@ -31,7 +31,7 @@ public class TimeoutChecker extends Thread {
 				runner.logStatus("Browser " + browserFileName + " timed out after " + runner.timeoutSeconds() + " seconds");
 				runner.accept(createTimedOutBrowserResult());
 				return;
-			} 
+			}
 //			else if (!isBrowserProcessAlive()) {
 //				if (!runner.hasReceivedResultSince(launchTime)) {
 //					runner.logStatus("Browser " + browserFileName + " was shutdown externally");
@@ -44,7 +44,7 @@ public class TimeoutChecker extends Thread {
 					Thread.sleep(checkInterval);
 				} catch (InterruptedException e) {
 				}
-		}	
+		}
 	}
 
 	private BrowserResult createExternallyShutdownBrowserResult() {
@@ -64,7 +64,7 @@ public class TimeoutChecker extends Thread {
 		result.setBrowserFileName(browserFileName);
 		return result;
 	}
-	
+
 	private boolean isBrowserProcessAlive() {
 		try {
 			if (browserProcess == null)
