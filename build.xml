@@ -127,7 +127,7 @@
             <!--<formatter type="plain" usefile="false"/>-->
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
-            <test name="net.jsunit.Suite"/>
+            <test name="net.jsunit.UnitTestSuite"/>
         </junit>
     </target>
 

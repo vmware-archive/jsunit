@@ -18,3 +18,4 @@
 - Opera fix
 - New parameter "timeoutSeconds"; defaults to 60
 - Distributed Tests now send back an XML document that includes the XML for browser results as opposed to just a "success"/"failure" node
+- runner servlet takes a "url" querystring parameter that overrides the server's url property
