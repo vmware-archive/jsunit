@@ -1,28 +1,28 @@
-jsunit
-------
-REQUIRED:
-Fix IE7beta issues
-shouldLog on configuration should turn of *all* logging
-support for multiple server clients/queuing
-jsunit source div innerHTML
+Core JsUnit
+-----------
+Required for next release:
+- Fix IE7beta issues
+- shouldLog on configuration should turn of *all* logging
+- support for multiple server clients/queuing
+- jsunit source div innerHTML
 
-NICE-TO-HAVE
-have the config servlet show each remote server's configuraion (could cache it)
-individual testFunction= parameter to testRunner.html that makes it run only that test function
-bug: "retry test run" immediately fails after a test page timeout
-EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
-All SourceForge bugs
+Backlog:
+- have the config servlet show each remote server's configuraion (could cache it)
+- individual testFunction= parameter to testRunner.html that makes it run only that test function
+- bug: "retry test run" immediately fails after a test page timeout
+- EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
+- SourceForge bugs
 
-eclipse plugin
+Eclipse plugin
 --------------
-REQUIRED:
-rerun button
+Required for next release:
+- rerun button
 
-NICE-TO-HAVE:
-checkmark/error icon on jsunit tab after run is finished
-tab title should go italic during test run
-validate no duplicate browser entries are given in preferences
-ability to go to source by double-clicking on stack trace
-ability to toggle between fully qualified and not fully qualified browser name
-need original images?
-break plugin code into separate project?
+Backlog:
+- checkmark/error icon on jsunit tab after run is finished
+- tab title should go italic during test run
+- validate no duplicate browser entries are given in preferences
+- ability to go to source by double-clicking on stack trace
+- ability to toggle between fully qualified and not fully qualified browser name
+- need original images?
+- break plugin code into separate project?
