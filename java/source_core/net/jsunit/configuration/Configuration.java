@@ -178,7 +178,7 @@ public final class Configuration implements XmlRenderable {
 			"-" + ConfigurationConstants.PORT, String.valueOf(getPort()),
 			"-" + ConfigurationConstants.LOGS_DIRECTORY, getLogsDirectory().getAbsolutePath(),
 			"-" + ConfigurationConstants.BROWSER_FILE_NAMES, commaSeparatedBrowserFileNames(),
-			"-" + ConfigurationConstants.URL, getTestURL().toString(),
+			"-" + ConfigurationConstants.URL, getTestURL() == null ? "" : getTestURL().toString(),
 			"-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS, String.valueOf(shouldCloseBrowsersAfterTestRuns()),
 			"-" + ConfigurationConstants.LOG_STATUS, String.valueOf(logStatus()),
 			"-" + ConfigurationConstants.TIMEOUT_SECONDS, String.valueOf(getTimeoutSeconds())

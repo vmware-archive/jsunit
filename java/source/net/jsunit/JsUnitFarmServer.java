@@ -13,7 +13,11 @@ public class JsUnitFarmServer {
 		this.configuration = configuration;
 	}
 
-	public List<URL> getRemoteMachineURLs() {
+    public static void main(String[] args) {
+        
+    }
+
+    public List<URL> getRemoteMachineURLs() {
 		return configuration.getRemoteMachineURLs();
 	}
 
