@@ -56,7 +56,7 @@ public class JsUnitServer implements BrowserTestRunner {
 
 	private void setSystemError() {
 		try {
-			System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(errorFile()))));
+			System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(errorFile(), true))));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}

@@ -6,6 +6,7 @@ Required for next release:
 - jsunit source div innerHTML
 - bug: "retry test run" immediately fails after a test page timeout
 - JsUnitFarmServer (have the config servlet show each remote server's configuraion (could cache it))
+- Don't send System.err to a file - figure out how to turn off jetty logs instead
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

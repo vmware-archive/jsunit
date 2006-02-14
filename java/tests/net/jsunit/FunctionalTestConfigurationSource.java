@@ -22,7 +22,7 @@ class FunctionalTestConfigurationSource implements ConfigurationSource {
 	}
 
 	public String logsDirectory() {
-		return null;
+		return "";
 	}
 
 	public String browserFileNames() {

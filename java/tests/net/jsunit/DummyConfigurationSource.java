@@ -15,7 +15,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
 	}
 
 	public String logsDirectory() {
-		return ".";
+		return "";
 	}
 
 	public String browserFileNames() {
