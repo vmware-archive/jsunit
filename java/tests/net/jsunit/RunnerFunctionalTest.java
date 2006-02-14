@@ -9,7 +9,7 @@ import net.jsunit.model.ResultType;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public class RunnerFunctionalTest extends FunctionalTestCase {
+public class RunnerFunctionalTest extends ServerFunctionalTestCase {
 
 	public void testSimple() throws Exception {
 		webTester.beginAt("runner");
@@ -17,17 +17,17 @@ public class RunnerFunctionalTest extends FunctionalTestCase {
 		assertResult(
 			result, 
 			ResultType.SUCCESS, 
-			"http://localhost:8083/jsunit/tests/jsUnitUtilityTests.html"
+			"http://localhost:"+PORT+"/jsunit/tests/jsUnitUtilityTests.html"
 		);
 	}
 
 	public void testOverrideUrl() throws Exception {
-		webTester.beginAt("runner?url="+URLEncoder.encode("http://127.0.0.1:8083/jsunit/testRunner.html?testPage=http://127.0.0.1:8083/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true", "UTF-8"));
+		webTester.beginAt("runner?url="+URLEncoder.encode("http://127.0.0.1:"+PORT+"/jsunit/testRunner.html?testPage=http://127.0.0.1:"+PORT+"/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true", "UTF-8"));
 		Document result = responseXmlDocument();
 		assertResult(
 			result, 
 			ResultType.SUCCESS, 
-			"http://127.0.0.1:8083/jsunit/tests/jsUnitUtilityTests.html"
+			"http://127.0.0.1:"+PORT+"/jsunit/tests/jsUnitUtilityTests.html"
 		);
 	}
 

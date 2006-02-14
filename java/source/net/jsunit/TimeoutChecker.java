@@ -46,7 +46,9 @@ public class TimeoutChecker extends Thread {
 				}
 		}
 	}
-
+	
+	//TODO: finish implementing external shutdown
+	@SuppressWarnings("unused")
 	private BrowserResult createExternallyShutdownBrowserResult() {
 		BrowserResult result = createRawBrowserResult();
 		result.setExternallyShutDown();
@@ -65,6 +67,8 @@ public class TimeoutChecker extends Thread {
 		return result;
 	}
 
+	//TODO: finish implementing external shutdown
+	@SuppressWarnings("unused")
 	private boolean isBrowserProcessAlive() {
 		try {
 			if (browserProcess == null)

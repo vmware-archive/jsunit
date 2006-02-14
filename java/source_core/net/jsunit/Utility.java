@@ -6,10 +6,8 @@ import java.io.FileOutputStream;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -44,13 +42,10 @@ public class Utility {
     }
 
     public static List<String> listFromCommaDelimitedString(String string) {
-        List<String> result = new ArrayList<String>();
-        if (isEmpty(string))
-            return result;
-        StringTokenizer toker = new StringTokenizer(string, ",");
-        while (toker.hasMoreTokens())
-            result.add(toker.nextToken());
-        return result;
+        String[] array = string.split(",");
+        for (int i = 0; i < array.length; i++)
+        	array[i] = array[i].trim();
+		return Arrays.asList(array);
     }
 
     public static List listWith(Object object1, Object object2) {
@@ -97,14 +92,5 @@ public class Utility {
 		throwable.printStackTrace(new PrintWriter(writer));
 		return writer.toString();
 	}
-	
-	public static List<String> listFromDelimitedString(String delimitedString) {
-		String[] array = delimitedString.split(",");
-		List<String> result = new ArrayList<String>(array.length);
-		for (String element : array)
-			result.add(element.trim());
-		return result;
-	}
-	
 
 }

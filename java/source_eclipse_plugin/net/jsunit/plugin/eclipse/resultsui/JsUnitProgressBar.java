@@ -50,7 +50,7 @@ public class JsUnitProgressBar extends Canvas {
 				stoppedColor.dispose();
 			}
 		});
-		Display display= parent.getDisplay();
+		Display display = parent.getDisplay();
 		problemColor= new Color(display, 159, 63, 63);
 		okColor= new Color(display, 95, 191, 95);
 		stoppedColor= new Color(display, 120, 120, 120);

@@ -1,8 +1,8 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.node;
 
 import java.util.List;
 
-abstract class Node {
+public abstract class Node {
 	
 	private String name;
 	private ParentNode parent;

@@ -7,13 +7,18 @@ import java.util.List;
 import net.jsunit.TestRunListener;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
+import net.jsunit.plugin.eclipse.resultsui.node.BrowserResultNode;
+import net.jsunit.plugin.eclipse.resultsui.node.InvisibleRootNode;
+import net.jsunit.plugin.eclipse.resultsui.node.Node;
+import net.jsunit.plugin.eclipse.resultsui.node.ParentNode;
+import net.jsunit.plugin.eclipse.resultsui.node.TestCaseResultNode;
 
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.ui.IViewSite;
 
-class ContentProvider implements IStructuredContentProvider, ITreeContentProvider, TestRunListener {
+public class ContentProvider implements IStructuredContentProvider, ITreeContentProvider, TestRunListener {
 	
 	private IViewSite viewSite;
 

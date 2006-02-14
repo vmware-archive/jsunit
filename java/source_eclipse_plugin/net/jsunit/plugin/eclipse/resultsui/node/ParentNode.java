@@ -1,9 +1,9 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.node;
 
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class ParentNode extends Node {
+public abstract class ParentNode extends Node {
 	
 	private List<Node> children;
 	

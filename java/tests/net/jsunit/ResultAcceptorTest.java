@@ -21,6 +21,7 @@ import net.jsunit.model.BrowserResultWriter;
 public class ResultAcceptorTest extends TestCase {
     protected Map<String, String[]> requestMap;
     private JsUnitServer server;
+	private Configuration configuration;
 
     public ResultAcceptorTest(String name) {
         super(name);
@@ -30,7 +31,8 @@ public class ResultAcceptorTest extends TestCase {
         super.setUp();
         System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, "foo");
         System.setProperty(ConfigurationConstants.URL, "http://bar");
-        server = new JsUnitServer(new Configuration(new EnvironmentVariablesConfigurationSource()));
+        configuration = new Configuration(new EnvironmentVariablesConfigurationSource());
+		server = new JsUnitServer(configuration);
         requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[] {"ID_foo"});
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[] {"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
@@ -42,7 +44,7 @@ public class ResultAcceptorTest extends TestCase {
     public void tearDown() throws Exception {
         System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
         System.getProperties().remove(ConfigurationConstants.URL);
-        File logFile = BrowserResult.logFileForId(server.getLogsDirectory(), "ID_foo");
+        File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
         if (logFile.exists())
             logFile.delete();
         super.tearDown();
@@ -103,7 +105,7 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void testLog() {
-        File logFile = BrowserResult.logFileForId(server.getLogsDirectory(), "ID_foo");
+        File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
         assertFalse(logFile.exists());
         submit();
         assertTrue(logFile.exists());

@@ -36,6 +36,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
+        result.addTestSuite(JsUnitFarmServerTest.class);
         result.addTestSuite(JsUnitServerTest.class);
         result.addTestSuite(PropertiesConfigurationTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);

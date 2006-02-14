@@ -1,6 +1,7 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.tab;
 
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
+import net.jsunit.plugin.eclipse.resultsui.node.Node;
 
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
@@ -23,7 +24,7 @@ class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
 	
 	public Image getImage(Object obj) {
 		Node node = (Node) obj;
-		return JsUnitPlugin.createImage(node.getImageName());
+		return JsUnitPlugin.soleInstance().createImage(node.getImageName());
 	}
 	
 }

@@ -1,6 +1,12 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.tab;
 
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
+import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
+import net.jsunit.plugin.eclipse.resultsui.FailureTrace;
+import net.jsunit.plugin.eclipse.resultsui.TestResultsTab;
+import net.jsunit.plugin.eclipse.resultsui.node.BrowserResultNode;
+import net.jsunit.plugin.eclipse.resultsui.node.Node;
+import net.jsunit.plugin.eclipse.resultsui.node.TestCaseResultNode;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.viewers.ISelectionChangedListener;

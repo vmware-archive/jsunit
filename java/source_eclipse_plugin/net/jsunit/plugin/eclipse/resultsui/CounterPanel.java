@@ -20,10 +20,10 @@ public class CounterPanel extends Composite {
 	protected int totalBrowserCount;
 	private int browserRunCountValue;
 	
-	private final Image testErrorIcon = JsUnitPlugin.createImage("testerr.gif");
-	private final Image testFailureIcon = JsUnitPlugin.createImage("testfail.gif");
-	private final Image testRunsIcon = JsUnitPlugin.createImage("test.gif");
-	private final Image browserRunsIcon = JsUnitPlugin.createImage("tsuite.gif");
+	private final Image testErrorIcon = JsUnitPlugin.soleInstance().createImage("testerr.gif");
+	private final Image testFailureIcon = JsUnitPlugin.soleInstance().createImage("testfail.gif");
+	private final Image testRunsIcon = JsUnitPlugin.soleInstance().createImage("test.gif");
+	private final Image browserRunsIcon = JsUnitPlugin.soleInstance().createImage("tsuite.gif");
 			
 	public CounterPanel(Composite parent) {
 		super(parent, SWT.WRAP);

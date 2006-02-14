@@ -3,7 +3,6 @@ package net.jsunit;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
-import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.BrowserResult;
 
 public class JsUnitServerTest extends TestCase {

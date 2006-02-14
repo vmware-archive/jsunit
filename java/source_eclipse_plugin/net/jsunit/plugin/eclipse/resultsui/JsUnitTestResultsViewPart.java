@@ -8,8 +8,12 @@ import net.jsunit.RemoteTestRunClient;
 import net.jsunit.TestRunListener;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
+import net.jsunit.plugin.eclipse.resultsui.action.CollapseAllAction;
+import net.jsunit.plugin.eclipse.resultsui.action.ExpandAllAction;
+import net.jsunit.plugin.eclipse.resultsui.action.StopAction;
+import net.jsunit.plugin.eclipse.resultsui.tab.AllTestsByBrowserResultsTab;
+import net.jsunit.plugin.eclipse.resultsui.tab.FailuresTestResultsTab;
 
-import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.CLabel;
@@ -26,7 +30,7 @@ import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 
-public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListener {
+public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListener, ActiveTabSource, TestRunStoppable {
 	
 	static public final String ID = "net.jsunit.plugin.eclipse.resultsui.JsUnitTestResultsViewPart";
 
@@ -61,9 +65,9 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		sashForm.setOrientation(SWT.HORIZONTAL);
 		sashForm.setLayoutData(new GridData(GridData.FILL_BOTH));
 		
-		stopAction = new StopAction();
-		expandAllAction = new ExpandAllAction();
-		collapseAllAction = new CollapseAllAction();
+		stopAction = new StopAction(this, JsUnitPlugin.soleInstance());
+		expandAllAction = new ExpandAllAction(this, JsUnitPlugin.soleInstance());
+		collapseAllAction = new CollapseAllAction(this, JsUnitPlugin.soleInstance());
 		configureToolBar();
 	}
 	
@@ -77,7 +81,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		ViewForm right = new ViewForm(sashForm, SWT.NONE);
 		CLabel label= new CLabel(right, SWT.NONE);
 		label.setText("Failures");
-		label.setImage(JsUnitPlugin.createImage("stkfrm_obj.gif"));
+		label.setImage(JsUnitPlugin.soleInstance().createImage("stkfrm_obj.gif"));
 		right.setTopLeft(label);
 
 		ToolBar failureToolBar = new ToolBar(right, SWT.FLAT | SWT.WRAP);
@@ -174,54 +178,6 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		actionBars.updateActionBars();
 	}
 	
-	private class StopAction extends Action {
-		public StopAction() {
-			setText("Stop");
-			setToolTipText("Stop current test run");
-			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("stopdisabled.gif"));
-			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("stopenabled.gif"));
-			setImageDescriptor(JsUnitPlugin.createImageDescriptor("stopenabled.gif"));
-		}
-
-		public void run() {
-			stopped = true;
-			setEnabled(false);
-			client.sendStopServer();
-			client.stopListening();
-			progressBar.stopped();
-			testRunFinished();
-		}
-
-	}
-
-	private class ExpandAllAction extends Action {
-		public ExpandAllAction() {
-			setText("Expand all");
-			setToolTipText("Expand all browsers and test pages");
-			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("expandalldisabled.png"));
-			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("expandallenabled.png"));
-			setImageDescriptor(JsUnitPlugin.createImageDescriptor("expandallenabled.png"));
-		}
-
-		public void run() {
-			activeTab.expandAll();
-		}
-	}
-
-	private class CollapseAllAction extends Action {
-		public CollapseAllAction() {
-			setText("Collapse all");
-			setToolTipText("Collapse all browsers and test pages");
-			setDisabledImageDescriptor(JsUnitPlugin.createImageDescriptor("collapsealldisabled.png"));
-			setHoverImageDescriptor(JsUnitPlugin.createImageDescriptor("collapseallenabled.png"));
-			setImageDescriptor(JsUnitPlugin.createImageDescriptor("collapseallenabled.png"));
-		}
-
-		public void run() {
-			activeTab.collapseAll();
-		}
-	}
-
 	public boolean isReady() {
 		return true;
 	}
@@ -282,6 +238,18 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	public void connectToRemoteRunner(int serverPort) {
 		client = new RemoteTestRunClient(this, serverPort);
 		client.startListening();
+	}
+
+	public TestResultsTab getActiveTab() {
+		return activeTab;
+	}
+
+	public void stopTestRun() {
+		stopped = true;
+		client.sendStopServer();
+		client.stopListening();
+		progressBar.stopped();
+		testRunFinished();		
 	}
 	
 	

@@ -14,6 +14,9 @@ import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,12 +48,25 @@ public class JsUnitServer implements BrowserTestRunner {
     public JsUnitServer(Configuration configuration) {
     	configuration.ensureValid();
 		this.configuration = configuration;
-		addBrowserTestRunListener(new BrowserResultLogWriter(getLogsDirectory()));
+		addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
 		if (configuration.logStatus())
 			statusLogger = new SystemOutStatusLogger();
 		else
-			statusLogger = new NoOpStatusLogger();		
+			statusLogger = new NoOpStatusLogger();
+		setSystemError();
         instance = this;
+	}
+
+	private void setSystemError() {
+		try {
+			System.setErr(new PrintStream(new FileOutputStream(errorFile())));
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	private File errorFile() {
+		return new File(configuration.getLogsDirectory(), "jsunit_error.log");
 	}
 
 	public static void main(String args[]) {
@@ -117,10 +133,6 @@ public class JsUnitServer implements BrowserTestRunner {
     	}
 	}
 
-	public File getLogsDirectory() {
-		return configuration.getLogsDirectory();
-	}
-
 	public List<BrowserResult> getResults() {
         return results;
     }
@@ -132,7 +144,7 @@ public class JsUnitServer implements BrowserTestRunner {
     public BrowserResult findResultWithId(String id) {
         BrowserResult result = findResultWithIdInResultList(id);
         if (result == null)
-            result = BrowserResult.findResultWithIdInLogs(getLogsDirectory(), id);
+            result = BrowserResult.findResultWithIdInLogs(configuration.getLogsDirectory(), id);
         return result;
     }
 

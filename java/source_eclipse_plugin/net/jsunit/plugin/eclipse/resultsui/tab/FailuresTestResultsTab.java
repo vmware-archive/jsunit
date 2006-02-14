@@ -1,4 +1,9 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.tab;
+
+import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
+import net.jsunit.plugin.eclipse.resultsui.FailureTrace;
+import net.jsunit.plugin.eclipse.resultsui.FailuresTable;
+import net.jsunit.plugin.eclipse.resultsui.TestResultsTab;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.util.OpenStrategy;

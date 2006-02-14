@@ -28,7 +28,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
-public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
+public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener, ImageSource {
 
 	public static final String PLUGIN_ID = "net.jsunit";
 	
@@ -175,11 +175,11 @@ public class JsUnitPlugin extends AbstractUIPlugin implements ILaunchListener {
 		return new JsUnitPreferenceStore(getPreferenceStore());
 	}
 
-	public static Image createImage(String imageName) {
+	public Image createImage(String imageName) {
 		return createImageDescriptor(imageName).createImage();
 	}
 	
-	public static ImageDescriptor createImageDescriptor(String imageName) {
+	public ImageDescriptor createImageDescriptor(String imageName) {
 		URL iconFileURL = iconFileURL(imageName);
 		return ImageDescriptor.createFromURL(iconFileURL);
 	}

@@ -1,4 +1,7 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.tab;
+
+import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
+import net.jsunit.plugin.eclipse.resultsui.FailureTrace;
 
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.ui.IViewSite;

@@ -10,5 +10,5 @@ public interface ConfigurationSource {
     String closeBrowsersAfterTestRuns();
     String logStatus();
 	String timeoutSeconds();
-    
+	
 }

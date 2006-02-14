@@ -9,4 +9,5 @@ public class ConfigurationConstants {
     public static final String CLOSE_BROWSERS_AFTER_TEST_RUNS = "closeBrowsersAfterTestRuns";
 	public static final String LOG_STATUS = "logStatus";
 	public static final String TIMEOUT_SECONDS = "timeoutSeconds";
+	public static final String REMOTE_MACHINE_URLS = "remoteMachineURLs";
 }

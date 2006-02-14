@@ -21,9 +21,9 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.ToolBar;
 
-class FailureTrace implements IMenuListener {
-    private final Image jsunitIcon= JsUnitPlugin.createImage("jsunitlaunch.gif");
-    private final Image stackTraceIcon= JsUnitPlugin.createImage("stkfrm_obj.gif");
+public class FailureTrace implements IMenuListener {
+    private final Image jsunitIcon= JsUnitPlugin.soleInstance().createImage("jsunitlaunch.gif");
+    private final Image stackTraceIcon= JsUnitPlugin.soleInstance().createImage("stkfrm_obj.gif");
     
 	private Table table;
 	private String inputTrace;

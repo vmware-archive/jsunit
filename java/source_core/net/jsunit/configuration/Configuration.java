@@ -49,6 +49,8 @@ public final class Configuration implements XmlRenderable {
 
     public URL getTestURL() throws ConfigurationException {
         String urlString = source.url();
+        if (Utility.isEmpty(urlString))
+        	return null;
         try {
             return new URL(urlString);
         } catch (Exception e) {

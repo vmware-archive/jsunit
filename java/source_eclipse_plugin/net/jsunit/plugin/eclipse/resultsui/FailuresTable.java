@@ -1,6 +1,7 @@
 package net.jsunit.plugin.eclipse.resultsui;
 
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
+import net.jsunit.plugin.eclipse.resultsui.node.TestCaseResultNode;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;

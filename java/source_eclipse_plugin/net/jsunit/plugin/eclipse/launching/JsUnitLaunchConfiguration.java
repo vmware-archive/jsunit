@@ -90,9 +90,11 @@ public class JsUnitLaunchConfiguration extends AbstractJavaLaunchConfigurationDe
 	}
 	
 	private int findFreePortThatIsNot(int badPort) {
-		int freePort = 0;
-		while (freePort == 0 || freePort == badPort)
+		int freePort;
+		do
 			freePort = SocketUtil.findFreePort();
+		while
+			(freePort == badPort);
 		return freePort;
 	}
 

@@ -1,4 +1,4 @@
-package net.jsunit.plugin.eclipse.resultsui;
+package net.jsunit.plugin.eclipse.resultsui.node;
 
 import java.util.HashMap;
 import java.util.Map;

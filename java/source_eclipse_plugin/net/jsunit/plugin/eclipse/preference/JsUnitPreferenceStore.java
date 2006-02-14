@@ -36,7 +36,7 @@ public class JsUnitPreferenceStore {
 	}
 	
 	public List<String> testPageExtensions() {
-		return Utility.listFromDelimitedString(testPageExtensionsString());
+		return Utility.listFromCommaDelimitedString(testPageExtensionsString());
 	}
 
 	public int timeoutSeconds() {
@@ -44,7 +44,7 @@ public class JsUnitPreferenceStore {
 	}
 
 	public List<String> browserFileNames() {
-		return Utility.listFromDelimitedString(browserFileNamesString());
+		return Utility.listFromCommaDelimitedString(browserFileNamesString());
 	}
 
 	public PreferenceConfigurationSource asConfigurationSource(IFile testPage, int jsUnitServerPort) {

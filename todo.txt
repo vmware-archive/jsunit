@@ -2,12 +2,11 @@ Core JsUnit
 -----------
 Required for next release:
 - Fix IE7beta issues
-- shouldLog on configuration should turn of *all* logging
-- support for multiple server clients/queuing
+- support for multiple server clients - queuing?
 - jsunit source div innerHTML
+- JsUnitFarmServer (have the config servlet show each remote server's configuraion (could cache it))
 
 Backlog:
-- have the config servlet show each remote server's configuraion (could cache it)
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
 - bug: "retry test run" immediately fails after a test page timeout
 - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
@@ -16,9 +15,10 @@ Backlog:
 Eclipse plugin
 --------------
 Required for next release:
-- rerun button
 
 Backlog:
+- rerun button
+- prevent simultaneous runs
 - checkmark/error icon on jsunit tab after run is finished
 - tab title should go italic during test run
 - validate no duplicate browser entries are given in preferences

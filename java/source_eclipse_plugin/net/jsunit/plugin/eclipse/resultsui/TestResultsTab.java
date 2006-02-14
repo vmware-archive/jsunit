@@ -19,9 +19,13 @@ public abstract class TestResultsTab {
 
 	public TestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
 		this.failureTrace = failureTrace;
-		CTabItem tab= new CTabItem(tabFolder, SWT.NONE);
+		createCTabItem(tabFolder, viewSite, contentProvider);
+	}
+
+	protected void createCTabItem(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider) {
+		CTabItem tab = new CTabItem(tabFolder, SWT.NONE);
 		tab.setText(getName());
-		tab.setImage(JsUnitPlugin.createImage(getImageName()));
+		tab.setImage(JsUnitPlugin.soleInstance().createImage(getImageName()));
 
 		Composite panel= new Composite(tabFolder, SWT.NONE);
 		GridLayout gridLayout= new GridLayout();
@@ -38,7 +42,6 @@ public abstract class TestResultsTab {
 		addControlToPanel(viewSite, contentProvider, panel);	
 
 		hookSelectionChangedEventTo(createSelectionChangedAction());
-
 	}
 
 	protected abstract String getImageName();
