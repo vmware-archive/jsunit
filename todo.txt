@@ -4,6 +4,7 @@ Required for next release:
 - Fix IE7beta issues
 - support for multiple server clients - queuing?
 - jsunit source div innerHTML
+- bug: "retry test run" immediately fails after a test page timeout
 - JsUnitFarmServer (have the config servlet show each remote server's configuraion (could cache it))
 
 Backlog:
