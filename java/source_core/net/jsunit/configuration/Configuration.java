@@ -154,7 +154,8 @@ public final class Configuration implements XmlRenderable {
         configuration.addContent(browserFileNames);
 
         Element url = new Element(ConfigurationConstants.URL);
-        url.setText(getTestURL().toString());
+        URL testURL = getTestURL();
+        url.setText(testURL == null ? "" : testURL.toString());
         configuration.addContent(url);
 
         Element closeBrowsers = new Element(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);

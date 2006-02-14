@@ -13,10 +13,7 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +56,7 @@ public class JsUnitServer implements BrowserTestRunner {
 
 	private void setSystemError() {
 		try {
-			System.setErr(new PrintStream(new FileOutputStream(errorFile())));
+			System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(errorFile()))));
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
 		}
