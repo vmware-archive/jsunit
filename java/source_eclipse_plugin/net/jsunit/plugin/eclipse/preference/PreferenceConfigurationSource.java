@@ -119,5 +119,9 @@ public class PreferenceConfigurationSource implements ConfigurationSource {
 	public String timeoutSeconds() {
 		return String.valueOf(preferenceStore.timeoutSeconds());
 	}
+
+	public String remoteMachineURLs() {
+		return "";
+	}
 	
 }
