@@ -37,5 +37,9 @@ public class DummyConfigurationSource implements ConfigurationSource {
 	public String timeoutSeconds() {
 		return "60";
 	}
+
+    public String remoteMachineURLs() {
+        return "";
+    }    
 	
 }

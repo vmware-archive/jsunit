@@ -2,6 +2,7 @@ package net.jsunit;
  
 import junit.framework.TestCase;
 import net.jsunit.model.ResultType;
+import net.jsunit.configuration.ConfigurationProperty;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -18,13 +19,12 @@ import java.util.List;
  */
 
 public class DistributedTest extends TestCase {
-    public static final String REMOTE_MACHINE_URLS = "remoteMachineURLs";
 
     private List<String> remoteMachineURLs;
 
     public DistributedTest(String name) {
         super(name);
-        String urlsString = System.getProperty(REMOTE_MACHINE_URLS);
+        String urlsString = System.getProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
         remoteMachineURLs = Utility.listFromCommaDelimitedString(urlsString);
     }
 

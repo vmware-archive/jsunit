@@ -1,6 +1,8 @@
 Core JsUnit
 -----------
 Required for next release:
+- Make configuration properties an enum
+- Change tests that use env. variables to use custom configurations
 - Fix IE7beta issues
 - support for multiple server clients - queuing?
 - jsunit source div innerHTML

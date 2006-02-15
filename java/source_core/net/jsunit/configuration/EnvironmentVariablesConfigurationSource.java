@@ -3,27 +3,31 @@ package net.jsunit.configuration;
 public class EnvironmentVariablesConfigurationSource implements ConfigurationSource {
  
     public String resourceBase() {
-        return System.getProperty(ConfigurationConstants.RESOURCE_BASE);
+        return System.getProperty(ConfigurationProperty.RESOURCE_BASE.getName());
     }
 
     public String port() {
-        return System.getProperty(ConfigurationConstants.PORT);
+        return System.getProperty(ConfigurationProperty.PORT.getName());
+    }
+
+    public String remoteMachineURLs() {
+        return System.getProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
     }
 
     public String logsDirectory() {
-        return System.getProperty(ConfigurationConstants.LOGS_DIRECTORY);
+        return System.getProperty(ConfigurationProperty.LOGS_DIRECTORY.getName());
     }
 
     public String browserFileNames() {
-        return System.getProperty(ConfigurationConstants.BROWSER_FILE_NAMES);
+        return System.getProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
     }
 
     public String url() {
-        return System.getProperty(ConfigurationConstants.URL);
+        return System.getProperty(ConfigurationProperty.URL.getName());
     }
 
     public String closeBrowsersAfterTestRuns() {
-		return System.getProperty(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+		return System.getProperty(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
 	}
 
 	public boolean isAppropriate() {
@@ -31,11 +35,11 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
     }
 
 	public String logStatus() {
-		return System.getProperty(ConfigurationConstants.LOG_STATUS);
+		return System.getProperty(ConfigurationProperty.LOG_STATUS.getName());
 	}
 
 	public String timeoutSeconds() {
-		return System.getProperty(ConfigurationConstants.TIMEOUT_SECONDS);
+		return System.getProperty(ConfigurationProperty.TIMEOUT_SECONDS.getName());
 	}
 
 }

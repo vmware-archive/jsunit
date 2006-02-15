@@ -1,31 +1,46 @@
 package net.jsunit;
 
+import net.jsunit.configuration.Configuration;
+
 import java.net.URL;
 import java.util.List;
+import java.util.Arrays;
 
-import net.jsunit.configuration.FarmConfiguration;
+public class JsUnitFarmServer extends AbstractJsUnitServer {
 
-public class JsUnitFarmServer {
+    private JsUnitFarmServer instance;
 
-	private final FarmConfiguration configuration;
+    public JsUnitFarmServer(Configuration configuration) {
+        super(configuration);
+        instance = this;
+    }
 
-	public JsUnitFarmServer(FarmConfiguration configuration) {
-		this.configuration = configuration;
-	}
+    protected void ensureConfigurationIsValid() {
+        configuration.ensureValidForFarm();
+    }
 
-    public static void main(String[] args) {
-        
+    protected List<String> servletNames() {
+        return Arrays.asList(new String[] {
+            "config",
+            "runner"
+        });
+    }
+
+    public static void main(String args[]) {
+          try {
+              JsUnitFarmServer server = new JsUnitFarmServer(Configuration.resolve(args));
+              server.start();
+          } catch (Throwable t) {
+              t.printStackTrace();
+          }
     }
 
     public List<URL> getRemoteMachineURLs() {
-		return configuration.getRemoteMachineURLs();
-	}
+        return configuration.getRemoteMachineURLs();
+    }
 
-	public void dispose() {
-	}
-
-	public void start() {
-		
-	}
+    public String toString() {
+        return "JsUnit Farm Server";
+    }
 
 }

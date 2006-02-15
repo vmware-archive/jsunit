@@ -1,19 +1,16 @@
 package net.jsunit;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.PrintWriter;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.util.Arrays;
-import java.util.List;
-
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Iterator;
+import java.util.ArrayList;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -42,10 +39,12 @@ public class Utility {
     }
 
     public static List<String> listFromCommaDelimitedString(String string) {
+        if (isEmpty(string))
+            return new ArrayList<String>();
         String[] array = string.split(",");
         for (int i = 0; i < array.length; i++)
-        	array[i] = array[i].trim();
-		return Arrays.asList(array);
+            array[i] = array[i].trim();
+        return Arrays.asList(array);
     }
 
     public static List listWith(Object object1, Object object2) {
@@ -74,23 +73,32 @@ public class Utility {
         return new XMLOutputter().outputString(document);
     }
 
-	public static Document asXmlDocument(String xmlDocumentString) {
-		try {
-			return new SAXBuilder().build(new StringReader(xmlDocumentString));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-	}
+    public static Document asXmlDocument(String xmlDocumentString) {
+        try {
+            return new SAXBuilder().build(new StringReader(xmlDocumentString));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-	public static boolean isWindows() {
+    public static boolean isWindows() {
         String os = System.getProperty("os.name");
         return os != null && os.startsWith("Windows");
     }
-	
-	public static String stackTraceAsString(Throwable throwable) {
-		StringWriter writer = new StringWriter();
-		throwable.printStackTrace(new PrintWriter(writer));
-		return writer.toString();
-	}
 
+    public static String stackTraceAsString(Throwable throwable) {
+        StringWriter writer = new StringWriter();
+        throwable.printStackTrace(new PrintWriter(writer));
+        return writer.toString();
+    }
+
+    public static String commaSeparatedString(List<? extends Object> strings) {
+        StringBuffer result = new StringBuffer();
+        for (Iterator it = strings.iterator(); it.hasNext();) {
+            result.append(it.next());
+            if (it.hasNext())
+                result.append(",");
+        }
+        return result.toString();
+    }
 }

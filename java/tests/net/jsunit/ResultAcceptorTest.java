@@ -1,18 +1,17 @@
 package net.jsunit;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.EnvironmentVariablesConfigurationSource;
 import net.jsunit.interceptor.BrowserResultInterceptor;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
+
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -29,8 +28,8 @@ public class ResultAcceptorTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, "foo");
-        System.setProperty(ConfigurationConstants.URL, "http://bar");
+        System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), "foo");
+        System.setProperty(ConfigurationProperty.URL.getName(), "http://bar");
         configuration = new Configuration(new EnvironmentVariablesConfigurationSource());
 		server = new JsUnitServer(configuration);
         requestMap = new HashMap<String, String[]>();
@@ -42,8 +41,8 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
-        System.getProperties().remove(ConfigurationConstants.URL);
+        System.getProperties().remove(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+        System.getProperties().remove(ConfigurationProperty.URL.getName());
         File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
         if (logFile.exists())
             logFile.delete();

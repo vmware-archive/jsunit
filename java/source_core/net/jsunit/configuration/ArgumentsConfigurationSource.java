@@ -25,35 +25,39 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
     }
 
     public String resourceBase() {
-        return getArgumentValue(ConfigurationConstants.RESOURCE_BASE);
+        return getArgumentValue(ConfigurationProperty.RESOURCE_BASE.getName());
     }
 
     public String port() {
-        return getArgumentValue(ConfigurationConstants.PORT);
+        return getArgumentValue(ConfigurationProperty.PORT.getName());
+    }
+
+    public String remoteMachineURLs() {
+        return getArgumentValue(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
     }
 
     public String logsDirectory() {
-        return getArgumentValue(ConfigurationConstants.LOGS_DIRECTORY);
+        return getArgumentValue(ConfigurationProperty.LOGS_DIRECTORY.getName());
     }
 
     public String browserFileNames() {
-        return getArgumentValue(ConfigurationConstants.BROWSER_FILE_NAMES);
+        return getArgumentValue(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
     }
 
     public String url() {
-        return getArgumentValue(ConfigurationConstants.URL);
+        return getArgumentValue(ConfigurationProperty.URL.getName());
     }
 
 	public String closeBrowsersAfterTestRuns() {
-		return getArgumentValue(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+		return getArgumentValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
 	}
 
 	public String logStatus() {
-		return getArgumentValue(ConfigurationConstants.LOG_STATUS);
+		return getArgumentValue(ConfigurationProperty.LOG_STATUS.getName());
 	}
 
 	public String timeoutSeconds() {
-		return getArgumentValue(ConfigurationConstants.TIMEOUT_SECONDS);
-	}    
+		return getArgumentValue(ConfigurationProperty.TIMEOUT_SECONDS.getName());
+	}
     
 }

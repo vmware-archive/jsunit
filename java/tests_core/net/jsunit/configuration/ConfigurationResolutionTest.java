@@ -11,19 +11,19 @@ public class ConfigurationResolutionTest extends TestCase {
     }
 
     public void testResolveEnvironmentVariablesConfiguration() {
-        System.setProperty(ConfigurationConstants.URL, "foo");
+        System.setProperty(ConfigurationProperty.URL.getName(), "foo");
         Configuration configuration = Configuration.resolve(new String[] {});
         assertTrue(configuration.getSource() instanceof EnvironmentVariablesConfigurationSource);
     }
 
     public void testResolvePropertiesConfiguration() {
-    	PropertiesConfigurationTest.writePropertiesFile(PropertiesFileConfigurationSource.PROPERTIES_FILE_NAME);
+    	PropertiesConfigurationSourceTest.writePropertiesFile(PropertiesFileConfigurationSource.PROPERTIES_FILE_NAME);
         Configuration configuration = Configuration.resolve(new String[] {});
         assertTrue(configuration.getSource() instanceof PropertiesFileConfigurationSource);
     }
 
     protected void tearDown() throws Exception {
-        System.getProperties().remove(ConfigurationConstants.URL);
+        System.getProperties().remove(ConfigurationProperty.URL.getName());
         Utility.deleteFile(PropertiesFileConfigurationSource.PROPERTIES_FILE_NAME);
         super.tearDown();
     }

@@ -1,136 +1,84 @@
 package net.jsunit;
 
-import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.logging.NoOpStatusLogger;
-import net.jsunit.logging.StatusLogger;
-import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.model.BrowserResult;
-import org.jdom.Element;
-import org.mortbay.http.HttpServer;
-import org.mortbay.http.SocketListener;
-import org.mortbay.http.handler.ResourceHandler;
-import org.mortbay.jetty.servlet.ServletHttpContext;
-import org.mortbay.start.Monitor;
 
-import java.io.*;
-import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
 
-public class JsUnitServer implements BrowserTestRunner {
+public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
     private static JsUnitServer instance;
-    
-    private HttpServer server;
-	private Configuration configuration;
+
     private Process browserProcess;
     private String browserFileName;
-	private List<BrowserResult> results = new ArrayList<BrowserResult>();
+    private List<BrowserResult> results = new ArrayList<BrowserResult>();
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
     private long timeLastResultReceived;
-	private ProcessStarter processStarter = new DefaultProcessStarter();
-	private StatusLogger statusLogger;
-	private TimeoutChecker timeoutChecker;
+    private ProcessStarter processStarter = new DefaultProcessStarter();
+    private TimeoutChecker timeoutChecker;
 
-	public static JsUnitServer instance() {
-		return instance;
-	}
+    public static JsUnitServer instance() {
+        return instance;
+    }
 
     public JsUnitServer(Configuration configuration) {
-    	configuration.ensureValid();
-		this.configuration = configuration;
-		addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
-		if (configuration.logStatus())
-			statusLogger = new SystemOutStatusLogger();
-		else
-			statusLogger = new NoOpStatusLogger();
-		setSystemError();
+        super(configuration);
+        addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
         instance = this;
-	}
-
-	private void setSystemError() {
-		try {
-			System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(errorFile(), true))));
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException(e);
-		}
-	}
-
-	private File errorFile() {
-		return new File(configuration.getLogsDirectory(), "jsunit_error.log");
-	}
-
-	public static void main(String args[]) {
-  		try {
-	  		JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
-	  		server.start();
-  		} catch (Throwable t) {
-  			t.printStackTrace();
-  		}
     }
 
-    public void start() throws Exception {
-        setUpHttpServer();
-        server.start();
-        logStatus("Starting server with configuration:\r\n" + Utility.asPrettyString(configuration.asXml()));
+    protected void ensureConfigurationIsValid() {
+        configuration.ensureValidForServer();
     }
 
-    private void setUpHttpServer() throws Exception {
-		server = new HttpServer();
-		SocketListener listener = new SocketListener();
-		listener.setPort(configuration.getPort());
-		server.addListener(listener);
-
-		ServletHttpContext servletContext = new ServletHttpContext();
-		servletContext.setContextPath("jsunit");
-		servletContext.setResourceBase(configuration.getResourceBase().toString());
-		servletContext.addHandler(new ResourceHandler());
-		addWebworkServlet(servletContext, "/acceptor");
-		addWebworkServlet(servletContext, "/displayer");
-		addWebworkServlet(servletContext, "/runner");
-		addWebworkServlet(servletContext, "/config");
-		server.addContext(servletContext);
-
-        if (Monitor.activeCount() == 0)
-        	Monitor.monitor();
+    public static void main(String args[]) {
+          try {
+              JsUnitServer server = new JsUnitServer(Configuration.resolve(args));
+              server.start();
+          } catch (Throwable t) {
+              t.printStackTrace();
+          }
     }
 
-	private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
-		servletContext.addServlet(
-			"webwork",
-			name,
-			ServletDispatcher.class.getName()
-		);
-	}
+    protected List<String> servletNames() {
+        return Arrays.asList(new String[] {
+            "acceptor",
+            "displayer",
+            "runner",
+            "config"
+           }
+        );
+    }
 
     public void accept(BrowserResult result) {
-    	killTimeoutChecker();
-    	result.setBrowserFileName(browserFileName);
+        killTimeoutChecker();
+        result.setBrowserFileName(browserFileName);
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
         results.add(result);
-        
+
         for (TestRunListener listener : browserTestRunListeners)
-        	listener.browserTestRunFinished(browserFileName, result);
+            listener.browserTestRunFinished(browserFileName, result);
         timeLastResultReceived = System.currentTimeMillis();
-    	endBrowser();
+        endBrowser();
     }
 
     private void killTimeoutChecker() {
-    	if (timeoutChecker != null) {
-        	timeoutChecker.die();
-        	timeoutChecker = null;
-    	}
-	}
+        if (timeoutChecker != null) {
+            timeoutChecker.die();
+            timeoutChecker = null;
+        }
+    }
 
-	public List<BrowserResult> getResults() {
+    public List<BrowserResult> getResults() {
         return results;
     }
 
@@ -156,8 +104,8 @@ public class JsUnitServer implements BrowserTestRunner {
     public BrowserResult lastResult() {
         List results = getResults();
         return results.isEmpty()
-	        ? null
-	        : (BrowserResult) results.get(results.size() - 1);
+            ? null
+            : (BrowserResult) results.get(results.size() - 1);
     }
 
     public int resultsCount() {
@@ -172,31 +120,18 @@ public class JsUnitServer implements BrowserTestRunner {
         return configuration.getBrowserFileNames();
     }
 
-    public void finalize() throws Throwable {
-        super.finalize();
-        dispose();
-    }
-
     public boolean hasReceivedResultSince(long launchTime) {
         return timeLastResultReceived>=launchTime;
     }
 
-	public boolean shouldCloseBrowsersAfterTestRuns() {
-		return configuration.shouldCloseBrowsersAfterTestRuns();
-	}
-	
-	public void addBrowserTestRunListener(TestRunListener listener) {
-		browserTestRunListeners.add(listener);
-	}
-	
-	public List<TestRunListener> getBrowserTestRunListeners() {
-		return browserTestRunListeners;
-	}
+    public void addBrowserTestRunListener(TestRunListener listener) {
+        browserTestRunListeners.add(listener);
+    }
 
-	public URL getTestURL() {
-		return configuration.getTestURL();
-	}
-	
+    public List<TestRunListener> getBrowserTestRunListeners() {
+        return browserTestRunListeners;
+    }
+
     private String[] openBrowserCommand(String browserFileName) {
         if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
             if (Utility.isWindows()) {
@@ -208,103 +143,80 @@ public class JsUnitServer implements BrowserTestRunner {
     }
 
     private void endBrowser() {
-    	if (browserProcess != null && shouldCloseBrowsersAfterTestRuns())
-    		browserProcess.destroy();
+        if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns())
+            browserProcess.destroy();
         browserProcess = null;
         browserFileName = null;
         killTimeoutChecker();
     }
-    
+
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-    	waitUntilLastReceivedTimeHasPassed();
-    	long launchTime = System.currentTimeMillis();
-    	String[] browserCommand = openBrowserCommand(launchSpec.getBrowserFileName());
+        waitUntilLastReceivedTimeHasPassed();
+        long launchTime = System.currentTimeMillis();
+        String[] browserCommand = openBrowserCommand(launchSpec.getBrowserFileName());
         logStatus("Launching " + browserCommand[0]);
-		try {
-		    String[] commandWithUrl = new String[browserCommand.length + 1];
-		    System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
-		    commandWithUrl[browserCommand.length] = 
-		    	launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
-		    this.browserFileName = launchSpec.getBrowserFileName();
-		    for (TestRunListener listener : browserTestRunListeners)
-		    	listener.browserTestRunStarted(browserFileName);
-		    this.browserProcess = processStarter.execute(commandWithUrl);
-		    startTimeoutChecker(launchTime);
-		} catch (Throwable throwable) {
-			logStatus("Browser " + browserFileName + " failed to launch: " + Utility.stackTraceAsString(throwable));
-			BrowserResult failedToLaunchBrowserResult = new BrowserResult();
-			failedToLaunchBrowserResult.setFailedToLaunch();
-			failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
-			failedToLaunchBrowserResult.setServerSideException(throwable);
-			accept(failedToLaunchBrowserResult);
-		}
-		return launchTime;
-	}
-
-	private void waitUntilLastReceivedTimeHasPassed() {
-    	while (System.currentTimeMillis() == timeLastResultReceived)
-			try {
-				Thread.sleep(1);
-			} catch (InterruptedException e) {
-			}
-	}
-
-	private void startTimeoutChecker(long launchTime) {
-		timeoutChecker = new TimeoutChecker(browserProcess, browserFileName, launchTime, this);
-		timeoutChecker.start();
-	}
-
-	void setProcessStarter(ProcessStarter starter) {
-		this.processStarter = starter;
-	}
-
-	public void dispose() {
-		logStatus("Stopping server");
-		endBrowser();
-		try {
-			if (server != null)
-				server.stop();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
-
-    public Element asXml() {
-        return configuration.asXml();
+        try {
+            String[] commandWithUrl = new String[browserCommand.length + 1];
+            System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
+            commandWithUrl[browserCommand.length] =
+                launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
+            this.browserFileName = launchSpec.getBrowserFileName();
+            for (TestRunListener listener : browserTestRunListeners)
+                listener.browserTestRunStarted(browserFileName);
+            this.browserProcess = processStarter.execute(commandWithUrl);
+            startTimeoutChecker(launchTime);
+        } catch (Throwable throwable) {
+            logStatus("Browser " + browserFileName + " failed to launch: " + Utility.stackTraceAsString(throwable));
+            BrowserResult failedToLaunchBrowserResult = new BrowserResult();
+            failedToLaunchBrowserResult.setFailedToLaunch();
+            failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
+            failedToLaunchBrowserResult.setServerSideException(throwable);
+            accept(failedToLaunchBrowserResult);
+        }
+        return launchTime;
     }
 
-	public void startTestRun() {
-		for (TestRunListener listener : browserTestRunListeners) {
-			listener.testRunStarted();
-			while (!listener.isReady())
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-				}
-		}
-	}
+    private void waitUntilLastReceivedTimeHasPassed() {
+        while (System.currentTimeMillis() == timeLastResultReceived)
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+            }
+    }
 
-	public void finishTestRun() {
-		for (TestRunListener listener : browserTestRunListeners) {
-			listener.testRunFinished();
-		}
-		
-	}
+    private void startTimeoutChecker(long launchTime) {
+        timeoutChecker = new TimeoutChecker(browserProcess, browserFileName, launchTime, this);
+        timeoutChecker.start();
+    }
 
-	public void logStatus(String message) {
-		statusLogger.log(message);
-	}
-	
-	public int timeoutSeconds() {
-		return configuration.getTimeoutSeconds();
-	}
-	
-	public boolean isAlive() {
-		return server != null && server.isStarted();
-	}
-	
-	public Process getBrowserProcess() {
-		return browserProcess;
-	}
+    void setProcessStarter(ProcessStarter starter) {
+        this.processStarter = starter;
+    }
+
+    public void startTestRun() {
+        for (TestRunListener listener : browserTestRunListeners) {
+            listener.testRunStarted();
+            while (!listener.isReady())
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+            }
+        }
+    }
+
+    public void finishTestRun() {
+        for (TestRunListener listener : browserTestRunListeners) {
+            listener.testRunFinished();
+        }
+    }
+
+    public Process getBrowserProcess() {
+        return browserProcess;
+    }
+
+    public void dispose() {
+        super.dispose();
+        endBrowser();
+    }
 
 }

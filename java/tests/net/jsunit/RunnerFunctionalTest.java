@@ -34,10 +34,9 @@ public class RunnerFunctionalTest extends ServerFunctionalTestCase {
 	private void assertResult(Document result, ResultType expectedResultType, String expectedUrl) {
 		Element root = result.getRootElement();
 		assertEquals("testRunResult", root.getName());
-		assertEquals(ResultType.SUCCESS.name(), root.getAttribute("type").getValue());
+		assertEquals(expectedResultType.name(), root.getAttribute("type").getValue());
 		Element urlProperty = urlPropertyElement(root);
 		assertEquals(expectedUrl, urlProperty.getAttribute(BrowserResultWriter.PROPERTY_VALUE).getValue());
-		
 	}
 	
 	@SuppressWarnings("unchecked")

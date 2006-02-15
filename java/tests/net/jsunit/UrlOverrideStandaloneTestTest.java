@@ -1,6 +1,6 @@
 package net.jsunit;
 
-import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.configuration.ConfigurationProperty;
 
 public class UrlOverrideStandaloneTestTest extends StandaloneTest {
 
@@ -9,8 +9,8 @@ public class UrlOverrideStandaloneTestTest extends StandaloneTest {
 	  }
 
 	  public void setUp() throws Exception {
-	      System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_SYSTEM_BROWSER);
-	      System.setProperty(ConfigurationConstants.URL, "http://www.example.com");
+	      System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+	      System.setProperty(ConfigurationProperty.URL.getName(), "http://www.example.com");
 		  super.setUp();
 	  }
 	  
@@ -26,8 +26,8 @@ public class UrlOverrideStandaloneTestTest extends StandaloneTest {
 
 	  public void tearDown() throws Exception {
 	      super.tearDown();
-	      System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
-	      System.getProperties().remove(ConfigurationConstants.URL);
+	      System.getProperties().remove(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+	      System.getProperties().remove(ConfigurationProperty.URL.getName());
 	  }
 
 	

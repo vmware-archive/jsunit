@@ -2,13 +2,13 @@ package net.jsunit.configuration;
 
 import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
-
 import org.jdom.Element;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,9 +30,8 @@ public final class Configuration implements XmlRenderable {
         ConfigurationSource source;
         if (arguments.length > 0)
             source = new ArgumentsConfigurationSource(Arrays.asList(arguments));
-        else {
+        else
             source = resolveSource();
-        }
         return new Configuration(source);
     }
 
@@ -50,11 +49,11 @@ public final class Configuration implements XmlRenderable {
     public URL getTestURL() throws ConfigurationException {
         String urlString = source.url();
         if (Utility.isEmpty(urlString))
-        	return null;
+            return null;
         try {
             return new URL(urlString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationConstants.URL, urlString, e);
+            throw new ConfigurationException(ConfigurationProperty.URL.getName(), urlString, e);
         }
     }
 
@@ -63,7 +62,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return Utility.listFromCommaDelimitedString(browserFileNamesString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationConstants.BROWSER_FILE_NAMES, browserFileNamesString, e);
+            throw new ConfigurationException(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), browserFileNamesString, e);
         }
     }
 
@@ -78,7 +77,7 @@ public final class Configuration implements XmlRenderable {
             }
             return logsDirectory;
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationConstants.LOGS_DIRECTORY, logsDirectoryString, e);
+            throw new ConfigurationException(ConfigurationProperty.LOGS_DIRECTORY.getName(), logsDirectoryString, e);
         }
     }
 
@@ -92,7 +91,7 @@ public final class Configuration implements XmlRenderable {
                 port = Integer.parseInt(portString);
             return port;
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationConstants.PORT, portString, e);
+            throw new ConfigurationException(ConfigurationProperty.PORT.getName(), portString, e);
         }
     }
 
@@ -108,7 +107,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return new File(resourceBaseString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationConstants.RESOURCE_BASE, resourceBaseString, e);
+            throw new ConfigurationException(ConfigurationProperty.RESOURCE_BASE.getName(), resourceBaseString, e);
         }
     }
 
@@ -124,28 +123,28 @@ public final class Configuration implements XmlRenderable {
     }
 
     public boolean logStatus() {
-    	String logStatus = source.logStatus();
-    	if (Utility.isEmpty(logStatus))
-    		return true;
-    	return Boolean.valueOf(logStatus);
+        String logStatus = source.logStatus();
+        if (Utility.isEmpty(logStatus))
+            return true;
+        return Boolean.valueOf(logStatus);
     }
 
     public Element asXml() {
         Element configuration = new Element("configuration");
 
-        Element resourceBase = new Element(ConfigurationConstants.RESOURCE_BASE);
+        Element resourceBase = new Element(ConfigurationProperty.RESOURCE_BASE.getName());
         resourceBase.setText(getResourceBase().toString());
         configuration.addContent(resourceBase);
 
-        Element port = new Element(ConfigurationConstants.PORT);
+        Element port = new Element(ConfigurationProperty.PORT.getName());
         port.setText(String.valueOf(getPort()));
         configuration.addContent(port);
 
-        Element logsDirectory = new Element(ConfigurationConstants.LOGS_DIRECTORY);
+        Element logsDirectory = new Element(ConfigurationProperty.LOGS_DIRECTORY.getName());
         logsDirectory.setText(getLogsDirectory().toString());
         configuration.addContent(logsDirectory);
 
-        Element browserFileNames = new Element(ConfigurationConstants.BROWSER_FILE_NAMES);
+        Element browserFileNames = new Element(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
         for (String name : getBrowserFileNames()) {
             Element browserFileName = new Element("browserFileName");
             browserFileName.setText(name);
@@ -153,61 +152,84 @@ public final class Configuration implements XmlRenderable {
         }
         configuration.addContent(browserFileNames);
 
-        Element url = new Element(ConfigurationConstants.URL);
+        Element url = new Element(ConfigurationProperty.URL.getName());
         URL testURL = getTestURL();
         url.setText(testURL == null ? "" : testURL.toString());
         configuration.addContent(url);
 
-        Element closeBrowsers = new Element(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+        Element closeBrowsers = new Element(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
         closeBrowsers.setText(String.valueOf(shouldCloseBrowsersAfterTestRuns()));
         configuration.addContent(closeBrowsers);
 
-        Element logStatus = new Element(ConfigurationConstants.LOG_STATUS);
+        Element logStatus = new Element(ConfigurationProperty.LOG_STATUS.getName());
         logStatus.setText(String.valueOf(logStatus()));
         configuration.addContent(logStatus);
 
-        Element timeoutSeconds = new Element("timeoutSeconds");
+        Element timeoutSeconds = new Element(ConfigurationProperty.TIMEOUT_SECONDS.getName());
         timeoutSeconds.setText(String.valueOf(getTimeoutSeconds()));
         configuration.addContent(timeoutSeconds);
+
+        Element remoteMachineURLs = new Element(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
+        for (URL machineURL : getRemoteMachineURLs()) {
+            Element urlElement = new Element("remoteMachineURL");
+            urlElement.setText(machineURL.toString());
+            remoteMachineURLs.addContent(urlElement);
+        }
+        configuration.addContent(remoteMachineURLs);
 
         return configuration;
     }
 
-	public String[] asArgumentsArray() {
-		return new String[] {
-			"-" + ConfigurationConstants.RESOURCE_BASE, getResourceBase().getAbsolutePath(),
-			"-" + ConfigurationConstants.PORT, String.valueOf(getPort()),
-			"-" + ConfigurationConstants.LOGS_DIRECTORY, getLogsDirectory().getAbsolutePath(),
-			"-" + ConfigurationConstants.BROWSER_FILE_NAMES, commaSeparatedBrowserFileNames(),
-			"-" + ConfigurationConstants.URL, getTestURL() == null ? "" : getTestURL().toString(),
-			"-" + ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS, String.valueOf(shouldCloseBrowsersAfterTestRuns()),
-			"-" + ConfigurationConstants.LOG_STATUS, String.valueOf(logStatus()),
-			"-" + ConfigurationConstants.TIMEOUT_SECONDS, String.valueOf(getTimeoutSeconds())
-		};
-	}
+    public String[] asArgumentsArray() {
+        return new String[] {
+            "-" + ConfigurationProperty.BROWSER_FILE_NAMES.getName(), commaSeparatedBrowserFileNames(),
+            "-" + ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName(), String.valueOf(shouldCloseBrowsersAfterTestRuns()),
+            "-" + ConfigurationProperty.LOGS_DIRECTORY.getName(), getLogsDirectory().getAbsolutePath(),
+            "-" + ConfigurationProperty.LOG_STATUS.getName(), String.valueOf(logStatus()),
+            "-" + ConfigurationProperty.PORT.getName(), String.valueOf(getPort()),
+            "-" + ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), commaSeparatedRemoteMachineURLs(),
+            "-" + ConfigurationProperty.RESOURCE_BASE.getName(), getResourceBase().getAbsolutePath(),
+            "-" + ConfigurationProperty.TIMEOUT_SECONDS.getName(), String.valueOf(getTimeoutSeconds()),
+            "-" + ConfigurationProperty.URL.getName(), getTestURL() == null ? "" : getTestURL().toString()
+        };
+    }
 
-	private String commaSeparatedBrowserFileNames() {
-		StringBuffer result = new StringBuffer();
-		for (Iterator it = getBrowserFileNames().iterator(); it.hasNext();) {
-			result.append(it.next());
-			if (it.hasNext())
-				result.append(",");
-		}
-		return result.toString();
-	}
+    private String commaSeparatedBrowserFileNames() {
+        return Utility.commaSeparatedString(getBrowserFileNames());
+    }
 
-	public int getTimeoutSeconds() {
-		String timeoutSecondsString = source.timeoutSeconds();
-		if (Utility.isEmpty(timeoutSecondsString))
-			return DEFAULT_TIMEOUT_SECONDS;
-		return Integer.parseInt(timeoutSecondsString);
-	}
+    private String commaSeparatedRemoteMachineURLs() {
+        return Utility.commaSeparatedString(getRemoteMachineURLs());
+    }
 
-	public void ensureValid() {
+    public int getTimeoutSeconds() {
+        String timeoutSecondsString = source.timeoutSeconds();
+        if (Utility.isEmpty(timeoutSecondsString))
+            return DEFAULT_TIMEOUT_SECONDS;
+        return Integer.parseInt(timeoutSecondsString);
+    }
+
+    public void ensureValidForServer() {
         try {
             asArgumentsArray();
         } catch (ConfigurationException e) {
             throw e;
         }
+    }
+
+    public List<URL> getRemoteMachineURLs() {
+        String remoteMachineURLs = source.remoteMachineURLs();
+        List<String> strings = Utility.listFromCommaDelimitedString(remoteMachineURLs);
+        List<URL> result = new ArrayList<URL>(strings.size());
+        for (String string : strings)
+            try {
+                result.add(new URL(string));
+            } catch (MalformedURLException e) {
+                throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), remoteMachineURLs, e);
+            }
+        return result;
+    }
+
+    public void ensureValidForFarm() {
     }
 }

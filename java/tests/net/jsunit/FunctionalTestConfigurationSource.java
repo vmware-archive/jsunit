@@ -5,7 +5,7 @@ package net.jsunit;
 
 import net.jsunit.configuration.ConfigurationSource;
 
-class FunctionalTestConfigurationSource implements ConfigurationSource {
+public class FunctionalTestConfigurationSource implements ConfigurationSource {
 
 	private final int port;
 
@@ -44,5 +44,9 @@ class FunctionalTestConfigurationSource implements ConfigurationSource {
 	public String timeoutSeconds() {
 		return "60";
 	}
+
+    public String remoteMachineURLs() {
+        return "";
+    }    
 	
 }

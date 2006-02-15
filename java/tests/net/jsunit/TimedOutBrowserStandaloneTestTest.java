@@ -1,7 +1,7 @@
 package net.jsunit;
 
 import junit.framework.AssertionFailedError;
-import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.model.ResultType;
 
 public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
@@ -11,9 +11,9 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 	}
 	
 	  public void setUp() throws Exception {
-	      System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_SYSTEM_BROWSER);
-	      System.setProperty(ConfigurationConstants.TIMEOUT_SECONDS, "1");
-	      System.setProperty(ConfigurationConstants.URL,
+	      System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+	      System.setProperty(ConfigurationProperty.TIMEOUT_SECONDS.getName(), "1");
+	      System.setProperty(ConfigurationProperty.URL.getName(),
 	         "http://localhost:8080/jsunit/testRunner.html?"
 	         + "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true&resultId=foobar");
 	      super.setUp();
@@ -30,9 +30,9 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 
 	  public void tearDown() throws Exception {
 	      super.tearDown();
-	      System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
-	      System.getProperties().remove(ConfigurationConstants.TIMEOUT_SECONDS);
-	      System.getProperties().remove(ConfigurationConstants.URL);
+          System.getProperties().remove(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+	      System.getProperties().remove(ConfigurationProperty.TIMEOUT_SECONDS.getName());
+	      System.getProperties().remove(ConfigurationProperty.URL.getName());
 	  }
 
 }

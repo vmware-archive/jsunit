@@ -39,35 +39,39 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
 	}
 
     public String resourceBase() {
-        return getProperty(ConfigurationConstants.RESOURCE_BASE);
+        return getProperty(ConfigurationProperty.RESOURCE_BASE.getName());
     }
 
     public String logsDirectory() {
-        return getProperty(ConfigurationConstants.LOGS_DIRECTORY);
+        return getProperty(ConfigurationProperty.LOGS_DIRECTORY.getName());
     }
 
     public String port() {
-        return getProperty(ConfigurationConstants.PORT);
+        return getProperty(ConfigurationProperty.PORT.getName());
+    }
+
+    public String remoteMachineURLs() {
+        return getProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
     }
 
     public String url() {
-        return getProperty(ConfigurationConstants.URL);
+        return getProperty(ConfigurationProperty.URL.getName());
     }
 
     public String browserFileNames() {
-        return getProperty(ConfigurationConstants.BROWSER_FILE_NAMES);
+        return getProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
     }
 
     public String closeBrowsersAfterTestRuns() {
-        return getProperty(ConfigurationConstants.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+        return getProperty(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
     }
 
 	public String logStatus() {
-		return getProperty(ConfigurationConstants.LOG_STATUS);
+		return getProperty(ConfigurationProperty.LOG_STATUS.getName());
 	}
 
 	public String timeoutSeconds() {
-		return getProperty(ConfigurationConstants.TIMEOUT_SECONDS);
+		return getProperty(ConfigurationProperty.TIMEOUT_SECONDS.getName());
 	}
 
 }

@@ -1,7 +1,7 @@
 package net.jsunit;
 
 import junit.framework.AssertionFailedError;
-import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.model.ResultType;
 
 public class FailedToLaunchBrowserStandaloneTestTest extends StandaloneTest {
@@ -11,8 +11,8 @@ public class FailedToLaunchBrowserStandaloneTestTest extends StandaloneTest {
 	}
 	
 	  public void setUp() throws Exception {
-	      System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, "no_such_browser.exe");
-	      System.setProperty(ConfigurationConstants.URL,
+	      System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), "no_such_browser.exe");
+	      System.setProperty(ConfigurationProperty.URL.getName(),
 	         "http://localhost:8080/jsunit/testRunner.html?"
 	         + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
 	      super.setUp();
@@ -29,8 +29,8 @@ public class FailedToLaunchBrowserStandaloneTestTest extends StandaloneTest {
 
 	  public void tearDown() throws Exception {
 	      super.tearDown();
-	      System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
-	      System.getProperties().remove(ConfigurationConstants.URL);
+	      System.getProperties().remove(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+	      System.getProperties().remove(ConfigurationProperty.URL.getName());
 	  }
 
 }

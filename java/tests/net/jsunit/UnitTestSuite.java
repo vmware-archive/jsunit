@@ -23,7 +23,7 @@ public class UnitTestSuite extends TestCase {
 	
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
-        result.addTestSuite(ArgumentsConfigurationTest.class);
+        result.addTestSuite(ArgumentsConfigurationSourceTest.class);
         result.addTestSuite(BrowserLaunchSpecificationTest.class);
         result.addTestSuite(BrowserResultInterceptorTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);
@@ -33,12 +33,12 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(ClientServerConnectionTest.class);
         result.addTestSuite(ConfigurationResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
-        result.addTestSuite(EnvironmentVariablesConfigurationTest.class);
+        result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(JsUnitFarmServerTest.class);
         result.addTestSuite(JsUnitServerTest.class);
-        result.addTestSuite(PropertiesConfigurationTest.class);
+        result.addTestSuite(PropertiesConfigurationSourceTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultAcceptorTest.class);

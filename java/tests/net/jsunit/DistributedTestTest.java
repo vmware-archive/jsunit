@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationConstants;
+import net.jsunit.configuration.ConfigurationProperty;
 
 public class DistributedTestTest extends TestCase {
     private JsUnitServer server;
@@ -15,8 +15,8 @@ public class DistributedTestTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(ConfigurationConstants.BROWSER_FILE_NAMES, JsUnitServer.DEFAULT_SYSTEM_BROWSER);
-        System.setProperty(ConfigurationConstants.URL,
+        System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+        System.setProperty(ConfigurationProperty.URL.getName(),
            "http://localhost:8080/jsunit/testRunner.html?"
            + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true");
         server = new JsUnitServer(Configuration.resolve());
@@ -25,20 +25,20 @@ public class DistributedTestTest extends TestCase {
 
     public void tearDown() throws Exception {
         server.dispose();
-        System.getProperties().remove(ConfigurationConstants.BROWSER_FILE_NAMES);
-        System.getProperties().remove(ConfigurationConstants.URL);
+        System.getProperties().remove(ConfigurationProperty.BROWSER_FILE_NAMES);
+        System.getProperties().remove(ConfigurationProperty.URL);
         super.tearDown();
     }
 
     public void testDistributedRunWithTwoLocalhosts() {
-        System.setProperty(DistributedTest.REMOTE_MACHINE_URLS, "http://localhost:8080, http://localhost:8080");
+        System.setProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), "http://localhost:8080, http://localhost:8080");
         TestResult result = TestRunner.run(new DistributedTest("testCollectResults"));
         assertEquals(1, result.runCount());
         assertTrue(result.wasSuccessful());
     }
 
     public void testDistributedRunWithInvalidHosts() {
-        System.setProperty(DistributedTest.REMOTE_MACHINE_URLS, "http://invalid_host1:1234, http://invalid_host2:5678");
+        System.setProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), "http://invalid_host1:1234, http://invalid_host2:5678");
         TestResult result = TestRunner.run(new DistributedTest("testCollectResults"));
         assertEquals(1, result.runCount());
         assertFalse(result.wasSuccessful());
