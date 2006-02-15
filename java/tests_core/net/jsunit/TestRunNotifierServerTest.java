@@ -1,9 +1,9 @@
 package net.jsunit;
 
+import junit.framework.TestCase;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import junit.framework.TestCase;
 
 public class TestRunNotifierServerTest extends TestCase implements MessageReceiver {
 
@@ -27,34 +27,33 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 		waitForServerConnectionToStartRunning();
 	}
 
-	public void testInitialConditions() {
-		assertTrue(server.isReady());
-		
-		assertEquals(1, messages.size());
-		assertEquals("testRunStarted", ndLastMessage(0));
-	}
-	
-	public void testMessagesSentAsTestRunProceeds() throws InterruptedException {
-		server.browserTestRunStarted("mybrowser1.exe");
-		while (messages.size()<2) {
-			Thread.sleep(100);
-		}
-		assertEquals("browserTestRunStarted", ndLastMessage(1));
-		assertEquals("mybrowser1.exe", ndLastMessage(0));
+    public void testMessagesSentAsTestRunProceeds() throws InterruptedException {
+        while (messages.size() < 1)
+            Thread.sleep(10);
 
-		DummyBrowserResult browserResult = new DummyBrowserResult(false, 2, 3);
-		server.browserTestRunFinished("mybrowser2.exe", browserResult);
-		while (messages.size()<2+3) {
-			Thread.sleep(100);
-		}
-		assertEquals("browserTestRunFinished", ndLastMessage(5));
-		assertEquals("mybrowser2.exe", ndLastMessage(4));
-		String line1 = ndLastMessage(3);
-		String line2 = ndLastMessage(2);
-		String line3 = ndLastMessage(1);
+        assertEquals(1, messages.size());
+        assertEquals("testRunStarted", messages.get(0));
+
+        server.browserTestRunStarted("mybrowser1.exe");
+		while (messages.size() < 3)
+			Thread.sleep(10);
+
+        assertEquals("browserTestRunStarted", messages.get(1));
+		assertEquals("mybrowser1.exe", messages.get(2));
+
+        DummyBrowserResult browserResult = new DummyBrowserResult(false, 2, 3);
+        server.browserTestRunFinished("mybrowser2.exe", browserResult);
+        while (messages.size() < 8)
+            Thread.sleep(10);
+
+        assertEquals("browserTestRunFinished", messages.get(3));
+        assertEquals("mybrowser2.exe", messages.get(4));
+		String line1 = messages.get(5);
+		String line2 = messages.get(6);
+		String line3 = messages.get(7);
 		assertEquals(Utility.asString(browserResult.asXmlDocument()), line1 + "\r\n" + line2 + "\r\n" + line3);
 		
-		assertEquals("endXml", ndLastMessage(0));
+		assertEquals("endXml", messages.get(8));
 	}
 	
 	public void testStopRunner() throws InterruptedException {
@@ -66,17 +65,14 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 			Thread.sleep(10);
 	}
 
-	private String ndLastMessage(int count) {
-		return messages.get(messages.size() - (count + 1));
-	}
-	
 	private void waitForServerConnectionToStartRunning() throws InterruptedException {
 		while (!clientSideConnection.isRunning() || !server.isReady())
-			Thread.sleep(10);		
+			Thread.sleep(10);
 	}
 
 	public void messageReceived(String message) {
-		messages.add(message);
+        System.out.println(message);
+        messages.add(message);
 	}
 	
 	public void tearDown() throws Exception {
