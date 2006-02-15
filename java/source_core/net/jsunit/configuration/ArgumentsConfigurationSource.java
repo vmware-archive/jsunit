@@ -15,49 +15,49 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         this.arguments = arguments;
     }
 
-    private String getArgumentValue(String argumentName) {
+    private String getArgumentValue(ConfigurationProperty property) {
         for (Iterator<String> it = arguments.iterator(); it.hasNext();) {
-            String argument = (String) it.next();
-            if (argument.equals("-" + argumentName))
+            String argument = it.next();
+            if (argument.equals("-" + property.getName()))
                 return it.next();
         }
         return null;
     }
 
     public String resourceBase() {
-        return getArgumentValue(ConfigurationProperty.RESOURCE_BASE.getName());
+        return getArgumentValue(ConfigurationProperty.RESOURCE_BASE);
     }
 
     public String port() {
-        return getArgumentValue(ConfigurationProperty.PORT.getName());
+        return getArgumentValue(ConfigurationProperty.PORT);
     }
 
     public String remoteMachineURLs() {
-        return getArgumentValue(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
+        return getArgumentValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
     }
 
     public String logsDirectory() {
-        return getArgumentValue(ConfigurationProperty.LOGS_DIRECTORY.getName());
+        return getArgumentValue(ConfigurationProperty.LOGS_DIRECTORY);
     }
 
     public String browserFileNames() {
-        return getArgumentValue(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+        return getArgumentValue(ConfigurationProperty.BROWSER_FILE_NAMES);
     }
 
     public String url() {
-        return getArgumentValue(ConfigurationProperty.URL.getName());
+        return getArgumentValue(ConfigurationProperty.URL);
     }
 
 	public String closeBrowsersAfterTestRuns() {
-		return getArgumentValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
+		return getArgumentValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
 	}
 
 	public String logStatus() {
-		return getArgumentValue(ConfigurationProperty.LOG_STATUS.getName());
+		return getArgumentValue(ConfigurationProperty.LOG_STATUS);
 	}
 
 	public String timeoutSeconds() {
-		return getArgumentValue(ConfigurationProperty.TIMEOUT_SECONDS.getName());
+		return getArgumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
 	}
     
 }

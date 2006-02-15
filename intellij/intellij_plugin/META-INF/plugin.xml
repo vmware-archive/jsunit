@@ -1,0 +1,23 @@
+<!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
+<idea-plugin>
+    <name>JsUnit</name>
+    <description>Allows the running of Test Pages inside IntelliJ</description>
+    <version>1.0</version>
+    <vendor url="http://www.jsunit.net" email="edward@jsunit.net">Edward Hieatt</vendor>
+    <idea-version since-build="3000"/>
+    <application-components>
+        <component>
+            <implementation-class>net.jsunit.plugin.intellij.configuration.ConfigurationComponent</implementation-class>
+        </component>
+    </application-components>
+    <actions>
+        <action
+                id="ShowConfigurationXmlAction"
+                class="net.jsunit.plugin.intellij.configuration.ShowConfigurationXmlAction"
+                text="JsUnit Configuration"
+                description="Show JsUnit Configuration">
+            <add-to-group group-id="WindowMenu" anchor="last"/>
+        </action>
+    </actions>
+
+</idea-plugin>

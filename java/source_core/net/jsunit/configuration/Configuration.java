@@ -18,9 +18,6 @@ import java.util.List;
 public final class Configuration implements XmlRenderable {
 
     private ConfigurationSource source;
-    public static final String DEFAULT_RESOURCE_BASE = ".";
-    public static final int DEFAULT_PORT = 8080;
-    public static final int DEFAULT_TIMEOUT_SECONDS = 60;
 
     public Configuration(ConfigurationSource source) {
         this.source = source;
@@ -83,13 +80,10 @@ public final class Configuration implements XmlRenderable {
 
     public int getPort() throws ConfigurationException {
         String portString = source.port();
+        if (Utility.isEmpty(portString))
+            portString = ConfigurationProperty.PORT.getDefaultValue();
         try {
-            int port;
-            if (Utility.isEmpty(portString))
-                port = DEFAULT_PORT;
-            else
-                port = Integer.parseInt(portString);
-            return port;
+            return Integer.parseInt(portString);
         } catch (Exception e) {
             throw new ConfigurationException(ConfigurationProperty.PORT.getName(), portString, e);
         }
@@ -114,7 +108,7 @@ public final class Configuration implements XmlRenderable {
     private String resourceBaseCheckForDefault() {
         String result = source.resourceBase();
         if (Utility.isEmpty(result))
-            result = DEFAULT_RESOURCE_BASE;
+            result = ConfigurationProperty.RESOURCE_BASE.getDefaultValue();
         return result;
     }
 
@@ -205,7 +199,7 @@ public final class Configuration implements XmlRenderable {
     public int getTimeoutSeconds() {
         String timeoutSecondsString = source.timeoutSeconds();
         if (Utility.isEmpty(timeoutSecondsString))
-            return DEFAULT_TIMEOUT_SECONDS;
+            timeoutSecondsString = ConfigurationProperty.TIMEOUT_SECONDS.getDefaultValue();
         return Integer.parseInt(timeoutSecondsString);
     }
 
