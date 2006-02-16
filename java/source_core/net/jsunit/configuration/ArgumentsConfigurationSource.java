@@ -1,6 +1,5 @@
 package net.jsunit.configuration;
 
-import java.util.Iterator;
 import java.util.List;
  
 /**
@@ -16,10 +15,14 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
     }
 
     private String getArgumentValue(ConfigurationProperty property) {
-        for (Iterator<String> it = arguments.iterator(); it.hasNext();) {
-            String argument = it.next();
-            if (argument.equals("-" + property.getName()))
-                return it.next();
+        for (int i = 0; i < arguments.size(); i++) {
+            if (arguments.get(i).equals("-" + property.getName())) {
+            	String value = arguments.get(i+1);
+                if (!value.startsWith("-"))
+                	return value;
+                else
+                	return "";
+            }
         }
         return null;
     }
