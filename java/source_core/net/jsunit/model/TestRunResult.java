@@ -8,6 +8,7 @@ import net.jsunit.XmlRenderable;
 import org.jdom.Element;
 
 public class TestRunResult extends AbstractResult implements XmlRenderable {
+	
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
 
     public void addBrowserResult(BrowserResult browserResult) {
@@ -24,5 +25,9 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
 
 	protected List<? extends Result> getChildren() {
 		return browserResults;
+	}
+
+	public void mergeWith(TestRunResult result) {
+		browserResults.addAll(result.browserResults);		
 	}
 }

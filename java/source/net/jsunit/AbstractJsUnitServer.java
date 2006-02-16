@@ -1,19 +1,27 @@
 package net.jsunit;
 
-import com.opensymphony.webwork.dispatcher.ServletDispatcher;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.util.List;
+
 import net.jsunit.configuration.Configuration;
+import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
-import net.jsunit.logging.NoOpStatusLogger;
+
+import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
-import org.jdom.Element;
 
-import java.io.*;
-import java.util.List;
+import com.opensymphony.webwork.dispatcher.ServletDispatcher;
+import com.opensymphony.xwork.config.ConfigurationManager;
+import com.opensymphony.xwork.config.providers.XmlConfigurationProvider;
 
 public abstract class AbstractJsUnitServer implements XmlRenderable {
 
@@ -61,6 +69,9 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
         servletContext.addHandler(new ResourceHandler());
+        
+        ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));
+        
         for (String servletName : servletNames())
             addWebworkServlet(servletContext, servletName);
         server.addContext(servletContext);
@@ -68,6 +79,8 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         if (Monitor.activeCount() == 0)
             Monitor.monitor();
     }
+    
+    protected abstract String xworkXmlName();
 
     protected abstract List<String> servletNames();
 

@@ -21,6 +21,7 @@ public class BrowserResultTest extends TestCase {
                 "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
                 "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
                 "<property name=\"url\" value=\"http://www.example.com/\" />" +
+                "<property name=\"os\" value=\"" + Utility.osString() + "\" />" +
             "</properties>" +
             "<testCases>" +
 	            "<testCase name=\"page1.html:testFoo\" time=\"1.3\" />" +
@@ -33,7 +34,7 @@ public class BrowserResultTest extends TestCase {
             "</testCases>" +
         "</browserResult>";
 
-    public void setUp() throws Exception {
+    public void setUp() throws Exception {    	
         super.setUp();
         result = createBrowserResult();
         result.setTestCaseStrings(new String[] {

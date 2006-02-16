@@ -39,7 +39,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
 	}
 
     public String remoteMachineURLs() {
-        return "";
+        return "http://my.machine.com:8080, http://your.machine.com:9090";
     }    
 	
 }

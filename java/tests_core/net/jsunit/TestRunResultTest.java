@@ -49,6 +49,25 @@ public class TestRunResultTest extends TestCase {
     	assertEquals(ResultType.ERROR.name(), root.getAttribute("type").getValue());
     	assertEquals(3, root.getChildren().size());
     }
+    
+    public void testMergeWith() throws Exception {
+    	TestRunResult other = new TestRunResult();
+    	other.addBrowserResult(successResult());
+    	other.addBrowserResult(errorResult());
+    	
+    	TestRunResult otherOther = new TestRunResult();
+    	otherOther.addBrowserResult(successResult());
+    	otherOther.addBrowserResult(failureResult());
+
+    	other.mergeWith(otherOther);
+
+    	testRunResult.addBrowserResult(successResult());
+    	testRunResult.addBrowserResult(errorResult());
+    	testRunResult.addBrowserResult(successResult());
+    	testRunResult.addBrowserResult(failureResult());
+    	
+    	assertEquals(Utility.asString(testRunResult.asXml()), Utility.asString(other.asXml()));
+    }
 
     private BrowserResult successResult() {
         return new BrowserResult();

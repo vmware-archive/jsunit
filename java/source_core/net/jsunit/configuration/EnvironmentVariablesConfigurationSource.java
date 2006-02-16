@@ -31,7 +31,10 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
 	}
 
 	public boolean isAppropriate() {
-        return url() != null;
+        for (ConfigurationProperty property : ConfigurationProperty.values())
+        	if (System.getProperty(property.getName()) != null)
+        			return true;
+        return false;
     }
 
 	public String logStatus() {

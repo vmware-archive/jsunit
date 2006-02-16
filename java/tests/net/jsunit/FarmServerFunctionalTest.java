@@ -16,14 +16,15 @@ public class FarmServerFunctionalTest extends FunctionalTestCase {
         super.setUp();
         server1 = new JsUnitServer(new Configuration(new FunctionalTestConfigurationSource(PORT + 1)));
         server1.start();
-        server2 = new JsUnitServer(new Configuration(new FunctionalTestConfigurationSource(PORT + 2)));
-        server2.start();
-        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(PORT + 1, PORT + 2)));
+        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(PORT + 1)));
         farmServer.start();
     }
 
     public void testHitRunner() throws Exception {
-        webTester.beginAt("/runner?url=" + URLEncoder.encode("http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html", "UTF-8"));
+        String url =
+        	"/runner?url=" + 
+        	URLEncoder.encode("http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html", "UTF-8");
+		webTester.beginAt(url);
         Document document = responseXmlDocument();
         assertEquals(ResultType.SUCCESS.name(), document.getRootElement().getAttribute("resultType").getValue());
     }

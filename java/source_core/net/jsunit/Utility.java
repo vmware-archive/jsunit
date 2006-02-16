@@ -101,4 +101,12 @@ public class Utility {
         }
         return result.toString();
     }
+
+	public static String osString() {
+		StringBuffer result = new StringBuffer();
+		result.append(System.getProperty("os.arch"));
+		result.append(" - ");
+		result.append(System.getProperty("os.name"));
+		return result.toString();
+	}
 }

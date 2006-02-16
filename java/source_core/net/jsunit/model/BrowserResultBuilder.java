@@ -35,7 +35,12 @@ public class BrowserResultBuilder {
 	@SuppressWarnings("unchecked")
 	public BrowserResult build(Document document) {
         Element root = document.getRootElement();
-        BrowserResult result = new BrowserResult();
+        return build(root);
+    }
+
+	@SuppressWarnings("unchecked")
+	public BrowserResult build(Element root) {
+		BrowserResult result = new BrowserResult();
         if (failedToLaunch(root))
         	result.setFailedToLaunch();
         else if (timedOut(root))
@@ -45,10 +50,12 @@ public class BrowserResultBuilder {
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
         Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASES);
-        if (testCasesElement != null)
-        	updateWithTestCaseResults(testCasesElement.getChildren(TestCaseResultWriter.TEST_CASE), result);
+        if (testCasesElement != null) {
+        	List children = testCasesElement.getChildren(TestCaseResultWriter.TEST_CASE);
+			updateWithTestCaseResults(children, result);
+        }
         return result;
-    }
+	}
 
     private boolean failedToLaunch(Element root) {
     	Attribute failedToLaunchAttribute = root.getAttribute(BrowserResultWriter.FAILED_TO_LAUNCH);

@@ -47,6 +47,7 @@ public class FunctionalTestFarmConfigurationSource implements ConfigurationSourc
         for (int port : ports) {
             buffer.append("http://localhost:");
             buffer.append(port);
+            buffer.append(",");
         }
         return buffer.toString();
     }

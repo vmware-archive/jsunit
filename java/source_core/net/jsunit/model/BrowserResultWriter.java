@@ -1,5 +1,7 @@
 package net.jsunit.model;
 
+import net.jsunit.Utility;
+
 import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -24,6 +26,7 @@ public class BrowserResultWriter {
 	    EXTERNALLY_SHUT_DOWN = "externallyShutDown",
 	    JSUNIT_VERSION = "jsUnitVersion",
 	    REMOTE_ADDRESS = "remoteAddress",
+	    OS = "os",
 	    SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
 	    PROPERTIES = "properties",
 	    PROPERTY = "property",
@@ -73,6 +76,7 @@ public class BrowserResultWriter {
 	        addProperty(properties, USER_AGENT, browserResult.getUserAgent());
 	        addProperty(properties, REMOTE_ADDRESS, browserResult.getRemoteAddress());
 	        addProperty(properties, URL, browserResult.getBaseURL());
+	        addProperty(properties, OS, Utility.osString());
         }
         if (browserResult.hasServerSideExceptionStackTrace()) {
         	Element stackTrace = createPropertyElement(SERVER_SIDE_EXCEPTION_STACK_TRACE);

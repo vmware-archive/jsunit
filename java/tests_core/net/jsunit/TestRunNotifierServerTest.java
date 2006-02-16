@@ -71,7 +71,6 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 	}
 
 	public void messageReceived(String message) {
-        System.out.println(message);
         messages.add(message);
 	}
 	

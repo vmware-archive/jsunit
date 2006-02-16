@@ -14,7 +14,7 @@ import java.util.List;
 public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
-    private static JsUnitServer instance;
+    private static JsUnitServer serverInstance;
 
     private Process browserProcess;
     private String browserFileName;
@@ -24,14 +24,14 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
     private ProcessStarter processStarter = new DefaultProcessStarter();
     private TimeoutChecker timeoutChecker;
 
-    public static JsUnitServer instance() {
-        return instance;
+    public static JsUnitServer serverInstance() {
+        return serverInstance;
     }
 
     public JsUnitServer(Configuration configuration) {
         super(configuration);
         addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
-        instance = this;
+        serverInstance = this;
     }
 
     protected void ensureConfigurationIsValid() {
@@ -218,5 +218,9 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         super.dispose();
         endBrowser();
     }
+    
+	protected String xworkXmlName() {
+		return "xwork.xml";
+	}
 
 }

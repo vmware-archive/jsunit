@@ -8,11 +8,11 @@ import java.util.Arrays;
 
 public class JsUnitFarmServer extends AbstractJsUnitServer {
 
-    private JsUnitFarmServer instance;
+    private static JsUnitFarmServer farmServerInstance;
 
     public JsUnitFarmServer(Configuration configuration) {
         super(configuration);
-        instance = this;
+        farmServerInstance = this;
     }
 
     protected void ensureConfigurationIsValid() {
@@ -42,5 +42,17 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
     public String toString() {
         return "JsUnit Farm Server";
     }
+
+	protected String xworkXmlName() {
+		return "farm_xwork.xml";
+	}
+
+	public static JsUnitFarmServer getFarmServerInstance() {
+		return farmServerInstance;
+	}
+
+	public Configuration getConfiguration() {
+		return configuration;
+	}
 
 }

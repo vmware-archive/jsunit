@@ -6,7 +6,7 @@ import net.jsunit.JsUnitServer;
 public class DefaultBrowserTestRunnerSource implements BrowserTestRunnerSource {
 
 	public BrowserTestRunner getRunner() {
-		return JsUnitServer.instance();
+		return JsUnitServer.serverInstance();
 	}
 
 }

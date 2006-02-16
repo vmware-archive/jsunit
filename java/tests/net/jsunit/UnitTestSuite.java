@@ -2,6 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import net.jsunit.action.FarmTestRunnerActionTest;
 import net.jsunit.action.ResultAcceptorActionTest;
 import net.jsunit.action.ResultDisplayerActionTest;
 import net.jsunit.action.TestRunnerActionTest;
@@ -36,6 +37,8 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
+        result.addTestSuite(FarmTestRunManagerTest.class);
+        result.addTestSuite(FarmTestRunnerActionTest.class);
         result.addTestSuite(JsUnitFarmServerTest.class);
         result.addTestSuite(JsUnitServerTest.class);
         result.addTestSuite(PropertiesConfigurationSourceTest.class);
