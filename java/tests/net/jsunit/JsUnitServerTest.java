@@ -106,7 +106,7 @@ public class JsUnitServerTest extends TestCase {
 		assertEquals(overrideUrl, starter.commandPassed[1]);
 	}
 	
-	public void testInvalidationConfiguration() {
+	public void testInvalidConfiguration() {
 		try {
 			server = new JsUnitServer(new Configuration(new InvalidConfigurationSource()));
 			fail();

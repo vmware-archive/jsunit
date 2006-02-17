@@ -27,6 +27,9 @@ public class ConfigurationTest extends TestCase {
         expectedRemoteMachineURLs.add(new URL("http://localhost:8081"));
         expectedRemoteMachineURLs.add(new URL("http://127.0.0.1:8082"));
         assertEquals(expectedRemoteMachineURLs, configuration.getRemoteMachineURLs());
+        
+        assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
+        assertTrue(configuration.isValidFor(ConfigurationType.FARM));
     }
 
     public void testMinimal() throws Exception {
@@ -35,6 +38,13 @@ public class ConfigurationTest extends TestCase {
         assertEquals(new File(".\\logs"), configuration.getLogsDirectory());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(60, configuration.getTimeoutSeconds());
+
+        assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
+        assertTrue(configuration.isValidFor(ConfigurationType.FARM));
+    }
+    
+    public void testInvalidForServer() throws Exception {
+    	
     }
 
     public void testAsXml() throws Exception {

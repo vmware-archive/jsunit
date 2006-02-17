@@ -1,16 +1,21 @@
 package net.jsunit.configuration;
 
 public class ConfigurationException extends RuntimeException {
-    private String propertyInError;
+    private ConfigurationProperty propertyInError;
     private String invalidValue;
  
-    public ConfigurationException(String property, String invalidValue, Exception exception) {
+    public ConfigurationException(ConfigurationProperty property, String invalidValue) {
+        this.propertyInError = property;
+        this.invalidValue = invalidValue;    	
+    }
+    
+    public ConfigurationException(ConfigurationProperty property, String invalidValue, Exception exception) {
         super(exception);
         this.propertyInError = property;
-        this.invalidValue = invalidValue;
+        this.invalidValue = invalidValue;    	
     }
 
-    public String getPropertyInError() {
+    public ConfigurationProperty getPropertyInError() {
         return propertyInError;
     }
 

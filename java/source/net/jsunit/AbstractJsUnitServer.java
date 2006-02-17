@@ -8,6 +8,9 @@ import java.io.PrintStream;
 import java.util.List;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationException;
+import net.jsunit.configuration.ConfigurationProperty;
+import net.jsunit.configuration.ConfigurationType;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
@@ -32,16 +35,23 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     protected AbstractJsUnitServer(Configuration configuration) {
         this.configuration = configuration;
         ensureConfigurationIsValid();
-        if (configuration.logStatus())
+        if (configuration.shouldLogStatus())
             statusLogger = new SystemOutStatusLogger();
         else
             statusLogger = new NoOpStatusLogger();
         setSystemError();
     }
 
-    protected abstract void ensureConfigurationIsValid();
+    protected void ensureConfigurationIsValid() {
+    	if (!configuration.isValidFor(serverType())) {
+    		ConfigurationProperty property = configuration.getPropertiesInvalidFor(serverType()).get(0);
+    		throw new ConfigurationException(property, property.getValueString(configuration));
+    	}
+    }
 
-    protected void setSystemError() {
+    protected abstract ConfigurationType serverType();
+
+	protected void setSystemError() {
         try {
             System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(errorFile(), true))));
         } catch (FileNotFoundException e) {
@@ -119,7 +129,4 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         return server != null && server.isStarted();
     }
 
-    public int timeoutSeconds() {
-        return configuration.getTimeoutSeconds();
-    }
 }

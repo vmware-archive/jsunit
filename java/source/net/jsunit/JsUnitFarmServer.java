@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationType;
 
 import java.net.URL;
 import java.util.List;
@@ -16,7 +17,6 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
     }
 
     protected void ensureConfigurationIsValid() {
-        configuration.ensureValidForFarm();
     }
 
     protected List<String> servletNames() {
@@ -53,6 +53,10 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
 
 	public Configuration getConfiguration() {
 		return configuration;
+	}
+
+	protected ConfigurationType serverType() {
+		return ConfigurationType.FARM;
 	}
 
 }

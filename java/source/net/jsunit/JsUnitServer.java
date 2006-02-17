@@ -1,11 +1,12 @@
 package net.jsunit;
 
-import net.jsunit.configuration.Configuration;
-import net.jsunit.model.BrowserResult;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationType;
+import net.jsunit.model.BrowserResult;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -32,10 +33,6 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         super(configuration);
         addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
         serverInstance = this;
-    }
-
-    protected void ensureConfigurationIsValid() {
-        configuration.ensureValidForServer();
     }
 
     public static void main(String args[]) {
@@ -221,6 +218,14 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
     
 	protected String xworkXmlName() {
 		return "xwork.xml";
+	}
+
+	public int timeoutSeconds() {
+		return configuration.getTimeoutSeconds();
+	}
+
+	protected ConfigurationType serverType() {
+		return ConfigurationType.STANDARD;
 	}
 
 }

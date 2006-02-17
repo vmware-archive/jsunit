@@ -23,7 +23,7 @@ public class FarmConfiguration {
 			try {
 				result.add(new URL(string));
 			} catch (MalformedURLException e) {
-				throw new ConfigurationException(ConfigurationConstants.REMOTE_MACHINE_URLS, remoteMachineURLs, e);
+				throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS, remoteMachineURLs, e);
 			}
 		return result;
 	}

@@ -50,7 +50,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return new URL(urlString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.URL.getName(), urlString, e);
+            throw new ConfigurationException(ConfigurationProperty.URL, urlString, e);
         }
     }
 
@@ -59,7 +59,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return Utility.listFromCommaDelimitedString(browserFileNamesString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), browserFileNamesString, e);
+            throw new ConfigurationException(ConfigurationProperty.BROWSER_FILE_NAMES, browserFileNamesString, e);
         }
     }
 
@@ -74,7 +74,7 @@ public final class Configuration implements XmlRenderable {
             }
             return logsDirectory;
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.LOGS_DIRECTORY.getName(), logsDirectoryString, e);
+            throw new ConfigurationException(ConfigurationProperty.LOGS_DIRECTORY, logsDirectoryString, e);
         }
     }
 
@@ -85,7 +85,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return Integer.parseInt(portString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.PORT.getName(), portString, e);
+            throw new ConfigurationException(ConfigurationProperty.PORT, portString, e);
         }
     }
 
@@ -101,7 +101,7 @@ public final class Configuration implements XmlRenderable {
         try {
             return new File(resourceBaseString);
         } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.RESOURCE_BASE.getName(), resourceBaseString, e);
+            throw new ConfigurationException(ConfigurationProperty.RESOURCE_BASE, resourceBaseString, e);
         }
     }
 
@@ -116,7 +116,7 @@ public final class Configuration implements XmlRenderable {
         return source;
     }
 
-    public boolean logStatus() {
+    public boolean shouldLogStatus() {
         String logStatus = source.logStatus();
         if (Utility.isEmpty(logStatus))
             return true;
@@ -156,7 +156,7 @@ public final class Configuration implements XmlRenderable {
         configuration.addContent(closeBrowsers);
 
         Element logStatus = new Element(ConfigurationProperty.LOG_STATUS.getName());
-        logStatus.setText(String.valueOf(logStatus()));
+        logStatus.setText(String.valueOf(shouldLogStatus()));
         configuration.addContent(logStatus);
 
         Element timeoutSeconds = new Element(ConfigurationProperty.TIMEOUT_SECONDS.getName());
@@ -179,7 +179,7 @@ public final class Configuration implements XmlRenderable {
             "-" + ConfigurationProperty.BROWSER_FILE_NAMES.getName(), commaSeparatedBrowserFileNames(),
             "-" + ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName(), String.valueOf(shouldCloseBrowsersAfterTestRuns()),
             "-" + ConfigurationProperty.LOGS_DIRECTORY.getName(), getLogsDirectory().getAbsolutePath(),
-            "-" + ConfigurationProperty.LOG_STATUS.getName(), String.valueOf(logStatus()),
+            "-" + ConfigurationProperty.LOG_STATUS.getName(), String.valueOf(shouldLogStatus()),
             "-" + ConfigurationProperty.PORT.getName(), String.valueOf(getPort()),
             "-" + ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), commaSeparatedRemoteMachineURLs(),
             "-" + ConfigurationProperty.RESOURCE_BASE.getName(), getResourceBase().getAbsolutePath(),
@@ -203,12 +203,23 @@ public final class Configuration implements XmlRenderable {
         return Integer.parseInt(timeoutSecondsString);
     }
 
-    public void ensureValidForServer() {
-        try {
-            asArgumentsArray();
-        } catch (ConfigurationException e) {
-            throw e;
-        }
+    public List<ConfigurationProperty> getPropertiesInvalidFor(ConfigurationType type) {
+    	List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
+    	for (ConfigurationProperty property : type.getRequiredConfigurationProperties()) {
+			try {
+				property.getValueString(this);
+			} catch (ConfigurationException e){
+				result.add(property);
+			}
+    	}
+    	for (ConfigurationProperty property : type.getOptionalConfigurationProperties()) {
+			try {
+				property.getValueString(this);
+			} catch (ConfigurationException e) {
+				result.add(property);
+			}
+    	}
+    	return result;
     }
 
     public List<URL> getRemoteMachineURLs() {
@@ -219,11 +230,13 @@ public final class Configuration implements XmlRenderable {
             try {
                 result.add(new URL(string));
             } catch (MalformedURLException e) {
-                throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), remoteMachineURLs, e);
+                throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS, remoteMachineURLs, e);
             }
         return result;
     }
 
-    public void ensureValidForFarm() {
-    }
+	public boolean isValidFor(ConfigurationType type) {
+		return getPropertiesInvalidFor(type).isEmpty();
+	}
+
 }

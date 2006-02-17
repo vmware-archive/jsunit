@@ -4,18 +4,20 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import net.jsunit.model.TestRunResult;
+
 import org.jdom.Document;
 
 public class RemoteMachineRunnerHitter implements RemoteRunnerHitter {
 
 	public Document hitRemoteRunner(URL url) {
-		String xml;
+		Document result;
 		try {
-			xml = submitRequestTo(new URL(url.toString()+"/jsunit/runner"));
+			result = Utility.asXmlDocument(submitRequestTo(new URL(url.toString()+"/jsunit/runner")));
 		} catch (Exception e) {
-			xml = "<testResult/>";
+			result = new Document(new TestRunResult().asXml());
 		}
-		return Utility.asXmlDocument(xml);
+		return result;
 	}
 	
     private String submitRequestTo(URL url) throws Exception {

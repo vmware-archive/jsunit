@@ -1,29 +1,67 @@
 package net.jsunit.configuration;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+
+import net.jsunit.Utility;
 
 public enum ConfigurationProperty {
 
-    PORT("port", "8080", true, true),
-    RESOURCE_BASE("resourceBase", ".", true, false),
-    LOGS_DIRECTORY("logsDirectory", "." + File.separator + "logs", true, true),
-    URL("url", null, false, false),
-    BROWSER_FILE_NAMES("browserFileNames", null, true, false),
-    CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "true", true, false),
-    LOG_STATUS("logStatus", "true", true, true),
-    TIMEOUT_SECONDS("timeoutSeconds", "60", true, true),
-    REMOTE_MACHINE_URLS("remoteMachineURLs", null, false, true);
+    PORT("port", "8080") {
+    	public String getValueString(Configuration configuration) {
+    		return String.valueOf(configuration.getPort());
+    	}
+    },
+    RESOURCE_BASE("resourceBase", ".") {
+    	public String getValueString(Configuration configuration) {
+    		return configuration.getResourceBase().toString();
+    	}
+    },
+    LOGS_DIRECTORY("logsDirectory", "." + File.separator + "logs") {
+    	public String getValueString(Configuration configuration) {
+    		return configuration.getLogsDirectory().toString();
+    	}
+    },
+    URL("url", null) {
+    	public String  getValueString(Configuration configuration) {
+    		return configuration.getTestURL().toString();
+    	}
+    },
+    BROWSER_FILE_NAMES("browserFileNames", null) {
+    	public String getValueString(Configuration configuration) {
+    		return Utility.commaSeparatedString(configuration.getBrowserFileNames());
+    	}
+    },
+    CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "true") {
+    	public String getValueString(Configuration configuration) {
+    		return String.valueOf(configuration.shouldCloseBrowsersAfterTestRuns());
+    	}
+    },
+    LOG_STATUS("logStatus", "true") {
+    	public String getValueString(Configuration configuration) {
+    		return String.valueOf(configuration.shouldLogStatus());
+    	}
+    },
+    TIMEOUT_SECONDS("timeoutSeconds", "60") {
+    	public String getValueString(Configuration configuration) {
+    		return String.valueOf(configuration.getTimeoutSeconds());
+    	}
+    },
+    REMOTE_MACHINE_URLS("remoteMachineURLs", null) {
+    	public String getValueString(Configuration configuration) {
+    		return Utility.commaSeparatedString(configuration.getRemoteMachineURLs());
+    	}
+    };
 
     private String name;
     private String defaultValue;
-    private boolean requiredForServer;
-    private boolean requiredForFarmServer;
+	private final List<ConfigurationType> serverTypes;
 
-    ConfigurationProperty(String name, String defaultValue, boolean requiredForServer, boolean requiredForFarmServer) {
+    ConfigurationProperty(String name, String defaultValue, ConfigurationType... serverTypes) {
         this.name = name;
         this.defaultValue = defaultValue;
-        this.requiredForServer = requiredForServer;
-        this.requiredForFarmServer = requiredForFarmServer;
+		this.serverTypes = Arrays.asList(serverTypes);
     }
 
     public String getName() {
@@ -34,12 +72,10 @@ public enum ConfigurationProperty {
         return defaultValue;
     }
 
-    public boolean isRequiredForServer() {
-        return requiredForServer;
+    public boolean isRequiredFor(ConfigurationType type) {
+        return serverTypes.contains(type);
     }
 
-    public boolean isRequiredForFarmServer() {
-        return requiredForFarmServer;
-    }
+	public abstract String getValueString(Configuration configuration);
 
 }
