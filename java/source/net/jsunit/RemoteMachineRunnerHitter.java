@@ -1,26 +1,20 @@
 package net.jsunit;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import net.jsunit.model.TestRunResult;
 
 import org.jdom.Document;
 
 public class RemoteMachineRunnerHitter implements RemoteRunnerHitter {
 
-	public Document hitRemoteRunner(URL url) {
-		Document result;
-		try {
-			result = Utility.asXmlDocument(submitRequestTo(new URL(url.toString()+"/jsunit/runner")));
-		} catch (Exception e) {
-			result = new Document(new TestRunResult().asXml());
-		}
-		return result;
+	public Document hitRemoteRunner(URL url) throws IOException {
+		URL fullURL = new URL(url.toString() + "/jsunit/runner");
+		return Utility.asXmlDocument(submitRequestTo(fullURL));
 	}
 	
-    private String submitRequestTo(URL url) throws Exception {
+    private String submitRequestTo(URL url) throws IOException {
         byte buffer[];
         URLConnection connection = url.openConnection();
         InputStream in = connection.getInputStream();

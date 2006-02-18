@@ -43,29 +43,25 @@ public class ConfigurationTest extends TestCase {
         assertTrue(configuration.isValidFor(ConfigurationType.FARM));
     }
     
-    public void testInvalidForServer() throws Exception {
-    	
-    }
-
     public void testAsXml() throws Exception {
         Configuration configuration = new Configuration(new FullConfigurationSource());
         assertEquals(
             "<configuration>" +
-                "<resourceBase>c:\\resource\\base</resourceBase>" +
-                "<port>1234</port>" +
-                "<logsDirectory>c:\\logs\\directory</logsDirectory>" +
-                "<browserFileNames>" +
-                    "<browserFileName>browser1.exe</browserFileName>" +
-                    "<browserFileName>browser2.exe</browserFileName>" +
-                "</browserFileNames>" +
-                "<url>http://www.example.com</url>" +
-                "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
-                "<logStatus>true</logStatus>" +
-                "<timeoutSeconds>76</timeoutSeconds>" +
-                "<remoteMachineURLs>" +
-                    "<remoteMachineURL>http://localhost:8081</remoteMachineURL>" +
-                    "<remoteMachineURL>http://127.0.0.1:8082</remoteMachineURL>" +
-                "</remoteMachineURLs>" +
+            	"<browserFileNames>" +
+	            	"<browserFileName>browser1.exe</browserFileName>" +
+	            	"<browserFileName>browser2.exe</browserFileName>" +
+	            "</browserFileNames>" +
+	            "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
+	            "<logsDirectory>c:\\logs\\directory</logsDirectory>" +
+	            "<logStatus>true</logStatus>" +
+	            "<port>1234</port>" +
+	            "<remoteMachineURLs>" +
+	            	"<remoteMachineURL>http://localhost:8081</remoteMachineURL>" +
+	            	"<remoteMachineURL>http://127.0.0.1:8082</remoteMachineURL>" +
+	            "</remoteMachineURLs>" +
+	            "<resourceBase>c:\\resource\\base</resourceBase>" +
+	            "<timeoutSeconds>76</timeoutSeconds>" +
+	            "<url>http://www.example.com</url>" +
             "</configuration>",
             Utility.asString(configuration.asXml())
         );

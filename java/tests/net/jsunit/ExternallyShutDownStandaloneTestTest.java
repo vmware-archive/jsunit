@@ -10,8 +10,8 @@ public class ExternallyShutDownStandaloneTestTest extends StandaloneTest {
 		super(name);
 	}
 	
-	  public void setUp() throws Exception {
-	      System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), JsUnitServer.DEFAULT_SYSTEM_BROWSER);
+	public void setUp() throws Exception {
+	    System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), JsUnitServer.DEFAULT_SYSTEM_BROWSER);
 	      System.setProperty(ConfigurationProperty.URL.getName(),
 	         "http://localhost:8080/jsunit/testRunner.html?"
 	         + "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html&autoRun=true&submitresults=true&resultId=foobar");

@@ -1,14 +1,14 @@
 Core JsUnit
 -----------
 Required for next release:
-- Make configuration properties an enum
 - Change tests that use env. variables to use custom configurations
 - Fix IE7beta issues
 - support for multiple server clients - queuing?
 - jsunit source div innerHTML
 - bug: "retry test run" immediately fails after a test page timeout
-- JsUnitFarmServer (have the config servlet show each remote server's configuraion (could cache it))
+- For the farm server, have the config servlet show each remote server's configuraion (could cache it)
 - Don't send System.err to a file - figure out how to turn off jetty logs instead
+- ConfigurationProperties should be able to write XML
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

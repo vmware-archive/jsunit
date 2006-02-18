@@ -23,13 +23,17 @@ public class StandaloneTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         if (runner == null) {
-        	JsUnitServer server = new JsUnitServer(Configuration.resolve());
+        	JsUnitServer server = new JsUnitServer(createConfiguration());
         	server.start();
             runner = server;
             shouldDisposeOfRunner = true;
         }
         testRunManager = createTestRunManager();
     }
+
+	protected Configuration createConfiguration() {
+		return Configuration.resolve();
+	}
 
 	protected TestRunManager createTestRunManager() {
 		return new TestRunManager(runner);
@@ -44,8 +48,8 @@ public class StandaloneTest extends TestCase {
     public void testStandaloneRun() throws Exception {
     	testRunManager.runTests();
     	if (testRunManager.hadProblems()) {
-    		System.out.println(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
-    		fail();
+    		fail(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
+    		
     	}
     }
 

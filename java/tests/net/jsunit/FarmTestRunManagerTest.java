@@ -22,7 +22,7 @@ public class FarmTestRunManagerTest extends TestCase {
 	}
 	
 	public void testSimple() {
-		FarmTestRunManager manager = new FarmTestRunManager(new MockRemoteServerHitter(), configuration);
+		FarmTestRunManager manager = new FarmTestRunManager(new MockRemoteServerHitter(), configuration.getRemoteMachineURLs());
 		manager.runTests();
 		TestRunResult result = manager.getTestRunResult();
 		

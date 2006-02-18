@@ -1,36 +1,24 @@
 package net.jsunit.configuration;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
+import java.net.URL;
 
 import net.jsunit.Utility;
 
+import org.jdom.Element;
+
 public enum ConfigurationProperty {
 
-    PORT("port", "8080") {
-    	public String getValueString(Configuration configuration) {
-    		return String.valueOf(configuration.getPort());
-    	}
-    },
-    RESOURCE_BASE("resourceBase", ".") {
-    	public String getValueString(Configuration configuration) {
-    		return configuration.getResourceBase().toString();
-    	}
-    },
-    LOGS_DIRECTORY("logsDirectory", "." + File.separator + "logs") {
-    	public String getValueString(Configuration configuration) {
-    		return configuration.getLogsDirectory().toString();
-    	}
-    },
-    URL("url", null) {
-    	public String  getValueString(Configuration configuration) {
-    		return configuration.getTestURL().toString();
-    	}
-    },
     BROWSER_FILE_NAMES("browserFileNames", null) {
     	public String getValueString(Configuration configuration) {
     		return Utility.commaSeparatedString(configuration.getBrowserFileNames());
+    	}
+    	protected void addContentTo(Configuration configuration, Element element) {
+			for (String name : configuration.getBrowserFileNames()) {
+				Element browserFileName = new Element("browserFileName");
+				browserFileName.setText(name);
+				element.addContent(browserFileName);
+			}
     	}
     },
     CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "true") {
@@ -38,9 +26,36 @@ public enum ConfigurationProperty {
     		return String.valueOf(configuration.shouldCloseBrowsersAfterTestRuns());
     	}
     },
+    LOGS_DIRECTORY("logsDirectory", "." + File.separator + "logs") {
+    	public String getValueString(Configuration configuration) {
+    		return configuration.getLogsDirectory().toString();
+    	}
+    },
     LOG_STATUS("logStatus", "true") {
     	public String getValueString(Configuration configuration) {
     		return String.valueOf(configuration.shouldLogStatus());
+    	}
+    },
+    PORT("port", "8080") {
+    	public String getValueString(Configuration configuration) {
+    		return String.valueOf(configuration.getPort());
+    	}
+    },
+    REMOTE_MACHINE_URLS("remoteMachineURLs", null) {
+    	public String getValueString(Configuration configuration) {
+    		return Utility.commaSeparatedString(configuration.getRemoteMachineURLs());
+    	}
+    	protected void addContentTo(Configuration configuration, Element element) {
+    		for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
+                Element urlElement = new Element("remoteMachineURL");
+                urlElement.setText(remoteMachineURL.toString());
+                element.addContent(urlElement);
+            }
+    	}
+    },
+    RESOURCE_BASE("resourceBase", ".") {
+    	public String getValueString(Configuration configuration) {
+    		return configuration.getResourceBase().toString();
     	}
     },
     TIMEOUT_SECONDS("timeoutSeconds", "60") {
@@ -48,20 +63,19 @@ public enum ConfigurationProperty {
     		return String.valueOf(configuration.getTimeoutSeconds());
     	}
     },
-    REMOTE_MACHINE_URLS("remoteMachineURLs", null) {
+    URL("url", null) {
     	public String getValueString(Configuration configuration) {
-    		return Utility.commaSeparatedString(configuration.getRemoteMachineURLs());
+    		URL testURL = configuration.getTestURL();
+			return testURL == null ? "" : testURL.toString();
     	}
     };
 
     private String name;
     private String defaultValue;
-	private final List<ConfigurationType> serverTypes;
 
-    ConfigurationProperty(String name, String defaultValue, ConfigurationType... serverTypes) {
+    ConfigurationProperty(String name, String defaultValue) {
         this.name = name;
         this.defaultValue = defaultValue;
-		this.serverTypes = Arrays.asList(serverTypes);
     }
 
     public String getName() {
@@ -72,10 +86,16 @@ public enum ConfigurationProperty {
         return defaultValue;
     }
 
-    public boolean isRequiredFor(ConfigurationType type) {
-        return serverTypes.contains(type);
-    }
-
 	public abstract String getValueString(Configuration configuration);
+
+	public void addXmlTo(Element parentElement, Configuration configuration) {
+        Element element = new Element(name);
+        addContentTo(configuration, element);
+        parentElement.addContent(element);
+	}
+
+	protected void addContentTo(Configuration configuration, Element element) {
+		element.setText(getValueString(configuration));
+	}
 
 }

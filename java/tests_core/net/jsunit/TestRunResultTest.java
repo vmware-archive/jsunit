@@ -1,11 +1,13 @@
 package net.jsunit;
 
-import org.jdom.Element;
+import java.net.URL;
 
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
+
+import org.jdom.Element;
 
 public class TestRunResultTest extends TestCase {
     private TestRunResult testRunResult;
@@ -67,6 +69,13 @@ public class TestRunResultTest extends TestCase {
     	testRunResult.addBrowserResult(failureResult());
     	
     	assertEquals(Utility.asString(testRunResult.asXml()), Utility.asString(other.asXml()));
+    }
+    
+    public void testTimedOut() throws Exception {
+    	testRunResult.addBrowserResult(successResult());
+    	testRunResult.addTimedOutRemoteURL(new URL("http://my.domain.com:8201"));
+    	testRunResult.addTimedOutRemoteURL(new URL("http://another.domain.com:4732"));
+    	assertEquals(ResultType.TIMED_OUT, testRunResult.getResultType());
     }
 
     private BrowserResult successResult() {

@@ -17,7 +17,7 @@ public class FarmTestRunnerAction implements Action, XmlProducer {
 
 	public String execute() throws Exception {
 		server.logStatus("Received request to run farm tests");
-		manager = new FarmTestRunManager(hitter, server.getConfiguration());
+		manager = new FarmTestRunManager(hitter, server.getRemoteMachineURLs());
 		manager.runTests();
 		server.logStatus("Done running farm tests");		
 		return SUCCESS;

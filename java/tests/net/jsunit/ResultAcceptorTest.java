@@ -1,21 +1,16 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
-import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationProperty;
-import net.jsunit.configuration.EnvironmentVariablesConfigurationSource;
-import net.jsunit.interceptor.BrowserResultInterceptor;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.BrowserResultWriter;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
+import javax.servlet.http.HttpServletRequest;
+
+import junit.framework.TestCase;
+import net.jsunit.configuration.Configuration;
+import net.jsunit.interceptor.BrowserResultInterceptor;
+import net.jsunit.model.BrowserResult;
+import net.jsunit.model.BrowserResultWriter;
 
 public class ResultAcceptorTest extends TestCase {
     protected Map<String, String[]> requestMap;
@@ -28,9 +23,21 @@ public class ResultAcceptorTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), "foo");
-        System.setProperty(ConfigurationProperty.URL.getName(), "http://bar");
-        configuration = new Configuration(new EnvironmentVariablesConfigurationSource());
+        configuration = new Configuration(new StubConfigurationSource() {
+
+			public String browserFileNames() {
+				return "foo";
+			}
+
+			public String logStatus() {
+				return String.valueOf(Boolean.FALSE);
+			}
+
+			public String url() {
+				return "http://bar";
+			}
+        	
+        });
 		server = new JsUnitServer(configuration);
         requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[] {"ID_foo"});
@@ -38,15 +45,6 @@ public class ResultAcceptorTest extends TestCase {
         requestMap.put(BrowserResultWriter.TIME, new String[] {"4.3"});
         requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[] {"2.5"});
         requestMap.put(BrowserResultWriter.TEST_CASES, dummyTestCaseStrings());
-    }
-
-    public void tearDown() throws Exception {
-        System.getProperties().remove(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
-        System.getProperties().remove(ConfigurationProperty.URL.getName());
-        File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
-        if (logFile.exists())
-            logFile.delete();
-        super.tearDown();
     }
 
     protected String[] dummyTestCaseStrings() {
@@ -92,13 +90,14 @@ public class ResultAcceptorTest extends TestCase {
         assertTrue(server.hasReceivedResultSince(time));
     }
 
-    public void testFindResultById() {
+    public void testFindResultByIdInMemoryOrOnDisk() {
         assertNull(server.findResultWithId("ID_foo"));
         submit();
+        assertFalse(server.getResults().isEmpty());
         assertNotNull(server.findResultWithId("ID_foo"));
         assertNull(server.findResultWithId("Invalid ID"));
         server.clearResults();
-        //should look on disk when not in memory
+        assertTrue(server.getResults().isEmpty());
         assertNotNull(server.findResultWithId("ID_foo"));
         assertNull(server.findResultWithId("Invalid ID"));
     }
@@ -108,5 +107,12 @@ public class ResultAcceptorTest extends TestCase {
         assertFalse(logFile.exists());
         submit();
         assertTrue(logFile.exists());
+    }
+    
+    public void tearDown() throws Exception {
+    	File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
+    	if (logFile.exists())
+    		logFile.delete();
+    	super.tearDown();
     }
 }
