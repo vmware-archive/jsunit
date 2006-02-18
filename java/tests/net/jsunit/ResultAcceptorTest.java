@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.interceptor.BrowserResultInterceptor;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.BrowserResultBuilder;
 import net.jsunit.model.BrowserResultWriter;
 
 public class ResultAcceptorTest extends TestCase {
@@ -53,7 +53,7 @@ public class ResultAcceptorTest extends TestCase {
 
     protected void submit() {
         HttpServletRequest request = new DummyHttpRequest(requestMap);
-        server.accept(BrowserResultInterceptor.resultFromRequest(request));
+        server.accept(new BrowserResultBuilder().build(request));
     }
 
     public void testSubmitResults() {

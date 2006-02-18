@@ -8,30 +8,28 @@ import java.net.URLEncoder;
 
 public class FarmServerFunctionalTest extends FunctionalTestCase {
 
-    private JsUnitServer server1;
-    private JsUnitServer server2;
     private JsUnitFarmServer farmServer;
 
     public void setUp() throws Exception {
         super.setUp();
-        server1 = new JsUnitServer(new Configuration(new FunctionalTestConfigurationSource(PORT + 1)));
-        server1.start();
-        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(PORT + 1)));
+        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(PORT + 1, PORT)));
         farmServer.start();
     }
+    
+    protected int webTesterPort() {
+    	return PORT + 1;
+    }
 
-    public void testHitRunner() throws Exception {
+    public void testHitFarmRunner() throws Exception {
         String url =
         	"/runner?url=" + 
-        	URLEncoder.encode("http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html", "UTF-8");
+        	URLEncoder.encode("http://localhost:"+PORT+"/jsunit/tests/jsUnitUtilityTests.html", "UTF-8");
 		webTester.beginAt(url);
         Document document = responseXmlDocument();
-        assertEquals(ResultType.SUCCESS.name(), document.getRootElement().getAttribute("resultType").getValue());
+        assertEquals(ResultType.SUCCESS.name(), document.getRootElement().getAttribute("type").getValue());
     }
 
     public void tearDown() throws Exception {
-        server1.dispose();
-        server2.dispose();
         farmServer.dispose();
         super.tearDown();
     }

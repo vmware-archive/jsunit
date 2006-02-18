@@ -4,10 +4,12 @@ import net.jsunit.configuration.ConfigurationSource;
 
 public class FunctionalTestFarmConfigurationSource implements ConfigurationSource {
 
-    private int[] ports;
+    private int port;
+    private int remotePort;
 
-    public FunctionalTestFarmConfigurationSource(int... ports) {
-        this.ports = ports;
+    public FunctionalTestFarmConfigurationSource(int port, int remotePort) {
+    	this.port = port;
+        this.remotePort = remotePort;
     }
 
     public String resourceBase() {
@@ -15,7 +17,7 @@ public class FunctionalTestFarmConfigurationSource implements ConfigurationSourc
     }
 
     public String port() {
-        return String.valueOf(FunctionalTestCase.PORT);
+        return String.valueOf(port);
     }
 
     public String logsDirectory() {
@@ -43,13 +45,7 @@ public class FunctionalTestFarmConfigurationSource implements ConfigurationSourc
     }
 
     public String remoteMachineURLs() {
-        StringBuffer buffer = new StringBuffer();
-        for (int port : ports) {
-            buffer.append("http://localhost:");
-            buffer.append(port);
-            buffer.append(",");
-        }
-        return buffer.toString();
+        return "http://localhost:" + remotePort;
     }
 
 }

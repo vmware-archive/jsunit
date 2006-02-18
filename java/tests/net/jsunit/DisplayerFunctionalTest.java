@@ -6,7 +6,7 @@ import net.jsunit.model.BrowserResult;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public class DisplayerFunctionalTest extends ServerFunctionalTestCase {
+public class DisplayerFunctionalTest extends FunctionalTestCase {
 
 	public void testNoId() throws Exception {
 		webTester.beginAt("displayer");

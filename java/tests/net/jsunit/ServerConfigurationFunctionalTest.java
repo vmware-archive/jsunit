@@ -3,7 +3,7 @@ package net.jsunit;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public class ServerConfigurationFunctionalTest extends ServerFunctionalTestCase {
+public class ServerConfigurationFunctionalTest extends FunctionalTestCase {
 
     public void testSimple() throws Exception {
         webTester.beginAt("config");

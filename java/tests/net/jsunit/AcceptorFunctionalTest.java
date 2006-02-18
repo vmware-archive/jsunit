@@ -4,7 +4,7 @@ import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 import org.jdom.Document;
 
-public class AcceptorFunctionalTest extends ServerFunctionalTestCase {
+public class AcceptorFunctionalTest extends FunctionalTestCase {
 
     public void testSubmission() throws Exception {
         StringBuffer buffer = new StringBuffer();

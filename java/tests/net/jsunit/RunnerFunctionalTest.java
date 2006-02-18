@@ -9,7 +9,7 @@ import net.jsunit.model.ResultType;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public class RunnerFunctionalTest extends ServerFunctionalTestCase {
+public class RunnerFunctionalTest extends FunctionalTestCase {
 
 	public void testSimple() throws Exception {
 		webTester.beginAt("runner");
