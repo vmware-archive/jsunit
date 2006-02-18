@@ -6,7 +6,7 @@ import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.TestRunResult;
 
 public class DistributedTest extends TestCase {
-    
+
     protected FarmTestRunManager manager;
 
     public DistributedTest(String name) {
@@ -18,10 +18,14 @@ public class DistributedTest extends TestCase {
 	}
 
     public void testCollectResults() {
-    	manager = new FarmTestRunManager(new Configuration(configurationSource()));
+    	manager = createTestRunManager();
     	manager.runTests();
     	TestRunResult result = manager.getTestRunResult();
     	if (!result.wasSuccessful())
     		fail(Utility.asPrettyString(result.asXml()));
+    }
+
+    protected FarmTestRunManager createTestRunManager() {
+        return new FarmTestRunManager(new Configuration(configurationSource()));
     }
 }

@@ -11,6 +11,7 @@ public class FunctionalTestSuite extends TestCase {
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
 //        result.addTestSuite(FarmServerFunctionalTest.class);
+        result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
         result.addTestSuite(ServerConfigurationFunctionalTest.class);
         result.addTestSuite(SuccessfulStandaloneTestTest.class);

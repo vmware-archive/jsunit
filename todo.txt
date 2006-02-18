@@ -1,7 +1,6 @@
 Core JsUnit
 -----------
 Required for next release:
-- Ability to pass a url to the farm runner
 - IE7beta issues
 - support for multiple server clients - queuing?
 - jsunit source div innerHTML
