@@ -7,6 +7,7 @@ Required for next release:
 - bug: "retry test run" immediately fails after a test page timeout
 - For the farm server, have the config servlet show each remote server's configuraion (could cache it)
 - Don't send System.err to a file - figure out how to turn off jetty logs instead
+- farm manager should time out remote urls
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

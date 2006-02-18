@@ -13,14 +13,18 @@ public class FarmTestRunnerAction implements Action, XmlProducer {
 	private JsUnitFarmServer server;
 	private FarmTestRunManager manager;
 	private RemoteRunnerHitter hitter = new RemoteMachineRunnerHitter();
+    private String overrideURL;
 
-	public String execute() throws Exception {
-		server.logStatus("Received request to run farm tests");
-		manager = new FarmTestRunManager(hitter, server.getConfiguration());
-		manager.runTests();
-		server.logStatus("Done running farm tests");		
-		return SUCCESS;
-	}
+    public String execute() throws Exception {
+        String message = "Received request to run farm tests";
+        if (overrideURL != null)
+            message += " with URL " + overrideURL;
+        server.logStatus(message);
+        manager = new FarmTestRunManager(hitter, server.getConfiguration(), overrideURL);
+        manager.runTests();
+        server.logStatus("Done running farm tests");
+        return SUCCESS;
+    }
 
 	public XmlRenderable getXmlRenderable() {
 		return manager.getTestRunResult();
@@ -38,4 +42,7 @@ public class FarmTestRunnerAction implements Action, XmlProducer {
 		this.hitter  = hitter;
 	}
 
+    public void setUrl(String overrideURL) {
+        this.overrideURL = overrideURL;
+    }
 }

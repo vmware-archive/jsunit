@@ -1,38 +1,37 @@
 package net.jsunit.model;
 
-import net.jsunit.Utility;
-
 import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+import net.jsunit.Utility;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
  */
- 
+
 public class BrowserResultWriter {
-	
+
     public static final String
-	    ID = "id",
-	    BROWSER_RESULT="browserResult",
-	    BROWSER_FILE_NAME = "browserFileName",
-	    USER_AGENT = "userAgent",
-	    TIME = "time",
-	    TEST_CASES = "testCases",
-	    TEST_CASE = "testCase",
-	    TIMED_OUT = "timedOut",
-	    FAILED_TO_LAUNCH = "failedToLaunch",
-	    EXTERNALLY_SHUT_DOWN = "externallyShutDown",
-	    JSUNIT_VERSION = "jsUnitVersion",
-	    REMOTE_ADDRESS = "remoteAddress",
-	    OS = "os",
-	    SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
-	    PROPERTIES = "properties",
-	    PROPERTY = "property",
-	    PROPERTY_KEY = "name",
-	    PROPERTY_VALUE = "value",
-	    URL = "url";
+        ID = "id",
+        BROWSER_RESULT="browserResult",
+        BROWSER_FILE_NAME = "browserFileName",
+        USER_AGENT = "userAgent",
+        TIME = "time",
+        TEST_CASES = "testCases",
+        TEST_CASE = "testCase",
+        TIMED_OUT = "timedOut",
+        FAILED_TO_LAUNCH = "failedToLaunch",
+        EXTERNALLY_SHUT_DOWN = "externallyShutDown",
+        JSUNIT_VERSION = "jsUnitVersion",
+        REMOTE_ADDRESS = "remoteAddress",
+        OS = "os",
+        SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
+        PROPERTIES = "properties",
+        PROPERTY = "property",
+        PROPERTY_KEY = "name",
+        PROPERTY_VALUE = "value",
+        URL = "url";
 
     BrowserResult browserResult;
 
@@ -53,16 +52,16 @@ public class BrowserResultWriter {
     private Element createRootElement() {
         Element root = new Element(BROWSER_RESULT);
         if (browserResult.timedOut())
-        	root.setAttribute(TIMED_OUT, String.valueOf(true));
+            root.setAttribute(TIMED_OUT, String.valueOf(true));
         if (browserResult.failedToLaunch())
-        	root.setAttribute(FAILED_TO_LAUNCH, String.valueOf(true));
+            root.setAttribute(FAILED_TO_LAUNCH, String.valueOf(true));
         if (browserResult.externallyShutDown())
-        	root.setAttribute(EXTERNALLY_SHUT_DOWN, String.valueOf(true));
+            root.setAttribute(EXTERNALLY_SHUT_DOWN, String.valueOf(true));
         addPropertiesElementTo(root);
         if (browserResult.completedTestRun()) {
             root.setAttribute(ID, browserResult.getId());
             root.setAttribute(TIME, String.valueOf(browserResult.getTime()));
-	        addTestCasesElementTo(root);
+            addTestCasesElementTo(root);
         }
         return root;
     }
@@ -71,17 +70,17 @@ public class BrowserResultWriter {
         Element properties = new Element(PROPERTIES);
         element.addContent(properties);
         addProperty(properties, BROWSER_FILE_NAME, browserResult.getBrowserFileName());
+        addProperty(properties, OS, Utility.osString());
         if (browserResult.completedTestRun()) {
-	        addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
-	        addProperty(properties, USER_AGENT, browserResult.getUserAgent());
-	        addProperty(properties, REMOTE_ADDRESS, browserResult.getRemoteAddress());
-	        addProperty(properties, URL, browserResult.getBaseURL());
-	        addProperty(properties, OS, Utility.osString());
+            addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
+            addProperty(properties, USER_AGENT, browserResult.getUserAgent());
+            addProperty(properties, REMOTE_ADDRESS, browserResult.getRemoteAddress());
+            addProperty(properties, URL, browserResult.getBaseURL());
         }
         if (browserResult.hasServerSideExceptionStackTrace()) {
-        	Element stackTrace = createPropertyElement(SERVER_SIDE_EXCEPTION_STACK_TRACE);
-        	stackTrace.addContent(new CDATA(browserResult.getServerSideExceptionStackTrace()));
-        	properties.addContent(stackTrace);
+            Element stackTrace = createPropertyElement(SERVER_SIDE_EXCEPTION_STACK_TRACE);
+            stackTrace.addContent(new CDATA(browserResult.getServerSideExceptionStackTrace()));
+            properties.addContent(stackTrace);
         }
     }
 
@@ -91,14 +90,14 @@ public class BrowserResultWriter {
         parent.addContent(property);
     }
 
-	private Element createPropertyElement(String name) {
-		Element property = new Element(PROPERTY);
+    private Element createPropertyElement(String name) {
+        Element property = new Element(PROPERTY);
         property.setAttribute(PROPERTY_KEY, name);
-		return property;
-	}
+        return property;
+    }
 
     private void addTestCasesElementTo(Element element) {
-    	Element testCasesElement = new Element(TEST_CASES);
+        Element testCasesElement = new Element(TEST_CASES);
         for (TestCaseResult result : browserResult.getTestCaseResults()) {
             new TestCaseResultWriter(result).addXmlTo(testCasesElement);
         }

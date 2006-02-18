@@ -66,4 +66,7 @@ public class FarmTestRunManager {
         return result;
     }
 
+    public String getOverrideURL() {
+        return overrideURL;
+    }
 }

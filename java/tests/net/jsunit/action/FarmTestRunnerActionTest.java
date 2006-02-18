@@ -1,15 +1,14 @@
 package net.jsunit.action;
 
-import java.net.URL;
-
-import org.jdom.Document;
-
 import junit.framework.TestCase;
 import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitFarmServer;
 import net.jsunit.RemoteRunnerHitter;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.TestRunResult;
+import org.jdom.Document;
+
+import java.net.URL;
 
 public class FarmTestRunnerActionTest extends TestCase {
 
@@ -25,9 +24,17 @@ public class FarmTestRunnerActionTest extends TestCase {
 	public void testSimple() throws Exception {
 		assertEquals(FarmTestRunnerAction.SUCCESS, action.execute());
 		assertTrue(action.getTestRunManager().getTestRunResult().wasSuccessful());
-	}
-	
-	static class SuccessfulRemoteRunnerHitter implements RemoteRunnerHitter {
+        assertNull(action.getTestRunManager().getOverrideURL());
+    }
+
+    public void testOverrideURL() throws Exception {
+        String overrideURL = "http://overrideurl.com:1234?foo=bar&bar=fo";
+        action.setUrl(overrideURL);
+		assertEquals(FarmTestRunnerAction.SUCCESS, action.execute());
+        assertEquals(overrideURL, action.getTestRunManager().getOverrideURL());
+    }
+
+    static class SuccessfulRemoteRunnerHitter implements RemoteRunnerHitter {
 
 		public Document hitRemoteRunner(URL url) {
 			return new Document(new TestRunResult().asXml());

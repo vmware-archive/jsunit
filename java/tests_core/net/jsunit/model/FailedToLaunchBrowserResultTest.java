@@ -1,10 +1,9 @@
 package net.jsunit.model;
 
-import java.io.FileNotFoundException;
-
+import junit.framework.TestCase;
 import net.jsunit.Utility;
 
-import junit.framework.TestCase;
+import java.io.FileNotFoundException;
 
 public class FailedToLaunchBrowserResultTest extends TestCase {
 
@@ -13,7 +12,8 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     	"<browserResult failedToLaunch=\"true\">" +
     		"<properties>" +
         		"<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-        		"<property name=\"serverSideExceptionStackTrace\"><![CDATA[" +
+                "<property name=\"os\" value=\""+Utility.osString()+"\" />" +                
+                "<property name=\"serverSideExceptionStackTrace\"><![CDATA[" +
         			Utility.stackTraceAsString(exception)+
         		"]]></property>" +
             "</properties>" +

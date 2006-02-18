@@ -1,12 +1,13 @@
 package net.jsunit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationType;
 import net.jsunit.model.BrowserResult;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.net.URL;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -155,8 +156,8 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         try {
             String[] commandWithUrl = new String[browserCommand.length + 1];
             System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
-            commandWithUrl[browserCommand.length] =
-                launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
+            URL url = new URL(launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString());
+            commandWithUrl[browserCommand.length] = url.toString();
             this.browserFileName = launchSpec.getBrowserFileName();
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
@@ -215,17 +216,17 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         super.dispose();
         endBrowser();
     }
-    
-	protected String xworkXmlName() {
-		return "xwork.xml";
-	}
 
-	public int timeoutSeconds() {
-		return configuration.getTimeoutSeconds();
-	}
+    protected String xworkXmlName() {
+        return "xwork.xml";
+    }
 
-	protected ConfigurationType serverType() {
-		return ConfigurationType.STANDARD;
-	}
+    public int timeoutSeconds() {
+        return configuration.getTimeoutSeconds();
+    }
+
+    protected ConfigurationType serverType() {
+        return ConfigurationType.STANDARD;
+    }
 
 }
