@@ -28,7 +28,7 @@ public final class Configuration implements XmlRenderable {
         return new Configuration(source);
     }
 
-    private static ConfigurationSource resolveSource() {
+    public static ConfigurationSource resolveSource() {
         EnvironmentVariablesConfigurationSource evConfig = new EnvironmentVariablesConfigurationSource();
         if (evConfig.isAppropriate())
             return evConfig;

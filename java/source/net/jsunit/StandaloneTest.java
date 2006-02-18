@@ -2,10 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
+import net.jsunit.configuration.ConfigurationSource;
 
 public class StandaloneTest extends TestCase {
     private boolean shouldDisposeOfRunner = false;
@@ -23,7 +20,7 @@ public class StandaloneTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         if (runner == null) {
-        	JsUnitServer server = new JsUnitServer(createConfiguration());
+        	JsUnitServer server = new JsUnitServer(new Configuration(configurationSource()));
         	server.start();
             runner = server;
             shouldDisposeOfRunner = true;
@@ -31,8 +28,8 @@ public class StandaloneTest extends TestCase {
         testRunManager = createTestRunManager();
     }
 
-	protected Configuration createConfiguration() {
-		return Configuration.resolve();
+	protected ConfigurationSource configurationSource() {
+		return Configuration.resolveSource();
 	}
 
 	protected TestRunManager createTestRunManager() {
