@@ -1,24 +1,23 @@
 package net.jsunit.model;
 
+import net.jsunit.XmlRenderable;
+import org.jdom.Element;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jsunit.XmlRenderable;
-
-import org.jdom.Element;
-
 public class TestRunResult extends AbstractResult implements XmlRenderable {
 	
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
-	private List<URL> timedOutRemoteURLs = new ArrayList<URL>();
+	private List<URL> crashedRemoteURLs = new ArrayList<URL>();
 
     public void addBrowserResult(BrowserResult browserResult) {
         browserResults.add(browserResult);
     }
     
     public ResultType getResultType() {
-    	if (!timedOutRemoteURLs.isEmpty())
+    	if (!crashedRemoteURLs.isEmpty())
     		return ResultType.TIMED_OUT;
     	return super.getResultType();
     }
@@ -39,7 +38,11 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
 		browserResults.addAll(result.browserResults);		
 	}
 
-	public void addTimedOutRemoteURL(URL url) {
-		timedOutRemoteURLs.add(url);
+	public void addCrashedRemoteURL(URL url) {
+		crashedRemoteURLs.add(url);
 	}
+
+    public List<URL> getCrashedRemoteURLs() {
+        return crashedRemoteURLs;
+    }
 }

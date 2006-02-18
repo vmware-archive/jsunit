@@ -73,8 +73,8 @@ public class TestRunResultTest extends TestCase {
     
     public void testTimedOut() throws Exception {
     	testRunResult.addBrowserResult(successResult());
-    	testRunResult.addTimedOutRemoteURL(new URL("http://my.domain.com:8201"));
-    	testRunResult.addTimedOutRemoteURL(new URL("http://another.domain.com:4732"));
+    	testRunResult.addCrashedRemoteURL(new URL("http://my.domain.com:8201"));
+    	testRunResult.addCrashedRemoteURL(new URL("http://another.domain.com:4732"));
     	assertEquals(ResultType.TIMED_OUT, testRunResult.getResultType());
     }
 
