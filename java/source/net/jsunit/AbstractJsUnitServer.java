@@ -1,12 +1,8 @@
 package net.jsunit;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.PrintStream;
-import java.util.List;
-
+import com.opensymphony.webwork.dispatcher.ServletDispatcher;
+import com.opensymphony.xwork.config.ConfigurationManager;
+import com.opensymphony.xwork.config.providers.XmlConfigurationProvider;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
@@ -14,7 +10,6 @@ import net.jsunit.configuration.ConfigurationType;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
-
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -22,9 +17,8 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
-import com.opensymphony.webwork.dispatcher.ServletDispatcher;
-import com.opensymphony.xwork.config.ConfigurationManager;
-import com.opensymphony.xwork.config.providers.XmlConfigurationProvider;
+import java.io.*;
+import java.util.List;
 
 public abstract class AbstractJsUnitServer implements XmlRenderable {
 
@@ -35,6 +29,8 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     protected AbstractJsUnitServer(Configuration configuration) {
         this.configuration = configuration;
         ensureConfigurationIsValid();
+        if (!configuration.getLogsDirectory().exists())
+            configuration.getLogsDirectory().mkdir();
         if (configuration.shouldLogStatus())
             statusLogger = new SystemOutStatusLogger();
         else

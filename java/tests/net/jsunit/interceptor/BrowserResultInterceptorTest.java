@@ -1,34 +1,30 @@
 package net.jsunit.interceptor;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.Action;
-
+import junit.framework.TestCase;
 import net.jsunit.DummyHttpRequest;
 import net.jsunit.action.BrowserResultAware;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
-import junit.framework.TestCase;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BrowserResultInterceptorTest extends TestCase {
 
-	private HttpServletRequest request;
-
-	public void setUp() throws Exception {
-		super.setUp();
+    public void setUp() throws Exception {
+        super.setUp();
         Map<String, String[]> requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[] {"ID_foo"});
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[] {"user agent"});
         requestMap.put(BrowserResultWriter.TIME, new String[] {"4.3"});
         requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[] {"2.5"});
         requestMap.put(BrowserResultWriter.TEST_CASES, new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
-        request = new DummyHttpRequest(requestMap);
+        HttpServletRequest request = new DummyHttpRequest(requestMap);
         ServletActionContext.setRequest(request);
-	}
+    }
 
 	public void tearDown() throws Exception {
 		ServletActionContext.setRequest(null);

@@ -2,7 +2,6 @@ package net.jsunit.configuration;
 
 import junit.framework.TestCase;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -57,13 +56,6 @@ public class ArgumentsConfigurationSourceTest extends TestCase {
         assertEquals("ggg", source.resourceBase());
         assertEquals("hhh", source.timeoutSeconds());
         assertEquals("iii", source.url());
-    }
-
-    public void tearDown() throws Exception {
-        File createdLogsDirectory = new File("bar");
-        if (createdLogsDirectory.exists())
-            createdLogsDirectory.delete();
-        super.tearDown();
     }
 
 }

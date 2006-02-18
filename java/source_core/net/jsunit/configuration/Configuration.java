@@ -64,11 +64,7 @@ public final class Configuration implements XmlRenderable {
         try {
             if (Utility.isEmpty(logsDirectoryString))
                 logsDirectoryString = ConfigurationProperty.LOGS_DIRECTORY.getDefaultValue();
-            File logsDirectory = new File(logsDirectoryString);
-            if (!logsDirectory.exists()) {
-                logsDirectory.mkdir();
-            }
-            return logsDirectory;
+            return new File(logsDirectoryString);
         } catch (Exception e) {
             throw new ConfigurationException(ConfigurationProperty.LOGS_DIRECTORY, logsDirectoryString, e);
         }
@@ -150,20 +146,23 @@ public final class Configuration implements XmlRenderable {
 
     public List<ConfigurationProperty> getPropertiesInvalidFor(ConfigurationType type) {
     	List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
-    	for (ConfigurationProperty property : type.getRequiredConfigurationProperties()) {
+
+        for (ConfigurationProperty property : type.getRequiredConfigurationProperties()) {
+            if (Utility.isEmpty(property.getValueString(this)))
+                result.add(property);
+        }
+
+        List<ConfigurationProperty> propertiesInQuestion = new ArrayList<ConfigurationProperty>();
+        propertiesInQuestion.addAll(type.getRequiredConfigurationProperties());
+        propertiesInQuestion.addAll(type.getOptionalConfigurationProperties());
+
+        for (ConfigurationProperty property : propertiesInQuestion) {
 			try {
 				property.getValueString(this);
 			} catch (ConfigurationException e){
 				result.add(property);
 			}
-    	}
-    	for (ConfigurationProperty property : type.getOptionalConfigurationProperties()) {
-			try {
-				property.getValueString(this);
-			} catch (ConfigurationException e) {
-				result.add(property);
-			}
-    	}
+        }
     	return result;
     }
 

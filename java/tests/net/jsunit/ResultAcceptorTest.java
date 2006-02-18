@@ -1,21 +1,20 @@
 package net.jsunit;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultBuilder;
 import net.jsunit.model.BrowserResultWriter;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class ResultAcceptorTest extends TestCase {
     protected Map<String, String[]> requestMap;
     private JsUnitServer server;
-	private Configuration configuration;
+    private Configuration configuration;
 
     public ResultAcceptorTest(String name) {
         super(name);
@@ -25,25 +24,25 @@ public class ResultAcceptorTest extends TestCase {
         super.setUp();
         configuration = new Configuration(new StubConfigurationSource() {
 
-			public String browserFileNames() {
-				return "foo";
-			}
+            public String browserFileNames() {
+                return "foo";
+            }
 
-			public String logStatus() {
-				return String.valueOf(Boolean.FALSE);
-			}
+            public String logStatus() {
+                return String.valueOf(Boolean.FALSE);
+            }
 
-			public String url() {
-				return "http://bar";
-			}
-        	
+            public String url() {
+                return "http://bar";
+            }
+
         });
-		server = new JsUnitServer(configuration);
+        server = new JsUnitServer(configuration);
         requestMap = new HashMap<String, String[]>();
-        requestMap.put(BrowserResultWriter.ID, new String[] {"ID_foo"});
-        requestMap.put(BrowserResultWriter.USER_AGENT, new String[] {"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
-        requestMap.put(BrowserResultWriter.TIME, new String[] {"4.3"});
-        requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[] {"2.5"});
+        requestMap.put(BrowserResultWriter.ID, new String[]{"ID_foo"});
+        requestMap.put(BrowserResultWriter.USER_AGENT, new String[]{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
+        requestMap.put(BrowserResultWriter.TIME, new String[]{"4.3"});
+        requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[]{"2.5"});
         requestMap.put(BrowserResultWriter.TEST_CASES, dummyTestCaseStrings());
     }
 
@@ -108,11 +107,11 @@ public class ResultAcceptorTest extends TestCase {
         submit();
         assertTrue(logFile.exists());
     }
-    
+
     public void tearDown() throws Exception {
-    	File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
-    	if (logFile.exists())
-    		logFile.delete();
-    	super.tearDown();
+        File logFile = BrowserResult.logFileForId(configuration.getLogsDirectory(), "ID_foo");
+        if (logFile.exists())
+            logFile.delete();
+        super.tearDown();
     }
 }
