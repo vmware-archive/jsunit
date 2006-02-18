@@ -5,7 +5,6 @@ import net.jsunit.JsUnitFarmServer;
 import net.jsunit.RemoteMachineRunnerHitter;
 import net.jsunit.RemoteRunnerHitter;
 import net.jsunit.XmlRenderable;
-import net.jsunit.action.FarmTestRunnerActionTest.SuccessfulRemoteRunnerHitter;
 
 import com.opensymphony.xwork.Action;
 
@@ -35,7 +34,7 @@ public class FarmTestRunnerAction implements Action, XmlProducer {
 		return manager;
 	}
 
-	public void setRemoteRunnerHitter(SuccessfulRemoteRunnerHitter hitter) {
+	public void setRemoteRunnerHitter(RemoteRunnerHitter hitter) {
 		this.hitter  = hitter;
 	}
 
