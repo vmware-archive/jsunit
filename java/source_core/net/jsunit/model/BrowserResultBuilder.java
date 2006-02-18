@@ -3,8 +3,6 @@ package net.jsunit.model;
 import java.io.File;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import net.jsunit.Utility;
 
 import org.jdom.Attribute;
@@ -17,22 +15,6 @@ import org.jdom.input.SAXBuilder;
  */
 
 public class BrowserResultBuilder {
-
-    public BrowserResult build(HttpServletRequest request) {
-        BrowserResult result = new BrowserResult();
-        String testId = request.getParameter(BrowserResultWriter.ID);
-        if (!Utility.isEmpty(testId))
-            result.setId(testId);
-        result.setRemoteAddress(request.getRemoteAddr());
-        result.setUserAgent(request.getParameter(BrowserResultWriter.USER_AGENT));
-        result.setBaseURL(request.getParameter(BrowserResultWriter.URL));
-        String time = request.getParameter(BrowserResultWriter.TIME);
-        if (!Utility.isEmpty(time))
-            result.setTime(Double.parseDouble(time));
-        result.setJsUnitVersion(request.getParameter(BrowserResultWriter.JSUNIT_VERSION));
-        result.setTestCaseStrings(request.getParameterValues(BrowserResultWriter.TEST_CASES));
-        return result;
-    }
 	
     public BrowserResult build(File file) {
         try {

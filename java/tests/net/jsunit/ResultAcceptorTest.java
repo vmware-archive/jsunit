@@ -1,15 +1,16 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
-import net.jsunit.configuration.Configuration;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.BrowserResultBuilder;
-import net.jsunit.model.BrowserResultWriter;
-
-import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import junit.framework.TestCase;
+import net.jsunit.configuration.Configuration;
+import net.jsunit.interceptor.BrowserResultInterceptor;
+import net.jsunit.model.BrowserResult;
+import net.jsunit.model.BrowserResultWriter;
 
 public class ResultAcceptorTest extends TestCase {
     protected Map<String, String[]> requestMap;
@@ -52,7 +53,7 @@ public class ResultAcceptorTest extends TestCase {
 
     protected void submit() {
         HttpServletRequest request = new DummyHttpRequest(requestMap);
-        server.accept(new BrowserResultBuilder().build(request));
+        server.accept(new BrowserResultInterceptor().build(request));
     }
 
     public void testSubmitResults() {
