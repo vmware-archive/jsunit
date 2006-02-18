@@ -2,7 +2,7 @@ Core JsUnit
 -----------
 Required for next release:
 - Change tests that use env. variables to use custom configurations
-- Fix IE7beta issues
+- IE7beta issues
 - support for multiple server clients - queuing?
 - jsunit source div innerHTML
 - bug: "retry test run" immediately fails after a test page timeout
