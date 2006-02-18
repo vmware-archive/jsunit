@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.plugin.eclipse.DefaultErrorMessageRenderer;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 import net.jsunit.plugin.eclipse.preference.JsUnitPreferenceStore;
 import net.jsunit.plugin.eclipse.preference.PreferenceConfigurationSource;
@@ -34,25 +36,39 @@ public class JsUnitLaunchConfiguration extends AbstractJavaLaunchConfigurationDe
 	public static final String ATTRIBUTE_REMOTE_NOTIFIER_SERVER_PORT = "port";
 
 	public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch, IProgressMonitor monitor) throws CoreException {
-		IVMInstall install= getVMInstall(configuration);
+		String projectName = configuration.getAttribute(ATTRIBUTE_PROJECT_NAME, (String) null);
+		int remoteNotifierServerPort = configuration.getAttribute(ATTRIBUTE_REMOTE_NOTIFIER_SERVER_PORT, -1);
+		int jsUnitServerPort = findFreePortThatIsNot(remoteNotifierServerPort);
+		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
+		String fileRelativePath = configuration.getAttribute(ATTRIBUTE_TEST_PAGE_PATH, (String) null);
+		IFile testPage = project.getFile(fileRelativePath);
+
+		JsUnitPreferenceStore preferenceStore = JsUnitPlugin.soleInstance().getJsUnitPreferenceStore();
+		PreferenceConfigurationSource source = preferenceStore.asConfigurationSource(testPage, jsUnitServerPort);
+		if (source.hasError()) {
+			new DefaultErrorMessageRenderer().showError("JsUnit", source.getErrorMessage());
+			return;
+		}
+
+		IVMInstall install = getVMInstall(configuration);
 		IVMRunner runner = install.getVMRunner(mode);
 		if (runner == null)
 			throw new RuntimeException("No VM runner");
-		VMRunnerConfiguration runConfig = createVMRunnerConfiguration(configuration, mode);
+		VMRunnerConfiguration runConfig = createVMRunnerConfiguration(configuration, source, remoteNotifierServerPort);
 		runner.run(runConfig, launch, monitor);
 	}
 	
-	private VMRunnerConfiguration createVMRunnerConfiguration(ILaunchConfiguration configuration, String mode) throws CoreException {
+	private VMRunnerConfiguration createVMRunnerConfiguration(ILaunchConfiguration configuration, ConfigurationSource source, int remoteNotifierServerPort) throws CoreException {
 		File workingDir = verifyWorkingDirectory(configuration);
 		String workingDirName = null;
-		if (workingDir != null) 
+		if (workingDir != null)
 			workingDirName = workingDir.getAbsolutePath();
 		
 		String vmArgs = getVMArguments(configuration);
 		ExecutionArguments execArgs = new ExecutionArguments(vmArgs, "");
 		String[] envp = DebugPlugin.getDefault().getLaunchManager().getEnvironment(configuration);
 
-		VMRunnerConfiguration runConfig = createVMRunner(configuration, mode);
+		VMRunnerConfiguration runConfig = createVMRunner(configuration, source, remoteNotifierServerPort);
 		runConfig.setVMArguments(execArgs.getVMArgumentsArray());
 		runConfig.setWorkingDirectory(workingDirName);
 		runConfig.setEnvironment(envp);
@@ -66,18 +82,8 @@ public class JsUnitLaunchConfiguration extends AbstractJavaLaunchConfigurationDe
 		return runConfig;
 	}
 	
-	private VMRunnerConfiguration createVMRunner(ILaunchConfiguration configuration, String runMode) throws CoreException {
+	private VMRunnerConfiguration createVMRunner(ILaunchConfiguration configuration, ConfigurationSource source, int remoteNotifierServerPort) throws CoreException {
 		String[] classPath = createClassPath(configuration);	
-		String projectName = configuration.getAttribute(ATTRIBUTE_PROJECT_NAME, (String) null);
-		String fileRelativePath = configuration.getAttribute(ATTRIBUTE_TEST_PAGE_PATH, (String) null);
-		int remoteNotifierServerPort = configuration.getAttribute(ATTRIBUTE_REMOTE_NOTIFIER_SERVER_PORT, -1);
-		IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject(projectName);
-		IFile testPage = project.getFile(fileRelativePath);
-		
-		int jsUnitServerPort = findFreePortThatIsNot(remoteNotifierServerPort);
-		
-		JsUnitPreferenceStore preferenceStore = JsUnitPlugin.soleInstance().getJsUnitPreferenceStore();
-		PreferenceConfigurationSource source = preferenceStore.asConfigurationSource(testPage, jsUnitServerPort);
 		String[] configurationArguments = new Configuration(source).asArgumentsArray();
 		String[] arguments = new String[configurationArguments.length + 1];
 		System.arraycopy(configurationArguments, 0, arguments, 0, configurationArguments.length);
@@ -101,13 +107,11 @@ public class JsUnitLaunchConfiguration extends AbstractJavaLaunchConfigurationDe
 	private String[] createClassPath(ILaunchConfiguration configuration) throws CoreException {
 		List<String> classPathEntries = new ArrayList<String>();
 		String installationDirectoryString = JsUnitPlugin.soleInstance().getJsUnitPreferenceStore().installationDirectory();
-		File libDirectory = new File(installationDirectoryString+File.separator+"java"+File.separator+"lib");
+		File libDirectory = new File(installationDirectoryString + File.separator + "java" + File.separator + "lib");
 		File[] libJars = libDirectory.listFiles(new FilenameFilter() {
-
 			public boolean accept(File directory, String filename) {
 				return filename.toLowerCase().endsWith(".jar");
 			}
-			
 		});
 		for (File libJar : libJars)
 			classPathEntries.add(libJar.getAbsolutePath());
