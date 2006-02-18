@@ -30,13 +30,6 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
 		return System.getProperty(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
 	}
 
-	public boolean isAppropriate() {
-        for (ConfigurationProperty property : ConfigurationProperty.values())
-        	if (System.getProperty(property.getName()) != null)
-        			return true;
-        return false;
-    }
-
 	public String logStatus() {
 		return System.getProperty(ConfigurationProperty.LOG_STATUS.getName());
 	}

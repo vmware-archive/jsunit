@@ -29,9 +29,9 @@ public final class Configuration implements XmlRenderable {
     }
 
     public static ConfigurationSource resolveSource() {
-        EnvironmentVariablesConfigurationSource evConfig = new EnvironmentVariablesConfigurationSource();
-        if (evConfig.isAppropriate())
-            return evConfig;
+        for (ConfigurationProperty property : ConfigurationProperty.values())
+            if (System.getProperty(property.getName()) != null)
+                return new EnvironmentVariablesConfigurationSource();
         return new PropertiesFileConfigurationSource();
     }
 

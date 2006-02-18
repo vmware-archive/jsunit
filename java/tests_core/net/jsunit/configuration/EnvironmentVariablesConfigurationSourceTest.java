@@ -20,7 +20,6 @@ public class EnvironmentVariablesConfigurationSourceTest extends TestCase {
         System.setProperty(ConfigurationProperty.RESOURCE_BASE.getName(), "ggg");
         System.setProperty(ConfigurationProperty.TIMEOUT_SECONDS.getName(), "hhh");
         System.setProperty(ConfigurationProperty.URL.getName(), "iii");
-        assertTrue(source.isAppropriate());
         assertEquals("aaa", source.browserFileNames());
         assertEquals("bbb", source.closeBrowsersAfterTestRuns());
         assertEquals("ccc", source.logStatus());
@@ -30,10 +29,6 @@ public class EnvironmentVariablesConfigurationSourceTest extends TestCase {
         assertEquals("ggg", source.resourceBase());
         assertEquals("hhh", source.timeoutSeconds());
         assertEquals("iii", source.url());
-    }
-
-    public void testIsAppropriate() {
-        assertFalse(source.isAppropriate());
     }
 
     public void tearDown() throws Exception {
