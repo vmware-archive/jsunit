@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationType;
 import junit.framework.TestCase;
 
 public class JsUnitFarmServerTest extends TestCase {
@@ -13,7 +14,7 @@ public class JsUnitFarmServerTest extends TestCase {
 	}
 	
 	public void testStartTestRun() throws Exception {
-		assertEquals(2, server.getRemoteMachineURLs().size());
+		assertEquals(ConfigurationType.FARM, server.serverType());
 	}
 		
 }

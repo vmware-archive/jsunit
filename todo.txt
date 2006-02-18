@@ -2,6 +2,7 @@ Core JsUnit
 -----------
 Required for next release:
 - Change tests that use env. variables to use custom configurations
+- Ability to pass a url to the farm runner
 - IE7beta issues
 - support for multiple server clients - queuing?
 - jsunit source div innerHTML

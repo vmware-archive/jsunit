@@ -1,12 +1,11 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestResult;
 import junit.textui.TestRunner;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationProperty;
 
-public class DistributedTestTest extends TestCase {
+public class DistributedTestTest extends DistributedTest {
     private JsUnitServer server;
 
     public DistributedTestTest(String name) {

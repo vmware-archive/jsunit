@@ -1,11 +1,10 @@
 package net.jsunit;
 
+import java.util.Arrays;
+import java.util.List;
+
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationType;
-
-import java.net.URL;
-import java.util.List;
-import java.util.Arrays;
 
 public class JsUnitFarmServer extends AbstractJsUnitServer {
 
@@ -14,9 +13,6 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
     public JsUnitFarmServer(Configuration configuration) {
         super(configuration);
         farmServerInstance = this;
-    }
-
-    protected void ensureConfigurationIsValid() {
     }
 
     protected List<String> servletNames() {
@@ -33,10 +29,6 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
           } catch (Throwable t) {
               t.printStackTrace();
           }
-    }
-
-    public List<URL> getRemoteMachineURLs() {
-        return configuration.getRemoteMachineURLs();
     }
 
     public String toString() {

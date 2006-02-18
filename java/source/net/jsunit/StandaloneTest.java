@@ -5,7 +5,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 
 public class StandaloneTest extends TestCase {
-    private boolean shouldDisposeOfRunner = false;
+	
     protected BrowserTestRunner runner;
 	private TestRunManager testRunManager;
 
@@ -13,17 +13,12 @@ public class StandaloneTest extends TestCase {
     	super(name);
 	}
 
-	public void setBrowserTestRunner(BrowserTestRunner runner) {
-        this.runner = runner;
-    }
-
     public void setUp() throws Exception {
         super.setUp();
         if (runner == null) {
         	JsUnitServer server = new JsUnitServer(new Configuration(configurationSource()));
         	server.start();
             runner = server;
-            shouldDisposeOfRunner = true;
         }
         testRunManager = createTestRunManager();
     }
@@ -37,8 +32,7 @@ public class StandaloneTest extends TestCase {
 	}
 
     public void tearDown() throws Exception {
-        if (shouldDisposeOfRunner)
-            runner.dispose();
+        runner.dispose();
         super.tearDown();
     }
 
@@ -46,12 +40,7 @@ public class StandaloneTest extends TestCase {
     	testRunManager.runTests();
     	if (testRunManager.hadProblems()) {
     		fail(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
-    		
     	}
     }
-
-	public BrowserTestRunner getBrowserTestRunner() {
-		return runner;
-	}
 
 }
