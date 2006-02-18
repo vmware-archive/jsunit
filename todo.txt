@@ -10,7 +10,6 @@ Required for next release:
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
-- bug: "retry test run" immediately fails after a test page timeout
 - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
 - SourceForge bugs
 
