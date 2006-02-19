@@ -54,13 +54,13 @@ function testTrim() {
   assertEquals("", trim(""));
   assertEquals("", trim("    "));
   assertEquals("string", trim("string"));
-  assertEqurals("str  ing", trim("str  ing"));
+  assertEquals("str  ing", trim("str  ing"));
   assertEquals("string", trim(" string   "));
 }
 
 function testIsBlank() {
   assert(!isBlank("  string "));
-  assert(isBlank("4"));
+  assert(isBlank(""));
   assert(isBlank("    "));
 }
 
