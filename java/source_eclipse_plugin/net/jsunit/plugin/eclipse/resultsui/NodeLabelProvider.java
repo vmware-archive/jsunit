@@ -12,7 +12,7 @@ public class NodeLabelProvider extends LabelProvider implements ITableLabelProvi
 	private boolean fullyQualified;
 	
 	public NodeLabelProvider() {
-		fullyQualified = true;
+		fullyQualified = false;
 	}
 
 	public String getColumnText(Object obj, int index) {

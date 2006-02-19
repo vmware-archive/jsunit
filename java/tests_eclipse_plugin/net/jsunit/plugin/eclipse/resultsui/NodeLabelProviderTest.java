@@ -10,11 +10,19 @@ public class NodeLabelProviderTest extends TestCase {
 
 	public void testSimple() {
 		NodeLabelProvider provider = new NodeLabelProvider();
-		assertTrue(provider.isFullyQualified());
-		provider.getText(new MockNode());
+		assertFalse(provider.isFullyQualified());
+		MockNode mockNode = new MockNode();
+		provider.getText(mockNode);
+		assertFalse(mockNode.fullyQualified);
+		
+		provider.setFullyQualified(true);
+		provider.getText(mockNode);
+		assertTrue(mockNode.fullyQualified);
 	}
 	
 	static class MockNode extends Node {
+
+		private boolean fullyQualified;
 
 		public MockNode() {
 			super("Mock Node");
@@ -29,6 +37,11 @@ public class NodeLabelProviderTest extends TestCase {
 		}
 
 		public List<TestCaseResultNode> getProblemTestCaseResultNodes() {
+			return null;
+		}
+		
+		public String getDisplayString(boolean fullyQualified) {
+			this.fullyQualified = fullyQualified;
 			return null;
 		}
 		

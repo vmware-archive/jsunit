@@ -10,12 +10,17 @@ public class ToggleFullyQualifiedNodeNamesActionTest extends TestCase {
 		NodeLabelProvider labelProvider = new NodeLabelProvider();
 		MockActiveTabSource source = new MockActiveTabSource();
 		ToggleFullyQualifiedNodeNamesAction action = new ToggleFullyQualifiedNodeNamesAction(source, new MockImageSource(), labelProvider);
-		assertTrue(action.isChecked());
+		assertFalse(labelProvider.isFullyQualified());
+		assertFalse(action.isChecked());
+		
+		action.run();
 		assertTrue(labelProvider.isFullyQualified());
+		assertTrue(action.isChecked());
+		assertTrue(source.tab.wasRefreshCalled);
+
 		action.run();
 		assertFalse(labelProvider.isFullyQualified());
 		assertFalse(action.isChecked());
-		assertTrue(source.tab.wasRefreshCalled);
 	}
 	
 }
