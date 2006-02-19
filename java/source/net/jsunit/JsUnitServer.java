@@ -152,9 +152,9 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         long launchTime = System.currentTimeMillis();
         String[] browserCommand = openBrowserCommand(launchSpec.getBrowserFileName());
         logStatus("Launching " + browserCommand[0]);
+        this.browserFileName = launchSpec.getBrowserFileName();
         try {
             String[] commandWithUrl = buildCommandWithURL(browserCommand, launchSpec);
-            this.browserFileName = launchSpec.getBrowserFileName();
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
             this.browserProcess = processStarter.execute(commandWithUrl);

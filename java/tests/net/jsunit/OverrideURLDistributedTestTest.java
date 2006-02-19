@@ -20,8 +20,8 @@ public class OverrideURLDistributedTestTest extends DistributedTest {
         };
     }
 
-    protected FarmTestRunManager createTestRunManager() {
-        return new FarmTestRunManager(
+    protected DistributedTestRunManager createTestRunManager() {
+        return new DistributedTestRunManager(
             new Configuration(configurationSource()),
                 "http://localhost:8080/jsunit/testRunner.html?"
                 + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"

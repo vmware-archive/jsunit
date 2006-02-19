@@ -11,26 +11,26 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.net.MalformedURLException;
 
-public class FarmTestRunManager {
+public class DistributedTestRunManager {
 
     private RemoteRunnerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
     private TestRunResult result = new TestRunResult();
 
-    public FarmTestRunManager(Configuration configuration) {
+    public DistributedTestRunManager(Configuration configuration) {
         this(new RemoteMachineRunnerHitter(), configuration);
     }
 
-    public FarmTestRunManager(RemoteRunnerHitter hitter, Configuration configuration) {
+    public DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration) {
         this(hitter, configuration, null);
     }
 
-    public FarmTestRunManager(Configuration configuration, String overrideURL) {
+    public DistributedTestRunManager(Configuration configuration, String overrideURL) {
         this(new RemoteMachineRunnerHitter(), configuration, overrideURL);
     }
 
-    public FarmTestRunManager(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    public DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
         this.hitter = hitter;
         this.configuration = configuration;
         this.overrideURL = overrideURL;
