@@ -11,6 +11,7 @@ import net.jsunit.plugin.eclipse.JsUnitPlugin;
 import net.jsunit.plugin.eclipse.resultsui.action.CollapseAllAction;
 import net.jsunit.plugin.eclipse.resultsui.action.ExpandAllAction;
 import net.jsunit.plugin.eclipse.resultsui.action.StopAction;
+import net.jsunit.plugin.eclipse.resultsui.action.ToggleFullyQualifiedNodeNamesAction;
 import net.jsunit.plugin.eclipse.resultsui.tab.AllTestsByBrowserResultsTab;
 import net.jsunit.plugin.eclipse.resultsui.tab.FailuresTestResultsTab;
 
@@ -47,12 +48,15 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 	private StopAction stopAction;
 	private CollapseAllAction collapseAllAction;
 	private ExpandAllAction expandAllAction;
+	private ToggleFullyQualifiedNodeNamesAction toggleFullyQualifiedNodeNamesAction;
 	private RemoteTestRunClient client;
 	private long startTime;
 	private boolean stopped;
+	private NodeLabelProvider labelProvider;
 
 	public void createPartControl(Composite parent) {
 		contentProvider = new ContentProvider(getViewSite());
+		labelProvider = new NodeLabelProvider();
 		GridLayout gridLayout = new GridLayout(); 
 		gridLayout.marginWidth = 0;
 		gridLayout.marginHeight = 0;
@@ -68,6 +72,7 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		stopAction = new StopAction(this, JsUnitPlugin.soleInstance());
 		expandAllAction = new ExpandAllAction(this, JsUnitPlugin.soleInstance());
 		collapseAllAction = new CollapseAllAction(this, JsUnitPlugin.soleInstance());
+		toggleFullyQualifiedNodeNamesAction = new ToggleFullyQualifiedNodeNamesAction(this, JsUnitPlugin.soleInstance(), labelProvider);
 		configureToolBar();
 	}
 	
@@ -102,9 +107,10 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		tabFolder.setLayoutData(new GridData(GridData.FILL_BOTH | GridData.GRAB_VERTICAL));
 		testResultsTabs = new ArrayList<TestResultsTab>();
 
-		testResultsTabs.add(new AllTestsByBrowserResultsTab(tabFolder, getViewSite(), contentProvider, failureTrace));
-//		testResultsTabs.add(new AllTestsByTestResultsTab(tabFolder, getViewSite(), contentProvider, failureTrace));
-		testResultsTabs.add(new FailuresTestResultsTab(tabFolder, getViewSite(), contentProvider, failureTrace));
+		testResultsTabs.add(new AllTestsByBrowserResultsTab(tabFolder, getViewSite(), contentProvider, failureTrace, labelProvider));
+		//TODO: implement AllTestsByTestResultsTab
+//		testResultsTabs.add(new AllTestsByTestResultsTab(tabFolder, getViewSite(), contentProvider, failureTrace, labelProvider));
+		testResultsTabs.add(new FailuresTestResultsTab(tabFolder, getViewSite(), contentProvider, failureTrace, labelProvider));
 		
 		tabFolder.setSelection(0);				
 		activeTab = (TestResultsTab) testResultsTabs.get(0);		
@@ -175,6 +181,8 @@ public class JsUnitTestResultsViewPart extends ViewPart implements TestRunListen
 		toolBar.add(expandAllAction);
 		collapseAllAction.setEnabled(true);
 		toolBar.add(collapseAllAction);
+		toggleFullyQualifiedNodeNamesAction.setEnabled(true);
+		toolBar.add(toggleFullyQualifiedNodeNamesAction);
 		actionBars.updateActionBars();
 	}
 	

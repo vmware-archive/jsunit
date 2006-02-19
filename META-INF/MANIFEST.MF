@@ -4,7 +4,7 @@ Bundle-Name: JsUnit
 Bundle-SymbolicName: net.jsunit; singleton:=true
 Bundle-Version: 1.0
 Bundle-Localization: plugin
-Bundle-Vendor: Edward Hieatt, edward@jsunit.net
+Bundle-Vendor: Edward Hieatt
 Require-Bundle: org.eclipse.core.resources,
  org.eclipse.core.runtime,
  org.eclipse.jface,

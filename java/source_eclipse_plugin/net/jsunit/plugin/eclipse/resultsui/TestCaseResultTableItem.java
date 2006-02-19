@@ -9,9 +9,9 @@ import org.eclipse.swt.widgets.TableItem;
 
 public class TestCaseResultTableItem extends TableItem {
 
-	public TestCaseResultTableItem(Table table, TestCaseResultNode node) {
+	public TestCaseResultTableItem(Table table, TestCaseResultNode node, NodeLabelProvider labelProvider) {
 		super(table, SWT.NONE);
-		setText(node.getDisplayStringWithBrowserFileName());
+		setText(labelProvider.getText(node));
 		setImage(JsUnitPlugin.soleInstance().createImage(node.getImageName()));
 		setData(node.getResult());
 	}

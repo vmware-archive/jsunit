@@ -109,4 +109,14 @@ public class Utility {
 		result.append(System.getProperty("os.name"));
 		return result.toString();
 	}
+
+	public static String unqualify(String string) {
+		int indexOfForwardSlash = string.lastIndexOf("/");
+		if (indexOfForwardSlash >= 0 && indexOfForwardSlash < string.length())
+			string = string.substring(indexOfForwardSlash + 1);
+		int indexOfBackSlash = string.lastIndexOf("\\");
+		if (indexOfBackSlash >= 0 && indexOfBackSlash < string.length())
+			string = string.substring(indexOfBackSlash + 1);
+		return string;
+	}
 }

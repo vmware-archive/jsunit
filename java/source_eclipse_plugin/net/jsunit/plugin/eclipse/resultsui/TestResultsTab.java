@@ -17,12 +17,12 @@ public abstract class TestResultsTab {
 	
 	private FailureTrace failureTrace;
 
-	public TestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
+	public TestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace, NodeLabelProvider labelProvider) {
 		this.failureTrace = failureTrace;
-		createCTabItem(tabFolder, viewSite, contentProvider);
+		createCTabItem(tabFolder, viewSite, contentProvider, labelProvider);
 	}
 
-	protected void createCTabItem(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider) {
+	protected void createCTabItem(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, NodeLabelProvider labelProvider) {
 		CTabItem tab = new CTabItem(tabFolder, SWT.NONE);
 		tab.setText(getName());
 		tab.setImage(JsUnitPlugin.soleInstance().createImage(getImageName()));
@@ -39,7 +39,7 @@ public abstract class TestResultsTab {
 		tab.setControl(panel);
 		tab.setToolTipText(getToolTipText()); 
 		
-		addControlToPanel(viewSite, contentProvider, panel);	
+		addControlToPanel(viewSite, contentProvider, panel, labelProvider);	
 
 		hookSelectionChangedEventTo(createSelectionChangedAction());
 	}
@@ -67,7 +67,7 @@ public abstract class TestResultsTab {
 	
 	protected abstract void hookSelectionChangedEventTo(Action action);
 	
-	protected abstract void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel);
+	protected abstract void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel, NodeLabelProvider labelProvider);
 
 	protected abstract String getToolTipText();
 	
