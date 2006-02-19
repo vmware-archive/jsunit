@@ -45,9 +45,9 @@ public class TestCaseResultNode extends Node {
 		return result;
 	}
 
-	public String getDisplayStringWithBrowserFileName() {
+	public String getDisplayStringWithBrowserFileName(boolean fullyQualified) {
 		BrowserResultNode browserNode = (BrowserResultNode) getParent().getParent();
-		return browserNode.getName() + ":" + getDisplayString();
+		return browserNode.getName(fullyQualified) + ":" + getDisplayString(fullyQualified);
 	}
 
 	public List<TestCaseResultNode> getProblemTestCaseResultNodes() {

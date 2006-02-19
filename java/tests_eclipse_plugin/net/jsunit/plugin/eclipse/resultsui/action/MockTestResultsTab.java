@@ -1,6 +1,7 @@
 package net.jsunit.plugin.eclipse.resultsui.action;
 
 import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
+import net.jsunit.plugin.eclipse.resultsui.NodeLabelProvider;
 import net.jsunit.plugin.eclipse.resultsui.TestResultsTab;
 
 import org.eclipse.jface.action.Action;
@@ -12,12 +13,13 @@ public class MockTestResultsTab extends TestResultsTab {
 
 	public boolean wasExpandAllCalled;
 	public boolean wasCollapseAllCalled;
+	public boolean wasRefreshCalled;
 
 	public MockTestResultsTab() {
-		super(null, null, null, null);
+		super(null, null, null, null, null);
 	}
 	
-	protected void createCTabItem(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider) {
+	protected void createCTabItem(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, NodeLabelProvider labelProvider) {
 	}
 
 	protected String getImageName() {
@@ -27,7 +29,7 @@ public class MockTestResultsTab extends TestResultsTab {
 	protected void hookSelectionChangedEventTo(Action action) {
 	}
 
-	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel) {
+	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel, NodeLabelProvider labelProvider) {
 	}
 
 	protected String getToolTipText() {
@@ -46,6 +48,7 @@ public class MockTestResultsTab extends TestResultsTab {
 	}
 
 	public void refresh() {
+		wasRefreshCalled = true;
 	}
 
 	public void expandAll() {

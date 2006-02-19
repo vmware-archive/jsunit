@@ -3,6 +3,7 @@ package net.jsunit.plugin.eclipse.resultsui.tab;
 import net.jsunit.plugin.eclipse.JsUnitPlugin;
 import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
 import net.jsunit.plugin.eclipse.resultsui.FailureTrace;
+import net.jsunit.plugin.eclipse.resultsui.NodeLabelProvider;
 import net.jsunit.plugin.eclipse.resultsui.TestResultsTab;
 import net.jsunit.plugin.eclipse.resultsui.node.BrowserResultNode;
 import net.jsunit.plugin.eclipse.resultsui.node.Node;
@@ -23,17 +24,17 @@ public abstract class HierarchyTestResultsTab extends TestResultsTab {
 
 	private TreeViewer treeViewer;
 	
-	public HierarchyTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
-		super(tabFolder, viewSite, contentProvider, failureTrace);
+	public HierarchyTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace, NodeLabelProvider labelProvider) {
+		super(tabFolder, viewSite, contentProvider, failureTrace, labelProvider);
 	}
 	
-	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel) {
+	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel, NodeLabelProvider labelProvider) {
 		treeViewer = new TreeViewer(panel, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		GridData gridData= new GridData(GridData.FILL_BOTH | GridData.GRAB_HORIZONTAL | GridData.GRAB_VERTICAL);
 		treeViewer.getControl().setLayoutData(gridData);
 
 		treeViewer.setContentProvider(contentProvider);
-		treeViewer.setLabelProvider(new ViewLabelProvider());
+		treeViewer.setLabelProvider(labelProvider);
 		treeViewer.setSorter(null);
 		treeViewer.setInput(viewSite);
 	}

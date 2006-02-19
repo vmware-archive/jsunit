@@ -2,6 +2,8 @@ package net.jsunit.plugin.eclipse.resultsui.node;
 
 import java.util.List;
 
+import net.jsunit.Utility;
+
 public abstract class Node {
 	
 	private String name;
@@ -14,9 +16,13 @@ public abstract class Node {
 	protected abstract String getStatus();
 	
 	public String getName() {
-		return name;
+		return getName(true);
 	}
 	
+	public String getName(boolean fullyQualified) {
+		return fullyQualified ? name : Utility.unqualify(name);
+	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -29,8 +35,8 @@ public abstract class Node {
 		return parent;
 	}
 	
-	public String getDisplayString() {
-		String result = getName();
+	public String getDisplayString(boolean fullyQualified) {
+		String result = getName(fullyQualified);
 		if (getStatus() != null) {
 			result += " (" + getStatus()+ ")";
 		}

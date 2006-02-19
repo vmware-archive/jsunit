@@ -3,6 +3,7 @@ package net.jsunit.plugin.eclipse.resultsui.tab;
 import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
 import net.jsunit.plugin.eclipse.resultsui.FailureTrace;
 import net.jsunit.plugin.eclipse.resultsui.FailuresTable;
+import net.jsunit.plugin.eclipse.resultsui.NodeLabelProvider;
 import net.jsunit.plugin.eclipse.resultsui.TestResultsTab;
 
 import org.eclipse.jface.action.Action;
@@ -20,12 +21,12 @@ public class FailuresTestResultsTab extends TestResultsTab {
 
 	private FailuresTable table;
 
-	public FailuresTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
-		super(tabFolder, viewSite, contentProvider, failureTrace);
+	public FailuresTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace, NodeLabelProvider labelProvider) {
+		super(tabFolder, viewSite, contentProvider, failureTrace, labelProvider);
 	}
 
-	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel) {
-		table = new FailuresTable(panel, SWT.NONE, contentProvider);
+	protected void addControlToPanel(IViewSite viewSite, ContentProvider contentProvider, Composite panel, NodeLabelProvider labelProvider) {
+		table = new FailuresTable(panel, SWT.NONE, contentProvider, labelProvider);
 		GridLayout gridLayout= new GridLayout();
 		gridLayout.marginHeight= 0;
 		gridLayout.marginWidth= 0;

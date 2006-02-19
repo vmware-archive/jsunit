@@ -12,5 +12,5 @@ public class ExpandAllActionTest extends TestCase {
 		action.run();
 		assertTrue(source.tab.wasExpandAllCalled);
 	}
-	
+
 }

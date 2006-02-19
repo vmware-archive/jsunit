@@ -8,6 +8,8 @@ Required for next release:
 - For the farm server, have the config servlet show each remote server's configuraion (could cache it)
 - Don't send System.err to a file - figure out how to turn off jetty logs instead
 - farm manager should time out remote urls
+- update website
+- Distributed test should bring up a farm server
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
@@ -25,8 +27,6 @@ Backlog:
 - tab title should go italic during test run
 - validate no duplicate browser entries are given in preferences
 - ability to go to source by double-clicking on stack trace
-- ability to toggle between fully qualified and not fully qualified browser name
-- need original images?
 - break plugin code into separate project?
 
 

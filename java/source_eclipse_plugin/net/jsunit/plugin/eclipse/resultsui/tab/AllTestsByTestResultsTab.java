@@ -2,14 +2,15 @@ package net.jsunit.plugin.eclipse.resultsui.tab;
 
 import net.jsunit.plugin.eclipse.resultsui.ContentProvider;
 import net.jsunit.plugin.eclipse.resultsui.FailureTrace;
+import net.jsunit.plugin.eclipse.resultsui.NodeLabelProvider;
 
 import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.ui.IViewSite;
 
 public class AllTestsByTestResultsTab extends HierarchyTestResultsTab {
 
-	public AllTestsByTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace) {
-		super(tabFolder, viewSite, contentProvider, failureTrace);
+	public AllTestsByTestResultsTab(CTabFolder tabFolder, IViewSite viewSite, ContentProvider contentProvider, FailureTrace failureTrace, NodeLabelProvider labelProvider) {
+		super(tabFolder, viewSite, contentProvider, failureTrace, labelProvider);
 	}
 
 	protected String getToolTipText() {
