@@ -7,7 +7,6 @@ import net.jsunit.model.BrowserResult;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.net.URL;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -154,10 +153,7 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         String[] browserCommand = openBrowserCommand(launchSpec.getBrowserFileName());
         logStatus("Launching " + browserCommand[0]);
         try {
-            String[] commandWithUrl = new String[browserCommand.length + 1];
-            System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
-            URL url = new URL(launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString());
-            commandWithUrl[browserCommand.length] = url.toString();
+            String[] commandWithUrl = buildCommandWithURL(browserCommand, launchSpec);
             this.browserFileName = launchSpec.getBrowserFileName();
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
@@ -172,6 +168,38 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
             accept(failedToLaunchBrowserResult);
         }
         return launchTime;
+    }
+
+    private String[] buildCommandWithURL(String[] browserCommand, BrowserLaunchSpecification launchSpec) {
+        String[] commandWithUrl = new String[browserCommand.length + 1];
+        System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
+        String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
+        urlString = addAutoRunParameterIfNeeded(urlString);
+        urlString = addSubmitResultsParameterIfNeeded(urlString);
+        commandWithUrl[browserCommand.length] = urlString;
+        return commandWithUrl;
+    }
+
+    private String addSubmitResultsParameterIfNeeded(String urlString) {
+        if (urlString.indexOf("submitResults") == -1)
+            urlString = addParameter(urlString, "submitResults=localhost:" + configuration.getPort() + "/jsunit/acceptor");
+        return urlString;
+    }
+
+    private String addAutoRunParameterIfNeeded(String urlString) {
+        if (urlString.indexOf("autoRun") == -1) {
+            urlString = addParameter(urlString, "autoRun=true");
+        }
+        return urlString;
+    }
+
+    private String addParameter(String urlString, String paramAndValue) {
+        if (urlString.indexOf("?") == -1)
+            urlString += "?";
+        else
+            urlString += "&";
+        urlString += paramAndValue;
+        return urlString;
     }
 
     private void waitUntilLastReceivedTimeHasPassed() {

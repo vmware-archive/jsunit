@@ -24,9 +24,10 @@ public enum ConfigurationType {
 			ConfigurationProperty.LOG_STATUS,
 			ConfigurationProperty.PORT,
 			ConfigurationProperty.REMOTE_MACHINE_URLS,
-			ConfigurationProperty.TIMEOUT_SECONDS,		
+			ConfigurationProperty.TIMEOUT_SECONDS,
 		},
 		new ConfigurationProperty [] {
+            ConfigurationProperty.RESOURCE_BASE,
 		}
 	);
 

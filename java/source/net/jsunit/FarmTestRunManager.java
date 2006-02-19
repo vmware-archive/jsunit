@@ -59,6 +59,8 @@ public class FarmTestRunManager {
         fullURLString += "jsunit/runner";
         if (overrideURL != null)
             fullURLString += "?url=" + URLEncoder.encode(overrideURL, "UTF-8");
+        else if (configuration.getTestURL() != null)
+            fullURLString += "?url=" + URLEncoder.encode(configuration.getTestURL().toString(), "UTF-8");
         return new URL(fullURLString);
     }
 

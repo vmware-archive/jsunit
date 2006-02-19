@@ -12,6 +12,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class FarmTestRunManagerTest extends TestCase {
 
@@ -22,13 +23,14 @@ public class FarmTestRunManagerTest extends TestCase {
         configuration = new Configuration(new DummyConfigurationSource());
     }
 
-    public void testSimple() throws MalformedURLException {
+    public void testSimple() throws MalformedURLException, UnsupportedEncodingException {
         MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
         FarmTestRunManager manager = new FarmTestRunManager(hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "jsunit/runner", hitter.urlsPassed.get(0).toString());
-        assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner", hitter.urlsPassed.get(1).toString());
+        String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(0).toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(1).toString());
         TestRunResult result = manager.getTestRunResult();
 
         TestRunResult expectedResult = new TestRunResult();
@@ -59,6 +61,27 @@ public class FarmTestRunManagerTest extends TestCase {
         assertEquals(
                 DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner?url=" + encodedOverrideURL,
                 hitter.urlsPassed.get(1).toString());
+    }
+
+    public void testNoURL() throws Exception {
+        configuration = new Configuration(new DummyConfigurationSource() {
+            public String url() {
+                return null;
+            }
+        });
+        MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+        FarmTestRunManager manager = new FarmTestRunManager(hitter, configuration);
+        manager.runTests();
+        assertEquals(2, hitter.urlsPassed.size());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "jsunit/runner", hitter.urlsPassed.get(0).toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner", hitter.urlsPassed.get(1).toString());
+        TestRunResult result = manager.getTestRunResult();
+
+        TestRunResult expectedResult = new TestRunResult();
+        expectedResult.mergeWith(createResult1());
+        expectedResult.mergeWith(createResult2());
+
+        assertEquals(Utility.asString(expectedResult.asXml()), Utility.asString(result.asXml()));
     }
 
     private TestRunResult createResult1() {

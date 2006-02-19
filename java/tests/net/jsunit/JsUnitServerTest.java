@@ -99,14 +99,30 @@ public class JsUnitServerTest extends TestCase {
 		MockTestRunListener listener = new MockTestRunListener();
 		server.addBrowserTestRunListener(listener);
 		
-		String overrideUrl = "http://my.example.com:8080?param=value";
+		String overrideUrl = "http://my.example.com:8080?submitResults=true&autoRun=true";
 		server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe", overrideUrl));
 		assertEquals(2, starter.commandPassed.length);
 		assertEquals("mybrowser.exe", starter.commandPassed[0]);
 		assertEquals(overrideUrl, starter.commandPassed[1]);
 	}
-	
-	public void testInvalidConfiguration() {
+
+    public void testAddingSubmitResultsAndAutoRunParameters() throws Exception {
+        MockProcessStarter starter = new MockProcessStarter();
+        server.setProcessStarter(starter);
+        MockTestRunListener listener = new MockTestRunListener();
+        server.addBrowserTestRunListener(listener);
+
+        String overrideUrlWithoutSubmitResults = "http://my.example.com:8080?param=value";
+        server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe", overrideUrlWithoutSubmitResults));
+        assertEquals(2, starter.commandPassed.length);
+        assertEquals("mybrowser.exe", starter.commandPassed[0]);
+        assertEquals(
+            overrideUrlWithoutSubmitResults + "&autoRun=true&submitResults=localhost:1234/jsunit/acceptor",
+            starter.commandPassed[1]
+        );
+    }
+
+    public void testInvalidConfiguration() {
 		try {
 			server = new JsUnitServer(new Configuration(new InvalidConfigurationSource()));
 			fail();
