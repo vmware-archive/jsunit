@@ -122,6 +122,19 @@ public class JsUnitServerTest extends TestCase {
         );
     }
 
+    public void testNoURLSpecified() throws Exception {
+        server = new JsUnitServer(new Configuration(new DummyConfigurationSource() {
+            public String url() {
+                return "";
+            }
+        }));
+        MockProcessStarter starter = new MockProcessStarter();
+        server.setProcessStarter(starter);
+        server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
+        assertFalse(server.lastResult().wasSuccessful());
+        assertTrue(server.lastResult().getServerSideExceptionStackTrace().indexOf(NoUrlSpecifiedException.class.getName())!=-1);
+    }
+
     public void testInvalidConfiguration() {
 		try {
 			server = new JsUnitServer(new Configuration(new InvalidConfigurationSource()));

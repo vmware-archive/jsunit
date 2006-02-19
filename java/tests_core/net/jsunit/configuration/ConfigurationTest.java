@@ -47,7 +47,7 @@ public class ConfigurationTest extends TestCase {
     public void testInvalidForStandardValidForFarm() throws Exception {
         Configuration configuration = new Configuration(new InvalidForStandardValidForFarmConfigurationSource());
         assertFalse(configuration.isValidFor(ConfigurationType.STANDARD));
-        assertEquals(2, configuration.getPropertiesInvalidFor(ConfigurationType.STANDARD).size());
+        assertEquals(1, configuration.getPropertiesInvalidFor(ConfigurationType.STANDARD).size());
         assertTrue(configuration.isValidFor(ConfigurationType.FARM));
     }
     
@@ -168,10 +168,6 @@ public class ConfigurationTest extends TestCase {
     }
 
     static class InvalidForStandardValidForFarmConfigurationSource extends StubConfigurationSource {
-
-        public String url() {
-            return "bad url";
-        }
 
         public String remoteMachineURLs() {
             return "http://localhost:8081,http://127.0.0.1:8082";

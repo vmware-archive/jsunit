@@ -28,6 +28,7 @@ public enum ConfigurationType {
 		},
 		new ConfigurationProperty [] {
             ConfigurationProperty.RESOURCE_BASE,
+            ConfigurationProperty.URL,
 		}
 	);
 

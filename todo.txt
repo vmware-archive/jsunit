@@ -28,3 +28,6 @@ Backlog:
 - ability to toggle between fully qualified and not fully qualified browser name
 - need original images?
 - break plugin code into separate project?
+
+
+http://localhost:8080/jsunit/runner?url=http%3A%2F%2F192.168.1.102%3A8080%2Fjsunit%2FtestRunner.html%3FtestPage%3Dhttp%3A%2F%2F192.168.1.102%3A8080%2Fjsunit%2Ftests%2FjsUnitUtilityTests.html

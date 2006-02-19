@@ -170,9 +170,11 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         return launchTime;
     }
 
-    private String[] buildCommandWithURL(String[] browserCommand, BrowserLaunchSpecification launchSpec) {
+    private String[] buildCommandWithURL(String[] browserCommand, BrowserLaunchSpecification launchSpec) throws NoUrlSpecifiedException {
         String[] commandWithUrl = new String[browserCommand.length + 1];
         System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
+        if (!launchSpec.hasOverrideUrl() && configuration.getTestURL() == null)
+            throw new NoUrlSpecifiedException();
         String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
         urlString = addAutoRunParameterIfNeeded(urlString);
         urlString = addSubmitResultsParameterIfNeeded(urlString);
