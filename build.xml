@@ -192,6 +192,7 @@
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <classpath refid="classpath"/>
             <sysproperty key="remoteMachineURLs" value="${remoteMachineURLs}"/>
+            <sysproperty key="url" value="${url}"/>
             <test name="net.jsunit.DistributedTest"/>
         </junit>
     </target>
