@@ -78,5 +78,5 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 		server.testRunFinished();
 		clientSideConnection.shutdown();
 		super.tearDown();
-	}	
+	}
 }

@@ -93,7 +93,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
         servletContext.addServlet(
             "webwork",
-            name,
+            "/" + name,
             ServletDispatcher.class.getName()
         );
     }
