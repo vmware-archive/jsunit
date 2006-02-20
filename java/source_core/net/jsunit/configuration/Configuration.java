@@ -119,7 +119,9 @@ public final class Configuration implements XmlRenderable {
 
     public Element asXml() {
         Element configurationElement = new Element("configuration");
-
+        Element osElement = new Element("os");
+        osElement.setText(Utility.osString());
+        configurationElement.addContent(osElement);
         for (ConfigurationProperty property : ConfigurationProperty.values()) {
         	property.addXmlTo(configurationElement, this);
         }

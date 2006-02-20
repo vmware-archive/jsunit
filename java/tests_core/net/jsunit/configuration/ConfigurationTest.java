@@ -62,6 +62,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals(
             "<configuration>" +
+                "<os>"+Utility.osString()+"</os>" +
             	"<browserFileNames>" +
 	            	"<browserFileName>browser1.exe</browserFileName>" +
 	            	"<browserFileName>browser2.exe</browserFileName>" +
