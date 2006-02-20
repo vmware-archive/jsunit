@@ -13,8 +13,10 @@ public class FarmTestRunnerAction extends JsUnitFarmServerAction {
         if (overrideURL != null)
             message += " with URL " + overrideURL;
         server.logStatus(message);
-        manager = new DistributedTestRunManager(hitter, server.getConfiguration(), overrideURL);
-        manager.runTests();
+        synchronized (server) {
+            manager = new DistributedTestRunManager(hitter, server.getConfiguration(), overrideURL);
+            manager.runTests();
+        }
         server.logStatus("Done running farm tests");
         return SUCCESS;
     }

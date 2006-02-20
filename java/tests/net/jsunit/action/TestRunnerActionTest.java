@@ -8,7 +8,7 @@ import net.jsunit.model.ResultType;
 public class TestRunnerActionTest extends TestCase {
 
     private TestRunnerAction action;
-	private MockBrowserTestRunner mockRunner;
+    private MockBrowserTestRunner mockRunner;
 
     public void setUp() throws Exception {
         super.setUp();
@@ -19,22 +19,22 @@ public class TestRunnerActionTest extends TestCase {
     }
 
     public void testSuccess() throws Exception {
-    	mockRunner.shouldSucceed = true;
+        mockRunner.shouldSucceed = true;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         String xmlString = Utility.asString(action.getXmlRenderable().asXml());
-		assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.SUCCESS.name()));
+        assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.SUCCESS.name()));
     }
 
     public void testFailure() throws Exception {
-    	mockRunner.shouldSucceed = false;
+        mockRunner.shouldSucceed = false;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         String xmlString = Utility.asString(action.getXmlRenderable().asXml());
-		assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.FAILURE.name()));
+        assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.FAILURE.name()));
     }
-    
+
     public void testOverrideUrl() throws Exception {
-    	String overrideUrl = "http://www.example.com:8954/jsunit/testRunner.html?testPage=http://www.example.com:8954/tests/myTests.html?autoRun=true&submitResults=http://www.example.com:8954/tests";
-		action.setUrl(overrideUrl);
+        String overrideUrl = "http://www.example.com:8954/jsunit/testRunner.html?testPage=http://www.example.com:8954/tests/myTests.html?autoRun=true&submitResults=http://www.example.com:8954/tests";
+        action.setUrl(overrideUrl);
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         assertTrue(mockRunner.launchSpec.hasOverrideUrl());
         assertEquals(overrideUrl, mockRunner.launchSpec.getOverrideUrl());

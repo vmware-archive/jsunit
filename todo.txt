@@ -2,7 +2,6 @@ Core JsUnit
 -----------
 Required for next release:
 - IE7beta issues
-- support for multiple server clients - queuing/blocking?
 - jsunit source div innerHTML
 - bug: "retry test run" immediately fails after a test page timeout
 - Don't send System.err to a file - figure out how to turn off jetty logs instead

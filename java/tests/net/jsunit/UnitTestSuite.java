@@ -43,6 +43,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
+        result.addTestSuite(TestRunnerActionSimultaneousRunBlockingTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestPageResultTest.class);
