@@ -1,6 +1,5 @@
 package net.jsunit.action;
 
-import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
 import org.jdom.CDATA;
 import org.jdom.Document;
@@ -25,7 +24,7 @@ public class FarmServerConfigurationAction extends JsUnitFarmServerAction {
 			} catch (IOException e) {
 				configurationElement = new Element("configuration");
 				configurationElement.setAttribute("failedToConnect", String.valueOf(true));
-				configurationElement.addContent(new CDATA(Utility.stackTraceAsString(e)));
+				configurationElement.addContent(new CDATA(e.toString()));
 			}
 			
 			addRemoteConfigurationElementToResult(url, configurationElement);

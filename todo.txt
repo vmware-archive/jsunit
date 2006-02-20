@@ -10,6 +10,7 @@ Required for next release:
 - update website
 - Distributed test should bring up a farm server
 - IE xml results don't show up as XML
+- admin page
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
