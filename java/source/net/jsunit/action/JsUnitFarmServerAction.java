@@ -1,11 +1,14 @@
 package net.jsunit.action;
 
+import com.opensymphony.xwork.Action;
 import net.jsunit.JsUnitFarmServer;
 import net.jsunit.RemoteRunnerHitter;
 
-import com.opensymphony.xwork.Action;
-
-public abstract class JsUnitFarmServerAction implements Action, XmlProducer {
+public abstract class JsUnitFarmServerAction
+        implements  Action,
+                    XmlProducer,
+                    RemoteRunnerHitterAware,
+                    FarmServerAware {
 
 	protected JsUnitFarmServer server;
 	protected RemoteRunnerHitter hitter;	

@@ -1,14 +1,13 @@
 package net.jsunit.interceptor;
 
-import net.jsunit.JsUnitFarmServer;
-import net.jsunit.action.FarmTestRunnerAction;
-
 import com.opensymphony.xwork.Action;
+import net.jsunit.JsUnitFarmServer;
+import net.jsunit.action.FarmServerAware;
 
 public class FarmServerInterceptor extends JsUnitInterceptor {
 
 	protected void execute(Action targetAction) {
-		FarmTestRunnerAction action = (FarmTestRunnerAction) targetAction;
+		FarmServerAware action = (FarmServerAware) targetAction;
 		action.setFarmServer(JsUnitFarmServer.getFarmServerInstance());
 	}
 

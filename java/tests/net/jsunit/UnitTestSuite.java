@@ -2,21 +2,13 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import net.jsunit.action.FarmServerConfigurationActionTest;
-import net.jsunit.action.FarmTestRunnerActionTest;
-import net.jsunit.action.ResultAcceptorActionTest;
-import net.jsunit.action.ResultDisplayerActionTest;
-import net.jsunit.action.TestRunnerActionTest;
+import net.jsunit.action.*;
 import net.jsunit.configuration.*;
 import net.jsunit.interceptor.BrowserResultInterceptorTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
+import net.jsunit.interceptor.FarmServerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
-import net.jsunit.model.BrowserResultTest;
-import net.jsunit.model.ExternallyShutDownBrowserResultTest;
-import net.jsunit.model.FailedToLaunchBrowserResultTest;
-import net.jsunit.model.TestCaseResultTest;
-import net.jsunit.model.TestPageResultTest;
-import net.jsunit.model.TimedOutBrowerResultTest;
+import net.jsunit.model.*;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -40,6 +32,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(FarmServerConfigurationActionTest.class);
+        result.addTestSuite(FarmServerInterceptorTest.class);
         result.addTestSuite(DistributedTestRunManagerTest.class);
         result.addTestSuite(FarmTestRunnerActionTest.class);
         result.addTestSuite(JsUnitFarmServerTest.class);

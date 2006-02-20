@@ -10,6 +10,8 @@ Required for next release:
 - farm manager should time out remote urls
 - update website
 - Distributed test should bring up a farm server
+- IE xml results don't show up as XML
+- os string in configuration
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

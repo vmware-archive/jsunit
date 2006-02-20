@@ -1,8 +1,8 @@
 package net.jsunit.configuration;
 
 import junit.framework.TestCase;
-import net.jsunit.Utility;
 import net.jsunit.StubConfigurationSource;
+import net.jsunit.Utility;
 
 import java.io.File;
 import java.net.URL;
@@ -21,7 +21,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals(new File("c:\\logs\\directory"), configuration.getLogsDirectory());
         assertEquals(1234, configuration.getPort());
         assertEquals(new File("c:\\resource\\base"), configuration.getResourceBase());
-        assertEquals(new URL("http://www.example.com"), configuration.getTestURL());
+        assertEquals(new URL("http://www.example.com:1234"), configuration.getTestURL());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(76, configuration.getTimeoutSeconds());
         List<URL> expectedRemoteMachineURLs = new ArrayList<URL>();
@@ -76,7 +76,7 @@ public class ConfigurationTest extends TestCase {
 	            "</remoteMachineURLs>" +
 	            "<resourceBase>c:\\resource\\base</resourceBase>" +
 	            "<timeoutSeconds>76</timeoutSeconds>" +
-	            "<url>http://www.example.com</url>" +
+	            "<url>http://www.example.com:1234</url>" +
             "</configuration>",
             Utility.asString(configuration.asXml())
         );
@@ -113,7 +113,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals("76", arguments[15]);
 
         assertEquals("-url", arguments[16]);
-        assertEquals("http://www.example.com", arguments[17]);
+        assertEquals("http://www.example.com:1234", arguments[17]);
      }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
@@ -135,7 +135,7 @@ public class ConfigurationTest extends TestCase {
         }
 
         public String url() {
-            return "http://www.example.com";
+            return "http://www.example.com:1234/";
         }
 
         public String closeBrowsersAfterTestRuns() {

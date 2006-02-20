@@ -28,7 +28,7 @@ public class ExternallyShutDownStandaloneTestTest extends StandaloneTest {
 		  new Thread() {
 			  public void run() {
 				try {
-					Thread.sleep(4);
+					Thread.sleep(3);
 				} catch (InterruptedException e) {
 				}
 				JsUnitServer.serverInstance().getBrowserProcess().destroy();

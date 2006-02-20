@@ -27,7 +27,7 @@ public class ClientServerInteractionTest extends TestCase {
 		
 		server.browserTestRunStarted("mybrowser.exe");
 		while (!mockTestRunListener.browserTestRunStartedCalled)
-			Thread.sleep(100);
+			Thread.sleep(3);
 		assertEquals("mybrowser.exe", mockTestRunListener.browserFileName);
 	}
 

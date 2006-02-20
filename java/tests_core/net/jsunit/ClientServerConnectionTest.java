@@ -19,7 +19,7 @@ public class ClientServerConnectionTest extends TestCase {
 		serverSideConnection.connect();
 		
 		while (!serverSideConnection.isConnected() || !clientSideConnection.isRunning())
-			Thread.sleep(10);
+			Thread.sleep(3);
 	}
 	
 	public void tearDown() throws Exception {
@@ -31,12 +31,12 @@ public class ClientServerConnectionTest extends TestCase {
 	public void testSimple() throws InterruptedException {
 		serverSideConnection.sendMessage("hello");
 		while (mockReceiver2.message == null)
-			Thread.sleep(10);
+			Thread.sleep(3);
 		assertEquals("hello", mockReceiver2.message);
 		
 		clientSideConnection.sendMessage("bonjour");
 		while (mockReceiver1.message == null)
-			Thread.sleep(10);
+			Thread.sleep(3);
 		assertEquals("bonjour", mockReceiver1.message);
 	}
 

@@ -1,14 +1,13 @@
 package net.jsunit.action;
 
-import java.io.IOException;
-import java.net.URL;
-
+import net.jsunit.Utility;
+import net.jsunit.XmlRenderable;
 import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
 
-import net.jsunit.Utility;
-import net.jsunit.XmlRenderable;
+import java.io.IOException;
+import java.net.URL;
 
 public class FarmServerConfigurationAction extends JsUnitFarmServerAction {
 

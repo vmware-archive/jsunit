@@ -6,9 +6,9 @@ import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 import org.jdom.Document;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.io.UnsupportedEncodingException;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
@@ -25,7 +25,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
-        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(0).toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(0).toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(1).toString());
         TestRunResult result = manager.getTestRunResult();
 
@@ -52,7 +52,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertEquals(
-                DummyConfigurationSource.REMOTE_URL_1 + "jsunit/runner?url=" + encodedOverrideURL,
+                DummyConfigurationSource.REMOTE_URL_1 + "/jsunit/runner?url=" + encodedOverrideURL,
                 hitter.urlsPassed.get(0).toString());
         assertEquals(
                 DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner?url=" + encodedOverrideURL,
@@ -70,7 +70,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "jsunit/runner", hitter.urlsPassed.get(0).toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/jsunit/runner", hitter.urlsPassed.get(0).toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner", hitter.urlsPassed.get(1).toString());
         TestRunResult result = manager.getTestRunResult();
 

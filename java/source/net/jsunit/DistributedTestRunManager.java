@@ -7,9 +7,9 @@ import org.jdom.Document;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.net.MalformedURLException;
 
 public class DistributedTestRunManager {
 
@@ -52,11 +52,8 @@ public class DistributedTestRunManager {
     }
 
     private URL buildURL(URL url) throws UnsupportedEncodingException, MalformedURLException {
-        String urlString = url.toString();
-        String fullURLString = urlString;
-        if (!urlString.endsWith("/"))
-            fullURLString += "/";
-        fullURLString += "jsunit/runner";
+        String fullURLString = url.toString();
+        fullURLString += "/jsunit/runner";
         if (overrideURL != null)
             fullURLString += "?url=" + URLEncoder.encode(overrideURL, "UTF-8");
         else if (configuration.getTestURL() != null)

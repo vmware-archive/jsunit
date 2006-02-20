@@ -44,6 +44,8 @@ public final class Configuration implements XmlRenderable {
         if (Utility.isEmpty(urlString))
             return null;
         try {
+            if (urlString.endsWith("/"))
+                urlString = urlString.substring(0, urlString.length()-1);
             return new URL(urlString);
         } catch (Exception e) {
             throw new ConfigurationException(ConfigurationProperty.URL, urlString, e);
@@ -172,6 +174,8 @@ public final class Configuration implements XmlRenderable {
         List<URL> result = new ArrayList<URL>(strings.size());
         for (String string : strings)
             try {
+                if (string.endsWith("/"))
+                    string = string.substring(0, string.length() - 1);
                 result.add(new URL(string));
             } catch (MalformedURLException e) {
                 throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS, remoteMachineURLs, e);
