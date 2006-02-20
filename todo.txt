@@ -6,7 +6,7 @@ Required for next release:
 - bug: "retry test run" immediately fails after a test page timeout
 - Don't send System.err to a file - figure out how to turn off jetty logs instead
 - update website
-- Distributed test should bring up a farm server
+- should distributed test bring up a farm server?
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
