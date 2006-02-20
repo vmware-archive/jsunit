@@ -31,7 +31,7 @@ public class FailedToLaunchBrowserStandaloneTestTest extends StandaloneTest {
 			  fail();
 		  } catch (AssertionFailedError e) {
 		  }
-		  assertEquals(ResultType.FAILED_TO_LAUNCH, runner.lastResult().getResultType());
+		  assertEquals(ResultType.FAILED_TO_LAUNCH, server.lastResult().getResultType());
 	  }
 
 }

@@ -34,7 +34,7 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 			  fail();
 		  } catch (AssertionFailedError e) {
 		  }
-		  assertEquals(ResultType.TIMED_OUT, runner.lastResult().getResultType());
+		  assertEquals(ResultType.TIMED_OUT, server.lastResult().getResultType());
 	  }
 
 }

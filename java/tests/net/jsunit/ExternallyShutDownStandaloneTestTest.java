@@ -39,7 +39,7 @@ public class ExternallyShutDownStandaloneTestTest extends StandaloneTest {
 			  fail();
 		  } catch (AssertionFailedError e) {
 		  }
-		  assertEquals(ResultType.EXTERNALLY_SHUT_DOWN, runner.lastResult().getResultType());
+		  assertEquals(ResultType.EXTERNALLY_SHUT_DOWN, server.lastResult().getResultType());
 	  }
 
 }

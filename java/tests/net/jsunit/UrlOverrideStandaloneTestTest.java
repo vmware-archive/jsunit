@@ -24,11 +24,11 @@ public class UrlOverrideStandaloneTestTest extends StandaloneTest {
 	  
 	  public void testStandaloneRun() throws Exception {
 		  super.testStandaloneRun();
-		  assertTrue(runner.lastResult().wasSuccessful());
+		  assertTrue(server.lastResult().wasSuccessful());
 	  }
-	  
+
 	  protected TestRunManager createTestRunManager() {
-		  return new TestRunManager(runner, "http://localhost:8080/jsunit/testRunner.html?"
+		  return new TestRunManager(server, "http://localhost:8080/jsunit/testRunner.html?"
 	         + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
 	  }
 

@@ -5,42 +5,40 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 
 public class StandaloneTest extends TestCase {
-	
-    protected BrowserTestRunner runner;
-	private TestRunManager testRunManager;
+
+    protected JsUnitServer server;
+    private TestRunManager testRunManager;
 
     public StandaloneTest(String name) {
-    	super(name);
-	}
+        super(name);
+    }
 
     public void setUp() throws Exception {
         super.setUp();
-        if (runner == null) {
-        	JsUnitServer server = new JsUnitServer(new Configuration(configurationSource()));
-        	server.start();
-            runner = server;
-        }
+        server = new JsUnitServer(new Configuration(configurationSource()));
+        server.start();
         testRunManager = createTestRunManager();
     }
 
-	protected ConfigurationSource configurationSource() {
-		return Configuration.resolveSource();
-	}
+    protected ConfigurationSource configurationSource() {
+        return Configuration.resolveSource();
+    }
 
-	protected TestRunManager createTestRunManager() {
-		return new TestRunManager(runner);
-	}
+    protected TestRunManager createTestRunManager() {
+        return new TestRunManager(server);
+    }
 
     public void tearDown() throws Exception {
-        runner.dispose();
+        if (server != null)
+            server.dispose();
         super.tearDown();
     }
 
     public void testStandaloneRun() throws Exception {
-    	testRunManager.runTests();
-    	if (testRunManager.hadProblems()) {
-    		fail(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
-    	}
+        testRunManager.runTests();
+        if (testRunManager.hadProblems()) {
+            fail(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
+        }
     }
 
 }

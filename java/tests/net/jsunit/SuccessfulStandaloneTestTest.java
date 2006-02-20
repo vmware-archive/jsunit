@@ -24,7 +24,7 @@ public class SuccessfulStandaloneTestTest extends StandaloneTest {
   
   public void testStandaloneRun() throws Exception {
 	  super.testStandaloneRun();
-	  assertTrue(runner.lastResult().wasSuccessful());
+	  assertTrue(server.lastResult().wasSuccessful());
   }
 
 }
