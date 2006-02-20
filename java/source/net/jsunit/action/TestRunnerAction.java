@@ -3,7 +3,7 @@ package net.jsunit.action;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
 
-public class TestRunnerAction extends JsUnitAction {
+public class TestRunnerAction extends JsUnitServerAction {
     private TestRunManager manager;
 	private String url;
 

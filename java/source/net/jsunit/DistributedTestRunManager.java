@@ -42,7 +42,7 @@ public class DistributedTestRunManager {
             Document documentFromRemoteMachine;
             try {
                 URL fullURL = buildURL(baseURL);
-                documentFromRemoteMachine = hitter.hitRemoteRunner(fullURL);
+                documentFromRemoteMachine = hitter.hitURL(fullURL);
                 TestRunResult resultFromRemoteMachine = builder.build(documentFromRemoteMachine);
                 result.mergeWith(resultFromRemoteMachine);
             } catch (IOException e) {

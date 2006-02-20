@@ -36,7 +36,7 @@ public class FarmTestRunnerActionTest extends TestCase {
 
     static class SuccessfulRemoteRunnerHitter implements RemoteRunnerHitter {
 
-		public Document hitRemoteRunner(URL url) {
+		public Document hitURL(URL url) {
 			return new Document(new TestRunResult().asXml());
 		}
 		

@@ -1,18 +1,11 @@
 package net.jsunit.action;
 
 import net.jsunit.DistributedTestRunManager;
-import net.jsunit.JsUnitFarmServer;
-import net.jsunit.RemoteMachineRunnerHitter;
-import net.jsunit.RemoteRunnerHitter;
 import net.jsunit.XmlRenderable;
 
-import com.opensymphony.xwork.Action;
+public class FarmTestRunnerAction extends JsUnitFarmServerAction {
 
-public class FarmTestRunnerAction implements Action, XmlProducer {
-
-	private JsUnitFarmServer server;
 	private DistributedTestRunManager manager;
-	private RemoteRunnerHitter hitter = new RemoteMachineRunnerHitter();
     private String overrideURL;
 
     public String execute() throws Exception {
@@ -30,19 +23,11 @@ public class FarmTestRunnerAction implements Action, XmlProducer {
 		return manager.getTestRunResult();
 	}
 
-	public void setFarmServer(JsUnitFarmServer server) {
-		this.server = server;
-	}
-	
 	public DistributedTestRunManager getTestRunManager() {
 		return manager;
 	}
 
-	public void setRemoteRunnerHitter(RemoteRunnerHitter hitter) {
-		this.hitter  = hitter;
-	}
-
-    public void setUrl(String overrideURL) {
+	public void setUrl(String overrideURL) {
         this.overrideURL = overrideURL;
     }
 }

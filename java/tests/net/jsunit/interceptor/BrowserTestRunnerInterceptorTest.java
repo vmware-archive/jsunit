@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import net.jsunit.BrowserTestRunner;
 import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.XmlRenderable;
-import net.jsunit.action.JsUnitAction;
+import net.jsunit.action.JsUnitServerAction;
 
 public class BrowserTestRunnerInterceptorTest extends TestCase {
 
@@ -32,7 +32,7 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
         super.tearDown();
     }
 
-    static class MockJsUnitAction extends JsUnitAction {
+    static class MockJsUnitAction extends JsUnitServerAction {
 
         public String execute() throws Exception {
             return null;

@@ -13,6 +13,7 @@
 	
 		<interceptors>
 			<interceptor name="farmServer" class="net.jsunit.interceptor.FarmServerInterceptor" />
+			<interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor" />			
 
 			<interceptor-stack name="defaultStack">
 				<interceptor-ref name="servlet-config" /> 
@@ -21,6 +22,7 @@
 				<interceptor-ref name="params" /> 
 				<interceptor-ref name="conversionError" /> 
 				<interceptor-ref name="farmServer" />
+				<interceptor-ref name="remoteRunnerHitter" />				
 			</interceptor-stack>
 		</interceptors>
 		
@@ -30,7 +32,7 @@
 			<result name="success" type="jsUnitXml"/>
 		</action> 
 
-        <action name="config" class="net.jsunit.action.ServerConfigurationAction">
+        <action name="config" class="net.jsunit.action.FarmServerConfigurationAction">
             <result name="success" type="jsUnitXml"/>
         </action>
 

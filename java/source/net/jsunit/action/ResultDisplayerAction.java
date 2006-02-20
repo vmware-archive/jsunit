@@ -4,7 +4,7 @@ import net.jsunit.XmlRenderable;
 import net.jsunit.model.BrowserResult;
 import org.jdom.Element;
 
-public class ResultDisplayerAction extends JsUnitAction {
+public class ResultDisplayerAction extends JsUnitServerAction {
 
     private String id;
     private BrowserResult result;

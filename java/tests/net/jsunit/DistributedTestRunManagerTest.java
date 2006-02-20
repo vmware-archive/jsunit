@@ -6,12 +6,8 @@ import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 import org.jdom.Document;
 
-import java.net.URL;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 public class DistributedTestRunManagerTest extends TestCase {
@@ -24,7 +20,7 @@ public class DistributedTestRunManagerTest extends TestCase {
     }
 
     public void testSimple() throws MalformedURLException, UnsupportedEncodingException {
-        MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+        MockRemoteRunnerHitter hitter = createMockHitter();
         DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
@@ -51,7 +47,7 @@ public class DistributedTestRunManagerTest extends TestCase {
     public void testOverrideURL() throws Exception {
         String overrideURL = "http://my.override.com:1234?foo=bar&bar=foo";
         String encodedOverrideURL = URLEncoder.encode(overrideURL, "UTF-8");
-        MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+        MockRemoteRunnerHitter hitter = createMockHitter();
         DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
@@ -69,7 +65,8 @@ public class DistributedTestRunManagerTest extends TestCase {
                 return null;
             }
         });
-        MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+        MockRemoteRunnerHitter hitter = createMockHitter();
+
         DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
@@ -83,6 +80,13 @@ public class DistributedTestRunManagerTest extends TestCase {
 
         assertEquals(Utility.asString(expectedResult.asXml()), Utility.asString(result.asXml()));
     }
+
+	private MockRemoteRunnerHitter createMockHitter() {
+		MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+        hitter.documents.add(new Document(createResult1().asXml()));
+        hitter.documents.add(new Document(createResult2().asXml()));
+		return hitter;
+	}
 
     private TestRunResult createResult1() {
         TestRunResult result = new TestRunResult();
@@ -119,33 +123,6 @@ public class DistributedTestRunManagerTest extends TestCase {
         result.addBrowserResult(browserResult2);
 
         return result;
-    }
-
-    class MockRemoteRunnerHitter implements RemoteRunnerHitter {
-
-        private List<URL> urlsPassed;
-        private List<TestRunResult> results;
-        private int index = 0;
-
-        public MockRemoteRunnerHitter() {
-            results = new ArrayList<TestRunResult>();
-            urlsPassed = new ArrayList<URL>();
-            results.add(createResult1());
-            results.add(createResult2());
-        }
-
-        public Document hitRemoteRunner(URL url) {
-            urlsPassed.add(url);
-            return new Document(results.get(index++).asXml());
-        }
-
-    }
-
-    static class BlowingUpRemoteRunnerHitter implements RemoteRunnerHitter {
-
-        public Document hitRemoteRunner(URL url) throws IOException {
-            throw new IOException();
-        }
     }
 
 }

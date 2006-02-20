@@ -9,7 +9,7 @@ import java.net.URLConnection;
 
 public class RemoteMachineRunnerHitter implements RemoteRunnerHitter {
 
-	public Document hitRemoteRunner(URL url) throws IOException {
+	public Document hitURL(URL url) throws IOException {
         String xmlResultString = submitRequestTo(url);
         return Utility.asXmlDocument(xmlResultString);
 	}

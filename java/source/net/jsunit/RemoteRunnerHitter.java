@@ -7,6 +7,6 @@ import org.jdom.Document;
 
 public interface RemoteRunnerHitter {
 
-	public Document hitRemoteRunner(URL url) throws IOException ;
+	public Document hitURL(URL url) throws IOException ;
 	
 }

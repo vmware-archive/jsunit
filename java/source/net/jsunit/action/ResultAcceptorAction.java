@@ -3,7 +3,7 @@ package net.jsunit.action;
 import net.jsunit.XmlRenderable;
 import net.jsunit.model.BrowserResult;
 
-public class ResultAcceptorAction extends JsUnitAction implements BrowserResultAware {
+public class ResultAcceptorAction extends JsUnitServerAction implements BrowserResultAware {
 
 	protected BrowserResult result;
 
