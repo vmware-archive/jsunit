@@ -1,18 +1,13 @@
 package net.jsunit;
 
-import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationType;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.utility.OperatingSystemUtility;
-import net.jsunit.utility.StringUtility;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
+import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationType;
+import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.StringUtility;
 
 public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
@@ -131,17 +126,6 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         return browserTestRunListeners;
     }
 
-    private String[] openBrowserCommand(String browserFileName) {
-        if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
-            if (OperatingSystemUtility.isWindows())
-                return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
-            else if (OperatingSystemUtility.isMacintosh())
-                return new String[] {"open"};
-            else return new String[] {"htmlview"};
-        }
-        return new String[] {browserFileName};
-    }
-
     private void endBrowser() {
         if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns())
             browserProcess.destroy();
@@ -153,14 +137,14 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         waitUntilLastReceivedTimeHasPassed();
         long launchTime = System.currentTimeMillis();
-        String[] browserCommand = openBrowserCommand(launchSpec.getBrowserFileName());
-        logStatus("Launching " + browserCommand[0]);
-        this.browserFileName = launchSpec.getBrowserFileName();
+        LaunchTestRunCommand command = new LaunchTestRunCommand(launchSpec, configuration);
+        logStatus("Launching " + command.getBrowserFileName());
+        this.browserFileName = command.getBrowserFileName();
         try {
-            String[] commandWithUrl = buildCommandWithURL(browserCommand, launchSpec);
+            String[] commandArray = command.generateArray();
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
-            this.browserProcess = processStarter.execute(commandWithUrl);
+            this.browserProcess = processStarter.execute(commandArray);
             startTimeoutChecker(launchTime);
         } catch (Throwable throwable) {
             logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
@@ -171,40 +155,6 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
             accept(failedToLaunchBrowserResult);
         }
         return launchTime;
-    }
-
-    private String[] buildCommandWithURL(String[] browserCommand, BrowserLaunchSpecification launchSpec) throws NoUrlSpecifiedException {
-        String[] commandWithUrl = new String[browserCommand.length + 1];
-        System.arraycopy(browserCommand, 0, commandWithUrl, 0, browserCommand.length);
-        if (!launchSpec.hasOverrideUrl() && configuration.getTestURL() == null)
-            throw new NoUrlSpecifiedException();
-        String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
-        urlString = addAutoRunParameterIfNeeded(urlString);
-        urlString = addSubmitResultsParameterIfNeeded(urlString);
-        commandWithUrl[browserCommand.length] = urlString;
-        return commandWithUrl;
-    }
-
-    private String addSubmitResultsParameterIfNeeded(String urlString) {
-        if (urlString.indexOf("submitResults") == -1)
-            urlString = addParameter(urlString, "submitResults=localhost:" + configuration.getPort() + "/jsunit/acceptor");
-        return urlString;
-    }
-
-    private String addAutoRunParameterIfNeeded(String urlString) {
-        if (urlString.indexOf("autoRun") == -1) {
-            urlString = addParameter(urlString, "autoRun=true");
-        }
-        return urlString;
-    }
-
-    private String addParameter(String urlString, String paramAndValue) {
-        if (urlString.indexOf("?") == -1)
-            urlString += "?";
-        else
-            urlString += "&";
-        urlString += paramAndValue;
-        return urlString;
     }
 
     private void waitUntilLastReceivedTimeHasPassed() {

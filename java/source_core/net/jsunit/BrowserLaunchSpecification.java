@@ -26,4 +26,8 @@ public class BrowserLaunchSpecification {
 		return overrideUrl != null;
 	}
 
+	public boolean isForDefaultBrowser() {
+		return browserFileName.equals(JsUnitServer.DEFAULT_SYSTEM_BROWSER);	
+	}
+
 }
