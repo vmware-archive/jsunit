@@ -141,21 +141,24 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
         logStatus("Launching " + command.getBrowserFileName());
         this.browserFileName = command.getBrowserFileName();
         try {
-            String[] commandArray = command.generateArray();
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
-            this.browserProcess = processStarter.execute(commandArray);
+            this.browserProcess = processStarter.execute(command.generateArray());
             startTimeoutChecker(launchTime);
         } catch (Throwable throwable) {
-            logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
-            BrowserResult failedToLaunchBrowserResult = new BrowserResult();
-            failedToLaunchBrowserResult.setFailedToLaunch();
-            failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
-            failedToLaunchBrowserResult.setServerSideException(throwable);
-            accept(failedToLaunchBrowserResult);
+            handleCrashWhileLaunching(throwable);
         }
         return launchTime;
     }
+
+	private void handleCrashWhileLaunching(Throwable throwable) {
+		logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
+		BrowserResult failedToLaunchBrowserResult = new BrowserResult();
+		failedToLaunchBrowserResult.setFailedToLaunch();
+		failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
+		failedToLaunchBrowserResult.setServerSideException(throwable);
+		accept(failedToLaunchBrowserResult);
+	}
 
     private void waitUntilLastReceivedTimeHasPassed() {
         while (System.currentTimeMillis() == timeLastResultReceived)

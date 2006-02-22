@@ -6,29 +6,42 @@ public class LaunchTestRunCommand {
 
 	private Configuration configuration;
 	private BrowserLaunchSpecification launchSpec;
-	private String[] browserCommandArray;
 	
     public LaunchTestRunCommand(BrowserLaunchSpecification launchSpec, Configuration configuration) {
         this.configuration = configuration;
         this.launchSpec = launchSpec;
-        this.browserCommandArray = new OpenBrowserCommand(launchSpec).generateCommandLineArray();
 	}
-
+    
 	public String getBrowserFileName() {
-		return browserCommandArray[0];
+		return launchSpec.getBrowserFileName();
 	}
 
 	public String[] generateArray() throws NoUrlSpecifiedException {
-        String[] commandWithUrl = new String[browserCommandArray.length + 1];
-        System.arraycopy(browserCommandArray, 0, commandWithUrl, 0, browserCommandArray.length);
+		String[] browserCommandArray = openBrowserCommandArray();
         if (!launchSpec.hasOverrideUrl() && configuration.getTestURL() == null)
             throw new NoUrlSpecifiedException();
-        String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
-        urlString = addAutoRunParameterIfNeeded(urlString);
-        urlString = addSubmitResultsParameterIfNeeded(urlString);
+        
+        String[] commandWithUrl = new String[browserCommandArray.length + 1];
+        System.arraycopy(browserCommandArray, 0, commandWithUrl, 0, browserCommandArray.length);
+        String urlString = generateTestUrlString();
         commandWithUrl[browserCommandArray.length] = urlString;
         return commandWithUrl;
     }
+
+    private String[] openBrowserCommandArray() {
+		if (launchSpec.isForDefaultBrowser()) {
+			PlatformType platformType = PlatformType.resolve();
+			return platformType.getDefaultCommandLineBrowserArray();
+		}
+		return new String[] {launchSpec.getBrowserFileName()};
+	}
+
+	private String generateTestUrlString() {
+		String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
+        urlString = addAutoRunParameterIfNeeded(urlString);
+        urlString = addSubmitResultsParameterIfNeeded(urlString);
+		return urlString;
+	}
 
     private String addSubmitResultsParameterIfNeeded(String urlString) {
         if (urlString.indexOf("submitResults") == -1)
