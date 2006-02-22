@@ -131,9 +131,10 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
 
     private String[] openBrowserCommand(String browserFileName) {
         if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
-            if (Utility.isWindows()) {
+            if (Utility.isWindows())
                 return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
-            }
+            else if (Utility.isMacintosh())
+                return new String[] {"/Applications/Firefox.app"};
             else return new String[] {"htmlview"};
         }
         return new String[] {browserFileName};

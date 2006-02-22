@@ -36,7 +36,7 @@ public class ConfigurationTest extends TestCase {
     public void testMinimal() throws Exception {
         Configuration configuration = new Configuration(new MinimalValidForBothConfigurationSource());
         assertEquals(new File("."), configuration.getResourceBase());
-        assertEquals(new File(".\\logs"), configuration.getLogsDirectory());
+        assertEquals(new File("." + File.separator + "logs"), configuration.getLogsDirectory());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(60, configuration.getTimeoutSeconds());
 

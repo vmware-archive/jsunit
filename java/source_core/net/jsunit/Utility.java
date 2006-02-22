@@ -7,10 +7,10 @@ import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 
 import java.io.*;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Iterator;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -84,6 +84,11 @@ public class Utility {
     public static boolean isWindows() {
         String os = System.getProperty("os.name");
         return os != null && os.startsWith("Windows");
+    }
+
+    public static boolean isMacintosh() {
+        String os = System.getProperty("os.name");
+        return os != null && os.startsWith("Mac");
     }
 
     public static String stackTraceAsString(Throwable throwable) {
