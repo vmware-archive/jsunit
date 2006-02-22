@@ -1,7 +1,9 @@
 package net.jsunit.configuration;
 
-import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
+import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.StringUtility;
+
 import org.jdom.Element;
 
 import java.io.File;
@@ -41,7 +43,7 @@ public final class Configuration implements XmlRenderable {
 
     public URL getTestURL() throws ConfigurationException {
         String urlString = source.url();
-        if (Utility.isEmpty(urlString))
+        if (StringUtility.isEmpty(urlString))
             return null;
         try {
             if (urlString.endsWith("/"))
@@ -55,7 +57,7 @@ public final class Configuration implements XmlRenderable {
     public List<String> getBrowserFileNames() throws ConfigurationException {
         String browserFileNamesString = source.browserFileNames();
         try {
-            return Utility.listFromCommaDelimitedString(browserFileNamesString);
+            return StringUtility.listFromCommaDelimitedString(browserFileNamesString);
         } catch (Exception e) {
             throw new ConfigurationException(ConfigurationProperty.BROWSER_FILE_NAMES, browserFileNamesString, e);
         }
@@ -64,7 +66,7 @@ public final class Configuration implements XmlRenderable {
     public File getLogsDirectory() throws ConfigurationException {
         String logsDirectoryString = source.logsDirectory();
         try {
-            if (Utility.isEmpty(logsDirectoryString))
+            if (StringUtility.isEmpty(logsDirectoryString))
                 logsDirectoryString = ConfigurationProperty.LOGS_DIRECTORY.getDefaultValue();
             return new File(logsDirectoryString);
         } catch (Exception e) {
@@ -74,7 +76,7 @@ public final class Configuration implements XmlRenderable {
 
     public int getPort() throws ConfigurationException {
         String portString = source.port();
-        if (Utility.isEmpty(portString))
+        if (StringUtility.isEmpty(portString))
             portString = ConfigurationProperty.PORT.getDefaultValue();
         try {
             return Integer.parseInt(portString);
@@ -85,7 +87,7 @@ public final class Configuration implements XmlRenderable {
 
     public boolean shouldCloseBrowsersAfterTestRuns() throws ConfigurationException {
         String string = source.closeBrowsersAfterTestRuns();
-        if (Utility.isEmpty(string))
+        if (StringUtility.isEmpty(string))
             return true;
         return Boolean.valueOf(string);
     }
@@ -101,7 +103,7 @@ public final class Configuration implements XmlRenderable {
 
     private String resourceBaseCheckForDefault() {
         String result = source.resourceBase();
-        if (Utility.isEmpty(result))
+        if (StringUtility.isEmpty(result))
             result = ConfigurationProperty.RESOURCE_BASE.getDefaultValue();
         return result;
     }
@@ -112,7 +114,7 @@ public final class Configuration implements XmlRenderable {
 
     public boolean shouldLogStatus() {
         String logStatus = source.logStatus();
-        if (Utility.isEmpty(logStatus))
+        if (StringUtility.isEmpty(logStatus))
             return true;
         return Boolean.valueOf(logStatus);
     }
@@ -120,7 +122,7 @@ public final class Configuration implements XmlRenderable {
     public Element asXml() {
         Element configurationElement = new Element("configuration");
         Element osElement = new Element("os");
-        osElement.setText(Utility.osString());
+        osElement.setText(OperatingSystemUtility.osString());
         configurationElement.addContent(osElement);
         for (ConfigurationProperty property : ConfigurationProperty.values()) {
         	property.addXmlTo(configurationElement, this);
@@ -143,7 +145,7 @@ public final class Configuration implements XmlRenderable {
 
     public int getTimeoutSeconds() {
         String timeoutSecondsString = source.timeoutSeconds();
-        if (Utility.isEmpty(timeoutSecondsString))
+        if (StringUtility.isEmpty(timeoutSecondsString))
             timeoutSecondsString = ConfigurationProperty.TIMEOUT_SECONDS.getDefaultValue();
         return Integer.parseInt(timeoutSecondsString);
     }
@@ -152,7 +154,7 @@ public final class Configuration implements XmlRenderable {
     	List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
 
         for (ConfigurationProperty property : type.getRequiredConfigurationProperties()) {
-            if (Utility.isEmpty(property.getValueString(this)))
+            if (StringUtility.isEmpty(property.getValueString(this)))
                 result.add(property);
         }
 
@@ -172,7 +174,7 @@ public final class Configuration implements XmlRenderable {
 
     public List<URL> getRemoteMachineURLs() {
         String remoteMachineURLs = source.remoteMachineURLs();
-        List<String> strings = Utility.listFromCommaDelimitedString(remoteMachineURLs);
+        List<String> strings = StringUtility.listFromCommaDelimitedString(remoteMachineURLs);
         List<URL> result = new ArrayList<URL>(strings.size());
         for (String string : strings)
             try {

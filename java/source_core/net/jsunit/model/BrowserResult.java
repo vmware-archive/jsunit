@@ -4,8 +4,10 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
+import net.jsunit.utility.FileUtility;
+import net.jsunit.utility.StringUtility;
+import net.jsunit.utility.XmlUtility;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -134,8 +136,8 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
 
     private void writeXmlToFile(File logsDirectory) {
         Element element = asXml();
-        String string = Utility.asString(element);
-        Utility.writeFile(string, logFileForId(logsDirectory, getId()));
+        String string = XmlUtility.asString(element);
+        FileUtility.writeFile(string, logFileForId(logsDirectory, getId()));
     }
 
     public void addTestCaseResult(TestCaseResult testCaseResult) {
@@ -190,7 +192,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
 	}
 
 	public void setServerSideException(Throwable throwable) {
-		serverSideExceptionStackTrace = Utility.stackTraceAsString(throwable);
+		serverSideExceptionStackTrace = StringUtility.stackTraceAsString(throwable);
 	}
 
 	public void setFailedToLaunch() {

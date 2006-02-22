@@ -2,6 +2,7 @@ package net.jsunit;
 
 
 import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.XmlUtility;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -33,7 +34,7 @@ public class DisplayerFunctionalTest extends FunctionalTestCase {
 		browserResult.setId(id);
 		server.accept(browserResult);
 		webTester.beginAt("displayer?id="+id);
-		assertEquals(Utility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
+		assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
 	}
 	
 }

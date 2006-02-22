@@ -5,6 +5,8 @@ import junit.framework.TestCase;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.jsunit.utility.XmlUtility;
+
 public class TestRunNotifierServerTest extends TestCase implements MessageReceiver {
 
 	private TestRunNotifierServer server;
@@ -51,7 +53,7 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 		String line1 = messages.get(5);
 		String line2 = messages.get(6);
 		String line3 = messages.get(7);
-		assertEquals(Utility.asString(browserResult.asXmlDocument()), line1 + "\r\n" + line2 + "\r\n" + line3);
+		assertEquals(XmlUtility.asString(browserResult.asXmlDocument()), line1 + "\r\n" + line2 + "\r\n" + line3);
 		
 		assertEquals("endXml", messages.get(8));
 	}

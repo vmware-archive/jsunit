@@ -9,8 +9,8 @@ import net.jsunit.BlowingUpRemoteRunnerHitter;
 import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitFarmServer;
 import net.jsunit.MockRemoteRunnerHitter;
-import net.jsunit.Utility;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.utility.XmlUtility;
 
 import org.jdom.CDATA;
 import org.jdom.Document;
@@ -36,14 +36,14 @@ public class FarmServerConfigurationActionTest extends TestCase {
 		action.setRemoteRunnerHitter(mockHitter);
 		action.execute();
 		assertEquals(2, mockHitter.urlsPassed.size());
-		String xml = Utility.asString(action.getXmlRenderable().asXml());
+		String xml = XmlUtility.asString(action.getXmlRenderable().asXml());
 		assertEquals(
 			"<remoteConfigurations>" +
 				"<remoteConfiguration remoteMachineURL=\"" + DummyConfigurationSource.REMOTE_URL_1 + "\">" +
-					Utility.asString(configuration1.asXml()) +
+					XmlUtility.asString(configuration1.asXml()) +
 				"</remoteConfiguration>" +
 				"<remoteConfiguration remoteMachineURL=\"" + DummyConfigurationSource.REMOTE_URL_2 + "\">" +
-					Utility.asString(configuration2.asXml()) +
+					XmlUtility.asString(configuration2.asXml()) +
 				"</remoteConfiguration>" +
 			"</remoteConfigurations>",
 			xml
@@ -59,7 +59,7 @@ public class FarmServerConfigurationActionTest extends TestCase {
 		for (CDATA stackTraceElement : stackTraceElements)
 			stackTraceElement.detach();
 
-		String xml = Utility.asString(rootElement);
+		String xml = XmlUtility.asString(rootElement);
 		assertEquals(
 			"<remoteConfigurations>" +
 				"<remoteConfiguration remoteMachineURL=\"" + DummyConfigurationSource.REMOTE_URL_1 + "\">" +

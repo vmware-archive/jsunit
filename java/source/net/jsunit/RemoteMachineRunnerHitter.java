@@ -1,5 +1,7 @@
 package net.jsunit;
 
+import net.jsunit.utility.XmlUtility;
+
 import org.jdom.Document;
 
 import java.io.IOException;
@@ -11,7 +13,7 @@ public class RemoteMachineRunnerHitter implements RemoteRunnerHitter {
 
 	public Document hitURL(URL url) throws IOException {
         String xmlResultString = submitRequestTo(url);
-        return Utility.asXmlDocument(xmlResultString);
+        return XmlUtility.asXmlDocument(xmlResultString);
 	}
 	
     private String submitRequestTo(URL url) throws IOException {

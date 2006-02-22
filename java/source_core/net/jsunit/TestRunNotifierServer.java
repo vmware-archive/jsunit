@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.XmlUtility;
 
 public class TestRunNotifierServer implements TestRunListener {
 
@@ -23,7 +24,7 @@ public class TestRunNotifierServer implements TestRunListener {
 	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
 		serverSideConnection.sendMessage(BROWSER_TEST_RUN_FINISHED);
 		serverSideConnection.sendMessage(browserFileName);
-		serverSideConnection.sendMessage(Utility.asString(result.asXmlDocument()));
+		serverSideConnection.sendMessage(XmlUtility.asString(result.asXmlDocument()));
 		serverSideConnection.sendMessage(END_XML);
 	}
 		

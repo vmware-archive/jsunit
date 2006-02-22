@@ -4,7 +4,8 @@ import org.jdom.CDATA;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
-import net.jsunit.Utility;
+
+import net.jsunit.utility.OperatingSystemUtility;
 
 /**
  * @author Edward Hieatt, edward@jsunit.net
@@ -70,7 +71,7 @@ public class BrowserResultWriter {
         Element properties = new Element(PROPERTIES);
         element.addContent(properties);
         addProperty(properties, BROWSER_FILE_NAME, browserResult.getBrowserFileName());
-        addProperty(properties, OS, Utility.osString());
+        addProperty(properties, OS, OperatingSystemUtility.osString());
         if (browserResult.completedTestRun()) {
             addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
             addProperty(properties, USER_AGENT, browserResult.getUserAgent());

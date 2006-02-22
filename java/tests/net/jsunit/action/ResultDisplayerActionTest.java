@@ -2,8 +2,8 @@ package net.jsunit.action;
 
 import junit.framework.TestCase;
 import net.jsunit.MockBrowserTestRunner;
-import net.jsunit.Utility;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.XmlUtility;
 
 public class ResultDisplayerActionTest extends TestCase {
 
@@ -28,13 +28,13 @@ public class ResultDisplayerActionTest extends TestCase {
     public void testResultNotFound() throws Exception {
         assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
         assertEquals("12345", mockRunner.idPassed);
-        assertEquals("<error>No Test Result has been submitted with ID 12345</error>", Utility.asString(action.getXmlRenderable().asXml()));
+        assertEquals("<error>No Test Result has been submitted with ID 12345</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
     }
 
     public void testIdNotGiven() throws Exception {
         action.setId(null);
         assertEquals(ResultDisplayerAction.SUCCESS, action.execute());
         assertNull(mockRunner.idPassed);
-        assertEquals("<error>No ID given</error>", Utility.asString(action.getXmlRenderable().asXml()));
+        assertEquals("<error>No ID given</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
     }
 }

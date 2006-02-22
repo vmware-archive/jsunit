@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.XmlUtility;
 import junit.framework.TestCase;
 
 public class RemoteTestRunClientTest extends TestCase {
@@ -42,14 +43,14 @@ public class RemoteTestRunClientTest extends TestCase {
 		result.setTestCaseStrings(new String[] {"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
 		client.messageReceived("browserTestRunFinished");
 		client.messageReceived("mybrowser.exe");
-		String xml = Utility.asString(result.asXmlDocument());
+		String xml = XmlUtility.asString(result.asXmlDocument());
 		String[] lines = xml.split("\r\n");
 		for (String line : lines)
 			client.messageReceived(line);
 		client.messageReceived("endXml");
 		assertTrue(listener.browserTestRunFinishedCalled);
 		assertEquals("mybrowser.exe", listener.browserFileName);
-		assertEquals(xml, Utility.asString(listener.result.asXmlDocument()));
+		assertEquals(xml, XmlUtility.asString(listener.result.asXmlDocument()));
 	}
 	
 }

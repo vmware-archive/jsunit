@@ -2,7 +2,7 @@ package net.jsunit.plugin.eclipse.preference;
 
 import java.util.List;
 
-import net.jsunit.Utility;
+import net.jsunit.utility.StringUtility;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.jface.preference.IPreferenceStore;
@@ -36,7 +36,7 @@ public class JsUnitPreferenceStore {
 	}
 	
 	public List<String> testPageExtensions() {
-		return Utility.listFromCommaDelimitedString(testPageExtensionsString());
+		return StringUtility.listFromCommaDelimitedString(testPageExtensionsString());
 	}
 
 	public int timeoutSeconds() {
@@ -44,7 +44,7 @@ public class JsUnitPreferenceStore {
 	}
 
 	public List<String> browserFileNames() {
-		return Utility.listFromCommaDelimitedString(browserFileNamesString());
+		return StringUtility.listFromCommaDelimitedString(browserFileNamesString());
 	}
 
 	public PreferenceConfigurationSource asConfigurationSource(IFile testPage, int jsUnitServerPort) {

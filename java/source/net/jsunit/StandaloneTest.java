@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.utility.XmlUtility;
 
 public class StandaloneTest extends TestCase {
 
@@ -37,7 +38,7 @@ public class StandaloneTest extends TestCase {
     public void testStandaloneRun() throws Exception {
         testRunManager.runTests();
         if (testRunManager.hadProblems()) {
-            fail(Utility.asPrettyString(testRunManager.getTestRunResult().asXml()));
+            fail(XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml()));
         }
     }
 

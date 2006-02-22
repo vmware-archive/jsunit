@@ -4,6 +4,8 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
+import net.jsunit.utility.XmlUtility;
+
 import org.jdom.Document;
 
 import java.io.UnsupportedEncodingException;
@@ -33,7 +35,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         expectedResult.mergeWith(createResult1());
         expectedResult.mergeWith(createResult2());
 
-        assertEquals(Utility.asString(expectedResult.asXml()), Utility.asString(result.asXml()));
+        assertEquals(XmlUtility.asString(expectedResult.asXml()), XmlUtility.asString(result.asXml()));
     }
 
     public void testRemoteURLBlowsUp() {
@@ -78,7 +80,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         expectedResult.mergeWith(createResult1());
         expectedResult.mergeWith(createResult2());
 
-        assertEquals(Utility.asString(expectedResult.asXml()), Utility.asString(result.asXml()));
+        assertEquals(XmlUtility.asString(expectedResult.asXml()), XmlUtility.asString(result.asXml()));
     }
 
 	private MockRemoteRunnerHitter createMockHitter() {

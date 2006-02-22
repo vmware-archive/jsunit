@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jsunit.Utility;
+import net.jsunit.utility.StringUtility;
 
 public class FarmConfiguration {
 
@@ -17,7 +17,7 @@ public class FarmConfiguration {
 
 	public List<URL> getRemoteMachineURLs() {
 		String remoteMachineURLs = source.remoteMachineURLs();
-		List<String> strings = Utility.listFromCommaDelimitedString(remoteMachineURLs);
+		List<String> strings = StringUtility.listFromCommaDelimitedString(remoteMachineURLs);
 		List<URL> result = new ArrayList<URL>(strings.size());
 		for (String string : strings)
 			try {

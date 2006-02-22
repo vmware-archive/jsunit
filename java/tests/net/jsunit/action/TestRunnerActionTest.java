@@ -2,8 +2,8 @@ package net.jsunit.action;
 
 import junit.framework.TestCase;
 import net.jsunit.MockBrowserTestRunner;
-import net.jsunit.Utility;
 import net.jsunit.model.ResultType;
+import net.jsunit.utility.XmlUtility;
 
 public class TestRunnerActionTest extends TestCase {
 
@@ -21,14 +21,14 @@ public class TestRunnerActionTest extends TestCase {
     public void testSuccess() throws Exception {
         mockRunner.shouldSucceed = true;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
-        String xmlString = Utility.asString(action.getXmlRenderable().asXml());
+        String xmlString = XmlUtility.asString(action.getXmlRenderable().asXml());
         assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.SUCCESS.name()));
     }
 
     public void testFailure() throws Exception {
         mockRunner.shouldSucceed = false;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
-        String xmlString = Utility.asString(action.getXmlRenderable().asXml());
+        String xmlString = XmlUtility.asString(action.getXmlRenderable().asXml());
         assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.FAILURE.name()));
     }
 

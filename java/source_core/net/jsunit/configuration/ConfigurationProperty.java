@@ -3,7 +3,7 @@ package net.jsunit.configuration;
 import java.io.File;
 import java.net.URL;
 
-import net.jsunit.Utility;
+import net.jsunit.utility.StringUtility;
 
 import org.jdom.Element;
 
@@ -11,7 +11,7 @@ public enum ConfigurationProperty {
 
     BROWSER_FILE_NAMES("browserFileNames", null) {
     	public String getValueString(Configuration configuration) {
-    		return Utility.commaSeparatedString(configuration.getBrowserFileNames());
+    		return StringUtility.commaSeparatedString(configuration.getBrowserFileNames());
     	}
     	protected void addContentTo(Configuration configuration, Element element) {
 			for (String name : configuration.getBrowserFileNames()) {
@@ -43,7 +43,7 @@ public enum ConfigurationProperty {
     },
     REMOTE_MACHINE_URLS("remoteMachineURLs", null) {
     	public String getValueString(Configuration configuration) {
-    		return Utility.commaSeparatedString(configuration.getRemoteMachineURLs());
+    		return StringUtility.commaSeparatedString(configuration.getRemoteMachineURLs());
     	}
     	protected void addContentTo(Configuration configuration, Element element) {
     		for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {

@@ -3,6 +3,8 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationType;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,9 +133,9 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
 
     private String[] openBrowserCommand(String browserFileName) {
         if (browserFileName.equals(DEFAULT_SYSTEM_BROWSER)) {
-            if (Utility.isWindows())
+            if (OperatingSystemUtility.isWindows())
                 return new String[] {"rundll32", "url.dll,FileProtocolHandler"};
-            else if (Utility.isMacintosh())
+            else if (OperatingSystemUtility.isMacintosh())
                 return new String[] {"open"};
             else return new String[] {"htmlview"};
         }
@@ -161,7 +163,7 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
             this.browserProcess = processStarter.execute(commandWithUrl);
             startTimeoutChecker(launchTime);
         } catch (Throwable throwable) {
-            logStatus("Browser " + browserFileName + " failed to launch: " + Utility.stackTraceAsString(throwable));
+            logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
             BrowserResult failedToLaunchBrowserResult = new BrowserResult();
             failedToLaunchBrowserResult.setFailedToLaunch();
             failedToLaunchBrowserResult.setBrowserFileName(browserFileName);

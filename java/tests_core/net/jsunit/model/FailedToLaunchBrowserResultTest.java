@@ -1,7 +1,8 @@
 package net.jsunit.model;
 
 import junit.framework.TestCase;
-import net.jsunit.Utility;
+import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.StringUtility;
 
 import java.io.FileNotFoundException;
 
@@ -12,9 +13,9 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     	"<browserResult failedToLaunch=\"true\">" +
     		"<properties>" +
         		"<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                "<property name=\"os\" value=\""+Utility.osString()+"\" />" +                
+                "<property name=\"os\" value=\""+OperatingSystemUtility.osString()+"\" />" +                
                 "<property name=\"serverSideExceptionStackTrace\"><![CDATA[" +
-        			Utility.stackTraceAsString(exception)+
+        			StringUtility.stackTraceAsString(exception)+
         		"]]></property>" +
             "</properties>" +
         "</browserResult>";
@@ -36,7 +37,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
 		assertEquals(0, result.getTestCount());
 		assertEquals(ResultType.FAILED_TO_LAUNCH, result.getResultType());
 		assertEquals(0, result.getTestPageResults().size());
-		assertEquals(Utility.stackTraceAsString(exception), result.getServerSideExceptionStackTrace());
+		assertEquals(StringUtility.stackTraceAsString(exception), result.getServerSideExceptionStackTrace());
 	}
 	
 	public void testCompleted() {

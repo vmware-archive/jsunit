@@ -10,6 +10,8 @@ import net.jsunit.configuration.ConfigurationType;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
+import net.jsunit.utility.XmlUtility;
+
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -62,7 +64,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     public void start() throws Exception {
         setUpHttpServer();
         server.start();
-        logStatus("Starting server with configuration:\r\n" + Utility.asPrettyString(configuration.asXml()));
+        logStatus("Starting server with configuration:\r\n" + XmlUtility.asPrettyString(configuration.asXml()));
     }
 
     private void setUpHttpServer() throws Exception {

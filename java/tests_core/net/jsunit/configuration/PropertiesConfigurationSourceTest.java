@@ -1,7 +1,7 @@
 package net.jsunit.configuration;
 
 import junit.framework.TestCase;
-import net.jsunit.Utility;
+import net.jsunit.utility.FileUtility;
 
 public class PropertiesConfigurationSourceTest extends TestCase {
 
@@ -28,7 +28,7 @@ public class PropertiesConfigurationSourceTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        Utility.deleteFile("temp.file");
+        FileUtility.deleteFile("temp.file");
         super.tearDown();
     }
 
@@ -43,7 +43,7 @@ public class PropertiesConfigurationSourceTest extends TestCase {
             ConfigurationProperty.RESOURCE_BASE.getName() + "=ggg\n" +
             ConfigurationProperty.TIMEOUT_SECONDS.getName() + "=hhh\n" +
             ConfigurationProperty.URL.getName() + "=iii\n";
-        Utility.writeFile(contents, fileName);
+        FileUtility.writeFile(contents, fileName);
     }
 
 }

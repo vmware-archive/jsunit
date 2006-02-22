@@ -1,7 +1,7 @@
 package net.jsunit.model;
 
 import junit.framework.TestCase;
-import net.jsunit.Utility;
+import net.jsunit.utility.OperatingSystemUtility;
 
 public class ExternallyShutDownBrowserResultTest extends TestCase {
 
@@ -9,7 +9,7 @@ public class ExternallyShutDownBrowserResultTest extends TestCase {
         "<browserResult externallyShutDown=\"true\">" +
             "<properties>" +
                 "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                "<property name=\"os\" value=\""+ Utility.osString()+"\" />" +
+                "<property name=\"os\" value=\""+ OperatingSystemUtility.osString()+"\" />" +
             "</properties>" +
         "</browserResult>";
 

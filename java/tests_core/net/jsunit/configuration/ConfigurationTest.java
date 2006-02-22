@@ -2,7 +2,8 @@ package net.jsunit.configuration;
 
 import junit.framework.TestCase;
 import net.jsunit.StubConfigurationSource;
-import net.jsunit.Utility;
+import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
 import java.net.URL;
@@ -62,7 +63,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals(
             "<configuration>" +
-                "<os>"+Utility.osString()+"</os>" +
+                "<os>"+OperatingSystemUtility.osString()+"</os>" +
             	"<browserFileNames>" +
 	            	"<browserFileName>browser1.exe</browserFileName>" +
 	            	"<browserFileName>browser2.exe</browserFileName>" +
@@ -79,7 +80,7 @@ public class ConfigurationTest extends TestCase {
 	            "<timeoutSeconds>76</timeoutSeconds>" +
 	            "<url>http://www.example.com:1234</url>" +
             "</configuration>",
-            Utility.asString(configuration.asXml())
+            XmlUtility.asString(configuration.asXml())
         );
     }
     

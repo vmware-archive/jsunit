@@ -3,7 +3,7 @@ package net.jsunit.model;
 import java.io.File;
 import java.util.List;
 
-import net.jsunit.Utility;
+import net.jsunit.utility.XmlUtility;
 
 import org.jdom.Attribute;
 import org.jdom.Document;
@@ -28,7 +28,7 @@ public class BrowserResultBuilder {
     }
     
     public BrowserResult build(String string) {
-		Document document = Utility.asXmlDocument(string);
+		Document document = XmlUtility.asXmlDocument(string);
 		return build(document);
     }
 

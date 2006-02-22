@@ -1,6 +1,6 @@
 package net.jsunit.configuration;
 
-import net.jsunit.Utility;
+import net.jsunit.utility.FileUtility;
 import junit.framework.TestCase;
 
 public class ConfigurationResolutionTest extends TestCase {
@@ -24,7 +24,7 @@ public class ConfigurationResolutionTest extends TestCase {
 
     protected void tearDown() throws Exception {
         System.getProperties().remove(ConfigurationProperty.URL.getName());
-        Utility.deleteFile(PropertiesFileConfigurationSource.PROPERTIES_FILE_NAME);
+        FileUtility.deleteFile(PropertiesFileConfigurationSource.PROPERTIES_FILE_NAME);
         super.tearDown();
     }
 

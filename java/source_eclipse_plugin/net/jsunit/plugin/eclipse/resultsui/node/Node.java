@@ -2,7 +2,7 @@ package net.jsunit.plugin.eclipse.resultsui.node;
 
 import java.util.List;
 
-import net.jsunit.Utility;
+import net.jsunit.utility.StringUtility;
 
 public abstract class Node {
 	
@@ -20,7 +20,7 @@ public abstract class Node {
 	}
 	
 	public String getName(boolean fullyQualified) {
-		return fullyQualified ? name : Utility.unqualify(name);
+		return fullyQualified ? name : StringUtility.unqualify(name);
 	}
 
 	public void setName(String name) {

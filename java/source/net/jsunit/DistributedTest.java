@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.TestRunResult;
+import net.jsunit.utility.XmlUtility;
 
 public class DistributedTest extends TestCase {
 
@@ -22,7 +23,7 @@ public class DistributedTest extends TestCase {
     	manager.runTests();
     	TestRunResult result = manager.getTestRunResult();
     	if (!result.wasSuccessful())
-    		fail(Utility.asPrettyString(result.asXml()));
+    		fail(XmlUtility.asPrettyString(result.asXml()));
     }
 
     protected DistributedTestRunManager createTestRunManager() {

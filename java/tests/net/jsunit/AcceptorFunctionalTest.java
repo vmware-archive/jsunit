@@ -2,6 +2,8 @@ package net.jsunit;
 
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
+import net.jsunit.utility.XmlUtility;
+
 import org.jdom.Document;
 
 public class AcceptorFunctionalTest extends FunctionalTestCase {
@@ -24,7 +26,7 @@ public class AcceptorFunctionalTest extends FunctionalTestCase {
         result.setTestCaseStrings(new String[] {"/dummy/path/dummyPage.html:testFoo|1.3|S||"});
         result.setRemoteAddress("127.0.0.1");
 
-        assertEquals(Utility.asString(new Document(result.asXml())), webTester.getDialog().getResponseText());
+        assertEquals(XmlUtility.asString(new Document(result.asXml())), webTester.getDialog().getResponseText());
     }
 
     private void addParameter(StringBuffer buffer, String key, String value, boolean isFirst) {

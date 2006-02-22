@@ -3,8 +3,9 @@ package net.jsunit.action;
 import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.Result;
-import net.jsunit.Utility;
 import net.jsunit.XmlRenderable;
+import net.jsunit.utility.XmlUtility;
+
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -18,7 +19,7 @@ public class XmlResult implements Result {
         XmlRenderable xmlRenderable = producer.getXmlRenderable();
         Element element = xmlRenderable.asXml();
         Document document = new Document(element);
-        String xmlString = Utility.asString(document);
+        String xmlString = XmlUtility.asString(document);
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setContentType("text/xml");
         OutputStream out = response.getOutputStream();

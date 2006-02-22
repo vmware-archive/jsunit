@@ -1,7 +1,8 @@
 package net.jsunit.model;
 
 import junit.framework.TestCase;
-import net.jsunit.Utility;
+import net.jsunit.utility.FileUtility;
+import net.jsunit.utility.OperatingSystemUtility;
 
 import java.io.File;
 import java.util.List;
@@ -17,7 +18,7 @@ public class BrowserResultTest extends TestCase {
         "<browserResult id=\"An ID\" time=\"4.3\">" +
         	"<properties>" +
             	"<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-            	"<property name=\"os\" value=\""+Utility.osString()+"\" />" +
+            	"<property name=\"os\" value=\""+OperatingSystemUtility.osString()+"\" />" +
             	"<property name=\"jsUnitVersion\" value=\"2.5\" />" +
                 "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
                 "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
@@ -71,7 +72,7 @@ public class BrowserResultTest extends TestCase {
     public void testBuildFromXmlFile() {
     	File file = null;
     	try {
-	        Utility.writeFile(expectedXmlFragment, "resultXml.xml");
+	        FileUtility.writeFile(expectedXmlFragment, "resultXml.xml");
 	        file = new File("resultXml.xml");
 	        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(file);
 	        assertEquals(BrowserResult.class, reconstitutedResult.getClass());

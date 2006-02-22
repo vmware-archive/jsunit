@@ -6,6 +6,7 @@ import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
+import net.jsunit.utility.XmlUtility;
 
 import org.jdom.Element;
 
@@ -68,7 +69,7 @@ public class TestRunResultTest extends TestCase {
     	testRunResult.addBrowserResult(successResult());
     	testRunResult.addBrowserResult(failureResult());
     	
-    	assertEquals(Utility.asString(testRunResult.asXml()), Utility.asString(other.asXml()));
+    	assertEquals(XmlUtility.asString(testRunResult.asXml()), XmlUtility.asString(other.asXml()));
     }
     
     public void testTimedOut() throws Exception {
