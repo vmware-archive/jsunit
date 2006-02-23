@@ -13,18 +13,4 @@ Backlog:
 - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
 - SourceForge bugs
 
-Eclipse plugin
---------------
-Required for next release:
-
-Backlog:
-- rerun button
-- prevent simultaneous runs
-- checkmark/error icon on jsunit tab after run is finished
-- tab title should go italic during test run
-- validate no duplicate browser entries are given in preferences
-- ability to go to source by double-clicking on stack trace
-- break plugin code into separate project?
-
-
 http://localhost:8080/jsunit/runner?url=http%3A%2F%2F192.168.1.102%3A8080%2Fjsunit%2FtestRunner.html%3FtestPage%3Dhttp%3A%2F%2F192.168.1.102%3A8080%2Fjsunit%2Ftests%2FjsUnitUtilityTests.html
