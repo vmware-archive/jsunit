@@ -11,5 +11,5 @@ public interface ConfigurationSource {
     String resourceBase();
     String timeoutSeconds();
     String url();
-
+    String ignoreUnresponsiveRemoteMachines();
 }

@@ -29,7 +29,8 @@ public class ConfigurationTest extends TestCase {
         expectedRemoteMachineURLs.add(new URL("http://localhost:8081"));
         expectedRemoteMachineURLs.add(new URL("http://127.0.0.1:8082"));
         assertEquals(expectedRemoteMachineURLs, configuration.getRemoteMachineURLs());
-        
+        assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
+
         assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
         assertTrue(configuration.isValidFor(ConfigurationType.FARM));
     }
@@ -40,6 +41,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals(new File("." + File.separator + "logs"), configuration.getLogsDirectory());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(60, configuration.getTimeoutSeconds());
+        assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
         assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
         assertTrue(configuration.isValidFor(ConfigurationType.FARM));
@@ -79,6 +81,7 @@ public class ConfigurationTest extends TestCase {
 	            "<resourceBase>c:\\resource\\base</resourceBase>" +
 	            "<timeoutSeconds>76</timeoutSeconds>" +
 	            "<url>http://www.example.com:1234</url>" +
+	            "<ignoreUnresponsiveRemoteMachines>true</ignoreUnresponsiveRemoteMachines>" +
             "</configuration>",
             XmlUtility.asString(configuration.asXml())
         );
@@ -88,7 +91,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
 
-        assertEquals(18, arguments.length);
+        assertEquals(20, arguments.length);
 
         assertEquals("-browserFileNames", arguments[0]);
         assertEquals("browser1.exe,browser2.exe", arguments[1]);
@@ -116,6 +119,9 @@ public class ConfigurationTest extends TestCase {
 
         assertEquals("-url", arguments[16]);
         assertEquals("http://www.example.com:1234", arguments[17]);
+
+        assertEquals("-ignoreUnresponsiveRemoteMachines", arguments[18]);
+        assertEquals("true", arguments[19]);
      }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
@@ -138,6 +144,10 @@ public class ConfigurationTest extends TestCase {
 
         public String url() {
             return "http://www.example.com:1234/";
+        }
+
+        public String ignoreUnresponsiveRemoteMachines() {
+            return "true";
         }
 
         public String closeBrowsersAfterTestRuns() {

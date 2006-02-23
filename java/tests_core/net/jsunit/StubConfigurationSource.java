@@ -40,4 +40,8 @@ public class StubConfigurationSource implements ConfigurationSource {
 		return null;
 	}
 
+    public String ignoreUnresponsiveRemoteMachines() {
+        return null;
+    }
+
 }

@@ -1,41 +1,49 @@
 package net.jsunit.configuration;
 
 public class EnvironmentVariablesConfigurationSource implements ConfigurationSource {
- 
+
+    private String environmentVariableValue(ConfigurationProperty property) {
+        return System.getProperty(property.getName());
+    }
+
     public String resourceBase() {
-        return System.getProperty(ConfigurationProperty.RESOURCE_BASE.getName());
+        return environmentVariableValue(ConfigurationProperty.RESOURCE_BASE);
     }
 
     public String port() {
-        return System.getProperty(ConfigurationProperty.PORT.getName());
+        return environmentVariableValue(ConfigurationProperty.PORT);
     }
 
     public String remoteMachineURLs() {
-        return System.getProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
+        return environmentVariableValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
     }
 
     public String logsDirectory() {
-        return System.getProperty(ConfigurationProperty.LOGS_DIRECTORY.getName());
+        return environmentVariableValue(ConfigurationProperty.LOGS_DIRECTORY);
     }
 
     public String browserFileNames() {
-        return System.getProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+        return environmentVariableValue(ConfigurationProperty.BROWSER_FILE_NAMES);
     }
 
     public String url() {
-        return System.getProperty(ConfigurationProperty.URL.getName());
+        return environmentVariableValue(ConfigurationProperty.URL);
     }
 
     public String closeBrowsersAfterTestRuns() {
-		return System.getProperty(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
+		return environmentVariableValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
 	}
 
 	public String logStatus() {
-		return System.getProperty(ConfigurationProperty.LOG_STATUS.getName());
+		return environmentVariableValue(ConfigurationProperty.LOG_STATUS);
 	}
 
 	public String timeoutSeconds() {
-		return System.getProperty(ConfigurationProperty.TIMEOUT_SECONDS.getName());
+		return environmentVariableValue(ConfigurationProperty.TIMEOUT_SECONDS);
 	}
+
+    public String ignoreUnresponsiveRemoteMachines() {
+        return environmentVariableValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);
+    }
 
 }

@@ -33,9 +33,13 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
 		return "http://localhost:"+port+"/jsunit/testRunner.html?testPage=http://localhost:"+port+"/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true";
 	}
 
-	public String closeBrowsersAfterTestRuns() {
-		return String.valueOf(Boolean.TRUE);
-	}
+    public String ignoreUnresponsiveRemoteMachines() {
+        return "";
+    }
+
+    public String closeBrowsersAfterTestRuns() {
+        return String.valueOf(Boolean.TRUE);
+    }
 
 	public String logStatus() {
 		return String.valueOf(false);

@@ -3,7 +3,6 @@ package net.jsunit.configuration;
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.OperatingSystemUtility;
 import net.jsunit.utility.StringUtility;
-
 import org.jdom.Element;
 
 import java.io.File;
@@ -88,24 +87,20 @@ public final class Configuration implements XmlRenderable {
     public boolean shouldCloseBrowsersAfterTestRuns() throws ConfigurationException {
         String string = source.closeBrowsersAfterTestRuns();
         if (StringUtility.isEmpty(string))
-            return true;
+            string = ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getDefaultValue();
         return Boolean.valueOf(string);
     }
 
     public File getResourceBase() throws ConfigurationException {
-        String resourceBaseString = resourceBaseCheckForDefault();
+        String result = source.resourceBase();
+        if (StringUtility.isEmpty(result))
+            result = ConfigurationProperty.RESOURCE_BASE.getDefaultValue();
+        String resourceBaseString = result;
         try {
             return new File(resourceBaseString);
         } catch (Exception e) {
             throw new ConfigurationException(ConfigurationProperty.RESOURCE_BASE, resourceBaseString, e);
         }
-    }
-
-    private String resourceBaseCheckForDefault() {
-        String result = source.resourceBase();
-        if (StringUtility.isEmpty(result))
-            result = ConfigurationProperty.RESOURCE_BASE.getDefaultValue();
-        return result;
     }
 
     public ConfigurationSource getSource() {
@@ -191,4 +186,10 @@ public final class Configuration implements XmlRenderable {
 		return getPropertiesInvalidFor(type).isEmpty();
 	}
 
+    public boolean shouldIgnoreUnresponsiveRemoteMachines() {
+        String string = source.ignoreUnresponsiveRemoteMachines();
+        if (StringUtility.isEmpty(string))
+            string = ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES.getDefaultValue();
+        return Boolean.valueOf(string);
+    }
 }

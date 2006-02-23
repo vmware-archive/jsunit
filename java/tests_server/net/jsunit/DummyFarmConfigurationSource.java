@@ -24,6 +24,10 @@ public class DummyFarmConfigurationSource implements ConfigurationSource {
         return null;
     }
 
+    public String ignoreUnresponsiveRemoteMachines() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return null;
     }

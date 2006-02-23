@@ -3,10 +3,6 @@ package net.jsunit.configuration;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class PropertiesFileConfigurationSource implements ConfigurationSource {
  
     public static final String PROPERTIES_FILE_NAME = "jsunit.properties";
@@ -34,44 +30,48 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         }
     }
 
-	private String getProperty(String propertyName) {
-		return properties.getProperty(propertyName);
+	private String propertValue(ConfigurationProperty property) {
+		return properties.getProperty(property.getName());
 	}
 
     public String resourceBase() {
-        return getProperty(ConfigurationProperty.RESOURCE_BASE.getName());
+        return propertValue(ConfigurationProperty.RESOURCE_BASE);
     }
 
     public String logsDirectory() {
-        return getProperty(ConfigurationProperty.LOGS_DIRECTORY.getName());
+        return propertValue(ConfigurationProperty.LOGS_DIRECTORY);
     }
 
     public String port() {
-        return getProperty(ConfigurationProperty.PORT.getName());
+        return propertValue(ConfigurationProperty.PORT);
     }
 
     public String remoteMachineURLs() {
-        return getProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName());
+        return propertValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
     }
 
     public String url() {
-        return getProperty(ConfigurationProperty.URL.getName());
+        return propertValue(ConfigurationProperty.URL);
+    }
+
+    public String ignoreUnresponsiveRemoteMachines() {
+        return propertValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);
     }
 
     public String browserFileNames() {
-        return getProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName());
+        return propertValue(ConfigurationProperty.BROWSER_FILE_NAMES);
     }
 
     public String closeBrowsersAfterTestRuns() {
-        return getProperty(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName());
+        return propertValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
     }
 
 	public String logStatus() {
-		return getProperty(ConfigurationProperty.LOG_STATUS.getName());
+		return propertValue(ConfigurationProperty.LOG_STATUS);
 	}
 
 	public String timeoutSeconds() {
-		return getProperty(ConfigurationProperty.TIMEOUT_SECONDS.getName());
+		return propertValue(ConfigurationProperty.TIMEOUT_SECONDS);
 	}
 
 }

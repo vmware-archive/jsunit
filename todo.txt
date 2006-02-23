@@ -7,6 +7,10 @@ Required for next release:
 - Don't send System.err to a file - figure out how to turn off jetty logs instead
 - update website
 - should distributed test bring up a farm server or a standard server?
+- make sure bin/net is not in cvs
+- look at all jsunit emails to see what feature requests/bugs there are to do
+- ignoreUnresponsiveRemoteMachines parameter
+- configuration xml should be specific to the server type
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

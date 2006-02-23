@@ -32,6 +32,10 @@ public class FunctionalTestFarmConfigurationSource implements ConfigurationSourc
         return null;
     }
 
+    public String ignoreUnresponsiveRemoteMachines() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return null;
     }

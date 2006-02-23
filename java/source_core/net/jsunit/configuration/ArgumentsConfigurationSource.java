@@ -2,10 +2,6 @@ package net.jsunit.configuration;
 
 import java.util.List;
  
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class ArgumentsConfigurationSource implements ConfigurationSource {
 
     private List<String> arguments;
@@ -14,9 +10,9 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         this.arguments = arguments;
     }
 
-    private String getArgumentValue(ConfigurationProperty property) {
+    private String argumentValue(ConfigurationProperty property) {
         for (int i = 0; i < arguments.size(); i++) {
-            if (arguments.get(i).equals("-" + property.getName())) {
+            if (arguments.get(i).equalsIgnoreCase("-" + property.getName())) {
             	String value = arguments.get(i+1);
                 if (!value.startsWith("-"))
                 	return value;
@@ -28,39 +24,43 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
     }
 
     public String resourceBase() {
-        return getArgumentValue(ConfigurationProperty.RESOURCE_BASE);
+        return argumentValue(ConfigurationProperty.RESOURCE_BASE);
     }
 
     public String port() {
-        return getArgumentValue(ConfigurationProperty.PORT);
+        return argumentValue(ConfigurationProperty.PORT);
     }
 
     public String remoteMachineURLs() {
-        return getArgumentValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
+        return argumentValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
     }
 
     public String logsDirectory() {
-        return getArgumentValue(ConfigurationProperty.LOGS_DIRECTORY);
+        return argumentValue(ConfigurationProperty.LOGS_DIRECTORY);
     }
 
     public String browserFileNames() {
-        return getArgumentValue(ConfigurationProperty.BROWSER_FILE_NAMES);
+        return argumentValue(ConfigurationProperty.BROWSER_FILE_NAMES);
     }
 
     public String url() {
-        return getArgumentValue(ConfigurationProperty.URL);
+        return argumentValue(ConfigurationProperty.URL);
     }
 
-	public String closeBrowsersAfterTestRuns() {
-		return getArgumentValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
-	}
+    public String ignoreUnresponsiveRemoteMachines() {
+        return argumentValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);
+    }
+
+    public String closeBrowsersAfterTestRuns() {
+        return argumentValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+    }
 
 	public String logStatus() {
-		return getArgumentValue(ConfigurationProperty.LOG_STATUS);
+		return argumentValue(ConfigurationProperty.LOG_STATUS);
 	}
 
 	public String timeoutSeconds() {
-		return getArgumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
+		return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
 	}
     
 }

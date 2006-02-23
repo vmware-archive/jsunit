@@ -1,11 +1,10 @@
 package net.jsunit.configuration;
 
+import net.jsunit.utility.StringUtility;
+import org.jdom.Element;
+
 import java.io.File;
 import java.net.URL;
-
-import net.jsunit.utility.StringUtility;
-
-import org.jdom.Element;
 
 public enum ConfigurationProperty {
 
@@ -68,6 +67,11 @@ public enum ConfigurationProperty {
     		URL testURL = configuration.getTestURL();
 			return testURL == null ? "" : testURL.toString();
     	}
+    },
+    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "false") {
+        public String getValueString(Configuration configuration) {
+            return String.valueOf(configuration.shouldIgnoreUnresponsiveRemoteMachines());
+        }
     };
 
     private String name;

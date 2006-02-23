@@ -28,6 +28,10 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return DUMMY_URL;
     }
 
+    public String ignoreUnresponsiveRemoteMachines() {
+        return "";
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return "true";
     }
