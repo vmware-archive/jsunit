@@ -11,7 +11,6 @@ import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.utility.XmlUtility;
-
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -127,4 +126,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         return server != null && server.isStarted();
     }
 
+    public StatusLogger getStatusLogger() {
+        return statusLogger;
+    }
 }

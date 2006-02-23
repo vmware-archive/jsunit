@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.logging.StatusLogger;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.model.TestRunResultBuilder;
 import org.jdom.Document;
@@ -13,24 +14,26 @@ import java.net.URLEncoder;
 
 public class DistributedTestRunManager {
 
+    private StatusLogger logger;
     private RemoteRunnerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
     private TestRunResult result = new TestRunResult();
 
-    public DistributedTestRunManager(Configuration configuration) {
-        this(new RemoteMachineRunnerHitter(), configuration);
+    public DistributedTestRunManager(StatusLogger logger, Configuration configuration) {
+        this(logger, new RemoteMachineRunnerHitter(), configuration);
     }
 
-    public DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration) {
-        this(hitter, configuration, null);
+    public DistributedTestRunManager(StatusLogger logger, RemoteRunnerHitter hitter, Configuration configuration) {
+        this(logger, hitter, configuration, null);
     }
 
-    public DistributedTestRunManager(Configuration configuration, String overrideURL) {
-        this(new RemoteMachineRunnerHitter(), configuration, overrideURL);
+    public DistributedTestRunManager(StatusLogger logger, Configuration configuration, String overrideURL) {
+        this(logger, new RemoteMachineRunnerHitter(), configuration, overrideURL);
     }
 
-    public DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    public DistributedTestRunManager(StatusLogger logger, RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+        this.logger = logger;
         this.hitter = hitter;
         this.configuration = configuration;
         this.overrideURL = overrideURL;
@@ -46,7 +49,10 @@ public class DistributedTestRunManager {
                 TestRunResult resultFromRemoteMachine = builder.build(documentFromRemoteMachine);
                 result.mergeWith(resultFromRemoteMachine);
             } catch (IOException e) {
-                result.addCrashedRemoteURL(baseURL);
+                if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
+                    logger.log("Ignoring unresponsive machine " + baseURL.toString());
+                else
+                    result.addCrashedRemoteURL(baseURL);
             }
         }
     }

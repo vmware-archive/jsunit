@@ -20,3 +20,4 @@
 - runner servlet takes a "url" querystring parameter that overrides the server's url property
 - server system.err is sent to <logs directory>/jsunit_error.log
 - test runs in the JsUnitServer and the FarmServer are run in serial - test runs don't step on eachother
+- "ignoreUnresponsiveRemoteMachines" parameter

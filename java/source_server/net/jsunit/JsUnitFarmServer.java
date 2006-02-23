@@ -1,10 +1,10 @@
 package net.jsunit;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationType;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class JsUnitFarmServer extends AbstractJsUnitServer {
 
@@ -35,20 +35,20 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
         return "JsUnit Farm Server";
     }
 
-	protected String xworkXmlName() {
-		return "farm_xwork.xml";
-	}
+    protected String xworkXmlName() {
+        return "farm_xwork.xml";
+    }
 
-	public static JsUnitFarmServer getFarmServerInstance() {
-		return farmServerInstance;
-	}
+    public static JsUnitFarmServer getFarmServerInstance() {
+        return farmServerInstance;
+    }
 
-	public Configuration getConfiguration() {
-		return configuration;
-	}
+    public Configuration getConfiguration() {
+        return configuration;
+    }
 
-	protected ConfigurationType serverType() {
-		return ConfigurationType.FARM;
-	}
+    protected ConfigurationType serverType() {
+        return ConfigurationType.FARM;
+    }
 
 }

@@ -25,6 +25,7 @@ public enum ConfigurationType {
 			ConfigurationProperty.PORT,
 			ConfigurationProperty.REMOTE_MACHINE_URLS,
 			ConfigurationProperty.TIMEOUT_SECONDS,
+			ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES,
 		},
 		new ConfigurationProperty [] {
             ConfigurationProperty.RESOURCE_BASE,

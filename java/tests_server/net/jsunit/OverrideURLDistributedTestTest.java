@@ -1,7 +1,8 @@
 package net.jsunit;
 
-import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.model.ResultType;
 
 public class OverrideURLDistributedTestTest extends DistributedTest {
@@ -22,6 +23,7 @@ public class OverrideURLDistributedTestTest extends DistributedTest {
 
     protected DistributedTestRunManager createTestRunManager() {
         return new DistributedTestRunManager(
+            new NoOpStatusLogger(),
             new Configuration(configurationSource()),
                 "http://localhost:8080/jsunit/testRunner.html?"
                 + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
