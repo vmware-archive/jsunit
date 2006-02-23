@@ -13,7 +13,7 @@
     <actions>
         <action
                 id="ShowConfigurationXmlAction"
-                class="net.jsunit.plugin.intellij.configuration.ShowConfigurationXmlAction"
+                class="net.jsunit.plugin.intellij.configuration.ShowConfigurationArgumentsAction"
                 text="JsUnit Configuration"
                 description="Show JsUnit Configuration">
             <add-to-group group-id="WindowMenu" anchor="last"/>
