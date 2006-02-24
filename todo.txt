@@ -1,5 +1,4 @@
 Required for next release:
-- IE7beta issues
 - jsunit source div innerHTML
 - bug: "retry test run" immediately fails after a test page timeout
 -- Don't send System.err to a file - figure out how to turn off jetty logs instead
@@ -12,5 +11,4 @@ Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
 - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
 - SourceForge bugs
-
-http://localhost:8080/jsunit/runner?url=http%3A%2F%2F192.168.1.102%3A8080%2Fjsunit%2FtestRunner.html%3FtestPage%3Dhttp%3A%2F%2F192.168.1.102%3A8080%2Fjsunit%2Ftests%2FjsUnitUtilityTests.html
+- IE7beta issues
