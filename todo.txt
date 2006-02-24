@@ -6,7 +6,6 @@ Required for next release:
 - update website
 - look at all jsunit emails to see what feature requests/bugs there are to do
 - configuration xml should be specific to the server type
-- Make ConfigurationException's toString return the property name and value
 - browserfilenames shouldn't be required for distributed_test target
 
 Backlog:
