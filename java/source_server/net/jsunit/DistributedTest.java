@@ -10,17 +10,26 @@ import net.jsunit.utility.XmlUtility;
 public class DistributedTest extends TestCase {
 
     protected DistributedTestRunManager manager;
+    private JsUnitServer server;
 
     public DistributedTest(String name) {
         super(name);
     }
 
-    protected ConfigurationSource configurationSource() {
-        return Configuration.resolveSource();
+    public void setUp() throws Exception {
+        super.setUp();
+        server = new JsUnitServer(new Configuration(configurationSource()));
+        server.start();
+        manager = createTestRunManager();
+    }
+
+    public void tearDown() throws Exception {
+        if (server != null)
+            server.dispose();
+        super.tearDown();
     }
 
     public void testCollectResults() {
-        manager = createTestRunManager();
         manager.runTests();
         FarmTestRunResult result = manager.getFarmTestRunResult();
         if (!result.wasSuccessful())
@@ -28,6 +37,15 @@ public class DistributedTest extends TestCase {
     }
 
     protected DistributedTestRunManager createTestRunManager() {
-        return new DistributedTestRunManager(new NoOpStatusLogger(), new Configuration(configurationSource()));
+        return new DistributedTestRunManager(new NoOpStatusLogger(), new Configuration(farmConfigurationSource()));
     }
+
+    protected ConfigurationSource farmConfigurationSource() {
+        return Configuration.resolveSource();
+    }
+
+    protected ConfigurationSource configurationSource() {
+        return Configuration.resolveSource();
+    }
+
 }

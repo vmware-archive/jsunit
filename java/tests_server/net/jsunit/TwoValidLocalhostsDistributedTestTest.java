@@ -1,17 +1,15 @@
 package net.jsunit;
 
-import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
 public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
-    private JsUnitServer server;
 
     public TwoValidLocalhostsDistributedTestTest(String name) {
         super(name);
     }
 
-    protected ConfigurationSource configurationSource() {
+    protected ConfigurationSource farmConfigurationSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:8080, http://localhost:8080";
@@ -19,9 +17,9 @@ public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
         };
     }
 
-    public void setUp() throws Exception {
-        super.setUp();
-        server = new JsUnitServer(new Configuration(new StubConfigurationSource() {
+    protected StubConfigurationSource configurationSource() {
+        return new StubConfigurationSource() {
+
             public String browserFileNames() {
                 return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
             }
@@ -30,18 +28,12 @@ public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
                 return "http://localhost:8080/jsunit/testRunner.html?"
                 + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true";
             }
-        }));
-        server.start();
+        };
     }
 
     public void testCollectResults() {
         super.testCollectResults();
         assertEquals(ResultType.SUCCESS, manager.getFarmTestRunResult().getResultType());
-    }
-
-    public void tearDown() throws Exception {
-        server.dispose();
-        super.tearDown();
     }
 
 }
