@@ -4,7 +4,6 @@ Required for next release:
 - bug: "retry test run" immediately fails after a test page timeout
 - Don't send System.err to a file - figure out how to turn off jetty logs instead
 - update website
-- distributed test should bring up a standard server
 - look at all jsunit emails to see what feature requests/bugs there are to do
 - configuration xml should be specific to the server type
 
