@@ -24,6 +24,13 @@ public class ConfigurationException extends RuntimeException {
     }
 
     public String toString() {
-        return "Bad property " + propertyInError.getName() + ": " + invalidValue;
+        StringBuffer result = new StringBuffer();
+        result.append("Invalid property ");
+        result.append(propertyInError.getName());
+        result.append(" - \"");
+        result.append(invalidValue);
+        result.append("\"");
+        return result.toString();
     }
+
 }

@@ -142,29 +142,11 @@ public final class Configuration implements XmlRenderable {
         String timeoutSecondsString = source.timeoutSeconds();
         if (StringUtility.isEmpty(timeoutSecondsString))
             timeoutSecondsString = ConfigurationProperty.TIMEOUT_SECONDS.getDefaultValue();
-        return Integer.parseInt(timeoutSecondsString);
-    }
-
-    public List<ConfigurationProperty> getPropertiesInvalidFor(ConfigurationType type) {
-    	List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
-
-        for (ConfigurationProperty property : type.getRequiredConfigurationProperties()) {
-            if (StringUtility.isEmpty(property.getValueString(this)))
-                result.add(property);
+        try {
+            return Integer.parseInt(timeoutSecondsString);
+        } catch (NumberFormatException e) {
+            throw new ConfigurationException(ConfigurationProperty.TIMEOUT_SECONDS, timeoutSecondsString, e);
         }
-
-        List<ConfigurationProperty> propertiesInQuestion = new ArrayList<ConfigurationProperty>();
-        propertiesInQuestion.addAll(type.getRequiredConfigurationProperties());
-        propertiesInQuestion.addAll(type.getOptionalConfigurationProperties());
-
-        for (ConfigurationProperty property : propertiesInQuestion) {
-			try {
-				property.getValueString(this);
-			} catch (ConfigurationException e){
-				result.add(property);
-			}
-        }
-    	return result;
     }
 
     public List<URL> getRemoteMachineURLs() {
@@ -183,7 +165,7 @@ public final class Configuration implements XmlRenderable {
     }
 
 	public boolean isValidFor(ConfigurationType type) {
-		return getPropertiesInvalidFor(type).isEmpty();
+        return type.getPropertiesInvalidFor(this).isEmpty();
 	}
 
     public boolean shouldIgnoreUnresponsiveRemoteMachines() {

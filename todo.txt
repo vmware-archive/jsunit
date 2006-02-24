@@ -5,7 +5,6 @@ Required for next release:
 - update website
 - look at all jsunit emails to see what feature requests/bugs there are to do
 - configuration xml should be specific to the server type
-- browserfilenames shouldn't be required for distributed_test target
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

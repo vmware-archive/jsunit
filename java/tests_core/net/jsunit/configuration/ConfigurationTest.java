@@ -50,7 +50,7 @@ public class ConfigurationTest extends TestCase {
     public void testInvalidForStandardValidForFarm() throws Exception {
         Configuration configuration = new Configuration(new InvalidForStandardValidForFarmConfigurationSource());
         assertFalse(configuration.isValidFor(ConfigurationType.STANDARD));
-        assertEquals(1, configuration.getPropertiesInvalidFor(ConfigurationType.STANDARD).size());
+        assertEquals(1, ConfigurationType.STANDARD.getPropertiesInvalidFor(configuration).size());
         assertTrue(configuration.isValidFor(ConfigurationType.FARM));
     }
     
@@ -58,7 +58,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new ValidForStandardInvalidForFarmConfigurationSource());
         assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
         assertFalse(configuration.isValidFor(ConfigurationType.FARM));
-        assertEquals(1, configuration.getPropertiesInvalidFor(ConfigurationType.FARM).size());
+        assertEquals(1, ConfigurationType.FARM.getPropertiesInvalidFor(configuration).size());
     }
 
     public void testAsXml() throws Exception {
@@ -180,6 +180,10 @@ public class ConfigurationTest extends TestCase {
     }
 
     static class InvalidForStandardValidForFarmConfigurationSource extends StubConfigurationSource {
+
+        public String timeoutSeconds() {
+            return "xyz";
+        }
 
         public String remoteMachineURLs() {
             return "http://localhost:8081,http://127.0.0.1:8082";

@@ -48,8 +48,7 @@
     <property name="logsDirectory" value=""/>
     <!--
      For a JsUnit Server, timeoutSeconds is the number of seconds to wait before "timing out" a browser during a test run.
-     For a JsUnit Farm Server, timeoutSeconds is the number of seconds to wait before "timing out" a remote machine during
-     a test run. This is not a mandatory property.  If not specified, 60 is assumed.
+     This is not a mandatory property.  If not specified, 60 is assumed.
      For example: <property name="timeoutSeconds" value="60"/>
      -->
     <property name="timeoutSeconds" value=""/>
@@ -157,7 +156,7 @@
 
     <target name="run_self_tests" depends="_compile_tests" description="Runs the Java tests for JsUnit itself">
         <junit showoutput="yes" printsummary="yes" haltonfailure="yes" haltonerror="yes">
-            <!--<formatter type="plain" usefile="false"/>-->
+            <formatter type="plain" usefile="false"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
             <test name="net.jsunit.UnitTestSuite"/>
@@ -201,6 +200,7 @@
 
     <target name="standalone_test" description="Runs tests on the local machine">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
@@ -216,6 +216,7 @@
 
     <target name="distributed_test" description="Runs tests the remote machines">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>

@@ -41,7 +41,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
 
     protected void ensureConfigurationIsValid() {
     	if (!configuration.isValidFor(serverType())) {
-    		ConfigurationProperty property = configuration.getPropertiesInvalidFor(serverType()).get(0);
+            ConfigurationProperty property = serverType().getPropertiesInvalidFor(configuration).get(0);
     		throw new ConfigurationException(property, property.getValueString(configuration));
     	}
     }
@@ -76,9 +76,9 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
         servletContext.addHandler(new ResourceHandler());
-        
+
         ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));
-        
+
         for (String servletName : servletNames())
             addWebworkServlet(servletContext, servletName);
         server.addContext(servletContext);
@@ -86,7 +86,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         if (Monitor.activeCount() == 0)
             Monitor.monitor();
     }
-    
+
     protected abstract String xworkXmlName();
 
     protected abstract List<String> servletNames();

@@ -46,8 +46,7 @@ public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRun
             "displayer",
             "runner",
             "config"
-           }
-        );
+       });
     }
 
     public void accept(BrowserResult result) {
