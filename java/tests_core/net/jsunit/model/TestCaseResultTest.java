@@ -1,11 +1,6 @@
 package net.jsunit.model;
 
-import net.jsunit.model.TestCaseResult;
 import junit.framework.TestCase;
-
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
 
 public class TestCaseResultTest extends TestCase {
     public TestCaseResultTest(String name) {
