@@ -25,7 +25,7 @@ class ConfigurationComponentSource implements ConfigurationSource {
         StringBuffer buffer = new StringBuffer();
         String[] browserFileNames = configurationComponent.getBrowserFileNames();
         for (int i = 0; i < browserFileNames.length; i++) {
-            buffer.append(browserFileNames);
+            buffer.append(browserFileNames[i]);
             if (i != (browserFileNames.length - 1))
                 buffer.append(",");
         }
