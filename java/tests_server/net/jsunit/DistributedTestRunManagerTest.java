@@ -4,13 +4,17 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.FarmTestRunResult;
+import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.net.URLEncoder;
+import java.util.List;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
@@ -29,11 +33,11 @@ public class DistributedTestRunManagerTest extends TestCase {
         String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
         assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(0).toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner?url=" + encodedURL, hitter.urlsPassed.get(1).toString());
-        TestRunResult result = manager.getTestRunResult();
+        FarmTestRunResult result = manager.getFarmTestRunResult();
 
-        TestRunResult expectedResult = new TestRunResult();
-        expectedResult.mergeWith(createResult1());
-        expectedResult.mergeWith(createResult2());
+        FarmTestRunResult expectedResult = new FarmTestRunResult();
+        expectedResult.addTestRunResult(createResult1());
+        expectedResult.addTestRunResult(createResult2());
 
         assertEquals(XmlUtility.asString(expectedResult.asXml()), XmlUtility.asString(result.asXml()));
     }
@@ -42,9 +46,14 @@ public class DistributedTestRunManagerTest extends TestCase {
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         manager.runTests();
-        TestRunResult result = manager.getTestRunResult();
+        FarmTestRunResult result = manager.getFarmTestRunResult();
         assertFalse(result.wasSuccessful());
-        assertEquals(2, result.getCrashedRemoteURLs().size());
+        List<TestRunResult> testRunResults = result.getTestRunResults();
+        assertEquals(2, testRunResults.size());
+        assertEquals(ResultType.UNRESPONSIVE, testRunResults.get(0).getResultType());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1, testRunResults.get(0).getUrl().toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_2, testRunResults.get(1).getUrl().toString());
+        assertEquals(ResultType.UNRESPONSIVE, testRunResults.get(1).getResultType());
     }
 
     public void testRemoteURLBlowsUpButIgnored() {
@@ -56,9 +65,9 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
         manager.runTests();
-        TestRunResult result = manager.getTestRunResult();
+        FarmTestRunResult result = manager.getFarmTestRunResult();
         assertTrue(result.wasSuccessful());
-        assertEquals(0, result.getCrashedRemoteURLs().size());
+        assertEquals(0, result.getTestRunResults().size());
     }
 
     public void testOverrideURL() throws Exception {
@@ -89,24 +98,24 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertEquals(2, hitter.urlsPassed.size());
         assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/jsunit/runner", hitter.urlsPassed.get(0).toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/jsunit/runner", hitter.urlsPassed.get(1).toString());
-        TestRunResult result = manager.getTestRunResult();
+        FarmTestRunResult result = manager.getFarmTestRunResult();
 
-        TestRunResult expectedResult = new TestRunResult();
-        expectedResult.mergeWith(createResult1());
-        expectedResult.mergeWith(createResult2());
+        FarmTestRunResult expectedResult = new FarmTestRunResult();
+        expectedResult.addTestRunResult(createResult1());
+        expectedResult.addTestRunResult(createResult2());
 
         assertEquals(XmlUtility.asString(expectedResult.asXml()), XmlUtility.asString(result.asXml()));
     }
 
-	private MockRemoteRunnerHitter createMockHitter() {
-		MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+    private MockRemoteRunnerHitter createMockHitter() throws MalformedURLException {
+        MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
         hitter.documents.add(new Document(createResult1().asXml()));
         hitter.documents.add(new Document(createResult2().asXml()));
-		return hitter;
-	}
+        return hitter;
+    }
 
-    private TestRunResult createResult1() {
-        TestRunResult result = new TestRunResult();
+    private TestRunResult createResult1() throws MalformedURLException {
+        TestRunResult result = new TestRunResult(new URL(DummyConfigurationSource.REMOTE_URL_1));
         BrowserResult browserResult1 = new BrowserResult();
         browserResult1.setId("1");
         browserResult1.setBrowserFileName("mybrowser1.exe");
@@ -122,8 +131,8 @@ public class DistributedTestRunManagerTest extends TestCase {
         return result;
     }
 
-    private TestRunResult createResult2() {
-        TestRunResult result = new TestRunResult();
+    private TestRunResult createResult2() throws MalformedURLException {
+        TestRunResult result = new TestRunResult(new URL(DummyConfigurationSource.REMOTE_URL_2));
         BrowserResult browserResult1 = new BrowserResult();
         browserResult1.setBrowserFileName("mybrowser3.exe");
         browserResult1.setId("a");

@@ -3,10 +3,6 @@ package net.jsunit.model;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class TestCaseResultWriter {
     public static final String 
     	TEST_CASE = "testCase", 

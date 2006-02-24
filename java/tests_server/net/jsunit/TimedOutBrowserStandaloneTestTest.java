@@ -13,7 +13,7 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 	protected ConfigurationSource configurationSource() {
 		return new StubConfigurationSource() {
 			public String browserFileNames() {
-				return JsUnitServer.DEFAULT_SYSTEM_BROWSER;
+				return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
 			}
 			
 			public String url() {

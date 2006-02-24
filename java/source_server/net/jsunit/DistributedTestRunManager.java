@@ -2,6 +2,7 @@ package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.StatusLogger;
+import net.jsunit.model.FarmTestRunResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.model.TestRunResultBuilder;
 import org.jdom.Document;
@@ -18,7 +19,7 @@ public class DistributedTestRunManager {
     private RemoteRunnerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
-    private TestRunResult result = new TestRunResult();
+    private FarmTestRunResult farmTestRunResult = new FarmTestRunResult();
 
     public DistributedTestRunManager(StatusLogger logger, Configuration configuration) {
         this(logger, new RemoteMachineRunnerHitter(), configuration);
@@ -42,18 +43,21 @@ public class DistributedTestRunManager {
     public void runTests() {
         TestRunResultBuilder builder = new TestRunResultBuilder();
         for (URL baseURL : configuration.getRemoteMachineURLs()) {
-            Document documentFromRemoteMachine;
+            TestRunResult testRunResult = null;
             try {
                 URL fullURL = buildURL(baseURL);
-                documentFromRemoteMachine = hitter.hitURL(fullURL);
-                TestRunResult resultFromRemoteMachine = builder.build(documentFromRemoteMachine);
-                result.mergeWith(resultFromRemoteMachine);
+                Document documentFromRemoteMachine = hitter.hitURL(fullURL);
+                testRunResult = builder.build(baseURL, documentFromRemoteMachine);
             } catch (IOException e) {
                 if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
                     logger.log("Ignoring unresponsive machine " + baseURL.toString());
-                else
-                    result.addCrashedRemoteURL(baseURL);
+                else {
+                    testRunResult = new TestRunResult(baseURL);
+                    testRunResult.setUnresponsive();
+                }
             }
+            if (testRunResult != null)
+                farmTestRunResult.addTestRunResult(testRunResult);
         }
     }
 
@@ -67,8 +71,8 @@ public class DistributedTestRunManager {
         return new URL(fullURLString);
     }
 
-    public TestRunResult getTestRunResult() {
-        return result;
+    public FarmTestRunResult getFarmTestRunResult() {
+        return farmTestRunResult;
     }
 
     public String getOverrideURL() {

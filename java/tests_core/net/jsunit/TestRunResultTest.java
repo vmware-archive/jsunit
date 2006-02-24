@@ -1,21 +1,19 @@
 package net.jsunit;
 
-import java.net.URL;
-
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 
-import org.jdom.Element;
+import java.net.URL;
 
 public class TestRunResultTest extends TestCase {
     private TestRunResult testRunResult;
 
     protected void setUp() throws Exception {
         super.setUp();
-        testRunResult = new TestRunResult();
+        testRunResult = new TestRunResult(new URL("http://www.example.com"));
     }
 
     public void testSuccess() throws Exception {
@@ -24,6 +22,7 @@ public class TestRunResultTest extends TestCase {
         assertTrue(testRunResult.wasSuccessful());
         assertEquals(0, testRunResult.getErrorCount());
         assertEquals(0, testRunResult.getFailureCount());
+        assertFalse(testRunResult.wasUnresponsive());
     }
 
     public void testFailuresAndErrors() throws Exception {
@@ -42,41 +41,34 @@ public class TestRunResultTest extends TestCase {
         assertEquals(1, testRunResult.getErrorCount());
         assertEquals(2, testRunResult.getFailureCount());
     }
-    
+
     public void testAsXml() throws Exception {
-    	testRunResult.addBrowserResult(successResult());
-    	testRunResult.addBrowserResult(failureResult());
-    	testRunResult.addBrowserResult(errorResult());
-    	Element root = testRunResult.asXml();
-    	assertEquals("testRunResult", root.getName());
-    	assertEquals(ResultType.ERROR.name(), root.getAttribute("type").getValue());
-    	assertEquals(3, root.getChildren().size());
+        testRunResult.addBrowserResult(successResult());
+        testRunResult.addBrowserResult(failureResult());
+        testRunResult.addBrowserResult(errorResult());
+        assertEquals(
+                "<testRunResult type=\"ERROR\" url=\"http://www.example.com\">" +
+                    successResult().asXmlFragment() +
+                    failureResult().asXmlFragment() +
+                    errorResult().asXmlFragment() +
+                "</testRunResult>",
+                XmlUtility.asString(testRunResult.asXml())
+        );
     }
-    
-    public void testMergeWith() throws Exception {
-    	TestRunResult other = new TestRunResult();
-    	other.addBrowserResult(successResult());
-    	other.addBrowserResult(errorResult());
-    	
-    	TestRunResult otherOther = new TestRunResult();
-    	otherOther.addBrowserResult(successResult());
-    	otherOther.addBrowserResult(failureResult());
 
-    	other.mergeWith(otherOther);
-
-    	testRunResult.addBrowserResult(successResult());
-    	testRunResult.addBrowserResult(errorResult());
-    	testRunResult.addBrowserResult(successResult());
-    	testRunResult.addBrowserResult(failureResult());
-    	
-    	assertEquals(XmlUtility.asString(testRunResult.asXml()), XmlUtility.asString(other.asXml()));
+    public void testUnresponsive() throws Exception {
+        testRunResult.setUnresponsive();
+        assertTrue(testRunResult.wasUnresponsive());
+        assertEquals(ResultType.UNRESPONSIVE, testRunResult.getResultType());
+        assertEquals(
+                "<testRunResult type=\"UNRESPONSIVE\" url=\"http://www.example.com\" />",
+                XmlUtility.asString(testRunResult.asXml())
+        );
     }
-    
-    public void testTimedOut() throws Exception {
-    	testRunResult.addBrowserResult(successResult());
-    	testRunResult.addCrashedRemoteURL(new URL("http://my.domain.com:8201"));
-    	testRunResult.addCrashedRemoteURL(new URL("http://another.domain.com:4732"));
-    	assertEquals(ResultType.TIMED_OUT, testRunResult.getResultType());
+
+    public void testAsXmlWithNoUrl() throws Exception {
+        TestRunResult result = new TestRunResult();
+        assertEquals("<testRunResult type=\"SUCCESS\" />", XmlUtility.asString(result.asXml()));
     }
 
     private BrowserResult successResult() {
@@ -84,7 +76,7 @@ public class TestRunResultTest extends TestCase {
     }
 
     private BrowserResult failureResult() {
-    	return new DummyBrowserResult(false, 1, 0);
+        return new DummyBrowserResult(false, 1, 0);
     }
 
     private BrowserResult errorResult() {

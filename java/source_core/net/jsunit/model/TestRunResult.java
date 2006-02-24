@@ -8,41 +8,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TestRunResult extends AbstractResult implements XmlRenderable {
-	
+
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
-	private List<URL> crashedRemoteURLs = new ArrayList<URL>();
+    private URL url;
+    private boolean unresponsive = false;
+
+    public TestRunResult() {
+        this(null);
+    }
+
+    public TestRunResult(URL url) {
+        this.url = url;
+    }
 
     public void addBrowserResult(BrowserResult browserResult) {
         browserResults.add(browserResult);
     }
-    
-    public ResultType getResultType() {
-    	if (!crashedRemoteURLs.isEmpty())
-    		return ResultType.TIMED_OUT;
-    	return super.getResultType();
+
+    public Element asXml() {
+        Element root = new Element("testRunResult");
+        root.setAttribute("type", getResultType().name());
+        if (url != null)
+            root.setAttribute("url", url.toString());
+        for (BrowserResult browserResult : browserResults)
+            root.addContent(browserResult.asXml());
+        return root;
     }
 
-	public Element asXml() {
-		Element root = new Element("testRunResult");
-		root.setAttribute("type", getResultType().name());
-		for (BrowserResult browserResult : browserResults)
-			root.addContent(browserResult.asXml());
-		return root;
-	}
+    protected List<? extends Result> getChildren() {
+        return browserResults;
+    }
 
-	protected List<? extends Result> getChildren() {
-		return browserResults;
-	}
+    public void setUnresponsive() {
+        unresponsive = true;
+    }
 
-	public void mergeWith(TestRunResult result) {
-		browserResults.addAll(result.browserResults);		
-	}
+    public boolean wasUnresponsive() {
+        return unresponsive;
+    }
 
-	public void addCrashedRemoteURL(URL url) {
-		crashedRemoteURLs.add(url);
-	}
+    public URL getUrl() {
+        return url;
+    }
 
-    public List<URL> getCrashedRemoteURLs() {
-        return crashedRemoteURLs;
+    public ResultType getResultType() {
+        if (unresponsive)
+            return ResultType.UNRESPONSIVE;
+        else
+            return super.getResultType();
     }
 }

@@ -1,20 +1,15 @@
 package net.jsunit.model;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.StringUtility;
 import net.jsunit.utility.XmlUtility;
-
 import org.jdom.Document;
 import org.jdom.Element;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BrowserResult extends AbstractResult implements XmlRenderable {
     private String browserFileName;

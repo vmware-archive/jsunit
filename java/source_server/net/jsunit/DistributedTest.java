@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.logging.NoOpStatusLogger;
-import net.jsunit.model.TestRunResult;
+import net.jsunit.model.FarmTestRunResult;
 import net.jsunit.utility.XmlUtility;
 
 public class DistributedTest extends TestCase {
@@ -22,7 +22,7 @@ public class DistributedTest extends TestCase {
     public void testCollectResults() {
         manager = createTestRunManager();
         manager.runTests();
-        TestRunResult result = manager.getTestRunResult();
+        FarmTestRunResult result = manager.getFarmTestRunResult();
         if (!result.wasSuccessful())
             fail(XmlUtility.asPrettyString(result.asXml()));
     }

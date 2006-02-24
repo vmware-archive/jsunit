@@ -1,17 +1,13 @@
 package net.jsunit.model;
 
+import org.jdom.Element;
+
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.StringTokenizer;
-
-import org.jdom.Element;
  
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class TestCaseResult extends AbstractResult {
 
     public static final String TEST_PAGE_TEST_NAME_DELIMITER = ":";

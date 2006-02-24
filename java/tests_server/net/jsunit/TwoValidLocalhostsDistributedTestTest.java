@@ -23,7 +23,7 @@ public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
         super.setUp();
         server = new JsUnitServer(new Configuration(new StubConfigurationSource() {
             public String browserFileNames() {
-                return JsUnitServer.DEFAULT_SYSTEM_BROWSER;
+                return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
             }
 
             public String url() {
@@ -36,7 +36,7 @@ public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
 
     public void testCollectResults() {
         super.testCollectResults();
-        assertEquals(ResultType.SUCCESS, manager.getTestRunResult().getResultType());
+        assertEquals(ResultType.SUCCESS, manager.getFarmTestRunResult().getResultType());
     }
 
     public void tearDown() throws Exception {

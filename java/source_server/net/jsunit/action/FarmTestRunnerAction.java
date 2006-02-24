@@ -22,7 +22,7 @@ public class FarmTestRunnerAction extends JsUnitFarmServerAction {
     }
 
 	public XmlRenderable getXmlRenderable() {
-		return manager.getTestRunResult();
+		return manager.getFarmTestRunResult();
 	}
 
 	public DistributedTestRunManager getTestRunManager() {

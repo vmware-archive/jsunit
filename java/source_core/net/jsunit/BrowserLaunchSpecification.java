@@ -4,10 +4,11 @@ public class BrowserLaunchSpecification {
 
 	private final String browserFileName;
 	private final String overrideUrl;
+    public static final String DEFAULT_SYSTEM_BROWSER = "default";
 
-	public BrowserLaunchSpecification(String browserFileName) {
-		this(browserFileName, null);
-	}
+    public BrowserLaunchSpecification(String browserFileName) {
+        this(browserFileName, null);
+    }
 	
 	public BrowserLaunchSpecification(String browserFileName, String overrideUrl) {
 		this.browserFileName = browserFileName;
@@ -27,7 +28,7 @@ public class BrowserLaunchSpecification {
 	}
 
 	public boolean isForDefaultBrowser() {
-		return browserFileName.equals(JsUnitServer.DEFAULT_SYSTEM_BROWSER);	
+		return browserFileName.equals(DEFAULT_SYSTEM_BROWSER);	
 	}
 
 }

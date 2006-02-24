@@ -72,9 +72,9 @@
      -->
 
     <property name="source_core" location="java/source_core"/>
-    <property name="source" location="java/source"/>
+    <property name="source_server" location="java/source_server"/>
     <property name="tests_core" location="java/tests_core"/>
-    <property name="tests" location="java/tests"/>
+    <property name="tests_server" location="java/tests_server"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
     <property name="testlib" location="java/testlib"/>
@@ -112,7 +112,7 @@
                 </fileset>
             </classpath>
         </javac>
-        <javac srcdir="${source}" destdir="${bin}" debug="true">
+        <javac srcdir="${source_server}" destdir="${bin}" debug="true">
             <classpath>
                 <fileset dir="${lib}">
                     <include name="*.jar"/>
@@ -126,7 +126,7 @@
         <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
             <classpath refid="self_tests_classpath"/>
         </javac>
-        <javac srcdir="${tests}" destdir="${bin}" debug="true">
+        <javac srcdir="${tests_server}" destdir="${bin}" debug="true">
             <classpath refid="self_tests_classpath"/>
         </javac>
     </target>
@@ -168,6 +168,7 @@
             <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
             <sysproperty key="logStatus" value="${logStatus}"/>
             <sysproperty key="remoteMachineURLs" value="${remoteMachineURLs}"/>
+            <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
         </java>
     </target>
 
@@ -201,10 +202,6 @@
             <sysproperty key="url" value="${url}"/>
             <test name="net.jsunit.DistributedTest"/>
         </junit>
-    </target>
-
-    <target name="eclipse_plugin_export">
-        <pde.exportPlugins destination="." exportSource="false" exportType="zip" filename="eclipse_plugin.zip" plugins="net.jsunit" source="1.5" target="1.5" useJARFormat="false" />
     </target>
 
 </project>

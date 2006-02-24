@@ -1,9 +1,9 @@
 package net.jsunit;
 
+import junit.framework.AssertionFailedError;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
-import junit.framework.AssertionFailedError;
 
 public class InvalidRemoteMachinesDistributedTestTest extends DistributedTest {
     private JsUnitServer server;
@@ -24,7 +24,7 @@ public class InvalidRemoteMachinesDistributedTestTest extends DistributedTest {
         super.setUp();
         server = new JsUnitServer(new Configuration(new StubConfigurationSource() {
             public String browserFileNames() {
-                return JsUnitServer.DEFAULT_SYSTEM_BROWSER;
+                return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
             }
 
             public String url() {
@@ -40,7 +40,7 @@ public class InvalidRemoteMachinesDistributedTestTest extends DistributedTest {
             super.testCollectResults();
             fail();
         } catch (AssertionFailedError e) {
-            assertEquals(ResultType.TIMED_OUT, manager.getTestRunResult().getResultType());
+            assertEquals(ResultType.UNRESPONSIVE, manager.getFarmTestRunResult().getResultType());
         }
     }
 

@@ -1,17 +1,16 @@
 package net.jsunit;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationType;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.StringUtility;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
-    public static final String DEFAULT_SYSTEM_BROWSER = "default";
     private static JsUnitServer serverInstance;
 
     private Process browserProcess;

@@ -26,7 +26,7 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
 	}
 
 	public String browserFileNames() {
-		return JsUnitServer.DEFAULT_SYSTEM_BROWSER;
+		return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
 	}
 
 	public String url() {
