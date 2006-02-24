@@ -7,7 +7,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="java/lib/javax.servlet.jar"/>
 	<classpathentry kind="lib" path="java/lib/jdom.jar"/>
-	<classpathentry kind="lib" path="java/lib/junit.jar"/>
+	<classpathentry exported="true" kind="lib" path="java/lib/junit.jar"/>
 	<classpathentry kind="lib" path="java/lib/webwork-2.1.7.jar"/>
 	<classpathentry kind="lib" path="java/lib/xwork.jar"/>
 	<classpathentry kind="lib" path="java/lib/ognl.jar"/>
