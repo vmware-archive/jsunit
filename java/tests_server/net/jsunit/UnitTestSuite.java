@@ -10,10 +10,6 @@ import net.jsunit.interceptor.FarmServerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
 import net.jsunit.model.*;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class UnitTestSuite extends TestCase {
 	
     public static TestSuite suite() {
