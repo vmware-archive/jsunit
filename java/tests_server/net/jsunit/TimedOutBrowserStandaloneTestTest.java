@@ -23,7 +23,7 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 			}
 			
 			public String timeoutSeconds() {
-				return "1";
+				return "0";
 			}
 		};
 	}

@@ -12,7 +12,7 @@ public class TimeoutChecker extends Thread {
 	private Process browserProcess;
 
 	public TimeoutChecker(Process browserProcess, String browserFileName, long launchTime, BrowserTestRunner runner) {
-		this(browserProcess, browserFileName, launchTime, runner, 500);
+		this(browserProcess, browserFileName, launchTime, runner, 100);
 	}
 	
 	public TimeoutChecker(Process browserProcess, String browserFileName, long launchTime, BrowserTestRunner runner, long checkInterval) {
