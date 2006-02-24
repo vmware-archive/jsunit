@@ -22,4 +22,8 @@ public class ConfigurationException extends RuntimeException {
     public String getInvalidValue() {
         return invalidValue;
     }
+
+    public String toString() {
+        return "Bad property " + propertyInError.getName() + ": " + invalidValue;
+    }
 }
