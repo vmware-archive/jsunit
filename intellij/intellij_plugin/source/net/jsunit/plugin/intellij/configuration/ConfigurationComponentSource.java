@@ -3,9 +3,9 @@ package net.jsunit.plugin.intellij.configuration;
 import net.jsunit.configuration.ConfigurationSource;
 
 class ConfigurationComponentSource implements ConfigurationSource {
-    
+
     public String description() {
-        return "IntelliJ plugin configuration";
+        return "IntelliJ plugin configuration source";
     }
 
     private ConfigurationComponent configurationComponent;

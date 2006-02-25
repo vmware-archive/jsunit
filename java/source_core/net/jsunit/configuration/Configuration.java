@@ -176,4 +176,8 @@ public final class Configuration {
         return Boolean.valueOf(string);
     }
 
+    public String toString() {
+        return getDescription() == null ? super.toString() : getDescription();
+    }
+
 }

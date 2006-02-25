@@ -8,6 +8,7 @@ Required for next release:
     - documentation of assertArrayEquals
     - documentation of assertHTMLEquals
     - documentation of assertEvaluatesToFalse & assertEvaluatesToTrue
+    - xsl file for generating jsunit.properties.sample
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
