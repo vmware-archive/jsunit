@@ -72,15 +72,21 @@ public class TestRunResultTest extends TestCase {
     }
 
     private BrowserResult successResult() {
-        return new BrowserResult();
+      BrowserResult browserResult = new BrowserResult();
+      browserResult.setId("foo");
+      return browserResult;
     }
 
     private BrowserResult failureResult() {
-        return new DummyBrowserResult(false, 1, 0);
+      DummyBrowserResult dummyBrowserResult = new DummyBrowserResult(false, 1, 0);
+      dummyBrowserResult.setId("foo");
+      return dummyBrowserResult;
     }
 
     private BrowserResult errorResult() {
-        return new DummyBrowserResult(false, 0, 1);
+      DummyBrowserResult dummyBrowserResult = new DummyBrowserResult(false, 0, 1);
+      dummyBrowserResult.setId("foo");
+      return dummyBrowserResult;
     }
 
 }
