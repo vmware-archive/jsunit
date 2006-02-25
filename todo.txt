@@ -4,7 +4,6 @@ Required for next release:
 -- Don't send System.err to a file - figure out how to turn off jetty logs instead
 - update website
 - look at all jsunit emails to see what feature requests/bugs there are to do
-- configuration xml should be specific to the server type
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

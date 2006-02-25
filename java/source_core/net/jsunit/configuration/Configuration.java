@@ -114,17 +114,23 @@ public final class Configuration implements XmlRenderable {
         return Boolean.valueOf(logStatus);
     }
 
-    public Element asXml() {
+    private Element asXml(List<ConfigurationProperty> properties) {
         Element configurationElement = new Element("configuration");
         Element osElement = new Element("os");
         osElement.setText(OperatingSystemUtility.osString());
         configurationElement.addContent(osElement);
-        for (ConfigurationProperty property : ConfigurationProperty.values()) {
+        for (ConfigurationProperty property : properties) {
         	property.addXmlTo(configurationElement, this);
         }
-        
         return configurationElement;
-        
+    }
+
+    public Element asXml() {
+        return asXml(Arrays.asList(ConfigurationProperty.values()));
+    }
+
+    public Element asXml(ConfigurationType configurationType) {
+        return asXml(configurationType.getRequiredAndOptionalConfigurationProperties());
     }
 
     public String[] asArgumentsArray() {
@@ -174,4 +180,5 @@ public final class Configuration implements XmlRenderable {
             string = ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES.getDefaultValue();
         return Boolean.valueOf(string);
     }
+
 }

@@ -72,7 +72,7 @@ public enum ConfigurationType {
         return getRequiredConfigurationProperties().contains(property);
     }
 
-    private List<ConfigurationProperty> getRequiredAndOptionalConfigurationProperties() {
+    public List<ConfigurationProperty> getRequiredAndOptionalConfigurationProperties() {
         List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
         result.addAll(getRequiredConfigurationProperties());
         result.addAll(getOptionalConfigurationProperties());

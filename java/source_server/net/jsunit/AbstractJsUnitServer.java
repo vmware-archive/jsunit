@@ -63,7 +63,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     public void start() throws Exception {
         setUpHttpServer();
         server.start();
-        logStatus("Starting server with configuration:\r\n" + XmlUtility.asPrettyString(configuration.asXml()));
+        logStatus("Starting server with configuration:\r\n" + XmlUtility.asPrettyString(configuration.asXml(serverType())));
     }
 
     private void setUpHttpServer() throws Exception {
@@ -104,7 +104,7 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     }
 
     public Element asXml() {
-        return configuration.asXml();
+        return configuration.asXml(serverType());
     }
 
     public void finalize() throws Throwable {
