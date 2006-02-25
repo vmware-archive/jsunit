@@ -34,20 +34,23 @@ public class DistributedTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         server = new JsUnitServer(new Configuration(configurationSource()));
-        startServerIfNecssary();
+        startServerIfNecessary();
         manager = createTestRunManager();
     }
 
-    private void startServerIfNecssary() throws Exception {
+    private void startServerIfNecessary() throws Exception {
         try {
             server.start();
         } catch (MultiException e) {
-            List exceptions = e.getExceptions();
-            if (exceptions.size() == 1 && exceptions.get(0) instanceof BindException) {
-                //if a server is already running, fine - we only need it to serve content to remote machines
-            } else
+            if (!isMultiExceptionJustABindException(e))
                 throw e;
+            //if a server is already running, fine - we only need it to server content to remote machines
         }
+    }
+
+    private boolean isMultiExceptionJustABindException(MultiException e) {
+        List exceptions = e.getExceptions();
+        return exceptions.size() == 1 && exceptions.get(0) instanceof BindException;
     }
 
     public void tearDown() throws Exception {
