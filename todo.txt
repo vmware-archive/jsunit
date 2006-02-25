@@ -2,7 +2,7 @@ Required for next release:
   FEATURES:
     - jsunit source div innerHTML
     - pull in pivotal's new assertion functions
-    - make ajaxunit.js from pivotal's ajax.js and get don's and daniel zen's input too
+    - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
   BUGS:
