@@ -46,12 +46,15 @@ public class DistributedTestRunManager {
             TestRunResult testRunResult = null;
             try {
                 URL fullURL = buildURL(baseURL);
+                logger.log("Requesting run on remote machine URL " + baseURL);
                 Document documentFromRemoteMachine = hitter.hitURL(fullURL);
+                logger.log("Received response from remove machine URL " + baseURL);
                 testRunResult = builder.build(baseURL, documentFromRemoteMachine);
             } catch (IOException e) {
                 if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
                     logger.log("Ignoring unresponsive machine " + baseURL.toString());
                 else {
+                    logger.log("Remote machine URL is unresponsive: " + baseURL.toString());
                     testRunResult = new TestRunResult(baseURL);
                     testRunResult.setUnresponsive();
                 }
