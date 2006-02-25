@@ -8,8 +8,17 @@ ASSERTION FUNCTIONS
 - assertEvaluatesToTrue and assertEvaluatesToFalse introduced
 - changed expected/actual values display strings to use angle brackets, rather than square brackets
 
+- CLIENT-SIDE
+- HTML in result output is now correctly escaped
+- page load timeout changed to 120 seconds by default
+- setup page timeout change to 120 seconds by default
+
 SERVER
 - Migration of Java code to require Java 5.0
+- StandaloneTest and DistributedTest continue on after a failure in a particular browser or remote server respectively
+- StandaloneTest has a suite() method that makes the test run have multiple JUnit tests, one per browser
+- Change to XML output format of test runs to include more information and be more hierarchical (machine->browser->test page->test case)
+- Logs are now prefixed with "JSTEST-" in order to match JUnit's "TEST-"
 - added support for launching the default system browser on Windows and UNIX (see the constant on net.jsunit.StandaloneTest)
 - StandaloneTest now runs tests in all specified browsers, even after an earlier browser failed
 - New "config" servlet that shows the configuration as XML of the server
