@@ -41,9 +41,13 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return String.valueOf(Boolean.TRUE);
     }
 
-	public String logStatus() {
-		return String.valueOf(false);
-	}
+    public String description() {
+        return null;
+    }
+
+    public String logStatus() {
+        return String.valueOf(false);
+    }
 
 	public String timeoutSeconds() {
 		return "60";

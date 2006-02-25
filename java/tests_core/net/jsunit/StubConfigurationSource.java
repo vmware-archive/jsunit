@@ -12,9 +12,13 @@ public class StubConfigurationSource implements ConfigurationSource {
 		return null;
 	}
 
-	public String logsDirectory() {
-		return null;
-	}
+    public String description() {
+        return null;
+    }
+
+    public String logsDirectory() {
+        return null;
+    }
 
 	public String logStatus() {
 		return null;

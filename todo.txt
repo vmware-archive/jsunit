@@ -1,9 +1,13 @@
 Required for next release:
-- jsunit source div innerHTML
-- bug: "retry test run" immediately fails after a test page timeout
--- Don't send System.err to a file - figure out how to turn off jetty logs instead
-- update website
-- look at all jsunit emails to see what feature requests/bugs there are to do
+  FEATURES:
+    - jsunit source div innerHTML
+  BUGS:
+    -- Don't send System.err to a file - figure out how to turn off jetty logs instead
+    - look at all jsunit emails to see what feature requests/bugs there are to do
+  WEBSITE/DOCUMENTATION
+    - documentation of assertArrayEquals
+    - documentation of assertHTMLEquals
+    - documentation of assertEvaluatesToFalse & assertEvaluatesToTrue
 
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function

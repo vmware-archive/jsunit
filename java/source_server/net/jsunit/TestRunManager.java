@@ -18,7 +18,6 @@ public class TestRunManager {
         manager.runTests();
         if (server.isAlive())
         	server.dispose();
-        System.exit(manager.hadProblems() ? 1 : 0);
     }
 
     public TestRunManager(BrowserTestRunner testRunner) {
@@ -49,10 +48,6 @@ public class TestRunManager {
         testRunner.logStatus("Test Run Completed");
 	}
 
-    public boolean hadProblems() {
-        return !testRunResult.wasSuccessful();
-    }
-
     private void waitForResultToBeSubmitted(String browserFileName, long launchTime) {
         testRunner.logStatus("Waiting for " + browserFileName + " to submit result");
         long secondsWaited = 0;
@@ -65,14 +60,6 @@ public class TestRunManager {
             if (secondsWaited > (testRunner.timeoutSeconds())+3)
                 throw new RuntimeException("Server not responding");
         }
-    }
-
-    public int getFailureCount() {
-        return testRunResult.getFailureCount();
-    }
-
-    public int getErrorCount() {
-        return testRunResult.getErrorCount();
     }
 
 	public TestRunResult getTestRunResult() {

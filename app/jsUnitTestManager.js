@@ -151,7 +151,6 @@ jsUnitTestManager.prototype._runTest = function ()
 
     if (this.containerTestFrame.setUpPageStatus != 'complete')
     {
-      // setUpPage called, but not complete yet
       top.status = 'setUpPage not completed... ' + this.containerTestFrame.setUpPageStatus + ' ' + (new Date());
       if ((new Date() - this.containerTestFrame.startTime) /1000 > this.getsetUpPageTimeout()) {
         alert('setUpPage timed out without completing.');
@@ -328,11 +327,13 @@ jsUnitTestManager.prototype.loadPage = function (testFileName)
   this._callBackWhenPageIsLoaded();
 }
 
-jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () 
-{
+jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
   if ((new Date() - this._loadAttemptStartTime) / 1000 > this.getTimeout()) {
     alert('Reading Test Page ' + this._testFileName + ' timed out.\nMake sure that the file exists and is a Test Page.');
-    if (!confirm('Retry Test Run?')) {
+    if (confirm('Retry Test Run?')) {
+        this.loadPage(this._testFileName);
+        return;
+    } else {
       this.abort();
       return;
     }
@@ -344,8 +345,7 @@ jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function ()
   this.doneLoadingPage(this._testFileName);
 }
 
-jsUnitTestManager.prototype._isTestFrameLoaded = function () 
-{
+jsUnitTestManager.prototype._isTestFrameLoaded = function () {
   try {
     return this.containerController.isPageLoaded();
   } 

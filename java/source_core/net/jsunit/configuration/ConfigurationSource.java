@@ -4,6 +4,7 @@ public interface ConfigurationSource {
 
     String browserFileNames();
     String closeBrowsersAfterTestRuns();
+    String description();
     String logsDirectory();
     String logStatus();
     String port();

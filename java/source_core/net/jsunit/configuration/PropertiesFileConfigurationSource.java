@@ -30,48 +30,52 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         }
     }
 
-	private String propertValue(ConfigurationProperty property) {
+	private String propertyValue(ConfigurationProperty property) {
 		return properties.getProperty(property.getName());
 	}
 
     public String resourceBase() {
-        return propertValue(ConfigurationProperty.RESOURCE_BASE);
+        return propertyValue(ConfigurationProperty.RESOURCE_BASE);
     }
 
     public String logsDirectory() {
-        return propertValue(ConfigurationProperty.LOGS_DIRECTORY);
+        return propertyValue(ConfigurationProperty.LOGS_DIRECTORY);
     }
 
     public String port() {
-        return propertValue(ConfigurationProperty.PORT);
+        return propertyValue(ConfigurationProperty.PORT);
     }
 
     public String remoteMachineURLs() {
-        return propertValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
+        return propertyValue(ConfigurationProperty.REMOTE_MACHINE_URLS);
     }
 
     public String url() {
-        return propertValue(ConfigurationProperty.URL);
+        return propertyValue(ConfigurationProperty.URL);
     }
 
     public String ignoreUnresponsiveRemoteMachines() {
-        return propertValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);
+        return propertyValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);
     }
 
     public String browserFileNames() {
-        return propertValue(ConfigurationProperty.BROWSER_FILE_NAMES);
+        return propertyValue(ConfigurationProperty.BROWSER_FILE_NAMES);
     }
 
     public String closeBrowsersAfterTestRuns() {
-        return propertValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+        return propertyValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
     }
 
-	public String logStatus() {
-		return propertValue(ConfigurationProperty.LOG_STATUS);
-	}
+    public String description() {
+        return propertyValue(ConfigurationProperty.DESCRIPTION);
+    }
+
+    public String logStatus() {
+        return propertyValue(ConfigurationProperty.LOG_STATUS);
+    }
 
 	public String timeoutSeconds() {
-		return propertValue(ConfigurationProperty.TIMEOUT_SECONDS);
+		return propertyValue(ConfigurationProperty.TIMEOUT_SECONDS);
 	}
 
 }

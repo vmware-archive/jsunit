@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.utility.XmlUtility;
+import net.jsunit.model.TestRunResult;
 
 public class StandaloneTest extends TestCase {
 
@@ -37,8 +38,17 @@ public class StandaloneTest extends TestCase {
 
     public void testStandaloneRun() throws Exception {
         testRunManager.runTests();
-        if (testRunManager.hadProblems()) {
-            fail(XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml()));
+        TestRunResult testRunResult = testRunManager.getTestRunResult();
+        if (!testRunResult.wasSuccessful()) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("The test run had problems: ");
+            buffer.append(testRunResult.getErrorCount());
+            buffer.append(" errors, ");
+            buffer.append(testRunResult.getFailureCount());
+            buffer.append(" failures\n");
+            String xml = XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml());
+            buffer.append(xml);
+            fail(buffer.toString());
         }
     }
 

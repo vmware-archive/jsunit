@@ -34,9 +34,13 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
 		return environmentVariableValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
 	}
 
-	public String logStatus() {
-		return environmentVariableValue(ConfigurationProperty.LOG_STATUS);
-	}
+    public String description() {
+        return environmentVariableValue(ConfigurationProperty.DESCRIPTION);
+    }
+
+    public String logStatus() {
+        return environmentVariableValue(ConfigurationProperty.LOG_STATUS);
+    }
 
 	public String timeoutSeconds() {
 		return environmentVariableValue(ConfigurationProperty.TIMEOUT_SECONDS);

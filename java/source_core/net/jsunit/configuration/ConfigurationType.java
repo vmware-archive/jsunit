@@ -19,6 +19,7 @@ public enum ConfigurationType {
         },
         new ConfigurationProperty[]{
             ConfigurationProperty.BROWSER_FILE_NAMES,
+            ConfigurationProperty.DESCRIPTION,
             ConfigurationProperty.URL,
         }
     ),
@@ -31,6 +32,7 @@ public enum ConfigurationType {
             ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES,
         },
         new ConfigurationProperty [] {
+            ConfigurationProperty.DESCRIPTION,
             ConfigurationProperty.RESOURCE_BASE,
             ConfigurationProperty.URL,
         }
@@ -77,7 +79,7 @@ public enum ConfigurationType {
         List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
         result.addAll(getRequiredConfigurationProperties());
         result.addAll(getOptionalConfigurationProperties());
-        Collections.sort(result);
+        Collections.sort(result, ConfigurationProperty.comparator());
         return result;
     }
 }

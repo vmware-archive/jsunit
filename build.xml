@@ -15,43 +15,37 @@
         value="browserFileNames=c:\program files\internet explorer\iexplore.exe,c:\program files\netscape\netscape7.1\netscp.exe"/>
      -->
     <property name="browserFileNames" value=""/>
-    <!--
-     url is the URL (HTTP or file protocol) to open in the browser.  For a JsUnit Server, this is a mandatory property if
-     the server is to know how to run tests.  Alternatively a url parameter can be passed to the runner servlet.
-     For example:
-     <property
-        name="url"
-        value="file:///c:/jsunit/testRunner.html?testPage=c:\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true"/>
-     -->
 
-    <property name="url" value=""/>
     <!--
-     port is the port on which the JsUnitServer runs.  This is not a mandatory property.  If not specified, 8080 is assumed.
-     For example: <property name="port" value="8080"/>
+     closeBrowsersAfterTestRuns determines whether to attempt to close browsers after test runs.  This is not a mandatory
+     property.  The default is true.
+     For example: <property name="closeBrowsersAfterTestRuns" value="true"/>
      -->
+    <property name="closeBrowsersAfterTestRuns" value=""/>
 
-    <property name="port" value=""/>
     <!--
-     resourceBase is the directory that the JsUnitServer considers to be its document root.  It can be specified relative
-     to the working directory.  This is not a mandatory property.  If not specified, the working directory is assumed.
-     For example: <property name="resourceBase" value="c:\\jsunit"/>
+     description is a human-readable description of a standard or farm server.  This is not a mandatory
+     property.  The default is blank.
+     For example: <property name="description" value="This is our Mac - it's only running Safari right now"/>
      -->
+    <property name="description" value=""/>
 
-    <property name="resourceBase" value=""/>
+    <!--
+    ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target.
+    Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one
+    or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not
+    a mandatory property.  Its default is false.
+    For example: <property name="ignoreUnresponsiveRemoteMachines" value="true"/>
+    -->
+    <property name="ignoreUnresponsiveRemoteMachines" value=""/>
+
     <!--
      logsDirectory is the directory in which the JsUnitServer stores the XML logs produced from tests run.  It can be
      specified relative to the working directory.  This is not a mandatory property.  If not specified, the directory
      called "logs" inside resourceBase is assumed.
      For example: <property name="logsDirectory" value="c:\\jsunit\\java\logs"/>
      -->
-
     <property name="logsDirectory" value=""/>
-    <!--
-     For a JsUnit Server, timeoutSeconds is the number of seconds to wait before "timing out" a browser during a test run.
-     This is not a mandatory property.  If not specified, 60 is assumed.
-     For example: <property name="timeoutSeconds" value="60"/>
-     -->
-    <property name="timeoutSeconds" value=""/>
 
     <!--
      logStatus determines whether or not to log server status to standard out.  This is not a mandatory property.  If not
@@ -61,11 +55,34 @@
     <property name="logStatus" value=""/>
 
     <!--
-     closeBrowsersAfterTestRuns determins whether to attempt to close browsers after test runs.  This is not a mandatory
-     property.  The default is true.
-     For example: <property name="closeBrowsersAfterTestRuns" value="true"/>
+     port is the port on which the JsUnitServer runs.  This is not a mandatory property.  If not specified, 8080 is assumed.
+     For example: <property name="port" value="8080"/>
      -->
-    <property name="closeBrowsersAfterTestRuns" value=""/>
+    <property name="port" value=""/>
+
+    <!--
+     resourceBase is the directory that the JsUnitServer considers to be its document root.  It can be specified relative
+     to the working directory.  This is not a mandatory property.  If not specified, the working directory is assumed.
+     For example: <property name="resourceBase" value="c:\\jsunit"/>
+     -->
+    <property name="resourceBase" value=""/>
+
+    <!--
+     timeoutSeconds is the number of seconds to wait before "timing out" a browser during a test run.
+     This is not a mandatory property.  If not specified, 60 is assumed.
+     For example: <property name="timeoutSeconds" value="60"/>
+     -->
+    <property name="timeoutSeconds" value=""/>
+
+    <!--
+     url is the URL (HTTP or file protocol) to open in the browser.  For a JsUnit Server, this is a mandatory property
+     for a test run if the server is not passed the "url" parameter.
+     For example:
+     <property
+        name="url"
+        value="file:///c:/jsunit/testRunner.html?testPage=c:\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true"/>
+     -->
+    <property name="url" value=""/>
 
     <!--
      remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target.  Its value is
@@ -73,15 +90,6 @@
      For example: <property name="remoteMachineURLs" value="http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090"/>
      -->
     <property name="remoteMachineURLs" value=""/>
-
-    <!--
-     ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target.
-     Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one
-     or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not
-     a mandatory property.  Its default is false.
-     For example: <property name="ignoreUnresponsiveRemoteMachines" value="true"/>
-     -->
-    <property name="ignoreUnresponsiveRemoteMachines" value=""/>
 
     <!--
      The remainder of this build file is not intended to be modified by the end user.
@@ -196,7 +204,8 @@
         </java>
     </target>
 
-    <target name="create_distribution" depends="_create_jar,run_self_tests" description="Creates and tests the JsUnit distribution"/>
+    <target name="create_distribution" depends="_create_jar,run_self_tests"
+            description="Creates and tests the JsUnit distribution"/>
 
     <target name="standalone_test" description="Runs tests on the local machine">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">

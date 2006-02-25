@@ -32,8 +32,17 @@ public class DistributedTest extends TestCase {
     public void testCollectResults() {
         manager.runTests();
         FarmTestRunResult result = manager.getFarmTestRunResult();
-        if (!result.wasSuccessful())
-            fail(XmlUtility.asPrettyString(result.asXml()));
+        if (!result.wasSuccessful()) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("The test run had problems: ");
+            buffer.append(result.getErrorCount());
+            buffer.append(" errors, ");
+            buffer.append(result.getFailureCount());
+            buffer.append(" failures\n");
+            String xml = XmlUtility.asPrettyString(result.asXml());
+            buffer.append(xml);
+            fail(buffer.toString());
+        }
     }
 
     protected DistributedTestRunManager createTestRunManager() {

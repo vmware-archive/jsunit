@@ -40,6 +40,10 @@ public class FunctionalTestFarmConfigurationSource implements ConfigurationSourc
         return null;
     }
 
+    public String description() {
+        return null;
+    }
+
     public String logStatus() {
         return "true";
     }

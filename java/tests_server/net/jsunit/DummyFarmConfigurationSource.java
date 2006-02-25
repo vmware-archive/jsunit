@@ -32,6 +32,10 @@ public class DummyFarmConfigurationSource implements ConfigurationSource {
         return null;
     }
 
+    public String description() {
+        return "This is a cool server";
+    }
+
     public String logStatus() {
         return "true";
     }

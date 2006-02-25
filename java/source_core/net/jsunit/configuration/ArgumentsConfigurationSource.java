@@ -55,9 +55,13 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         return argumentValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
     }
 
-	public String logStatus() {
-		return argumentValue(ConfigurationProperty.LOG_STATUS);
-	}
+    public String description() {
+        return argumentValue(ConfigurationProperty.DESCRIPTION);
+    }
+
+    public String logStatus() {
+        return argumentValue(ConfigurationProperty.LOG_STATUS);
+    }
 
 	public String timeoutSeconds() {
 		return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);

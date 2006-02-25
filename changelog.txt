@@ -1,23 +1,34 @@
+TRACING
 - Tracing is now color coded by trace level
 - Traces are now prefixed with the Test Page and Test Function from which the trace is made
-- assertArrayEquals(array1, array2) introduced (NEED TO ADD TO DOCS)
-- assertHTMLEquals function introduce (NEED TO ADD TO DOCS)
-- added assertEvaluatesToTrue and assertEvaluatesToFalse (NEED TO ADD TO DOCS)
-- bug 1070436 fixed
-- bug with multiple browsers and resultId specified fixed
+
+ASSERTION FUNCTIONS
+- assertArrayEquals(array1, array2) introduced
+- assertHTMLEquals function introduced
+- assertEvaluatesToTrue and assertEvaluatesToFalse introduced
 - changed expected/actual values display strings to use angle brackets, rather than square brackets
-- added support for launching the default system browser on Windows and UNIX (see the constant on net.jsunit.StandaloneTest)
-- changed StandaloneTestTest and DistributedTestTest to use the default system browser
-- Bug 1281427 fixed (test submission for Opera)
+
+SERVER
 - Migration of Java code to require Java 5.0
-- Addition of new configuration parameter, "closeBrowsersAfterTestRuns", for whether to attempt to close browsers after test runs
-- Addition of new configuration property, "timeoutSeconds", for how long to time browsers out
+- added support for launching the default system browser on Windows and UNIX (see the constant on net.jsunit.StandaloneTest)
 - StandaloneTest now runs tests in all specified browsers, even after an earlier browser failed
 - New "config" servlet that shows the configuration as XML of the server
-- Safari fix
-- Eclipse plugin version 1.0
 - Distributed Tests now send back an XML document that includes the XML for browser results as opposed to just a "success"/"failure" node
 - runner servlet takes a "url" querystring parameter that overrides the server's url property
 - server system.err is sent to <logs directory>/jsunit_error.log
-- test runs in the JsUnitServer and the FarmServer are run in serial - test runs don't step on eachother
-- "ignoreUnresponsiveRemoteMachines" parameter
+- test run requests to the JsUnitServer and the FarmServer are queued up and in serial so that different clients don't step on eachother
+- addition of new configuration parameter, "closeBrowsersAfterTestRuns", for whether to attempt to close browsers after test runs
+- addition of new configuration property, "timeoutSeconds", for how long to time browsers out
+- addition of new configuration property, "ignoreUnresponsiveRemoteMachines", for whether to care that remote machines don't uccessfully run the tests
+- addition of new configuration property, "description", which contains a human-readable description of the server
+- new index.html page
+
+BUGS
+- fix for "retry test run" bug
+- bug 1070436 fixed
+- bug with multiple browsers and resultId specified fixed
+- Bug 1281427 fixed (test submission for Opera)
+- Safari fix
+
+ECLIPSE PLUGIN
+- Eclipse plugin version 1.0

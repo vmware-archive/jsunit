@@ -71,7 +71,8 @@ public class ConfigurationTest extends TestCase {
                     "<browserFileName>browser2.exe</browserFileName>" +
                 "</browserFileNames>" +
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
-	            "<logsDirectory>c:\\logs\\directory</logsDirectory>" +
+                "<description>This is the best server ever</description>" +
+                "<logsDirectory>c:\\logs\\directory</logsDirectory>" +
 	            "<logStatus>true</logStatus>" +
 	            "<port>1234</port>" +
 	            "<resourceBase>c:\\resource\\base</resourceBase>" +
@@ -86,37 +87,41 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
 
-        assertEquals(20, arguments.length);
+        assertEquals(22, arguments.length);
+        int index = 0;
 
-        assertEquals("-browserFileNames", arguments[0]);
-        assertEquals("browser1.exe,browser2.exe", arguments[1]);
+        assertEquals("-browserFileNames", arguments[index++]);
+        assertEquals("browser1.exe,browser2.exe", arguments[index++]);
 
-        assertEquals("-closeBrowsersAfterTestRuns", arguments[2]);
-        assertEquals("true", arguments[3]);
+        assertEquals("-closeBrowsersAfterTestRuns", arguments[index++]);
+        assertEquals("true", arguments[index++]);
 
-        assertEquals("-logsDirectory", arguments[4]);
-        assertEquals("c:\\logs\\directory", arguments[5]);
+        assertEquals("-description", arguments[index++]);
+        assertEquals("This is the best server ever", arguments[index++]);
 
-        assertEquals("-logStatus", arguments[6]);
-        assertEquals("true", arguments[7]);
+        assertEquals("-ignoreUnresponsiveRemoteMachines", arguments[index++]);
+        assertEquals("true", arguments[index++]);
 
-        assertEquals("-port", arguments[8]);
-        assertEquals("1234", arguments[9]);
+        assertEquals("-logsDirectory", arguments[index++]);
+        assertEquals("c:\\logs\\directory", arguments[index++]);
 
-        assertEquals("-remoteMachineURLs", arguments[10]);
-        assertEquals("http://localhost:8081,http://127.0.0.1:8082", arguments[11]);
+        assertEquals("-logStatus", arguments[index++]);
+        assertEquals("true", arguments[index++]);
 
-        assertEquals("-resourceBase", arguments[12]);
-        assertEquals("c:\\resource\\base", arguments[13]);
+        assertEquals("-port", arguments[index++]);
+        assertEquals("1234", arguments[index++]);
 
-        assertEquals("-timeoutSeconds", arguments[14]);
-        assertEquals("76", arguments[15]);
+        assertEquals("-remoteMachineURLs", arguments[index++]);
+        assertEquals("http://localhost:8081,http://127.0.0.1:8082", arguments[index++]);
 
-        assertEquals("-url", arguments[16]);
-        assertEquals("http://www.example.com:1234", arguments[17]);
+        assertEquals("-resourceBase", arguments[index++]);
+        assertEquals("c:\\resource\\base", arguments[index++]);
 
-        assertEquals("-ignoreUnresponsiveRemoteMachines", arguments[18]);
-        assertEquals("true", arguments[19]);
+        assertEquals("-timeoutSeconds", arguments[index++]);
+        assertEquals("76", arguments[index++]);
+
+        assertEquals("-url", arguments[index++]);
+        assertEquals("http://www.example.com:1234", arguments[index]);
      }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
@@ -149,9 +154,13 @@ public class ConfigurationTest extends TestCase {
             return "true";
         }
 
-		public String logStatus() {
-			return String.valueOf(true);
-		}
+        public String description() {
+            return "This is the best server ever";
+        }
+
+        public String logStatus() {
+            return String.valueOf(true);
+        }
 
 		public String timeoutSeconds() {
 			return "76";

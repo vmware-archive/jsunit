@@ -1,31 +1,14 @@
 package net.jsunit;
 
+import junit.framework.TestCase;
+import net.jsunit.model.BrowserResult;
+import org.jdom.Element;
+
 import java.util.Arrays;
 import java.util.List;
 
-import junit.framework.TestCase;
-import net.jsunit.model.BrowserResult;
-
-import org.jdom.Element;
-
 public class TestRunManagerTest extends TestCase {
 
-    public void testSuccess() {
-        TestRunManager manager = new TestRunManager(new SuccessfulBrowserTestRunner());
-        manager.runTests();
-        assertFalse(manager.hadProblems());
-        assertEquals(0, manager.getErrorCount());
-        assertEquals(0, manager.getFailureCount());
-    }
-
-    public void testFailure() {
-        TestRunManager manager = new TestRunManager(new FailingBrowserTestRunner());
-        manager.runTests();
-        assertTrue(manager.hadProblems());
-        assertEquals(4, manager.getErrorCount());
-        assertEquals(3, manager.getFailureCount());
-    }
-    
     public void testDisposedDuringTestRun() throws InterruptedException {
     	KillableBrowserTestRunner runner = new KillableBrowserTestRunner();
     	final TestRunManager manager = new TestRunManager(runner);

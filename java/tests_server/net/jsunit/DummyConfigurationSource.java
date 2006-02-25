@@ -36,6 +36,10 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return "true";
     }
 
+    public String description() {
+        return "This is my server!";
+    }
+
     public String logStatus() {
         return "false";
     }

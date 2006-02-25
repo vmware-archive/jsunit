@@ -45,7 +45,7 @@ public final class Configuration {
             return null;
         try {
             if (urlString.endsWith("/"))
-                urlString = urlString.substring(0, urlString.length()-1);
+                urlString = urlString.substring(0, urlString.length() - 1);
             return new URL(urlString);
         } catch (Exception e) {
             throw new ConfigurationException(ConfigurationProperty.URL, urlString, e);
@@ -119,21 +119,20 @@ public final class Configuration {
         Element osElement = new Element("os");
         osElement.setText(OperatingSystemUtility.osString());
         configurationElement.addContent(osElement);
-        for (ConfigurationProperty property : configurationType.getRequiredAndOptionalConfigurationProperties()) {
+        for (ConfigurationProperty property : configurationType.getRequiredAndOptionalConfigurationProperties())
             property.addXmlTo(configurationElement, this);
-        }
         return configurationElement;
     }
 
     public String[] asArgumentsArray() {
-    	ConfigurationProperty[] properties = ConfigurationProperty.values();
-		String[] arguments = new String[properties.length * 2];
-    	int i = 0;
-    	for (ConfigurationProperty property : properties) {
-    		arguments[i++] = "-" + property.getName();
-    		arguments[i++] = property.getValueString(this);
-    	}
-    	return arguments;
+        List<ConfigurationProperty> properties = ConfigurationProperty.all();
+        String[] arguments = new String[properties.size() * 2];
+        int i = 0;
+        for (ConfigurationProperty property : properties) {
+            arguments[i++] = "-" + property.getName();
+            arguments[i++] = property.getValueString(this);
+        }
+        return arguments;
     }
 
     public int getTimeoutSeconds() {
@@ -162,9 +161,13 @@ public final class Configuration {
         return result;
     }
 
-	public boolean isValidFor(ConfigurationType type) {
+    public String getDescription() {
+        return source.description();
+    }
+
+    public boolean isValidFor(ConfigurationType type) {
         return type.getPropertiesInvalidFor(this).isEmpty();
-	}
+    }
 
     public boolean shouldIgnoreUnresponsiveRemoteMachines() {
         String string = source.ignoreUnresponsiveRemoteMachines();
