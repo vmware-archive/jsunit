@@ -20,6 +20,7 @@ import org.mortbay.start.Monitor;
 
 import java.io.*;
 import java.util.List;
+import java.util.logging.*;
 
 public abstract class AbstractJsUnitServer implements XmlRenderable {
 
@@ -48,12 +49,28 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
 
     protected abstract ConfigurationType serverType();
 
-	protected void setSystemError() {
-        try {
-            System.setErr(new PrintStream(new BufferedOutputStream(new FileOutputStream(errorFile(), true))));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
+    class CommonLogHandler extends Handler {
+        public void publish(LogRecord record) {
+            statusLogger.log(record.getLevel().toString() + " " + record.getMessage());
         }
+
+        public void flush() {
+            System.out.flush();
+        }
+
+        public void close() throws SecurityException {
+        }
+    }
+
+    protected void setSystemError() {
+        CommonLogHandler handler = new CommonLogHandler();
+        Logger jettyLogger = Logger.getLogger("org.mortbay");
+        jettyLogger.addHandler(handler);
+        jettyLogger.setUseParentHandlers(false);
+
+        Logger webworkLogger = Logger.getLogger("com.opensymphony.webwork");
+        webworkLogger.addHandler(handler);
+        webworkLogger.setUseParentHandlers(false);
     }
 
     private File errorFile() {

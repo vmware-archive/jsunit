@@ -6,7 +6,6 @@ Required for next release:
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
   BUGS:
-    -- Don't send System.err to a file - figure out how to turn off jetty logs instead
     - look at all jsunit emails to see what feature requests/bugs there are to do
   WEBSITE/DOCUMENTATION
     - documentation of assertArrayEquals
