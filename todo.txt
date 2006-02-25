@@ -1,6 +1,8 @@
 Required for next release:
   FEATURES:
     - jsunit source div innerHTML
+    - pull in pivotal's new assertion functions
+    - make ajaxunit.js from pivotal's ajax.js and get don's and daniel zen's input too
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
     - make a "getResultString" on abstractresult that writes "the test failed with x errors and y failures" (right now this is duplicated in ST and DT)
