@@ -1,6 +1,9 @@
 Required for next release:
   FEATURES:
     - jsunit source div innerHTML
+  REFACTORINGS:
+    - make all Result implementers implement XmlRenderable
+    - make a "getResultString" on abstractresult that writes "the test failed with x errors and y failures" (right now this is duplicated in ST and DT)
   BUGS:
     -- Don't send System.err to a file - figure out how to turn off jetty logs instead
     - look at all jsunit emails to see what feature requests/bugs there are to do

@@ -1,8 +1,11 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.model.TestRunResult;
 
@@ -10,14 +13,34 @@ public class StandaloneTest extends TestCase {
 
     protected JsUnitServer server;
     private TestRunManager testRunManager;
+    private ConfigurationSource configurationSource;
 
     public StandaloneTest(String name) {
         super(name);
+        this.configurationSource = configurationSource();
+    }
+
+    public StandaloneTest(ConfigurationSource source) {
+        this(source.browserFileNames());
+        this.configurationSource = source;
+    }
+
+    public static Test suite() {
+        TestSuite suite = new TestSuite();
+        ConfigurationSource originalSource = Configuration.resolveSource();
+        Configuration configuration = new Configuration(originalSource);
+        for (final String browserFileName : configuration.getBrowserFileNames())
+            suite.addTest(new StandaloneTest(new DelegatingConfigurationSource(originalSource) {
+                public String browserFileNames() {
+                    return browserFileName;
+                }
+            }));
+        return suite;
     }
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new JsUnitServer(new Configuration(configurationSource()));
+        server = new JsUnitServer(new Configuration(configurationSource));
         server.start();
         testRunManager = createTestRunManager();
     }
@@ -34,6 +57,10 @@ public class StandaloneTest extends TestCase {
         if (server != null)
             server.dispose();
         super.tearDown();
+    }
+
+    public void runTest() throws Exception {
+        testStandaloneRun();
     }
 
     public void testStandaloneRun() throws Exception {

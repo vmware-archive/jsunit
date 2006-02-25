@@ -61,6 +61,13 @@
     <property name="port" value=""/>
 
     <!--
+     remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target.  Its value is
+     the list of URLs of remote machines to which a request to run tests will be sent.
+     For example: <property name="remoteMachineURLs" value="http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090"/>
+     -->
+    <property name="remoteMachineURLs" value=""/>
+
+    <!--
      resourceBase is the directory that the JsUnitServer considers to be its document root.  It can be specified relative
      to the working directory.  This is not a mandatory property.  If not specified, the working directory is assumed.
      For example: <property name="resourceBase" value="c:\\jsunit"/>
@@ -80,16 +87,9 @@
      For example:
      <property
         name="url"
-        value="file:///c:/jsunit/testRunner.html?testPage=c:\\jsunit\\tests\\jsUnitTestSuite.html&autoRun=true&submitresults=true"/>
+        value="file:///c:/jsunit/testRunner.html?testPage=c:/jsunit/tests/jsUnitTestSuite.html"/>
      -->
     <property name="url" value=""/>
-
-    <!--
-     remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target.  Its value is
-     the list of URLs of remote machines to which a request to run tests will be sent.
-     For example: <property name="remoteMachineURLs" value="http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090"/>
-     -->
-    <property name="remoteMachineURLs" value=""/>
 
     <!--
      The remainder of this build file is not intended to be modified by the end user.
