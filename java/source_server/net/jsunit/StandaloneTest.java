@@ -68,11 +68,8 @@ public class StandaloneTest extends TestCase {
         TestRunResult testRunResult = testRunManager.getTestRunResult();
         if (!testRunResult.wasSuccessful()) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("The test run had problems: ");
-            buffer.append(testRunResult.getErrorCount());
-            buffer.append(" errors, ");
-            buffer.append(testRunResult.getFailureCount());
-            buffer.append(" failures\n");
+            buffer.append(testRunResult.displayString());
+            buffer.append("\n");
             String xml = XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml());
             buffer.append(xml);
             fail(buffer.toString());

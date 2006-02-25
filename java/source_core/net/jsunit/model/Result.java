@@ -12,4 +12,6 @@ public interface Result {
 	
 	public boolean wasSuccessful();
 
+    public String displayString();
+
 }

@@ -57,4 +57,5 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
         else
             return super.getResultType();
     }
+
 }

@@ -96,6 +96,7 @@ public class BrowserResultTest extends TestCase {
         });
         assertFalse(result.wasSuccessful());
         assertEquals(ResultType.FAILURE, result.getResultType());
+        assertEquals("The test run had 0 error(s) and 1 failure(s).", result.displayString());
     }
 
     public void testSuccess() {

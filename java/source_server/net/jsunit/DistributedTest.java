@@ -81,11 +81,8 @@ public class DistributedTest extends TestCase {
         FarmTestRunResult result = manager.getFarmTestRunResult();
         if (!result.wasSuccessful()) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append("The test run had problems: ");
-            buffer.append(result.getErrorCount());
-            buffer.append(" errors, ");
-            buffer.append(result.getFailureCount());
-            buffer.append(" failures\n");
+            buffer.append(result.displayString());
+            buffer.append("\n");
             String xml = XmlUtility.asPrettyString(result.asXml());
             buffer.append(xml);
             fail(buffer.toString());
