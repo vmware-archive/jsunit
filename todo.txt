@@ -12,6 +12,7 @@ Required for next release:
     - documentation of assertArrayEquals
     - documentation of assertHTMLEquals
     - documentation of assertEvaluatesToFalse & assertEvaluatesToTrue
+    - overhaul website?
     - xsl file for generating jsunit.properties.sample
 
 Backlog:
