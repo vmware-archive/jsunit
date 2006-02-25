@@ -5,6 +5,7 @@ import net.jsunit.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
 
 public enum ConfigurationType {
     STANDARD(
@@ -76,6 +77,7 @@ public enum ConfigurationType {
         List<ConfigurationProperty> result = new ArrayList<ConfigurationProperty>();
         result.addAll(getRequiredConfigurationProperties());
         result.addAll(getOptionalConfigurationProperties());
+        Collections.sort(result);
         return result;
     }
 }

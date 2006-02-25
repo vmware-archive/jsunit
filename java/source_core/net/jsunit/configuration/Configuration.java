@@ -1,6 +1,5 @@
 package net.jsunit.configuration;
 
-import net.jsunit.XmlRenderable;
 import net.jsunit.utility.OperatingSystemUtility;
 import net.jsunit.utility.StringUtility;
 import org.jdom.Element;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Configuration implements XmlRenderable {
+public final class Configuration {
 
     private ConfigurationSource source;
 
@@ -114,23 +113,16 @@ public final class Configuration implements XmlRenderable {
         return Boolean.valueOf(logStatus);
     }
 
-    private Element asXml(List<ConfigurationProperty> properties) {
+    public Element asXml(ConfigurationType configurationType) {
         Element configurationElement = new Element("configuration");
+        configurationElement.setAttribute("type", configurationType.name());
         Element osElement = new Element("os");
         osElement.setText(OperatingSystemUtility.osString());
         configurationElement.addContent(osElement);
-        for (ConfigurationProperty property : properties) {
-        	property.addXmlTo(configurationElement, this);
+        for (ConfigurationProperty property : configurationType.getRequiredAndOptionalConfigurationProperties()) {
+            property.addXmlTo(configurationElement, this);
         }
         return configurationElement;
-    }
-
-    public Element asXml() {
-        return asXml(Arrays.asList(ConfigurationProperty.values()));
-    }
-
-    public Element asXml(ConfigurationType configurationType) {
-        return asXml(configurationType.getRequiredAndOptionalConfigurationProperties());
     }
 
     public String[] asArgumentsArray() {

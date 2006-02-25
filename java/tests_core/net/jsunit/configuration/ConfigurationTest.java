@@ -64,26 +64,21 @@ public class ConfigurationTest extends TestCase {
     public void testAsXml() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals(
-            "<configuration>" +
+            "<configuration type=\""+ConfigurationType.STANDARD.name()+"\">" +
                 "<os>"+OperatingSystemUtility.osString()+"</os>" +
-            	"<browserFileNames>" +
-	            	"<browserFileName>browser1.exe</browserFileName>" +
-	            	"<browserFileName>browser2.exe</browserFileName>" +
-	            "</browserFileNames>" +
-	            "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
+                "<browserFileNames>" +
+                    "<browserFileName>browser1.exe</browserFileName>" +
+                    "<browserFileName>browser2.exe</browserFileName>" +
+                "</browserFileNames>" +
+                "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
 	            "<logsDirectory>c:\\logs\\directory</logsDirectory>" +
 	            "<logStatus>true</logStatus>" +
 	            "<port>1234</port>" +
-	            "<remoteMachineURLs>" +
-	            	"<remoteMachineURL>http://localhost:8081</remoteMachineURL>" +
-	            	"<remoteMachineURL>http://127.0.0.1:8082</remoteMachineURL>" +
-	            "</remoteMachineURLs>" +
 	            "<resourceBase>c:\\resource\\base</resourceBase>" +
 	            "<timeoutSeconds>76</timeoutSeconds>" +
 	            "<url>http://www.example.com:1234</url>" +
-	            "<ignoreUnresponsiveRemoteMachines>true</ignoreUnresponsiveRemoteMachines>" +
             "</configuration>",
-            XmlUtility.asString(configuration.asXml())
+            XmlUtility.asString(configuration.asXml(ConfigurationType.STANDARD))
         );
     }
     
