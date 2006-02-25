@@ -53,8 +53,7 @@ jsUnitTestManager.SETUPPAGE_TIMEOUT    = 60;
 // milliseconds to wait between polls on setUpPages
 jsUnitTestManager.SETUPPAGE_INTERVAL   = 100;
 
-jsUnitTestManager.prototype.setup = function ()
-{
+jsUnitTestManager.prototype.setup = function () {
   this.totalCount    = 0;
   this.errorCount    = 0;
   this.failureCount  = 0;
@@ -65,8 +64,7 @@ jsUnitTestManager.prototype.setup = function ()
   push(this._suiteStack, initialSuite);
 }
 
-jsUnitTestManager.prototype.start = function () 
-{
+jsUnitTestManager.prototype.start = function () {
   this._baseURL = this.resolveUserEnteredTestFileName();
   var firstQuery = this._baseURL.indexOf("?");
   if (firstQuery >= 0) {
@@ -90,8 +88,7 @@ jsUnitTestManager.prototype.getBaseURL = function () {
   return this._baseURL;
 }
 
-jsUnitTestManager.prototype.doneLoadingPage = function (pageName) 
-{
+jsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
   //this.containerTestFrame.setTracer(top.tracer);
   this._testFileName = pageName;
   if (this.isTestPageSuite()) 
@@ -105,8 +102,7 @@ jsUnitTestManager.prototype.doneLoadingPage = function (pageName)
   }
 }
 
-jsUnitTestManager.prototype._handleNewSuite = function () 
-{
+jsUnitTestManager.prototype._handleNewSuite = function () {
   var allegedSuite = this.containerTestFrame.suite();
   if (allegedSuite.isjsUnitTestSuite) {
     var newSuite = allegedSuite.clone();
@@ -120,23 +116,20 @@ jsUnitTestManager.prototype._handleNewSuite = function ()
   }
 }
 
-jsUnitTestManager.prototype._runTest = function () 
-{
+jsUnitTestManager.prototype._runTest = function () {
   if (this._testIndex + 1 > this._numberOfTestsInPage)
   {
     // execute tearDownPage *synchronously*
     // (unlike setUpPage which is asynchronous)
-    if (typeof this.containerTestFrame.tearDownPage == 'function')
-    {
-      this.containerTestFrame.tearDownPage();
+    if (typeof this.containerTestFrame.tearDownPage == 'function') {
+        this.containerTestFrame.tearDownPage();
     }
     
     this._nextPage();
     return;
   }
 
-  if (this._testIndex == 0 && typeof(this.containerTestFrame.setUpPage) == 'function')
-  {
+  if (this._testIndex == 0 && typeof(this.containerTestFrame.setUpPage) == 'function') {
     // first test for this page and a setUpPage is defined
     if (typeof(this.containerTestFrame.setUpPageStatus) == 'undefined')
     {
@@ -149,9 +142,8 @@ jsUnitTestManager.prototype._runTest = function ()
       return;
     }
 
-    if (this.containerTestFrame.setUpPageStatus != 'complete')
-    {
-      top.status = 'setUpPage not completed... ' + this.containerTestFrame.setUpPageStatus + ' ' + (new Date());
+    if (this.containerTestFrame.setUpPageStatus != 'complete') {
+        top.status = 'setUpPage not completed... ' + this.containerTestFrame.setUpPageStatus + ' ' + (new Date());
       if ((new Date() - this.containerTestFrame.startTime) /1000 > this.getsetUpPageTimeout()) {
         alert('setUpPage timed out without completing.');
         if (!confirm('Retry Test Run?')) {
@@ -175,8 +167,7 @@ jsUnitTestManager.prototype._runTest = function ()
   setTimeout('top.testManager._runTest()', jsUnitTestManager.TIMEOUT_LENGTH);
 }
 
-jsUnitTestManager.prototype._done = function () 
-{
+jsUnitTestManager.prototype._done = function () {
   var secondsSinceRunBegan=(new Date() - this._timeRunStarted)/1000;
   this.setStatus('Done (' + secondsSinceRunBegan + ' seconds)');
   this._cleanUp();
@@ -186,8 +177,7 @@ jsUnitTestManager.prototype._done = function ()
   }
 }
 
-jsUnitTestManager.prototype._nextPage = function () 
-{
+jsUnitTestManager.prototype._nextPage = function () {
   if (this._currentSuite().hasMorePages()) {
     this.loadPage(this._currentSuite().nextPage());
   }
@@ -200,8 +190,7 @@ jsUnitTestManager.prototype._nextPage = function ()
   }
 }
 
-jsUnitTestManager.prototype._currentSuite = function () 
-{
+jsUnitTestManager.prototype._currentSuite = function () {
   var suite = null;
 
   if (this._suiteStack && this._suiteStack.length > 0)
@@ -210,8 +199,7 @@ jsUnitTestManager.prototype._currentSuite = function ()
   return suite;
 }
 
-jsUnitTestManager.prototype.calculateProgressBarProportion = function () 
-{
+jsUnitTestManager.prototype.calculateProgressBarProportion = function () {
   if (this.totalCount == 0) 
     return 0;
   var currentDivisor = 1;
@@ -226,21 +214,18 @@ jsUnitTestManager.prototype.calculateProgressBarProportion = function ()
   return result;
 }
 
-jsUnitTestManager.prototype._cleanUp = function () 
-{
+jsUnitTestManager.prototype._cleanUp = function () {
   this.containerController.setTestPage('./app/emptyPage.html');
   this.finalize();
   top.tracer.finalize();
 }
 
-jsUnitTestManager.prototype.abort = function () 
-{
+jsUnitTestManager.prototype.abort = function () {
   this.setStatus('Aborted');
   this._cleanUp();
 }
 
-jsUnitTestManager.prototype.getTimeout = function () 
-{
+jsUnitTestManager.prototype.getTimeout = function () {
   var result = jsUnitTestManager.TESTPAGE_WAIT_SEC;
   try {
     result = eval(this.timeout.value);
@@ -250,8 +235,7 @@ jsUnitTestManager.prototype.getTimeout = function ()
   return result;
 }
 
-jsUnitTestManager.prototype.getsetUpPageTimeout = function () 
-{
+jsUnitTestManager.prototype.getsetUpPageTimeout = function () {
   var result = jsUnitTestManager.SETUPPAGE_TIMEOUT;
   try {
     result = eval(this.setUpPageTimeout.value);
@@ -261,8 +245,7 @@ jsUnitTestManager.prototype.getsetUpPageTimeout = function ()
   return result;
 }
 
-jsUnitTestManager.prototype.isTestPageSuite = function () 
-{
+jsUnitTestManager.prototype.isTestPageSuite = function () {
   var result = false;
   if (typeof(this.containerTestFrame.suite) == 'function')
   {
@@ -271,8 +254,7 @@ jsUnitTestManager.prototype.isTestPageSuite = function ()
   return result;
 }
 
-jsUnitTestManager.prototype.getTestFunctionNames = function () 
-{
+jsUnitTestManager.prototype.getTestFunctionNames = function () {
   var testFrame         = this.containerTestFrame;
   var testFunctionNames = new Array();
   var i;
@@ -301,8 +283,7 @@ jsUnitTestManager.prototype.getTestFunctionNames = function ()
   return testFunctionNames;
 }
 
-jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) 
-{
+jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) {
   var result;
   var remainingScriptToInspect = aScript.text;
   var currentIndex             = remainingScriptToInspect.indexOf('function test');
@@ -318,8 +299,7 @@ jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScr
   return result;
 }
 
-jsUnitTestManager.prototype.loadPage = function (testFileName) 
-{
+jsUnitTestManager.prototype.loadPage = function (testFileName) {
   this._testFileName         = testFileName;
   this._loadAttemptStartTime = new Date();
   this.setStatus('Opening Test Page "' + this._testFileName + '"');
@@ -354,8 +334,7 @@ jsUnitTestManager.prototype._isTestFrameLoaded = function () {
   return false;
 }
 
-jsUnitTestManager.prototype.executeTestFunction = function (functionName) 
-{
+jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
   this._testFunctionName=functionName;
   this.setStatus('Running test "' + this._testFunctionName + '"');
   var excep=null;
@@ -437,8 +416,7 @@ jsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
   }
 }
 
-jsUnitTestManager.prototype._handleTestException = function (excep) 
-{
+jsUnitTestManager.prototype._handleTestException = function (excep) {
   var problemMessage = this._fullyQualifiedCurrentTestFunctionName() + ' ';
   var errOption;
   if (typeof(excep.isJsUnitException) == 'undefined' || !excep.isJsUnitException) {
@@ -455,8 +433,7 @@ jsUnitTestManager.prototype._handleTestException = function (excep)
      problemMessage);
 }
 
-jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) 
-{
+jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
   var result=null;
   if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException) {
     result = '';
@@ -481,8 +458,7 @@ jsUnitTestManager.prototype._problemDetailMessageFor = function (excep)
   return result;
 }
 
-jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str)
-{
+jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
   var html = '';
   html += '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
   html += '<html><head><link rel="stylesheet" type="text/css" href="css/jsUnitStyle.css"><\/head>';
@@ -494,38 +470,31 @@ jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str)
   this.uiFrames[layerName].document.close();
 }
 
-jsUnitTestManager.prototype.setStatus = function (str)
-{
+jsUnitTestManager.prototype.setStatus = function (str) {
   this._setTextOnLayer('mainStatus', '<b>Status:<\/b> '+str);
 }
 
-jsUnitTestManager.prototype._setErrors = function (n)
-{
+jsUnitTestManager.prototype._setErrors = function (n) {
   this._setTextOnLayer('mainCountsErrors', '<b>Errors: <\/b>' + n);
 }
 
-jsUnitTestManager.prototype._setFailures = function (n)
-{
+jsUnitTestManager.prototype._setFailures = function (n) {
   this._setTextOnLayer('mainCountsFailures', '<b>Failures:<\/b> ' + n);
 }
 
-jsUnitTestManager.prototype._setTotal = function (n)
-{
+jsUnitTestManager.prototype._setTotal = function (n) {
   this._setTextOnLayer('mainCountsRuns', '<b>Runs:<\/b> ' + n);
 }
 
-jsUnitTestManager.prototype._setProgressBarImage = function (imgName)
-{
+jsUnitTestManager.prototype._setProgressBarImage = function (imgName) {
   this.progressBar.src=imgName;
 }
 
-jsUnitTestManager.prototype._setProgressBarWidth = function (w)
-{
+jsUnitTestManager.prototype._setProgressBarWidth = function (w) {
   this.progressBar.width=w;
 }
 
-jsUnitTestManager.prototype.updateProgressIndicators = function ()
-{
+jsUnitTestManager.prototype.updateProgressIndicators = function () {
   this._setTotal(this.totalCount);
   this._setErrors(this.errorCount);
   this._setFailures(this.failureCount);
@@ -537,25 +506,21 @@ jsUnitTestManager.prototype.updateProgressIndicators = function ()
     this._setProgressBarImage('../images/green.gif');
 }
 
-jsUnitTestManager.prototype.showMessageForSelectedProblemTest = function ()
-{
+jsUnitTestManager.prototype.showMessageForSelectedProblemTest = function () {
   var problemTestIndex = this.problemsListField.selectedIndex;
   if (problemTestIndex != -1)
     alert(this.problemsListField[problemTestIndex].value);
 }
 
-jsUnitTestManager.prototype.showMessagesForAllProblemTests = function ()
-{
+jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
    if (this.problemsListField.length == 0) 
      return;
 
-   try
-   {
-     if (this._windowForAllProblemMessages && !this._windowForAllProblemMessages.closed)
+   try {
+       if (this._windowForAllProblemMessages && !this._windowForAllProblemMessages.closed)
        this._windowForAllProblemMessages.close();
    }
-   catch(e)
-   {
+   catch(e) {
    }
 
    this._windowForAllProblemMessages = window.open('','','width=600, height=350,status=no,resizable=yes,scrollbars=yes');
@@ -569,7 +534,7 @@ jsUnitTestManager.prototype.showMessagesForAllProblemTests = function ()
      resDoc.write('<b>' + (i + 1) + '. ');
      resDoc.write(this.problemsListField[i].text);
      resDoc.write('<\/b><\/p><p><pre>');
-     resDoc.write(this.problemsListField[i].value);
+     resDoc.write(this._makeHTMLSafe(this.problemsListField[i].value));
      resDoc.write('<\/pre><\/p>');
    }
 
@@ -577,8 +542,14 @@ jsUnitTestManager.prototype.showMessagesForAllProblemTests = function ()
    resDoc.close();
 }
 
-jsUnitTestManager.prototype._clearProblemsList = function ()
-{
+jsUnitTestManager.prototype._makeHTMLSafe = function (string) {
+  string = string.replace(/&/g, '&amp;');
+  string = string.replace(/</g, '&lt;');
+  string = string.replace(/>/g, '&gt;');
+  return string;
+}
+
+jsUnitTestManager.prototype._clearProblemsList = function () {
   var listField = this.problemsListField;
   var initialLength=listField.options.length;
 
@@ -586,8 +557,7 @@ jsUnitTestManager.prototype._clearProblemsList = function ()
     listField.remove(0);
 }
 
-jsUnitTestManager.prototype.initialize = function ()
-{
+jsUnitTestManager.prototype.initialize = function () {
   this.setStatus('Initializing...');
   this._setRunButtonEnabled(false);
   this._clearProblemsList();
@@ -595,18 +565,15 @@ jsUnitTestManager.prototype.initialize = function ()
   this.setStatus('Done initializing');
 }
 
-jsUnitTestManager.prototype.finalize = function ()
-{
+jsUnitTestManager.prototype.finalize = function () {
   this._setRunButtonEnabled(true);
 }
 
-jsUnitTestManager.prototype._setRunButtonEnabled = function (b)
-{
+jsUnitTestManager.prototype._setRunButtonEnabled = function (b) {
   this.runButton.disabled = !b;
 }
 
-jsUnitTestManager.prototype.getTestFileName = function () 
-{
+jsUnitTestManager.prototype.getTestFileName = function () {
   var rawEnteredFileName = this.testFileName.value;
   var result             = rawEnteredFileName;
 
@@ -616,13 +583,11 @@ jsUnitTestManager.prototype.getTestFileName = function ()
   return result;
 }
 
-jsUnitTestManager.prototype.getTestFunctionName = function ()
-{
+jsUnitTestManager.prototype.getTestFunctionName = function () {
     return this._testFunctionName;
 }
 
-jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText) 
-{
+jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText) {
   var userEnteredTestFileName = top.testManager.getTestFileName();
   
   // only test for file:// since Opera uses a different format
@@ -632,13 +597,11 @@ jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText)
   return getTestFileProtocol() + this.getTestFileName();
 }
 
-function getTestFileProtocol()
-{
+function getTestFileProtocol() {
   return getDocumentProtocol();
 }
 
-function getDocumentProtocol() 
-{
+function getDocumentProtocol() {
   var protocol = top.document.location.protocol;
     
   if (protocol == "file:") 
@@ -673,21 +636,18 @@ function getWebserver() {
 // exist because the JavaScript Array.push(anObject) and Array.pop() 
 // functions are not available in IE 5.0
 
-function push(anArray, anObject) 
-{
+function push(anArray, anObject) {
   anArray[anArray.length]=anObject;
 }
 
-function pop(anArray) 
-{
+function pop(anArray) {
   if (anArray.length>=1) {
     delete anArray[anArray.length - 1];
     anArray.length--;
   }
 }
 
-if (xbDEBUG.on)
-{
+if (xbDEBUG.on) {
   xbDebugTraceObject('window', 'jsUnitTestManager');
   xbDebugTraceFunction('window', 'getTestFileProtocol');
   xbDebugTraceFunction('window', 'getDocumentProtocol');
