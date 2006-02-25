@@ -18,9 +18,10 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
-import java.io.*;
 import java.util.List;
-import java.util.logging.*;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 public abstract class AbstractJsUnitServer implements XmlRenderable {
 
@@ -71,10 +72,6 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         Logger webworkLogger = Logger.getLogger("com.opensymphony.webwork");
         webworkLogger.addHandler(handler);
         webworkLogger.setUseParentHandlers(false);
-    }
-
-    private File errorFile() {
-        return new File(configuration.getLogsDirectory(), "jsunit_error.log");
     }
 
     public void start() throws Exception {
