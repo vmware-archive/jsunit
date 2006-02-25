@@ -21,7 +21,6 @@ public class RemoteMachineRunnerHitter implements RemoteRunnerHitter {
         URLConnection connection = url.openConnection();
         InputStream in = connection.getInputStream();
         buffer = new byte[in.available()];
-        //noinspection ResultOfMethodCallIgnored
         in.read(buffer);
         in.close();
         return new String(buffer);

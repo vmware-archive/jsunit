@@ -12,6 +12,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrowserResult extends AbstractResult implements XmlRenderable {
+    private static final String LOG_PREFIX = "JSTEST-";
+
     private String browserFileName;
     private String remoteAddress;
     private String id;
@@ -28,7 +30,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     public static File logFileForId(File logsDirectory, String id) {
-        return new File(logsDirectory + File.separator + id + ".xml");
+        return new File(logsDirectory + File.separator + LOG_PREFIX + id + ".xml");
     }
 
     public void setBrowserFileName(String browserFileName) {
