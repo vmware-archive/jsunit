@@ -227,6 +227,7 @@
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
+            <sysproperty key="browserFileNames" value="${browserFileNames}"/>            
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
             <sysproperty key="logStatus" value="${logStatus}"/>

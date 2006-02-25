@@ -13,9 +13,6 @@ Required for next release:
     - documentation of assertEvaluatesToFalse & assertEvaluatesToTrue
     - xsl file for generating jsunit.properties.sample
 
-    keith's stuff:
-    - distributedtest as multiple individual runs
-
 Backlog:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
 - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
