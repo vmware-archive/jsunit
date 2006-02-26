@@ -6,7 +6,7 @@ import com.opensymphony.xwork.config.providers.XmlConfigurationProvider;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
-import net.jsunit.configuration.ConfigurationType;
+import net.jsunit.configuration.ServerType;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
@@ -17,13 +17,14 @@ import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
+import org.apache.jasper.servlet.JspServlet;
 
 import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
-public abstract class AbstractJsUnitServer implements XmlRenderable {
+public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     private HttpServer server;
     private StatusLogger statusLogger;
@@ -48,7 +49,11 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
     	}
     }
 
-    protected abstract ConfigurationType serverType();
+    public abstract ServerType serverType();
+
+    public Configuration getConfiguration() {
+        return configuration;
+    }
 
     class CommonLogHandler extends Handler {
         public void publish(LogRecord record) {
@@ -89,6 +94,8 @@ public abstract class AbstractJsUnitServer implements XmlRenderable {
         ServletHttpContext servletContext = new ServletHttpContext();
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
+
+        servletContext.addServlet("JSP","*.jsp", JspServlet.class.getName());
         servletContext.addHandler(new ResourceHandler());
 
         ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));

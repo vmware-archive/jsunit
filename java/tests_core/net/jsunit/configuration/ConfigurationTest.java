@@ -2,7 +2,7 @@ package net.jsunit.configuration;
 
 import junit.framework.TestCase;
 import net.jsunit.StubConfigurationSource;
-import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
@@ -31,8 +31,8 @@ public class ConfigurationTest extends TestCase {
         assertEquals(expectedRemoteMachineURLs, configuration.getRemoteMachineURLs());
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
-        assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
-        assertTrue(configuration.isValidFor(ConfigurationType.FARM));
+        assertTrue(configuration.isValidFor(ServerType.STANDARD));
+        assertTrue(configuration.isValidFor(ServerType.FARM));
     }
 
     public void testMinimal() throws Exception {
@@ -43,29 +43,29 @@ public class ConfigurationTest extends TestCase {
         assertEquals(60, configuration.getTimeoutSeconds());
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
-        assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
-        assertTrue(configuration.isValidFor(ConfigurationType.FARM));
+        assertTrue(configuration.isValidFor(ServerType.STANDARD));
+        assertTrue(configuration.isValidFor(ServerType.FARM));
     }
 
     public void testInvalidForStandardValidForFarm() throws Exception {
         Configuration configuration = new Configuration(new InvalidForStandardValidForFarmConfigurationSource());
-        assertFalse(configuration.isValidFor(ConfigurationType.STANDARD));
-        assertEquals(1, ConfigurationType.STANDARD.getPropertiesInvalidFor(configuration).size());
-        assertTrue(configuration.isValidFor(ConfigurationType.FARM));
+        assertFalse(configuration.isValidFor(ServerType.STANDARD));
+        assertEquals(1, ServerType.STANDARD.getPropertiesInvalidFor(configuration).size());
+        assertTrue(configuration.isValidFor(ServerType.FARM));
     }
     
     public void testValidForStandardInvalidForFarm() throws Exception {
         Configuration configuration = new Configuration(new ValidForStandardInvalidForFarmConfigurationSource());
-        assertTrue(configuration.isValidFor(ConfigurationType.STANDARD));
-        assertFalse(configuration.isValidFor(ConfigurationType.FARM));
-        assertEquals(1, ConfigurationType.FARM.getPropertiesInvalidFor(configuration).size());
+        assertTrue(configuration.isValidFor(ServerType.STANDARD));
+        assertFalse(configuration.isValidFor(ServerType.FARM));
+        assertEquals(1, ServerType.FARM.getPropertiesInvalidFor(configuration).size());
     }
 
     public void testAsXml() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals(
-            "<configuration type=\""+ConfigurationType.STANDARD.name()+"\">" +
-                "<os>"+OperatingSystemUtility.osString()+"</os>" +
+            "<configuration type=\""+ServerType.STANDARD.name()+"\">" +
+                "<os>"+SystemUtility.osString()+"</os>" +
                 "<browserFileNames>" +
                     "<browserFileName>browser1.exe</browserFileName>" +
                     "<browserFileName>browser2.exe</browserFileName>" +
@@ -79,7 +79,7 @@ public class ConfigurationTest extends TestCase {
 	            "<timeoutSeconds>76</timeoutSeconds>" +
 	            "<url>http://www.example.com:1234</url>" +
             "</configuration>",
-            XmlUtility.asString(configuration.asXml(ConfigurationType.STANDARD))
+            XmlUtility.asString(configuration.asXml(ServerType.STANDARD))
         );
     }
     

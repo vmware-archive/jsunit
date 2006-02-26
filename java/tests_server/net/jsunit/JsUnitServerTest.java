@@ -7,11 +7,11 @@ import net.jsunit.model.BrowserResult;
 
 public class JsUnitServerTest extends TestCase {
 
-	private JsUnitServer server;
+	private StandardJsUnitServer server;
 	
 	public void setUp() throws Exception {
 		super.setUp();
-		server = new JsUnitServer(new Configuration(new DummyConfigurationSource()));
+		server = new StandardJsUnitServer(new Configuration(new DummyConfigurationSource()));
 	}
 	
 	public void testStartTestRun() throws Exception {
@@ -123,7 +123,7 @@ public class JsUnitServerTest extends TestCase {
     }
 
     public void testNoURLSpecified() throws Exception {
-        server = new JsUnitServer(new Configuration(new DummyConfigurationSource() {
+        server = new StandardJsUnitServer(new Configuration(new DummyConfigurationSource() {
             public String url() {
                 return "";
             }
@@ -137,7 +137,7 @@ public class JsUnitServerTest extends TestCase {
 
     public void testInvalidConfiguration() {
 		try {
-			server = new JsUnitServer(new Configuration(new InvalidConfigurationSource()));
+			server = new StandardJsUnitServer(new Configuration(new InvalidConfigurationSource()));
 			fail();
 		} catch (ConfigurationException e){
 			

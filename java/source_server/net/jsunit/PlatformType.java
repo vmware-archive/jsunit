@@ -1,18 +1,18 @@
 package net.jsunit;
 
-import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.SystemUtility;
 
 public enum PlatformType {
 	
 	WINDOWS(new String[] {"rundll32", "url.dll,FileProtocolHandler"}) {
 		public boolean matchesSystem() {
-			String os = OperatingSystemUtility.osName();
+			String os = SystemUtility.osName();
 			return os != null && os.startsWith("Windows");
 		}
 	},
 	MACINTOSH(new String[] {"open"}) {
 		public boolean matchesSystem() {
-			String os = OperatingSystemUtility.osName();
+			String os = SystemUtility.osName();
 			return os != null && os.startsWith("Mac");
 		}
 	},

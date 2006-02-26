@@ -1,6 +1,6 @@
 package net.jsunit.configuration;
 
-import net.jsunit.utility.OperatingSystemUtility;
+import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.StringUtility;
 import org.jdom.Element;
 
@@ -113,13 +113,13 @@ public final class Configuration {
         return Boolean.valueOf(logStatus);
     }
 
-    public Element asXml(ConfigurationType configurationType) {
+    public Element asXml(ServerType serverType) {
         Element configurationElement = new Element("configuration");
-        configurationElement.setAttribute("type", configurationType.name());
+        configurationElement.setAttribute("type", serverType.name());
         Element osElement = new Element("os");
-        osElement.setText(OperatingSystemUtility.osString());
+        osElement.setText(SystemUtility.osString());
         configurationElement.addContent(osElement);
-        for (ConfigurationProperty property : configurationType.getRequiredAndOptionalConfigurationProperties())
+        for (ConfigurationProperty property : serverType.getRequiredAndOptionalConfigurationProperties())
             property.addXmlTo(configurationElement, this);
         return configurationElement;
     }
@@ -165,7 +165,7 @@ public final class Configuration {
         return source.description();
     }
 
-    public boolean isValidFor(ConfigurationType type) {
+    public boolean isValidFor(ServerType type) {
         return type.getPropertiesInvalidFor(this).isEmpty();
     }
 

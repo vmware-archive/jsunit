@@ -40,7 +40,7 @@
     <property name="ignoreUnresponsiveRemoteMachines" value=""/>
 
     <!--
-     logsDirectory is the directory in which the JsUnitServer stores the XML logs produced from tests run.  It can be
+     logsDirectory is the directory in which the StandardJsUnitServer stores the XML logs produced from tests run.  It can be
      specified relative to the working directory.  This is not a mandatory property.  If not specified, the directory
      called "logs" inside resourceBase is assumed.
      For example: <property name="logsDirectory" value="c:\\jsunit\\java\logs"/>
@@ -55,7 +55,7 @@
     <property name="logStatus" value=""/>
 
     <!--
-     port is the port on which the JsUnitServer runs.  This is not a mandatory property.  If not specified, 8080 is assumed.
+     port is the port on which the StandardJsUnitServer runs.  This is not a mandatory property.  If not specified, 8080 is assumed.
      For example: <property name="port" value="8080"/>
      -->
     <property name="port" value=""/>
@@ -68,7 +68,7 @@
     <property name="remoteMachineURLs" value=""/>
 
     <!--
-     resourceBase is the directory that the JsUnitServer considers to be its document root.  It can be specified relative
+     resourceBase is the directory that the StandardJsUnitServer considers to be its document root.  It can be specified relative
      to the working directory.  This is not a mandatory property.  If not specified, the working directory is assumed.
      For example: <property name="resourceBase" value="c:\\jsunit"/>
      -->
@@ -172,7 +172,7 @@
     </target>
 
     <target name="start_server" description="Starts a JsUnit Server">
-        <java fork="true" classname="net.jsunit.JsUnitServer">
+        <java fork="true" classname="net.jsunit.StandardJsUnitServer">
             <classpath refid="classpath"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="url" value="${url}"/>

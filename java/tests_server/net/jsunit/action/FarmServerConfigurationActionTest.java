@@ -6,7 +6,7 @@ import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitFarmServer;
 import net.jsunit.MockRemoteRunnerHitter;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationType;
+import net.jsunit.configuration.ServerType;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.CDATA;
 import org.jdom.Document;
@@ -31,8 +31,8 @@ public class FarmServerConfigurationActionTest extends TestCase {
 		MockRemoteRunnerHitter mockHitter = new MockRemoteRunnerHitter();
 		Configuration configuration1 = configuration1();
 		Configuration configuration2 = configuration2();
-		mockHitter.documents.add(new Document(configuration1.asXml(ConfigurationType.FARM)));
-		mockHitter.documents.add(new Document(configuration2.asXml(ConfigurationType.FARM)));
+		mockHitter.documents.add(new Document(configuration1.asXml(ServerType.FARM)));
+		mockHitter.documents.add(new Document(configuration2.asXml(ServerType.FARM)));
 		action.setRemoteRunnerHitter(mockHitter);
 		action.execute();
 		assertEquals(2, mockHitter.urlsPassed.size());
@@ -40,10 +40,10 @@ public class FarmServerConfigurationActionTest extends TestCase {
 		assertEquals(
 			"<remoteConfigurations>" +
 				"<remoteConfiguration remoteMachineURL=\"" + DummyConfigurationSource.REMOTE_URL_1 + "\">" +
-					XmlUtility.asString(configuration1.asXml(ConfigurationType.FARM)) +
+					XmlUtility.asString(configuration1.asXml(ServerType.FARM)) +
 				"</remoteConfiguration>" +
 				"<remoteConfiguration remoteMachineURL=\"" + DummyConfigurationSource.REMOTE_URL_2 + "\">" +
-					XmlUtility.asString(configuration2.asXml(ConfigurationType.FARM)) +
+					XmlUtility.asString(configuration2.asXml(ServerType.FARM)) +
 				"</remoteConfiguration>" +
 			"</remoteConfigurations>",
 			xml

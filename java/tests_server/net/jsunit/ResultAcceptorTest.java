@@ -14,7 +14,7 @@ import net.jsunit.model.BrowserResultWriter;
 
 public class ResultAcceptorTest extends TestCase {
     protected Map<String, String[]> requestMap;
-    private JsUnitServer server;
+    private StandardJsUnitServer server;
     private Configuration configuration;
 
     public ResultAcceptorTest(String name) {
@@ -38,7 +38,7 @@ public class ResultAcceptorTest extends TestCase {
             }
 
         });
-        server = new JsUnitServer(configuration);
+        server = new StandardJsUnitServer(configuration);
         requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[]{"ID_foo"});
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[]{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});

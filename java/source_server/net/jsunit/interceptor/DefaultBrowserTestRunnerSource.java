@@ -1,12 +1,12 @@
 package net.jsunit.interceptor;
 
 import net.jsunit.BrowserTestRunner;
-import net.jsunit.JsUnitServer;
+import net.jsunit.StandardJsUnitServer;
 
 public class DefaultBrowserTestRunnerSource implements BrowserTestRunnerSource {
 
 	public BrowserTestRunner getRunner() {
-		return JsUnitServer.serverInstance();
+		return StandardJsUnitServer.serverInstance();
 	}
 
 }

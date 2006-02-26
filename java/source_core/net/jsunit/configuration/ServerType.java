@@ -7,8 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Collections;
 
-public enum ConfigurationType {
+public enum ServerType {
     STANDARD(
+        false,
         new ConfigurationProperty[] {
             ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
             ConfigurationProperty.LOGS_DIRECTORY,
@@ -24,6 +25,7 @@ public enum ConfigurationType {
         }
     ),
     FARM(
+        true,
         new ConfigurationProperty[] {
             ConfigurationProperty.LOGS_DIRECTORY,
             ConfigurationProperty.LOG_STATUS,
@@ -40,8 +42,10 @@ public enum ConfigurationType {
 
     private List<ConfigurationProperty> requiredProperties;
     private List<ConfigurationProperty> optionalProperties;
+    private boolean isFarm;
 
-    private ConfigurationType(ConfigurationProperty[] required, ConfigurationProperty[] optional) {
+    private ServerType(boolean isFarm, ConfigurationProperty[] required, ConfigurationProperty[] optional) {
+        this.isFarm = isFarm;
         this.requiredProperties = Arrays.asList(required);
         this.optionalProperties = Arrays.asList(optional);
     }
@@ -81,5 +85,9 @@ public enum ConfigurationType {
         result.addAll(getOptionalConfigurationProperties());
         Collections.sort(result, ConfigurationProperty.comparator());
         return result;
+    }
+
+    public boolean isFarm() {
+        return isFarm;
     }
 }

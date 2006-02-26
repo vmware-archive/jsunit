@@ -1,7 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationType;
+import net.jsunit.configuration.ServerType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,16 +39,12 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
         return "farm_xwork.xml";
     }
 
-    public static JsUnitFarmServer getFarmServerInstance() {
+    public static JsUnitFarmServer farmServerInstance() {
         return farmServerInstance;
     }
 
-    public Configuration getConfiguration() {
-        return configuration;
-    }
-
-    protected ConfigurationType serverType() {
-        return ConfigurationType.FARM;
+    public ServerType serverType() {
+        return ServerType.FARM;
     }
 
 }

@@ -8,7 +8,7 @@ public class FarmServerInterceptor extends JsUnitInterceptor {
 
 	protected void execute(Action targetAction) {
 		FarmServerAware action = (FarmServerAware) targetAction;
-		action.setFarmServer(JsUnitFarmServer.getFarmServerInstance());
+		action.setFarmServer(JsUnitFarmServer.farmServerInstance());
 	}
 
 }

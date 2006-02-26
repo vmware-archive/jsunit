@@ -11,7 +11,7 @@ import net.jsunit.model.TestRunResult;
 
 public class StandaloneTest extends TestCase {
 
-    protected JsUnitServer server;
+    protected StandardJsUnitServer server;
     private TestRunManager testRunManager;
     private ConfigurationSource configurationSource;
 
@@ -40,7 +40,7 @@ public class StandaloneTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new JsUnitServer(new Configuration(configurationSource));
+        server = new StandardJsUnitServer(new Configuration(configurationSource));
         server.start();
         testRunManager = createTestRunManager();
     }
