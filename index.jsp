@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</title>
+    <title>JsUnit <%if (server.isFarmServer()){%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>

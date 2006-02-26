@@ -31,6 +31,7 @@ SERVER
 - addition of new configuration property, "ignoreUnresponsiveRemoteMachines", for whether to care that remote machines don't uccessfully run the tests
 - addition of new configuration property, "description", which contains a human-readable description of the server
 - new index.jsp ("/") page
+- jsunit.org registered; redirects to edwardh.com/jsunit
 
 BUGS
 - fix for "retry test run" bug
