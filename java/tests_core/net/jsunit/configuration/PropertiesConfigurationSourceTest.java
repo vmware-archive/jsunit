@@ -1,5 +1,7 @@
 package net.jsunit.configuration;
 
+import java.io.FileNotFoundException;
+
 import junit.framework.TestCase;
 import net.jsunit.utility.FileUtility;
 
@@ -9,7 +11,7 @@ public class PropertiesConfigurationSourceTest extends TestCase {
         try {
         	new PropertiesFileConfigurationSource("nosuch.file");
             fail("Should have thrown a RuntimeException because no properties file exists");
-        } catch (RuntimeException e) {
+        } catch (FileNotFoundException e) {
         }
     }
 
