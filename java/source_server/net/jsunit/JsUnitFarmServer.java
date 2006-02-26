@@ -15,6 +15,7 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
 
     protected List<String> servletNames() {
         return Arrays.asList(new String[] {
+            "index",
             "config",
             "runner"
         });

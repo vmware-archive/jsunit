@@ -27,21 +27,21 @@
 		
 		<default-interceptor-ref name="defaultStack" />
 	
-		<action name="acceptor" class="net.jsunit.action.ResultAcceptorAction"> 
+		<action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
 			<result name="success" type="jsUnitXml"/>
 			<interceptor-ref name="defaultStack" />
-			<interceptor-ref name="browserResult" />				
+			<interceptor-ref name="browserResult" />
 		</action>
 
-		<action name="runner" class="net.jsunit.action.TestRunnerAction"> 
-			<result name="success" type="jsUnitXml"/>
-		</action> 
+        <action name="runner" class="net.jsunit.action.TestRunnerAction">
+            <result name="success" type="jsUnitXml"/>
+        </action>
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">
             <result name="success" type="jsUnitXml"/>
         </action>
 
-        <action name="config" class="net.jsunit.action.ServerConfigurationAction">
+        <action name="config" class="net.jsunit.action.BrowserTestRunnerConfigurationAction">
             <result name="success" type="jsUnitXml"/>
         </action>
 

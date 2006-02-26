@@ -3,7 +3,7 @@ package net.jsunit.action;
 import com.opensymphony.xwork.Action;
 import net.jsunit.BrowserTestRunner;
 
-public abstract class JsUnitServerAction implements Action, XmlProducer {
+public abstract class JsUnitBrowserTestRunnerAction implements Action, XmlProducer {
 
 	protected BrowserTestRunner runner;
 

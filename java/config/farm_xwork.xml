@@ -27,7 +27,7 @@
 		</interceptors>
 		
 		<default-interceptor-ref name="defaultStack" />
-	
+
 		<action name="runner" class="net.jsunit.action.FarmTestRunnerAction"> 
 			<result name="success" type="jsUnitXml"/>
 		</action> 

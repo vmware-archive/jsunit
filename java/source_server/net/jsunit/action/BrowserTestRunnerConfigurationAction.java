@@ -2,7 +2,7 @@ package net.jsunit.action;
 
 import net.jsunit.XmlRenderable;
 
-public class ServerConfigurationAction extends JsUnitServerAction {
+public class BrowserTestRunnerConfigurationAction extends JsUnitBrowserTestRunnerAction {
     public String execute() throws Exception {
         return SUCCESS;
     }
