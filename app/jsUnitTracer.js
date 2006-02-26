@@ -1,5 +1,3 @@
-/* @author Edward Hieatt, edward@jsunit.net */
-
 var TRACE_LEVEL_NONE    = new JsUnitTraceLevel(0, null);
 var TRACE_LEVEL_WARNING = new JsUnitTraceLevel(1, "#FF0000");
 var TRACE_LEVEL_INFO    = new JsUnitTraceLevel(2, "#009966");

@@ -4,6 +4,7 @@ Required for next release:
     - pull in pivotal's new assertion functions
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
     - auto-upgrade check
+    - add hostname & ip address to test run result
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
   BUGS:

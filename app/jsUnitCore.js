@@ -1,5 +1,3 @@
-/* @author Edward Hieatt, edward@jsunit.net */
-
 var JSUNIT_UNDEFINED_VALUE;
 var JSUNIT_VERSION="2.2";
 var isTestPageLoaded = false;
@@ -347,7 +345,6 @@ function pop(anArray) {
   }
 }
 
-// safe, strict access to jsUnitParmHash
 function jsUnitGetParm(name)
 {
   if (typeof(top.jsUnitParmHash[name]) != 'undefined')

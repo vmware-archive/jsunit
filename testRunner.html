@@ -10,25 +10,15 @@
     <script language="JavaScript" type="text/javascript">
   var DEFAULT_TEST_FRAME_HEIGHT=250;
 
-  // safe, strict access to jsUnitParmHash
-  function jsUnitGetParm(name)
-  {
-    if (typeof(top.jsUnitParmHash[name]) != 'undefined')
-    {
-      return top.jsUnitParmHash[name];
-    }
-    return null;
-  }
-
   function jsUnitParseParms(string)
   {
     var i;
     var searchString = unescape(string);
-    var jsUnitParmHash = new Object();
+    var parameterHash = new Object();
 
     if (!searchString)
     {
-      return jsUnitParmHash;
+      return parameterHash;
     }
 
     i = searchString.indexOf('?');
@@ -45,14 +35,14 @@
       a[0] = a[0].toLowerCase();
       if (a.length > 1)
       {
-        jsUnitParmHash[a[0]] =  a[1];
+        parameterHash[a[0]] =  a[1];
       }
       else
       {
-        jsUnitParmHash[a[0]] =  true;
+        parameterHash[a[0]] =  true;
       }
     }
-    return jsUnitParmHash;
+    return parameterHash;
   }
 
   function jsUnitConstructTestParms()
@@ -104,8 +94,6 @@
   var utility;
   var tracer;
 
-
-  var JSUNIT_UNDEFINED_VALUE;
 
   if (!Array.prototype.push)
   {

@@ -1,5 +1,3 @@
-/* @author Edward Hieatt, edward@jsunit.net */
-
 function jsUnitTestSuite() {
   this.isjsUnitTestSuite = true;
   this.testPages         = Array();

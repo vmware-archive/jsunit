@@ -66,6 +66,8 @@ public class ConfigurationTest extends TestCase {
         assertEquals(
             "<configuration type=\""+ServerType.STANDARD.name()+"\">" +
                 "<os>"+SystemUtility.osString()+"</os>" +
+                "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
+                "<hostname>"+SystemUtility.hostname()+"</hostname>" +
                 "<browserFileNames>" +
                     "<browserFileName>browser1.exe</browserFileName>" +
                     "<browserFileName>browser2.exe</browserFileName>" +

@@ -1,5 +1,3 @@
-/* @author Edward Hieatt, edward@jsunit.net */
-
 function jsUnitTestManager()
 {
   this._windowForAllProblemMessages = null;
@@ -48,7 +46,7 @@ jsUnitTestManager.TESTPAGE_WAIT_SEC  = 120;
 jsUnitTestManager.TIMEOUT_LENGTH     = 20;
 
 // seconds to wait for setUpPage to complete
-jsUnitTestManager.SETUPPAGE_TIMEOUT    = 120; 
+jsUnitTestManager.SETUPPAGE_TIMEOUT    = 120;
 
 // milliseconds to wait between polls on setUpPages
 jsUnitTestManager.SETUPPAGE_INTERVAL   = 100;

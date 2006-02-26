@@ -12,7 +12,7 @@ import java.util.Comparator;
 
 public enum ConfigurationProperty {
 
-    BROWSER_FILE_NAMES("browserFileNames", null) {
+    BROWSER_FILE_NAMES("browserFileNames", "Browser file names", null) {
         public String getValueString(Configuration configuration) {
             return StringUtility.commaSeparatedString(configuration.getBrowserFileNames());
         }
@@ -24,27 +24,27 @@ public enum ConfigurationProperty {
             }
         }
     },
-    CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "true") {
+    CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "Close browsers?", "true") {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldCloseBrowsersAfterTestRuns());
         }
     },
-    LOGS_DIRECTORY("logsDirectory", "." + File.separator + "logs") {
+    LOGS_DIRECTORY("logsDirectory", "Logs directory", "." + File.separator + "logs") {
         public String getValueString(Configuration configuration) {
-            return configuration.getLogsDirectory().toString();
+            return configuration.getLogsDirectory().getAbsolutePath();
         }
     },
-    LOG_STATUS("logStatus", "true") {
+    LOG_STATUS("logStatus", "Log status?", "true") {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldLogStatus());
         }
     },
-    PORT("port", "8080") {
+    PORT("port", "Port", "8080") {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.getPort());
         }
     },
-    REMOTE_MACHINE_URLS("remoteMachineURLs", null) {
+    REMOTE_MACHINE_URLS("remoteMachineURLs", "Remote machine URLs", null) {
         public String getValueString(Configuration configuration) {
             return StringUtility.commaSeparatedString(configuration.getRemoteMachineURLs());
         }
@@ -56,37 +56,39 @@ public enum ConfigurationProperty {
             }
         }
     },
-    RESOURCE_BASE("resourceBase", ".") {
+    RESOURCE_BASE("resourceBase", "Resource base", ".") {
         public String getValueString(Configuration configuration) {
-            return configuration.getResourceBase().toString();
+            return configuration.getResourceBase().getAbsolutePath();
         }
     },
-    TIMEOUT_SECONDS("timeoutSeconds", "60") {
+    TIMEOUT_SECONDS("timeoutSeconds", "Test timeout (seconds)", "60") {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.getTimeoutSeconds());
         }
     },
-    URL("url", null) {
+    URL("url", "Test Page URL", null) {
         public String getValueString(Configuration configuration) {
             URL testURL = configuration.getTestURL();
             return testURL == null ? "" : testURL.toString();
         }
     },
-    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "false") {
+    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remote machines?", "false") {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         }
     },
-    DESCRIPTION("description", null) {
+    DESCRIPTION("description", "Description", null) {
         public String getValueString(Configuration configuration) {
             return configuration.getDescription();
         }
     };
 
     private String name;
+    private String displayName;
     private String defaultValue;
 
-    ConfigurationProperty(String name, String defaultValue) {
+    private ConfigurationProperty(String name, String displayName, String defaultValue) {
+        this.displayName = displayName;
         this.name = name;
         this.defaultValue = defaultValue;
     }
@@ -123,5 +125,9 @@ public enum ConfigurationProperty {
                 return property1.name().compareTo(property2.name());
             }
         };
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

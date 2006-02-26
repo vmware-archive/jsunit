@@ -2,51 +2,71 @@
 <%@ page import="net.jsunit.ServerRegistry"%>
 <%@ page import="net.jsunit.utility.SystemUtility"%>
 <%@ page import="net.jsunit.utility.XmlUtility"%>
+<%@ page import="net.jsunit.configuration.ConfigurationProperty"%>
+<%@ page import="net.jsunit.configuration.Configuration"%>
 <%JsUnitServer server = ServerRegistry.getServer();%>
+<%Configuration configuration = server.getConfiguration();%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 <body>
-<table width="100%" bgcolor="#EEEEEE">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information" bgcolor="#DDDDDD">
     <tr>
         <td width="1">
             <a href="http://www.jsunit.net"><img src="images/logo_jsunit.gif" alt="JsUnit" border="0"/></a>
         </td>
         <td width="50">&nbsp;</td>
-        <td valign="middle" align="left">
+        <th nowrap align="left">
             <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</h4>
-            <i>Running on <%=SystemUtility.osString()%>.</i>
+            <font size="-2"><i>Running on <%=SystemUtility.displayString()%><br/>
+        </th>
+        <td nowrap align="right" valign="middle">
+            <a href="http://www.jsunit.net/" target="_blank">JsUnit Home</a><br>
+            <a href="mailto:edward@jsunit.net">edward@jsunit.net</a><br>
         </td>
+
     </tr>
 </table>
 <h4>
     Server configuration:
 </h4>
+<table border="0">
+    <%
+        for (ConfigurationProperty property : configuration.getRequiredAndOptionalConfigurationProperties(server.serverType())) {
+            String valueString = property.getValueString(configuration);
+            %>
+                <tr>
+                    <td><b><%=property.getDisplayName()%>:</b></td>
+                    <td><%=valueString == null ? "" : valueString%></td></tr>
+    <%
+        }
+    %>
+</table>
 <p>
-    <%=XmlUtility.asPrettyString(server.asXml())%>
-</p>
-<p>
-    The following commands are available on this JsUnit server. For more information, see <a href="http://www.jsunit.net">jsunit.net</a>.<br/>
+    The following commands are available on this JsUnit server.
 </p>
 <h4>testRunner.html</h4>
-The manual Test Runner is at <a href="testRunner.html">testRunner.html</a>.
+The manual Test Runner is at <a href="./testRunner.html">testRunner.html</a>.
 <h4>config</h4>
-You can see the configuration of this server by going to <a href="config">config</a>.
+You can see the configuration of this server by going to <a href="/jsunit/config">config</a>.
 <h4>runner</h4>
 You can see tell the server to run JsUnit tests using the runner command.
-You can run using the server's default URL for tests by going to <a href="runner">runner</a>,
+You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
 or you can specify a custom URL using this form:
-<form action="runner" method="get">
+<form action="/jsunit/runner" method="get">
     URL: <input type="text" name="url" size="100"/>
     <input type="submit" value="go"/>
 </form>
 <h4>displayer</h4>
 You can view the logs of past runs using the displayer command.
 Use this form to specify the ID of the run you want to see:
-<form action="displayer">
+<form action="/jsunit/displayer">
     ID: <input type="text" name="id" size="20"/>
     <input type="submit" value="go"/>
 </form>

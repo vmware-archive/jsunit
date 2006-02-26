@@ -1,7 +1,7 @@
 package net.jsunit.configuration;
 
-import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.StringUtility;
+import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
 import java.io.File;
@@ -121,12 +121,26 @@ public final class Configuration {
     public Element asXml(ServerType serverType) {
         Element configurationElement = new Element("configuration");
         configurationElement.setAttribute("type", serverType.name());
-        Element osElement = new Element("os");
-        osElement.setText(SystemUtility.osString());
-        configurationElement.addContent(osElement);
-        for (ConfigurationProperty property : serverType.getRequiredAndOptionalConfigurationProperties())
+        addSystemElementsTo(configurationElement);
+        for (ConfigurationProperty property : getRequiredAndOptionalConfigurationProperties(serverType))
             property.addXmlTo(configurationElement, this);
         return configurationElement;
+    }
+
+    private void addSystemElementsTo(Element element) {
+        Element osElement = new Element("os");
+        osElement.setText(SystemUtility.osString());
+        element.addContent(osElement);
+        Element ipAddressElement = new Element("ipAddress");
+        ipAddressElement.setText(SystemUtility.ipAddress());
+        element.addContent(ipAddressElement);
+        Element hostnameElement = new Element("hostname");
+        hostnameElement.setText(SystemUtility.hostname());
+        element.addContent(hostnameElement);
+    }
+
+    public List<ConfigurationProperty> getRequiredAndOptionalConfigurationProperties(ServerType serverType) {
+        return serverType.getRequiredAndOptionalConfigurationProperties();
     }
 
     public String[] asArgumentsArray() {

@@ -8,6 +8,9 @@ public class LandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/index.jsp");
         webTester.assertTitleEquals("JsUnit 2.2 Server");
         webTester.assertTextPresent(SystemUtility.osString());
+        webTester.assertTextPresent(SystemUtility.hostname());
+        webTester.assertTextPresent(SystemUtility.ipAddress());
+        
     }
 
 }
