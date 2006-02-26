@@ -9,6 +9,7 @@ import java.util.Collections;
 
 public enum ServerType {
     STANDARD(
+        "Standard",
         false,
         new ConfigurationProperty[] {
             ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
@@ -25,6 +26,7 @@ public enum ServerType {
         }
     ),
     FARM(
+        "Farm",
         true,
         new ConfigurationProperty[] {
             ConfigurationProperty.LOGS_DIRECTORY,
@@ -42,9 +44,11 @@ public enum ServerType {
 
     private List<ConfigurationProperty> requiredProperties;
     private List<ConfigurationProperty> optionalProperties;
+    private String displayName;
     private boolean isFarm;
 
-    private ServerType(boolean isFarm, ConfigurationProperty[] required, ConfigurationProperty[] optional) {
+    private ServerType(String displayName, boolean isFarm, ConfigurationProperty[] required, ConfigurationProperty[] optional) {
+        this.displayName = displayName;
         this.isFarm = isFarm;
         this.requiredProperties = Arrays.asList(required);
         this.optionalProperties = Arrays.asList(optional);
@@ -89,5 +93,9 @@ public enum ServerType {
 
     public boolean isFarm() {
         return isFarm;
+    }
+
+    public String getDisplayName() {
+        return displayName;
     }
 }

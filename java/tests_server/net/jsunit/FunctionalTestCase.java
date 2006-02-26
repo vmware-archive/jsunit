@@ -14,7 +14,7 @@ import java.io.StringReader;
 
 public abstract class FunctionalTestCase extends TestCase {
 
-    protected final static int PORT = 8080;
+    protected final static int PORT = 9090;
 
     static {
         HttpUnitOptions.setScriptingEnabled(false);

@@ -1,9 +1,8 @@
 <%@ page import="net.jsunit.JsUnitServer"%>
 <%@ page import="net.jsunit.ServerRegistry"%>
-<%@ page import="net.jsunit.utility.SystemUtility"%>
-<%@ page import="net.jsunit.utility.XmlUtility"%>
-<%@ page import="net.jsunit.configuration.ConfigurationProperty"%>
 <%@ page import="net.jsunit.configuration.Configuration"%>
+<%@ page import="net.jsunit.configuration.ConfigurationProperty"%>
+<%@ page import="net.jsunit.utility.SystemUtility"%>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%Configuration configuration = server.getConfiguration();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
@@ -34,31 +33,34 @@
     </tr>
 </table>
 <h4>
-    Server configuration:
+    Server configuration
 </h4>
 <table border="0">
-    <%
+    <tr>
+        <th nowrap align="right">Server type:</th>
+        <td width="10">&nbsp;</td>
+        <td><%=server.serverType().getDisplayName()%></td>
+        <%
         for (ConfigurationProperty property : configuration.getRequiredAndOptionalConfigurationProperties(server.serverType())) {
             String valueString = property.getValueString(configuration);
-            %>
-                <tr>
-                    <td><b><%=property.getDisplayName()%>:</b></td>
-                    <td><%=valueString == null ? "" : valueString%></td></tr>
+        %>
+            <tr>
+                <th nowrap align="right"><%=property.getDisplayName()%>:</th>
+                <td width="10">&nbsp;</td>
+                <td><%=valueString == null ? "" : valueString%></td></tr>
     <%
         }
     %>
 </table>
-<p>
-    The following commands are available on this JsUnit server.
-</p>
 <h4>testRunner.html</h4>
 The manual Test Runner is at <a href="./testRunner.html">testRunner.html</a>.
 <h4>config</h4>
-You can see the configuration of this server by going to <a href="/jsunit/config">config</a>.
+You can see the configuration of this server by going to <a href="/jsunit/config">config</a>.  The configuration is
+displayed as XML.  config is usually used programmatically.
 <h4>runner</h4>
 You can see tell the server to run JsUnit tests using the runner command.
 You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
-or you can specify a custom URL using this form:
+or you can specify a custom URL using the following form.
 <form action="/jsunit/runner" method="get">
     URL: <input type="text" name="url" size="100"/>
     <input type="submit" value="go"/>
