@@ -21,12 +21,12 @@ public abstract class FunctionalTestCase extends TestCase {
     }
 
     protected WebTester webTester;
-    protected StandardJsUnitServer server;
+    protected JsUnitStandardServer server;
 
     public void setUp() throws Exception {
         super.setUp();
         Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(PORT));
-        server = new StandardJsUnitServer(configuration);
+        server = new JsUnitStandardServer(configuration);
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl("http://localhost:" + webTesterPort() + "/jsunit");

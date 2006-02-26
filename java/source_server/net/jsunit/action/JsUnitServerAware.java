@@ -2,6 +2,6 @@ package net.jsunit.action;
 
 import net.jsunit.JsUnitFarmServer;
 
-public interface FarmServerAware {
+public interface JsUnitServerAware {
     void setFarmServer(JsUnitFarmServer farmServer);
 }

@@ -51,6 +51,10 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     public abstract ServerType serverType();
 
+    public boolean isFarmServer() {
+        return serverType().isFarm();
+    }
+
     public Configuration getConfiguration() {
         return configuration;
     }

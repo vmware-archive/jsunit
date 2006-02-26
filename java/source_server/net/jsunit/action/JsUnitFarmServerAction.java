@@ -8,7 +8,7 @@ public abstract class JsUnitFarmServerAction
         implements  Action,
                     XmlProducer,
                     RemoteRunnerHitterAware,
-                    FarmServerAware {
+                    JsUnitServerAware {
 
 	protected JsUnitFarmServer server;
 	protected RemoteRunnerHitter hitter;	
@@ -20,6 +20,5 @@ public abstract class JsUnitFarmServerAction
 	public void setRemoteRunnerHitter(RemoteRunnerHitter hitter) {
 		this.hitter  = hitter;
 	}
-
 
 }

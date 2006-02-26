@@ -9,9 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class StandardJsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner {
-
-    private static StandardJsUnitServer serverInstance;
+public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
     private Process browserProcess;
     private String browserFileName;
@@ -21,19 +19,15 @@ public class StandardJsUnitServer extends AbstractJsUnitServer implements Browse
     private ProcessStarter processStarter = new DefaultProcessStarter();
     private TimeoutChecker timeoutChecker;
 
-    public static StandardJsUnitServer serverInstance() {
-        return serverInstance;
-    }
-
-    public StandardJsUnitServer(Configuration configuration) {
+    public JsUnitStandardServer(Configuration configuration) {
         super(configuration);
         addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
-        serverInstance = this;
+        ServerRegistry.registerServer(this);
     }
 
     public static void main(String args[]) {
           try {
-              StandardJsUnitServer server = new StandardJsUnitServer(Configuration.resolve(args));
+              JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
               server.start();
           } catch (Throwable t) {
               t.printStackTrace();

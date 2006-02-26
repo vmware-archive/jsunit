@@ -8,11 +8,9 @@ import java.util.List;
 
 public class JsUnitFarmServer extends AbstractJsUnitServer {
 
-    private static JsUnitFarmServer farmServerInstance;
-
     public JsUnitFarmServer(Configuration configuration) {
         super(configuration);
-        farmServerInstance = this;
+        ServerRegistry.registerFarmServer(this);
     }
 
     protected List<String> servletNames() {
@@ -37,10 +35,6 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
 
     protected String xworkXmlName() {
         return "farm_xwork.xml";
-    }
-
-    public static JsUnitFarmServer farmServerInstance() {
-        return farmServerInstance;
     }
 
     public ServerType serverType() {

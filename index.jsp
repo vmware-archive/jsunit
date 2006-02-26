@@ -1,9 +1,8 @@
-<%@ page import="net.jsunit.utility.SystemUtility"%>
-<%@ page import="net.jsunit.StandardJsUnitServer"%>
-<%@ page import="net.jsunit.JsUnitFarmServer"%>
-<%@ page import="net.jsunit.utility.XmlUtility"%>
 <%@ page import="net.jsunit.JsUnitServer"%>
-<%JsUnitServer server = StandardJsUnitServer.serverInstance() != null ? StandardJsUnitServer.serverInstance() : JsUnitFarmServer.farmServerInstance();%>
+<%@ page import="net.jsunit.ServerRegistry"%>
+<%@ page import="net.jsunit.utility.SystemUtility"%>
+<%@ page import="net.jsunit.utility.XmlUtility"%>
+<%JsUnitServer server = ServerRegistry.getServer();%>
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">

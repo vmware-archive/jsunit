@@ -18,7 +18,7 @@ import java.util.List;
 public class DistributedTest extends TestCase {
 
     protected DistributedTestRunManager manager;
-    private StandardJsUnitServer server;
+    private JsUnitStandardServer server;
     private ConfigurationSource farmConfigurationSource;
 
     public DistributedTest(String name) {
@@ -33,7 +33,7 @@ public class DistributedTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new StandardJsUnitServer(new Configuration(configurationSource()));
+        server = new JsUnitStandardServer(new Configuration(configurationSource()));
         startServerIfNecessary();
         manager = createTestRunManager();
     }
