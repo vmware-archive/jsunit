@@ -6,7 +6,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
-    <title>JsUnit Server</title>
+    <title>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
 </head>
 <body>
@@ -17,7 +17,7 @@
         </td>
         <td width="50">&nbsp;</td>
         <td valign="middle" align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.serverType().isFarm()){%> Farm<%}%> Server</h4>
+            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</h4>
             <i>Running on <%=SystemUtility.osString()%>.</i>
         </td>
     </tr>
