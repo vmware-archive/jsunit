@@ -174,6 +174,7 @@
     <target name="start_server" description="Starts a JsUnit Server">
         <java fork="true" classname="net.jsunit.JsUnitStandardServer">
             <classpath refid="classpath"/>
+            <sysproperty key="description" value="${description}"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="url" value="${url}"/>
             <sysproperty key="port" value="${port}"/>
@@ -188,6 +189,7 @@
     <target name="start_farm_server" description="Starts a JsUnit Farm Server">
         <java fork="true" classname="net.jsunit.JsUnitFarmServer">
             <classpath refid="classpath"/>
+            <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
             <sysproperty key="logStatus" value="${logStatus}"/>
@@ -212,6 +214,7 @@
             <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
+            <sysproperty key="description" value="${description}"/>
             <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
             <sysproperty key="logStatus" value="${logStatus}"/>
@@ -228,6 +231,7 @@
             <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>            
+            <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
             <sysproperty key="logStatus" value="${logStatus}"/>
