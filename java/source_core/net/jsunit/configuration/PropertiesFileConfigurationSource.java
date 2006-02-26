@@ -1,6 +1,7 @@
 package net.jsunit.configuration;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Properties;
 
 public class PropertiesFileConfigurationSource implements ConfigurationSource {
@@ -10,23 +11,25 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
     private Properties properties;
     private String propertiesFileName;
 
-    public PropertiesFileConfigurationSource(String propertiesFileName) {
+    public PropertiesFileConfigurationSource(String propertiesFileName) throws FileNotFoundException {
         this.propertiesFileName = propertiesFileName;
         loadProperties();
     }
 
-    public PropertiesFileConfigurationSource() {
+    public PropertiesFileConfigurationSource() throws FileNotFoundException {
         this(PROPERTIES_FILE_NAME);
     }
 
-    private void loadProperties() {
+    private void loadProperties() throws FileNotFoundException {
         properties = new Properties();
         try {
             FileInputStream fileInputStream = new FileInputStream(propertiesFileName);
             properties.load(fileInputStream);
             fileInputStream.close();
-        } catch (Exception e) {
-            throw new RuntimeException("Could not load " + propertiesFileName);
+        } catch (FileNotFoundException e) {
+        	throw e;
+        } catch (Throwable t) {
+            throw new RuntimeException(t);
         }
     }
 

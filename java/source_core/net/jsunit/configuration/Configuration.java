@@ -5,6 +5,7 @@ import net.jsunit.utility.StringUtility;
 import org.jdom.Element;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -32,7 +33,11 @@ public final class Configuration {
         for (ConfigurationProperty property : ConfigurationProperty.values())
             if (System.getProperty(property.getName()) != null)
                 return new EnvironmentVariablesConfigurationSource();
-        return new PropertiesFileConfigurationSource();
+        try {
+			return new PropertiesFileConfigurationSource();
+		} catch (FileNotFoundException e) {
+			throw new RuntimeException("Could not configure JsUnit - no environment variables or properties file found");
+		}
     }
 
     public static Configuration resolve() {
