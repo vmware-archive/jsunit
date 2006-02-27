@@ -81,4 +81,8 @@ public class DistributedTestRunManager {
     public String getOverrideURL() {
         return overrideURL;
     }
+
+  public void setOverrideURL(String overrideURL) {
+    this.overrideURL = overrideURL;
+  }
 }

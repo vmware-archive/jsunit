@@ -1,16 +1,14 @@
 package net.jsunit;
 
-import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
+
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
-public class InvalidRemoteMachinesDistributedTestTest extends DistributedTest {
+public class InvalidRemoteMachinesDistributedTestTest extends TestCase {
 
-    public InvalidRemoteMachinesDistributedTestTest(String name) {
-        super(name);
-    }
-
-    protected ConfigurationSource farmConfigurationSource() {
+  protected ConfigurationSource invalidRemoteMachinesFarmSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://invalid_machine1:8080, http://invalid_machine2:8080";
@@ -18,26 +16,18 @@ public class InvalidRemoteMachinesDistributedTestTest extends DistributedTest {
         };
     }
 
-    protected ConfigurationSource configurationSource() {
-        return new StubConfigurationSource() {
-            public String browserFileNames() {
-                return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
-            }
-
-            public String url() {
-                return "http://localhost:8080/jsunit/testRunner.html?"
-                + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true";
-            }
-        };
+    protected ConfigurationSource serverSource() {
+        return new StubConfigurationSource();
     }
 
-    public void testCollectResults() {
-        try {
-            super.testCollectResults();
-            fail();
-        } catch (AssertionFailedError e) {
-            assertEquals(ResultType.UNRESPONSIVE, manager.getFarmTestRunResult().getResultType());
-        }
+    public void testUnresponsive() {
+      DistributedTest test = new DistributedTest(serverSource(), invalidRemoteMachinesFarmSource());
+      TestResult testResult = test.run();
+      assertFalse(testResult.wasSuccessful());
+      assertEquals(
+        ResultType.UNRESPONSIVE,
+        test.getDistributedTestRunManager().getFarmTestRunResult().getResultType()
+      );
     }
 
 }

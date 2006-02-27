@@ -1,17 +1,14 @@
 package net.jsunit;
 
-import net.jsunit.configuration.Configuration;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
+
 import net.jsunit.configuration.ConfigurationSource;
-import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.model.ResultType;
 
-public class OverrideURLDistributedTestTest extends DistributedTest {
+public class OverrideURLDistributedTestTest extends TestCase {
 
-    public OverrideURLDistributedTestTest(String name) {
-        super(name);
-    }
-
-    protected ConfigurationSource farmConfigurationSource() {
+  protected ConfigurationSource farmSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:8080";
@@ -20,16 +17,7 @@ public class OverrideURLDistributedTestTest extends DistributedTest {
         };
     }
 
-    protected DistributedTestRunManager createTestRunManager() {
-        return new DistributedTestRunManager(
-            new NoOpStatusLogger(),
-            new Configuration(farmConfigurationSource()),
-                "http://localhost:8080/jsunit/testRunner.html?"
-                + "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
-        );
-    }
-
-    protected StubConfigurationSource configurationSource() {
+    protected StubConfigurationSource serverSourceWithBadTestURL() {
         return new StubConfigurationSource() {
             public String browserFileNames() {
                 return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
@@ -41,9 +29,19 @@ public class OverrideURLDistributedTestTest extends DistributedTest {
         };
     }
 
-    public void testCollectResults() {
-        super.testCollectResults();
-        assertEquals(ResultType.SUCCESS, manager.getFarmTestRunResult().getResultType());
+    public void testOverrideURL() throws Throwable {
+      DistributedTest test = new DistributedTest(serverSourceWithBadTestURL(), farmSource());
+      test.getDistributedTestRunManager().setOverrideURL(
+          "http://localhost:8080/jsunit/testRunner.html?" +
+          "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
+      );
+      TestResult result = test.run();
+      assertTrue(result.wasSuccessful());
+
+      assertEquals(
+        ResultType.SUCCESS,
+        test.getDistributedTestRunManager().getFarmTestRunResult().getResultType()
+      );
     }
 
 }

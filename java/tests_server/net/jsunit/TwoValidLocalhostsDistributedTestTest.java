@@ -1,15 +1,15 @@
 package net.jsunit;
 
+import junit.framework.TestCase;
+import junit.framework.TestResult;
+
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
+import net.jsunit.model.FarmTestRunResult;
 
-public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
+public class TwoValidLocalhostsDistributedTestTest extends TestCase {
 
-    public TwoValidLocalhostsDistributedTestTest(String name) {
-        super(name);
-    }
-
-    protected ConfigurationSource farmConfigurationSource() {
+  protected ConfigurationSource farmSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:8080, http://localhost:8080";
@@ -17,7 +17,7 @@ public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
         };
     }
 
-    protected StubConfigurationSource configurationSource() {
+    protected StubConfigurationSource serverSource() {
         return new StubConfigurationSource() {
 
             public String browserFileNames() {
@@ -31,9 +31,13 @@ public class TwoValidLocalhostsDistributedTestTest extends DistributedTest {
         };
     }
 
-    public void testCollectResults() {
-        super.testCollectResults();
-        assertEquals(ResultType.SUCCESS, manager.getFarmTestRunResult().getResultType());
+    public void testSuccessfulRun() {
+      DistributedTest test = new DistributedTest(serverSource(), farmSource());
+      TestResult testResult = test.run();
+      assertTrue(testResult.wasSuccessful());
+      FarmTestRunResult farmTestRunResult = test.getDistributedTestRunManager().getFarmTestRunResult();
+      assertEquals(ResultType.SUCCESS, farmTestRunResult.getResultType());
+      assertEquals(2, farmTestRunResult.getTestRunResults().size());
     }
 
 }

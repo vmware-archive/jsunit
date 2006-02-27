@@ -19,24 +19,17 @@ public class DistributedTest extends TestCase {
 
     protected DistributedTestRunManager manager;
     private JsUnitStandardServer server;
-    private ConfigurationSource farmConfigurationSource;
 
-    public DistributedTest(String name) {
-        super(name);
-        this.farmConfigurationSource = farmConfigurationSource();
-    }
+  public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
+    super(farmSource.remoteMachineURLs());
+    server = new JsUnitStandardServer(new Configuration(serverSource));
+    manager = new DistributedTestRunManager(new NoOpStatusLogger(), new Configuration(farmSource));
+  }
 
-    public DistributedTest(ConfigurationSource source) {
-        this(source.remoteMachineURLs());
-        this.farmConfigurationSource = source;
-    }
-
-    public void setUp() throws Exception {
-        super.setUp();
-        server = new JsUnitStandardServer(new Configuration(configurationSource()));
-        startServerIfNecessary();
-        manager = createTestRunManager();
-    }
+  public void setUp() throws Exception {
+      super.setUp();
+      startServerIfNecessary();
+  }
 
     private void startServerIfNecessary() throws Exception {
         try {
@@ -64,41 +57,30 @@ public class DistributedTest extends TestCase {
         ConfigurationSource originalSource = Configuration.resolveSource();
         Configuration configuration = new Configuration(originalSource);
         for (final URL remoteMachineURL : configuration.getRemoteMachineURLs())
-            suite.addTest(new DistributedTest(new DelegatingConfigurationSource(originalSource) {
-                public String remoteMachineURLs() {
-                    return remoteMachineURL.toString();
-                }
+            suite.addTest(new DistributedTest(
+                originalSource,
+                new DelegatingConfigurationSource(originalSource) {
+                  public String remoteMachineURLs() {
+                      return remoteMachineURL.toString();
+                  }
             }));
         return suite;
     }
 
     protected void runTest() throws Throwable {
-        testCollectResults();
+      manager.runTests();
+      FarmTestRunResult result = manager.getFarmTestRunResult();
+      if (!result.wasSuccessful()) {
+          StringBuffer buffer = new StringBuffer();
+          buffer.append(result.displayString());
+          buffer.append("\n");
+          String xml = XmlUtility.asPrettyString(result.asXml());
+          buffer.append(xml);
+          fail(buffer.toString());
+      }
     }
 
-    public void testCollectResults() {
-        manager.runTests();
-        FarmTestRunResult result = manager.getFarmTestRunResult();
-        if (!result.wasSuccessful()) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append(result.displayString());
-            buffer.append("\n");
-            String xml = XmlUtility.asPrettyString(result.asXml());
-            buffer.append(xml);
-            fail(buffer.toString());
-        }
-    }
-
-    protected DistributedTestRunManager createTestRunManager() {
-        return new DistributedTestRunManager(new NoOpStatusLogger(), new Configuration(farmConfigurationSource));
-    }
-
-    protected ConfigurationSource farmConfigurationSource() {
-        return Configuration.resolveSource();
-    }
-
-    protected ConfigurationSource configurationSource() {
-        return Configuration.resolveSource();
-    }
-
+  public DistributedTestRunManager getDistributedTestRunManager() {
+    return manager;
+  }
 }
