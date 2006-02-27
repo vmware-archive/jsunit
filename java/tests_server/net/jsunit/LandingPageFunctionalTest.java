@@ -18,7 +18,7 @@ public class LandingPageFunctionalTest extends FunctionalTestCase {
     }
 
     private void assertOnLandingPage() {
-        webTester.assertTitleEquals("JsUnit 2.2 Server");
+        webTester.assertTitleEquals("JsUnit  Server");
     }
 
 }

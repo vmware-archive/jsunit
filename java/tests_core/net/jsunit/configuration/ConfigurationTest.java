@@ -19,9 +19,9 @@ public class ConfigurationTest extends TestCase {
         expectedBrowsers.add("browser1.exe");
         expectedBrowsers.add("browser2.exe");
         assertEquals(expectedBrowsers, configuration.getBrowserFileNames());
-        assertEquals(new File("c:\\logs\\directory"), configuration.getLogsDirectory());
+        assertEquals(new File("logs" + File.separator + "directory"), configuration.getLogsDirectory());
         assertEquals(1234, configuration.getPort());
-        assertEquals(new File("c:\\resource\\base"), configuration.getResourceBase());
+        assertEquals(new File("resource" + File.separator + "base"), configuration.getResourceBase());
         assertEquals(new URL("http://www.example.com:1234"), configuration.getTestURL());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(76, configuration.getTimeoutSeconds());
@@ -62,27 +62,31 @@ public class ConfigurationTest extends TestCase {
     }
 
     public void testAsXml() throws Exception {
-        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-        assertEquals(
-            "<configuration type=\""+ServerType.STANDARD.name()+"\">" +
-                "<os>"+SystemUtility.osString()+"</os>" +
-                "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
-                "<hostname>"+SystemUtility.hostname()+"</hostname>" +
-                "<browserFileNames>" +
-                    "<browserFileName>browser1.exe</browserFileName>" +
-                    "<browserFileName>browser2.exe</browserFileName>" +
-                "</browserFileNames>" +
-                "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
-                "<description>This is the best server ever</description>" +
-                "<logsDirectory>c:\\logs\\directory</logsDirectory>" +
-	            "<logStatus>true</logStatus>" +
-	            "<port>1234</port>" +
-	            "<resourceBase>c:\\resource\\base</resourceBase>" +
-	            "<timeoutSeconds>76</timeoutSeconds>" +
-	            "<url>http://www.example.com:1234</url>" +
-            "</configuration>",
-            XmlUtility.asString(configuration.asXml(ServerType.STANDARD))
-        );
+      FullValidForBothConfigurationSource source
+          = new FullValidForBothConfigurationSource();
+      Configuration configuration = new Configuration(source);
+      File logsDirectory = new File(source.logsDirectory());
+      File resourceBase = new File(source.resourceBase());
+      assertEquals(
+          "<configuration type=\""+ServerType.STANDARD.name()+"\">" +
+              "<os>"+SystemUtility.osString()+"</os>" +
+              "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
+              "<hostname>"+SystemUtility.hostname()+"</hostname>" +
+              "<browserFileNames>" +
+                  "<browserFileName>browser1.exe</browserFileName>" +
+                  "<browserFileName>browser2.exe</browserFileName>" +
+              "</browserFileNames>" +
+              "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
+              "<description>This is the best server ever</description>" +
+              "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
+                  "<logStatus>true</logStatus>" +
+                  "<port>1234</port>" +
+                  "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                  "<timeoutSeconds>76</timeoutSeconds>" +
+                  "<url>http://www.example.com:1234</url>" +
+          "</configuration>",
+          XmlUtility.asString(configuration.asXml(ServerType.STANDARD))
+      );
     }
     
     public void testAsArgumentsArray() throws Exception {
@@ -105,7 +109,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals("true", arguments[index++]);
 
         assertEquals("-logsDirectory", arguments[index++]);
-        assertEquals("c:\\logs\\directory", arguments[index++]);
+        assertEquals(new File("logs" + File.separator + "directory").getAbsolutePath(), arguments[index++]);
 
         assertEquals("-logStatus", arguments[index++]);
         assertEquals("true", arguments[index++]);
@@ -117,7 +121,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals("http://localhost:8081,http://127.0.0.1:8082", arguments[index++]);
 
         assertEquals("-resourceBase", arguments[index++]);
-        assertEquals("c:\\resource\\base", arguments[index++]);
+        assertEquals(new File("resource/base").getAbsolutePath(), arguments[index++]);
 
         assertEquals("-timeoutSeconds", arguments[index++]);
         assertEquals("76", arguments[index++]);
@@ -129,7 +133,7 @@ public class ConfigurationTest extends TestCase {
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
 
         public String resourceBase() {
-            return "c:\\resource\\base";
+            return "resource" + File.separator + "base";
         }
 
         public String port() {
@@ -137,7 +141,7 @@ public class ConfigurationTest extends TestCase {
         }
 
         public String logsDirectory() {
-            return "c:\\logs\\directory";
+            return "logs" + File.separator + "directory";
         }
 
         public String browserFileNames() {

@@ -22,7 +22,7 @@
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</h4>
+            <h4>JsUnit<%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()){%> Farm<%}%> Server</h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%><br/>
         </th>
         <td nowrap align="right" valign="middle">
