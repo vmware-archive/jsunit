@@ -3,16 +3,17 @@ package net.jsunit;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
-import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.model.FarmTestRunResult;
 import net.jsunit.utility.XmlUtility;
+
 import org.mortbay.util.MultiException;
 
-import java.net.URL;
 import java.net.BindException;
+import java.net.URL;
 import java.util.List;
 
 public class DistributedTest extends TestCase {
@@ -23,7 +24,7 @@ public class DistributedTest extends TestCase {
   public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
     super(farmSource.remoteMachineURLs());
     server = new JsUnitStandardServer(new Configuration(serverSource));
-    manager = new DistributedTestRunManager(new NoOpStatusLogger(), new Configuration(farmSource));
+    manager = new DistributedTestRunManager(server.getStatusLogger(), new Configuration(farmSource));
   }
 
   public void setUp() throws Exception {
@@ -35,13 +36,13 @@ public class DistributedTest extends TestCase {
         try {
             server.start();
         } catch (MultiException e) {
-            if (!isMultiExceptionJustABindException(e))
+            if (!isMultiExceptionASingleBindException(e))
                 throw e;
             //if a server is already running, fine - we only need it to server content to remote machines
         }
     }
 
-    private boolean isMultiExceptionJustABindException(MultiException e) {
+    private boolean isMultiExceptionASingleBindException(MultiException e) {
         List exceptions = e.getExceptions();
         return exceptions.size() == 1 && exceptions.get(0) instanceof BindException;
     }
