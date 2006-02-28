@@ -4,11 +4,10 @@ Required for next release:
     - pull in pivotal's new assertion functions
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
     - auto-upgrade check
-    - add hostname & ip address to test run result
-  REFACTORINGS:
-    - make all Result implementers implement XmlRenderable
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
+    - What is going on with the javac crash on some systems
+    - SourceForge bugs
   WEBSITE/DOCUMENTATION
     - documentation of assertArrayEquals
     - documentation of assertHTMLEquals
@@ -17,7 +16,12 @@ Required for next release:
     - xsl file for generating jsunit.properties.sample
 
 Backlog:
+  FEATURES:
 - individual testFunction= parameter to testRunner.html that makes it run only that test function
 - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
-- SourceForge bugs
-- IE7beta issues
+
+  REFACTORINGS:
+    - make all Result implementers implement XmlRenderable
+
+  BUGS:
+    - IE7beta issues

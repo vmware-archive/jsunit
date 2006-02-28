@@ -46,8 +46,17 @@ public class TestRunResultTest extends TestCase {
         testRunResult.addBrowserResult(successResult());
         testRunResult.addBrowserResult(failureResult());
         testRunResult.addBrowserResult(errorResult());
+        testRunResult.setOsString("my cool os");
+        testRunResult.setIpAddress("127.0.0.1");
+        testRunResult.setHostname("machine.example.com");
+        testRunResult.setURL(new URL("http://www.example.com"));
         assertEquals(
                 "<testRunResult type=\"ERROR\" url=\"http://www.example.com\">" +
+                    "<properties>" +
+                        "<property name=\"os\" value=\"my cool os\" />" +
+                        "<property name=\"ipAddress\" value=\"127.0.0.1\" />" +
+                        "<property name=\"hostname\" value=\"machine.example.com\" />" +
+                    "</properties>" +
                     successResult().asXmlFragment() +
                     failureResult().asXmlFragment() +
                     errorResult().asXmlFragment() +

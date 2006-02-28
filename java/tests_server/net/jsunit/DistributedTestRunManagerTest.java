@@ -116,6 +116,7 @@ public class DistributedTestRunManagerTest extends TestCase {
 
     private TestRunResult createResult1() throws MalformedURLException {
         TestRunResult result = new TestRunResult(new URL(DummyConfigurationSource.REMOTE_URL_1));
+        result.setOsString("my os");
         BrowserResult browserResult1 = new BrowserResult();
         browserResult1.setId("1");
         browserResult1.setBrowserFileName("mybrowser1.exe");
@@ -133,6 +134,7 @@ public class DistributedTestRunManagerTest extends TestCase {
 
     private TestRunResult createResult2() throws MalformedURLException {
         TestRunResult result = new TestRunResult(new URL(DummyConfigurationSource.REMOTE_URL_2));
+        result.setOsString("my other os");
         BrowserResult browserResult1 = new BrowserResult();
         browserResult1.setBrowserFileName("mybrowser3.exe");
         browserResult1.setId("a");

@@ -11,6 +11,9 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
 
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
     private URL url;
+    private String osString;
+    private String ipAddress;
+    private String hostname;
     private boolean unresponsive = false;
 
     public TestRunResult() {
@@ -30,9 +33,34 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
         root.setAttribute("type", getResultType().name());
         if (url != null)
             root.setAttribute("url", url.toString());
+        if (hasProperties()) {
+            Element properties = new Element("properties");
+            addProperties(properties);
+            root.addContent(properties);
+        }
         for (BrowserResult browserResult : browserResults)
             root.addContent(browserResult.asXml());
         return root;
+    }
+
+    private boolean hasProperties() {
+        return osString != null || ipAddress != null || hostname != null;
+    }
+
+    private void addProperties(Element element) {
+        if (osString != null)
+            addProperty(element, "os", osString);
+        if (ipAddress != null)
+            addProperty(element, "ipAddress", ipAddress);
+        if (hostname != null)
+            addProperty(element, "hostname", hostname);
+    }
+
+    private void addProperty(Element element, String name, String value) {
+        Element property = new Element("property");
+        property.setAttribute("name", name);
+        property.setAttribute("value", value);
+        element.addContent(property);
     }
 
     protected List<? extends Result> getChildren() {
@@ -58,4 +86,31 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
             return super.getResultType();
     }
 
+    public void setOsString(String osString) {
+        this.osString = osString;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public void setURL(URL url) {
+        this.url = url;
+    }
+
+    public String getOsString() {
+        return osString;
+    }
+
+    public String getIpAddress() {
+        return ipAddress;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
 }
