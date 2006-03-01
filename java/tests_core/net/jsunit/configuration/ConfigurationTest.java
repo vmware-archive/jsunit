@@ -14,7 +14,6 @@ public class ConfigurationTest extends TestCase {
 
     public void testFull() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-
         List<String> expectedBrowsers = new ArrayList<String>();
         expectedBrowsers.add("browser1.exe");
         expectedBrowsers.add("browser2.exe");
@@ -22,7 +21,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals(new File("logs" + File.separator + "directory"), configuration.getLogsDirectory());
         assertEquals(1234, configuration.getPort());
         assertEquals(new File("resource" + File.separator + "base"), configuration.getResourceBase());
-        assertEquals(new URL("http://www.example.com:1234"), configuration.getTestURL());
+        assertEquals(new URL("http://www.example.com:1234/"), configuration.getTestURL());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(76, configuration.getTimeoutSeconds());
         List<URL> expectedRemoteMachineURLs = new ArrayList<URL>();
@@ -38,7 +37,7 @@ public class ConfigurationTest extends TestCase {
     public void testMinimal() throws Exception {
         Configuration configuration = new Configuration(new MinimalValidForBothConfigurationSource());
         assertEquals(new File("."), configuration.getResourceBase());
-        assertEquals(new File("." + File.separator + "logs"), configuration.getLogsDirectory());
+        assertEquals(new File("logs"), configuration.getLogsDirectory());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(60, configuration.getTimeoutSeconds());
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
@@ -47,23 +46,65 @@ public class ConfigurationTest extends TestCase {
         assertTrue(configuration.isValidFor(ServerType.FARM));
     }
 
-    public void testInvalidForStandardValidForFarm() throws Exception {
-        Configuration configuration = new Configuration(new InvalidForStandardValidForFarmConfigurationSource());
-        assertFalse(configuration.isValidFor(ServerType.STANDARD));
-        assertEquals(1, ServerType.STANDARD.getPropertiesInvalidFor(configuration).size());
-        assertTrue(configuration.isValidFor(ServerType.FARM));
+    public void testBadRemoteMachineURLs() throws Exception {
+        try {
+            new Configuration(new StubConfigurationSource() {
+                public String remoteMachineURLs() {
+                    return "invalid url";
+                }
+            });
+            fail();
+        } catch (ConfigurationException e) {
+        }
     }
-    
+
+    public void testBadURL() throws Exception {
+        try {
+            new Configuration(new StubConfigurationSource() {
+                public String url() {
+                    return "invalid url";
+                }
+            });
+            fail();
+        } catch (ConfigurationException e) {
+        }
+    }
+
+    public void testBadPort() throws Exception {
+        try {
+            new Configuration(new StubConfigurationSource() {
+                public String port() {
+                    return "invalid number";
+                }
+            });
+            fail();
+        } catch (ConfigurationException e) {
+        }
+    }
+
+    public void testBadTimeoutSeconds() throws Exception {
+        try {
+            new Configuration(new StubConfigurationSource() {
+                public String timeoutSeconds() {
+                    return "invalid number";
+                }
+            });
+            fail();
+        } catch (ConfigurationException e) {
+        }
+    }
+
     public void testValidForStandardInvalidForFarm() throws Exception {
         Configuration configuration = new Configuration(new ValidForStandardInvalidForFarmConfigurationSource());
         assertTrue(configuration.isValidFor(ServerType.STANDARD));
         assertFalse(configuration.isValidFor(ServerType.FARM));
-        assertEquals(1, ServerType.FARM.getPropertiesInvalidFor(configuration).size());
+        List<ConfigurationProperty> invalidProperties = ServerType.FARM.getPropertiesInvalidFor(configuration);
+        assertEquals(1, invalidProperties.size());
+        assertEquals(ConfigurationProperty.REMOTE_MACHINE_URLS, invalidProperties.get(0));
     }
 
     public void testAsXml() throws Exception {
-      FullValidForBothConfigurationSource source
-          = new FullValidForBothConfigurationSource();
+      FullValidForBothConfigurationSource source = new FullValidForBothConfigurationSource();
       Configuration configuration = new Configuration(source);
       File logsDirectory = new File(source.logsDirectory());
       File resourceBase = new File(source.resourceBase());
@@ -83,7 +124,7 @@ public class ConfigurationTest extends TestCase {
                   "<port>1234</port>" +
                   "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                   "<timeoutSeconds>76</timeoutSeconds>" +
-                  "<url>http://www.example.com:1234</url>" +
+                  "<url>http://www.example.com:1234/</url>" +
           "</configuration>",
           XmlUtility.asString(configuration.asXml(ServerType.STANDARD))
       );
@@ -127,7 +168,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals("76", arguments[index++]);
 
         assertEquals("-url", arguments[index++]);
-        assertEquals("http://www.example.com:1234", arguments[index]);
+        assertEquals("http://www.example.com:1234/", arguments[index]);
      }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
@@ -178,23 +219,6 @@ public class ConfigurationTest extends TestCase {
     }
 
     static class MinimalValidForBothConfigurationSource extends StubConfigurationSource {
-
-        public String browserFileNames() {
-            return "browser1.exe";
-        }
-
-        public String remoteMachineURLs() {
-            return "http://localhost:8081,http://127.0.0.1:8082";
-        }
-
-    }
-
-    static class InvalidForStandardValidForFarmConfigurationSource extends StubConfigurationSource {
-
-        public String timeoutSeconds() {
-            return "xyz";
-        }
-
         public String remoteMachineURLs() {
             return "http://localhost:8081,http://127.0.0.1:8082";
         }
@@ -202,10 +226,5 @@ public class ConfigurationTest extends TestCase {
     }
 
     static class ValidForStandardInvalidForFarmConfigurationSource extends StubConfigurationSource {
-
-        public String browserFileNames() {
-            return "mybrowser.exe";
-        }
-
     }
 }

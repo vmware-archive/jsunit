@@ -22,7 +22,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
         result.addTestSuite(ClientServerInteractionTest.class);
         result.addTestSuite(ClientServerConnectionTest.class);
-        result.addTestSuite(ConfigurationResolutionTest.class);
+        result.addTestSuite(ConfigurationSourceResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        

@@ -1,121 +1,57 @@
 package net.jsunit.configuration;
 
-import net.jsunit.utility.StringUtility;
 import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public final class Configuration {
 
-    private ConfigurationSource source;
-
-    public Configuration(ConfigurationSource source) {
-        this.source = source;
-    }
+    private List<String> browserFileNames;
+    private boolean closeBrowsersAfterTestRuns;
+    private String description;
+    private boolean ignoreUnresponsiveRemoteMachines;
+    private File logsDirectory;
+    private boolean shouldLogStatus;
+    private int port;
+    private List<URL> remoteMachineURLs;
+    private File resourceBase;
+    private int timeoutSeconds;
+    private URL testURL;
 
     public static Configuration resolve(String[] arguments) {
-        ConfigurationSource source;
+        return new Configuration(resolveSource(arguments));
+    }
+
+    public static ConfigurationSource resolveSource(String[] arguments) {
         if (arguments.length > 0)
-            source = new ArgumentsConfigurationSource(Arrays.asList(arguments));
+            return new ArgumentsConfigurationSource(Arrays.asList(arguments));
         else
-            source = resolveSource();
-        return new Configuration(source);
+            for (ConfigurationProperty property : ConfigurationProperty.values())
+                if (System.getProperty(property.getName()) != null)
+                    return new EnvironmentVariablesConfigurationSource();
+            try {
+                return new PropertiesFileConfigurationSource();
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException("Could not configure JsUnit - no environment variables or properties file found");
+            }
     }
 
     public static ConfigurationSource resolveSource() {
-        for (ConfigurationProperty property : ConfigurationProperty.values())
-            if (System.getProperty(property.getName()) != null)
-                return new EnvironmentVariablesConfigurationSource();
-        try {
-			return new PropertiesFileConfigurationSource();
-		} catch (FileNotFoundException e) {
-			throw new RuntimeException("Could not configure JsUnit - no environment variables or properties file found");
-		}
+        return resolveSource(new String[] {});
     }
 
     public static Configuration resolve() {
         return new Configuration(resolveSource());
     }
 
-    public URL getTestURL() throws ConfigurationException {
-        String urlString = source.url();
-        if (StringUtility.isEmpty(urlString))
-            return null;
-        try {
-            if (urlString.endsWith("/"))
-                urlString = urlString.substring(0, urlString.length() - 1);
-            return new URL(urlString);
-        } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.URL, urlString, e);
-        }
-    }
-
-    public List<String> getBrowserFileNames() throws ConfigurationException {
-        String browserFileNamesString = source.browserFileNames();
-        try {
-            return StringUtility.listFromCommaDelimitedString(browserFileNamesString);
-        } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.BROWSER_FILE_NAMES, browserFileNamesString, e);
-        }
-    }
-
-    public File getLogsDirectory() throws ConfigurationException {
-        String logsDirectoryString = source.logsDirectory();
-        try {
-            if (StringUtility.isEmpty(logsDirectoryString))
-                logsDirectoryString = ConfigurationProperty.LOGS_DIRECTORY.getDefaultValue();
-            return new File(logsDirectoryString);
-        } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.LOGS_DIRECTORY, logsDirectoryString, e);
-        }
-    }
-
-    public int getPort() throws ConfigurationException {
-        String portString = source.port();
-        if (StringUtility.isEmpty(portString))
-            portString = ConfigurationProperty.PORT.getDefaultValue();
-        try {
-            return Integer.parseInt(portString);
-        } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.PORT, portString, e);
-        }
-    }
-
-    public boolean shouldCloseBrowsersAfterTestRuns() throws ConfigurationException {
-        String string = source.closeBrowsersAfterTestRuns();
-        if (StringUtility.isEmpty(string))
-            string = ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getDefaultValue();
-        return Boolean.valueOf(string);
-    }
-
-    public File getResourceBase() throws ConfigurationException {
-        String result = source.resourceBase();
-        if (StringUtility.isEmpty(result))
-            result = ConfigurationProperty.RESOURCE_BASE.getDefaultValue();
-        String resourceBaseString = result;
-        try {
-            return new File(resourceBaseString);
-        } catch (Exception e) {
-            throw new ConfigurationException(ConfigurationProperty.RESOURCE_BASE, resourceBaseString, e);
-        }
-    }
-
-    public ConfigurationSource getSource() {
-        return source;
-    }
-
-    public boolean shouldLogStatus() {
-        String logStatus = source.logStatus();
-        if (StringUtility.isEmpty(logStatus))
-            return true;
-        return Boolean.valueOf(logStatus);
+    public Configuration(ConfigurationSource source) {
+        for (ConfigurationProperty property : ConfigurationProperty.values())
+            property.configure(this, source);
     }
 
     public Element asXml(ServerType serverType) {
@@ -154,49 +90,100 @@ public final class Configuration {
         return arguments;
     }
 
-    public int getTimeoutSeconds() {
-        String timeoutSecondsString = source.timeoutSeconds();
-        if (StringUtility.isEmpty(timeoutSecondsString))
-            timeoutSecondsString = ConfigurationProperty.TIMEOUT_SECONDS.getDefaultValue();
-        try {
-            return Integer.parseInt(timeoutSecondsString);
-        } catch (NumberFormatException e) {
-            throw new ConfigurationException(ConfigurationProperty.TIMEOUT_SECONDS, timeoutSecondsString, e);
-        }
-    }
-
-    public List<URL> getRemoteMachineURLs() {
-        String remoteMachineURLs = source.remoteMachineURLs();
-        List<String> strings = StringUtility.listFromCommaDelimitedString(remoteMachineURLs);
-        List<URL> result = new ArrayList<URL>(strings.size());
-        for (String string : strings)
-            try {
-                URL attemptedURL = new URL(string);
-                URL url = new URL(attemptedURL.getProtocol(), attemptedURL.getHost(), attemptedURL.getPort(), "/jsunit");
-                result.add(url);
-            } catch (MalformedURLException e) {
-                throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS, remoteMachineURLs, e);
-            }
-        return result;
-    }
-
-    public String getDescription() {
-        return source.description();
-    }
-
     public boolean isValidFor(ServerType type) {
         return type.getPropertiesInvalidFor(this).isEmpty();
     }
 
-    public boolean shouldIgnoreUnresponsiveRemoteMachines() {
-        String string = source.ignoreUnresponsiveRemoteMachines();
-        if (StringUtility.isEmpty(string))
-            string = ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES.getDefaultValue();
-        return Boolean.valueOf(string);
-    }
-
     public String toString() {
         return getDescription() == null ? super.toString() : getDescription();
+    }
+
+    public List<String> getBrowserFileNames() {
+        return browserFileNames;
+    }
+
+    public void setBrowserFileNames(List<String> browserFileNames) {
+        this.browserFileNames = browserFileNames;
+    }
+
+    public boolean shouldCloseBrowsersAfterTestRuns() {
+        return closeBrowsersAfterTestRuns;
+    }
+
+    public void setCloseBrowsersAfterTestRuns(boolean closeBrowsersAfterTestRuns) {
+        this.closeBrowsersAfterTestRuns = closeBrowsersAfterTestRuns;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public boolean shouldIgnoreUnresponsiveRemoteMachines() {
+        return ignoreUnresponsiveRemoteMachines;
+    }
+
+    public void setIgnoreUnresponsiveRemoteMachines(boolean ignoreUnresponsiveRemoteMachines) {
+        this.ignoreUnresponsiveRemoteMachines = ignoreUnresponsiveRemoteMachines;
+    }
+
+    public File getLogsDirectory() {
+        return logsDirectory;
+    }
+
+    public void setLogsDirectory(File logsDirectory) {
+        this.logsDirectory = logsDirectory;
+    }
+
+    public boolean shouldLogStatus() {
+        return shouldLogStatus;
+    }
+
+    public void setShouldLogStatus(boolean shouldLogStatus) {
+        this.shouldLogStatus = shouldLogStatus;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public List<URL> getRemoteMachineURLs() {
+        return remoteMachineURLs;
+    }
+
+    public void setRemoteMachineURLs(List<URL> remoteMachineURLs) {
+        this.remoteMachineURLs = remoteMachineURLs;
+    }
+
+    public File getResourceBase() {
+        return resourceBase;
+    }
+
+    public void setResourceBase(File resourceBase) {
+        this.resourceBase = resourceBase;
+    }
+
+    public int getTimeoutSeconds() {
+        return timeoutSeconds;
+    }
+
+    public void setTimeoutSeconds(int timeoutSeconds) {
+        this.timeoutSeconds = timeoutSeconds;
+    }
+
+    public URL getTestURL() {
+        return testURL;
+    }
+
+    public void setTestURL(URL url) {
+        this.testURL = url;
     }
 
 }

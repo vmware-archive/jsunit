@@ -1,9 +1,9 @@
 package net.jsunit.configuration;
 
-import java.io.FileNotFoundException;
-
 import junit.framework.TestCase;
 import net.jsunit.utility.FileUtility;
+
+import java.io.FileNotFoundException;
 
 public class PropertiesConfigurationSourceTest extends TestCase {
 
@@ -34,7 +34,7 @@ public class PropertiesConfigurationSourceTest extends TestCase {
         super.tearDown();
     }
 
-    static void writePropertiesFile(String fileName) {
+    private void writePropertiesFile(String fileName) {
         String contents =
             ConfigurationProperty.BROWSER_FILE_NAMES.getName() + "=aaa\n" +
             ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName() + "=bbb\n" +
