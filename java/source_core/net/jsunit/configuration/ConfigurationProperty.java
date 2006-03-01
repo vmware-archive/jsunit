@@ -5,17 +5,15 @@ import org.jdom.Element;
 
 import java.io.File;
 import java.net.URL;
-import java.util.List;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public enum ConfigurationProperty {
 
-    BROWSER_FILE_NAMES("browserFileNames", "Browser file names", null) {
+    BROWSER_FILE_NAMES("browserFileNames", "Browser file names", null, false, true) {
         public String getValueString(Configuration configuration) {
             return StringUtility.commaSeparatedString(configuration.getBrowserFileNames());
         }
+
         protected void addContentTo(Configuration configuration, Element element) {
             for (String name : configuration.getBrowserFileNames()) {
                 Element browserFileName = new Element("browserFileName");
@@ -24,30 +22,31 @@ public enum ConfigurationProperty {
             }
         }
     },
-    CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "Close browsers?", "true") {
+    CLOSE_BROWSERS_AFTER_TEST_RUNS("closeBrowsersAfterTestRuns", "Close browsers?", "true", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldCloseBrowsersAfterTestRuns());
         }
     },
-    LOGS_DIRECTORY("logsDirectory", "Logs directory", "." + File.separator + "logs") {
+    LOGS_DIRECTORY("logsDirectory", "Logs directory", "." + File.separator + "logs", false, false) {
         public String getValueString(Configuration configuration) {
             return configuration.getLogsDirectory().getAbsolutePath();
         }
     },
-    LOG_STATUS("logStatus", "Log status?", "true") {
+    LOG_STATUS("logStatus", "Log status?", "true", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldLogStatus());
         }
     },
-    PORT("port", "Port", "8080") {
+    PORT("port", "Port", "8080", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.getPort());
         }
     },
-    REMOTE_MACHINE_URLS("remoteMachineURLs", "Remote machine URLs", null) {
+    REMOTE_MACHINE_URLS("remoteMachineURLs", "Remote machine URLs", null, true, true) {
         public String getValueString(Configuration configuration) {
             return StringUtility.commaSeparatedString(configuration.getRemoteMachineURLs());
         }
+
         protected void addContentTo(Configuration configuration, Element element) {
             for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
                 Element urlElement = new Element("remoteMachineURL");
@@ -56,28 +55,28 @@ public enum ConfigurationProperty {
             }
         }
     },
-    RESOURCE_BASE("resourceBase", "Resource base", ".") {
+    RESOURCE_BASE("resourceBase", "Resource base", ".", false, false) {
         public String getValueString(Configuration configuration) {
             return configuration.getResourceBase().getAbsolutePath();
         }
     },
-    TIMEOUT_SECONDS("timeoutSeconds", "Test timeout (seconds)", "60") {
+    TIMEOUT_SECONDS("timeoutSeconds", "Test timeout (seconds)", "60", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.getTimeoutSeconds());
         }
     },
-    URL("url", "Test Page URL", null) {
+    URL("url", "Test Page URL", null, true, false) {
         public String getValueString(Configuration configuration) {
             URL testURL = configuration.getTestURL();
             return testURL == null ? "" : testURL.toString();
         }
     },
-    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remote machines?", "false") {
+    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remote machines?", "false", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         }
     },
-    DESCRIPTION("description", "Description", null) {
+    DESCRIPTION("description", "Description", null, false, false) {
         public String getValueString(Configuration configuration) {
             return configuration.getDescription();
         }
@@ -86,11 +85,15 @@ public enum ConfigurationProperty {
     private String name;
     private String displayName;
     private String defaultValue;
+    private boolean isURL;
+    private boolean isMultiValued;
 
-    private ConfigurationProperty(String name, String displayName, String defaultValue) {
+    private ConfigurationProperty(String name, String displayName, String defaultValue, boolean isURL, boolean isMultiValued) {
         this.displayName = displayName;
         this.name = name;
         this.defaultValue = defaultValue;
+        this.isURL = isURL;
+        this.isMultiValued = isMultiValued;
     }
 
     public String getName() {
@@ -129,5 +132,23 @@ public enum ConfigurationProperty {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public boolean isURL() {
+        return isURL;
+    }
+
+    public List<String> getValueStrings(Configuration configuration) {
+        List<String> result = new ArrayList<String>();
+        if (isMultiValued())
+            for (String value : StringUtility.listFromCommaDelimitedString(getValueString(configuration)))
+                result.add(value);
+        else
+            result.add(getValueString(configuration));
+        return result;
+    }
+
+    private boolean isMultiValued() {
+        return isMultiValued;
     }
 }

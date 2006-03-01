@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer {
 
@@ -33,20 +34,28 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     protected AbstractJsUnitServer(Configuration configuration) {
         this.configuration = configuration;
         ensureConfigurationIsValid();
-        if (!configuration.getLogsDirectory().exists())
-            configuration.getLogsDirectory().mkdir();
+        setUpLogsDirectory(configuration);
+        setUpStatusLogger(configuration);
+        setUpThirdPartyLoggers();
+    }
+
+    private void setUpStatusLogger(Configuration configuration) {
         if (configuration.shouldLogStatus())
             statusLogger = new SystemOutStatusLogger();
         else
             statusLogger = new NoOpStatusLogger();
-        setSystemError();
+    }
+
+    private void setUpLogsDirectory(Configuration configuration) {
+        if (!configuration.getLogsDirectory().exists())
+            configuration.getLogsDirectory().mkdir();
     }
 
     protected void ensureConfigurationIsValid() {
-    	if (!configuration.isValidFor(serverType())) {
+        if (!configuration.isValidFor(serverType())) {
             ConfigurationProperty property = serverType().getPropertiesInvalidFor(configuration).get(0);
-    		throw new ConfigurationException(property, property.getValueString(configuration));
-    	}
+            throw new ConfigurationException(property, property.getValueString(configuration));
+        }
     }
 
     public abstract ServerType serverType();
@@ -72,13 +81,15 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         }
     }
 
-    protected void setSystemError() {
+    protected void setUpThirdPartyLoggers() {
         CommonLogHandler handler = new CommonLogHandler();
         Logger jettyLogger = Logger.getLogger("org.mortbay");
+        jettyLogger.setLevel(Level.SEVERE);
         jettyLogger.addHandler(handler);
         jettyLogger.setUseParentHandlers(false);
 
         Logger webworkLogger = Logger.getLogger("com.opensymphony.webwork");
+        webworkLogger.setLevel(Level.SEVERE);
         webworkLogger.addHandler(handler);
         webworkLogger.setUseParentHandlers(false);
     }
@@ -154,4 +165,5 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     public StatusLogger getStatusLogger() {
         return statusLogger;
     }
+
 }

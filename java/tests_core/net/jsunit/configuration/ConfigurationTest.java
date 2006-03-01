@@ -26,8 +26,8 @@ public class ConfigurationTest extends TestCase {
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(76, configuration.getTimeoutSeconds());
         List<URL> expectedRemoteMachineURLs = new ArrayList<URL>();
-        expectedRemoteMachineURLs.add(new URL("http://localhost:8081"));
-        expectedRemoteMachineURLs.add(new URL("http://127.0.0.1:8082"));
+        expectedRemoteMachineURLs.add(new URL("http://localhost:8081/jsunit"));
+        expectedRemoteMachineURLs.add(new URL("http://127.0.0.1:8082/jsunit"));
         assertEquals(expectedRemoteMachineURLs, configuration.getRemoteMachineURLs());
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
@@ -118,7 +118,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals("1234", arguments[index++]);
 
         assertEquals("-remoteMachineURLs", arguments[index++]);
-        assertEquals("http://localhost:8081,http://127.0.0.1:8082", arguments[index++]);
+        assertEquals("http://localhost:8081/jsunit,http://127.0.0.1:8082/jsunit", arguments[index++]);
 
         assertEquals("-resourceBase", arguments[index++]);
         assertEquals(new File("resource/base").getAbsolutePath(), arguments[index++]);

@@ -67,7 +67,7 @@ public class DistributedTestRunManager {
 
     private URL buildURL(URL url) throws UnsupportedEncodingException, MalformedURLException {
         String fullURLString = url.toString();
-        fullURLString += "/jsunit/runner";
+        fullURLString += "/runner";
         if (overrideURL != null)
             fullURLString += "?url=" + URLEncoder.encode(overrideURL, "UTF-8");
         else if (configuration.getTestURL() != null)

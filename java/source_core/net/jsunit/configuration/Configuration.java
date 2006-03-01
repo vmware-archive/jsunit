@@ -171,9 +171,9 @@ public final class Configuration {
         List<URL> result = new ArrayList<URL>(strings.size());
         for (String string : strings)
             try {
-                if (string.endsWith("/"))
-                    string = string.substring(0, string.length() - 1);
-                result.add(new URL(string));
+                URL attemptedURL = new URL(string);
+                URL url = new URL(attemptedURL.getProtocol(), attemptedURL.getHost(), attemptedURL.getPort(), "/jsunit");
+                result.add(url);
             } catch (MalformedURLException e) {
                 throw new ConfigurationException(ConfigurationProperty.REMOTE_MACHINE_URLS, remoteMachineURLs, e);
             }
