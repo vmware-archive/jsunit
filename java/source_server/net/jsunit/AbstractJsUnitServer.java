@@ -7,9 +7,9 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.logging.NoOpStatusLogger;
-import net.jsunit.logging.StatusLogger;
-import net.jsunit.logging.SystemOutStatusLogger;
+import net.jsunit.logging.NoOpJsUnitLogger;
+import net.jsunit.logging.JsUnitLogger;
+import net.jsunit.logging.SystemOutJsUnitLogger;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
@@ -21,15 +21,13 @@ import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
 import java.util.List;
-import java.util.logging.Handler;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     private HttpServer server;
-    private StatusLogger statusLogger;
+    private JsUnitLogger jsUnitLogger;
     protected Configuration configuration;
 
     protected AbstractJsUnitServer(Configuration configuration) {
@@ -42,9 +40,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     private void setUpStatusLogger(Configuration configuration) {
         if (configuration.shouldLogStatus())
-            statusLogger = new SystemOutStatusLogger();
+            jsUnitLogger = new SystemOutJsUnitLogger();
         else
-            statusLogger = new NoOpStatusLogger();
+            jsUnitLogger = new NoOpJsUnitLogger();
     }
 
     private void setUpLogsDirectory(Configuration configuration) {
@@ -69,21 +67,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return configuration;
     }
 
-    class CommonLogHandler extends Handler {
-        public void publish(LogRecord record) {
-            statusLogger.log(record.getLevel().toString() + " " + record.getMessage(), true);
-        }
-
-        public void flush() {
-            System.out.flush();
-        }
-
-        public void close() throws SecurityException {
-        }
-    }
-
     protected void setUpThirdPartyLoggers() {
-        CommonLogHandler handler = new CommonLogHandler();
+        CommonLogHandler handler = new CommonLogHandler(jsUnitLogger);
         Logger jettyLogger = Logger.getLogger("org.mortbay");
         jettyLogger.setLevel(Level.SEVERE);
         jettyLogger.addHandler(handler);
@@ -103,7 +88,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
             public void run() {
                 VersionChecker checker = VersionChecker.forDefault();
                 if (!checker.isUpToDate())
-                    statusLogger.log(checker.outOfDateString(), false);
+                    jsUnitLogger.log(checker.outOfDateString(), false);
             }
         }.start();
     }
@@ -144,7 +129,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     public void logStatus(String message) {
-        statusLogger.log(message, true);
+        jsUnitLogger.log(message, true);
     }
 
     public Element asXml() {
@@ -170,8 +155,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return server != null && server.isStarted();
     }
 
-    public StatusLogger getStatusLogger() {
-        return statusLogger;
+    public JsUnitLogger getStatusLogger() {
+        return jsUnitLogger;
     }
 
 }

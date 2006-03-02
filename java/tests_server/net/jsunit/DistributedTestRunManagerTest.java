@@ -2,7 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.logging.NoOpStatusLogger;
+import net.jsunit.logging.NoOpJsUnitLogger;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.FarmTestRunResult;
 import net.jsunit.model.ResultType;
@@ -27,7 +27,7 @@ public class DistributedTestRunManagerTest extends TestCase {
 
     public void testSimple() throws MalformedURLException, UnsupportedEncodingException {
         MockRemoteRunnerHitter hitter = createMockHitter();
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), hitter, configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
@@ -43,7 +43,7 @@ public class DistributedTestRunManagerTest extends TestCase {
     }
 
     public void testRemoteURLBlowsUp() {
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         manager.runTests();
         FarmTestRunResult result = manager.getFarmTestRunResult();
@@ -63,7 +63,7 @@ public class DistributedTestRunManagerTest extends TestCase {
             }
         });
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
         manager.runTests();
         FarmTestRunResult result = manager.getFarmTestRunResult();
         assertTrue(result.wasSuccessful());
@@ -74,7 +74,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String overrideURL = "http://my.override.com:1234?foo=bar&bar=foo";
         String encodedOverrideURL = URLEncoder.encode(overrideURL, "UTF-8");
         MockRemoteRunnerHitter hitter = createMockHitter();
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), hitter, configuration, overrideURL);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertEquals(
@@ -93,7 +93,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         });
         MockRemoteRunnerHitter hitter = createMockHitter();
 
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpStatusLogger(), hitter, configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/runner", hitter.urlsPassed.get(0).toString());

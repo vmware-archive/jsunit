@@ -1,7 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
-import net.jsunit.logging.StatusLogger;
+import net.jsunit.logging.JsUnitLogger;
 import net.jsunit.model.FarmTestRunResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.model.TestRunResultBuilder;
@@ -15,25 +15,25 @@ import java.net.URLEncoder;
 
 public class DistributedTestRunManager {
 
-    private StatusLogger logger;
+    private JsUnitLogger logger;
     private RemoteRunnerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
     private FarmTestRunResult farmTestRunResult = new FarmTestRunResult();
 
-    public DistributedTestRunManager(StatusLogger logger, Configuration configuration) {
+    public DistributedTestRunManager(JsUnitLogger logger, Configuration configuration) {
         this(logger, new RemoteMachineRunnerHitter(), configuration);
     }
 
-    public DistributedTestRunManager(StatusLogger logger, RemoteRunnerHitter hitter, Configuration configuration) {
+    public DistributedTestRunManager(JsUnitLogger logger, RemoteRunnerHitter hitter, Configuration configuration) {
         this(logger, hitter, configuration, null);
     }
 
-    public DistributedTestRunManager(StatusLogger logger, Configuration configuration, String overrideURL) {
+    public DistributedTestRunManager(JsUnitLogger logger, Configuration configuration, String overrideURL) {
         this(logger, new RemoteMachineRunnerHitter(), configuration, overrideURL);
     }
 
-    public DistributedTestRunManager(StatusLogger logger, RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    public DistributedTestRunManager(JsUnitLogger logger, RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
         this.logger = logger;
         this.hitter = hitter;
         this.configuration = configuration;

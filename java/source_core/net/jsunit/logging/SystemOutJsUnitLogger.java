@@ -2,7 +2,7 @@ package net.jsunit.logging;
 
 import java.util.Date;
 
-public class SystemOutStatusLogger implements StatusLogger {
+public class SystemOutJsUnitLogger implements JsUnitLogger {
 
 	public void log(String message, boolean includeDate) {
         StringBuffer buffer = new StringBuffer();
@@ -13,5 +13,9 @@ public class SystemOutStatusLogger implements StatusLogger {
         buffer.append(message);
         System.out.println(buffer.toString());
 	}
+
+    public void flush() {
+        System.out.flush();
+    }
 
 }
