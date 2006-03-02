@@ -15,6 +15,7 @@ ASSERTION FUNCTIONS
 
 SERVER
 - Migration of Java code to require Java 5.0
+- JSPs require a JDK
 - StandaloneTest and DistributedTest continue on after a failure in a particular browser or remote server respectively
 - StandaloneTest has a suite() method that makes the test run have multiple JUnit tests, one per browser
 - DistribuedTest has a suite() method that makes the test run have multiple JUnit tests, one per remote machine URL

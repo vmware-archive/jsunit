@@ -7,7 +7,6 @@ Required for next release:
     - have distributed test & standalone test give nice names to the virtual tests they create - distributed test could hit the remote config and get the description or os String
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
-    - javac crash on some systems
     - SourceForge bugs
   WEBSITE/DOCUMENTATION
     - documentation of assertArrayEquals
