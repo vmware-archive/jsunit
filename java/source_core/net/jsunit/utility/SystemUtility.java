@@ -21,9 +21,9 @@ public class SystemUtility {
         return result.toString();
     }
 
-    public static String jsUnitVersion() {
+    public static double jsUnitVersion() {
         //TODO: get this from jsUnitCore.js
-        return "2.2";
+        return 2.2;
     }
 
     public static String hostname() {

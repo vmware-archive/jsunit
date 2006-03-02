@@ -10,20 +10,23 @@ import net.jsunit.configuration.ServerType;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
+import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
+import net.jsunit.version.JsUnitWebsiteVersionGrabber;
+import net.jsunit.version.VersionChecker;
+import org.apache.jasper.servlet.JspServlet;
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
-import org.apache.jasper.servlet.JspServlet;
 
 import java.util.List;
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer {
 
@@ -70,7 +73,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     class CommonLogHandler extends Handler {
         public void publish(LogRecord record) {
-            statusLogger.log(record.getLevel().toString() + " " + record.getMessage());
+            statusLogger.log(record.getLevel().toString() + " " + record.getMessage(), true);
         }
 
         public void flush() {
@@ -96,8 +99,15 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     public void start() throws Exception {
         setUpHttpServer();
-        server.start();
         logStatus("Starting server with configuration:\r\n" + XmlUtility.asPrettyString(configuration.asXml(serverType())));
+        server.start();
+        if (configuration.shouldLogStatus()) {
+            VersionChecker versionChecker = new VersionChecker(
+                statusLogger,
+                SystemUtility.jsUnitVersion(),
+                new JsUnitWebsiteVersionGrabber());
+            new Thread(versionChecker).start();
+        }
     }
 
     private void setUpHttpServer() throws Exception {
@@ -136,7 +146,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     public void logStatus(String message) {
-        statusLogger.log(message);
+        statusLogger.log(message, true);
     }
 
     public Element asXml() {
