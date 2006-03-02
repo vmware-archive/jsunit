@@ -24,7 +24,7 @@ public class DistributedTest extends TestCase {
   public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
     super(farmSource.remoteMachineURLs());
     server = new JsUnitStandardServer(new Configuration(serverSource));
-    manager = new DistributedTestRunManager(server.getStatusLogger(), new Configuration(farmSource));
+    manager = new DistributedTestRunManager(server.getLogger(), new Configuration(farmSource));
   }
 
   public void setUp() throws Exception {

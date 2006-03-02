@@ -34,11 +34,11 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         this.configuration = configuration;
         ensureConfigurationIsValid();
         setUpLogsDirectory(configuration);
-        setUpStatusLogger(configuration);
+        setUpLogger(configuration);
         setUpThirdPartyLoggers();
     }
 
-    private void setUpStatusLogger(Configuration configuration) {
+    private void setUpLogger(Configuration configuration) {
         if (configuration.shouldLogStatus())
             jsUnitLogger = new SystemOutJsUnitLogger();
         else
@@ -155,7 +155,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return server != null && server.isStarted();
     }
 
-    public JsUnitLogger getStatusLogger() {
+    public JsUnitLogger getLogger() {
         return jsUnitLogger;
     }
 
