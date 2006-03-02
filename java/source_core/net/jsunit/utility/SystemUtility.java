@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 import java.net.InetAddress;
 
 public class SystemUtility {
+    private static String hostname;
 
     public static String osArchitecture() {
         return System.getProperty("os.arch");
@@ -27,12 +28,14 @@ public class SystemUtility {
     }
 
     public static String hostname() {
-        try {
-            InetAddress addr = InetAddress.getLocalHost();
-            return addr.getCanonicalHostName();
-        } catch (UnknownHostException e) {
-            return null;
+        if (hostname == null) {
+            try {
+                InetAddress addr = InetAddress.getLocalHost();
+                hostname = addr.getCanonicalHostName();
+            } catch (UnknownHostException e) {
+            }
         }
+        return hostname;
     }
 
     public static String ipAddress() {

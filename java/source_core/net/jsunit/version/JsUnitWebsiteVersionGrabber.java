@@ -12,7 +12,7 @@ public class JsUnitWebsiteVersionGrabber implements VersionGrabber {
             byte[] array = new byte[length];
             stream.read(array);
             String string = new String(array);
-            
+
             return Double.parseDouble(string);
         } catch (Throwable t) {
             return 0;

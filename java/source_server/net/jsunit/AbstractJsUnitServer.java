@@ -10,9 +10,7 @@ import net.jsunit.configuration.ServerType;
 import net.jsunit.logging.NoOpStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
-import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
-import net.jsunit.version.JsUnitWebsiteVersionGrabber;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
 import org.jdom.Element;
@@ -101,13 +99,13 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         setUpHttpServer();
         logStatus("Starting server with configuration:\r\n" + XmlUtility.asPrettyString(configuration.asXml(serverType())));
         server.start();
-        if (configuration.shouldLogStatus()) {
-            VersionChecker versionChecker = new VersionChecker(
-                statusLogger,
-                SystemUtility.jsUnitVersion(),
-                new JsUnitWebsiteVersionGrabber());
-            new Thread(versionChecker).start();
-        }
+        new Thread() {
+            public void run() {
+                VersionChecker checker = VersionChecker.forDefault();
+                if (!checker.isUpToDate())
+                    statusLogger.log(checker.outOfDateString(), false);
+            }
+        }.start();
     }
 
     private void setUpHttpServer() throws Exception {

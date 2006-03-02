@@ -1,29 +1,44 @@
 package net.jsunit.version;
 
-import net.jsunit.logging.StatusLogger;
+import net.jsunit.utility.SystemUtility;
 
-public class VersionChecker implements Runnable {
+public class VersionChecker {
 
-    private StatusLogger logger;
-    private double currentVersion;
+    private double installedVersion;
+    private static Double latestVersion;
     private VersionGrabber grabber;
 
-    public VersionChecker(StatusLogger logger, double currentVersion, VersionGrabber grabber) {
-        this.logger = logger;
-        this.currentVersion = currentVersion;
+    public static VersionChecker forDefault() {
+        return new VersionChecker(SystemUtility.jsUnitVersion(), new JsUnitWebsiteVersionGrabber());
+    }
+
+    public VersionChecker(double currentVersion, VersionGrabber grabber) {
+        this.installedVersion = currentVersion;
         this.grabber = grabber;
     }
 
     public boolean isUpToDate() {
-        return currentVersion >= grabber.grabVersion();
+        return installedVersion >= getLatestVersion();
     }
 
-    public void run() {
-        if (!isUpToDate()) {
-                logger.log(
-                "*** Your JsUnit version (" +
-                currentVersion +
-                ") is out of date.  There is a newer version available at http://www.jsunit.net ***", false);
-        }
+    public double getLatestVersion() {
+        if (latestVersion == null)
+            latestVersion = grabber.grabVersion();
+        return latestVersion;
     }
+
+    public void setLatestVersion(double version) {
+        latestVersion = version;
+    }
+
+    public String outOfDateString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append("*** Your JsUnit version (");
+        buffer.append(installedVersion);
+        buffer.append(") is out of date.  There is a newer version available (");
+        buffer.append(getLatestVersion());
+        buffer.append(") at http://www.jsunit.net ***");
+        return buffer.toString();
+    }
+
 }
