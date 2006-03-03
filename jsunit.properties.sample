@@ -1,6 +1,6 @@
 #Using jsunit.properties is one way to specify the various properties used by the JsUnitServer.
 #To use this file, rename it to "jsunit.properties".  You need to provide values for the mandatory properties.
-#If you are running tests using the ant script build.xml, the properties are set in its targets.
+#If you are running tests using the ant script build.xml, the properties are set in build.xml.
 #If you are running JsUnit programmatically, either create a ConfigurationSource programmatically or use System.setProperty(String, String) to specify properties.
 
 #Please see the documentation at http://www.jsunit.net for more information.
