@@ -7,8 +7,8 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.logging.NoOpJsUnitLogger;
 import net.jsunit.logging.JsUnitLogger;
+import net.jsunit.logging.NoOpJsUnitLogger;
 import net.jsunit.logging.SystemOutJsUnitLogger;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
@@ -21,7 +21,6 @@ import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer {
@@ -69,15 +68,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     protected void setUpThirdPartyLoggers() {
         CommonLogHandler handler = new CommonLogHandler(jsUnitLogger);
-        Logger jettyLogger = Logger.getLogger("org.mortbay");
-        jettyLogger.setLevel(Level.SEVERE);
-        jettyLogger.addHandler(handler);
-        jettyLogger.setUseParentHandlers(false);
-
-        Logger webworkLogger = Logger.getLogger("com.opensymphony.webwork");
-        webworkLogger.setLevel(Level.SEVERE);
-        webworkLogger.addHandler(handler);
-        webworkLogger.setUseParentHandlers(false);
+        handler.addThirdPartyLogger(Logger.getLogger("org.mortbay"));
+        handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.webwork"));
     }
 
     public void start() throws Exception {

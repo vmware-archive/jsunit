@@ -4,6 +4,8 @@ import net.jsunit.logging.JsUnitLogger;
 
 import java.util.logging.Handler;
 import java.util.logging.LogRecord;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 class CommonLogHandler extends Handler {
     private JsUnitLogger logger;
@@ -21,5 +23,11 @@ class CommonLogHandler extends Handler {
     }
 
     public void close() throws SecurityException {
+    }
+
+    public void addThirdPartyLogger(Logger logger) {
+        logger.setLevel(Level.SEVERE);
+        logger.addHandler(this);
+        logger.setUseParentHandlers(false);
     }
 }
