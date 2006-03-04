@@ -12,6 +12,7 @@ ASSERTION FUNCTIONS
 - HTML in result output is now correctly escaped
 - page load timeout changed to 120 seconds by default
 - setup page timeout change to 120 seconds by default
+- cache-buster for testpage retrieval & results submission
 
 SERVER
 - Migration of Java code to require Java 5.0

@@ -10,70 +10,59 @@
     <script language="JavaScript" type="text/javascript">
   var DEFAULT_TEST_FRAME_HEIGHT=250;
 
-  function jsUnitParseParms(string)
-  {
+  function jsUnitParseParms(string) {
     var i;
     var searchString = unescape(string);
     var parameterHash = new Object();
 
-    if (!searchString)
-    {
-      return parameterHash;
+    if (!searchString) {
+        return parameterHash;
     }
 
     i = searchString.indexOf('?');
-    if (i != -1)
-    {
-      searchString = searchString.substring(i+1);
+    if (i != -1) {
+        searchString = searchString.substring(i+1);
     }
 
     var parmList     = searchString.split('&');
     var a;
-    for (i = 0; i < parmList.length; i++)
-    {
-      a = parmList[i].split('=');
+    for (i = 0; i < parmList.length; i++) {
+        a = parmList[i].split('=');
       a[0] = a[0].toLowerCase();
-      if (a.length > 1)
-      {
-        parameterHash[a[0]] =  a[1];
+      if (a.length > 1) {
+          parameterHash[a[0]] =  a[1];
       }
-      else
-      {
-        parameterHash[a[0]] =  true;
+      else {
+          parameterHash[a[0]] =  true;
       }
     }
     return parameterHash;
   }
 
-  function jsUnitConstructTestParms()
-  {
+  function jsUnitConstructTestParms() {
      var p;
      var parms = '';
 
-     for (p in jsUnitParmHash)
-     {
-       var value = jsUnitParmHash[p];
+     for (p in jsUnitParmHash) {
+         var value = jsUnitParmHash[p];
 
        if (!value ||
            p == 'testpage' ||
            p == 'autorun'  ||
            p == 'submitresults' ||
            p == 'showtestframe' ||
-           p == 'resultid')
-       {
-         continue;
+           p == 'resultid') {
+           continue;
        }
 
-       if (parms)
-       {
-         parms += '&';
+       if (parms) {
+           parms += '&';
        }
 
        parms += p;
 
-       if (typeof(value) != 'boolean')
-       {
-         parms += '=' + value;
+       if (typeof(value) != 'boolean') {
+           parms += '=' + value;
        }
      }
      return escape(parms);
@@ -95,21 +84,16 @@
   var tracer;
 
 
-  if (!Array.prototype.push)
-  {
-    Array.prototype.push = function (anObject)
-    {
-      this[this.length] = anObject;
+  if (!Array.prototype.push) {
+    Array.prototype.push = function (anObject) {
+        this[this.length] = anObject;
     }
   }
 
-  if (!Array.prototype.pop)
-  {
-    Array.prototype.pop = function ()
-    {
-      if (this.length > 0)
-      {
-        delete this[this.length - 1];
+  if (!Array.prototype.pop) {
+    Array.prototype.pop = function () {
+        if (this.length > 0) {
+            delete this[this.length - 1];
         this.length--;
       }
     }
