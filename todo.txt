@@ -1,6 +1,5 @@
 Required for next release:
   FEATURES:
-    - ability to pass in "-temporary true" to the server, which means no config printout and no background version checker
     - change to use webwork taglib for jsps; remove all java
     - Background thread to update latest version; display latest version on index.jsp
     - admin console to change and save configuration (password protected?)
