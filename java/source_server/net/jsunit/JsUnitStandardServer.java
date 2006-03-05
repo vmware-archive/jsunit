@@ -18,6 +18,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private long timeLastResultReceived;
     private ProcessStarter processStarter = new DefaultProcessStarter();
     private TimeoutChecker timeoutChecker;
+    private boolean temporary;
 
     public JsUnitStandardServer(Configuration configuration) {
         super(configuration);
@@ -28,10 +29,26 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public static void main(String args[]) {
           try {
               JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
+              server.setTemporary(isTemporary(args));
               server.start();
           } catch (Throwable t) {
               t.printStackTrace();
           }
+    }
+
+    public void setTemporary(boolean temporary) {
+        this.temporary = temporary;
+    }
+
+    protected boolean isTemporary() {
+        return temporary;
+    }
+
+    private static boolean isTemporary(String[] args) {
+        for (int i = 0; i< args.length;i++)
+            if (args[i].equals("-temporary"))
+                return Boolean.valueOf(args[i+1]);
+        return false;
     }
 
     protected List<String> servletNames() {
