@@ -9,37 +9,43 @@ import java.util.Collections;
 
 public enum ServerType {
     STANDARD(
-        "Standard",
-        false,
-        new ConfigurationProperty[] {
-            ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
-            ConfigurationProperty.LOGS_DIRECTORY,
-            ConfigurationProperty.LOG_STATUS,
-            ConfigurationProperty.PORT,
-            ConfigurationProperty.RESOURCE_BASE,
-            ConfigurationProperty.TIMEOUT_SECONDS,
-        },
-        new ConfigurationProperty[]{
-            ConfigurationProperty.BROWSER_FILE_NAMES,
-            ConfigurationProperty.DESCRIPTION,
-            ConfigurationProperty.URL,
-        }
+            "Standard",
+            false,
+            Arrays.asList(new ConfigurationProperty[]{
+                    ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
+                    ConfigurationProperty.LOGS_DIRECTORY,
+                    ConfigurationProperty.LOG_STATUS,
+                    ConfigurationProperty.PORT,
+                    ConfigurationProperty.RESOURCE_BASE,
+                    ConfigurationProperty.TIMEOUT_SECONDS,
+            }),
+            Arrays.asList(new ConfigurationProperty[]{
+                    ConfigurationProperty.BROWSER_FILE_NAMES,
+                    ConfigurationProperty.DESCRIPTION,
+                    ConfigurationProperty.URL,
+            })
+    ),
+    TEMPORARY_STANDARD(
+            "Standard Temporary",
+            STANDARD.isFarm(),
+            STANDARD.getRequiredConfigurationProperties(),
+            STANDARD.getOptionalConfigurationProperties()
     ),
     FARM(
-        "Farm",
-        true,
-        new ConfigurationProperty[] {
-            ConfigurationProperty.LOGS_DIRECTORY,
-            ConfigurationProperty.LOG_STATUS,
-            ConfigurationProperty.PORT,
-            ConfigurationProperty.REMOTE_MACHINE_URLS,
-            ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES,
-        },
-        new ConfigurationProperty [] {
-            ConfigurationProperty.DESCRIPTION,
-            ConfigurationProperty.RESOURCE_BASE,
-            ConfigurationProperty.URL,
-        }
+            "Farm",
+            true,
+            Arrays.asList(new ConfigurationProperty[]{
+                    ConfigurationProperty.LOGS_DIRECTORY,
+                    ConfigurationProperty.LOG_STATUS,
+                    ConfigurationProperty.PORT,
+                    ConfigurationProperty.REMOTE_MACHINE_URLS,
+                    ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES,
+            }),
+            Arrays.asList(new ConfigurationProperty []{
+                    ConfigurationProperty.DESCRIPTION,
+                    ConfigurationProperty.RESOURCE_BASE,
+                    ConfigurationProperty.URL,
+            })
     );
 
     private List<ConfigurationProperty> requiredProperties;
@@ -47,11 +53,11 @@ public enum ServerType {
     private String displayName;
     private boolean isFarm;
 
-    private ServerType(String displayName, boolean isFarm, ConfigurationProperty[] required, ConfigurationProperty[] optional) {
+    private ServerType(String displayName, boolean isFarm, List<ConfigurationProperty> required, List<ConfigurationProperty> optional) {
         this.displayName = displayName;
         this.isFarm = isFarm;
-        this.requiredProperties = Arrays.asList(required);
-        this.optionalProperties = Arrays.asList(optional);
+        this.requiredProperties = required;
+        this.optionalProperties = optional;
     }
 
     public List<ConfigurationProperty> getRequiredConfigurationProperties() {

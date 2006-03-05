@@ -5,7 +5,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.model.BrowserResult;
 
-public class JsUnitServerTest extends TestCase {
+public class JsUnitStandardServerTest extends TestCase {
 
 	private JsUnitStandardServer server;
 	

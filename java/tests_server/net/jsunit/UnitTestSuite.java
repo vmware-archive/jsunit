@@ -33,7 +33,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(DistributedTestRunManagerTest.class);
         result.addTestSuite(FarmTestRunnerActionTest.class);
         result.addTestSuite(JsUnitFarmServerTest.class);
-        result.addTestSuite(JsUnitServerTest.class);
+        result.addTestSuite(JsUnitStandardServerTest.class);
         result.addTestSuite(PropertiesConfigurationSourceTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);
