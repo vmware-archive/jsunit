@@ -129,9 +129,8 @@ jsUnitTestManager.prototype._runTest = function () {
 
   if (this._testIndex == 0 && typeof(this.containerTestFrame.setUpPage) == 'function') {
     // first test for this page and a setUpPage is defined
-    if (typeof(this.containerTestFrame.setUpPageStatus) == 'undefined')
-    {
-      // setUpPage() not called yet, so call it
+    if (typeof(this.containerTestFrame.setUpPageStatus) == 'undefined') {
+        // setUpPage() not called yet, so call it
       this.containerTestFrame.setUpPageStatus = false;
       this.containerTestFrame.startTime = new Date();
       this.containerTestFrame.setUpPage();

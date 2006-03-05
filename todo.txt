@@ -26,6 +26,7 @@ Backlog:
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - have distributed test & standalone test give nice names to the virtual tests they create - distributed test could hit the remote config and get the description or os String
+    - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
   BUGS:

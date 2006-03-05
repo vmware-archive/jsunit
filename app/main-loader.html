@@ -19,8 +19,7 @@
   
         function loadComplete() {
             top.xbDEBUG.dump('main-loader.html:loadComplete(): loadStatus = ' + loadStatus + ' href=' + buffer().document.location.href);
-            if (loadStatus == 'loading')
-            {
+            if (loadStatus == 'loading') {
                 loadStatus = 'complete';
                 callback();
                 callback = function () {};
