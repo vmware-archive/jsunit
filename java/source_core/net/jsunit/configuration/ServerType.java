@@ -25,7 +25,7 @@ public enum ServerType {
                     ConfigurationProperty.URL,
             })
     ),
-    TEMPORARY_STANDARD(
+    STANDARD_TEMPORARY(
             "Standard Temporary",
             STANDARD.isFarm(),
             STANDARD.getRequiredConfigurationProperties(),

@@ -29,7 +29,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public static void main(String args[]) {
           try {
               JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
-              server.setTemporary(isTemporary(args));
               server.start();
           } catch (Throwable t) {
               t.printStackTrace();
@@ -42,13 +41,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     protected boolean shouldPerformVersionUpToDateChecks() {
         return !temporary;
-    }
-
-    private static boolean isTemporary(String[] args) {
-        for (int i = 0; i< args.length;i++)
-            if (args[i].equals("-temporary"))
-                return Boolean.valueOf(args[i+1]);
-        return false;
     }
 
     protected List<String> servletNames() {
@@ -221,7 +213,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     public ServerType serverType() {
-        return isTemporary() ? ServerType.TEMPORARY_STANDARD : ServerType.STANDARD;
+        return isTemporary() ? ServerType.STANDARD_TEMPORARY : ServerType.STANDARD;
     }
 
     public boolean isTemporary() {
