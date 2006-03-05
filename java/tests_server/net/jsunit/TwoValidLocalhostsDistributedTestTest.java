@@ -39,7 +39,7 @@ public class TwoValidLocalhostsDistributedTestTest extends TestCase {
       assertEquals(ResultType.SUCCESS, farmTestRunResult.getResultType());
       assertEquals(2, farmTestRunResult.getTestRunResults().size());
 
-      assertTrue(test.getTemporaryStandardServer().shouldPerformVersionUpToDateChecks());
+      assertTrue(test.getTemporaryStandardServer().isTemporary());
     }
 
 }

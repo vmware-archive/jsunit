@@ -44,6 +44,10 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return !temporary;
     }
 
+    protected String serverTypeName() {
+        return (temporary ? "Temporary " : "") + super.serverTypeName();
+    }
+
     private static boolean isTemporary(String[] args) {
         for (int i = 0; i< args.length;i++)
             if (args[i].equals("-temporary"))
@@ -225,4 +229,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return ServerType.STANDARD;
     }
 
+    public boolean isTemporary() {
+        return temporary;
+    }
 }

@@ -74,15 +74,27 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     public void start() throws Exception {
         setUpHttpServer();
-        logStatus(
-            "Starting " + (shouldPerformVersionUpToDateChecks() ? "temporary " : "") + "server with configuration:\r\n"
-            + XmlUtility.asPrettyString(configuration.asXml(serverType())));
+        logStatus(startingServerStatusMessage());
         server.start();
-        if (shouldPerformVersionUpToDateChecks()) {
-            VersionChecker checker = VersionChecker.forDefault();
-            if (!checker.isUpToDate())
-                jsUnitLogger.log(checker.outOfDateString(), false);
-        }
+        if (shouldPerformVersionUpToDateChecks())
+            performUpToDateCheck();
+    }
+
+    private void performUpToDateCheck() {
+        VersionChecker checker = VersionChecker.forDefault();
+        if (!checker.isUpToDate())
+            jsUnitLogger.log(checker.outOfDateString(), false);
+    }
+
+    private String startingServerStatusMessage() {
+        return "Starting " +
+                serverTypeName() +
+                " Server with configuration:\r\n" +
+                XmlUtility.asPrettyString(configuration.asXml(serverType()));
+    }
+
+    protected String serverTypeName() {
+        return serverType().getDisplayName();
     }
 
     protected boolean shouldPerformVersionUpToDateChecks() {
