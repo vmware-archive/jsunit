@@ -38,6 +38,8 @@ public class TwoValidLocalhostsDistributedTestTest extends TestCase {
       FarmTestRunResult farmTestRunResult = test.getDistributedTestRunManager().getFarmTestRunResult();
       assertEquals(ResultType.SUCCESS, farmTestRunResult.getResultType());
       assertEquals(2, farmTestRunResult.getTestRunResults().size());
+
+      assertTrue(test.getTemporaryStandardServer().isTemporary());
     }
 
 }

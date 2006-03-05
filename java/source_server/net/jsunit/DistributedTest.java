@@ -19,13 +19,13 @@ import java.util.List;
 public class DistributedTest extends TestCase {
 
     protected DistributedTestRunManager manager;
-    private JsUnitStandardServer server;
+    private JsUnitStandardServer temporaryStandardServer;
 
     public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
         super(farmSource.remoteMachineURLs());
-        server = new JsUnitStandardServer(new Configuration(serverSource));
-        server.setTemporary(true);
-        manager = new DistributedTestRunManager(server.getLogger(), new Configuration(farmSource));
+        temporaryStandardServer = new JsUnitStandardServer(new Configuration(serverSource));
+        temporaryStandardServer.setTemporary(true);
+        manager = new DistributedTestRunManager(temporaryStandardServer.getLogger(), new Configuration(farmSource));
     }
 
     public void setUp() throws Exception {
@@ -35,11 +35,11 @@ public class DistributedTest extends TestCase {
 
     private void startServerIfNecessary() throws Exception {
         try {
-            server.start();
+            temporaryStandardServer.start();
         } catch (MultiException e) {
             if (!isMultiExceptionASingleBindException(e))
                 throw e;
-            //if a server is already running, fine - we only need it to server content to remote machines
+            //if a temporaryStandardServer is already running, fine - we only need it to temporaryStandardServer content to remote machines
         }
     }
 
@@ -49,8 +49,8 @@ public class DistributedTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        if (server != null && server.isAlive())
-            server.dispose();
+        if (temporaryStandardServer != null && temporaryStandardServer.isAlive())
+            temporaryStandardServer.dispose();
         super.tearDown();
     }
 
@@ -84,5 +84,9 @@ public class DistributedTest extends TestCase {
 
     public DistributedTestRunManager getDistributedTestRunManager() {
         return manager;
+    }
+
+    public JsUnitStandardServer getTemporaryStandardServer() {
+        return temporaryStandardServer;
     }
 }

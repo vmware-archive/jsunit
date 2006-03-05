@@ -40,8 +40,8 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         this.temporary = temporary;
     }
 
-    protected boolean isTemporary() {
-        return temporary;
+    protected boolean shouldPerformVersionUpToDateChecks() {
+        return !temporary;
     }
 
     private static boolean isTemporary(String[] args) {

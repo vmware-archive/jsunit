@@ -74,7 +74,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     public void start() throws Exception {
         setUpHttpServer();
-        logStatus("Starting server with configuration:\r\n" + XmlUtility.asPrettyString(configuration.asXml(serverType())));
+        logStatus(
+            "Starting " + (isTemporary() ? "temporary " : "") + "server with configuration:\r\n"
+            + XmlUtility.asPrettyString(configuration.asXml(serverType())));
         server.start();
         if (!isTemporary()) {
             VersionChecker checker = VersionChecker.forDefault();
