@@ -39,10 +39,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         this.temporary = temporary;
     }
 
-    protected boolean shouldPerformVersionUpToDateChecks() {
-        return !temporary;
-    }
-
     protected List<String> servletNames() {
         return Arrays.asList(new String[] {
             "index",

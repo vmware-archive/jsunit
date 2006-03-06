@@ -21,7 +21,7 @@ public class StandaloneTest extends TestCase {
     }
 
     public StandaloneTest(ConfigurationSource source) {
-        this(source.browserFileNames());
+        super(source.browserFileNames());
         this.configurationSource = source;
     }
 
@@ -76,4 +76,7 @@ public class StandaloneTest extends TestCase {
         }
     }
 
+    public JsUnitStandardServer getServer() {
+        return server;
+    }
 }

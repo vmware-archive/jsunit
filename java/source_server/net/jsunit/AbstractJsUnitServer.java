@@ -76,7 +76,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         setUpHttpServer();
         logStatus(startingServerStatusMessage());
         server.start();
-        if (shouldPerformVersionUpToDateChecks())
+        if (serverType().shouldPerformUpToDateCheck())
             performUpToDateCheck();
     }
 
@@ -95,10 +95,6 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     protected String serverTypeName() {
         return serverType().getDisplayName();
-    }
-
-    protected boolean shouldPerformVersionUpToDateChecks() {
-        return true;
     }
 
     private void setUpHttpServer() throws Exception {

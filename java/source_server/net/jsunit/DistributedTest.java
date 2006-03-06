@@ -40,7 +40,8 @@ public class DistributedTest extends TestCase {
         } catch (MultiException e) {
             if (!isMultiExceptionASingleBindException(e))
                 throw e;
-            //if a temporaryStandardServer is already running, fine - we only need it to temporaryStandardServer content to remote machines
+            //if a temporaryStandardServer is already running, fine -
+            //we only need it to serve content to remote machines
         }
     }
 
@@ -78,8 +79,8 @@ public class DistributedTest extends TestCase {
             buffer.append(result.displayString());
             buffer.append("\n");
             List<TestRunResult> testRunResults = result.getTestRunResults();
-            XmlRenderable renderable =
-                    testRunResults.size() == 1 ? result.getTestRunResults().get(0) : result;
+            XmlRenderable renderable = testRunResults.size() == 1 ?
+                    result.getTestRunResults().get(0) : result;
             String xml = XmlUtility.asPrettyString(renderable.asXml());
             buffer.append(xml);
             fail(buffer.toString());
