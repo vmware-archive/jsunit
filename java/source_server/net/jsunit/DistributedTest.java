@@ -8,6 +8,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 
 import org.mortbay.util.MultiException;
@@ -76,7 +77,10 @@ public class DistributedTest extends TestCase {
             StringBuffer buffer = new StringBuffer();
             buffer.append(result.displayString());
             buffer.append("\n");
-            String xml = XmlUtility.asPrettyString(result.asXml());
+            List<TestRunResult> testRunResults = result.getTestRunResults();
+            XmlRenderable renderable =
+                testRunResults.size() == 1 ? result.getTestRunResults().get(0) : result;
+            String xml = XmlUtility.asPrettyString(renderable.asXml());
             buffer.append(xml);
             fail(buffer.toString());
         }
