@@ -78,6 +78,7 @@ or you can specify a custom URL using the following form.
     URL: <input type="text" name="url" size="100"/>
     <input type="submit" value="go"/>
 </form>
+<%if (!server.isFarmServer()) {%>
 <h4>displayer</h4>
 You can view the logs of past runs using the displayer command.
 Use this form to specify the ID of the run you want to see:
@@ -85,5 +86,6 @@ Use this form to specify the ID of the run you want to see:
     ID: <input type="text" name="id" size="20"/>
     <input type="submit" value="go"/>
 </form>
+<%}%>
 </body>
 </html>
