@@ -186,4 +186,7 @@ public final class Configuration {
         this.testURL = url;
     }
 
+    public String getBrowserFileNameById(int id) {
+        return getBrowserFileNames().get(id);
+    }
 }

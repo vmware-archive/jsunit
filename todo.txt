@@ -3,7 +3,8 @@ Required for next release:
     - Background thread to update latest version; display latest version on index.jsp
     - admin console to change and save configuration (password protected?)
     - how do the logs work with multiple browser runs given an id?
-    - browser id's - give each browser an id, and add the ability to pass a browser id to the runner servlet
+    - browser ids - ability to pass a browser id to the runner servlet
+    - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
 
     - jsunit source div innerHTML
     - auto-upgrade check in browser using AJAX

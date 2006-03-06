@@ -103,31 +103,86 @@ public class ConfigurationTest extends TestCase {
         assertEquals(ConfigurationProperty.REMOTE_MACHINE_URLS, invalidProperties.get(0));
     }
 
-    public void testAsXml() throws Exception {
-      FullValidForBothConfigurationSource source = new FullValidForBothConfigurationSource();
-      Configuration configuration = new Configuration(source);
-      File logsDirectory = new File(source.logsDirectory());
-      File resourceBase = new File(source.resourceBase());
-      assertEquals(
-          "<configuration type=\""+ServerType.STANDARD.name()+"\">" +
-              "<os>"+SystemUtility.osString()+"</os>" +
-              "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
-              "<hostname>"+SystemUtility.hostname()+"</hostname>" +
-              "<browserFileNames>" +
-                  "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
-                  "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
-              "</browserFileNames>" +
-              "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
-              "<description>This is the best server ever</description>" +
-              "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
-                  "<logStatus>true</logStatus>" +
-                  "<port>1234</port>" +
-                  "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
-                  "<timeoutSeconds>76</timeoutSeconds>" +
-                  "<url>http://www.example.com:1234/</url>" +
-          "</configuration>",
-          XmlUtility.asString(configuration.asXml(ServerType.STANDARD))
-      );
+    public void testAsXmlForStandardConfiguration() throws Exception {
+        FullValidForBothConfigurationSource source = new FullValidForBothConfigurationSource();
+        Configuration configuration = new Configuration(source);
+        File logsDirectory = new File(source.logsDirectory());
+        File resourceBase = new File(source.resourceBase());
+        String expectedXML = "<configuration type=\"" + ServerType.STANDARD.name() + "\">" +
+                "<os>" + SystemUtility.osString() + "</os>" +
+                "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
+                "<hostname>" + SystemUtility.hostname() + "</hostname>" +
+                "<browserFileNames>" +
+                    "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
+                    "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
+                "</browserFileNames>" +
+                "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
+                "<description>This is the best server ever</description>" +
+                "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
+                "<logStatus>true</logStatus>" +
+                "<port>1234</port>" +
+                "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                "<timeoutSeconds>76</timeoutSeconds>" +
+                "<url>http://www.example.com:1234/</url>" +
+                "</configuration>";
+        assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD)));
+    }
+
+    public void testAsXmlForStandardTemporaryConfiguration() throws Exception {
+        FullValidForBothConfigurationSource source = new FullValidForBothConfigurationSource();
+        Configuration configuration = new Configuration(source);
+        File logsDirectory = new File(source.logsDirectory());
+        File resourceBase = new File(source.resourceBase());
+        String expectedXML = "<configuration type=\"" + ServerType.STANDARD_TEMPORARY.name() + "\">" +
+                "<os>" + SystemUtility.osString() + "</os>" +
+                "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
+                "<hostname>" + SystemUtility.hostname() + "</hostname>" +
+                "<browserFileNames>" +
+                    "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
+                    "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
+                "</browserFileNames>" +
+                "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
+                "<description>This is the best server ever</description>" +
+                "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
+                "<logStatus>true</logStatus>" +
+                "<port>1234</port>" +
+                "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                "<timeoutSeconds>76</timeoutSeconds>" +
+                "<url>http://www.example.com:1234/</url>" +
+                "</configuration>";
+        assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD_TEMPORARY)));
+    }
+
+    public void testAsXmlForFarmConfiguration() throws Exception {
+        FullValidForBothConfigurationSource source = new FullValidForBothConfigurationSource();
+        Configuration configuration = new Configuration(source);
+        File logsDirectory = new File(source.logsDirectory());
+        File resourceBase = new File(source.resourceBase());
+        assertEquals(
+                "<configuration type=\""+ServerType.FARM.name()+"\">" +
+                        "<os>"+SystemUtility.osString()+"</os>" +
+                        "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
+                        "<hostname>"+SystemUtility.hostname()+"</hostname>" +
+                        "<description>This is the best server ever</description>" +
+                        "<ignoreUnresponsiveRemoteMachines>true</ignoreUnresponsiveRemoteMachines>" +
+                        "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
+                        "<logStatus>true</logStatus>" +
+                        "<port>1234</port>" +
+                        "<remoteMachineURLs>" +
+                            "<remoteMachineURL id=\"0\">http://localhost:8081/jsunit</remoteMachineURL>" +
+                            "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
+                        "</remoteMachineURLs>" +
+                        "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                        "<url>http://www.example.com:1234/</url>" +                        
+                        "</configuration>",
+                XmlUtility.asString(configuration.asXml(ServerType.FARM))
+        );
+    }
+
+    public void testGetBrowserById() throws Exception {
+        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
+        assertEquals("browser1.exe", configuration.getBrowserFileNameById(0));
+        assertEquals("browser2.exe", configuration.getBrowserFileNameById(1));
     }
     
     public void testAsArgumentsArray() throws Exception {
@@ -169,7 +224,7 @@ public class ConfigurationTest extends TestCase {
 
         assertEquals("-url", arguments[index++]);
         assertEquals("http://www.example.com:1234/", arguments[index]);
-     }
+    }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
 
@@ -209,9 +264,9 @@ public class ConfigurationTest extends TestCase {
             return String.valueOf(true);
         }
 
-		public String timeoutSeconds() {
-			return "76";
-		}
+        public String timeoutSeconds() {
+            return "76";
+        }
 
         public String remoteMachineURLs() {
             return "http://localhost:8081,http://127.0.0.1:8082";

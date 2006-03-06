@@ -130,8 +130,10 @@ public enum ConfigurationProperty {
         }
 
         protected void addContentTo(Configuration configuration, Element element) {
-            for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
+            for (int i = 0; i < configuration.getRemoteMachineURLs().size(); i++) {
+                URL remoteMachineURL = configuration.getRemoteMachineURLs().get(i);
                 Element urlElement = new Element("remoteMachineURL");
+                urlElement.setAttribute("id", String.valueOf(i));
                 urlElement.setText(remoteMachineURL.toString());
                 element.addContent(urlElement);
             }
