@@ -2,7 +2,7 @@ package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.JsUnitLogger;
-import net.jsunit.model.FarmTestRunResult;
+import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.model.TestRunResultBuilder;
 import org.jdom.Document;
@@ -19,7 +19,7 @@ public class DistributedTestRunManager {
     private RemoteRunnerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
-    private FarmTestRunResult farmTestRunResult = new FarmTestRunResult();
+    private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
 
     public DistributedTestRunManager(JsUnitLogger logger, Configuration configuration) {
         this(logger, new RemoteMachineRunnerHitter(), configuration);
@@ -61,7 +61,7 @@ public class DistributedTestRunManager {
                 }
             }
             if (testRunResult != null)
-                farmTestRunResult.addTestRunResult(testRunResult);
+                distributedTestRunResult.addTestRunResult(testRunResult);
         }
     }
 
@@ -75,8 +75,8 @@ public class DistributedTestRunManager {
         return new URL(fullURLString);
     }
 
-    public FarmTestRunResult getFarmTestRunResult() {
-        return farmTestRunResult;
+    public DistributedTestRunResult getDistributedTestRunResult() {
+        return distributedTestRunResult;
     }
 
     public String getOverrideURL() {

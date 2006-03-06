@@ -5,7 +5,7 @@ import junit.framework.TestResult;
 
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
-import net.jsunit.model.FarmTestRunResult;
+import net.jsunit.model.DistributedTestRunResult;
 
 public class TwoValidLocalhostsDistributedTestTest extends TestCase {
 
@@ -35,9 +35,9 @@ public class TwoValidLocalhostsDistributedTestTest extends TestCase {
       DistributedTest test = new DistributedTest(serverSource(), farmSource());
       TestResult testResult = test.run();
       assertTrue(testResult.wasSuccessful());
-      FarmTestRunResult farmTestRunResult = test.getDistributedTestRunManager().getFarmTestRunResult();
-      assertEquals(ResultType.SUCCESS, farmTestRunResult.getResultType());
-      assertEquals(2, farmTestRunResult.getTestRunResults().size());
+      DistributedTestRunResult distributedTestRunResult = test.getDistributedTestRunManager().getDistributedTestRunResult();
+      assertEquals(ResultType.SUCCESS, distributedTestRunResult.getResultType());
+      assertEquals(2, distributedTestRunResult.getTestRunResults().size());
 
       assertTrue(test.getTemporaryStandardServer().isTemporary());
     }

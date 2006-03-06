@@ -6,7 +6,7 @@ import org.jdom.Element;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FarmTestRunResult extends AbstractResult implements XmlRenderable {
+public class DistributedTestRunResult extends AbstractResult implements XmlRenderable {
 
     private List<TestRunResult> testRunResults = new ArrayList<TestRunResult>();
 
@@ -19,7 +19,7 @@ public class FarmTestRunResult extends AbstractResult implements XmlRenderable {
     }
 
     public Element asXml() {
-        Element root = new Element("farmTestRunResult");
+        Element root = new Element("distributedTestRunResult");
         root.setAttribute("type", getResultType().name());
         for (TestRunResult testRunResult : testRunResults)
             root.addContent(testRunResult.asXml());

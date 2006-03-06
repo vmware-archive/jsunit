@@ -29,7 +29,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(FarmServerConfigurationActionTest.class);
         result.addTestSuite(FarmServerInterceptorTest.class);
-        result.addTestSuite(FarmTestRunResultTest.class);
+        result.addTestSuite(DistributedTestRunResultTest.class);
         result.addTestSuite(DistributedTestRunManagerTest.class);
         result.addTestSuite(FarmTestRunnerActionTest.class);
         result.addTestSuite(JsUnitFarmServerTest.class);

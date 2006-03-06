@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.logging.NoOpJsUnitLogger;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.model.FarmTestRunResult;
+import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
@@ -33,9 +33,9 @@ public class DistributedTestRunManagerTest extends TestCase {
         String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
         assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL, hitter.urlsPassed.get(0).toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL, hitter.urlsPassed.get(1).toString());
-        FarmTestRunResult result = manager.getFarmTestRunResult();
+        DistributedTestRunResult result = manager.getDistributedTestRunResult();
 
-        FarmTestRunResult expectedResult = new FarmTestRunResult();
+        DistributedTestRunResult expectedResult = new DistributedTestRunResult();
         expectedResult.addTestRunResult(createResult1());
         expectedResult.addTestRunResult(createResult2());
 
@@ -46,7 +46,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         manager.runTests();
-        FarmTestRunResult result = manager.getFarmTestRunResult();
+        DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertFalse(result.wasSuccessful());
         List<TestRunResult> testRunResults = result.getTestRunResults();
         assertEquals(2, testRunResults.size());
@@ -65,7 +65,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
         manager.runTests();
-        FarmTestRunResult result = manager.getFarmTestRunResult();
+        DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertTrue(result.wasSuccessful());
         assertEquals(0, result.getTestRunResults().size());
     }
@@ -98,9 +98,9 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertEquals(2, hitter.urlsPassed.size());
         assertEquals(DummyConfigurationSource.REMOTE_URL_1 + "/runner", hitter.urlsPassed.get(0).toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2 + "/runner", hitter.urlsPassed.get(1).toString());
-        FarmTestRunResult result = manager.getFarmTestRunResult();
+        DistributedTestRunResult result = manager.getDistributedTestRunResult();
 
-        FarmTestRunResult expectedResult = new FarmTestRunResult();
+        DistributedTestRunResult expectedResult = new DistributedTestRunResult();
         expectedResult.addTestRunResult(createResult1());
         expectedResult.addTestRunResult(createResult2());
 

@@ -23,7 +23,7 @@ public class FarmTestRunnerActionTest extends TestCase {
 	
 	public void testSimple() throws Exception {
 		assertEquals(FarmTestRunnerAction.SUCCESS, action.execute());
-		assertTrue(action.getTestRunManager().getFarmTestRunResult().wasSuccessful());
+		assertTrue(action.getTestRunManager().getDistributedTestRunResult().wasSuccessful());
         assertNull(action.getTestRunManager().getOverrideURL());
     }
 

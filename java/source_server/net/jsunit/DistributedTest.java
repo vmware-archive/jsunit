@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
-import net.jsunit.model.FarmTestRunResult;
+import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.utility.XmlUtility;
 
 import org.mortbay.util.MultiException;
@@ -71,7 +71,7 @@ public class DistributedTest extends TestCase {
 
     protected void runTest() throws Throwable {
         manager.runTests();
-        FarmTestRunResult result = manager.getFarmTestRunResult();
+        DistributedTestRunResult result = manager.getDistributedTestRunResult();
         if (!result.wasSuccessful()) {
             StringBuffer buffer = new StringBuffer();
             buffer.append(result.displayString());

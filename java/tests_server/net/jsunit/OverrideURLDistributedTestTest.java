@@ -40,7 +40,7 @@ public class OverrideURLDistributedTestTest extends TestCase {
 
       assertEquals(
         ResultType.SUCCESS,
-        test.getDistributedTestRunManager().getFarmTestRunResult().getResultType()
+        test.getDistributedTestRunManager().getDistributedTestRunResult().getResultType()
       );
     }
 

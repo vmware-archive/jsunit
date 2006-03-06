@@ -26,7 +26,7 @@ public class InvalidRemoteMachinesDistributedTestTest extends TestCase {
       assertFalse(testResult.wasSuccessful());
       assertEquals(
         ResultType.UNRESPONSIVE,
-        test.getDistributedTestRunManager().getFarmTestRunResult().getResultType()
+        test.getDistributedTestRunManager().getDistributedTestRunResult().getResultType()
       );
     }
 
