@@ -14,6 +14,7 @@ public class StandaloneTest extends TestCase {
     protected JsUnitStandardServer server;
     private TestRunManager testRunManager;
     private ConfigurationSource configurationSource;
+    private String overrideURL;
 
     public StandaloneTest(String name) {
         super(name);
@@ -50,7 +51,7 @@ public class StandaloneTest extends TestCase {
     }
 
     protected TestRunManager createTestRunManager() {
-        return new TestRunManager(server);
+        return new TestRunManager(server, overrideURL);
     }
 
     public void tearDown() throws Exception {
@@ -78,5 +79,9 @@ public class StandaloneTest extends TestCase {
 
     public JsUnitStandardServer getServer() {
         return server;
+    }
+
+    public void setOverrideURL(String url) {
+        this.overrideURL = url;
     }
 }

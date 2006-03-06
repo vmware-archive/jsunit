@@ -1,10 +1,11 @@
 package net.jsunit;
 
-import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
-public class ExternallyShutDownStandaloneTestTest extends StandaloneTest {
+public class ExternallyShutDownStandaloneTestTest extends TestCase {
 
 	public ExternallyShutDownStandaloneTestTest(String name) {
 		super(name);
@@ -24,22 +25,26 @@ public class ExternallyShutDownStandaloneTestTest extends StandaloneTest {
 		};
 	}
 	
-	  public void testStandaloneRun() throws Exception {
-		  new Thread() {
-			  public void run() {
-				try {
-					Thread.sleep(3);
-				} catch (InterruptedException e) {
-				}
-				ServerRegistry.getStandardServer().getBrowserProcess().destroy();
-			  }
-		  }.start();
-		  try {
-			  super.testStandaloneRun();
-			  fail();
-		  } catch (AssertionFailedError e) {
-		  }
-		  assertEquals(ResultType.EXTERNALLY_SHUT_DOWN, server.lastResult().getResultType());
-	  }
+    public void testBrowsersExternallyShutDown() throws Exception {
+        final StandaloneTest test = new StandaloneTest(configurationSource());
+        new Thread() {
+            public void run() {
+                try {
+                    while (test.getServer() == null)
+                        Thread.sleep(100);
+                    while (test.getServer().getBrowserProcess() == null)
+                        Thread.sleep(100);
+                } catch (InterruptedException e) {
+                }
+                test.getServer().getBrowserProcess().destroy();
+            }
+        }.start();
+
+        TestResult result = test.run();
+        assertFalse(result.wasSuccessful());
+        assertEquals(
+                ResultType.EXTERNALLY_SHUT_DOWN,
+                test.getServer().lastResult().getResultType());
+    }
 
 }

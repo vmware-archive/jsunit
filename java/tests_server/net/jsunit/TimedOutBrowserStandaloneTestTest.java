@@ -1,10 +1,11 @@
 package net.jsunit;
 
-import junit.framework.AssertionFailedError;
+import junit.framework.TestCase;
+import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
-public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
+public class TimedOutBrowserStandaloneTestTest extends TestCase {
 
 	public TimedOutBrowserStandaloneTestTest(String name) {
 		super(name);
@@ -28,13 +29,11 @@ public class TimedOutBrowserStandaloneTestTest extends StandaloneTest {
 		};
 	}
 
-	  public void testStandaloneRun() throws Exception {
-		  try {
-			  super.testStandaloneRun();
-			  fail();
-		  } catch (AssertionFailedError e) {
-		  }
-		  assertEquals(ResultType.TIMED_OUT, server.lastResult().getResultType());
+	  public void testBrowserTimesOut() throws Exception {
+          StandaloneTest test = new StandaloneTest(configurationSource());
+          TestResult result = test.run();
+          assertFalse(result.wasSuccessful());
+		  assertEquals(ResultType.TIMED_OUT, test.getServer().lastResult().getResultType());
 	  }
 
 }

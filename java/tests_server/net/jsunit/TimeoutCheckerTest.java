@@ -1,10 +1,10 @@
 package net.jsunit;
 
-import java.io.InputStream;
-import java.io.OutputStream;
-
 import junit.framework.TestCase;
 import net.jsunit.model.ResultType;
+
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class TimeoutCheckerTest extends TestCase {
 
