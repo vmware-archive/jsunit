@@ -28,6 +28,7 @@ public abstract class FunctionalTestCase extends TestCase {
         super.setUp();
         Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(PORT));
         server = new JsUnitStandardServer(configuration);
+        server.setTemporary(true);
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl("http://localhost:" + webTesterPort() + "/jsunit");

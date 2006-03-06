@@ -49,7 +49,10 @@ public enum ConfigurationProperty {
 
     DESCRIPTION("description", "Description", false, false) {
         public String getValueString(Configuration configuration) {
-            return configuration.getDescription();
+            String description = configuration.getDescription();
+            if (StringUtility.isEmpty(description))
+                return "";
+            return description;
         }
 
         public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
