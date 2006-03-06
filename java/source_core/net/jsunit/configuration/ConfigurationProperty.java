@@ -17,10 +17,13 @@ public enum ConfigurationProperty {
         }
 
         protected void addContentTo(Configuration configuration, Element element) {
-            for (String name : configuration.getBrowserFileNames()) {
-                Element browserFileName = new Element("browserFileName");
-                browserFileName.setText(name);
-                element.addContent(browserFileName);
+            List<String> browserFileNames = configuration.getBrowserFileNames();
+            for (int i = 0; i< browserFileNames.size(); i++) {
+                String fileName = browserFileNames.get(i);
+                Element fileNameElement = new Element("browserFileName");
+                fileNameElement.setAttribute("id", String.valueOf(i));
+                fileNameElement.setText(fileName);
+                element.addContent(fileNameElement);
             }
         }
 

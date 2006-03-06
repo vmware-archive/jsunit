@@ -114,8 +114,8 @@ public class ConfigurationTest extends TestCase {
               "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
               "<hostname>"+SystemUtility.hostname()+"</hostname>" +
               "<browserFileNames>" +
-                  "<browserFileName>browser1.exe</browserFileName>" +
-                  "<browserFileName>browser2.exe</browserFileName>" +
+                  "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
+                  "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
               "</browserFileNames>" +
               "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
               "<description>This is the best server ever</description>" +
