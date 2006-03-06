@@ -1,6 +1,5 @@
 Required for next release:
   FEATURES:
-    - change to use webwork taglib for jsps; remove all java
     - Background thread to update latest version; display latest version on index.jsp
     - admin console to change and save configuration (password protected?)
     - how do the logs work with multiple browser runs given an id?
@@ -28,5 +27,6 @@ Backlog:
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
+    - change to use webwork taglib for jsps; remove all java
   BUGS:
     - IE7beta issues
