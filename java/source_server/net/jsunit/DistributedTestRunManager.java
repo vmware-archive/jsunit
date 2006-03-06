@@ -29,10 +29,6 @@ public class DistributedTestRunManager {
         this(logger, hitter, configuration, null);
     }
 
-    public DistributedTestRunManager(JsUnitLogger logger, Configuration configuration, String overrideURL) {
-        this(logger, new RemoteMachineRunnerHitter(), configuration, overrideURL);
-    }
-
     public DistributedTestRunManager(JsUnitLogger logger, RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
         this.logger = logger;
         this.hitter = hitter;
