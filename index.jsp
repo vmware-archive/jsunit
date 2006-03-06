@@ -3,7 +3,6 @@
 <%@ page import="net.jsunit.configuration.Configuration"%>
 <%@ page import="net.jsunit.configuration.ConfigurationProperty"%>
 <%@ page import="net.jsunit.utility.SystemUtility"%>
-<%@ page import="java.util.List"%>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%Configuration configuration = server.getConfiguration();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">

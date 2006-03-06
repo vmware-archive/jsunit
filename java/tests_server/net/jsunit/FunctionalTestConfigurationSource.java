@@ -54,7 +54,7 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
 	}
 
     public String remoteMachineURLs() {
-        return "";
+        return "http://www.example.com,http://www.example2.com";
     }    
 	
 }

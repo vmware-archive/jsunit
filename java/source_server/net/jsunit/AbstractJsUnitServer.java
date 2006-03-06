@@ -114,6 +114,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         servletContext.addServlet("JSP","*.jsp", JspServlet.class.getName());
         servletContext.addHandler(new ResourceHandler());
 
+        ConfigurationManager.clearConfigurationProviders();
         ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));
 
         for (String servletName : servletNames())
