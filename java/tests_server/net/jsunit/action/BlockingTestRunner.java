@@ -8,7 +8,7 @@ import org.jdom.Element;
 import java.util.Arrays;
 import java.util.List;
 
-class BlockingTestRunner implements BrowserTestRunner {
+public class BlockingTestRunner implements BrowserTestRunner {
     public boolean blocked;
 
     public Element asXml() {

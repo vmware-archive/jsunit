@@ -2,10 +2,6 @@ package net.jsunit.model;
 
 import org.jdom.Element;
 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class TestCaseResultBuilder {
 	
     public TestCaseResult build(Element element) {

@@ -5,12 +5,6 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
 
-import net.jsunit.utility.SystemUtility;
-
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
-
 public class BrowserResultWriter {
 
     public static final String
@@ -26,7 +20,6 @@ public class BrowserResultWriter {
         EXTERNALLY_SHUT_DOWN = "externallyShutDown",
         JSUNIT_VERSION = "jsUnitVersion",
         REMOTE_ADDRESS = "remoteAddress",
-        OS = "os",
         SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
         PROPERTIES = "properties",
         PROPERTY = "property",
@@ -71,7 +64,6 @@ public class BrowserResultWriter {
         Element properties = new Element(PROPERTIES);
         element.addContent(properties);
         addProperty(properties, BROWSER_FILE_NAME, browserResult.getBrowserFileName());
-        addProperty(properties, OS, SystemUtility.osString());
         if (browserResult.completedTestRun()) {
             addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
             addProperty(properties, USER_AGENT, browserResult.getUserAgent());

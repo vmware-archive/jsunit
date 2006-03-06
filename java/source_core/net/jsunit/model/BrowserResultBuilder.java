@@ -1,19 +1,14 @@
 package net.jsunit.model;
 
-import java.io.File;
-import java.util.List;
-
 import net.jsunit.utility.XmlUtility;
-
 import org.jdom.Attribute;
 import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
- 
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
 
+import java.io.File;
+import java.util.List;
+ 
 public class BrowserResultBuilder {
 	
     public BrowserResult build(File file) {

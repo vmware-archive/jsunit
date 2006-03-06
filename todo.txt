@@ -17,7 +17,6 @@ Required for next release:
     - documentation of assertArrayEquals, assertHTMLEquals, assertEvaluatesToFalse & assertEvaluatesToTrue
     - overhaul website
     - xsl file for generating jsunit.properties.sample
-    - remove all copyrights in source files
 
 Backlog:
   FEATURES:

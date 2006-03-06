@@ -2,14 +2,9 @@ package net.jsunit.model;
 
 import junit.framework.TestCase;
 import net.jsunit.utility.FileUtility;
-import net.jsunit.utility.SystemUtility;
 
 import java.io.File;
 import java.util.List;
-
-/**
- * @author Edward Hieatt, edward@jsunit.net
- */
 
 public class BrowserResultTest extends TestCase {
     private BrowserResult result;
@@ -18,7 +13,6 @@ public class BrowserResultTest extends TestCase {
         "<browserResult id=\"An ID\" time=\"4.3\">" +
         	"<properties>" +
             	"<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-            	"<property name=\"os\" value=\""+SystemUtility.osString()+"\" />" +
             	"<property name=\"jsUnitVersion\" value=\"2.5\" />" +
                 "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
                 "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
