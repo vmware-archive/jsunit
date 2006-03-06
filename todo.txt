@@ -1,6 +1,5 @@
 Required for next release:
   FEATURES:
-    - if only 1 test result in a farm result, xml should just be that testresult's
     - change to use webwork taglib for jsps; remove all java
     - Background thread to update latest version; display latest version on index.jsp
     - admin console to change and save configuration (password protected?)

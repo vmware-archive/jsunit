@@ -79,7 +79,7 @@ public class DistributedTest extends TestCase {
             buffer.append("\n");
             List<TestRunResult> testRunResults = result.getTestRunResults();
             XmlRenderable renderable =
-                testRunResults.size() == 1 ? result.getTestRunResults().get(0) : result;
+                    testRunResults.size() == 1 ? result.getTestRunResults().get(0) : result;
             String xml = XmlUtility.asPrettyString(renderable.asXml());
             buffer.append(xml);
             fail(buffer.toString());

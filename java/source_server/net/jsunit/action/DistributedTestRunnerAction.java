@@ -3,7 +3,7 @@ package net.jsunit.action;
 import net.jsunit.DistributedTestRunManager;
 import net.jsunit.XmlRenderable;
 
-public class FarmTestRunnerAction extends JsUnitFarmServerAction {
+public class DistributedTestRunnerAction extends JsUnitFarmServerAction {
 
 	private DistributedTestRunManager manager;
     private String overrideURL;

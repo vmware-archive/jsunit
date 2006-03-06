@@ -28,7 +28,7 @@
 		
 		<default-interceptor-ref name="defaultStack" />
 
-		<action name="runner" class="net.jsunit.action.FarmTestRunnerAction"> 
+		<action name="runner" class="net.jsunit.action.DistributedTestRunnerAction">
 			<result name="success" type="jsUnitXml"/>
 		</action> 
 

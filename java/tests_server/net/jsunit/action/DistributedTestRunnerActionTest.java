@@ -10,19 +10,19 @@ import org.jdom.Document;
 
 import java.net.URL;
 
-public class FarmTestRunnerActionTest extends TestCase {
+public class DistributedTestRunnerActionTest extends TestCase {
 
-	private FarmTestRunnerAction action;
+	private DistributedTestRunnerAction action;
 
 	public void setUp() throws Exception {
 		super.setUp();
-		action = new FarmTestRunnerAction();
+		action = new DistributedTestRunnerAction();
 		action.setFarmServer(new JsUnitFarmServer(new Configuration(new DummyConfigurationSource())));
 		action.setRemoteRunnerHitter(new SuccessfulRemoteRunnerHitter());
 	}
 	
 	public void testSimple() throws Exception {
-		assertEquals(FarmTestRunnerAction.SUCCESS, action.execute());
+		assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
 		assertTrue(action.getTestRunManager().getDistributedTestRunResult().wasSuccessful());
         assertNull(action.getTestRunManager().getOverrideURL());
     }
@@ -30,7 +30,7 @@ public class FarmTestRunnerActionTest extends TestCase {
     public void testOverrideURL() throws Exception {
         String overrideURL = "http://overrideurl.com:1234?foo=bar&bar=fo";
         action.setUrl(overrideURL);
-		assertEquals(FarmTestRunnerAction.SUCCESS, action.execute());
+		assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
         assertEquals(overrideURL, action.getTestRunManager().getOverrideURL());
     }
 
