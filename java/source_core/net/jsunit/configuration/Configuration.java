@@ -189,4 +189,8 @@ public final class Configuration {
     public String getBrowserFileNameById(int id) {
         return getBrowserFileNames().get(id);
     }
+
+    public URL getRemoteMachineURLById(int id) {
+        return getRemoteMachineURLs().get(id);
+    }
 }

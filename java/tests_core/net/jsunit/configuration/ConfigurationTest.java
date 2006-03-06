@@ -173,7 +173,7 @@ public class ConfigurationTest extends TestCase {
                             "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
                         "</remoteMachineURLs>" +
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
-                        "<url>http://www.example.com:1234/</url>" +                        
+                        "<url>http://www.example.com:1234/</url>" +
                         "</configuration>",
                 XmlUtility.asString(configuration.asXml(ServerType.FARM))
         );
@@ -185,6 +185,18 @@ public class ConfigurationTest extends TestCase {
         assertEquals("browser2.exe", configuration.getBrowserFileNameById(1));
     }
     
+    public void testGetRemoteMachineURLById() throws Exception {
+        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
+        assertEquals(
+                new URL("http://localhost:8081/jsunit"),
+                configuration.getRemoteMachineURLById(0)
+        );
+        assertEquals(
+                new URL("http://127.0.0.1:8082/jsunit"),
+                configuration.getRemoteMachineURLById(1)
+        );
+    }
+
     public void testAsArgumentsArray() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
