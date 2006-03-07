@@ -1,7 +1,6 @@
 package net.jsunit.model;
 
 import junit.framework.TestCase;
-import net.jsunit.utility.SystemUtility;
 
 public class TimedOutBrowerResultTest extends TestCase {
 
@@ -9,7 +8,6 @@ public class TimedOutBrowerResultTest extends TestCase {
         "<browserResult timedOut=\"true\">" +
             "<properties>" +
                 "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                "<property name=\"os\" value=\""+ SystemUtility.osString()+"\" />" +
             "</properties>" +
         "</browserResult>";
 
