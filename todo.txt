@@ -1,4 +1,5 @@
 Required for next release:
+
   FEATURES:
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
@@ -10,22 +11,27 @@ Required for next release:
 
     - pull in pivotal's new assertion functions
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
+
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
     - SourceForge bugs
+
   WEBSITE/DOCUMENTATION
     - documentation of assertArrayEquals, assertHTMLEquals, assertEvaluatesToFalse & assertEvaluatesToTrue
     - overhaul website
     - xsl file for generating jsunit.properties.sample
 
 Backlog:
+
   FEATURES:
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - have distributed test & standalone test give nice names to the virtual tests they create - distributed test could hit the remote config and get the description or os String
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
+
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
     - change to use webwork taglib for jsps; remove all java
+
   BUGS:
     - IE7beta issues
