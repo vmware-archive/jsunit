@@ -50,17 +50,20 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     public void accept(BrowserResult result) {
+        long timeReceived = System.currentTimeMillis();
+        String submittingBrowserFileName = browserFileName;
+        endBrowser();
+        
+        result.setBrowserFileName(submittingBrowserFileName);
+
         killTimeoutChecker();
-        result.setBrowserFileName(browserFileName);
         BrowserResult existingResultWithSameId = findResultWithId(result.getId());
+        for (TestRunListener listener : browserTestRunListeners)
+            listener.browserTestRunFinished(submittingBrowserFileName, result);
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
         results.add(result);
-
-        for (TestRunListener listener : browserTestRunListeners)
-            listener.browserTestRunFinished(browserFileName, result);
-        timeLastResultReceived = System.currentTimeMillis();
-        endBrowser();
+        timeLastResultReceived = timeReceived;        
     }
 
     private void killTimeoutChecker() {
@@ -125,11 +128,35 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private void endBrowser() {
-        if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns())
+        if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns()) {
             browserProcess.destroy();
+            try {
+                browserProcess.waitFor();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            waitUntilProcessHasExitValue(browserProcess);
+            try {
+                // todo(mgrafton,erikh): wha?
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         browserProcess = null;
         browserFileName = null;
         killTimeoutChecker();
+    }
+
+    private void waitUntilProcessHasExitValue(Process browserProcess) {
+        while (true) {
+            try {
+                System.out.println("browserProcess.exitValue(); = " + browserProcess.exitValue());
+                return;
+            } catch (IllegalThreadStateException e) {
+                System.out.println("not dead");
+            }
+        }
     }
 
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {

@@ -35,8 +35,15 @@ public class ExternallyShutDownStandaloneTestTest extends TestCase {
                     while (test.getServer().getBrowserProcess() == null)
                         Thread.sleep(100);
                 } catch (InterruptedException e) {
+                    fail();
                 }
-                test.getServer().getBrowserProcess().destroy();
+                Process process = test.getServer().getBrowserProcess();
+                process.destroy();
+                try {
+                    process.waitFor();
+                } catch (InterruptedException e) {
+                    fail();
+                }
             }
         }.start();
 
