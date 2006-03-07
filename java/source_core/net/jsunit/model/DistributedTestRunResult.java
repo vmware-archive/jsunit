@@ -5,6 +5,7 @@ import org.jdom.Element;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class DistributedTestRunResult extends AbstractResult implements XmlRenderable {
 
@@ -16,6 +17,7 @@ public class DistributedTestRunResult extends AbstractResult implements XmlRende
 
     public void addTestRunResult(TestRunResult result) {
         testRunResults.add(result);
+        Collections.sort(testRunResults);
     }
 
     public Element asXml() {

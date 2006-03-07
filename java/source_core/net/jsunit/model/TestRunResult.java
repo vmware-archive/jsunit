@@ -7,7 +7,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TestRunResult extends AbstractResult implements XmlRenderable {
+public class TestRunResult extends AbstractResult implements XmlRenderable, Comparable<TestRunResult> {
 
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
     private URL url;
@@ -112,5 +112,11 @@ public class TestRunResult extends AbstractResult implements XmlRenderable {
 
     public String getHostname() {
         return hostname;
+    }
+
+    public int compareTo(TestRunResult other) {
+        if (url == null | other.getUrl() == null)
+            return 0;
+        return url.toString().compareTo(other.getUrl().toString());
     }
 }

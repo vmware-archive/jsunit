@@ -40,11 +40,10 @@ public class DistributedTestRunManager {
 
     public void runTests() {
         List<Thread> threads = new ArrayList<Thread>();
-        final TestRunResultBuilder builder = new TestRunResultBuilder();
         for (final URL baseURL : configuration.getRemoteMachineURLs()) {
-            threads.add(new Thread("Run JSUnit tests on " + baseURL) {
+            threads.add(new Thread("Run JsUnit tests on " + baseURL) {
                 public void run() {
-                    runTestsOnRemoteMachine(baseURL, builder);
+                    runTestsOnRemoteMachine(baseURL);
                 }
             });
         }
@@ -60,15 +59,14 @@ public class DistributedTestRunManager {
         }
     }
 
-    private void runTestsOnRemoteMachine(URL baseURL, TestRunResultBuilder builder) {
+    private void runTestsOnRemoteMachine(URL baseURL) {
         TestRunResult testRunResult = null;
         try {
             URL fullURL = buildURL(baseURL);
             logger.log("Requesting run on remote machine URL " + baseURL, true);
             Document documentFromRemoteMachine = hitter.hitURL(fullURL);
             logger.log("Received response from remove machine URL " + baseURL, true);
-            testRunResult = builder.build(documentFromRemoteMachine);
-            testRunResult.setURL(baseURL);
+            testRunResult = new TestRunResultBuilder().build(documentFromRemoteMachine);
         } catch (IOException e) {
             if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
                 logger.log("Ignoring unresponsive machine " + baseURL.toString(), true);
@@ -79,6 +77,7 @@ public class DistributedTestRunManager {
             }
         }
         if (testRunResult != null) {
+            testRunResult.setURL(baseURL);
             synchronized(distributedTestRunResult) {
                 distributedTestRunResult.addTestRunResult(testRunResult);
             }

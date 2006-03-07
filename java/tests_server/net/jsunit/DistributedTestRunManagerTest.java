@@ -77,12 +77,8 @@ public class DistributedTestRunManagerTest extends TestCase {
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertEquals(
-                DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL,
-                hitter.urlsPassed.get(0).toString());
-        assertEquals(
-                DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL,
-                hitter.urlsPassed.get(1).toString());
+        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL)));
+        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL)));
     }
 
     public void testNoURL() throws Exception {
