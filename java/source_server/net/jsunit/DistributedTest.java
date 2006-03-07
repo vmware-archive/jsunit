@@ -1,18 +1,16 @@
 package net.jsunit;
 
+import junit.extensions.ActiveTestSuite;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
-
 import org.mortbay.util.MultiException;
-import org.kohsuke.junit.ParallelTestSuite;
 
 import java.net.BindException;
 import java.net.URL;
@@ -76,7 +74,7 @@ public class DistributedTest extends TestCase {
     }
 
     public static Test suite() {
-        TestSuite suite = new ParallelTestSuite();
+        TestSuite suite = new ActiveTestSuite();
         ConfigurationSource originalSource = Configuration.resolveSource();
         Configuration configuration = new Configuration(originalSource);
         for (final URL remoteMachineURL : configuration.getRemoteMachineURLs())
@@ -93,17 +91,11 @@ public class DistributedTest extends TestCase {
     protected void runTest() throws Throwable {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
-        if (!result.wasSuccessful()) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append(result.displayString());
-            buffer.append("\n");
-            List<TestRunResult> testRunResults = result.getTestRunResults();
-            XmlRenderable renderable = testRunResults.size() == 1 ?
-                    result.getTestRunResults().get(0) : result;
-            String xml = XmlUtility.asPrettyString(renderable.asXml());
-            buffer.append(xml);
-            fail(buffer.toString());
-        }
+        List<TestRunResult> testRunResults = result.getTestRunResults();
+        XmlRenderable renderable = testRunResults.size() == 1 ? result.getTestRunResults().get(0) : result;
+        System.out.println(XmlUtility.asPrettyString(renderable.asXml()));
+        if (!result.wasSuccessful())
+            fail(result.displayString());
     }
 
     public DistributedTestRunManager getDistributedTestRunManager() {
