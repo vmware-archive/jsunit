@@ -12,6 +12,7 @@ import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 
 import org.mortbay.util.MultiException;
+import org.kohsuke.junit.ParallelTestSuite;
 
 import java.net.BindException;
 import java.net.URL;
@@ -20,13 +21,23 @@ import java.util.List;
 public class DistributedTest extends TestCase {
 
     protected DistributedTestRunManager manager;
-    private JsUnitStandardServer temporaryStandardServer;
+    private static JsUnitStandardServer temporaryStandardServer;
+    private static Object blocker = new Object();
+    private static int serverCount = 0;
 
     public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
         super(farmSource.remoteMachineURLs());
-        temporaryStandardServer = new JsUnitStandardServer(new Configuration(serverSource));
-        temporaryStandardServer.setTemporary(true);
+        ensureTemporaryStandardServerIsCreated(serverSource);
         manager = new DistributedTestRunManager(temporaryStandardServer.getLogger(), new Configuration(farmSource));
+    }
+
+    private void ensureTemporaryStandardServerIsCreated(ConfigurationSource serverSource) {
+        synchronized(blocker) {
+            if (temporaryStandardServer == null) {
+                temporaryStandardServer = new JsUnitStandardServer(new Configuration(serverSource));
+                temporaryStandardServer.setTemporary(true);
+            }
+        }
     }
 
     public void setUp() throws Exception {
@@ -35,13 +46,18 @@ public class DistributedTest extends TestCase {
     }
 
     private void startServerIfNecessary() throws Exception {
-        try {
-            temporaryStandardServer.start();
-        } catch (MultiException e) {
-            if (!isMultiExceptionASingleBindException(e))
-                throw e;
-            //if a temporaryStandardServer is already running, fine -
-            //we only need it to serve content to remote machines
+        serverCount ++;
+        synchronized(blocker) {
+            if (!temporaryStandardServer.isAlive()) {
+                try {
+                    temporaryStandardServer.start();
+                } catch (MultiException e) {
+                    if (!isMultiExceptionASingleBindException(e))
+                        throw e;
+                    //if a temporaryStandardServer is already running, fine -
+                    //we only need it to serve content to remote machines
+                }
+            }
         }
     }
 
@@ -51,13 +67,16 @@ public class DistributedTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        if (temporaryStandardServer != null && temporaryStandardServer.isAlive())
-            temporaryStandardServer.dispose();
+        serverCount --;
+        if (serverCount == 0) {
+            if (temporaryStandardServer != null && temporaryStandardServer.isAlive())
+                temporaryStandardServer.dispose();
+        }
         super.tearDown();
     }
 
     public static Test suite() {
-        TestSuite suite = new TestSuite();
+        TestSuite suite = new ParallelTestSuite();
         ConfigurationSource originalSource = Configuration.resolveSource();
         Configuration configuration = new Configuration(originalSource);
         for (final URL remoteMachineURL : configuration.getRemoteMachineURLs())

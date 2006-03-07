@@ -12,6 +12,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DistributedTestRunManager {
 
@@ -37,27 +39,49 @@ public class DistributedTestRunManager {
     }
 
     public void runTests() {
-        TestRunResultBuilder builder = new TestRunResultBuilder();
-        for (URL baseURL : configuration.getRemoteMachineURLs()) {
-            TestRunResult testRunResult = null;
-            try {
-                URL fullURL = buildURL(baseURL);
-                logger.log("Requesting run on remote machine URL " + baseURL, true);
-                Document documentFromRemoteMachine = hitter.hitURL(fullURL);
-                logger.log("Received response from remove machine URL " + baseURL, true);
-                testRunResult = builder.build(documentFromRemoteMachine);
-                testRunResult.setURL(baseURL);
-            } catch (IOException e) {
-                if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
-                    logger.log("Ignoring unresponsive machine " + baseURL.toString(), true);
-                else {
-                    logger.log("Remote machine URL is unresponsive: " + baseURL.toString(), true);
-                    testRunResult = new TestRunResult(baseURL);
-                    testRunResult.setUnresponsive();
+        List<Thread> threads = new ArrayList<Thread>();
+        final TestRunResultBuilder builder = new TestRunResultBuilder();
+        for (final URL baseURL : configuration.getRemoteMachineURLs()) {
+            threads.add(new Thread("Run JSUnit tests on " + baseURL) {
+                public void run() {
+                    runTestsOnRemoteMachine(baseURL, builder);
                 }
+            });
+        }
+        for (Thread thread : threads) {
+            thread.start();
+        }
+        for (Thread thread : threads) {
+            try {
+                thread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException("One of the test threads was interrupted.");
             }
-            if (testRunResult != null)
+        }
+    }
+
+    private void runTestsOnRemoteMachine(URL baseURL, TestRunResultBuilder builder) {
+        TestRunResult testRunResult = null;
+        try {
+            URL fullURL = buildURL(baseURL);
+            logger.log("Requesting run on remote machine URL " + baseURL, true);
+            Document documentFromRemoteMachine = hitter.hitURL(fullURL);
+            logger.log("Received response from remove machine URL " + baseURL, true);
+            testRunResult = builder.build(documentFromRemoteMachine);
+            testRunResult.setURL(baseURL);
+        } catch (IOException e) {
+            if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
+                logger.log("Ignoring unresponsive machine " + baseURL.toString(), true);
+            else {
+                logger.log("Remote machine URL is unresponsive: " + baseURL.toString(), true);
+                testRunResult = new TestRunResult(baseURL);
+                testRunResult.setUnresponsive();
+            }
+        }
+        if (testRunResult != null) {
+            synchronized(distributedTestRunResult) {
                 distributedTestRunResult.addTestRunResult(testRunResult);
+            }
         }
     }
 
