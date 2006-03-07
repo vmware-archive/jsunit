@@ -137,7 +137,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
             }
             waitUntilProcessHasExitValue(browserProcess);
             try {
-                // todo(mgrafton,erikh): wha?
+                // todo: wha?
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
