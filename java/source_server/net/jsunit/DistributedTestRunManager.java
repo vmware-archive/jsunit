@@ -40,16 +40,14 @@ public class DistributedTestRunManager {
 
     public void runTests() {
         List<Thread> threads = new ArrayList<Thread>();
-        for (final URL baseURL : configuration.getRemoteMachineURLs()) {
+        for (final URL baseURL : configuration.getRemoteMachineURLs())
             threads.add(new Thread("Run JsUnit tests on " + baseURL) {
                 public void run() {
                     runTestsOnRemoteMachine(baseURL);
                 }
             });
-        }
-        for (Thread thread : threads) {
+        for (Thread thread : threads)
             thread.start();
-        }
         for (Thread thread : threads) {
             try {
                 thread.join();
