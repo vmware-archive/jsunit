@@ -2,11 +2,10 @@ Required for next release:
   FEATURES:
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
-    - admin console to change and save configuration (password protected?)
+    - admin.jsp console to change and save configuration (password protected?)
     - browser ids - ability to pass a browser id to the runner servlet
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
 
-    - jsunit source div innerHTML
     - auto-upgrade check in browser using AJAX
 
     - pull in pivotal's new assertion functions
