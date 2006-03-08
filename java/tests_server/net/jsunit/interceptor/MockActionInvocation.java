@@ -41,9 +41,12 @@ public class MockActionInvocation implements ActionInvocation {
 		return null;
 	}
 
-	public OgnlValueStack getStack() {
-		return null;
-	}
+    public void setResultCode(String string) {
+    }
+
+    public OgnlValueStack getStack() {
+        return null;
+    }
 
 	public void addPreResultListener(PreResultListener arg0) {
 	}
@@ -52,5 +55,9 @@ public class MockActionInvocation implements ActionInvocation {
 		wasInvokeCalled = true;
 		return null;
 	}
+
+    public String invokeActionOnly() throws Exception {
+        return null;
+    }
 
 }

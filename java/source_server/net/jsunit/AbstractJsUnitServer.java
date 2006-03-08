@@ -112,6 +112,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
         ConfigurationManager.clearConfigurationProviders();
         ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));
+        com.opensymphony.webwork.config.Configuration.set("webwork.action.extension", "");
 
         for (String servletName : servletNames())
             addWebworkServlet(servletContext, servletName);

@@ -13,7 +13,7 @@ public abstract class JsUnitInterceptor implements Interceptor {
 	}
 	
 	public String intercept(ActionInvocation invocation) throws Exception {
-		execute(invocation.getAction());
+		execute((Action) invocation.getAction());
 		return invocation.invoke();
 	}
 
