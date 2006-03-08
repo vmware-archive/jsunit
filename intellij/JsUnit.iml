@@ -195,15 +195,6 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../java/lib/parallel-junit.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
           <root url="jar://$MODULE_DIR$/../java/lib/rife-continuations.jar!/" />
         </CLASSES>
         <JAVADOC />
@@ -222,7 +213,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../java/lib/javamail.jar!/" />
+          <root url="jar://$MODULE_DIR$/../java/lib/webwork-2.2-beta-4.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -231,7 +222,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../java/lib/webwork-2.2-beta-4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../java/testlib/ashcroft.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

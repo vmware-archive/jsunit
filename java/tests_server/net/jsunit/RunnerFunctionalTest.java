@@ -1,13 +1,12 @@
 package net.jsunit;
 
-import java.net.URLEncoder;
-import java.util.List;
-
 import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.model.ResultType;
-
 import org.jdom.Document;
 import org.jdom.Element;
+
+import java.net.URLEncoder;
+import java.util.List;
 
 public class RunnerFunctionalTest extends FunctionalTestCase {
 
