@@ -171,7 +171,7 @@
         </junit>
     </target>
 
-    <target name="run_all_tests" depends="_compile_tests" description="Runs all the JsUnit Java tests">
+    <target name="run_all_tests" depends="_compile_source,_compile_tests" description="Runs all the JsUnit Java tests">
         <junit showoutput="yes" printsummary="yes" haltonfailure="yes" haltonerror="yes">
             <formatter type="plain" usefile="false"/>
             <classpath refid="self_tests_classpath"/>

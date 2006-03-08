@@ -31,8 +31,8 @@ public class DistributedTestRunManagerTest extends TestCase {
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
-        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL)));
-        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL)));
+        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL));
+        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL));
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
 
         DistributedTestRunResult expectedResult = new DistributedTestRunResult();
@@ -77,8 +77,8 @@ public class DistributedTestRunManagerTest extends TestCase {
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL)));
-        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL)));
+        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL));
+        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL));
     }
 
     public void testNoURL() throws Exception {
@@ -92,8 +92,8 @@ public class DistributedTestRunManagerTest extends TestCase {
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_1 + "/runner")));
-        assertTrue(hitter.urlsPassed.contains(new URL(DummyConfigurationSource.REMOTE_URL_2 + "/runner")));
+        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_1 + "/runner"));
+        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_2 + "/runner"));
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
 
         DistributedTestRunResult expectedResult = new DistributedTestRunResult();
