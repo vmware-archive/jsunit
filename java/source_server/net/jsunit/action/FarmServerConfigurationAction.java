@@ -15,7 +15,7 @@ public class FarmServerConfigurationAction extends JsUnitFarmServerAction {
 	public String execute() throws Exception {
 		result = new Element("remoteConfigurations");
 		for (URL url : server.getConfiguration().getRemoteMachineURLs()) {
-			URL configurationURL = new URL(url.toString() + "config");
+			URL configurationURL = new URL(url.toString() + "/config");
 			Element configurationElement;
 			try {
 				Document document = hitter.hitURL(configurationURL);

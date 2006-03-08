@@ -105,6 +105,10 @@
     <property name="testlib" location="java/testlib"/>
     <property name="config" location="java/config"/>
 
+    <target name="_clean">
+        <delete dir="${bin}/net"/>
+    </target>
+
     <path id="classpath">
         <fileset dir="${lib}">
             <include name="*.jar"/>
@@ -171,7 +175,7 @@
         </junit>
     </target>
 
-    <target name="run_all_tests" depends="_compile_source,_compile_tests" description="Runs all the JsUnit Java tests">
+    <target name="run_all_tests" depends="_clean,_compile_source,_compile_tests" description="Runs all the JsUnit Java tests">
         <junit showoutput="yes" printsummary="yes" haltonfailure="yes" haltonerror="yes">
             <formatter type="plain" usefile="false"/>
             <classpath refid="self_tests_classpath"/>

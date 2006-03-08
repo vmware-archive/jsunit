@@ -31,8 +31,8 @@ public class FarmServerConfigurationActionTest extends TestCase {
 		MockRemoteRunnerHitter mockHitter = new MockRemoteRunnerHitter();
 		Configuration configuration1 = configuration1();
 		Configuration configuration2 = configuration2();
-		mockHitter.documents.add(new Document(configuration1.asXml(ServerType.FARM)));
-		mockHitter.documents.add(new Document(configuration2.asXml(ServerType.FARM)));
+		mockHitter.urlToDocument.put(DummyConfigurationSource.REMOTE_URL_1+"/config", new Document(configuration1.asXml(ServerType.FARM)));
+		mockHitter.urlToDocument.put(DummyConfigurationSource.REMOTE_URL_2+"/config", new Document(configuration2.asXml(ServerType.FARM)));
 		action.setRemoteRunnerHitter(mockHitter);
 		action.execute();
 		assertEquals(2, mockHitter.urlsPassed.size());

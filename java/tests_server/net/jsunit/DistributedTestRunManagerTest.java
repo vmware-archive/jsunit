@@ -26,13 +26,15 @@ public class DistributedTestRunManagerTest extends TestCase {
     }
 
     public void testSimple() throws MalformedURLException, UnsupportedEncodingException {
-        MockRemoteRunnerHitter hitter = createMockHitter();
+        String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
+        String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
+        String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
+        MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
-        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL));
-        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL));
+        assertTrue(hitter.urlsPassed.contains(url1));
+        assertTrue(hitter.urlsPassed.contains(url2));
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
 
         DistributedTestRunResult expectedResult = new DistributedTestRunResult();
@@ -73,12 +75,14 @@ public class DistributedTestRunManagerTest extends TestCase {
     public void testOverrideURL() throws Exception {
         String overrideURL = "http://my.override.com:1234?foo=bar&bar=foo";
         String encodedOverrideURL = URLEncoder.encode(overrideURL, "UTF-8");
-        MockRemoteRunnerHitter hitter = createMockHitter();
+        String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL;
+        String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL;
+        MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL));
-        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL));
+        assertTrue(hitter.urlsPassed.contains(url1));
+        assertTrue(hitter.urlsPassed.contains(url2));
     }
 
     public void testNoURL() throws Exception {
@@ -87,13 +91,15 @@ public class DistributedTestRunManagerTest extends TestCase {
                 return null;
             }
         });
-        MockRemoteRunnerHitter hitter = createMockHitter();
+        String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner";
+        String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner";
+        MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
 
         DistributedTestRunManager manager = new DistributedTestRunManager(new NoOpJsUnitLogger(), hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
-        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_1 + "/runner"));
-        assertTrue(hitter.urlsPassed.contains(DummyConfigurationSource.REMOTE_URL_2 + "/runner"));
+        assertTrue(hitter.urlsPassed.contains(url1));
+        assertTrue(hitter.urlsPassed.contains(url2));
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
 
         DistributedTestRunResult expectedResult = new DistributedTestRunResult();
@@ -103,10 +109,10 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertEquals(XmlUtility.asString(expectedResult.asXml()), XmlUtility.asString(result.asXml()));
     }
 
-    private MockRemoteRunnerHitter createMockHitter() throws MalformedURLException {
+    private MockRemoteRunnerHitter createMockHitter(String url1, String url2) throws MalformedURLException {
         MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
-        hitter.documents.add(new Document(createResult1().asXml()));
-        hitter.documents.add(new Document(createResult2().asXml()));
+        hitter.urlToDocument.put(url1, new Document(createResult1().asXml()));
+        hitter.urlToDocument.put(url2, new Document(createResult2().asXml()));
         return hitter;
     }
 
