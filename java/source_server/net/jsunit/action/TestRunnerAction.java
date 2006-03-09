@@ -7,9 +7,13 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction {
 
     private TestRunManager manager;
     private String url;
+    private String remoteAddress;
 
     public String execute() throws Exception {
-        runner.logStatus("Received request to run tests");
+        String message = "Received request to run tests";
+        if (remoteAddress != null)
+            message += " from " + remoteAddress;
+        runner.logStatus(message);
         synchronized (runner) {
             manager = new TestRunManager(runner, url);
             manager.runTests();
@@ -25,5 +29,9 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+
+    public void setRemoteAddress(String remoteAddress) {
+        this.remoteAddress = remoteAddress;
+    }
 
 }

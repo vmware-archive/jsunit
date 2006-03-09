@@ -40,4 +40,10 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals(overrideUrl, mockRunner.launchSpec.getOverrideUrl());
     }
 
+    public void testRemoteAddressLogged() throws Exception {
+        action.setRemoteAddress("123.456.78.9");
+        action.execute();
+        assertTrue(mockRunner.logMessages.get(0).indexOf("123.456.78.9") !=-1);
+    }
+
 }

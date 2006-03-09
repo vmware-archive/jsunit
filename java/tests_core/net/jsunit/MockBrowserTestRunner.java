@@ -1,72 +1,74 @@
 package net.jsunit;
 
+import net.jsunit.model.BrowserResult;
+import org.jdom.Element;
+
 import java.util.Arrays;
 import java.util.List;
-
-import net.jsunit.model.BrowserResult;
-
-import org.jdom.Element;
+import java.util.ArrayList;
 
 public class MockBrowserTestRunner implements BrowserTestRunner {
 
-	public boolean disposeCalled;
+    public boolean disposeCalled;
     public BrowserResult acceptedResult;
     public BrowserResult resultToReturn;
     public boolean shouldSucceed;
     public String idPassed;
-	public int timeoutSeconds;
-	public boolean hasReceivedResult;
-	public BrowserLaunchSpecification launchSpec;
-    
-	public void startTestRun() {
-	}
+    public int timeoutSeconds;
+    public boolean hasReceivedResult;
+    public BrowserLaunchSpecification launchSpec;
+    public List<String> logMessages = new ArrayList<String>();
 
-	public void finishTestRun() {
-	}
+    public void startTestRun() {
+    }
 
-	public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-		this.launchSpec = launchSpec;
-		return 0;
-	}
+    public void finishTestRun() {
+    }
 
-	public void accept(BrowserResult result) {
+    public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
+        this.launchSpec = launchSpec;
+        return 0;
+    }
+
+    public void accept(BrowserResult result) {
         this.acceptedResult = result;
-	}
+    }
 
-	public boolean hasReceivedResultSince(long launchTime) {
-		return hasReceivedResult;
-	}
+    public boolean hasReceivedResultSince(long launchTime) {
+        return hasReceivedResult;
+    }
 
-	public BrowserResult lastResult() {
+    public BrowserResult lastResult() {
         return new DummyBrowserResult(shouldSucceed, shouldSucceed ? 0 : 1, 0);
-	}
+    }
 
-	public void dispose() {
-		disposeCalled = true;
-	}
+    public void dispose() {
+        disposeCalled = true;
+    }
 
     public BrowserResult findResultWithId(String id) {
         idPassed = id;
         return resultToReturn;
     }
 
-	public void logStatus(String message) {
-	}
+    public void logStatus(String message) {
+        logMessages.add(message);
+    }
 
-	public List<String> getBrowserFileNames() {
+    public List<String> getBrowserFileNames() {
         return Arrays.asList(new String[] {"mybrowser.exe"});
-	}
+    }
 
-	public int timeoutSeconds() {
-		return timeoutSeconds;
-	}
+    public int timeoutSeconds() {
+        return timeoutSeconds;
+    }
 
-	public Element asXml() {
-		return null;
-	}
+    public Element asXml() {
+        return null;
+    }
 
-	public boolean isAlive() {
-		return true;
-	}
+    public boolean isAlive() {
+        return true;
+    }
 
 }
