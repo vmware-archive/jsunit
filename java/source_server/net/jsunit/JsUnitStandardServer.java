@@ -151,7 +151,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private void waitUntilProcessHasExitValue(Process browserProcess) {
         while (true) {
             try {
-                System.out.println("browserProcess.exitValue(); = " + browserProcess.exitValue());
+                browserProcess.exitValue();
                 return;
             } catch (IllegalThreadStateException e) {
                 System.out.println("not dead");
