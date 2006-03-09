@@ -8,7 +8,6 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 import org.mortbay.util.MultiException;
 
@@ -91,9 +90,7 @@ public class DistributedTest extends TestCase {
     protected void runTest() throws Throwable {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
-        List<TestRunResult> testRunResults = result.getTestRunResults();
-        XmlRenderable renderable = testRunResults.size() == 1 ? result.getTestRunResults().get(0) : result;
-        System.out.println(XmlUtility.asPrettyString(renderable.asXml()));
+        temporaryStandardServer.logStatus(XmlUtility.asPrettyString(result.asXml()));
         if (!result.wasSuccessful())
             fail(result.displayString());
     }

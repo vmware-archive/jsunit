@@ -6,7 +6,7 @@ import net.jsunit.model.TestRunResult;
 public class TestRunManager {
 
     private BrowserTestRunner testRunner;
-    private TestRunResult testRunResult = new TestRunResult();
+    private TestRunResult testRunResult;
 	private final String overrideUrl;
 
     public static void main(String[] args) throws Exception {
@@ -31,7 +31,8 @@ public class TestRunManager {
 	}
 
 	public void runTests() {
-		testRunner.logStatus("Starting Test Run");
+        initializeTestRunResult();
+        testRunner.logStatus("Starting Test Run");
 		testRunner.startTestRun();
 		try {
 	        for (String browserFileName : testRunner.getBrowserFileNames()) {
@@ -49,14 +50,19 @@ public class TestRunManager {
         testRunner.logStatus("Test Run Completed");
 	}
 
+    private void initializeTestRunResult() {
+        testRunResult = new TestRunResult();
+        testRunResult.initializeProperties();
+    }
+
     private void waitForResultToBeSubmitted(String browserFileName, long launchTime) {
         testRunner.logStatus("Waiting for " + browserFileName + " to submit result");
         long secondsWaited = 0;
         while (testRunner.isAlive() && !testRunner.hasReceivedResultSince(launchTime)) {
             try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-			}
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
             secondsWaited++;
             if (secondsWaited > (testRunner.timeoutSeconds())+3)
                 throw new RuntimeException("Server not responding");

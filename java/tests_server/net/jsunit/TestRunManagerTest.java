@@ -2,6 +2,8 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.TestRunResult;
+import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
 import java.util.Arrays;
@@ -40,7 +42,18 @@ public class TestRunManagerTest extends TestCase {
     	runner.hasReceivedResult = true;
 		TestRunManager manager = new TestRunManager(runner, null);
     	manager.runTests();
-    	assertFalse(runner.launchSpec.hasOverrideUrl());    	
+    	assertFalse(runner.launchSpec.hasOverrideUrl());
+    }
+
+    public void testPropertiesSet() throws Exception {
+        MockBrowserTestRunner runner = new MockBrowserTestRunner();
+        runner.hasReceivedResult = true;        
+        TestRunManager manager = new TestRunManager(runner, null);
+        manager.runTests();
+        TestRunResult testRunResult = manager.getTestRunResult();
+        assertEquals(SystemUtility.osString(), testRunResult.getOsString());
+        assertEquals(SystemUtility.ipAddress(), testRunResult.getIpAddress());
+        assertEquals(SystemUtility.hostname(), testRunResult.getHostname());
     }
 
     static class SuccessfulBrowserTestRunner implements BrowserTestRunner {

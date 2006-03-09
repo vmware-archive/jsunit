@@ -1,6 +1,7 @@
 package net.jsunit.model;
 
 import net.jsunit.XmlRenderable;
+import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
 import java.net.URL;
@@ -118,5 +119,11 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         if (url == null | other.getUrl() == null)
             return 0;
         return url.toString().compareTo(other.getUrl().toString());
+    }
+
+    public void initializeProperties() {
+        setOsString(SystemUtility.osString());
+        setHostname(SystemUtility.hostname());
+        setIpAddress(SystemUtility.ipAddress());
     }
 }
