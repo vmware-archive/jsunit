@@ -136,12 +136,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
                 e.printStackTrace();
             }
             waitUntilProcessHasExitValue(browserProcess);
-            try {
-                // todo: wha?
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
         browserProcess = null;
         browserFileName = null;
@@ -154,7 +148,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
                 browserProcess.exitValue();
                 return;
             } catch (IllegalThreadStateException e) {
-                System.out.println("not dead");
             }
         }
     }
