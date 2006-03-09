@@ -27,7 +27,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
             message += " from ";
             if (!StringUtility.isEmpty(remoteHost)) {
                 message += remoteHost;
-                if (!StringUtility.isEmpty(remoteAddress))
+                if (!StringUtility.isEmpty(remoteAddress) && !remoteAddress.equals(remoteHost))
                     message += " (" + remoteAddress+")";
             } else {
                 message += remoteAddress;

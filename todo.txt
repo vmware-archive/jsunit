@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - say which IP the request to run tests was received from
     - get rid of the webwork spring ioc message - why is the component stuff even happening?
     - broken functional tests - runnerFT
     - ant run_all_tests broken

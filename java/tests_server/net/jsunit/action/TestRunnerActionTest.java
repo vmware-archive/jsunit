@@ -58,6 +58,12 @@ public class TestRunnerActionTest extends TestCase {
         action.setRequestIPAddress("");
         action.execute();
         assertEquals("Received request to run tests from www.example.com", mockRunner.logMessages.get(0));
+
+        mockRunner.logMessages.clear();
+        action.setRequestIPAddress("12.34.56.78");
+        action.setRequestHost("12.34.56.78");
+        action.execute();
+        assertEquals("Received request to run tests from 12.34.56.78", mockRunner.logMessages.get(0));
     }
 
 }
