@@ -28,6 +28,5 @@
 	<classpathentry kind="lib" path="java/lib/xwork-1.1.jar"/>
 	<classpathentry kind="lib" path="java/lib/webwork-2.2-beta-4.jar"/>
 	<classpathentry kind="lib" path="java/lib/rife-continuations.jar"/>
-	<classpathentry kind="lib" path="java/lib/javamail.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>
