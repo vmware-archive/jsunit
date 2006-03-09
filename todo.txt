@@ -6,6 +6,7 @@ Required for next release:
   - broken functional tests - runnerFT
   - ant run_all_tests broken
   - log source/sink interface to abstract all file access
+  - ashcroft compliance
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
     - admin.jsp console to change and save configuration (password protected?)
