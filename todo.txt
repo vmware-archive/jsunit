@@ -1,12 +1,12 @@
 Required for next release:
 
   FEATURES:
-  - say which IP the request to run tests was received from
-  - get rid of the webwork spring ioc message - why is the component stuff even happening?
-  - broken functional tests - runnerFT
-  - ant run_all_tests broken
-  - log source/sink interface to abstract all file access
-  - ashcroft compliance
+    - say which IP the request to run tests was received from
+    - get rid of the webwork spring ioc message - why is the component stuff even happening?
+    - broken functional tests - runnerFT
+    - ant run_all_tests broken
+    - log source/sink interface to abstract all file access
+    - ashcroft compliance
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
     - admin.jsp console to change and save configuration (password protected?)
@@ -26,6 +26,7 @@ Required for next release:
     - documentation of assertArrayEquals, assertHTMLEquals, assertEvaluatesToFalse & assertEvaluatesToTrue
     - overhaul website
     - xsl file for generating jsunit.properties.sample
+    - check in website
 
 Backlog:
 
