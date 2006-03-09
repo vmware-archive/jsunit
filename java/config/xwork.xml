@@ -1,5 +1,4 @@
-<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN"
-        "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
+<!DOCTYPE xwork PUBLIC "-//OpenSymphony Group//XWork 1.0//EN" "http://www.opensymphony.com/xwork/xwork-1.0.dtd">
 
 <xwork>
 
@@ -19,10 +18,9 @@
 			<interceptor-stack name="defaultStack">
 				<interceptor-ref name="servlet-config" /> 
 				<interceptor-ref name="prepare" /> 
-				<interceptor-ref name="static-params" /> 
-				<interceptor-ref name="params" /> 
+				<interceptor-ref name="params" />
 				<interceptor-ref name="conversionError" /> 
-				<interceptor-ref name="browserTestRunner" /> 
+				<interceptor-ref name="browserTestRunner" />
 			</interceptor-stack>
 		</interceptors>
 		
