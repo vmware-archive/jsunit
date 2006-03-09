@@ -15,6 +15,8 @@ import java.util.Map;
 
 public class DummyHttpRequest implements HttpServletRequest {
     protected Map parametersToValues;
+    private String ipAddress;
+    private String host;
 
     public DummyHttpRequest(Map parametersToValues) {
         this.parametersToValues = parametersToValues;
@@ -186,11 +188,11 @@ public class DummyHttpRequest implements HttpServletRequest {
     }
 
     public String getRemoteAddr() {
-        return "Dummy Remote Address";
+        return ipAddress;
     }
 
     public String getRemoteHost() {
-        return null;
+        return host;
     }
 
     public void setAttribute(String name, Object o) {
@@ -238,4 +240,12 @@ public class DummyHttpRequest implements HttpServletRequest {
 	public int getLocalPort() {
 		return 0;
 	}
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
 }

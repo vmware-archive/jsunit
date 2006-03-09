@@ -4,10 +4,7 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import net.jsunit.action.*;
 import net.jsunit.configuration.*;
-import net.jsunit.interceptor.BrowserResultInterceptorTest;
-import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
-import net.jsunit.interceptor.FarmServerInterceptorTest;
-import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
+import net.jsunit.interceptor.*;
 import net.jsunit.model.*;
 
 public class UnitTestSuite extends TestCase {
@@ -38,6 +35,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(RemoteMachineRunnerHitterTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);
+        result.addTestSuite(RequestSourceInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);

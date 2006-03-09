@@ -40,10 +40,24 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals(overrideUrl, mockRunner.launchSpec.getOverrideUrl());
     }
 
-    public void testRemoteAddressLogged() throws Exception {
-        action.setRemoteAddress("123.456.78.9");
+    public void testRequestIpAddressAndHostLogged() throws Exception {
         action.execute();
-        assertTrue(mockRunner.logMessages.get(0).indexOf("123.456.78.9") !=-1);
+        assertEquals("Received request to run tests", mockRunner.logMessages.get(0));
+
+        mockRunner.logMessages.clear();
+        action.setRequestIPAddress("123.456.78.9");
+        action.execute();
+        assertEquals("Received request to run tests from 123.456.78.9", mockRunner.logMessages.get(0));
+
+        mockRunner.logMessages.clear();
+        action.setRequestHost("www.example.com");
+        action.execute();
+        assertEquals("Received request to run tests from www.example.com (123.456.78.9)", mockRunner.logMessages.get(0));
+
+        mockRunner.logMessages.clear();
+        action.setRequestIPAddress("");
+        action.execute();
+        assertEquals("Received request to run tests from www.example.com", mockRunner.logMessages.get(0));
     }
 
 }
