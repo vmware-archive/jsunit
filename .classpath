@@ -8,8 +8,6 @@
 	<classpathentry kind="lib" path="java/lib/javax.servlet.jar"/>
 	<classpathentry kind="lib" path="java/lib/jdom.jar"/>
 	<classpathentry exported="true" kind="lib" path="java/lib/junit.jar"/>
-	<classpathentry kind="lib" path="java/lib/webwork-2.1.7.jar"/>
-	<classpathentry kind="lib" path="java/lib/xwork.jar"/>
 	<classpathentry kind="lib" path="java/lib/ognl.jar"/>
 	<classpathentry kind="lib" path="java/lib/oscore.jar"/>
 	<classpathentry kind="lib" path="java/config"/>
@@ -27,5 +25,9 @@
 	<classpathentry kind="lib" path="java/lib/commons-el.jar"/>
 	<classpathentry kind="lib" path="java/lib/jasper-compiler.jar"/>
 	<classpathentry kind="lib" path="java/lib/jasper-runtime.jar"/>
+	<classpathentry kind="lib" path="java/lib/xwork-1.1.jar"/>
+	<classpathentry kind="lib" path="java/lib/webwork-2.2-beta-4.jar"/>
+	<classpathentry kind="lib" path="java/lib/rife-continuations.jar"/>
+	<classpathentry kind="lib" path="java/lib/javamail.jar"/>
 	<classpathentry kind="output" path="java/bin"/>
 </classpath>
