@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - get rid of the webwork spring ioc message - why is the component stuff even happening?
     - broken functional tests - runnerFT
     - ant run_all_tests broken
     - log source/sink interface to abstract all file access

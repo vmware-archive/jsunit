@@ -70,6 +70,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         CommonLogHandler handler = new CommonLogHandler(jsUnitLogger);
         handler.addThirdPartyLogger(Logger.getLogger("org.mortbay"));
         handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.webwork"));
+        handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.xwork"));
     }
 
     public void start() throws Exception {
