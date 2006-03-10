@@ -4,7 +4,6 @@ Required for next release:
     - broken functional tests - runnerFT
     - ant run_all_tests broken
     - log source/sink interface to abstract all file access
-    - ashcroft compliance
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
     - auto-upgrade check in browser using AJAX
@@ -33,8 +32,9 @@ Backlog:
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
 
   REFACTORINGS:
+    - ashcroft compliance
     - make all Result implementers implement XmlRenderable
-    - change to use webwork taglib for jsps; remove all java
+    - change to use webwork taglib for jsps; remove all java scriptlets
 
   BUGS:
     - IE7beta issues
