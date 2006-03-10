@@ -35,7 +35,7 @@ JsUnitTracer.prototype.debug = function() {
 }
 
 JsUnitTracer.prototype._trace = function(message, value, traceLevel) {
-    if (this._getChosenTraceLevel().matches(traceLevel)) {
+    if (!top.shouldSubmitResults() && this._getChosenTraceLevel().matches(traceLevel)) {
         var traceString = message;
         if (value)
             traceString +=  ': ' + value;
@@ -56,7 +56,7 @@ JsUnitTracer.prototype._writeToTraceWindow  = function(prefix, traceString, trac
 }
 
 JsUnitTracer.prototype._getTraceWindow = function() {
-  if (this._traceWindow == null && !this.popupWindowsBlocked) {
+  if (this._traceWindow == null && !top.shouldSubmitResults() && !this.popupWindowsBlocked) {
     this._traceWindow = window.open('','','width=600, height=350,status=no,resizable=yes,scrollbars=yes');
     if (!this._traceWindow)
       this.popupWindowsBlocked = true;

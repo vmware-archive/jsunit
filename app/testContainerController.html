@@ -53,7 +53,9 @@
             setNotReady();
             top.jsUnitParseParms(testPageURI);
             testPageURI=appendCacheBusterParameterTo(testPageURI);
-            top.testManager.containerTestFrame.location.href=testPageURI;
+            try {
+                top.testManager.containerTestFrame.location.href=testPageURI;
+            } catch (e) {}
         }
 
         function appendCacheBusterParameterTo(testPageURI) {

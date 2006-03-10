@@ -23,7 +23,7 @@
 
 
             if (isBlank(top.testManager.getTestFileName())) {
-                alert('Please enter a file name.');
+                top.testManager.fatalError('No Test Page specified.');
                 return;
             }
 
@@ -40,7 +40,7 @@
                     traceWindow.focus();
                 }
                 else {
-                    alert('Tracing requires popup windows, and popups are blocked in your browser.\n\nPlease enable popups if you wish to use tracing.');
+                    top.testManager.fatalError('Tracing requires popup windows, and popups are blocked in your browser.\n\nPlease enable popups if you wish to use tracing.');
                 }
             }
 

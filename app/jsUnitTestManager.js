@@ -111,7 +111,7 @@ jsUnitTestManager.prototype._handleNewSuite = function () {
         this._nextPage();
     }
     else {
-        alert('Invalid test suite in file ' + this._testFileName);
+        this.fatalError('Invalid test suite in file ' + this._testFileName);
         this.abort();
     }
 }
@@ -146,8 +146,8 @@ jsUnitTestManager.prototype._runTest = function () {
             if (this.containerTestFrame.setUpPageStatus != 'complete') {
                 top.status = 'setUpPage not completed... ' + this.containerTestFrame.setUpPageStatus + ' ' + (new Date());
                 if ((new Date() - this.containerTestFrame.startTime) /1000 > this.getsetUpPageTimeout()) {
-                    alert('setUpPage timed out without completing.');
-                    if (!confirm('Retry Test Run?')) {
+                    this.fatalError('setUpPage timed out without completing.');
+                    if (!this.userConfirm('Retry Test Run?')) {
                         this.abort();
                         return;
                     }
@@ -312,8 +312,8 @@ jsUnitTestManager.prototype.loadPage = function (testFileName) {
 
 jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
     if ((new Date() - this._loadAttemptStartTime) / 1000 > this.getTimeout()) {
-        alert('Reading Test Page ' + this._testFileName + ' timed out.\nMake sure that the file exists and is a Test Page.');
-        if (confirm('Retry Test Run?')) {
+        this.fatalError('Reading Test Page ' + this._testFileName + ' timed out.\nMake sure that the file exists and is a Test Page.');
+        if (this.userConfirm('Retry Test Run?')) {
             this.loadPage(this._testFileName);
             return;
         } else {
@@ -515,7 +515,7 @@ jsUnitTestManager.prototype.updateProgressIndicators = function () {
 jsUnitTestManager.prototype.showMessageForSelectedProblemTest = function () {
     var problemTestIndex = this.problemsListField.selectedIndex;
     if (problemTestIndex != -1)
-        alert(this.problemsListField[problemTestIndex].value);
+        this.fatalError(this.problemsListField[problemTestIndex].value);
 }
 
 jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
@@ -607,6 +607,22 @@ jsUnitTestManager.prototype.storeRestoredHTML = function () {
     if (document.getElementById && top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID))
         this._restoredHTML = top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML;
 }
+
+jsUnitTestManager.prototype.fatalError = function(aMessage) {
+    if (top.shouldSubmitResults())
+      this.setStatus(aMessage);
+    else
+      alert(aMessage);
+}
+
+jsUnitTestManager.prototype.userConfirm = function(aMessage){
+    if (top.shouldSubmitResults())
+      return false;
+    else
+      return confirm(aMessage);
+}
+
+
 
 function getTestFileProtocol() {
     return getDocumentProtocol();

@@ -14,6 +14,7 @@ ASSERTION FUNCTIONS
 - setup page timeout change to 120 seconds by default
 - cache-buster for testpage retrieval & results submission
 - jsUnitRestoredHTMLDiv
+- turn off tracing, alerts, confirms when submitting
 
 SERVER
 - Migration of Java code to require Java 5.0
