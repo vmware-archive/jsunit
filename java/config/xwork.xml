@@ -19,7 +19,6 @@
 				<interceptor-ref name="servlet-config" /> 
 				<interceptor-ref name="prepare" /> 
 				<interceptor-ref name="params" />
-				<interceptor-ref name="conversionError" /> 
 				<interceptor-ref name="browserTestRunner" />
 			</interceptor-stack>
 		</interceptors>
