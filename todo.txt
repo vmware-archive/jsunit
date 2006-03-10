@@ -7,14 +7,8 @@ Required for next release:
     - ashcroft compliance
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
-    - admin.jsp console to change and save configuration (password protected?)
-    - browser ids - ability to pass a browser id to the runner servlet
-    - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
-
     - auto-upgrade check in browser using AJAX
-
     - pull in pivotal's new assertion functions
-    - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
 
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
@@ -29,10 +23,14 @@ Required for next release:
 Backlog:
 
   FEATURES:
+    - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - have distributed test & standalone test give nice names to the virtual tests they create - distributed test could hit the remote config and get the description or os String
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
+    - admin.jsp console to change and save configuration (password protected?)
+    - browser ids - ability to pass a browser id to the runner servlet
+    - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
 
   REFACTORINGS:
     - make all Result implementers implement XmlRenderable
