@@ -13,7 +13,7 @@ ASSERTION FUNCTIONS
 - page load timeout changed to 120 seconds by default
 - setup page timeout change to 120 seconds by default
 - cache-buster for testpage retrieval & results submission
-- jsUnitRestoredHTML div
+- jsUnitRestoredHTMLDiv
 - turn off tracing, alerts, confirms when submitting
 
 SERVER

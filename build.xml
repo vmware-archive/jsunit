@@ -173,7 +173,7 @@
 
     <target name="run_all_tests" depends="_create_jar,_compile_tests" description="Runs all the JsUnit Java tests">
         <junit showoutput="yes" printsummary="withOutAndErr" >
-            <formatter type="plain" usefile="false"/>
+            <formatter type="xml"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
             <test name="net.jsunit.UnitTestSuite"/>
