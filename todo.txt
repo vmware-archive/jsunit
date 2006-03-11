@@ -8,6 +8,7 @@ Required for next release:
     - Background thread to update latest version; display latest version on index.jsp
     - auto-upgrade check in browser using AJAX
     - pull in pivotal's new assertion functions
+    - xsl file for generating jsunit.properties.sample?
 
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
