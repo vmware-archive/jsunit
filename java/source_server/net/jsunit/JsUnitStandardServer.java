@@ -157,9 +157,9 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         waitUntilLastReceivedTimeHasPassed();
         long launchTime = System.currentTimeMillis();
         LaunchTestRunCommand command = new LaunchTestRunCommand(launchSpec, configuration);
-        logStatus("Launching " + command.getBrowserFileName());
         this.browserFileName = command.getBrowserFileName();
         try {
+            logStatus("Launching " + command.getBrowserFileName() + " on " + command.getTestURL());
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
             this.browserProcess = processStarter.execute(command.generateArray());

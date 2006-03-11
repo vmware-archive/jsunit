@@ -18,13 +18,9 @@ public class LaunchTestRunCommand {
 
 	public String[] generateArray() throws NoUrlSpecifiedException {
 		String[] browserCommandArray = openBrowserCommandArray();
-        if (!launchSpec.hasOverrideUrl() && configuration.getTestURL() == null)
-            throw new NoUrlSpecifiedException();
-        
         String[] commandWithUrl = new String[browserCommandArray.length + 1];
         System.arraycopy(browserCommandArray, 0, commandWithUrl, 0, browserCommandArray.length);
-        String urlString = generateTestUrlString();
-        commandWithUrl[browserCommandArray.length] = urlString;
+        commandWithUrl[browserCommandArray.length] = generateTestUrlString();
         return commandWithUrl;
     }
 
@@ -36,12 +32,14 @@ public class LaunchTestRunCommand {
 		return new String[] {launchSpec.getBrowserFileName()};
 	}
 
-	private String generateTestUrlString() {
-		String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
+	private String generateTestUrlString() throws NoUrlSpecifiedException {
+        if (!launchSpec.hasOverrideUrl() && configuration.getTestURL() == null)
+            throw new NoUrlSpecifiedException();
+        String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
         urlString = addAutoRunParameterIfNeeded(urlString);
         urlString = addSubmitResultsParameterIfNeeded(urlString);
-		return urlString;
-	}
+        return urlString;
+    }
 
     private String addSubmitResultsParameterIfNeeded(String urlString) {
         if (urlString.indexOf("submitResults") == -1)
@@ -65,4 +63,7 @@ public class LaunchTestRunCommand {
         return urlString;
     }
 
+    public String getTestURL() throws NoUrlSpecifiedException {
+        return generateTestUrlString();
+    }
 }
