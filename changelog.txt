@@ -46,3 +46,4 @@ BUGS
 
 ECLIPSE PLUGIN
 - Eclipse plugin version 1.0
+
