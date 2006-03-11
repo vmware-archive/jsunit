@@ -13,12 +13,6 @@ Required for next release:
     - look at all jsunit emails to see what feature requests/bugs there are to do
     - SourceForge bugs/patches
 
-  WEBSITE/DOCUMENTATION
-    - documentation of assertArrayEquals, assertHTMLEquals, assertEvaluatesToFalse & assertEvaluatesToTrue
-    - overhaul website
-    - xsl file for generating jsunit.properties.sample
-    - check in website
-
 Backlog:
 
   FEATURES:
