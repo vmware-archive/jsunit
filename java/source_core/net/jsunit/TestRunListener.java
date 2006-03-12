@@ -1,17 +1,17 @@
 package net.jsunit;
- 
+
 import net.jsunit.model.BrowserResult;
 
 public interface TestRunListener {
-	
-	boolean isReady();
 
-	void testRunStarted();
+    boolean isReady();
 
-	void testRunFinished();
+    void testRunStarted();
 
-	void browserTestRunStarted(String browserFileName);
-	
-	void browserTestRunFinished(String browserFileName, BrowserResult result);
+    void testRunFinished();
+
+    void browserTestRunStarted(String browserFileName);
+
+    void browserTestRunFinished(String browserFileName, BrowserResult result);
 
 }

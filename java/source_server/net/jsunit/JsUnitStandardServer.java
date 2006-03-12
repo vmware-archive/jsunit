@@ -2,6 +2,8 @@ package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
+import net.jsunit.logging.BrowserResultRepository;
+import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.StringUtility;
 
@@ -19,20 +21,26 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private ProcessStarter processStarter = new DefaultProcessStarter();
     private TimeoutChecker timeoutChecker;
     private boolean temporary;
+    private BrowserResultRepository browserResultRepository;
 
     public JsUnitStandardServer(Configuration configuration) {
+        this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()));
+    }
+
+    public JsUnitStandardServer(Configuration configuration, BrowserResultRepository browserResultRepository) {
         super(configuration);
-        addBrowserTestRunListener(new BrowserResultLogWriter(configuration.getLogsDirectory()));
+        this.browserResultRepository = browserResultRepository;
+        addBrowserTestRunListener(new BrowserResultLogWriter(browserResultRepository));
         ServerRegistry.registerServer(this);
     }
 
     public static void main(String args[]) {
-          try {
-              JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
-              server.start();
-          } catch (Throwable t) {
-              t.printStackTrace();
-          }
+        try {
+            JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
+            server.start();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public void setTemporary(boolean temporary) {
@@ -40,20 +48,20 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     protected List<String> servletNames() {
-        return Arrays.asList(new String[] {
-            "index",
-            "acceptor",
-            "displayer",
-            "runner",
-            "config"
-       });
+        return Arrays.asList(new String[]{
+                "index",
+                "acceptor",
+                "displayer",
+                "runner",
+                "config"
+        });
     }
 
     public void accept(BrowserResult result) {
         long timeReceived = System.currentTimeMillis();
         String submittingBrowserFileName = browserFileName;
         endBrowser();
-        
+
         result.setBrowserFileName(submittingBrowserFileName);
 
         killTimeoutChecker();
@@ -63,7 +71,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
         results.add(result);
-        timeLastResultReceived = timeReceived;        
+        timeLastResultReceived = timeReceived;
     }
 
     private void killTimeoutChecker() {
@@ -84,7 +92,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public BrowserResult findResultWithId(String id) {
         BrowserResult result = findResultWithIdInResultList(id);
         if (result == null)
-            result = BrowserResult.findResultWithIdInLogs(configuration.getLogsDirectory(), id);
+            result = browserResultRepository.retrieve(id);
         return result;
     }
 
@@ -99,8 +107,8 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public BrowserResult lastResult() {
         List results = getResults();
         return results.isEmpty()
-            ? null
-            : (BrowserResult) results.get(results.size() - 1);
+                ? null
+                : (BrowserResult) results.get(results.size() - 1);
     }
 
     public int resultsCount() {
@@ -116,7 +124,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     public boolean hasReceivedResultSince(long launchTime) {
-        return timeLastResultReceived>=launchTime;
+        return timeLastResultReceived >= launchTime;
     }
 
     public void addBrowserTestRunListener(TestRunListener listener) {
@@ -170,14 +178,14 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return launchTime;
     }
 
-	private void handleCrashWhileLaunching(Throwable throwable) {
-		logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
-		BrowserResult failedToLaunchBrowserResult = new BrowserResult();
-		failedToLaunchBrowserResult.setFailedToLaunch();
-		failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
-		failedToLaunchBrowserResult.setServerSideException(throwable);
-		accept(failedToLaunchBrowserResult);
-	}
+    private void handleCrashWhileLaunching(Throwable throwable) {
+        logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
+        BrowserResult failedToLaunchBrowserResult = new BrowserResult();
+        failedToLaunchBrowserResult.setFailedToLaunch();
+        failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
+        failedToLaunchBrowserResult.setServerSideException(throwable);
+        accept(failedToLaunchBrowserResult);
+    }
 
     private void waitUntilLastReceivedTimeHasPassed() {
         while (System.currentTimeMillis() == timeLastResultReceived)
@@ -203,7 +211,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException e) {
-            }
+                }
         }
     }
 

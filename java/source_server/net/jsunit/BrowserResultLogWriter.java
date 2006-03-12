@@ -1,32 +1,31 @@
 package net.jsunit;
 
+import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.model.BrowserResult;
-
-import java.io.File;
 
 public class BrowserResultLogWriter implements TestRunListener {
 
-	private File logsDirectory;
-	
-	public BrowserResultLogWriter(File logsDirectory) {
-		this.logsDirectory = logsDirectory;
-	}
+    private BrowserResultRepository repository;
 
-	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
-		result.writeLog(logsDirectory);
-	}
+    public BrowserResultLogWriter(BrowserResultRepository repository) {
+        this.repository = repository;
+    }
 
-	public void browserTestRunStarted(String browserFileName) {
-	}
+    public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+        repository.store(result);
+    }
 
-	public boolean isReady() {
-		return true;
-	}
+    public void browserTestRunStarted(String browserFileName) {
+    }
 
-	public void testRunStarted() {
-	}
+    public boolean isReady() {
+        return true;
+    }
 
-	public void testRunFinished() {
-	}
+    public void testRunStarted() {
+    }
+
+    public void testRunFinished() {
+    }
 
 }

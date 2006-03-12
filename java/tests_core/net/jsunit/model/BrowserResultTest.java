@@ -8,37 +8,37 @@ import java.util.List;
 
 public class BrowserResultTest extends TestCase {
     private BrowserResult result;
-    
-    private static String expectedXmlFragment =
-        "<browserResult id=\"An ID\" time=\"4.3\">" +
-        	"<properties>" +
-            	"<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-            	"<property name=\"jsUnitVersion\" value=\"2.5\" />" +
-                "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
-                "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
-                "<property name=\"url\" value=\"http://www.example.com/\" />" +
-            "</properties>" +
-            "<testCases>" +
-	            "<testCase name=\"page1.html:testFoo\" time=\"1.3\" />" +
-	            "<testCase name=\"page1.html:testFoo\" time=\"1.3\">" +
-	                "<error>Test Error Message</error>" +
-	            "</testCase>" +
-	            "<testCase name=\"page2.html:testFoo\" time=\"1.3\">" +
-	                "<failure>Test Failure Message</failure>" +
-	            "</testCase>" +
-            "</testCases>" +
-        "</browserResult>";
 
-    public void setUp() throws Exception {    	
+    private static String expectedXmlFragment =
+            "<browserResult id=\"An ID\" time=\"4.3\">" +
+                    "<properties>" +
+                    "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
+                    "<property name=\"jsUnitVersion\" value=\"2.5\" />" +
+                    "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
+                    "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
+                    "<property name=\"url\" value=\"http://www.example.com/\" />" +
+                    "</properties>" +
+                    "<testCases>" +
+                    "<testCase name=\"page1.html:testFoo\" time=\"1.3\" />" +
+                    "<testCase name=\"page1.html:testFoo\" time=\"1.3\">" +
+                    "<error>Test Error Message</error>" +
+                    "</testCase>" +
+                    "<testCase name=\"page2.html:testFoo\" time=\"1.3\">" +
+                    "<failure>Test Failure Message</failure>" +
+                    "</testCase>" +
+                    "</testCases>" +
+                    "</browserResult>";
+
+    public void setUp() throws Exception {
         super.setUp();
         result = createBrowserResult();
-        result.setTestCaseStrings(new String[] {
-            "page1.html:testFoo|1.3|S||",
-            "page1.html:testFoo|1.3|E|Test Error Message|",
-            "page2.html:testFoo|1.3|F|Test Failure Message|"}
+        result.setTestCaseStrings(new String[]{
+                "page1.html:testFoo|1.3|S||",
+                "page1.html:testFoo|1.3|E|Test Error Message|",
+                "page2.html:testFoo|1.3|F|Test Failure Message|"}
         );
     }
-    
+
     public void testId() {
         assertNotNull(result.getId());
         result = new BrowserResult();
@@ -58,23 +58,23 @@ public class BrowserResultTest extends TestCase {
         assertFalse(result.wasSuccessful());
         assertEquals(ResultType.ERROR, result.getResultType());
     }
-    
+
     public void testDisplayString() {
-    	assertEquals(ResultType.ERROR.getDisplayString(), result.getDisplayString());
+        assertEquals(ResultType.ERROR.getDisplayString(), result.getDisplayString());
     }
 
     public void testBuildFromXmlFile() {
-    	File file = null;
-    	try {
-	        FileUtility.writeFile(expectedXmlFragment, "resultXml.xml");
-	        file = new File("resultXml.xml");
-	        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(file);
-	        assertEquals(BrowserResult.class, reconstitutedResult.getClass());
-	        assertFields(reconstitutedResult);
-    	} finally {
-    		if (file != null)
-    			file.delete();
-    	}
+        File file = null;
+        try {
+            FileUtility.write(new File("resultXml.xml"), expectedXmlFragment);
+            file = new File("resultXml.xml");
+            BrowserResult reconstitutedResult = new BrowserResultBuilder().build(file);
+            assertEquals(BrowserResult.class, reconstitutedResult.getClass());
+            assertFields(reconstitutedResult);
+        } finally {
+            if (file != null)
+                file.delete();
+        }
     }
 
     public void testBuildFromXmlDocument() {
@@ -84,9 +84,9 @@ public class BrowserResultTest extends TestCase {
 
     public void testFailure() {
         BrowserResult result = createBrowserResult();
-        result.setTestCaseStrings(new String[] {
-            "page.html:testFoo|1.3|S||",
-            "page.html:testBar|1.3|F|Test Failure Message|"
+        result.setTestCaseStrings(new String[]{
+                "page.html:testFoo|1.3|S||",
+                "page.html:testBar|1.3|F|Test Failure Message|"
         });
         assertFalse(result.wasSuccessful());
         assertEquals(ResultType.FAILURE, result.getResultType());
@@ -95,32 +95,32 @@ public class BrowserResultTest extends TestCase {
 
     public void testSuccess() {
         BrowserResult result = createBrowserResult();
-        result.setTestCaseStrings(new String[] {
-            "page.html:testFoo|1.3|S||",
-            "page.html:testBar|1.3|S||"
+        result.setTestCaseStrings(new String[]{
+                "page.html:testFoo|1.3|S||",
+                "page.html:testBar|1.3|S||"
         });
         assertTrue(result.wasSuccessful());
         assertEquals(ResultType.SUCCESS, result.getResultType());
     }
-    
+
     public void testGetTestPageResults() {
-    	List<TestPageResult> testPageResults = result.getTestPageResults();
-    	assertEquals(2, testPageResults.size());
-    	TestPageResult result1 = testPageResults.get(0);
-    	assertEquals("page1.html", result1.getTestPageName());
-    	assertEquals(2, result1.getTestCaseResults().size());
-    	TestPageResult result2 = testPageResults.get(1);
-    	assertEquals("page2.html", result2.getTestPageName());
-    	assertEquals(1, result2.getTestCaseResults().size());
+        List<TestPageResult> testPageResults = result.getTestPageResults();
+        assertEquals(2, testPageResults.size());
+        TestPageResult result1 = testPageResults.get(0);
+        assertEquals("page1.html", result1.getTestPageName());
+        assertEquals(2, result1.getTestCaseResults().size());
+        TestPageResult result2 = testPageResults.get(1);
+        assertEquals("page2.html", result2.getTestPageName());
+        assertEquals(1, result2.getTestCaseResults().size());
     }
-    
+
     public void testCompleted() {
-    	assertTrue(result.completedTestRun());
-    	assertFalse(result.timedOut());
-    	assertFalse(result.failedToLaunch());
-    	assertFalse(result.externallyShutDown());
+        assertTrue(result.completedTestRun());
+        assertFalse(result.timedOut());
+        assertFalse(result.failedToLaunch());
+        assertFalse(result.externallyShutDown());
     }
-    
+
     private BrowserResult createBrowserResult() {
         BrowserResult browserResult = new BrowserResult();
         browserResult.setBrowserFileName("c:\\Program Files\\Internet Explorer\\iexplore.exe");

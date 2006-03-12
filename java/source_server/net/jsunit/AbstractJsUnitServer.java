@@ -7,9 +7,9 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.logging.JsUnitLogger;
-import net.jsunit.logging.NoOpJsUnitLogger;
-import net.jsunit.logging.SystemOutJsUnitLogger;
+import net.jsunit.logging.NoOpStatusLogger;
+import net.jsunit.logging.StatusLogger;
+import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
@@ -26,27 +26,21 @@ import java.util.logging.Logger;
 public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     private HttpServer server;
-    private JsUnitLogger jsUnitLogger;
+    private StatusLogger statusLogger;
     protected Configuration configuration;
 
     protected AbstractJsUnitServer(Configuration configuration) {
         this.configuration = configuration;
         ensureConfigurationIsValid();
-        setUpLogsDirectory(configuration);
         setUpLogger(configuration);
         setUpThirdPartyLoggers();
     }
 
     private void setUpLogger(Configuration configuration) {
         if (configuration.shouldLogStatus())
-            jsUnitLogger = new SystemOutJsUnitLogger();
+            statusLogger = new SystemOutStatusLogger();
         else
-            jsUnitLogger = new NoOpJsUnitLogger();
-    }
-
-    private void setUpLogsDirectory(Configuration configuration) {
-        if (!configuration.getLogsDirectory().exists())
-            configuration.getLogsDirectory().mkdir();
+            statusLogger = new NoOpStatusLogger();
     }
 
     protected void ensureConfigurationIsValid() {
@@ -67,7 +61,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     protected void setUpThirdPartyLoggers() {
-        CommonLogHandler handler = new CommonLogHandler(jsUnitLogger);
+        CommonLogHandler handler = new CommonLogHandler(statusLogger);
         handler.addThirdPartyLogger(Logger.getLogger("org.mortbay"));
         handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.webwork"));
         handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.xwork"));
@@ -84,7 +78,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     private void performUpToDateCheck() {
         VersionChecker checker = VersionChecker.forDefault();
         if (!checker.isUpToDate())
-            jsUnitLogger.log(checker.outOfDateString(), false);
+            statusLogger.log(checker.outOfDateString(), false);
     }
 
     private String startingServerStatusMessage() {
@@ -108,7 +102,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
 
-        servletContext.addServlet("JSP","*.jsp", JspServlet.class.getName());
+        servletContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
         servletContext.addHandler(new ResourceHandler());
 
         ConfigurationManager.clearConfigurationProviders();
@@ -129,14 +123,14 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
         servletContext.addServlet(
-            "webwork",
-            "/" + name,
-            ServletDispatcher.class.getName()
+                "webwork",
+                "/" + name,
+                ServletDispatcher.class.getName()
         );
     }
 
     public void logStatus(String message) {
-        jsUnitLogger.log(message, true);
+        statusLogger.log(message, true);
     }
 
     public Element asXml() {
@@ -162,8 +156,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return server != null && server.isStarted();
     }
 
-    public JsUnitLogger getLogger() {
-        return jsUnitLogger;
+    public StatusLogger getLogger() {
+        return statusLogger;
     }
 
 }

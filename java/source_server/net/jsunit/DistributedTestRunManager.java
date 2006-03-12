@@ -1,7 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
-import net.jsunit.logging.JsUnitLogger;
+import net.jsunit.logging.StatusLogger;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.model.TestRunResultBuilder;
@@ -17,21 +17,21 @@ import java.util.List;
 
 public class DistributedTestRunManager {
 
-    private JsUnitLogger logger;
+    private StatusLogger logger;
     private RemoteRunnerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
 
-    public DistributedTestRunManager(JsUnitLogger logger, Configuration configuration) {
+    public DistributedTestRunManager(StatusLogger logger, Configuration configuration) {
         this(logger, new RemoteMachineRunnerHitter(), configuration);
     }
 
-    public DistributedTestRunManager(JsUnitLogger logger, RemoteRunnerHitter hitter, Configuration configuration) {
+    public DistributedTestRunManager(StatusLogger logger, RemoteRunnerHitter hitter, Configuration configuration) {
         this(logger, hitter, configuration, null);
     }
 
-    public DistributedTestRunManager(JsUnitLogger logger, RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    public DistributedTestRunManager(StatusLogger logger, RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
         this.logger = logger;
         this.hitter = hitter;
         this.configuration = configuration;
@@ -61,9 +61,9 @@ public class DistributedTestRunManager {
         TestRunResult testRunResult = null;
         try {
             URL fullURL = buildURL(baseURL);
-            logger.log("Requesting run on remote machine URL " + baseURL, true);
+            logger.log("Requesting run on remove machine URL " + baseURL, true);
             Document documentFromRemoteMachine = hitter.hitURL(fullURL);
-            logger.log("Received response from remote machine URL " + baseURL, true);
+            logger.log("Received response from remove machine URL " + baseURL, true);
             testRunResult = new TestRunResultBuilder().build(documentFromRemoteMachine);
         } catch (IOException e) {
             if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
@@ -76,7 +76,8 @@ public class DistributedTestRunManager {
         }
         if (testRunResult != null) {
             testRunResult.setURL(baseURL);
-            synchronized(distributedTestRunResult) {
+            //noinspection SynchronizeOnNonFinalField
+            synchronized (distributedTestRunResult) {
                 distributedTestRunResult.addTestRunResult(testRunResult);
             }
         }
@@ -100,7 +101,7 @@ public class DistributedTestRunManager {
         return overrideURL;
     }
 
-  public void setOverrideURL(String overrideURL) {
-    this.overrideURL = overrideURL;
-  }
+    public void setOverrideURL(String overrideURL) {
+        this.overrideURL = overrideURL;
+    }
 }

@@ -1,13 +1,12 @@
 package net.jsunit;
 
-import java.io.File;
-
 import junit.framework.TestCase;
+import net.jsunit.logging.StubBrowserResultRepository;
 
 public class BrowserResultLogWriterTest extends TestCase {
 
-	public void testSimple() {
-		assertTrue(new BrowserResultLogWriter(new File(".")).isReady());
-	}
-	
+    public void testSimple() {
+        assertTrue(new BrowserResultLogWriter(new StubBrowserResultRepository()).isReady());
+    }
+
 }

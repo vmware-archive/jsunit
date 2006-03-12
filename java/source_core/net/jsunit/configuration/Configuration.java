@@ -34,19 +34,15 @@ public final class Configuration {
             for (ConfigurationProperty property : ConfigurationProperty.values())
                 if (System.getProperty(property.getName()) != null)
                     return new EnvironmentVariablesConfigurationSource();
-            try {
-                return new PropertiesFileConfigurationSource();
-            } catch (FileNotFoundException e) {
-                throw new RuntimeException("Could not configure JsUnit - no environment variables or properties file found");
-            }
+        try {
+            return new PropertiesFileConfigurationSource();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Could not configure JsUnit - no environment variables or properties file found");
+        }
     }
 
     public static ConfigurationSource resolveSource() {
-        return resolveSource(new String[] {});
-    }
-
-    public static Configuration resolve() {
-        return new Configuration(resolveSource());
+        return resolveSource(new String[]{});
     }
 
     public Configuration(ConfigurationSource source) {

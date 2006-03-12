@@ -3,10 +3,10 @@ package net.jsunit.configuration;
 import net.jsunit.utility.StringUtility;
 import org.jdom.Element;
 
-import java.net.URL;
-import java.net.MalformedURLException;
-import java.util.*;
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 public enum ConfigurationProperty {
 
@@ -18,7 +18,7 @@ public enum ConfigurationProperty {
 
         protected void addContentTo(Configuration configuration, Element element) {
             List<String> browserFileNames = configuration.getBrowserFileNames();
-            for (int i = 0; i< browserFileNames.size(); i++) {
+            for (int i = 0; i < browserFileNames.size(); i++) {
                 String fileName = browserFileNames.get(i);
                 Element fileNameElement = new Element("browserFileName");
                 fileNameElement.setAttribute("id", String.valueOf(i));
@@ -63,7 +63,7 @@ public enum ConfigurationProperty {
         }
     },
 
-    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remote machines?", false, false) {
+    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remove machines?", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         }

@@ -1,18 +1,14 @@
 package net.jsunit.model;
 
 import net.jsunit.XmlRenderable;
-import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.StringUtility;
-import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 import org.jdom.Element;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BrowserResult extends AbstractResult implements XmlRenderable {
-    private static final String LOG_PREFIX = "JSTEST-";
 
     private String browserFileName;
     private String remoteAddress;
@@ -21,26 +17,22 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     private String userAgent;
     private String baseURL;
     private double time;
-	private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
-	private String serverSideExceptionStackTrace;
-	private ResultType resultType;
-	
+    private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
+    private String serverSideExceptionStackTrace;
+    private ResultType resultType;
+
     public BrowserResult() {
         this.id = String.valueOf(System.currentTimeMillis());
     }
 
-    public static File logFileForId(File logsDirectory, String id) {
-        return new File(logsDirectory + File.separator + LOG_PREFIX + id + ".xml");
+    public void setBrowserFileName(String browserFileName) {
+        this.browserFileName = browserFileName;
     }
 
-    public void setBrowserFileName(String browserFileName) {
-		this.browserFileName = browserFileName;
-    }
-    
     public String getBrowserFileName() {
-    	return browserFileName;
+        return browserFileName;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -87,9 +79,9 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     public List<TestCaseResult> getTestCaseResults() {
-    	List<TestCaseResult> result = new ArrayList<TestCaseResult>();
-    	for (TestPageResult pageResult : getTestPageResults())
-    		result.addAll(pageResult.getTestCaseResults());
+        List<TestCaseResult> result = new ArrayList<TestCaseResult>();
+        for (TestPageResult pageResult : getTestPageResults())
+            result.addAll(pageResult.getTestCaseResults());
         return result;
     }
 
@@ -112,13 +104,6 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
             addTestCaseResult(TestCaseResult.fromString(testCaseResultString));
     }
 
-    public static BrowserResult findResultWithIdInLogs(File logsDirectory, String id) {
-        File logFile = logFileForId(logsDirectory, id);
-        if (logFile.exists())
-            return new BrowserResultBuilder().build(logFile);
-        return null;
-    }
-
     public Element asXml() {
         return new BrowserResultWriter(this).asXml();
     }
@@ -127,97 +112,87 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return new BrowserResultWriter(this).writeXmlFragment();
     }
 
-    public void writeLog(File logsDirectory) {
-        writeXmlToFile(logsDirectory);
-    }
-
-    private void writeXmlToFile(File logsDirectory) {
-        Element element = asXml();
-        String string = XmlUtility.asString(element);
-        FileUtility.writeFile(string, logFileForId(logsDirectory, getId()));
-    }
-
     public void addTestCaseResult(TestCaseResult testCaseResult) {
         String testPageName = testCaseResult.getTestPageName();
-		TestPageResult testPageResult = findTestPageResultForTestPageWithName(testPageName);
+        TestPageResult testPageResult = findTestPageResultForTestPageWithName(testPageName);
         if (testPageResult == null) {
-        	testPageResult = new TestPageResult(testPageName);
-        	testPageResults.add(testPageResult);
+            testPageResult = new TestPageResult(testPageName);
+            testPageResults.add(testPageResult);
         }
         testPageResult.addTestCaseResult(testCaseResult);
     }
 
     private TestPageResult findTestPageResultForTestPageWithName(String testPageName) {
-    	for (TestPageResult testPageResult : testPageResults)
-    		if (testPageResult.getTestPageName().equals(testPageName))
-    			return testPageResult;
-		return null;
-	}
-
-	public ResultType getResultType() {
-		if (resultType == null)
-			return super.getResultType();
-		return resultType;
+        for (TestPageResult testPageResult : testPageResults)
+            if (testPageResult.getTestPageName().equals(testPageName))
+                return testPageResult;
+        return null;
     }
 
-	public Document asXmlDocument() {
-		return new Document(asXml());
-	}
+    public ResultType getResultType() {
+        if (resultType == null)
+            return super.getResultType();
+        return resultType;
+    }
 
-	public List<TestPageResult> getTestPageResults() {
-		return testPageResults;
-	}
+    public Document asXmlDocument() {
+        return new Document(asXml());
+    }
 
-	public String getDisplayString() {
-		return getResultType().getDisplayString();
-	}
+    public List<TestPageResult> getTestPageResults() {
+        return testPageResults;
+    }
 
-	public boolean completedTestRun() {
-		return getResultType().completedTestRun();
-	}
+    public String getDisplayString() {
+        return getResultType().getDisplayString();
+    }
 
-	public boolean timedOut() {
-		return getResultType().timedOut();
-	}
+    public boolean completedTestRun() {
+        return getResultType().completedTestRun();
+    }
 
-	public boolean failedToLaunch() {
-		return getResultType().failedToLaunch();
-	}
-	
-	public boolean externallyShutDown() {
-		return getResultType().externallyShutDown();
-	}
+    public boolean timedOut() {
+        return getResultType().timedOut();
+    }
 
-	public void setServerSideException(Throwable throwable) {
-		serverSideExceptionStackTrace = StringUtility.stackTraceAsString(throwable);
-	}
+    public boolean failedToLaunch() {
+        return getResultType().failedToLaunch();
+    }
 
-	public void setFailedToLaunch() {
-		this.resultType = ResultType.FAILED_TO_LAUNCH;
-	}
+    public boolean externallyShutDown() {
+        return getResultType().externallyShutDown();
+    }
 
-	public void setTimedOut() {
-		this.resultType = ResultType.TIMED_OUT;
-	}
-	
-	public void setExternallyShutDown() {
-		this.resultType = ResultType.EXTERNALLY_SHUT_DOWN;
-	}
+    public void setServerSideException(Throwable throwable) {
+        serverSideExceptionStackTrace = StringUtility.stackTraceAsString(throwable);
+    }
 
-	public String getServerSideExceptionStackTrace() {
-		return serverSideExceptionStackTrace;
-	}
+    public void setFailedToLaunch() {
+        this.resultType = ResultType.FAILED_TO_LAUNCH;
+    }
 
-	public void setServerSideExceptionStackTrace(String serverSideExceptionStackTrace) {
-		this.serverSideExceptionStackTrace = serverSideExceptionStackTrace;
-	}
+    public void setTimedOut() {
+        this.resultType = ResultType.TIMED_OUT;
+    }
 
-	public boolean hasServerSideExceptionStackTrace() {
-		return getServerSideExceptionStackTrace() != null;
-	}
+    public void setExternallyShutDown() {
+        this.resultType = ResultType.EXTERNALLY_SHUT_DOWN;
+    }
 
-	protected List<? extends Result> getChildren() {
-		return testPageResults;
-	}
+    public String getServerSideExceptionStackTrace() {
+        return serverSideExceptionStackTrace;
+    }
+
+    public void setServerSideExceptionStackTrace(String serverSideExceptionStackTrace) {
+        this.serverSideExceptionStackTrace = serverSideExceptionStackTrace;
+    }
+
+    public boolean hasServerSideExceptionStackTrace() {
+        return getServerSideExceptionStackTrace() != null;
+    }
+
+    protected List<? extends Result> getChildren() {
+        return testPageResults;
+    }
 
 }

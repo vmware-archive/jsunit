@@ -21,7 +21,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals(new File("logs" + File.separator + "directory"), configuration.getLogsDirectory());
         assertEquals(1234, configuration.getPort());
         assertEquals(new File("resource" + File.separator + "base"), configuration.getResourceBase());
-        assertEquals(new URL("http://www.example.com:1234/"), configuration.getTestURL());
+        assertEquals("http://www.example.com:1234/", configuration.getTestURL().toString());
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(76, configuration.getTimeoutSeconds());
         List<URL> expectedRemoteMachineURLs = new ArrayList<URL>();
@@ -113,8 +113,8 @@ public class ConfigurationTest extends TestCase {
                 "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
                 "<hostname>" + SystemUtility.hostname() + "</hostname>" +
                 "<browserFileNames>" +
-                    "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
-                    "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
+                "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
+                "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
                 "</browserFileNames>" +
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
                 "<description>This is the best server ever</description>" +
@@ -138,8 +138,8 @@ public class ConfigurationTest extends TestCase {
                 "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
                 "<hostname>" + SystemUtility.hostname() + "</hostname>" +
                 "<browserFileNames>" +
-                    "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
-                    "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
+                "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
+                "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
                 "</browserFileNames>" +
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
                 "<description>This is the best server ever</description>" +
@@ -159,18 +159,18 @@ public class ConfigurationTest extends TestCase {
         File logsDirectory = new File(source.logsDirectory());
         File resourceBase = new File(source.resourceBase());
         assertEquals(
-                "<configuration type=\""+ServerType.FARM.name()+"\">" +
-                        "<os>"+SystemUtility.osString()+"</os>" +
-                        "<ipAddress>"+SystemUtility.ipAddress()+"</ipAddress>" +
-                        "<hostname>"+SystemUtility.hostname()+"</hostname>" +
+                "<configuration type=\"" + ServerType.FARM.name() + "\">" +
+                        "<os>" + SystemUtility.osString() + "</os>" +
+                        "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
+                        "<hostname>" + SystemUtility.hostname() + "</hostname>" +
                         "<description>This is the best server ever</description>" +
                         "<ignoreUnresponsiveRemoteMachines>true</ignoreUnresponsiveRemoteMachines>" +
                         "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
                         "<logStatus>true</logStatus>" +
                         "<port>1234</port>" +
                         "<remoteMachineURLs>" +
-                            "<remoteMachineURL id=\"0\">http://localhost:8081/jsunit</remoteMachineURL>" +
-                            "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
+                        "<remoteMachineURL id=\"0\">http://localhost:8081/jsunit</remoteMachineURL>" +
+                        "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
                         "</remoteMachineURLs>" +
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                         "<url>http://www.example.com:1234/</url>" +
@@ -184,16 +184,16 @@ public class ConfigurationTest extends TestCase {
         assertEquals("browser1.exe", configuration.getBrowserFileNameById(0));
         assertEquals("browser2.exe", configuration.getBrowserFileNameById(1));
     }
-    
+
     public void testGetRemoteMachineURLById() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals(
-                new URL("http://localhost:8081/jsunit"),
-                configuration.getRemoteMachineURLById(0)
+                "http://localhost:8081/jsunit",
+                configuration.getRemoteMachineURLById(0).toString()
         );
         assertEquals(
-                new URL("http://127.0.0.1:8082/jsunit"),
-                configuration.getRemoteMachineURLById(1)
+                "http://127.0.0.1:8082/jsunit",
+                configuration.getRemoteMachineURLById(1).toString()
         );
     }
 

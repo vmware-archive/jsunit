@@ -32,8 +32,8 @@
 
     <!--
     ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target.
-    Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one
-    or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not
+    Its value is whether to ignore a remove machine that does not respond.  If true, test runs will be green even if one
+    or more remove machines fail to respond; if false, an unresponsive remove machine results in a failure.  This is not
     a mandatory property.  Its default is false.
     For example: <property name="ignoreUnresponsiveRemoteMachines" value="true"/>
     -->
@@ -62,7 +62,7 @@
 
     <!--
      remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target.  Its value is
-     the list of URLs of remote machines to which a request to run tests will be sent.
+     the list of URLs of remove machines to which a request to run tests will be sent.
      For example: <property name="remoteMachineURLs" value="http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090"/>
      -->
     <property name="remoteMachineURLs" value=""/>
@@ -172,7 +172,7 @@
     </target>
 
     <target name="run_all_tests" depends="_create_jar,_compile_tests" description="Runs all the JsUnit Java tests">
-        <junit showoutput="yes" printsummary="withOutAndErr" >
+        <junit showoutput="yes" printsummary="withOutAndErr">
             <formatter type="xml"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
@@ -241,7 +241,7 @@
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
-            <sysproperty key="browserFileNames" value="${browserFileNames}"/>            
+            <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>

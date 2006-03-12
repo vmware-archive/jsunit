@@ -3,13 +3,14 @@ package net.jsunit.configuration;
 import junit.framework.TestCase;
 import net.jsunit.utility.FileUtility;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 
 public class PropertiesConfigurationSourceTest extends TestCase {
 
     public void testNoFile() throws Exception {
         try {
-        	new PropertiesFileConfigurationSource("nosuch.file");
+            new PropertiesFileConfigurationSource("nosuch.file");
             fail("Should have thrown a RuntimeException because no properties file exists");
         } catch (FileNotFoundException e) {
         }
@@ -30,22 +31,22 @@ public class PropertiesConfigurationSourceTest extends TestCase {
     }
 
     public void tearDown() throws Exception {
-        FileUtility.deleteFile("temp.file");
+        FileUtility.delete(new File("temp.file"));
         super.tearDown();
     }
 
     private void writePropertiesFile(String fileName) {
         String contents =
-            ConfigurationProperty.BROWSER_FILE_NAMES.getName() + "=aaa\n" +
-            ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName() + "=bbb\n" +
-            ConfigurationProperty.LOGS_DIRECTORY.getName() + "=ccc\n" +
-            ConfigurationProperty.LOG_STATUS.getName() + "=ddd\n" +
-            ConfigurationProperty.PORT.getName() + "=eee\n" +
-            ConfigurationProperty.REMOTE_MACHINE_URLS.getName() + "=fff\n"+
-            ConfigurationProperty.RESOURCE_BASE.getName() + "=ggg\n" +
-            ConfigurationProperty.TIMEOUT_SECONDS.getName() + "=hhh\n" +
-            ConfigurationProperty.URL.getName() + "=iii\n";
-        FileUtility.writeFile(contents, fileName);
+                ConfigurationProperty.BROWSER_FILE_NAMES.getName() + "=aaa\n" +
+                        ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName() + "=bbb\n" +
+                        ConfigurationProperty.LOGS_DIRECTORY.getName() + "=ccc\n" +
+                        ConfigurationProperty.LOG_STATUS.getName() + "=ddd\n" +
+                        ConfigurationProperty.PORT.getName() + "=eee\n" +
+                        ConfigurationProperty.REMOTE_MACHINE_URLS.getName() + "=fff\n" +
+                        ConfigurationProperty.RESOURCE_BASE.getName() + "=ggg\n" +
+                        ConfigurationProperty.TIMEOUT_SECONDS.getName() + "=hhh\n" +
+                        ConfigurationProperty.URL.getName() + "=iii\n";
+        FileUtility.write(new File(fileName), contents);
     }
 
 }

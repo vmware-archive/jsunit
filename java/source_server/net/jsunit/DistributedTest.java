@@ -29,7 +29,8 @@ public class DistributedTest extends TestCase {
     }
 
     private void ensureTemporaryStandardServerIsCreated(ConfigurationSource serverSource) {
-        synchronized(blocker) {
+        //noinspection SynchronizeOnNonFinalField
+        synchronized (blocker) {
             if (temporaryStandardServer == null) {
                 temporaryStandardServer = new JsUnitStandardServer(new Configuration(serverSource));
                 temporaryStandardServer.setTemporary(true);
@@ -44,7 +45,8 @@ public class DistributedTest extends TestCase {
 
     private void startServerIfNecessary() throws Exception {
         serverCount ++;
-        synchronized(blocker) {
+        //noinspection SynchronizeOnNonFinalField
+        synchronized (blocker) {
             if (!temporaryStandardServer.isAlive()) {
                 try {
                     temporaryStandardServer.start();
@@ -52,7 +54,7 @@ public class DistributedTest extends TestCase {
                     if (!isMultiExceptionASingleBindException(e))
                         throw e;
                     //if a temporaryStandardServer is already running, fine -
-                    //we only need it to serve content to remote machines
+                    //we only need it to serve content to remove machines
                 }
             }
         }

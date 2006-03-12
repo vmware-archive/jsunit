@@ -1,16 +1,16 @@
 package net.jsunit;
 
-import net.jsunit.logging.JsUnitLogger;
+import net.jsunit.logging.StatusLogger;
 
 import java.util.logging.Handler;
+import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import java.util.logging.Level;
 
 class CommonLogHandler extends Handler {
-    private JsUnitLogger logger;
+    private StatusLogger logger;
 
-    public CommonLogHandler(JsUnitLogger logger) {
+    public CommonLogHandler(StatusLogger logger) {
         this.logger = logger;
     }
 
