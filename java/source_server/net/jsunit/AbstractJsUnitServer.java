@@ -7,7 +7,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.logging.NoOpStatusLogger;
+import net.jsunit.logging.NullStatusLogger;
 import net.jsunit.logging.StatusLogger;
 import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.utility.XmlUtility;
@@ -40,7 +40,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         if (configuration.shouldLogStatus())
             statusLogger = new SystemOutStatusLogger();
         else
-            statusLogger = new NoOpStatusLogger();
+            statusLogger = new NullStatusLogger();
     }
 
     protected void ensureConfigurationIsValid() {
