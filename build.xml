@@ -172,7 +172,8 @@
     </target>
 
     <target name="run_all_tests" depends="_create_jar,_compile_tests" description="Runs all the JsUnit Java tests">
-        <junit showoutput="yes" printsummary="withOutAndErr">
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
             <formatter type="xml"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
@@ -180,6 +181,7 @@
             <test name="net.jsunit.FunctionalTestSuite"/>
             <test name="net.jsunit.FarmServerFunctionalTestSuite"/>
         </junit>
+        <fail if="junit_test_failed"/>
     </target>
 
     <target name="start_server" description="Starts a JsUnit Server">
