@@ -7,7 +7,7 @@ public class ConfigurationComponentTest extends TestCase {
 
     public void testSimple() throws Exception {
         ConfigurationComponent component = new ConfigurationComponent();
-        component.setBrowserFileNames(new String[] {"browser1.exe", "browser2.exe"});
+        component.setBrowserFileNames(new String[]{"browser1.exe", "browser2.exe"});
         component.setCloseBrowserAfterTestRuns(true);
         component.setLogsDirectory("logs directory");
         component.setLogStatusToConsole(true);

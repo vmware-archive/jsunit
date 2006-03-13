@@ -19,7 +19,7 @@ public class FunctionalTestSuite extends TestCase {
         result.addTestSuite(TwoValidLocalhostsDistributedTestTest.class);
 //        result.addTestSuite(ExternallyShutDownStandaloneTestTest.class);
         result.addTestSuite(UrlOverrideStandaloneTestTest.class);
-        
+
         return result;
     }
 }

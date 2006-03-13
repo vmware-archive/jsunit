@@ -8,9 +8,9 @@ import org.jdom.input.SAXBuilder;
 
 import java.io.File;
 import java.util.List;
- 
+
 public class BrowserResultBuilder {
-	
+
     public BrowserResult build(File file) {
         try {
             Document document = new SAXBuilder().build(file);
@@ -21,68 +21,68 @@ public class BrowserResultBuilder {
             return null;
         }
     }
-    
+
     public BrowserResult build(String string) {
-		Document document = XmlUtility.asXmlDocument(string);
-		return build(document);
+        Document document = XmlUtility.asXmlDocument(string);
+        return build(document);
     }
 
-	@SuppressWarnings("unchecked")
-	public BrowserResult build(Document document) {
+    @SuppressWarnings("unchecked")
+    public BrowserResult build(Document document) {
         Element root = document.getRootElement();
         return build(root);
     }
 
-	@SuppressWarnings("unchecked")
-	public BrowserResult build(Element root) {
-		BrowserResult result = new BrowserResult();
+    @SuppressWarnings("unchecked")
+    public BrowserResult build(Element root) {
+        BrowserResult result = new BrowserResult();
         if (failedToLaunch(root))
-        	result.setFailedToLaunch();
+            result.setFailedToLaunch();
         else if (timedOut(root))
-        	result.setTimedOut();
+            result.setTimedOut();
         else if (externallyShutDown(root))
-        	result.setExternallyShutDown();
+            result.setExternallyShutDown();
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
         Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASES);
         if (testCasesElement != null) {
-        	List children = testCasesElement.getChildren(TestCaseResultWriter.TEST_CASE);
-			updateWithTestCaseResults(children, result);
+            List children = testCasesElement.getChildren(TestCaseResultWriter.TEST_CASE);
+            updateWithTestCaseResults(children, result);
         }
         return result;
-	}
+    }
 
     private boolean failedToLaunch(Element root) {
-    	Attribute failedToLaunchAttribute = root.getAttribute(BrowserResultWriter.FAILED_TO_LAUNCH);
-		return failedToLaunchAttribute != null && failedToLaunchAttribute.getValue().equals(String.valueOf(true));
-	}
+        Attribute failedToLaunchAttribute = root.getAttribute(BrowserResultWriter.FAILED_TO_LAUNCH);
+        return failedToLaunchAttribute != null && failedToLaunchAttribute.getValue().equals(String.valueOf(true));
+    }
 
     private boolean timedOut(Element root) {
-    	Attribute timedOutAttribute = root.getAttribute(BrowserResultWriter.TIMED_OUT);
-		return timedOutAttribute != null && timedOutAttribute.getValue().equals(String.valueOf(true));
-	}
+        Attribute timedOutAttribute = root.getAttribute(BrowserResultWriter.TIMED_OUT);
+        return timedOutAttribute != null && timedOutAttribute.getValue().equals(String.valueOf(true));
+    }
 
     private boolean externallyShutDown(Element root) {
-    	Attribute externallyShutDownAttribute = root.getAttribute(BrowserResultWriter.EXTERNALLY_SHUT_DOWN);
-		return externallyShutDownAttribute != null && externallyShutDownAttribute.getValue().equals(String.valueOf(true));
-	}
+        Attribute externallyShutDownAttribute = root.getAttribute(BrowserResultWriter.EXTERNALLY_SHUT_DOWN);
+        return externallyShutDownAttribute != null && externallyShutDownAttribute.getValue().equals(String.valueOf(true));
+    }
 
-	private void updateWithHeaders(BrowserResult result, Element element) {
+    private void updateWithHeaders(BrowserResult result, Element element) {
         String id = element.getAttributeValue(BrowserResultWriter.ID);
-        if (id!=null)
-        	result.setId(id);
+        if (id != null)
+            result.setId(id);
         String time = element.getAttributeValue(BrowserResultWriter.TIME);
-        if (time!=null)
-        	result.setTime(Double.parseDouble(time));
+        if (time != null)
+            result.setTime(Double.parseDouble(time));
     }
 
     private void updateWithProperties(Element element, BrowserResult result) {
         for (Object child : element.getChildren()) {
             Element next = (Element) child;
             String key = next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY);
-			String value = next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE);
-			
-			if (BrowserResultWriter.JSUNIT_VERSION.equals(key))
+            String value = next.getAttributeValue(BrowserResultWriter.PROPERTY_VALUE);
+
+            if (BrowserResultWriter.JSUNIT_VERSION.equals(key))
                 result.setJsUnitVersion(value);
             else if (BrowserResultWriter.BROWSER_FILE_NAME.equals(key))
                 result.setBrowserFileName(value);
@@ -93,7 +93,7 @@ public class BrowserResultBuilder {
             else if (BrowserResultWriter.URL.equals(key))
                 result.setBaseURL(value);
             else if (BrowserResultWriter.SERVER_SIDE_EXCEPTION_STACK_TRACE.equals(key)) {
-            	String stackTrace = next.getText();
+                String stackTrace = next.getText();
                 result.setServerSideExceptionStackTrace(stackTrace);
             }
         }

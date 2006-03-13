@@ -3,9 +3,9 @@ package net.jsunit;
 import net.jsunit.model.BrowserResult;
 import org.jdom.Element;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 
 public class MockBrowserTestRunner implements BrowserTestRunner {
 
@@ -56,7 +56,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     }
 
     public List<String> getBrowserFileNames() {
-        return Arrays.asList(new String[] {"mybrowser.exe"});
+        return Arrays.asList(new String[]{"mybrowser.exe"});
     }
 
     public int timeoutSeconds() {

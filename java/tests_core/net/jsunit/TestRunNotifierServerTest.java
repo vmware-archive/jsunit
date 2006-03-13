@@ -1,33 +1,32 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import net.jsunit.utility.XmlUtility;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import net.jsunit.utility.XmlUtility;
-
 public class TestRunNotifierServerTest extends TestCase implements MessageReceiver {
 
-	private TestRunNotifierServer server;
-	private ClientSideConnection clientSideConnection;
-	private List<String> messages = new ArrayList<String>();
-	private MockBrowserTestRunner mockRunner;
+    private TestRunNotifierServer server;
+    private ClientSideConnection clientSideConnection;
+    private List<String> messages = new ArrayList<String>();
+    private MockBrowserTestRunner mockRunner;
 
-	public void setUp() throws Exception {
-		super.setUp();
-		mockRunner = new MockBrowserTestRunner();
-		server = new TestRunNotifierServer(mockRunner, 8083);
-		clientSideConnection = new ClientSideConnection(this, 8083);
-		new Thread() {
-			public void run() {
-				server.testRunStarted();				
-			}
-		}.start();
-		
-		clientSideConnection.start();
-		waitForServerConnectionToStartRunning();
-	}
+    public void setUp() throws Exception {
+        super.setUp();
+        mockRunner = new MockBrowserTestRunner();
+        server = new TestRunNotifierServer(mockRunner, 8083);
+        clientSideConnection = new ClientSideConnection(this, 8083);
+        new Thread() {
+            public void run() {
+                server.testRunStarted();
+            }
+        }.start();
+
+        clientSideConnection.start();
+        waitForServerConnectionToStartRunning();
+    }
 
     public void testMessagesSentAsTestRunProceeds() throws InterruptedException {
         while (messages.size() < 1)
@@ -37,11 +36,11 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
         assertEquals("testRunStarted", messages.get(0));
 
         server.browserTestRunStarted("mybrowser1.exe");
-		while (messages.size() < 3)
-			Thread.sleep(10);
+        while (messages.size() < 3)
+            Thread.sleep(10);
 
         assertEquals("browserTestRunStarted", messages.get(1));
-		assertEquals("mybrowser1.exe", messages.get(2));
+        assertEquals("mybrowser1.exe", messages.get(2));
 
         DummyBrowserResult browserResult = new DummyBrowserResult(false, 2, 3);
         server.browserTestRunFinished("mybrowser2.exe", browserResult);
@@ -50,35 +49,35 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
 
         assertEquals("browserTestRunFinished", messages.get(3));
         assertEquals("mybrowser2.exe", messages.get(4));
-		String line1 = messages.get(5);
-		String line2 = messages.get(6);
-		String line3 = messages.get(7);
-		assertEquals(XmlUtility.asString(browserResult.asXmlDocument()), line1 + "\r\n" + line2 + "\r\n" + line3);
-		
-		assertEquals("endXml", messages.get(8));
-	}
-	
-	public void testStopRunner() throws InterruptedException {
-		assertFalse(mockRunner.disposeCalled);
-		clientSideConnection.sendMessage("foo");
-		assertFalse(mockRunner.disposeCalled);
-		clientSideConnection.sendMessage("stop");
-		while (!mockRunner.disposeCalled)
-			Thread.sleep(10);
-	}
+        String line1 = messages.get(5);
+        String line2 = messages.get(6);
+        String line3 = messages.get(7);
+        assertEquals(XmlUtility.asString(browserResult.asXmlDocument()), line1 + "\r\n" + line2 + "\r\n" + line3);
 
-	private void waitForServerConnectionToStartRunning() throws InterruptedException {
-		while (!clientSideConnection.isRunning() || !server.isReady())
-			Thread.sleep(10);
-	}
+        assertEquals("endXml", messages.get(8));
+    }
 
-	public void messageReceived(String message) {
+    public void testStopRunner() throws InterruptedException {
+        assertFalse(mockRunner.disposeCalled);
+        clientSideConnection.sendMessage("foo");
+        assertFalse(mockRunner.disposeCalled);
+        clientSideConnection.sendMessage("stop");
+        while (!mockRunner.disposeCalled)
+            Thread.sleep(10);
+    }
+
+    private void waitForServerConnectionToStartRunning() throws InterruptedException {
+        while (!clientSideConnection.isRunning() || !server.isReady())
+            Thread.sleep(10);
+    }
+
+    public void messageReceived(String message) {
         messages.add(message);
-	}
-	
-	public void tearDown() throws Exception {
-		server.testRunFinished();
-		clientSideConnection.shutdown();
-		super.tearDown();
-	}
+    }
+
+    public void tearDown() throws Exception {
+        server.testRunFinished();
+        clientSideConnection.shutdown();
+        super.tearDown();
+    }
 }

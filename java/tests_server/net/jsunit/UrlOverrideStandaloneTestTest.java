@@ -1,8 +1,8 @@
 package net.jsunit;
 
-import net.jsunit.configuration.ConfigurationSource;
-import junit.framework.TestResult;
 import junit.framework.TestCase;
+import junit.framework.TestResult;
+import net.jsunit.configuration.ConfigurationSource;
 
 public class UrlOverrideStandaloneTestTest extends TestCase {
 
@@ -22,7 +22,6 @@ public class UrlOverrideStandaloneTestTest extends TestCase {
 
         };
     }
-
 
     public void testOverridenURL() throws Exception {
         StandaloneTest test = new StandaloneTest(configurationSource());

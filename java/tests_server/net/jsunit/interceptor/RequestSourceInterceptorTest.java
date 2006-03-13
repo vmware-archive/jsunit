@@ -1,10 +1,10 @@
 package net.jsunit.interceptor;
 
-import junit.framework.TestCase;
-import net.jsunit.action.RequestSourceAware;
-import net.jsunit.DummyHttpRequest;
-import com.opensymphony.xwork.Action;
 import com.opensymphony.webwork.ServletActionContext;
+import com.opensymphony.xwork.Action;
+import junit.framework.TestCase;
+import net.jsunit.DummyHttpRequest;
+import net.jsunit.action.RequestSourceAware;
 
 import java.util.HashMap;
 

@@ -52,15 +52,15 @@ public class TestRunResultTest extends TestCase {
         testRunResult.setURL(new URL("http://www.example.com"));
         assertEquals(
                 "<testRunResult type=\"ERROR\" url=\"http://www.example.com\">" +
-                    "<properties>" +
+                        "<properties>" +
                         "<property name=\"os\" value=\"my cool os\" />" +
                         "<property name=\"ipAddress\" value=\"127.0.0.1\" />" +
                         "<property name=\"hostname\" value=\"machine.example.com\" />" +
-                    "</properties>" +
-                    successResult().asXmlFragment() +
-                    failureResult().asXmlFragment() +
-                    errorResult().asXmlFragment() +
-                "</testRunResult>",
+                        "</properties>" +
+                        successResult().asXmlFragment() +
+                        failureResult().asXmlFragment() +
+                        errorResult().asXmlFragment() +
+                        "</testRunResult>",
                 XmlUtility.asString(testRunResult.asXml())
         );
     }
@@ -81,21 +81,21 @@ public class TestRunResultTest extends TestCase {
     }
 
     private BrowserResult successResult() {
-      BrowserResult browserResult = new BrowserResult();
-      browserResult.setId("foo");
-      return browserResult;
+        BrowserResult browserResult = new BrowserResult();
+        browserResult.setId("foo");
+        return browserResult;
     }
 
     private BrowserResult failureResult() {
-      DummyBrowserResult dummyBrowserResult = new DummyBrowserResult(false, 1, 0);
-      dummyBrowserResult.setId("foo");
-      return dummyBrowserResult;
+        DummyBrowserResult dummyBrowserResult = new DummyBrowserResult(false, 1, 0);
+        dummyBrowserResult.setId("foo");
+        return dummyBrowserResult;
     }
 
     private BrowserResult errorResult() {
-      DummyBrowserResult dummyBrowserResult = new DummyBrowserResult(false, 0, 1);
-      dummyBrowserResult.setId("foo");
-      return dummyBrowserResult;
+        DummyBrowserResult dummyBrowserResult = new DummyBrowserResult(false, 0, 1);
+        dummyBrowserResult.setId("foo");
+        return dummyBrowserResult;
     }
 
 }

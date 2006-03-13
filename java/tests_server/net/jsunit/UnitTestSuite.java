@@ -8,7 +8,7 @@ import net.jsunit.interceptor.*;
 import net.jsunit.model.*;
 
 public class UnitTestSuite extends TestCase {
-	
+
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
         result.addTestSuite(ArgumentsConfigurationSourceTest.class);
@@ -22,7 +22,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(ConfigurationSourceResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
-        result.addTestSuite(ExternallyShutDownBrowserResultTest.class);        
+        result.addTestSuite(ExternallyShutDownBrowserResultTest.class);
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(FarmServerConfigurationActionTest.class);
         result.addTestSuite(FarmServerInterceptorTest.class);
@@ -51,5 +51,5 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(TimedOutBrowerResultTest.class);
         return result;
     }
-    
+
 }

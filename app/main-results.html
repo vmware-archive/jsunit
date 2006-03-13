@@ -5,6 +5,7 @@
     <title>JsUnit main-results.html</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
 </head>
+
 <body>
 <script language="javascript" type="text/javascript">
     var DEFAULT_SUBMIT_WEBSERVER = "localhost:8080";
@@ -12,7 +13,7 @@
     function submitUrlFromSpecifiedUrl() {
         var result = "";
         var specifiedUrl = top.getSpecifiedResultUrl();
-        if (specifiedUrl.indexOf("http://")!=0)
+        if (specifiedUrl.indexOf("http://") != 0)
             result = "http://";
         result += specifiedUrl;
         return result;
@@ -20,9 +21,9 @@
 
     function submitUrlFromTestRunnerLocation() {
         var result = "http://";
-        var webserver=top.getWebserver();
-        if (webserver==null) // running over file:///
-            webserver=DEFAULT_SUBMIT_WEBSERVER;
+        var webserver = top.getWebserver();
+        if (webserver == null) // running over file:///
+            webserver = DEFAULT_SUBMIT_WEBSERVER;
         result += webserver;
         result += "/jsunit/acceptor";
         return result;
@@ -35,7 +36,7 @@
         submitUrl = submitUrlFromTestRunnerLocation();
     }
 
-    var formString = "<form name=\"resultsForm\" action=\""+submitUrl+"\" method=\"post\" target=\"_top\">";
+    var formString = "<form name=\"resultsForm\" action=\"" + submitUrl + "\" method=\"post\" target=\"_top\">";
     document.write(formString);
 </script>
 <input type="hidden" name="id">
@@ -48,16 +49,16 @@
 </form>
 <script language="javascript" type="text/javascript">
     function populateHeaderFields(id, userAgent, jsUnitVersion, baseURL) {
-        document.resultsForm.id.value=id;
-        document.resultsForm.userAgent.value=userAgent;
-        document.resultsForm.jsUnitVersion.value=jsUnitVersion;
+        document.resultsForm.id.value = id;
+        document.resultsForm.userAgent.value = userAgent;
+        document.resultsForm.jsUnitVersion.value = jsUnitVersion;
         document.resultsForm.url.value = baseURL;
         document.resultsForm.cacheBuster.value = new Date().getTime();
     }
     function submitResults() {
         var testCasesField = document.resultsForm.testCases;
-        for (var i=0; i<testCasesField.length; i++) {
-            testCasesField[i].selected=true;
+        for (var i = 0; i < testCasesField.length; i++) {
+            testCasesField[i].selected = true;
         }
         document.resultsForm.submit();
     }

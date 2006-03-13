@@ -225,21 +225,21 @@ public class DummyHttpRequest implements HttpServletRequest {
         return false;
     }
 
-	public int getRemotePort() {
-		return 0;
-	}
+    public int getRemotePort() {
+        return 0;
+    }
 
-	public String getLocalName() {
-		return null;
-	}
+    public String getLocalName() {
+        return null;
+    }
 
-	public String getLocalAddr() {
-		return null;
-	}
+    public String getLocalAddr() {
+        return null;
+    }
 
-	public int getLocalPort() {
-		return 0;
-	}
+    public int getLocalPort() {
+        return 0;
+    }
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;

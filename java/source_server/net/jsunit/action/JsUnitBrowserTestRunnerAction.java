@@ -5,14 +5,14 @@ import net.jsunit.BrowserTestRunner;
 
 public abstract class JsUnitBrowserTestRunnerAction implements Action, XmlProducer {
 
-	protected BrowserTestRunner runner;
+    protected BrowserTestRunner runner;
 
-	public void setBrowserTestRunner(BrowserTestRunner runner) {
-		this.runner = runner;
-	}
-	
-	public BrowserTestRunner getBrowserTestRunner() {
-		return runner;
-	}
-	
+    public void setBrowserTestRunner(BrowserTestRunner runner) {
+        this.runner = runner;
+    }
+
+    public BrowserTestRunner getBrowserTestRunner() {
+        return runner;
+    }
+
 }

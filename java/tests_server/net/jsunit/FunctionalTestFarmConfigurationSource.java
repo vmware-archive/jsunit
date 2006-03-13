@@ -8,7 +8,7 @@ public class FunctionalTestFarmConfigurationSource implements ConfigurationSourc
     private int remotePort;
 
     public FunctionalTestFarmConfigurationSource(int port, int remotePort) {
-    	this.port = port;
+        this.port = port;
         this.remotePort = remotePort;
     }
 

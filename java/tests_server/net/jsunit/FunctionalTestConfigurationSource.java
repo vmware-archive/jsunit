@@ -7,31 +7,31 @@ import net.jsunit.configuration.ConfigurationSource;
 
 public class FunctionalTestConfigurationSource implements ConfigurationSource {
 
-	private final int port;
+    private final int port;
 
-	public FunctionalTestConfigurationSource(int port) {
-		this.port = port;
-	}
-	
-	public String resourceBase() {
-		return ".";
-	}
+    public FunctionalTestConfigurationSource(int port) {
+        this.port = port;
+    }
 
-	public String port() {
-		return String.valueOf(port);
-	}
+    public String resourceBase() {
+        return ".";
+    }
 
-	public String logsDirectory() {
-		return "";
-	}
+    public String port() {
+        return String.valueOf(port);
+    }
 
-	public String browserFileNames() {
-		return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
-	}
+    public String logsDirectory() {
+        return "";
+    }
 
-	public String url() {
-		return "http://localhost:"+port+"/jsunit/testRunner.html?testPage=http://localhost:"+port+"/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true";
-	}
+    public String browserFileNames() {
+        return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
+    }
+
+    public String url() {
+        return "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true";
+    }
 
     public String ignoreUnresponsiveRemoteMachines() {
         return "";
@@ -49,12 +49,12 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return String.valueOf(true);
     }
 
-	public String timeoutSeconds() {
-		return "60";
-	}
+    public String timeoutSeconds() {
+        return "60";
+    }
 
     public String remoteMachineURLs() {
         return "http://www.example.com,http://www.example2.com";
-    }    
-	
+    }
+
 }

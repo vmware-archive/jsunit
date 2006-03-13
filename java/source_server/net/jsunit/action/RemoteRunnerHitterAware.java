@@ -4,6 +4,6 @@ import net.jsunit.RemoteRunnerHitter;
 
 public interface RemoteRunnerHitterAware {
 
-	public void setRemoteRunnerHitter(RemoteRunnerHitter hitter);
-	
+    public void setRemoteRunnerHitter(RemoteRunnerHitter hitter);
+
 }

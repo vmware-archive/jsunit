@@ -1,13 +1,13 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
-import net.jsunit.utility.XmlUtility;
 import net.jsunit.model.TestRunResult;
+import net.jsunit.utility.XmlUtility;
 
 public class StandaloneTest extends TestCase {
 

@@ -4,8 +4,8 @@ import net.jsunit.utility.StringUtility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 public enum ServerType {
     STANDARD(

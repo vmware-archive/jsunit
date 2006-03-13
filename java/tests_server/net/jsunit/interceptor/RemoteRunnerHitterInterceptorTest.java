@@ -1,35 +1,34 @@
 package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
-
+import junit.framework.TestCase;
 import net.jsunit.RemoteMachineRunnerHitter;
 import net.jsunit.RemoteRunnerHitter;
 import net.jsunit.action.RemoteRunnerHitterAware;
-import junit.framework.TestCase;
 
 public class RemoteRunnerHitterInterceptorTest extends TestCase {
 
-	public void testSimple() throws Exception {
-		RemoteRunnerHitterInterceptor interceptor = new RemoteRunnerHitterInterceptor();
-		MockAction action = new MockAction();
-		MockActionInvocation invocation = new MockActionInvocation(action);
-		interceptor.intercept(invocation);
-		assertNotNull(action.hitter);
-		assertTrue(action.hitter instanceof RemoteMachineRunnerHitter);
-	}
-	
-	static class MockAction implements RemoteRunnerHitterAware, Action {
+    public void testSimple() throws Exception {
+        RemoteRunnerHitterInterceptor interceptor = new RemoteRunnerHitterInterceptor();
+        MockAction action = new MockAction();
+        MockActionInvocation invocation = new MockActionInvocation(action);
+        interceptor.intercept(invocation);
+        assertNotNull(action.hitter);
+        assertTrue(action.hitter instanceof RemoteMachineRunnerHitter);
+    }
 
-		private RemoteRunnerHitter hitter;
+    static class MockAction implements RemoteRunnerHitterAware, Action {
 
-		public String execute() throws Exception {
-			return null;
-		}
+        private RemoteRunnerHitter hitter;
 
-		public void setRemoteRunnerHitter(RemoteRunnerHitter hitter) {
-			this.hitter = hitter;
-		}
-		
-	}
-	
+        public String execute() throws Exception {
+            return null;
+        }
+
+        public void setRemoteRunnerHitter(RemoteRunnerHitter hitter) {
+            this.hitter = hitter;
+        }
+
+    }
+
 }

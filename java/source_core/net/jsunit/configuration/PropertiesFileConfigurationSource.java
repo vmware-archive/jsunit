@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Properties;
 
 public class PropertiesFileConfigurationSource implements ConfigurationSource {
- 
+
     public static final String PROPERTIES_FILE_NAME = "jsunit.properties";
 
     private Properties properties;
@@ -27,15 +27,15 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
             properties.load(fileInputStream);
             fileInputStream.close();
         } catch (FileNotFoundException e) {
-        	throw e;
+            throw e;
         } catch (Throwable t) {
             throw new RuntimeException(t);
         }
     }
 
-	private String propertyValue(ConfigurationProperty property) {
-		return properties.getProperty(property.getName());
-	}
+    private String propertyValue(ConfigurationProperty property) {
+        return properties.getProperty(property.getName());
+    }
 
     public String resourceBase() {
         return propertyValue(ConfigurationProperty.RESOURCE_BASE);
@@ -77,8 +77,8 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         return propertyValue(ConfigurationProperty.LOG_STATUS);
     }
 
-	public String timeoutSeconds() {
-		return propertyValue(ConfigurationProperty.TIMEOUT_SECONDS);
-	}
+    public String timeoutSeconds() {
+        return propertyValue(ConfigurationProperty.TIMEOUT_SECONDS);
+    }
 
 }

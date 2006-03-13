@@ -16,7 +16,7 @@ public class ShowConfigurationArgumentsAction extends AnAction {
         Configuration configuration = new Configuration(source);
         String[] arguments = configuration.asArgumentsArray();
         StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i <arguments.length; i++) {
+        for (int i = 0; i < arguments.length; i++) {
             buffer.append(arguments[i++]);
             buffer.append("=");
             buffer.append(arguments[i]);

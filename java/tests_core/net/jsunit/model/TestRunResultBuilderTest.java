@@ -16,18 +16,17 @@ public class TestRunResultBuilderTest extends TestCase {
         assertEquals("machine.example.com", result.getHostname());
     }
 
-
     private String fullValidResult() {
         return
-            "<testRunResult>" +
-                "<properties>" +
-                    "<property name=\"os\" value=\"my cool os\"></property>" +
-                    "<property name=\"ipAddress\" value=\"127.0.0.1\"></property>" +
-                    "<property name=\"hostname\" value=\"machine.example.com\"></property>" +
-                "</properties>" +
-                successResult().asXmlFragment() +
-                successResult().asXmlFragment() +
-            "</testRunResult>";
+                "<testRunResult>" +
+                        "<properties>" +
+                        "<property name=\"os\" value=\"my cool os\"></property>" +
+                        "<property name=\"ipAddress\" value=\"127.0.0.1\"></property>" +
+                        "<property name=\"hostname\" value=\"machine.example.com\"></property>" +
+                        "</properties>" +
+                        successResult().asXmlFragment() +
+                        successResult().asXmlFragment() +
+                        "</testRunResult>";
     }
 
     private BrowserResult successResult() {

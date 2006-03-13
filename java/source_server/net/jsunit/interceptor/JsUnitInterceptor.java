@@ -6,17 +6,17 @@ import com.opensymphony.xwork.interceptor.Interceptor;
 
 public abstract class JsUnitInterceptor implements Interceptor {
 
-	public void destroy() {
-	}
+    public void destroy() {
+    }
 
-	public void init() {
-	}
-	
-	public String intercept(ActionInvocation invocation) throws Exception {
-		execute((Action) invocation.getAction());
-		return invocation.invoke();
-	}
+    public void init() {
+    }
 
-	protected abstract void execute(Action targetAction);
+    public String intercept(ActionInvocation invocation) throws Exception {
+        execute((Action) invocation.getAction());
+        return invocation.invoke();
+    }
+
+    protected abstract void execute(Action targetAction);
 
 }

@@ -14,7 +14,7 @@
 
         function testAlterOriginalHTML() {
             var theDiv = document.getElementById("jsUnitRestoredHTML");
-            theDiv.innerHTML="something <i>totally</i> different";
+            theDiv.innerHTML = "something <i>totally</i> different";
         }
 
         function testOriginalHTMLPresent2() {
@@ -24,7 +24,7 @@
         function assertJsUnitjsUnitRestoredHTMLDivContainsOriginalHTML() {
             var theDiv = document.getElementById("jsUnitRestoredHTML");
             assertHTMLEquals(
-                    '<b>foo</b><input type="text" name="bar" value="12345">', 
+                    '<b>foo</b><input type="text" name="bar" value="12345">',
                     theDiv.innerHTML);
         }
 

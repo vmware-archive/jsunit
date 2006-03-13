@@ -1,7 +1,7 @@
 package net.jsunit.utility;
 
-import java.net.UnknownHostException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class SystemUtility {
     private static String hostname;

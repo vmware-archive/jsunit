@@ -6,7 +6,8 @@
     <script language="JavaScript" type="text/javascript">
 
         var loadStatus;
-        var callback = function () {};
+        var callback = function () {
+        };
 
         function buffer() {
             return window.frames.documentBuffer;
@@ -16,13 +17,14 @@
             loadStatus = 'loading';
             buffer().document.location.href = uri;
         }
-  
+
         function loadComplete() {
             top.xbDEBUG.dump('main-loader.html:loadComplete(): loadStatus = ' + loadStatus + ' href=' + buffer().document.location.href);
             if (loadStatus == 'loading') {
                 loadStatus = 'complete';
                 callback();
-                callback = function () {};
+                callback = function () {
+                };
             }
         }
 
@@ -36,6 +38,7 @@
 
     </script>
 </head>
+
 <body>
 <iframe name="documentBuffer" onload="loadComplete()"></iframe>
 </body>

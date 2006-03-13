@@ -4,8 +4,8 @@ import net.jsunit.XmlRenderable;
 import org.jdom.Element;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Collections;
+import java.util.List;
 
 public class DistributedTestRunResult extends AbstractResult implements XmlRenderable {
 

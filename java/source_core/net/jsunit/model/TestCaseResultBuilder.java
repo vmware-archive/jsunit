@@ -3,17 +3,17 @@ package net.jsunit.model;
 import org.jdom.Element;
 
 public class TestCaseResultBuilder {
-	
+
     public TestCaseResult build(Element element) {
         TestCaseResult result = new TestCaseResult();
         updateWithHeaders(result, element);
         updateWithMessage(result, element);
         return result;
     }
- 
+
     private void updateWithHeaders(TestCaseResult result, Element element) {
         String fullyQualifiedName = element.getAttributeValue(TestCaseResultWriter.NAME);
-		result.setFullyQualifiedName(fullyQualifiedName);
+        result.setFullyQualifiedName(fullyQualifiedName);
         result.setTimeTaken(Double.parseDouble(element.getAttributeValue(TestCaseResultWriter.TIME)));
     }
 

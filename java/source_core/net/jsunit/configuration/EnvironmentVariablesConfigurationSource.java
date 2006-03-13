@@ -31,8 +31,8 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
     }
 
     public String closeBrowsersAfterTestRuns() {
-		return environmentVariableValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
-	}
+        return environmentVariableValue(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS);
+    }
 
     public String description() {
         return environmentVariableValue(ConfigurationProperty.DESCRIPTION);
@@ -42,9 +42,9 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
         return environmentVariableValue(ConfigurationProperty.LOG_STATUS);
     }
 
-	public String timeoutSeconds() {
-		return environmentVariableValue(ConfigurationProperty.TIMEOUT_SECONDS);
-	}
+    public String timeoutSeconds() {
+        return environmentVariableValue(ConfigurationProperty.TIMEOUT_SECONDS);
+    }
 
     public String ignoreUnresponsiveRemoteMachines() {
         return environmentVariableValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);

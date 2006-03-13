@@ -4,6 +4,6 @@ import net.jsunit.model.BrowserResult;
 
 public interface BrowserResultAware {
 
-	public void setBrowserResult(BrowserResult result);
-	
+    public void setBrowserResult(BrowserResult result);
+
 }

@@ -5,27 +5,27 @@ import java.util.List;
 
 public class TestPageResult extends AbstractResult {
 
-	private final String testPageName;
-	private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
+    private final String testPageName;
+    private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
 
-	public TestPageResult(String testPageName) {
-		this.testPageName = testPageName;
-	}
+    public TestPageResult(String testPageName) {
+        this.testPageName = testPageName;
+    }
 
-	public void addTestCaseResult(TestCaseResult testCaseResult) {
-		testCaseResults.add(testCaseResult);		
-	}
+    public void addTestCaseResult(TestCaseResult testCaseResult) {
+        testCaseResults.add(testCaseResult);
+    }
 
-	public String getTestPageName() {
-		return testPageName;
-	}
+    public String getTestPageName() {
+        return testPageName;
+    }
 
-	public List<TestCaseResult> getTestCaseResults() {
-		return testCaseResults;
-	}
+    public List<TestCaseResult> getTestCaseResults() {
+        return testCaseResults;
+    }
 
-	protected List<? extends Result> getChildren() {
-		return testCaseResults;
-	}
+    protected List<? extends Result> getChildren() {
+        return testCaseResults;
+    }
 
 }

@@ -4,6 +4,6 @@ import net.jsunit.XmlRenderable;
 
 public interface XmlProducer {
 
-	public XmlRenderable getXmlRenderable();
-	
+    public XmlRenderable getXmlRenderable();
+
 }

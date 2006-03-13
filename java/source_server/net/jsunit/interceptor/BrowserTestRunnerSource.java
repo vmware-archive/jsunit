@@ -4,6 +4,6 @@ import net.jsunit.BrowserTestRunner;
 
 public interface BrowserTestRunnerSource {
 
-	BrowserTestRunner getRunner();
+    BrowserTestRunner getRunner();
 
 }

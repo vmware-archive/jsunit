@@ -1,23 +1,23 @@
 package net.jsunit.configuration;
 
 import java.util.List;
- 
+
 public class ArgumentsConfigurationSource implements ConfigurationSource {
 
     private List<String> arguments;
 
-	public ArgumentsConfigurationSource(List<String> arguments) {
+    public ArgumentsConfigurationSource(List<String> arguments) {
         this.arguments = arguments;
     }
 
     private String argumentValue(ConfigurationProperty property) {
         for (int i = 0; i < arguments.size(); i++) {
             if (arguments.get(i).equalsIgnoreCase("-" + property.getName())) {
-            	String value = arguments.get(i+1);
+                String value = arguments.get(i + 1);
                 if (!value.startsWith("-"))
-                	return value;
+                    return value;
                 else
-                	return "";
+                    return "";
             }
         }
         return null;
@@ -63,8 +63,8 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         return argumentValue(ConfigurationProperty.LOG_STATUS);
     }
 
-	public String timeoutSeconds() {
-		return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
-	}
-    
+    public String timeoutSeconds() {
+        return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
+    }
+
 }

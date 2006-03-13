@@ -54,7 +54,7 @@ public class BlockingTestRunner implements BrowserTestRunner {
     }
 
     public List<String> getBrowserFileNames() {
-        return Arrays.asList(new String[] {"browser.exe"});
+        return Arrays.asList(new String[]{"browser.exe"});
     }
 
     public int timeoutSeconds() {

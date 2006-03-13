@@ -10,43 +10,43 @@ import java.net.URL;
 
 public class FarmServerConfigurationAction extends JsUnitFarmServerAction {
 
-	private Element result;
+    private Element result;
 
-	public String execute() throws Exception {
-		result = new Element("remoteConfigurations");
-		for (URL url : server.getConfiguration().getRemoteMachineURLs()) {
-			URL configurationURL = new URL(url.toString() + "/config");
-			Element configurationElement;
-			try {
-				Document document = hitter.hitURL(configurationURL);
-				configurationElement = document.getRootElement();
-				configurationElement.detach();
-			} catch (IOException e) {
-				configurationElement = new Element("configuration");
-				configurationElement.setAttribute("failedToConnect", String.valueOf(true));
-				configurationElement.addContent(new CDATA(e.toString()));
-			}
-			
-			addRemoteConfigurationElementToResult(url, configurationElement);
-		}
-		return SUCCESS;
-	}
+    public String execute() throws Exception {
+        result = new Element("remoteConfigurations");
+        for (URL url : server.getConfiguration().getRemoteMachineURLs()) {
+            URL configurationURL = new URL(url.toString() + "/config");
+            Element configurationElement;
+            try {
+                Document document = hitter.hitURL(configurationURL);
+                configurationElement = document.getRootElement();
+                configurationElement.detach();
+            } catch (IOException e) {
+                configurationElement = new Element("configuration");
+                configurationElement.setAttribute("failedToConnect", String.valueOf(true));
+                configurationElement.addContent(new CDATA(e.toString()));
+            }
 
-	private void addRemoteConfigurationElementToResult(URL remoteMachineURL, Element configurationElement) {
-		Element remoteConfigurationElement = new Element("remoteConfiguration");
-		remoteConfigurationElement.setAttribute("remoteMachineURL", remoteMachineURL.toString());
-		remoteConfigurationElement.addContent(configurationElement);
-		result.addContent(remoteConfigurationElement);
-	}
+            addRemoteConfigurationElementToResult(url, configurationElement);
+        }
+        return SUCCESS;
+    }
 
-	public XmlRenderable getXmlRenderable() {
-		return new XmlRenderable() {
+    private void addRemoteConfigurationElementToResult(URL remoteMachineURL, Element configurationElement) {
+        Element remoteConfigurationElement = new Element("remoteConfiguration");
+        remoteConfigurationElement.setAttribute("remoteMachineURL", remoteMachineURL.toString());
+        remoteConfigurationElement.addContent(configurationElement);
+        result.addContent(remoteConfigurationElement);
+    }
 
-			public Element asXml() {
-				return result;
-			}
-			
-		};
-	}
+    public XmlRenderable getXmlRenderable() {
+        return new XmlRenderable() {
+
+            public Element asXml() {
+                return result;
+            }
+
+        };
+    }
 
 }

@@ -5,8 +5,8 @@ import java.util.List;
 
 public class CollectionUtility {
 
-	public static List listWith(Object object1, Object object2) {
-	    return Arrays.asList(new Object[]{object1, object2});
-	}
+    public static List listWith(Object object1, Object object2) {
+        return Arrays.asList(new Object[]{object1, object2});
+    }
 
 }

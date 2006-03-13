@@ -71,10 +71,10 @@ public class DistributedTestRunResultTest extends TestCase {
 
         assertEquals(
                 "<distributedTestRunResult type=\"UNRESPONSIVE\">" +
-                    XmlUtility.asString(result1.asXml()) +
-                    XmlUtility.asString(result2.asXml()) +
-                    "<testRunResult type=\"UNRESPONSIVE\" url=\"http://my.domain.com:4732\" />" +
-                "</distributedTestRunResult>",
+                        XmlUtility.asString(result1.asXml()) +
+                        XmlUtility.asString(result2.asXml()) +
+                        "<testRunResult type=\"UNRESPONSIVE\" url=\"http://my.domain.com:4732\" />" +
+                        "</distributedTestRunResult>",
                 XmlUtility.asString(distributedResult.asXml())
         );
     }
@@ -84,7 +84,7 @@ public class DistributedTestRunResultTest extends TestCase {
     }
 
     private BrowserResult failureResult() {
-    	return new DummyBrowserResult(false, 1, 0);
+        return new DummyBrowserResult(false, 1, 0);
     }
 
     private BrowserResult errorResult() {

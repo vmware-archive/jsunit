@@ -8,14 +8,14 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 public class TestRunResultBuilder {
 
-	public TestRunResult build(Document document) {
+    public TestRunResult build(Document document) {
         TestRunResult result = new TestRunResult();
         Element propertiesElement = document.getRootElement().getChild("properties");
         if (propertiesElement != null)
             updateWithProperties(result, propertiesElement.getChildren());
         updateWithBrowserResults(document, result);
         return result;
-	}
+    }
 
     private void updateWithBrowserResults(Document document, TestRunResult result) {
         BrowserResultBuilder browserBuilder = new BrowserResultBuilder();

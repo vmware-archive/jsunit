@@ -1,9 +1,9 @@
 package net.jsunit;
 
+import com.meterware.httpunit.HttpUnitOptions;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.sourceforge.jwebunit.WebTester;
-import com.meterware.httpunit.HttpUnitOptions;
 
 public class FarmServerLandingPageFunctionalTest extends TestCase {
 

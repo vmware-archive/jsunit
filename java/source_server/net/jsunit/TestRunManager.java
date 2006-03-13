@@ -7,7 +7,7 @@ public class TestRunManager {
 
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult;
-	private final String overrideUrl;
+    private final String overrideUrl;
 
     public static void main(String[] args) throws Exception {
         JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
@@ -18,37 +18,37 @@ public class TestRunManager {
         TestRunManager manager = new TestRunManager(server);
         manager.runTests();
         if (server.isAlive())
-        	server.dispose();
+            server.dispose();
     }
 
     public TestRunManager(BrowserTestRunner testRunner) {
-    	this(testRunner, null);
+        this(testRunner, null);
     }
-    
-	public TestRunManager(BrowserTestRunner testRunner, String overrideUrl) {
-		this.testRunner = testRunner;
-		this.overrideUrl = overrideUrl;
-	}
 
-	public void runTests() {
+    public TestRunManager(BrowserTestRunner testRunner, String overrideUrl) {
+        this.testRunner = testRunner;
+        this.overrideUrl = overrideUrl;
+    }
+
+    public void runTests() {
         initializeTestRunResult();
         testRunner.logStatus("Starting Test Run");
-		testRunner.startTestRun();
-		try {
-	        for (String browserFileName : testRunner.getBrowserFileNames()) {
-	        	BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browserFileName, overrideUrl);
-	            long launchTime = testRunner.launchBrowserTestRun(launchSpec);
-	            waitForResultToBeSubmitted(browserFileName, launchTime);
-	            if (testRunner.isAlive())
-	            	testRunResult.addBrowserResult(testRunner.lastResult());
-	            else
-	            	return;
-	        }
-		} finally {
-			testRunner.finishTestRun();
-		}
+        testRunner.startTestRun();
+        try {
+            for (String browserFileName : testRunner.getBrowserFileNames()) {
+                BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browserFileName, overrideUrl);
+                long launchTime = testRunner.launchBrowserTestRun(launchSpec);
+                waitForResultToBeSubmitted(browserFileName, launchTime);
+                if (testRunner.isAlive())
+                    testRunResult.addBrowserResult(testRunner.lastResult());
+                else
+                    return;
+            }
+        } finally {
+            testRunner.finishTestRun();
+        }
         testRunner.logStatus("Test Run Completed");
-	}
+    }
 
     private void initializeTestRunResult() {
         testRunResult = new TestRunResult();
@@ -64,13 +64,13 @@ public class TestRunManager {
             } catch (InterruptedException e) {
             }
             secondsWaited++;
-            if (secondsWaited > (testRunner.timeoutSeconds())+3)
+            if (secondsWaited > (testRunner.timeoutSeconds()) + 3)
                 throw new RuntimeException("Server not responding");
         }
     }
 
-	public TestRunResult getTestRunResult() {
-		return testRunResult;
-	}
+    public TestRunResult getTestRunResult() {
+        return testRunResult;
+    }
 
 }

@@ -345,7 +345,7 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
             top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML = this._restoredHTML;
 
         this.containerTestFrame.setUp();
-        eval('this.containerTestFrame.' + this._testFunctionName + '();');
+        this.containerTestFrame[this._testFunctionName]();
     }
     catch (e1) {
         excep = e1;
@@ -463,15 +463,24 @@ jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
 }
 
 jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
-    var html = '';
-    html += '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
-    html += '<html><head><link rel="stylesheet" type="text/css" href="css/jsUnitStyle.css"><\/head>';
-    html += '<body><div>';
-    html += str;
-    html += '<\/div><\/body>';
-    html += '<\/html>';
-    this.uiFrames[layerName].document.write(html);
-    this.uiFrames[layerName].document.close();
+    try {
+        var content;
+        if (content = this.uiFrames[layerName].document.getElementById('content'))
+            content.innerHTML = str;
+        else
+            throw 'No content div found.';
+    }
+    catch (e) {
+        var html = '';
+        html += '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">';
+        html += '<html><head><link rel="stylesheet" type="text/css" href="css/jsUnitStyle.css"><\/head>';
+        html += '<body><div id="content">';
+        html += str;
+        html += '<\/div><\/body>';
+        html += '<\/html>';
+        this.uiFrames[layerName].document.write(html);
+        this.uiFrames[layerName].document.close();
+    }
 }
 
 jsUnitTestManager.prototype.setStatus = function (str) {

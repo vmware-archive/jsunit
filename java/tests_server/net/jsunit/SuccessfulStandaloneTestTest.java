@@ -1,8 +1,8 @@
 package net.jsunit;
 
-import net.jsunit.configuration.ConfigurationSource;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
+import net.jsunit.configuration.ConfigurationSource;
 
 public class SuccessfulStandaloneTestTest extends TestCase {
 

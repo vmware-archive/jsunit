@@ -1,7 +1,7 @@
 package net.jsunit.version;
 
-import java.net.URL;
 import java.io.BufferedInputStream;
+import java.net.URL;
 
 public class JsUnitWebsiteVersionGrabber implements VersionGrabber {
     public double grabVersion() {

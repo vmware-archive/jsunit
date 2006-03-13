@@ -14,21 +14,21 @@
         }
 
         function doStackTraceTest(numberLeft) {
-            if (numberLeft>0) {
-                doStackTraceTest(numberLeft-1);
+            if (numberLeft > 0) {
+                doStackTraceTest(numberLeft - 1);
                 return;
             }
             assertEquals("> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> testStackTrace\n", getStackTrace());
         }
 
         function testJsUnitTestSuiteClass() {
-            var aSuite=new top.jsUnitTestSuite();
+            var aSuite = new top.jsUnitTestSuite();
             aSuite.addTestPage("foo.html");
             aSuite.addTestPage("bar.html");
             assertEquals(2, aSuite.testPages.length);
             assertEquals("foo.html", aSuite.testPages[0]);
             assertEquals("bar.html", aSuite.testPages[1]);
-            var anotherSuite=new top.jsUnitTestSuite();
+            var anotherSuite = new top.jsUnitTestSuite();
             anotherSuite.addTestPage("foo2.html");
             anotherSuite.addTestPage("bar2.html");
             aSuite.addTestSuite(anotherSuite);

@@ -5,7 +5,7 @@ import net.jsunit.XmlRenderable;
 
 public class DistributedTestRunnerAction extends JsUnitFarmServerAction {
 
-	private DistributedTestRunManager manager;
+    private DistributedTestRunManager manager;
     private String overrideURL;
 
     public String execute() throws Exception {
@@ -21,15 +21,15 @@ public class DistributedTestRunnerAction extends JsUnitFarmServerAction {
         return SUCCESS;
     }
 
-	public XmlRenderable getXmlRenderable() {
-		return manager.getDistributedTestRunResult();
-	}
+    public XmlRenderable getXmlRenderable() {
+        return manager.getDistributedTestRunResult();
+    }
 
-	public DistributedTestRunManager getTestRunManager() {
-		return manager;
-	}
+    public DistributedTestRunManager getTestRunManager() {
+        return manager;
+    }
 
-	public void setUrl(String overrideURL) {
+    public void setUrl(String overrideURL) {
         this.overrideURL = overrideURL;
     }
 }

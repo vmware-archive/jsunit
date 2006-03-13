@@ -5,7 +5,6 @@ import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.Result;
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.XmlUtility;
-
 import org.jdom.Document;
 import org.jdom.Element;
 

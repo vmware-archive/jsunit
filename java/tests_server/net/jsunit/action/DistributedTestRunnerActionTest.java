@@ -12,33 +12,33 @@ import java.net.URL;
 
 public class DistributedTestRunnerActionTest extends TestCase {
 
-	private DistributedTestRunnerAction action;
+    private DistributedTestRunnerAction action;
 
-	public void setUp() throws Exception {
-		super.setUp();
-		action = new DistributedTestRunnerAction();
-		action.setFarmServer(new JsUnitFarmServer(new Configuration(new DummyConfigurationSource())));
-		action.setRemoteRunnerHitter(new SuccessfulRemoteRunnerHitter());
-	}
-	
-	public void testSimple() throws Exception {
-		assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
-		assertTrue(action.getTestRunManager().getDistributedTestRunResult().wasSuccessful());
+    public void setUp() throws Exception {
+        super.setUp();
+        action = new DistributedTestRunnerAction();
+        action.setFarmServer(new JsUnitFarmServer(new Configuration(new DummyConfigurationSource())));
+        action.setRemoteRunnerHitter(new SuccessfulRemoteRunnerHitter());
+    }
+
+    public void testSimple() throws Exception {
+        assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
+        assertTrue(action.getTestRunManager().getDistributedTestRunResult().wasSuccessful());
         assertNull(action.getTestRunManager().getOverrideURL());
     }
 
     public void testOverrideURL() throws Exception {
         String overrideURL = "http://overrideurl.com:1234?foo=bar&bar=fo";
         action.setUrl(overrideURL);
-		assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
+        assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
         assertEquals(overrideURL, action.getTestRunManager().getOverrideURL());
     }
 
     static class SuccessfulRemoteRunnerHitter implements RemoteRunnerHitter {
 
-		public Document hitURL(URL url) {
-			return new Document(new TestRunResult().asXml());
-		}
-		
-	}
+        public Document hitURL(URL url) {
+            return new Document(new TestRunResult().asXml());
+        }
+
+    }
 }

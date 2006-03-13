@@ -5,8 +5,8 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.sourceforge.jwebunit.WebTester;
 import org.jdom.Document;
-import org.jdom.JDOMException;
 import org.jdom.Element;
+import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
 import java.io.IOException;

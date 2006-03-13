@@ -66,51 +66,51 @@ function testAssertNotNaN() {
 }
 
 function testFail() {
-    var excep=null;
+    var excep = null;
     try {
         fail("Failure message");
     } catch (e) {
-        excep=e;
+        excep = e;
     }
     assertJsUnitException("fail(string) should throw a JsUnitException", excep);
 }
 
 function testTooFewArguments() {
-    var excep=null;
+    var excep = null;
     try {
         assert();
     } catch (e1) {
-        excep=e1;
+        excep = e1;
     }
     assertNonJsUnitException("Calling an assertion function with too few arguments should throw an exception", excep);
 }
 
 function testTooManyArguments() {
-    var excep=null;
+    var excep = null;
     try {
         assertEquals("A comment", true, true, true);
     } catch (e2) {
-        excep=e2;
+        excep = e2;
     }
     assertNonJsUnitException("Calling an assertion function with too many arguments should throw an exception", excep);
 }
 
 function testInvalidCommentArgumentType() {
-    var excep=null;
+    var excep = null;
     try {
         assertNull(1, true);
     } catch (e3) {
-        excep=e3;
+        excep = e3;
     }
     assertNonJsUnitException("Calling an assertion function with a non-string comment should throw an exception", excep);
 }
 
 function testInvalidArgumentType() {
-    var excep=null;
+    var excep = null;
     try {
         assert("string");
     } catch (e) {
-        excep=e;
+        excep = e;
     }
     assertNonJsUnitException("Calling an assertion function with an invalid argument should throw an exception", excep);
 }

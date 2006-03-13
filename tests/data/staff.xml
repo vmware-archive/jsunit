@@ -1,14 +1,14 @@
 <?xml version="1.0"?><?TEST-STYLE PIDATA?>
 <!DOCTYPE staff SYSTEM "staff.dtd" [
-   <!ENTITY ent1 "es">
-   <!ENTITY ent2 "1900 Dallas Road">
-   <!ENTITY ent3 "Texas">
-   <!ENTITY ent4 "<entElement domestic='Yes'>Element data</entElement><?PItarget PIdata?>">
-   <!ENTITY ent5 PUBLIC "entityURI" "entityFile" NDATA notation1>
-   <!ENTITY ent1 "This entity should be discarded">
-   <!NOTATION notation1 PUBLIC "notation1File">
-   <!NOTATION notation2 SYSTEM "notation2File">
-]>
+        <!ENTITY ent1 "es">
+        <!ENTITY ent2 "1900 Dallas Road">
+        <!ENTITY ent3 "Texas">
+        <!ENTITY ent4 "<entElement domestic='Yes'>Element data</entElement><?PItarget PIdata?>">
+        <!ENTITY ent5 PUBLIC "entityURI" "entityFile" NDATA notation1>
+        <!ENTITY ent1 "This entity should be discarded">
+        <!NOTATION notation1 PUBLIC "notation1File">
+        <!NOTATION notation2 SYSTEM "notation2File">
+        ]>
 <!-- This is comment number 1.-->
 <staff>
     <employee>
@@ -27,12 +27,12 @@
         <salary>35,000</salary>
         <gender>Female</gender>
         <address domestic="Yes" street="Yes">&ent2; Dallas, &ent3;
- 98554</address>
+            98554</address>
     </employee>
     <employee>
         <employeeId>EMP0003</employeeId>
         <name>Roger
- Jones</name>
+            Jones</name>
         <position>Department Manager</position>
         <salary>100,000</salary>
         <gender>&ent4;

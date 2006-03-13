@@ -6,9 +6,9 @@ import net.jsunit.action.JsUnitServerAware;
 
 public class FarmServerInterceptor extends JsUnitInterceptor {
 
-	protected void execute(Action targetAction) {
-		JsUnitServerAware action = (JsUnitServerAware) targetAction;
-		action.setFarmServer(ServerRegistry.getFarmServer());
-	}
+    protected void execute(Action targetAction) {
+        JsUnitServerAware action = (JsUnitServerAware) targetAction;
+        action.setFarmServer(ServerRegistry.getFarmServer());
+    }
 
 }

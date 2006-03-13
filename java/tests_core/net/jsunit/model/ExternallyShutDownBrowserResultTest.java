@@ -5,11 +5,11 @@ import junit.framework.TestCase;
 public class ExternallyShutDownBrowserResultTest extends TestCase {
 
     private static String xml =
-        "<browserResult externallyShutDown=\"true\">" +
-            "<properties>" + 
-                "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-            "</properties>" +
-        "</browserResult>";
+            "<browserResult externallyShutDown=\"true\">" +
+                    "<properties>" +
+                    "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
+                    "</properties>" +
+                    "</browserResult>";
 
     private BrowserResult result;
 

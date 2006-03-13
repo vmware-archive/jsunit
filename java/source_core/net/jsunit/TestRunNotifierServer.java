@@ -5,58 +5,58 @@ import net.jsunit.utility.XmlUtility;
 
 public class TestRunNotifierServer implements TestRunListener {
 
-	public static final String TEST_RUN_FINISHED = "testRunFinished";
-	public static final String TEST_RUN_STARTED = "testRunStarted";
-	public static final String BROWSER_TEST_RUN_FINISHED = "browserTestRunFinished";
-	public static final String BROWSER_TEST_RUN_STARTED = "browserTestRunStarted";
-	public static final String END_XML = "endXml";
-	private ServerSideConnection serverSideConnection;
+    public static final String TEST_RUN_FINISHED = "testRunFinished";
+    public static final String TEST_RUN_STARTED = "testRunStarted";
+    public static final String BROWSER_TEST_RUN_FINISHED = "browserTestRunFinished";
+    public static final String BROWSER_TEST_RUN_STARTED = "browserTestRunStarted";
+    public static final String END_XML = "endXml";
+    private ServerSideConnection serverSideConnection;
 
-	public TestRunNotifierServer(BrowserTestRunner runner, int port) {
-		serverSideConnection = new ServerSideConnection(new StopMessageReceiver(runner), port);
-	}
-	
-	public void browserTestRunStarted(String browserFileName) {
-		serverSideConnection.sendMessage(BROWSER_TEST_RUN_STARTED);
-		serverSideConnection.sendMessage(browserFileName);
-	}
+    public TestRunNotifierServer(BrowserTestRunner runner, int port) {
+        serverSideConnection = new ServerSideConnection(new StopMessageReceiver(runner), port);
+    }
 
-	public void browserTestRunFinished(String browserFileName, BrowserResult result) {
-		serverSideConnection.sendMessage(BROWSER_TEST_RUN_FINISHED);
-		serverSideConnection.sendMessage(browserFileName);
-		serverSideConnection.sendMessage(XmlUtility.asString(result.asXmlDocument()));
-		serverSideConnection.sendMessage(END_XML);
-	}
-		
-	public void testRunStarted() {
-		serverSideConnection.connect();
-		serverSideConnection.sendMessage(TEST_RUN_STARTED);
-	}
+    public void browserTestRunStarted(String browserFileName) {
+        serverSideConnection.sendMessage(BROWSER_TEST_RUN_STARTED);
+        serverSideConnection.sendMessage(browserFileName);
+    }
 
-	public void testRunFinished() {
-		serverSideConnection.sendMessage(TEST_RUN_FINISHED);
-		serverSideConnection.shutDown();
-	}
+    public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+        serverSideConnection.sendMessage(BROWSER_TEST_RUN_FINISHED);
+        serverSideConnection.sendMessage(browserFileName);
+        serverSideConnection.sendMessage(XmlUtility.asString(result.asXmlDocument()));
+        serverSideConnection.sendMessage(END_XML);
+    }
 
-	public boolean isReady() {
-		return serverSideConnection.isConnected();
-	}
+    public void testRunStarted() {
+        serverSideConnection.connect();
+        serverSideConnection.sendMessage(TEST_RUN_STARTED);
+    }
 
-	static class StopMessageReceiver implements MessageReceiver {
+    public void testRunFinished() {
+        serverSideConnection.sendMessage(TEST_RUN_FINISHED);
+        serverSideConnection.shutDown();
+    }
 
-		private final BrowserTestRunner runner;
+    public boolean isReady() {
+        return serverSideConnection.isConnected();
+    }
 
-		public StopMessageReceiver(BrowserTestRunner runner) {
-			this.runner = runner;
-		}
+    static class StopMessageReceiver implements MessageReceiver {
 
-		public void messageReceived(String message) {
-			if ("stop".equals(message)) {
-				runner.logStatus("Stopping Test Run");
-				runner.dispose();
-			}
-		}
-		
-	}
-	
+        private final BrowserTestRunner runner;
+
+        public StopMessageReceiver(BrowserTestRunner runner) {
+            this.runner = runner;
+        }
+
+        public void messageReceived(String message) {
+            if ("stop".equals(message)) {
+                runner.logStatus("Stopping Test Run");
+                runner.dispose();
+            }
+        }
+
+    }
+
 }

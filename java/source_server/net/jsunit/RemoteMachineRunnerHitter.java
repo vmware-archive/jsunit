@@ -3,9 +3,9 @@ package net.jsunit;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ByteArrayOutputStream;
 import java.net.URL;
 import java.net.URLConnection;
 

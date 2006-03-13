@@ -1,24 +1,23 @@
 package net.jsunit.interceptor;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.opensymphony.webwork.ServletActionContext;
+import com.opensymphony.xwork.Action;
 import net.jsunit.action.BrowserResultAware;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.utility.StringUtility;
 
-import com.opensymphony.webwork.ServletActionContext;
-import com.opensymphony.xwork.Action;
+import javax.servlet.http.HttpServletRequest;
 
 public class BrowserResultInterceptor extends JsUnitInterceptor {
 
-	protected void execute(Action targetAction) {
+    protected void execute(Action targetAction) {
         HttpServletRequest request = ServletActionContext.getRequest();
-		BrowserResult result = build(request);
+        BrowserResult result = build(request);
         BrowserResultAware aware = (BrowserResultAware) targetAction;
         aware.setBrowserResult(result);
-	}
-	
+    }
+
     public BrowserResult build(HttpServletRequest request) {
         BrowserResult result = new BrowserResult();
         String testId = request.getParameter(BrowserResultWriter.ID);
@@ -34,5 +33,5 @@ public class BrowserResultInterceptor extends JsUnitInterceptor {
         result.setTestCaseStrings(request.getParameterValues(BrowserResultWriter.TEST_CASES));
         return result;
     }
-    
+
 }

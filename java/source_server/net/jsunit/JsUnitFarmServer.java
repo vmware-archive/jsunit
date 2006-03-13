@@ -14,20 +14,20 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
     }
 
     protected List<String> servletNames() {
-        return Arrays.asList(new String[] {
-            "index",
-            "config",
-            "runner"
+        return Arrays.asList(new String[]{
+                "index",
+                "config",
+                "runner"
         });
     }
 
     public static void main(String args[]) {
-          try {
-              JsUnitFarmServer server = new JsUnitFarmServer(Configuration.resolve(args));
-              server.start();
-          } catch (Throwable t) {
-              t.printStackTrace();
-          }
+        try {
+            JsUnitFarmServer server = new JsUnitFarmServer(Configuration.resolve(args));
+            server.start();
+        } catch (Throwable t) {
+            t.printStackTrace();
+        }
     }
 
     public String toString() {

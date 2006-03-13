@@ -8,24 +8,24 @@ import org.jdom.output.XMLOutputter;
 public class BrowserResultWriter {
 
     public static final String
-        ID = "id",
-        BROWSER_RESULT="browserResult",
-        BROWSER_FILE_NAME = "browserFileName",
-        USER_AGENT = "userAgent",
-        TIME = "time",
-        TEST_CASES = "testCases",
-        TEST_CASE = "testCase",
-        TIMED_OUT = "timedOut",
-        FAILED_TO_LAUNCH = "failedToLaunch",
-        EXTERNALLY_SHUT_DOWN = "externallyShutDown",
-        JSUNIT_VERSION = "jsUnitVersion",
-        REMOTE_ADDRESS = "remoteAddress",
-        SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
-        PROPERTIES = "properties",
-        PROPERTY = "property",
-        PROPERTY_KEY = "name",
-        PROPERTY_VALUE = "value",
-        URL = "url";
+            ID = "id",
+            BROWSER_RESULT = "browserResult",
+            BROWSER_FILE_NAME = "browserFileName",
+            USER_AGENT = "userAgent",
+            TIME = "time",
+            TEST_CASES = "testCases",
+            TEST_CASE = "testCase",
+            TIMED_OUT = "timedOut",
+            FAILED_TO_LAUNCH = "failedToLaunch",
+            EXTERNALLY_SHUT_DOWN = "externallyShutDown",
+            JSUNIT_VERSION = "jsUnitVersion",
+            REMOTE_ADDRESS = "remoteAddress",
+            SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
+            PROPERTIES = "properties",
+            PROPERTY = "property",
+            PROPERTY_KEY = "name",
+            PROPERTY_VALUE = "value",
+            URL = "url";
 
     BrowserResult browserResult;
 

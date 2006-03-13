@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface BrowserTestRunner extends XmlRenderable {
 
-	void startTestRun();
+    void startTestRun();
 
-	void finishTestRun();
+    void finishTestRun();
 
-	long launchBrowserTestRun(BrowserLaunchSpecification launchSpec);
+    long launchBrowserTestRun(BrowserLaunchSpecification launchSpec);
 
     void accept(BrowserResult result);
 
@@ -21,13 +21,13 @@ public interface BrowserTestRunner extends XmlRenderable {
     void dispose();
 
     BrowserResult findResultWithId(String id);
-	
-	void logStatus(String message);
 
-	List<String> getBrowserFileNames();
+    void logStatus(String message);
 
-	int timeoutSeconds();
+    List<String> getBrowserFileNames();
 
-	boolean isAlive();
+    int timeoutSeconds();
+
+    boolean isAlive();
 
 }

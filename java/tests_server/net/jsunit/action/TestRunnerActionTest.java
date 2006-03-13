@@ -22,14 +22,14 @@ public class TestRunnerActionTest extends TestCase {
         mockRunner.shouldSucceed = true;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         String xmlString = XmlUtility.asString(action.getXmlRenderable().asXml());
-        assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.SUCCESS.name()));
+        assertTrue(xmlString.startsWith("<testRunResult type=\"" + ResultType.SUCCESS.name()));
     }
 
     public void testFailure() throws Exception {
         mockRunner.shouldSucceed = false;
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         String xmlString = XmlUtility.asString(action.getXmlRenderable().asXml());
-        assertTrue(xmlString.startsWith("<testRunResult type=\""+ResultType.FAILURE.name()));
+        assertTrue(xmlString.startsWith("<testRunResult type=\"" + ResultType.FAILURE.name()));
     }
 
     public void testOverrideUrl() throws Exception {
