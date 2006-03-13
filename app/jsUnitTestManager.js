@@ -2,65 +2,63 @@ function jsUnitTestManager()
 {
     this._windowForAllProblemMessages = null;
 
-
-    this.container            = top.frames.testContainer
-    this.documentLoader       = top.frames.documentLoader;
-    this.mainFrame            = top.frames.mainFrame;
+    this.container = top.frames.testContainer
+    this.documentLoader = top.frames.documentLoader;
+    this.mainFrame = top.frames.mainFrame;
 
     this.containerController = this.container.frames.testContainerController;
-    this.containerTestFrame  = this.container.frames.testFrame;
+    this.containerTestFrame = this.container.frames.testFrame;
 
-    var mainData             = this.mainFrame.frames.mainData;
+    var mainData = this.mainFrame.frames.mainData;
 
     // form elements on mainData frame
-    this.testFileName        = mainData.document.testRunnerForm.testFileName;
-    this.runButton           = mainData.document.testRunnerForm.runButton;
-    this.traceLevel          = mainData.document.testRunnerForm.traceLevel;
+    this.testFileName = mainData.document.testRunnerForm.testFileName;
+    this.runButton = mainData.document.testRunnerForm.runButton;
+    this.traceLevel = mainData.document.testRunnerForm.traceLevel;
     this.closeTraceWindowOnNewRun = mainData.document.testRunnerForm.closeTraceWindowOnNewRun;
-    this.timeout             = mainData.document.testRunnerForm.timeout;
-    this.setUpPageTimeout      = mainData.document.testRunnerForm.setUpPageTimeout;
+    this.timeout = mainData.document.testRunnerForm.timeout;
+    this.setUpPageTimeout = mainData.document.testRunnerForm.setUpPageTimeout;
 
     // image output
-    this.progressBar         = this.mainFrame.frames.mainProgress.document.progress;
+    this.progressBar = this.mainFrame.frames.mainProgress.document.progress;
 
-    this.problemsListField           = this.mainFrame.frames.mainErrors.document.testRunnerForm.problemsList;
-    this.testCaseResultsField        = this.mainFrame.frames.mainResults.document.resultsForm.testCases;
-    this.resultsTimeField			   = this.mainFrame.frames.mainResults.document.resultsForm.time;
+    this.problemsListField = this.mainFrame.frames.mainErrors.document.testRunnerForm.problemsList;
+    this.testCaseResultsField = this.mainFrame.frames.mainResults.document.resultsForm.testCases;
+    this.resultsTimeField = this.mainFrame.frames.mainResults.document.resultsForm.time;
 
     // 'layer' output frames
-    this.uiFrames                    = new Object();
-    this.uiFrames.mainStatus         = this.mainFrame.frames.mainStatus;
+    this.uiFrames = new Object();
+    this.uiFrames.mainStatus = this.mainFrame.frames.mainStatus;
 
-    var mainCounts                   = this.mainFrame.frames.mainCounts;
+    var mainCounts = this.mainFrame.frames.mainCounts;
 
-    this.uiFrames.mainCountsErrors   = mainCounts.frames.mainCountsErrors;
+    this.uiFrames.mainCountsErrors = mainCounts.frames.mainCountsErrors;
     this.uiFrames.mainCountsFailures = mainCounts.frames.mainCountsFailures;
-    this.uiFrames.mainCountsRuns     = mainCounts.frames.mainCountsRuns;
+    this.uiFrames.mainCountsRuns = mainCounts.frames.mainCountsRuns;
     this._baseURL = "";
 
     this.setup();
 }
 
 // seconds to wait for each test page to load
-jsUnitTestManager.TESTPAGE_WAIT_SEC  = 120;
-jsUnitTestManager.TIMEOUT_LENGTH     = 20;
+jsUnitTestManager.TESTPAGE_WAIT_SEC = 120;
+jsUnitTestManager.TIMEOUT_LENGTH = 20;
 
 // seconds to wait for setUpPage to complete
-jsUnitTestManager.SETUPPAGE_TIMEOUT    = 120;
+jsUnitTestManager.SETUPPAGE_TIMEOUT = 120;
 
 // milliseconds to wait between polls on setUpPages
-jsUnitTestManager.SETUPPAGE_INTERVAL   = 100;
+jsUnitTestManager.SETUPPAGE_INTERVAL = 100;
 
 jsUnitTestManager.RESTORED_HTML_DIV_ID = "jsUnitRestoredHTML";
 
 jsUnitTestManager.prototype.setup = function () {
-    this.totalCount    = 0;
-    this.errorCount    = 0;
-    this.failureCount  = 0;
-    this._suiteStack   = Array();
+    this.totalCount = 0;
+    this.errorCount = 0;
+    this.failureCount = 0;
+    this._suiteStack = Array();
 
-
-    var initialSuite   = new top.jsUnitTestSuite();
+    var initialSuite = new top.jsUnitTestSuite();
     push(this._suiteStack, initialSuite);
 }
 
@@ -95,7 +93,7 @@ jsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
         this._handleNewSuite();
     else
     {
-        this._testIndex   = 0;
+        this._testIndex = 0;
         this._testsInPage = this.getTestFunctionNames();
         this._numberOfTestsInPage = this._testsInPage.length;
         this._runTest();
@@ -145,7 +143,7 @@ jsUnitTestManager.prototype._runTest = function () {
 
             if (this.containerTestFrame.setUpPageStatus != 'complete') {
                 top.status = 'setUpPage not completed... ' + this.containerTestFrame.setUpPageStatus + ' ' + (new Date());
-                if ((new Date() - this.containerTestFrame.startTime) /1000 > this.getsetUpPageTimeout()) {
+                if ((new Date() - this.containerTestFrame.startTime) / 1000 > this.getsetUpPageTimeout()) {
                     this.fatalError('setUpPage timed out without completing.');
                     if (!this.userConfirm('Retry Test Run?')) {
                         this.abort();
@@ -170,7 +168,7 @@ jsUnitTestManager.prototype._runTest = function () {
 }
 
 jsUnitTestManager.prototype._done = function () {
-    var secondsSinceRunBegan=(new Date() - this._timeRunStarted)/1000;
+    var secondsSinceRunBegan = (new Date() - this._timeRunStarted) / 1000;
     this.setStatus('Done (' + secondsSinceRunBegan + ' seconds)');
     this._cleanUp();
     if (top.shouldSubmitResults()) {
@@ -197,7 +195,7 @@ jsUnitTestManager.prototype._currentSuite = function () {
     var suite = null;
 
     if (this._suiteStack && this._suiteStack.length > 0)
-        suite = this._suiteStack[this._suiteStack.length-1];
+        suite = this._suiteStack[this._suiteStack.length - 1];
 
     return suite;
 }
@@ -206,14 +204,14 @@ jsUnitTestManager.prototype.calculateProgressBarProportion = function () {
     if (this.totalCount == 0)
         return 0;
     var currentDivisor = 1;
-    var result         = 0;
+    var result = 0;
 
     for (var i = 0; i < this._suiteStack.length; i++) {
-        var aSuite     = this._suiteStack[i];
+        var aSuite = this._suiteStack[i];
         currentDivisor *= aSuite.testPages.length;
-        result += (aSuite.pageIndex - 1)/currentDivisor;
+        result += (aSuite.pageIndex - 1) / currentDivisor;
     }
-    result += (this._testIndex + 1)/(this._numberOfTestsInPage * currentDivisor);
+    result += (this._testIndex + 1) / (this._numberOfTestsInPage * currentDivisor);
     return result;
 }
 
@@ -258,7 +256,7 @@ jsUnitTestManager.prototype.isTestPageSuite = function () {
 }
 
 jsUnitTestManager.prototype.getTestFunctionNames = function () {
-    var testFrame         = this.containerTestFrame;
+    var testFrame = this.containerTestFrame;
     var testFunctionNames = new Array();
     var i;
 
@@ -274,7 +272,7 @@ jsUnitTestManager.prototype.getTestFunctionNames = function () {
         for (i = 0; i < scriptsInTestFrame.length; i++) {
             var someNames = this._extractTestFunctionNamesFromScript(scriptsInTestFrame[i]);
             if (someNames)
-                testFunctionNames=testFunctionNames.concat(someNames);
+                testFunctionNames = testFunctionNames.concat(someNames);
         }
     }
     else {
@@ -289,21 +287,21 @@ jsUnitTestManager.prototype.getTestFunctionNames = function () {
 jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) {
     var result;
     var remainingScriptToInspect = aScript.text;
-    var currentIndex             = remainingScriptToInspect.indexOf('function test');
+    var currentIndex = remainingScriptToInspect.indexOf('function test');
     while (currentIndex != -1) {
         if (!result)
-            result=new Array();
+            result = new Array();
 
         var fragment = remainingScriptToInspect.substring(currentIndex, remainingScriptToInspect.length);
-        result       = result.concat(fragment.substring('function '.length, fragment.indexOf('(')));
-        remainingScriptToInspect=remainingScriptToInspect.substring(currentIndex+12, remainingScriptToInspect.length);
-        currentIndex=remainingScriptToInspect.indexOf('function test');
+        result = result.concat(fragment.substring('function '.length, fragment.indexOf('(')));
+        remainingScriptToInspect = remainingScriptToInspect.substring(currentIndex + 12, remainingScriptToInspect.length);
+        currentIndex = remainingScriptToInspect.indexOf('function test');
     }
     return result;
 }
 
 jsUnitTestManager.prototype.loadPage = function (testFileName) {
-    this._testFileName         = testFileName;
+    this._testFileName = testFileName;
     this._loadAttemptStartTime = new Date();
     this.setStatus('Opening Test Page "' + this._testFileName + '"');
     this.containerController.setTestPage(this._testFileName);
@@ -338,9 +336,9 @@ jsUnitTestManager.prototype._isTestFrameLoaded = function () {
 }
 
 jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
-    this._testFunctionName=functionName;
+    this._testFunctionName = functionName;
     this.setStatus('Running test "' + this._testFunctionName + '"');
-    var excep=null;
+    var excep = null;
     var timeBefore = new Date();
     try {
         if (this._restoredHTML)
@@ -363,16 +361,16 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
     var timeTaken = (new Date() - timeBefore) / 1000;
     if (excep != null)
         this._handleTestException(excep);
-    var serializedTestCaseString = this._fullyQualifiedCurrentTestFunctionName()+"|"+timeTaken+"|";
-    if (excep==null)
-        serializedTestCaseString+="S||";
+    var serializedTestCaseString = this._fullyQualifiedCurrentTestFunctionName() + "|" + timeTaken + "|";
+    if (excep == null)
+        serializedTestCaseString += "S||";
     else {
         if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException)
-            serializedTestCaseString+="F|";
+            serializedTestCaseString += "F|";
         else {
-            serializedTestCaseString+="E|";
+            serializedTestCaseString += "E|";
         }
-        serializedTestCaseString+=this._problemDetailMessageFor(excep);
+        serializedTestCaseString += this._problemDetailMessageFor(excep);
     }
     this._addOption(this.testCaseResultsField,
             serializedTestCaseString,
@@ -399,7 +397,7 @@ jsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
         // options array does not work, and adding an Option created by new Option()
         // and appended by listField.options.add() fails due to WRONG_DOCUMENT_ERR
         var problemDocument = listField.ownerDocument;
-        errOption = problemDocument.createElement('option');
+        var errOption = problemDocument.createElement('option');
         errOption.setAttribute('value', problemValue);
         errOption.appendChild(problemDocument.createTextNode(problemMessage));
         listField.appendChild(errOption);
@@ -409,15 +407,15 @@ jsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
         errOption = new Option(problemMessage, problemValue);
         if (typeof(listField.add) != 'undefined') {
             // DOM 2 HTML
-            listField.add( errOption , null);
+            listField.add(errOption, null);
         }
         else if (typeof(listField.options.add) != 'undefined') {
             // DOM 0
-            listField.options.add( errOption, null);
+            listField.options.add(errOption, null);
         }
         else {
             // DOM 0
-            listField.options[listField.length]= errOption;
+            listField.options[listField.length] = errOption;
         }
     }
 }
@@ -440,16 +438,16 @@ jsUnitTestManager.prototype._handleTestException = function (excep) {
 }
 
 jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
-    var result=null;
+    var result = null;
     if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException) {
         result = '';
         if (excep.comment != null)
-            result+=('"'+excep.comment+'"\n');
+            result += ('"' + excep.comment + '"\n');
 
         result += excep.jsUnitMessage;
 
         if (excep.stackTrace)
-            result+='\n\nStack trace follows:\n'+excep.stackTrace;
+            result += '\n\nStack trace follows:\n' + excep.stackTrace;
     }
     else {
         result = 'Error message is:\n"';
@@ -459,7 +457,7 @@ jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
         excep.description;
         result += '"';
         if (typeof(excep.stack) != 'undefined') // Mozilla only
-            result+='\n\nStack trace follows:\n'+excep.stack;
+            result += '\n\nStack trace follows:\n' + excep.stack;
     }
     return result;
 }
@@ -477,7 +475,7 @@ jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
 }
 
 jsUnitTestManager.prototype.setStatus = function (str) {
-    this._setTextOnLayer('mainStatus', '<b>Status:<\/b> '+str);
+    this._setTextOnLayer('mainStatus', '<b>Status:<\/b> ' + str);
 }
 
 jsUnitTestManager.prototype._setErrors = function (n) {
@@ -493,11 +491,11 @@ jsUnitTestManager.prototype._setTotal = function (n) {
 }
 
 jsUnitTestManager.prototype._setProgressBarImage = function (imgName) {
-    this.progressBar.src=imgName;
+    this.progressBar.src = imgName;
 }
 
 jsUnitTestManager.prototype._setProgressBarWidth = function (w) {
-    this.progressBar.width=w;
+    this.progressBar.width = w;
 }
 
 jsUnitTestManager.prototype.updateProgressIndicators = function () {
@@ -529,11 +527,11 @@ jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
     catch(e) {
     }
 
-    this._windowForAllProblemMessages = window.open('','','width=600, height=350,status=no,resizable=yes,scrollbars=yes');
+    this._windowForAllProblemMessages = window.open('', '', 'width=600, height=350,status=no,resizable=yes,scrollbars=yes');
     var resDoc = this._windowForAllProblemMessages.document;
     resDoc.write('<html><head><link rel="stylesheet" href="../css/jsUnitStyle.css"><title>Tests with problems - JsUnit<\/title><head><body>');
     resDoc.write('<p class="jsUnitSubHeading">Tests with problems (' + this.problemsListField.length + ' total) - JsUnit<\/p>');
-    resDoc.write('<p class="jsUnitSubSubHeading"><i>Running on '+navigator.userAgent+'</i></p>');
+    resDoc.write('<p class="jsUnitSubSubHeading"><i>Running on ' + navigator.userAgent + '</i></p>');
     for (var i = 0; i < this.problemsListField.length; i++)
     {
         resDoc.write('<p class="jsUnitDefault">');
@@ -557,7 +555,7 @@ jsUnitTestManager.prototype._makeHTMLSafe = function (string) {
 
 jsUnitTestManager.prototype._clearProblemsList = function () {
     var listField = this.problemsListField;
-    var initialLength=listField.options.length;
+    var initialLength = listField.options.length;
 
     for (var i = 0; i < initialLength; i++)
         listField.remove(0);
@@ -581,7 +579,7 @@ jsUnitTestManager.prototype._setRunButtonEnabled = function (b) {
 
 jsUnitTestManager.prototype.getTestFileName = function () {
     var rawEnteredFileName = this.testFileName.value;
-    var result             = rawEnteredFileName;
+    var result = rawEnteredFileName;
 
     while (result.indexOf('\\') != -1)
         result = result.replace('\\', '/');
@@ -610,19 +608,17 @@ jsUnitTestManager.prototype.storeRestoredHTML = function () {
 
 jsUnitTestManager.prototype.fatalError = function(aMessage) {
     if (top.shouldSubmitResults())
-      this.setStatus(aMessage);
+        this.setStatus(aMessage);
     else
-      alert(aMessage);
+        alert(aMessage);
 }
 
-jsUnitTestManager.prototype.userConfirm = function(aMessage){
+jsUnitTestManager.prototype.userConfirm = function(aMessage) {
     if (top.shouldSubmitResults())
-      return false;
+        return false;
     else
-      return confirm(aMessage);
+        return confirm(aMessage);
 }
-
-
 
 function getTestFileProtocol() {
     return getDocumentProtocol();
@@ -647,7 +643,7 @@ function getDocumentProtocol() {
 }
 
 function isBeingRunOverHTTP() {
-    return getDocumentProtocol()=="http://";
+    return getDocumentProtocol() == "http://";
 }
 
 function getWebserver() {
@@ -659,16 +655,16 @@ function getWebserver() {
     return null;
 }
 
-// the functions push(anArray, anObject) and pop(anArray) 
-// exist because the JavaScript Array.push(anObject) and Array.pop() 
+// the functions push(anArray, anObject) and pop(anArray)
+// exist because the JavaScript Array.push(anObject) and Array.pop()
 // functions are not available in IE 5.0
 
 function push(anArray, anObject) {
-    anArray[anArray.length]=anObject;
+    anArray[anArray.length] = anObject;
 }
 
 function pop(anArray) {
-    if (anArray.length>=1) {
+    if (anArray.length >= 1) {
         delete anArray[anArray.length - 1];
         anArray.length--;
     }
