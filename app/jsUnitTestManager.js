@@ -651,6 +651,18 @@ function getDocumentProtocol() {
     return null;
 }
 
+function browserSupportsReadingFullPathFromFileField() {
+    return !isOpera() && !isIE7();
+}
+
+function isOpera() {
+    return navigator.userAgent.toLowerCase().indexOf("opera") != -1;
+}
+
+function isIE7() {
+    return navigator.userAgent.toLowerCase().indexOf("msie 7") != -1;
+}
+
 function isBeingRunOverHTTP() {
     return getDocumentProtocol() == "http://";
 }

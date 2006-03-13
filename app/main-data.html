@@ -99,7 +99,7 @@
                         html += valueString;
                         document.write(html);
                     } else {
-                        if (top.getDocumentProtocol() == 'file:///')
+                        if (top.getDocumentProtocol() == 'file:///' && top.browserSupportsReadingFullPathFromFileField())
                             document.write('<input type="file" name="testFileName" size="60">');
                         else
                             document.write('<input type="text" name="testFileName" size="60">');
