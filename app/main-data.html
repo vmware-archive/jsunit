@@ -7,7 +7,6 @@
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
     <script language="JavaScript" type="text/javascript" src="jsUnitCore.js"></script>
     <script language="JavaScript" type="text/javascript">
-
         function giveFocusToTestFileNameField() {
             if (document.testRunnerForm.testFileName.type != "hidden")
                 document.testRunnerForm.testFileName.focus();
@@ -68,8 +67,13 @@
 </table>
 
 <form name="testRunnerForm" action="">
-
-    <p>Enter the filename of the Test Page to be run:</p>
+    <script type="text/javascript" language="javascript">
+        if (!jsUnitGetParm('testpage')) {
+            document.write("<p>Enter the filename of the Test Page to be run:</p>");
+        } else {
+            document.write("<br>");
+        };
+    </script>
 
     <table cellpadding="0" cellspacing="0" border="0" summary="Form for entering test case location">
         <tr>
@@ -109,6 +113,7 @@
             </td>
         </tr>
     </table>
+    <br>
     <hr>
 
     <table cellpadding="0" cellspacing="0" border="0" summary="Choose Trace Level">
