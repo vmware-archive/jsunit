@@ -23,16 +23,67 @@ function jsUnitFixTop() {
 
 jsUnitFixTop();
 
+/**
+ + * A more functional typeof
+ + * @param Object o
+ + * @return String
+ + */
+function _trueTypeOf(something) {
+    var result = typeof something;
+    try {
+        switch (result) {
+            case 'string':
+            case 'boolean':
+            case 'number':
+                break;
+            case 'object':
+            case 'function':
+                switch (something.constructor)
+                        {
+                    case String:
+                        result = 'String';
+                        break;
+                    case Boolean:
+                        result = 'Boolean';
+                        break;
+                    case Number:
+                        result = 'Number';
+                        break;
+                    case Array:
+                        result = 'Array';
+                        break;
+                    case RegExp:
+                        result = 'RegExp';
+                        break;
+                    case Function:
+                        result = 'Function';
+                        break;
+                    default:
+                        var m = something.constructor.toString().match(/function\s*([^( ]+)\(/);
+                        if (m)
+                            result = m[1];
+                        else
+                            break;
+                }
+                break;
+        }
+    }
+    finally {
+        result = result.substr(0, 1).toUpperCase() + result.substr(1);
+        return result;
+    }
+}
+
 function _displayStringForValue(aVar) {
     var result = '<' + aVar + '>';
     if (!(aVar === null || aVar === top.JSUNIT_UNDEFINED_VALUE)) {
-        result += ' (' + typeof(aVar) + ')';
+        result += ' (' + _trueTypeOf(aVar) + ')';
     }
     return result;
 }
 
 function fail(failureMessage) {
-    throw new JsUnitException(null, failureMessage);
+    throw new JsUnitException("Call to fail()", failureMessage);
 }
 
 function error(errorMessage) {
@@ -150,21 +201,41 @@ function assertNotNaN() {
     _assert(commentArg(1, arguments), !isNaN(aVar), 'Expected not NaN');
 }
 
-function assertArrayEquals() {
+function assertObjectEquals() {
     _validateArguments(2, arguments);
     var var1 = nonCommentArg(1, 2, arguments);
     var var2 = nonCommentArg(2, 2, arguments);
     var i;
-    var isEqual = (var1.length == var2.length);
-    if (isEqual) {
-        for (i = 0; i < var1.length; i++) {
-            isEqual = (var1[i] === var2[i]);
-            if (!isEqual)
+    var type;
+    var msg = commentArg(2, arguments)?commentArg(2, arguments):'';
+    var isSame = (var1 === var2);
+    //shortpath for references to same object
+    var isEqual = ( (type = _trueTypeOf(var1)) == _trueTypeOf(var2) );
+    if (isEqual && !isSame) {
+        switch (type) {
+            case 'String':
+            case 'Number':
+                isEqual = (var1 == var2);
                 break;
+            case 'Boolean':
+            case 'Date':
+                isEqual = (var1 === var2);
+                break;
+            case 'RegExp':
+            case 'Function':
+                isEqual = (var1.toString() === var2.toString());
+                break;
+            default: //Object | Array
+                var i;
+                if (isEqual = (var1.length === var2.length))
+                    for (i in var1)
+                        assertObjectEquals(msg + ' found nested ' + type + '@' + i + '\n', var1[i], var2[i]);
         }
+        _assert(msg, isEqual, 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
     }
-    _assert(commentArg(2, arguments), isEqual, 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
 }
+
+assertArrayEquals = assertObjectEquals;
 
 function assertEvaluatesToTrue() {
     _validateArguments(1, arguments);

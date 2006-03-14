@@ -49,6 +49,45 @@
             pop(anArray);
             assertEquals("Should be 0 elements after trying to pop an array of size 0", 0, anArray.length);
         }
+
+        function FooBarThingy() {
+            this.foo = 'bar';
+        }
+
+        FooBarThingy.prototype.bar = function() {
+            return this.foo;
+        }
+
+        function testTrueTypeOf() {
+            assertEquals('Boolean', _trueTypeOf(true));
+            assertEquals('Using new', 'Boolean', _trueTypeOf(new Boolean('1')));
+
+            assertEquals('Number', _trueTypeOf(1));
+            var GI = new Number(1);
+            assertEquals('Using new', 'Number', _trueTypeOf(GI));
+            assertEquals('Number', _trueTypeOf(1.5));
+
+            assertEquals('String', _trueTypeOf('foo'));
+            assertEquals('Using new', 'String', _trueTypeOf(new String('foo')));
+
+            assertEquals('Using new', 'Function', _trueTypeOf(new Function()));
+            assertEquals('Function', _trueTypeOf(function foo() {
+            }));
+            assertEquals('Function', _trueTypeOf(testTrueTypeOf));
+
+            assertEquals('RegExp', _trueTypeOf(/foo/));
+            assertEquals('Using new', 'RegExp', _trueTypeOf(new RegExp('foo')));
+
+            var o = {foo: 'bar'};
+            assertEquals('Object', _trueTypeOf(o));
+            var o = new FooBarThingy();
+            assertEquals('FooBarThingy', _trueTypeOf(o));
+            assertEquals('String', _trueTypeOf(o.foo));
+            assertEquals('String', _trueTypeOf(o.bar()));
+            assertEquals('Function', _trueTypeOf(o.bar));
+
+            assertEquals('Object without constructor', 'Object', _trueTypeOf(window));
+        }
     </script>
 </head>
 

@@ -66,11 +66,11 @@
         }
 
         function testDisplayStringForNumber() {
-            assertEquals("<3> (number)", _displayStringForValue(3));
+            assertEquals("<3> (Number)", _displayStringForValue(3));
         }
 
         function testDisplayStringForString() {
-            assertEquals("<foo> (string)", _displayStringForValue("foo"));
+            assertEquals("<foo> (String)", _displayStringForValue("foo"));
         }
 
         function testDisplayStringForNull() {
@@ -85,7 +85,7 @@
             var anArray = new Array();
             anArray[0] = "foo";
             anArray[1] = "bar";
-            assertEquals("<foo,bar> (object)", _displayStringForValue(anArray));
+            assertEquals("<foo,bar> (Array)", _displayStringForValue(anArray));
         }
 
     </script>

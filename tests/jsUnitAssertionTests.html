@@ -139,13 +139,167 @@ function testAssertArrayEquals() {
         fail("Should not be equal");
     } catch (e) {
         assertJsUnitException("Should be a JsUnitException", e);
+        if (e.comment == "Call to fail()")
+            fail(e.comment + e.jsUnitMessage); //tried fail is also caught
     }
     try {
         assertArrayEquals(array1, array4);
         fail("Should not be equal");
     } catch (e) {
         assertJsUnitException("Should be a JsUnitException", e);
+        if (e.comment == "Call to fail()")
+            fail(e.comment + e.jsUnitMessage); //tried fail is also caught
     }
+    var array5 = ['foo', 'bar', ['nested', 'bar'], 'foobar'];
+    var array6 = ['foo', 'bar', ['nested', 'bar'], 'foobar'];
+    var array7 = ['foo', 'bar', ['nested', 'foo'], 'foobar'];
+    assertArrayEquals('Equal nested arrays', array5, array6);
+    try
+    {
+        assertArrayEquals(array5, array7);
+        var failure = 'Differing nested arrays found to be equal';
+        fail(failure);
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+}
+
+function testAssertObjectEquals()
+{
+    var failure;
+    var o1 = {foo:'bar'};
+    var o2 = {foo:'bar'};
+    assertObjectEquals('Single object', o1, o1);
+    assertObjectEquals('Same objects', o1, o2);
+    var o3 = {foo:'foo'};
+    var o4 = {foo:'foo',
+        bar: function () {
+            this.foo = 'bar';
+            delete this.bar
+        }};
+    var o5 = {foo:'foo',
+        bar: function () {
+            this.foo = 'foo';
+            delete this.bar
+        }};
+    try
+    {
+        assertObjectEquals(o1, o3);
+        fail(failure = 'Simple differing objects found to be the same');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+    try
+    {
+        assertObjectEquals(o4, o5);
+        fail(failure = 'Objects with different methods found to be the same');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+
+    o4.bar();
+    assertObjectEquals('Different objects, made to be the same', o1, o4);
+    try
+    {
+        assertObjectEquals({ts:new Date()}, {ts:new Date()});
+        fail(failure = 'Objects with different Date attributes found to be the same');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+    try
+    {
+        assertObjectEquals(new Date(), new Date());
+        fail(failure = 'Different Date objects found to be the same');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+    assertObjectEquals(/a/, new RegExp('a'));
+    assertObjectEquals(/a/i, new RegExp('a', 'i'));
+
+    try
+    {
+        assertObjectEquals(/a/i, new RegExp('a', 'g'));
+        fail(failure = 'RegExp with different flags found to be the same');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+    try
+    {
+        assertObjectEquals(/a/, new RegExp('b'));
+        fail(failure = 'RegExp with different patterns found to be the same');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+}
+
+function testAssertObjectEqualsOnStrings() {
+    var s1 = 'string1';
+    var s2 = 'string1';
+    var newS1 = new String('string1');
+    assertObjectEquals('Same Strings', s1, s2);
+    assertObjectEquals('Same Strings 1 with new', s1, newS1);
+}
+
+function testAssertObjectEqualsOnNumbers() {
+    var failure;
+    var n1 = 1;
+    var n2 = 1;
+    var newN1 = new Number(1);
+    assertObjectEquals('Same Numbers', n1, n2);
+    assertObjectEquals('Same Numbers 1 with new', n1, newN1);
+    var n3 = 2;
+    var newN3 = new Number(2);
+    try
+    {
+        assertObjectEquals(n1, n3);
+        fail(failure = 'Different Numbers');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+    try
+    {
+        assertObjectEquals(newN1, newN3);
+        fail(failure = 'Different New Numbers');
+    }
+    catch (e)
+    {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+
 }
 
 function testAssertEvaluatesToTrue() {
