@@ -23,19 +23,6 @@
             searchString = searchString.substring(i + 1);
         }
 
-<<<<<<< .mine
-    var parmList = searchString.split('&');
-    var a;
-    for (i = 0; i < parmList.length; i++) {
-        a = parmList[i].split('=');
-      a[0] = a[0].toLowerCase();
-      if (a.length > 1) {
-          parameterHash[a[0]] =  a[1];
-      }
-      else {
-          parameterHash[a[0]] =  true;
-      }
-=======
         var parmList = searchString.split('&');
         var a;
         for (i = 0; i < parmList.length; i++) {
@@ -49,7 +36,6 @@
             }
         }
         return parameterHash;
->>>>>>> .r568
     }
 
     function jsUnitConstructTestParms() {
