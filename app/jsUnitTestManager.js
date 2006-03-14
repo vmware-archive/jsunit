@@ -343,8 +343,8 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
     try {
         if (this._restoredHTML)
             top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML = this._restoredHTML;
-
-        this.containerTestFrame.setUp();
+        if (this.containerTestFrame.setUp !== JSUNIT_UNDEFINED_VALUE)
+            this.containerTestFrame.setUp();
         this.containerTestFrame[this._testFunctionName]();
     }
     catch (e1) {
@@ -352,7 +352,8 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
     }
     finally {
         try {
-            this.containerTestFrame.tearDown();
+            if (this.containerTestFrame.tearDown !== JSUNIT_UNDEFINED_VALUE)
+                this.containerTestFrame.tearDown();
         }
         catch (e2) {
             excep = e2;
