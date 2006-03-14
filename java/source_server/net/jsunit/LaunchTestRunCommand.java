@@ -42,13 +42,13 @@ public class LaunchTestRunCommand {
     }
 
     private String addSubmitResultsParameterIfNeeded(String urlString) {
-        if (urlString.indexOf("submitResults") == -1)
+        if (urlString.toLowerCase().indexOf("submitresults") == -1)
             urlString = addParameter(urlString, "submitResults=localhost:" + configuration.getPort() + "/jsunit/acceptor");
         return urlString;
     }
 
     private String addAutoRunParameterIfNeeded(String urlString) {
-        if (urlString.indexOf("autoRun") == -1) {
+        if (urlString.toLowerCase().indexOf("autorun") == -1) {
             urlString = addParameter(urlString, "autoRun=true");
         }
         return urlString;

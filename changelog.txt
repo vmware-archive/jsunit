@@ -15,6 +15,7 @@ ASSERTION FUNCTIONS
 - cache-buster for testpage retrieval & results submission
 - jsUnitRestoredHTMLDiv
 - turn off tracing, alerts, confirms when submitting
+- testPage parameter needs to be URL-encoded (only opera cares though)
 
 SERVER
 - Migration of Java code to require Java 5.0

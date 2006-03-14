@@ -14,6 +14,7 @@ Required for next release:
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
     - SourceForge bugs/patches
+    - Mozilla 1.7.12 issues
 
 Backlog:
 
@@ -33,5 +34,5 @@ Backlog:
     - change to use webwork taglib for jsps; remove all java scriptlets
 
   BUGS:
-    - IE7beta issues
+    - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
 
