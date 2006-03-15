@@ -28,6 +28,8 @@
         <td nowrap align="right" valign="middle">
             <a href="http://www.jsunit.net/" target="_blank">JsUnit Home</a><br>
             <a href="mailto:edward@jsunit.net">edward@jsunit.net</a><br>
+            <a href="http://www.pivotalsf.com/" target="top"><img border="0" src="images/powerby-transparent.gif"
+                                                                  alt="Powered By Pivotal"></a>
         </td>
 
     </tr>
