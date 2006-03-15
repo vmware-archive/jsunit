@@ -25,7 +25,7 @@ public class DistributedTest extends TestCase {
     public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
         super(farmSource.remoteMachineURLs());
         ensureTemporaryStandardServerIsCreated(serverSource);
-        manager = new DistributedTestRunManager(temporaryStandardServer.getLogger(), new Configuration(farmSource));
+        manager = new DistributedTestRunManager(new Configuration(farmSource));
     }
 
     private void ensureTemporaryStandardServerIsCreated(ConfigurationSource serverSource) {

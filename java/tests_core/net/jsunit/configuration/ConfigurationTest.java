@@ -119,7 +119,6 @@ public class ConfigurationTest extends TestCase {
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
                 "<description>This is the best server ever</description>" +
                 "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
-                "<logStatus>true</logStatus>" +
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
@@ -144,7 +143,6 @@ public class ConfigurationTest extends TestCase {
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
                 "<description>This is the best server ever</description>" +
                 "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
-                "<logStatus>true</logStatus>" +
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
@@ -166,7 +164,6 @@ public class ConfigurationTest extends TestCase {
                         "<description>This is the best server ever</description>" +
                         "<ignoreUnresponsiveRemoteMachines>true</ignoreUnresponsiveRemoteMachines>" +
                         "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
-                        "<logStatus>true</logStatus>" +
                         "<port>1234</port>" +
                         "<remoteMachineURLs>" +
                         "<remoteMachineURL id=\"0\">http://localhost:8081/jsunit</remoteMachineURL>" +
@@ -201,7 +198,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
 
-        assertEquals(22, arguments.length);
+        assertEquals(20, arguments.length);
         int index = 0;
 
         assertEquals("-browserFileNames", arguments[index++]);
@@ -218,9 +215,6 @@ public class ConfigurationTest extends TestCase {
 
         assertEquals("-logsDirectory", arguments[index++]);
         assertEquals(new File("logs" + File.separator + "directory").getAbsolutePath(), arguments[index++]);
-
-        assertEquals("-logStatus", arguments[index++]);
-        assertEquals("true", arguments[index++]);
 
         assertEquals("-port", arguments[index++]);
         assertEquals("1234", arguments[index++]);
@@ -270,10 +264,6 @@ public class ConfigurationTest extends TestCase {
 
         public String description() {
             return "This is the best server ever";
-        }
-
-        public String logStatus() {
-            return String.valueOf(true);
         }
 
         public String timeoutSeconds() {

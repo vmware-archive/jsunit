@@ -38,10 +38,6 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
         return environmentVariableValue(ConfigurationProperty.DESCRIPTION);
     }
 
-    public String logStatus() {
-        return environmentVariableValue(ConfigurationProperty.LOG_STATUS);
-    }
-
     public String timeoutSeconds() {
         return environmentVariableValue(ConfigurationProperty.TIMEOUT_SECONDS);
     }

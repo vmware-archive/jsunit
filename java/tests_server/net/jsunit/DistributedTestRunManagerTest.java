@@ -2,7 +2,6 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.logging.NullStatusLogger;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.ResultType;
@@ -15,10 +14,17 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
     private Configuration configuration;
+
+    public DistributedTestRunManagerTest() {
+        Logger logger = Logger.getLogger("net.jsunit");
+        logger.setLevel(Level.OFF);
+    }
 
     public void setUp() throws Exception {
         super.setUp();
@@ -30,7 +36,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
         MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NullStatusLogger(), hitter, configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
@@ -45,7 +51,7 @@ public class DistributedTestRunManagerTest extends TestCase {
     }
 
     public void testRemoteURLBlowsUp() {
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NullStatusLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteRunnerHitter(), configuration);
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
@@ -65,7 +71,7 @@ public class DistributedTestRunManagerTest extends TestCase {
             }
         });
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NullStatusLogger(), new BlowingUpRemoteRunnerHitter(), configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteRunnerHitter(), configuration);
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertTrue(result.wasSuccessful());
@@ -78,7 +84,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL;
         MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NullStatusLogger(), hitter, configuration, overrideURL);
+        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
@@ -95,7 +101,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner";
         MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
 
-        DistributedTestRunManager manager = new DistributedTestRunManager(new NullStatusLogger(), hitter, configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));

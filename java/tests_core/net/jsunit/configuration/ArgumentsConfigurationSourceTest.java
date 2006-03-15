@@ -26,7 +26,6 @@ public class ArgumentsConfigurationSourceTest extends TestCase {
         assertEquals("aaa", source.browserFileNames());
         assertEquals("bbb", source.closeBrowsersAfterTestRuns());
         assertEquals("ccc", source.logsDirectory());
-        assertEquals("ddd", source.logStatus());
         assertEquals("eee", source.port());
         assertEquals("fff", source.remoteMachineURLs());
         assertEquals("ggg", source.resourceBase());
@@ -50,7 +49,6 @@ public class ArgumentsConfigurationSourceTest extends TestCase {
         assertEquals("", source.browserFileNames());
         assertEquals("", source.closeBrowsersAfterTestRuns());
         assertEquals("ccc", source.logsDirectory());
-        assertEquals("ddd", source.logStatus());
         assertEquals("eee", source.port());
         assertEquals("", source.remoteMachineURLs());
         assertEquals("ggg", source.resourceBase());

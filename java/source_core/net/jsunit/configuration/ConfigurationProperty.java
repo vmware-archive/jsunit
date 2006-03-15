@@ -94,19 +94,6 @@ public enum ConfigurationProperty {
         }
     },
 
-    LOG_STATUS("logStatus", "Log status?", false, false) {
-        public String getValueString(Configuration configuration) {
-            return String.valueOf(configuration.shouldLogStatus());
-        }
-
-        public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
-            String logStatus = source.logStatus();
-            if (StringUtility.isEmpty(logStatus))
-                logStatus = String.valueOf(true);
-            configuration.setShouldLogStatus(Boolean.valueOf(logStatus));
-        }
-    },
-
     PORT("port", "Port", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.getPort());

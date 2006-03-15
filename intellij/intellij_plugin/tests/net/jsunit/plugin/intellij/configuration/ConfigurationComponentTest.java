@@ -17,7 +17,6 @@ public class ConfigurationComponentTest extends TestCase {
         assertEquals("browser1.exe,browser2.exe", source.browserFileNames());
         assertEquals("true", source.closeBrowsersAfterTestRuns());
         assertEquals("logs directory", source.logsDirectory());
-        assertEquals("true", source.logStatus());
         assertEquals("250", source.timeoutSeconds());
     }
 

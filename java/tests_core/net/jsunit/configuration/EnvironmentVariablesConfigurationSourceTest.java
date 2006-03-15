@@ -13,7 +13,6 @@ public class EnvironmentVariablesConfigurationSourceTest extends TestCase {
     public void testSimple() {
         System.setProperty(ConfigurationProperty.BROWSER_FILE_NAMES.getName(), "aaa");
         System.setProperty(ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName(), "bbb");
-        System.setProperty(ConfigurationProperty.LOG_STATUS.getName(), "ccc");
         System.setProperty(ConfigurationProperty.LOGS_DIRECTORY.getName(), "ddd");
         System.setProperty(ConfigurationProperty.PORT.getName(), "eee");
         System.setProperty(ConfigurationProperty.REMOTE_MACHINE_URLS.getName(), "fff");
@@ -22,7 +21,6 @@ public class EnvironmentVariablesConfigurationSourceTest extends TestCase {
         System.setProperty(ConfigurationProperty.URL.getName(), "iii");
         assertEquals("aaa", source.browserFileNames());
         assertEquals("bbb", source.closeBrowsersAfterTestRuns());
-        assertEquals("ccc", source.logStatus());
         assertEquals("ddd", source.logsDirectory());
         assertEquals("eee", source.port());
         assertEquals("fff", source.remoteMachineURLs());

@@ -10,8 +10,6 @@ public interface ConfigurationSource {
 
     String logsDirectory();
 
-    String logStatus();
-
     String port();
 
     String remoteMachineURLs();

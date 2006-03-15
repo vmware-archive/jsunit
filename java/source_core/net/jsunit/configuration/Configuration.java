@@ -16,7 +16,6 @@ public final class Configuration {
     private String description;
     private boolean ignoreUnresponsiveRemoteMachines;
     private File logsDirectory;
-    private boolean shouldLogStatus;
     private int port;
     private List<URL> remoteMachineURLs;
     private File resourceBase;
@@ -132,14 +131,6 @@ public final class Configuration {
 
     public void setLogsDirectory(File logsDirectory) {
         this.logsDirectory = logsDirectory;
-    }
-
-    public boolean shouldLogStatus() {
-        return shouldLogStatus;
-    }
-
-    public void setShouldLogStatus(boolean shouldLogStatus) {
-        this.shouldLogStatus = shouldLogStatus;
     }
 
     public int getPort() {

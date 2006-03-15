@@ -22,7 +22,6 @@ public class PropertiesConfigurationSourceTest extends TestCase {
         assertEquals("aaa", configuration.browserFileNames());
         assertEquals("bbb", configuration.closeBrowsersAfterTestRuns());
         assertEquals("ccc", configuration.logsDirectory());
-        assertEquals("ddd", configuration.logStatus());
         assertEquals("eee", configuration.port());
         assertEquals("fff", configuration.remoteMachineURLs());
         assertEquals("ggg", configuration.resourceBase());
@@ -40,7 +39,6 @@ public class PropertiesConfigurationSourceTest extends TestCase {
                 ConfigurationProperty.BROWSER_FILE_NAMES.getName() + "=aaa\n" +
                         ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS.getName() + "=bbb\n" +
                         ConfigurationProperty.LOGS_DIRECTORY.getName() + "=ccc\n" +
-                        ConfigurationProperty.LOG_STATUS.getName() + "=ddd\n" +
                         ConfigurationProperty.PORT.getName() + "=eee\n" +
                         ConfigurationProperty.REMOTE_MACHINE_URLS.getName() + "=fff\n" +
                         ConfigurationProperty.RESOURCE_BASE.getName() + "=ggg\n" +

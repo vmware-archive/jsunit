@@ -23,10 +23,6 @@ public class DelegatingConfigurationSource implements ConfigurationSource {
         return source.logsDirectory();
     }
 
-    public String logStatus() {
-        return source.logStatus();
-    }
-
     public String port() {
         return source.port();
     }

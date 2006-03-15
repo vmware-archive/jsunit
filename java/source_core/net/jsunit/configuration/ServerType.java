@@ -15,7 +15,6 @@ public enum ServerType {
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
                     ConfigurationProperty.LOGS_DIRECTORY,
-                    ConfigurationProperty.LOG_STATUS,
                     ConfigurationProperty.PORT,
                     ConfigurationProperty.RESOURCE_BASE,
                     ConfigurationProperty.TIMEOUT_SECONDS,
@@ -39,7 +38,6 @@ public enum ServerType {
             true,
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.LOGS_DIRECTORY,
-                    ConfigurationProperty.LOG_STATUS,
                     ConfigurationProperty.PORT,
                     ConfigurationProperty.REMOTE_MACHINE_URLS,
                     ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES,

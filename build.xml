@@ -48,13 +48,6 @@
     <property name="logsDirectory" value=""/>
 
     <!--
-     logStatus determines whether or not to log server status to standard out.  This is not a mandatory property.  If not
-     specified, true is assumed.
-     For example: <property name="logStatus" value="true"/>
-     -->
-    <property name="logStatus" value=""/>
-
-    <!--
      port is the port on which the JsUnitStandardServer runs.  This is not a mandatory property.  If not specified, 8080 is assumed.
      For example: <property name="port" value="8080"/>
      -->
@@ -194,7 +187,6 @@
             <sysproperty key="resourceBase" value="${resourceBase}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
             <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
-            <sysproperty key="logStatus" value="${logStatus}"/>
             <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
         </java>
     </target>
@@ -205,7 +197,6 @@
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
-            <sysproperty key="logStatus" value="${logStatus}"/>
             <sysproperty key="port" value="${port}"/>
             <sysproperty key="remoteMachineURLs" value="${remoteMachineURLs}"/>
             <sysproperty key="resourceBase" value="${resourceBase}"/>
@@ -230,7 +221,6 @@
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
-            <sysproperty key="logStatus" value="${logStatus}"/>
             <sysproperty key="port" value="${port}"/>
             <sysproperty key="resourceBase" value="${resourceBase}"/>
             <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
@@ -247,7 +237,6 @@
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
-            <sysproperty key="logStatus" value="${logStatus}"/>
             <sysproperty key="port" value="${port}"/>
             <sysproperty key="remoteMachineURLs" value="${remoteMachineURLs}"/>
             <sysproperty key="resourceBase" value="${resourceBase}"/>

@@ -7,9 +7,6 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.logging.NullStatusLogger;
-import net.jsunit.logging.StatusLogger;
-import net.jsunit.logging.SystemOutStatusLogger;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
@@ -26,21 +23,12 @@ import java.util.logging.Logger;
 public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     private HttpServer server;
-    private StatusLogger statusLogger;
+    private Logger logger = Logger.getLogger("net.jsunit");
     protected Configuration configuration;
 
     protected AbstractJsUnitServer(Configuration configuration) {
         this.configuration = configuration;
         ensureConfigurationIsValid();
-        setUpLogger(configuration);
-        setUpThirdPartyLoggers();
-    }
-
-    private void setUpLogger(Configuration configuration) {
-        if (configuration.shouldLogStatus())
-            statusLogger = new SystemOutStatusLogger();
-        else
-            statusLogger = new NullStatusLogger();
     }
 
     protected void ensureConfigurationIsValid() {
@@ -60,13 +48,6 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return configuration;
     }
 
-    protected void setUpThirdPartyLoggers() {
-        CommonLogHandler handler = new CommonLogHandler(statusLogger);
-        handler.addThirdPartyLogger(Logger.getLogger("org.mortbay"));
-        handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.webwork"));
-        handler.addThirdPartyLogger(Logger.getLogger("com.opensymphony.xwork"));
-    }
-
     public void start() throws Exception {
         setUpHttpServer();
         logStatus(startingServerStatusMessage());
@@ -78,7 +59,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     private void performUpToDateCheck() {
         VersionChecker checker = VersionChecker.forDefault();
         if (!checker.isUpToDate())
-            statusLogger.log(checker.outOfDateString(), false);
+            logger.warning(checker.outOfDateString());
     }
 
     private String startingServerStatusMessage() {
@@ -130,7 +111,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     public void logStatus(String message) {
-        statusLogger.log(message, true);
+        logger.info(message);
     }
 
     public Element asXml() {
@@ -156,8 +137,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return server != null && server.isStarted();
     }
 
-    public StatusLogger getLogger() {
-        return statusLogger;
+    public Logger getLogger() {
+        return logger;
     }
 
 }

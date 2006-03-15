@@ -30,10 +30,6 @@ logsDirectory=
 #For example: timeoutSeconds=60
 timeoutSeconds=
 
-#logStatus determines whether or not to log server status to standard out.  This is not a mandatory property.  If not specified, true is assumed.
-#For example: logStatus=true
-logStatus=
-
 #closeBrowsersAfterTestRuns is whether to attempt to close browsers after test runs.  This is not a mandatory property.  The default is true.
 #For example: closeBrowsersAfterTestRuns=false
 closeBrowsersAfterTestRuns=
