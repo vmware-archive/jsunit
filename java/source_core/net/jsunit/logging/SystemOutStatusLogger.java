@@ -11,6 +11,7 @@ public class SystemOutStatusLogger implements StatusLogger {
             buffer.append(": ");
         }
         buffer.append(message);
+
         System.out.println(buffer.toString());
     }
 
