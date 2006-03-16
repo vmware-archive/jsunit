@@ -3,8 +3,8 @@ Required for next release:
   FEATURES:
     - broken functional tests - runnerFT - is it because later tests receive responses from earlier ones?  maybe implement a check for expectedresultid
     - ant run_all_tests broken
-    - opera breaks when testPage parameter given
     - latest mozilla broken
+    - eclipse plugin "logStatus" no longer working
     - how do the logs work with multiple browser runs given an id?
     - Background thread to update latest version; display latest version on index.jsp
     - auto-upgrade check in browser using AJAX
