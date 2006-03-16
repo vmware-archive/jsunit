@@ -14,9 +14,17 @@ public class StringUtility {
     }
 
     public static List<String> listFromCommaDelimitedString(String string) {
+        return listFromDelimitedString(string, ",");
+    }
+
+    public static List<String> listFromSemiColonDelimitedString(String string) {
+        return listFromDelimitedString(string, ";");
+    }
+
+    private static List<String> listFromDelimitedString(String string, String delimiter) {
         if (isEmpty(string))
             return new ArrayList<String>();
-        String[] array = string.split(",");
+        String[] array = string.split(delimiter);
         for (int i = 0; i < array.length; i++)
             array[i] = array[i].trim();
         return Arrays.asList(array);

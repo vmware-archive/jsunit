@@ -10,11 +10,11 @@ import net.jsunit.utility.StringUtility;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.io.IOException;
 
 public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
     private Process browserProcess;
-    private String browserFileName;
     private List<BrowserResult> results = new ArrayList<BrowserResult>();
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
     private long timeLastResultReceived;
@@ -22,6 +22,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private TimeoutChecker timeoutChecker;
     private boolean temporary;
     private BrowserResultRepository browserResultRepository;
+    private LaunchTestRunCommand launchTestRunCommand;
 
     public JsUnitStandardServer(Configuration configuration) {
         this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()));
@@ -59,7 +60,10 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     public void accept(BrowserResult result) {
         long timeReceived = System.currentTimeMillis();
-        String submittingBrowserFileName = browserFileName;
+        String submittingBrowserFileName = null;
+        if (launchTestRunCommand != null) {
+            submittingBrowserFileName = launchTestRunCommand.getBrowserFileName();
+        }
         endBrowser();
 
         result.setBrowserFileName(submittingBrowserFileName);
@@ -137,16 +141,24 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     private void endBrowser() {
         if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns()) {
-            browserProcess.destroy();
-            try {
-                browserProcess.waitFor();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (launchTestRunCommand.getBrowserKillCommand() != null) {
+                try {
+                    processStarter.execute(new String[] {launchTestRunCommand.getBrowserKillCommand()});
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                browserProcess.destroy();
+                try {
+                    browserProcess.waitFor();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                waitUntilProcessHasExitValue(browserProcess);
             }
-            waitUntilProcessHasExitValue(browserProcess);
         }
         browserProcess = null;
-        browserFileName = null;
+        launchTestRunCommand = null;
         killTimeoutChecker();
     }
 
@@ -164,13 +176,13 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         waitUntilLastReceivedTimeHasPassed();
         long launchTime = System.currentTimeMillis();
-        LaunchTestRunCommand command = new LaunchTestRunCommand(launchSpec, configuration);
-        this.browserFileName = command.getBrowserFileName();
+        launchTestRunCommand = new LaunchTestRunCommand(launchSpec, configuration);
+        String browserFileName = launchTestRunCommand.getBrowserFileName();
         try {
-            logStatus("Launching " + command.getBrowserFileName() + " on " + command.getTestURL());
+            logStatus("Launching " + launchTestRunCommand.getBrowserFileName() + " on " + launchTestRunCommand.getTestURL());
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browserFileName);
-            this.browserProcess = processStarter.execute(command.generateArray());
+            this.browserProcess = processStarter.execute(launchTestRunCommand.generateArray());
             startTimeoutChecker(launchTime);
         } catch (Throwable throwable) {
             handleCrashWhileLaunching(throwable);
@@ -179,6 +191,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private void handleCrashWhileLaunching(Throwable throwable) {
+        String browserFileName = launchTestRunCommand.getBrowserFileName();
         logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
         failedToLaunchBrowserResult.setFailedToLaunch();
@@ -196,7 +209,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private void startTimeoutChecker(long launchTime) {
-        timeoutChecker = new TimeoutChecker(browserProcess, browserFileName, launchTime, this);
+        timeoutChecker = new TimeoutChecker(browserProcess, launchTestRunCommand.getBrowserFileName(), launchTime, this);
         timeoutChecker.start();
     }
 

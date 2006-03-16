@@ -16,6 +16,14 @@ public class LaunchTestRunCommand {
         return launchSpec.getBrowserFileName();
     }
 
+    public String getBrowserKillCommand() {
+        String killCommand = launchSpec.getBrowserKillCommand();
+        if (killCommand == null && launchSpec.isForDefaultBrowser()) {
+            killCommand = PlatformType.resolve().getDefaultBrowserKillCommand();
+        }
+        return killCommand;
+    }
+
     public String[] generateArray() throws NoUrlSpecifiedException {
         String[] browserCommandArray = openBrowserCommandArray();
         String[] commandWithUrl = new String[browserCommandArray.length + 1];
