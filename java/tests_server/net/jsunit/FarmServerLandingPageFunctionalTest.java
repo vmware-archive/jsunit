@@ -16,11 +16,11 @@ public class FarmServerLandingPageFunctionalTest extends TestCase {
 
     protected void setUp() throws Exception {
         super.setUp();
-        Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(9090));
+        Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(7000));
         server = new JsUnitFarmServer(configuration);
         server.start();
         webTester = new WebTester();
-        webTester.getTestContext().setBaseUrl("http://localhost:9090/jsunit");
+        webTester.getTestContext().setBaseUrl("http://localhost:7000/jsunit");
     }
 
     protected void tearDown() throws Exception {
