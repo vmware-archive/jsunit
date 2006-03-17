@@ -8,6 +8,7 @@ Required for next release:
     - pull in pivotal's new assertion functions
     - xsl file for generating jsunit.properties.sample from build.xml
     - configurationsourcecomposite
+    - AJAX from the JSPs needs to go to the server, and the server can go to jsunit.net to get version.txt
 
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
