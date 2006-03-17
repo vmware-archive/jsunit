@@ -1,22 +1,29 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
-public class InvalidRemoteMachinesDistributedTestTest extends TestCase {
+public class InvalidRemoteMachinesDistributedTestTest extends EndToEndTestCase {
 
     protected ConfigurationSource invalidRemoteMachinesFarmSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://invalid_machine1:8080, http://invalid_machine2:8080";
             }
+            
+            public String port() {
+            	return String.valueOf(port);
+            }
         };
     }
 
     protected ConfigurationSource serverSource() {
-        return new StubConfigurationSource();
+        return new StubConfigurationSource() {
+        	public String port() {
+        		return String.valueOf(port);
+        	}
+        };
     }
 
     public void testUnresponsive() {

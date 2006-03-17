@@ -25,23 +25,27 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     private HttpServer server;
     private Logger logger = Logger.getLogger("net.jsunit");
     protected Configuration configuration;
+	private final ServerType serverType;
 
-    protected AbstractJsUnitServer(Configuration configuration) {
+    protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
+        this.serverType = type;
         ensureConfigurationIsValid();
     }
 
     protected void ensureConfigurationIsValid() {
-        if (!configuration.isValidFor(serverType())) {
-            ConfigurationProperty property = serverType().getPropertiesInvalidFor(configuration).get(0);
+        if (!configuration.isValidFor(serverType)) {
+            ConfigurationProperty property = serverType.getPropertiesInvalidFor(configuration).get(0);
             throw new ConfigurationException(property, property.getValueString(configuration));
         }
     }
 
-    public abstract ServerType serverType();
-
     public boolean isFarmServer() {
-        return serverType().isFarm();
+        return serverType.isFarm();
+    }
+    
+    public boolean isTemporary() {
+    	return serverType.isTemporary();
     }
 
     public Configuration getConfiguration() {
@@ -52,7 +56,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         setUpHttpServer();
         logStatus(startingServerStatusMessage());
         server.start();
-        if (serverType().shouldPerformUpToDateCheck())
+        if (serverType.shouldPerformUpToDateCheck())
             performUpToDateCheck();
     }
 
@@ -66,11 +70,11 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return "Starting " +
                 serverTypeName() +
                 " Server with configuration:\r\n" +
-                XmlUtility.asPrettyString(configuration.asXml(serverType()));
+                XmlUtility.asPrettyString(configuration.asXml(serverType));
     }
 
     protected String serverTypeName() {
-        return serverType().getDisplayName();
+        return serverType.getDisplayName();
     }
 
     private void setUpHttpServer() throws Exception {
@@ -115,7 +119,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     public Element asXml() {
-        return configuration.asXml(serverType());
+        return configuration.asXml(serverType);
     }
 
     public void finalize() throws Throwable {
@@ -141,4 +145,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         return logger;
     }
 
+    public ServerType serverType() {
+    	return serverType;
+    }
+    
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public class JsUnitFarmServer extends AbstractJsUnitServer {
 
     public JsUnitFarmServer(Configuration configuration) {
-        super(configuration);
+        super(configuration, ServerType.FARM);
         ServerRegistry.registerFarmServer(this);
     }
 

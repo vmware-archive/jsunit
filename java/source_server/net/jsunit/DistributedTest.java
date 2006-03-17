@@ -32,8 +32,7 @@ public class DistributedTest extends TestCase {
         //noinspection SynchronizeOnNonFinalField
         synchronized (blocker) {
             if (temporaryStandardServer == null) {
-                temporaryStandardServer = new JsUnitStandardServer(new Configuration(serverSource));
-                temporaryStandardServer.setTemporary(true);
+                temporaryStandardServer = new JsUnitStandardServer(new Configuration(serverSource), true);
             }
         }
     }
@@ -68,8 +67,10 @@ public class DistributedTest extends TestCase {
     public void tearDown() throws Exception {
         serverCount --;
         if (serverCount == 0) {
-            if (temporaryStandardServer != null && temporaryStandardServer.isAlive())
+            if (temporaryStandardServer != null && temporaryStandardServer.isAlive()) {
                 temporaryStandardServer.dispose();
+                temporaryStandardServer = null;
+            }
         }
         super.tearDown();
     }

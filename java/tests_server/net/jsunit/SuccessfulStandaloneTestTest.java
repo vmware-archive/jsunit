@@ -1,14 +1,9 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 
-public class SuccessfulStandaloneTestTest extends TestCase {
-
-    public SuccessfulStandaloneTestTest(String name) {
-        super(name);
-    }
+public class SuccessfulStandaloneTestTest extends EndToEndTestCase {
 
     protected ConfigurationSource configurationSource() {
         return new StubConfigurationSource() {
@@ -17,10 +12,15 @@ public class SuccessfulStandaloneTestTest extends TestCase {
             }
 
             public String url() {
-                return "http://localhost:8080/jsunit/testRunner.html?" +
-                        "testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html" +
+                return "http://localhost:"+port+"/jsunit/testRunner.html?" +
+                        "testPage=http://localhost:"+port+"/jsunit/tests/jsUnitUtilityTests.html" +
                         "&autoRun=true&submitresults=true&resultId=foobar";
             }
+
+            public String port() {
+            	return String.valueOf(port);
+            }
+
         };
     }
 

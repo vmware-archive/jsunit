@@ -1,15 +1,10 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
-public class TimedOutBrowserStandaloneTestTest extends TestCase {
-
-    public TimedOutBrowserStandaloneTestTest(String name) {
-        super(name);
-    }
+public class TimedOutBrowserStandaloneTestTest extends EndToEndTestCase {
 
     protected ConfigurationSource configurationSource() {
         return new StubConfigurationSource() {
@@ -18,22 +13,27 @@ public class TimedOutBrowserStandaloneTestTest extends TestCase {
             }
 
             public String url() {
-                return "http://localhost:8080/jsunit/testRunner.html?" +
-                        "testPage=http://localhost:8080/jsunit/tests/jsUnitTestSuite.html" +
+                return "http://localhost:"+port+"/jsunit/testRunner.html?" +
+                        "testPage=http://localhost:"+port+"/jsunit/tests/jsUnitTestSuite.html" +
                         "&autoRun=true&submitresults=true&resultId=foobar";
             }
 
             public String timeoutSeconds() {
                 return "0";
             }
+
+            public String port() {
+            	return String.valueOf(port);
+            }
+
         };
     }
 
     public void testBrowserTimesOut() throws Exception {
         StandaloneTest test = new StandaloneTest(configurationSource());
         TestResult result = test.run();
-        assertFalse(result.wasSuccessful());
         assertEquals(ResultType.TIMED_OUT, test.getServer().lastResult().getResultType());
+        assertFalse(result.wasSuccessful());
     }
 
 }

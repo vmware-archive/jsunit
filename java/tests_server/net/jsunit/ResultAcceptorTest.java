@@ -35,7 +35,7 @@ public class ResultAcceptorTest extends TestCase {
 
         });
         mockBrowserResultRepository = new MockBrowserResultRepository();
-        server = new JsUnitStandardServer(configuration, mockBrowserResultRepository);
+        server = new JsUnitStandardServer(configuration, mockBrowserResultRepository, false);
         requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[]{"ID_foo"});
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[]{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});

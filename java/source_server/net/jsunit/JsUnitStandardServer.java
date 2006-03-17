@@ -20,16 +20,15 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private long timeLastResultReceived;
     private ProcessStarter processStarter = new DefaultProcessStarter();
     private TimeoutChecker timeoutChecker;
-    private boolean temporary;
     private BrowserResultRepository browserResultRepository;
     private LaunchTestRunCommand launchTestRunCommand;
 
-    public JsUnitStandardServer(Configuration configuration) {
-        this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()));
+    public JsUnitStandardServer(Configuration configuration, boolean temporary) {
+        this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()), temporary);
     }
 
-    public JsUnitStandardServer(Configuration configuration, BrowserResultRepository browserResultRepository) {
-        super(configuration);
+    public JsUnitStandardServer(Configuration configuration, BrowserResultRepository browserResultRepository, boolean temporary) {
+        super(configuration, temporary ? ServerType.STANDARD_TEMPORARY : ServerType.STANDARD);
         this.browserResultRepository = browserResultRepository;
         addBrowserTestRunListener(new BrowserResultLogWriter(browserResultRepository));
         ServerRegistry.registerServer(this);
@@ -37,15 +36,11 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     public static void main(String args[]) {
         try {
-            JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
+            JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), false);
             server.start();
         } catch (Throwable t) {
             t.printStackTrace();
         }
-    }
-
-    public void setTemporary(boolean temporary) {
-        this.temporary = temporary;
     }
 
     protected List<String> servletNames() {
@@ -250,11 +245,4 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return configuration.getTimeoutSeconds();
     }
 
-    public ServerType serverType() {
-        return isTemporary() ? ServerType.STANDARD_TEMPORARY : ServerType.STANDARD;
-    }
-
-    public boolean isTemporary() {
-        return temporary;
-    }
 }

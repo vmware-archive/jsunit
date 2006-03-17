@@ -11,7 +11,7 @@ public class JsUnitStandardServerTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new JsUnitStandardServer(new Configuration(new DummyConfigurationSource()));
+        server = new JsUnitStandardServer(new Configuration(new DummyConfigurationSource()), false);
     }
 
     public void testStartTestRun() throws Exception {
@@ -127,7 +127,7 @@ public class JsUnitStandardServerTest extends TestCase {
             public String url() {
                 return "";
             }
-        }));
+        }), false);
         MockProcessStarter starter = new MockProcessStarter();
         server.setProcessStarter(starter);
         server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
@@ -137,7 +137,7 @@ public class JsUnitStandardServerTest extends TestCase {
 
     public void testInvalidConfiguration() {
         try {
-            server = new JsUnitStandardServer(new Configuration(new InvalidConfigurationSource()));
+            server = new JsUnitStandardServer(new Configuration(new InvalidConfigurationSource()), false);
             fail();
         } catch (ConfigurationException e) {
 

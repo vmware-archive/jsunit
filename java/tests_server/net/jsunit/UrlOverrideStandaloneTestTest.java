@@ -1,14 +1,9 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 
-public class UrlOverrideStandaloneTestTest extends TestCase {
-
-    public UrlOverrideStandaloneTestTest(String name) {
-        super(name);
-    }
+public class UrlOverrideStandaloneTestTest extends EndToEndTestCase {
 
     protected ConfigurationSource configurationSource() {
         return new StubConfigurationSource() {
@@ -19,6 +14,10 @@ public class UrlOverrideStandaloneTestTest extends TestCase {
             public String url() {
                 return "http://www.example.com";
             }
+            
+            public String port() {
+            	return String.valueOf(port);
+            }
 
         };
     }
@@ -26,7 +25,7 @@ public class UrlOverrideStandaloneTestTest extends TestCase {
     public void testOverridenURL() throws Exception {
         StandaloneTest test = new StandaloneTest(configurationSource());
         test.setOverrideURL(
-                "http://localhost:8080/jsunit/testRunner.html?testPage=http://localhost:8080/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
+                "http://localhost:"+port+"/jsunit/testRunner.html?testPage=http://localhost:"+port+"/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
         TestResult testResult = test.run();
         assertTrue(testResult.wasSuccessful());
         assertTrue(test.getServer().lastResult().wasSuccessful());

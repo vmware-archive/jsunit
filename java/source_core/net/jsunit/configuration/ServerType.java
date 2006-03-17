@@ -12,6 +12,7 @@ public enum ServerType {
             "Standard",
             false,
             true,
+            false,
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
                     ConfigurationProperty.LOGS_DIRECTORY,
@@ -29,6 +30,7 @@ public enum ServerType {
             "Standard Temporary",
             STANDARD.isFarm(),
             false,
+            true,
             STANDARD.getRequiredConfigurationProperties(),
             STANDARD.getOptionalConfigurationProperties()
     ),
@@ -36,6 +38,7 @@ public enum ServerType {
             "Farm",
             true,
             true,
+            false,
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.LOGS_DIRECTORY,
                     ConfigurationProperty.PORT,
@@ -54,16 +57,19 @@ public enum ServerType {
     private String displayName;
     private boolean isFarm;
     private boolean performUpToDateCheck;
+	private boolean isTemporary;
 
     private ServerType(
             String displayName,
             boolean isFarm,
             boolean performVersionUpToDateCheck,
+            boolean isTemporary,
             List<ConfigurationProperty> required,
             List<ConfigurationProperty> optional) {
         this.performUpToDateCheck = performVersionUpToDateCheck;
         this.displayName = displayName;
         this.isFarm = isFarm;
+        this.isTemporary = isTemporary;
         this.requiredProperties = required;
         this.optionalProperties = optional;
     }
@@ -116,4 +122,8 @@ public enum ServerType {
     public boolean shouldPerformUpToDateCheck() {
         return performUpToDateCheck;
     }
+
+	public boolean isTemporary() {
+		return isTemporary;
+	}
 }

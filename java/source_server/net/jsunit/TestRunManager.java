@@ -10,8 +10,7 @@ public class TestRunManager {
     private final String overrideUrl;
 
     public static void main(String[] args) throws Exception {
-        JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args));
-        server.setTemporary(true);
+        JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), true);
         int port = Integer.parseInt(args[args.length - 1]);
         server.addBrowserTestRunListener(new TestRunNotifierServer(server, port));
         server.start();
