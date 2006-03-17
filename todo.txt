@@ -7,6 +7,7 @@ Required for next release:
     - how do the logs work with multiple browser runs given an id?
     - pull in pivotal's new assertion functions
     - xsl file for generating jsunit.properties.sample from build.xml
+    - configurationsourcecomposite
 
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
