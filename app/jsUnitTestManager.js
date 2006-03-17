@@ -1,5 +1,4 @@
-function jsUnitTestManager()
-{
+function jsUnitTestManager() {
     this._windowForAllProblemMessages = null;
 
     this.container = top.frames.testContainer

@@ -1,12 +1,10 @@
 Required for next release:
 
   FEATURES:
-    - broken functional tests - runnerFT - is it because later tests receive responses from earlier ones?  maybe implement a check for expectedresultid
+    - broken functional tests - URLOverrideFT - is it because later tests receive responses from earlier ones?  maybe implement a check for expectedresultid
     - ant run_all_tests broken
     - latest mozilla broken
     - how do the logs work with multiple browser runs given an id?
-    - Background thread to update latest version; display latest version on index.jsp
-    - auto-upgrade check in browser using AJAX
     - pull in pivotal's new assertion functions
     - xsl file for generating jsunit.properties.sample from build.xml
 
@@ -26,6 +24,8 @@ Backlog:
     - admin.jsp console to change and save configuration (password protected?)
     - browser ids - ability to pass a browser id to the runner servlet
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
+    - auto-upgrade check in browser using AJAX - issue with browser permissions
+    - Background thread to update latest version; display latest version on index.jsp
 
   REFACTORINGS:
     - ashcroft compliance
