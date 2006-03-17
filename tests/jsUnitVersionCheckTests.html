@@ -9,8 +9,9 @@
     <script language="JavaScript" type="text/javascript" src="../app/jsUnitVersionCheck.js"></script>
     <script language="JavaScript" type="text/javascript">
 
-        var showOutOfDateMessageCalled;
-        var showOutOfDateMessageLatestVersion;
+        var versionLatestCalled;
+        var versionNotLatestCalled;
+        var latestVersion;
 
         MockXmlHttpRequest = function() {
         }
@@ -30,17 +31,22 @@
 
         function setUp() {
             versionRequest = new MockXmlHttpRequest();
-            showOutOfDateMessageCalled = false;
-            showOutOfDateMessageLatestVersion = null;
+            versionLatestCalled = false;
+            versionNotLatestCalled = false;
+            latestVersion = null;
         }
 
         function createXmlHttpRequest() {
             return versionRequest;
         }
 
-        function showOutOfDateMessage(latestVersion) {
-            showOutOfDateMessageCalled = true;
-            showOutOfDateMessageLatestVersion = latestVersion;
+        function versionNotLatest(aVersion) {
+            versionNotLatestCalled = true;
+            latestVersion = aVersion;
+        }
+
+        function versionLatest() {
+            versionLatestCalled = true;
         }
 
         function testIsOutOfDate() {
@@ -67,16 +73,19 @@
             versionRequest.readyState = 999;
             versionRequest.status = 404;
             requestStateChanged();
-            assertFalse("both bad", showOutOfDateMessageCalled);
+            assertFalse("both bad", versionNotLatestCalled);
+            assertFalse("both bad", versionLatestCalled);
 
             versionRequest.status = 200;
             requestStateChanged();
-            assertFalse("readyState bad", showOutOfDateMessageCalled);
+            assertFalse("readyState bad", versionNotLatestCalled);
+            assertFalse("readyState bad", versionLatestCalled);
 
             versionRequest.readyState = 4;
             versionRequest.status = 404;
             requestStateChanged();
-            assertFalse("status bad", showOutOfDateMessageCalled);
+            assertFalse("status bad", versionNotLatestCalled);
+            assertFalse("status bad", versionLatestCalled);
         }
 
         function testReceiveNewerLatestVersion() {
@@ -84,16 +93,18 @@
             versionRequest.status = 200;
             versionRequest.responseText = "" + (JSUNIT_VERSION + 1);
             requestStateChanged();
-            assertTrue(showOutOfDateMessageCalled);
-            assertEquals("" + (JSUNIT_VERSION + 1), showOutOfDateMessageLatestVersion);
+            assertTrue(versionNotLatestCalled);
+            assertFalse(versionLatestCalled);
+            assertEquals("" + (JSUNIT_VERSION + 1), latestVersion);
         }
 
-        function testReceiveOlderLatestVersion() {
+        function testReceiveSameLatestVersion() {
             versionRequest.readyState = 4;
             versionRequest.status = 200;
-            versionRequest.responseText = "" + (JSUNIT_VERSION - 1);
+            versionRequest.responseText = "" + JSUNIT_VERSION;
             requestStateChanged();
-            assertFalse(showOutOfDateMessageCalled);
+            assertFalse(versionNotLatestCalled);
+            assertTrue(versionLatestCalled);
         }
 
     </script>

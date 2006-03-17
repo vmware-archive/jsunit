@@ -11,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit <%if (server.isFarmServer()) {%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
+    <script language="JavaScript" type="text/javascript" src="app/jsUnitVersionCheck.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
@@ -26,10 +27,11 @@
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%><br/>
         </th>
         <td nowrap align="right" valign="middle">
-            <a href="http://www.jsunit.net/" target="_blank">JsUnit Home</a><br>
-            <a href="mailto:edward@jsunit.net">edward@jsunit.net</a><br>
-            <a href="http://www.pivotalsf.com/" target="top"><img border="0" src="images/powerby-transparent.gif"
-                                                                  alt="Powered By Pivotal"></a>
+            <font size="-2">
+                <a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a><br>
+                <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion()">Check for newer version</a></div>
+            </font>
+            <a href="http://www.pivotalsf.com/" target="top"><img border="0" src="images/powerby-transparent.gif" alt="Powered By Pivotal"></a>
         </td>
 
     </tr>
