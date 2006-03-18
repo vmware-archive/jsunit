@@ -97,6 +97,7 @@
     <property name="lib" location="java/lib"/>
     <property name="testlib" location="java/testlib"/>
     <property name="config" location="java/config"/>
+    <property name="loggingPropertiesFile" location="logging.properties"/>
 
     <path id="classpath">
         <fileset dir="${lib}">
@@ -186,6 +187,7 @@
     <target name="start_server" description="Starts a JsUnit Server">
         <java fork="true" classname="net.jsunit.JsUnitStandardServer">
             <classpath refid="classpath"/>
+            <sysproperty key="java.util.logging.config.file" value="${loggingPropertiesFile}"/>
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="url" value="${url}"/>
@@ -200,6 +202,7 @@
     <target name="start_farm_server" description="Starts a JsUnit Farm Server">
         <java fork="true" classname="net.jsunit.JsUnitFarmServer">
             <classpath refid="classpath"/>
+            <sysproperty key="java.util.logging.config.file" value="${loggingPropertiesFile}"/>
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
             <sysproperty key="logsDirectory" value="${logsDirectory}"/>
