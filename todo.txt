@@ -19,8 +19,6 @@ Backlog:
     - admin.jsp console to change and save configuration (password protected?)
     - browser ids - ability to pass a browser id to the runner servlet
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
-    - auto-upgrade check in browser using AJAX - issue with browser permissions
-    - Background thread to update latest version; display latest version on index.jsp
 
   REFACTORINGS:
     - configurationsourcecomposite
