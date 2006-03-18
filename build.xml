@@ -148,7 +148,12 @@
         <delete dir="${bin}/net"/>
     </target>
 
-    <target name="run_unit_tests" depends="_compile_tests" description="Runs the JsUnit Java unit tests">
+    <target name="_generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
+        <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
+              style="xsl/buildXmlToBuildProperties.xsl"></xslt>
+    </target>
+
+    <target name="_run_unit_tests" depends="_compile_tests" description="Runs the JsUnit Java unit tests">
         <junit showoutput="yes" printsummary="withOutAndErr">
             <formatter type="plain" usefile="false"/>
             <classpath refid="self_tests_classpath"/>
@@ -157,7 +162,7 @@
         </junit>
     </target>
 
-    <target name="run_all_tests" depends="_create_jar,_compile_tests"
+    <target name="_run_all_tests" depends="_create_jar,_compile_tests"
             description="Runs all the JsUnit Java tests.  Used in the continuous build">
         <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
                failureproperty="junit_test_failed">
@@ -176,6 +181,9 @@
         </junit>
         <fail if="junit_test_failed"/>
     </target>
+
+    <target name="create_distribution" depends="_create_jar,_run_unit_tests"
+            description="Creates and tests the JsUnit distribution"/>
 
     <target name="start_server" description="Starts a JsUnit Server">
         <java fork="true" classname="net.jsunit.JsUnitStandardServer">
@@ -212,9 +220,6 @@
         </java>
     </target>
 
-    <target name="create_distribution" depends="_create_jar,run_unit_tests"
-            description="Creates and tests the JsUnit distribution"/>
-
     <target name="standalone_test" description="Runs tests on the local machine">
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
@@ -245,11 +250,6 @@
             <sysproperty key="url" value="${url}"/>
             <test name="net.jsunit.DistributedTest"/>
         </junit>
-    </target>
-
-    <target name="generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
-        <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
-              style="xsl/buildXmlToBuildProperties.xsl"></xslt>
     </target>
 
 </project>
