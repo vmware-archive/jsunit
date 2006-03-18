@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - how do the logs work with multiple browser runs given an id?
     - pull in pivotal's new assertion functions
 
   BUGS:

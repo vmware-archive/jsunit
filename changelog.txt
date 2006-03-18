@@ -25,6 +25,7 @@ SERVER
 - DistribuedTest has a suite() method that makes the test run have multiple JUnit tests, one per remote machine URL
 - Change to XML output format of test runs to include more information and be more hierarchical (machine->browser->test page->test case)
 - Logs are now prefixed with "JSTEST-" in order to match JUnit's "TEST-"
+- Logs now contain the browser ID (e.g. JSTEST-12345.5.xml means browser with ID 5); displayer servlet now takes an id and a browserId parameter
 - added support for launching the default system browser on Windows and UNIX (see the constant on net.jsunit.StandaloneTest)
 - StandaloneTest now runs tests in all specified browsers, even after an earlier browser failed
 - New "config" servlet that shows the configuration as XML of the server
