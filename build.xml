@@ -1,88 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+
 <project name="JsUnit" default="create_distribution" basedir=".">
 
     <!--
-     The following are the properties used to configure the JsUnit server.  You need to provide values for the mandatory
-     properties.
-     Please see the documentation at http://www.jsunit.net for more information.
+     The following are the properties used to configure the JsUnit server.  You need to provide values for the mandatory properties.
+     See the documentation at http://www.jsunit.net for more information.
      -->
 
-    <!--
-     browserFileNames is the list of browsers in which to run tests when StandaloneTest is invoked on this machine.  For
-     a JsUnit Server, this is a mandatory property.
-     For example:
-     <property
-        name="browserFileNames"
-        value="browserFileNames=c:\program files\internet explorer\iexplore.exe,c:\program files\netscape\netscape7.1\netscp.exe"/>
-     -->
-    <property name="browserFileNames" value=""/>
+    <property
+            name="browserFileNames"
+            value=""
+            description="browserFileNames is the list of browsers in which to run tests when StandaloneTest is invoked on this machine. For a JsUnit Server, this is a mandatory property. For example: c:\program files\internet explorer\iexplore.exe,c:\program files\netscape\netscape7.1\netscp.exe"
+            />
 
-    <!--
-     closeBrowsersAfterTestRuns determines whether to attempt to close browsers after test runs.  This is not a mandatory
-     property.  The default is true.
-     For example: <property name="closeBrowsersAfterTestRuns" value="true"/>
-     -->
-    <property name="closeBrowsersAfterTestRuns" value=""/>
+    <property
+            id="closeBrowsersAfterTestRuns"
+            name="closeBrowsersAfterTestRuns"
+            value=""
+            description="closeBrowsersAfterTestRuns determines whether to attempt to close browsers after test runs. This is not a mandatory property. The default is true. For example: true"
+            />
 
-    <!--
-     description is a human-readable description of a standard or farm server.  This is not a mandatory
-     property.  The default is blank.
-     For example: <property name="description" value="This is our Mac - it's only running Safari right now"/>
-     -->
-    <property name="description" value=""/>
+    <property
+            id="description"
+            name="description"
+            value=""
+            description="description is a human-readable description of a standard or farm server. This is not a mandatory property. The default is blank. For example: This is our Mac - it's only running Safari right now"
+            />
 
-    <!--
-    ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target.
-    Its value is whether to ignore a remove machine that does not respond.  If true, test runs will be green even if one
-    or more remove machines fail to respond; if false, an unresponsive remove machine results in a failure.  This is not
-    a mandatory property.  Its default is false.
-    For example: <property name="ignoreUnresponsiveRemoteMachines" value="true"/>
-    -->
-    <property name="ignoreUnresponsiveRemoteMachines" value=""/>
+    <property
+            id="ignoreUnresponsiveRemoteMachines"
+            name="ignoreUnresponsiveRemoteMachines"
+            value=""
+            description="ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is whether to ignore a remove machine that does not respond.  If true, test runs will be green even if one or more remove machines fail to respond; if false, an unresponsive remove machine results in a failure.  This is not a mandatory property.  Its default is false. For example: true"
+            />
 
-    <!--
-     logsDirectory is the directory in which the JsUnitStandardServer stores the XML logs produced from tests run.  It can be
-     specified relative to the working directory.  This is not a mandatory property.  If not specified, the directory
-     called "logs" inside resourceBase is assumed.
-     For example: <property name="logsDirectory" value="c:\\jsunit\\java\logs"/>
-     -->
-    <property name="logsDirectory" value=""/>
+    <property
+            id="logsDirectory"
+            name="logsDirectory"
+            value=""
+            description="logsDirectory is the directory in which the JsUnitStandardServer stores the XML logs produced from tests run. It can be specified relative to the working directory. This is not a mandatory property. If not specified, the directory called 'logs' inside resourceBase is assumed. For example: c:\jsunit\java\logs"
+            />
 
-    <!--
-     port is the port on which the JsUnitStandardServer runs.  This is not a mandatory property.  If not specified, 8080 is assumed.
-     For example: <property name="port" value="8080"/>
-     -->
-    <property name="port" value=""/>
+    <property
+            id="port"
+            name="port"
+            value=""
+            description="port is the port on which the JsUnitStandardServer runs. This is not a mandatory property. If not specified, 8080 is assumed. For exapmle: 8080"
+            />
 
-    <!--
-     remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target.  Its value is
-     the list of URLs of remove machines to which a request to run tests will be sent.
-     For example: <property name="remoteMachineURLs" value="http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090"/>
-     -->
-    <property name="remoteMachineURLs" value=""/>
+    <property
+            id="remoteMachineURLs"
+            name="remoteMachineURLs"
+            value=""
+            description="remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is the list of URLs of remove machines to which a request to run tests will be sent. For example: http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090"
+            />
 
-    <!--
-     resourceBase is the directory that the JsUnitStandardServer considers to be its document root.  It can be specified relative
-     to the working directory.  This is not a mandatory property.  If not specified, the working directory is assumed.
-     For example: <property name="resourceBase" value="c:\\jsunit"/>
-     -->
-    <property name="resourceBase" value=""/>
+    <property
+            id="resourceBase"
+            name="resourceBase"
+            value=""
+            description="resourceBase is the directory that the JsUnitStandardServer considers to be its document root. It can be specified relative to the working directory. This is not a mandatory property. If not specified, the working directory is assumed. For example: c:\jsunit"
+            />
 
-    <!--
-     timeoutSeconds is the number of seconds to wait before "timing out" a browser during a test run.
-     This is not a mandatory property.  If not specified, 60 is assumed.
-     For example: <property name="timeoutSeconds" value="60"/>
-     -->
-    <property name="timeoutSeconds" value=""/>
+    <property
+            id="timeoutSeconds"
+            name="timeoutSeconds"
+            value=""
+            description="timeoutSeconds is the number of seconds to wait before timing out a browser during a test run. This is not a mandatory property. If not specified, 60 is assumed. For example: 60"
+            />
 
-    <!--
-     url is the URL (HTTP or file protocol) to open in the browser.  For a JsUnit Server, this is a mandatory property
-     for a test run if the server is not passed the "url" parameter.
-     For example:
-     <property
-        name="url"
-        value="file:///c:/jsunit/testRunner.html?testPage=c:/jsunit/tests/jsUnitTestSuite.html"/>
-     -->
-    <property name="url" value=""/>
+    <property
+            id="url"
+            name="url"
+            value=""
+            description="url is the URL (HTTP or file protocol) to open in the browser. For a JsUnit Server, this is a mandatory property for a test run if the server is not passed the 'url' parameter. For example: file:///c:/jsunit/testRunner.html?testPage=c:/jsunit/tests/jsUnitTestSuite.html"
+            />
 
     <!--
      The remainder of this build file is not intended to be modified by the end user.
@@ -165,7 +157,8 @@
         </junit>
     </target>
 
-    <target name="run_all_tests" depends="_create_jar,_compile_tests" description="Runs all the JsUnit Java tests">
+    <target name="run_all_tests" depends="_create_jar,_compile_tests"
+            description="Runs all the JsUnit Java tests.  Used in the continuous build">
         <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
                failureproperty="junit_test_failed">
             <formatter type="xml"/>
@@ -254,5 +247,9 @@
         </junit>
     </target>
 
-</project>
+    <target name="generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
+        <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
+              style="xsl/buildXmlToBuildProperties.xsl"></xslt>
+    </target>
 
+</project>
