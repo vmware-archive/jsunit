@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - configurationsourcecomposite
     - how do the logs work with multiple browser runs given an id?
     - pull in pivotal's new assertion functions
 
@@ -25,6 +24,7 @@ Backlog:
     - Background thread to update latest version; display latest version on index.jsp
 
   REFACTORINGS:
+    - configurationsourcecomposite
     - ashcroft compliance
     - make all Result implementers implement XmlRenderable
     - change to use webwork taglib for jsps; remove all java scriptlets
