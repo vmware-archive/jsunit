@@ -1,17 +1,14 @@
 package net.jsunit.version;
 
-import java.io.BufferedInputStream;
+import net.jsunit.utility.StreamUtility;
+
 import java.net.URL;
 
 public class JsUnitWebsiteVersionGrabber implements VersionGrabber {
+
     public double grabVersion() throws Exception {
         URL url = new URL("http://www.jsunit.net/version.txt");
-        BufferedInputStream stream = new BufferedInputStream(url.openStream());
-        int length = stream.available();
-        byte[] array = new byte[length];
-        stream.read(array);
-        String string = new String(array);
-
+        String string = StreamUtility.readAllFromStream(url.openStream());
         return Double.parseDouble(string);
     }
 }
