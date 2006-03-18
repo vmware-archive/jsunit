@@ -1,5 +1,5 @@
 package net.jsunit.version;
 
 public interface VersionGrabber {
-    double grabVersion();
+    double grabVersion() throws Exception;
 }

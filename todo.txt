@@ -1,14 +1,12 @@
 Required for next release:
 
   FEATURES:
-    - broken functional tests - URLOverrideFT - is it because later tests receive responses from earlier ones?  maybe implement a check for expectedresultid
-    - ant run_all_tests broken
+    - reading the stream in jsunitwebsiteversiongrabber - unify with the other streamreading method
+    - configurationsourcecomposite
     - latest mozilla broken
     - how do the logs work with multiple browser runs given an id?
     - pull in pivotal's new assertion functions
     - xsl file for generating jsunit.properties.sample from build.xml
-    - configurationsourcecomposite
-    - AJAX from the JSPs needs to go to the server, and the server can go to jsunit.net to get version.txt
 
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do

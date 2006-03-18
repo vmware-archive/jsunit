@@ -31,6 +31,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(DistributedTestRunnerActionTest.class);
         result.addTestSuite(JsUnitFarmServerTest.class);
         result.addTestSuite(JsUnitStandardServerTest.class);
+        result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(PropertiesConfigurationSourceTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(RemoteMachineRunnerHitterTest.class);
@@ -49,6 +50,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(TestRunnerActionTest.class);
         result.addTestSuite(TimeoutCheckerTest.class);
         result.addTestSuite(TimedOutBrowerResultTest.class);
+        result.addTestSuite(VersionGrabberInterceptorTest.class);
         return result;
     }
 

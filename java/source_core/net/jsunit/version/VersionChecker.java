@@ -5,7 +5,7 @@ import net.jsunit.utility.SystemUtility;
 public class VersionChecker {
 
     private double installedVersion;
-    private static Double latestVersion;
+    private Double latestVersion;
     private VersionGrabber grabber;
 
     public static VersionChecker forDefault() {
@@ -22,8 +22,13 @@ public class VersionChecker {
     }
 
     public double getLatestVersion() {
-        if (latestVersion == null)
-            latestVersion = grabber.grabVersion();
+        if (latestVersion == null) {
+            try {
+                latestVersion = grabber.grabVersion();
+            } catch (Exception e) {
+                latestVersion = 0d;
+            }
+        }
         return latestVersion;
     }
 

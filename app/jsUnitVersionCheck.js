@@ -4,16 +4,20 @@ function isOutOfDate(newVersionNumber) {
     return JSUNIT_VERSION < newVersionNumber;
 }
 
-function sendRequestForLatestVersion() {
+function sendRequestForLatestVersion(url) {
     versionRequest = createXmlHttpRequest();
     if (versionRequest) {
         versionRequest.onreadystatechange = requestStateChanged;
-        try {
-            netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-        } catch (e) {
-        }
-        versionRequest.open("GET", "http://www.jsunit.net/version.txt", true);
+        enablePrivileges();
+        versionRequest.open("GET", url, true);
         versionRequest.send(null);
+    }
+}
+
+function enablePrivileges() {
+    try {
+        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    } catch (e) {
     }
 }
 
@@ -25,19 +29,22 @@ function createXmlHttpRequest() {
 }
 
 function requestStateChanged() {
-    if (versionRequest && versionRequest.readyState == 4 && versionRequest.status == 200) {
-        var latestVersion = versionRequest.responseText;
-        if (isOutOfDate(latestVersion))
-            versionNotLatest(latestVersion);
-        else
-            versionLatest();
+    if (versionRequest && versionRequest.readyState == 4) {
+        if (versionRequest.status == 200) {
+            var latestVersion = versionRequest.responseText;
+            if (isOutOfDate(latestVersion))
+                versionNotLatest(latestVersion);
+            else
+                versionLatest();
+        } else
+            versionCheckError();
     }
 }
 
-function checkForLatestVersion() {
+function checkForLatestVersion(url) {
     setLatestVersionDivHTML("Checking for newer version...");
     try {
-        sendRequestForLatestVersion();
+        sendRequestForLatestVersion(url);
     } catch (e) {
         setLatestVersionDivHTML("An error occurred while checking for a newer version: " + e.message);
     }
@@ -53,4 +60,8 @@ function versionLatest() {
 
 function setLatestVersionDivHTML(string) {
     document.getElementById("versionCheckDiv").innerHTML = string;
+}
+
+function versionCheckError() {
+    setLatestVersionDivHTML("An error occurred while checking for a newer version.");
 }

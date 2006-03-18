@@ -17,6 +17,7 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
         return Arrays.asList(new String[]{
                 "index",
                 "config",
+                "latestversion",
                 "runner"
         });
     }

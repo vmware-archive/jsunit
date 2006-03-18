@@ -8,12 +8,14 @@
 
         <result-types>
             <result-type name="jsUnitXml" class="net.jsunit.action.XmlResult"/>
+            <result-type name="jsUnitLatestVersion" class="net.jsunit.action.LatestVersionResult"/>
         </result-types>
 
         <interceptors>
             <interceptor name="browserTestRunner" class="net.jsunit.interceptor.BrowserTestRunnerInterceptor"/>
             <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
             <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
+            <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
 
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
@@ -43,6 +45,14 @@
 
         <action name="config" class="net.jsunit.action.BrowserTestRunnerConfigurationAction">
             <result name="success" type="jsUnitXml"/>
+        </action>
+
+        <action name="latestversion" class="net.jsunit.action.LatestVersionAction">
+            <result name="success" type="jsUnitLatestVersion"/>
+            <result name="error" type="httpheader">
+                <param name="status">500</param>
+            </result>
+            <interceptor-ref name="versionGrabber"/>
         </action>
 
     </package>

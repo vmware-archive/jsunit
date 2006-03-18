@@ -4,21 +4,19 @@ import junit.framework.TestCase;
 
 public class VersionCheckerTest extends TestCase {
 
-    public void testGrabVersion() throws Exception {
-        MockVersionGrabber mock = new MockVersionGrabber();
-        VersionChecker checker = new VersionChecker(1.1, mock);
-        mock.version = 1.2;
+    public void testOutOfDate() throws Exception {
+        VersionChecker checker = new VersionChecker(1.1, new MockVersionGrabber(1.2));
         assertFalse(checker.isUpToDate());
-        mock.version = 1.1;
+    }
+
+    public void testUpToDate() throws Exception {
+        VersionChecker checker = new VersionChecker(1.1, new MockVersionGrabber(1.1));
         assertTrue(checker.isUpToDate());
     }
 
-    static class MockVersionGrabber implements VersionGrabber {
-        public double version;
-
-        public double grabVersion() {
-            return version;
-        }
+    public void testBlowsUp() throws Exception {
+        VersionChecker checker = new VersionChecker(1.1, new BlowingUpVersionGrabber());
+        assertTrue(checker.isUpToDate());
     }
 
 }

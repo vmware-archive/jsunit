@@ -49,6 +49,10 @@
             versionLatestCalled = true;
         }
 
+        function versionCheckError() {
+            versionCheckErrorCalled = true;
+        }
+
         function testIsOutOfDate() {
             assertTrue(isOutOfDate("" + (JSUNIT_VERSION + 1)));
             assertFalse(isOutOfDate("" + JSUNIT_VERSION));
@@ -56,9 +60,9 @@
         }
 
         function testSendRequestForLatestVersion() {
-            sendRequestForLatestVersion();
+            sendRequestForLatestVersion("http://www.example.com/foo/bar/version.txt");
             assertEquals("GET", versionRequest.method);
-            assertEquals("http://www.jsunit.net/version.txt", versionRequest.url);
+            assertEquals("http://www.example.com/foo/bar/version.txt", versionRequest.url);
             assertTrue(versionRequest.isAsync);
             assertUndefined(versionRequest.userName);
             assertUndefined(versionRequest.password);
@@ -75,6 +79,7 @@
             requestStateChanged();
             assertFalse("both bad", versionNotLatestCalled);
             assertFalse("both bad", versionLatestCalled);
+            assertTrue(versionCheckErrorCalled);
 
             versionRequest.status = 200;
             requestStateChanged();
@@ -105,6 +110,9 @@
             requestStateChanged();
             assertFalse(versionNotLatestCalled);
             assertTrue(versionLatestCalled);
+        }
+
+        function enablePrivileges() {
         }
 
     </script>
