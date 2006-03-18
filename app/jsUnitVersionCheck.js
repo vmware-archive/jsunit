@@ -8,16 +8,8 @@ function sendRequestForLatestVersion(url) {
     versionRequest = createXmlHttpRequest();
     if (versionRequest) {
         versionRequest.onreadystatechange = requestStateChanged;
-        enablePrivileges();
         versionRequest.open("GET", url, true);
         versionRequest.send(null);
-    }
-}
-
-function enablePrivileges() {
-    try {
-        netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
-    } catch (e) {
     }
 }
 
