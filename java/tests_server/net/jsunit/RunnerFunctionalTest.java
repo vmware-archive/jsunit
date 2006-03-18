@@ -30,6 +30,10 @@ public class RunnerFunctionalTest extends FunctionalTestCase {
         );
     }
 
+    protected boolean shouldMockOutProcessStarter() {
+        return false;
+    }
+
     private void assertResult(Document result, ResultType expectedResultType, String expectedUrl) {
         Element root = result.getRootElement();
         assertEquals("testRunResult", root.getName());

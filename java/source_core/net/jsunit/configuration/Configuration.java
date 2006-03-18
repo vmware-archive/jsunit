@@ -180,4 +180,8 @@ public final class Configuration {
     public URL getRemoteMachineURLById(int id) {
         return getRemoteMachineURLs().get(id);
     }
+
+    public int getBrowserId(String browserFileName) {
+        return getBrowserFileNames().indexOf(browserFileName);
+    }
 }

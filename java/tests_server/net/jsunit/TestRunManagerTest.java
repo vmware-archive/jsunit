@@ -80,7 +80,7 @@ public class TestRunManagerTest extends TestCase {
         public void dispose() {
         }
 
-        public BrowserResult findResultWithId(String id) {
+        public BrowserResult findResultWithId(String id, int browserId) {
             return null;
         }
 
@@ -139,7 +139,7 @@ public class TestRunManagerTest extends TestCase {
         public void dispose() {
         }
 
-        public BrowserResult findResultWithId(String id) {
+        public BrowserResult findResultWithId(String id, int browserId) {
             return null;
         }
 
@@ -197,7 +197,7 @@ public class TestRunManagerTest extends TestCase {
         public void dispose() {
         }
 
-        public BrowserResult findResultWithId(String id) {
+        public BrowserResult findResultWithId(String id, int browserId) {
             return null;
         }
 

@@ -7,21 +7,23 @@ import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.StringUtility;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.io.IOException;
 
 public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
-    private Process browserProcess;
     private List<BrowserResult> results = new ArrayList<BrowserResult>();
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
-    private long timeLastResultReceived;
+
     private ProcessStarter processStarter = new DefaultProcessStarter();
-    private TimeoutChecker timeoutChecker;
-    private BrowserResultRepository browserResultRepository;
     private LaunchTestRunCommand launchTestRunCommand;
+    private TimeoutChecker timeoutChecker;
+    private Process browserProcess;
+    private long timeLastResultReceived;
+
+    private BrowserResultRepository browserResultRepository;
 
     public JsUnitStandardServer(Configuration configuration, boolean temporary) {
         this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()), temporary);
@@ -57,15 +59,18 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public void accept(BrowserResult result) {
         long timeReceived = System.currentTimeMillis();
         String submittingBrowserFileName = null;
+        int submittingBrowserId = -1;
         if (launchTestRunCommand != null) {
             submittingBrowserFileName = launchTestRunCommand.getBrowserFileName();
+            submittingBrowserId = configuration.getBrowserId(submittingBrowserFileName);
         }
         endBrowser();
 
         result.setBrowserFileName(submittingBrowserFileName);
+        result.setBrowserId(submittingBrowserId);
 
         killTimeoutChecker();
-        BrowserResult existingResultWithSameId = findResultWithId(result.getId());
+        BrowserResult existingResultWithSameId = findResultWithId(result.getId(), submittingBrowserId);
         for (TestRunListener listener : browserTestRunListeners)
             listener.browserTestRunFinished(submittingBrowserFileName, result);
         if (existingResultWithSameId != null)
@@ -89,16 +94,16 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         results.clear();
     }
 
-    public BrowserResult findResultWithId(String id) {
-        BrowserResult result = findResultWithIdInResultList(id);
+    public BrowserResult findResultWithId(String id, int browserId) {
+        BrowserResult result = findResultWithIdInResultList(id, browserId);
         if (result == null)
-            result = browserResultRepository.retrieve(id);
+            result = browserResultRepository.retrieve(id, browserId);
         return result;
     }
 
-    private BrowserResult findResultWithIdInResultList(String id) {
+    private BrowserResult findResultWithIdInResultList(String id, int browserId) {
         for (BrowserResult result : getResults()) {
-            if (result.hasId(id))
+            if (result.hasId(id) && result.getBrowserId() == browserId)
                 return result;
         }
         return null;
@@ -139,7 +144,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns()) {
             if (launchTestRunCommand.getBrowserKillCommand() != null) {
                 try {
-                    processStarter.execute(new String[] {launchTestRunCommand.getBrowserKillCommand()});
+                    processStarter.execute(new String[]{launchTestRunCommand.getBrowserKillCommand()});
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

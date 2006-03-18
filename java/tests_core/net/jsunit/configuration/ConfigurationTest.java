@@ -232,6 +232,12 @@ public class ConfigurationTest extends TestCase {
         assertEquals("http://www.example.com:1234/", arguments[index]);
     }
 
+    public void testGetBrowserId() throws Exception {
+        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
+        assertEquals(0, configuration.getBrowserId("browser1.exe"));
+        assertEquals(1, configuration.getBrowserId("browser2.exe"));
+    }
+
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
 
         public String resourceBase() {

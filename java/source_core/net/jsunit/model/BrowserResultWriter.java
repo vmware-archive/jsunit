@@ -11,6 +11,7 @@ public class BrowserResultWriter {
             ID = "id",
             BROWSER_RESULT = "browserResult",
             BROWSER_FILE_NAME = "browserFileName",
+            BROWSER_ID = "browserId",
             USER_AGENT = "userAgent",
             TIME = "time",
             TEST_CASES = "testCases",
@@ -64,6 +65,7 @@ public class BrowserResultWriter {
         Element properties = new Element(PROPERTIES);
         element.addContent(properties);
         addProperty(properties, BROWSER_FILE_NAME, browserResult.getBrowserFileName());
+        addProperty(properties, BROWSER_ID, String.valueOf(browserResult.getBrowserId()));
         if (browserResult.completedTestRun()) {
             addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
             addProperty(properties, USER_AGENT, browserResult.getUserAgent());

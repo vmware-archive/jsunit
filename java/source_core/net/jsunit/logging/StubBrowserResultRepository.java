@@ -6,10 +6,7 @@ public class StubBrowserResultRepository implements BrowserResultRepository {
     public void store(BrowserResult result) {
     }
 
-    public void remove(String id) {
-    }
-
-    public BrowserResult retrieve(String id) {
+    public BrowserResult retrieve(String id, int browserId) {
         return null;
     }
 }

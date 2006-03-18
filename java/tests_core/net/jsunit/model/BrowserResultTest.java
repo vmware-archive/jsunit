@@ -13,6 +13,7 @@ public class BrowserResultTest extends TestCase {
             "<browserResult id=\"An ID\" time=\"4.3\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
+                    "<property name=\"browserId\" value=\"0\" />" +
                     "<property name=\"jsUnitVersion\" value=\"2.5\" />" +
                     "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
                     "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +

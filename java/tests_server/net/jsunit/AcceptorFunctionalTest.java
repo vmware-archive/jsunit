@@ -8,6 +8,8 @@ import org.jdom.Document;
 public class AcceptorFunctionalTest extends FunctionalTestCase {
 
     public void testSubmission() throws Exception {
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER));
+
         StringBuffer buffer = new StringBuffer();
         addParameter(buffer, BrowserResultWriter.ID, "ID_foo", true);
         addParameter(buffer, BrowserResultWriter.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", false);
@@ -19,6 +21,8 @@ public class AcceptorFunctionalTest extends FunctionalTestCase {
 
         BrowserResult result = new BrowserResult();
         result.setId("ID_foo");
+        result.setBrowserId(0);
+        result.setBrowserFileName(BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER);
         result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
         result.setTime(4.3);
         result.setJsUnitVersion("12.5");

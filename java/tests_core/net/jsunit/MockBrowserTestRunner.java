@@ -14,6 +14,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     public BrowserResult resultToReturn;
     public boolean shouldSucceed;
     public String idPassed;
+    public Integer browserIdPassed;
     public int timeoutSeconds;
     public boolean hasReceivedResult;
     public BrowserLaunchSpecification launchSpec;
@@ -46,8 +47,9 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
         disposeCalled = true;
     }
 
-    public BrowserResult findResultWithId(String id) {
+    public BrowserResult findResultWithId(String id, int browserId) {
         idPassed = id;
+        browserIdPassed = browserId;
         return resultToReturn;
     }
 

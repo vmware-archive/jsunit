@@ -7,11 +7,12 @@ import java.io.FileNotFoundException;
 
 public class FailedToLaunchBrowserResultTest extends TestCase {
 
-    private static Throwable exception = new FileNotFoundException();
-    private static String xml =
+    private Throwable exception = new FileNotFoundException();
+    private String xml =
             "<browserResult failedToLaunch=\"true\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
+                    "<property name=\"browserId\" value=\"0\" />" +
                     "<property name=\"serverSideExceptionStackTrace\"><![CDATA[" +
                     StringUtility.stackTraceAsString(exception) +
                     "]]></property>" +

@@ -46,7 +46,7 @@ public class BlockingTestRunner implements BrowserTestRunner {
     public void dispose() {
     }
 
-    public BrowserResult findResultWithId(String id) {
+    public BrowserResult findResultWithId(String id, int browserId) {
         return null;
     }
 

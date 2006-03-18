@@ -4,10 +4,11 @@ import junit.framework.TestCase;
 
 public class TimedOutBrowerResultTest extends TestCase {
 
-    private static String xml =
+    private String xml =
             "<browserResult timedOut=\"true\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
+                    "<property name=\"browserId\" value=\"0\" />" +
                     "</properties>" +
                     "</browserResult>";
 

@@ -29,9 +29,12 @@
         <td nowrap align="right" valign="middle">
             <font size="-2">
                 <b><a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a></b><br>
-                <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer version</a></div>
+
+                <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
+                    version</a></div>
             </font>
-            <a href="http://www.pivotalsf.com/" target="top"><img border="0" src="images/powerby-transparent.gif" alt="Powered By Pivotal"></a>
+            <a href="http://www.pivotalsf.com/" target="top"><img border="0" src="images/powerby-transparent.gif"
+                                                                  alt="Powered By Pivotal"></a>
         </td>
 
     </tr>
@@ -79,7 +82,7 @@ displayed as XML. config is usually used programmatically.
 You can see tell the server to run JsUnit tests using the runner command.
 You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
 or you can specify a custom URL using the following form.
-<form action="/jsunit/runner" method="get">
+<form action="/jsunit/runner" method="get" name="runnerForm">
     URL: <input type="text" name="url" size="100"/>
     <input type="submit" value="go"/>
 </form>
@@ -87,8 +90,9 @@ or you can specify a custom URL using the following form.
 <h4>displayer</h4>
 You can view the logs of past runs using the displayer command.
 Use this form to specify the ID of the run you want to see:
-<form action="/jsunit/displayer">
+<form action="/jsunit/displayer" name="displayerForm">
     ID: <input type="text" name="id" size="20"/>
+    Browser ID: <input type="text" name="browserId" size="5"/>
     <input type="submit" value="go"/>
 </form>
 <%}%>

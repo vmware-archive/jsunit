@@ -3,7 +3,6 @@ package net.jsunit;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.interceptor.BrowserResultInterceptor;
-import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 
@@ -22,7 +21,7 @@ public class ResultAcceptorTest extends TestCase {
         Configuration configuration = new Configuration(new StubConfigurationSource() {
 
             public String browserFileNames() {
-                return "foo";
+                return "browser1.exe,browser2.exe,browser3.exe";
             }
 
             public String logStatus() {
@@ -36,6 +35,7 @@ public class ResultAcceptorTest extends TestCase {
         });
         mockBrowserResultRepository = new MockBrowserResultRepository();
         server = new JsUnitStandardServer(configuration, mockBrowserResultRepository, false);
+        server.setProcessStarter(new MockProcessStarter());
         requestMap = new HashMap<String, String[]>();
         requestMap.put(BrowserResultWriter.ID, new String[]{"ID_foo"});
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[]{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
@@ -49,6 +49,7 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     protected void submit() {
+        server.launchBrowserTestRun(new BrowserLaunchSpecification("browser2.exe"));
         HttpServletRequest request = new DummyHttpRequest(requestMap);
         server.accept(new BrowserResultInterceptor().build(request));
     }
@@ -88,20 +89,22 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void testFindResultByIdInMemoryOrOnDisk() {
-        assertNull(server.findResultWithId("ID_foo"));
+        assertNull(server.findResultWithId("ID_foo", 1));
         assertEquals("ID_foo", mockBrowserResultRepository.requestedId);
+        assertEquals(1, mockBrowserResultRepository.requestedBrowserId);
         submit();
         mockBrowserResultRepository.requestedId = null;
         assertFalse(server.getResults().isEmpty());
-        assertNotNull(server.findResultWithId("ID_foo"));
+        assertNotNull(server.findResultWithId("ID_foo", 1));
         assertNull(mockBrowserResultRepository.requestedId);
-        assertNull(server.findResultWithId("Invalid ID"));
+        assertNull(server.findResultWithId("Invalid ID", 1));
         assertEquals("Invalid ID", mockBrowserResultRepository.requestedId);
         mockBrowserResultRepository.requestedId = null;
         server.clearResults();
         assertTrue(server.getResults().isEmpty());
-        server.findResultWithId("ID_foo");
+        server.findResultWithId("ID_foo", 1);
         assertEquals("ID_foo", mockBrowserResultRepository.requestedId);
+        assertEquals(1, mockBrowserResultRepository.requestedBrowserId);
     }
 
     public void testLog() {
@@ -109,20 +112,4 @@ public class ResultAcceptorTest extends TestCase {
         assertEquals("ID_foo", mockBrowserResultRepository.storedResult.getId());
     }
 
-    static class MockBrowserResultRepository implements BrowserResultRepository {
-        public BrowserResult storedResult;
-        public String requestedId;
-
-        public void store(BrowserResult result) {
-            this.storedResult = result;
-        }
-
-        public void remove(String id) {
-        }
-
-        public BrowserResult retrieve(String id) {
-            this.requestedId = id;
-            return null;
-        }
-    }
 }

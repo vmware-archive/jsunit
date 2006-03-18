@@ -8,13 +8,19 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction {
 
     private String id;
     private BrowserResult result;
+    private Integer browserId;
 
     public void setId(String id) {
         this.id = id;
     }
 
+    public void setBrowserId(Integer browserId) {
+        this.browserId = browserId;
+    }
+
     public String execute() throws Exception {
-        result = runner.findResultWithId(id);
+        if (id != null && browserId != null)
+            result = runner.findResultWithId(id, browserId);
         return SUCCESS;
     }
 
@@ -24,7 +30,11 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction {
         return new XmlRenderable() {
             public Element asXml() {
                 Element errorElement = new Element("error");
-                String message = (id != null) ? "No Test Result has been submitted with ID " + id : "No ID given";
+                String message;
+                if (id != null && browserId != null)
+                    message = "No Test Result has been submitted with ID '" + id + "' for browser ID '" + browserId + "'";
+                else
+                    message = "A Test Result ID and a browser ID must both be given";
                 errorElement.setText(message);
                 return errorElement;
             }

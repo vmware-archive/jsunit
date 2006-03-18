@@ -11,7 +11,7 @@ public class JsUnitStandardServerTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new JsUnitStandardServer(new Configuration(new DummyConfigurationSource()), false);
+        server = new JsUnitStandardServer(new Configuration(new DummyConfigurationSource()), new MockBrowserResultRepository(), false);
     }
 
     public void testStartTestRun() throws Exception {
@@ -40,7 +40,7 @@ public class JsUnitStandardServerTest extends TestCase {
         MockTestRunListener listener = new MockTestRunListener();
         server.addBrowserTestRunListener(listener);
 
-        server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(DummyConfigurationSource.BROWSER_FILE_NAME));
         assertTrue(listener.browserTestRunStartedCalled);
         assertEquals(2, starter.commandPassed.length);
         assertEquals("mybrowser.exe", starter.commandPassed[0]);
@@ -56,7 +56,7 @@ public class JsUnitStandardServerTest extends TestCase {
         MockTestRunListener listener = new MockTestRunListener();
         server.addBrowserTestRunListener(listener);
 
-        long launchTime = server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));
+        long launchTime = server.launchBrowserTestRun(new BrowserLaunchSpecification(DummyConfigurationSource.BROWSER_FILE_NAME));
         assertTrue(listener.browserTestRunStartedCalled);
         assertTrue(listener.browserTestRunFinishedCalled);
         assertTrue(listener.result.failedToLaunch());
@@ -127,7 +127,7 @@ public class JsUnitStandardServerTest extends TestCase {
             public String url() {
                 return "";
             }
-        }), false);
+        }), new MockBrowserResultRepository(), false);
         MockProcessStarter starter = new MockProcessStarter();
         server.setProcessStarter(starter);
         server.launchBrowserTestRun(new BrowserLaunchSpecification("mybrowser.exe"));

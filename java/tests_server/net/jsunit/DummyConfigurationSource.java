@@ -7,6 +7,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
     public static final String DUMMY_URL = "http://www.example.com:1234/jsunit/runner?autoRun=true&submitResults=true";
     public static final String REMOTE_URL_1 = "http://my.machine.com:8080/jsunit";
     public static final String REMOTE_URL_2 = "http://your.machine.com:9090/jsunit";
+    public static final String BROWSER_FILE_NAME = "mybrowser.exe";
 
     public String resourceBase() {
         return ".";
@@ -21,7 +22,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
     }
 
     public String browserFileNames() {
-        return "dummy browser filename";
+        return BROWSER_FILE_NAME;
     }
 
     public String url() {

@@ -20,7 +20,7 @@ public interface BrowserTestRunner extends XmlRenderable {
 
     void dispose();
 
-    BrowserResult findResultWithId(String id);
+    BrowserResult findResultWithId(String id, int browserId);
 
     void logStatus(String message);
 

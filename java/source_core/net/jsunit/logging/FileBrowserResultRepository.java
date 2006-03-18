@@ -19,8 +19,8 @@ public class FileBrowserResultRepository implements BrowserResultRepository {
             logsDirectory.mkdir();
     }
 
-    private File logFileForId(String id) {
-        return new File(logsDirectory + File.separator + LOG_PREFIX + id + ".xml");
+    private File logFileForId(String id, int browserId) {
+        return new File(logsDirectory + File.separator + LOG_PREFIX + id + "." + browserId + ".xml");
     }
 
     public void deleteDirectory(String directoryName) {
@@ -30,16 +30,11 @@ public class FileBrowserResultRepository implements BrowserResultRepository {
 
     public void store(BrowserResult result) {
         String xml = XmlUtility.asString(result.asXml());
-        FileUtility.write(logFileForId(result.getId()), xml);
+        FileUtility.write(logFileForId(result.getId(), result.getBrowserId()), xml);
     }
 
-    public void remove(String id) {
-        File file = logFileForId(id);
-        FileUtility.delete(file);
-    }
-
-    public BrowserResult retrieve(String id) {
-        File logFile = logFileForId(id);
+    public BrowserResult retrieve(String id, int browserId) {
+        File logFile = logFileForId(id, browserId);
         if (logFile.exists())
             return new BrowserResultBuilder().build(logFile);
         return null;

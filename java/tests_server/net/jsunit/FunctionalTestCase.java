@@ -27,10 +27,16 @@ public abstract class FunctionalTestCase extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(PORT));
-        server = new JsUnitStandardServer(configuration, true);
+        server = new JsUnitStandardServer(configuration, new MockBrowserResultRepository(), true);
+        if (shouldMockOutProcessStarter())
+            server.setProcessStarter(new MockProcessStarter());
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl("http://localhost:" + webTesterPort() + "/jsunit");
+    }
+
+    protected boolean shouldMockOutProcessStarter() {
+        return true;
     }
 
     protected int webTesterPort() {

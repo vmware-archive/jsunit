@@ -11,6 +11,7 @@ import java.util.List;
 public class BrowserResult extends AbstractResult implements XmlRenderable {
 
     private String browserFileName;
+    private int browserId;
     private String remoteAddress;
     private String id;
     private String jsUnitVersion;
@@ -195,4 +196,11 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return testPageResults;
     }
 
+    public int getBrowserId() {
+        return browserId;
+    }
+
+    public void setBrowserId(int browserId) {
+        this.browserId = browserId;
+    }
 }
