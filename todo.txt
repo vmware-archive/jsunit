@@ -5,7 +5,7 @@ Required for next release:
 
   BUGS:
     - look at all jsunit emails to see what feature requests/bugs there are to do
-    - SourceForge bugs/patches
+    - SourceForge bugs
     - Mozilla 1.7.12 issues
 
 Backlog:
