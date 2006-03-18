@@ -11,6 +11,7 @@
 
         var versionLatestCalled;
         var versionNotLatestCalled;
+        var versionCheckErrorCalled;
         var latestVersion;
 
         MockXmlHttpRequest = function() {
@@ -33,6 +34,7 @@
             versionRequest = new MockXmlHttpRequest();
             versionLatestCalled = false;
             versionNotLatestCalled = false;
+            versionCheckErrorCalled = false;
             latestVersion = null;
         }
 
@@ -79,18 +81,20 @@
             requestStateChanged();
             assertFalse("both bad", versionNotLatestCalled);
             assertFalse("both bad", versionLatestCalled);
-            assertTrue(versionCheckErrorCalled);
+            assertFalse(versionCheckErrorCalled);
 
             versionRequest.status = 200;
             requestStateChanged();
             assertFalse("readyState bad", versionNotLatestCalled);
             assertFalse("readyState bad", versionLatestCalled);
+            assertFalse(versionCheckErrorCalled);
 
             versionRequest.readyState = 4;
             versionRequest.status = 404;
             requestStateChanged();
             assertFalse("status bad", versionNotLatestCalled);
             assertFalse("status bad", versionLatestCalled);
+            assertTrue(versionCheckErrorCalled);
         }
 
         function testReceiveNewerLatestVersion() {
