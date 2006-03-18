@@ -19,7 +19,7 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information" bgcolor="#DDDDDD">
     <tr>
         <td width="1">
-            <a href="http://www.jsunit.net"><img src="images/logo_jsunit.gif" alt="JsUnit" border="0"/></a>
+            <a href="http://www.jsunit.net" target="_blank"><img src="images/logo_jsunit.gif" alt="JsUnit" border="0"/></a>
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
@@ -28,7 +28,7 @@
         </th>
         <td nowrap align="right" valign="middle">
             <font size="-2">
-                <a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a><br>
+                <b><a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a></b><br>
                 <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer version</a></div>
             </font>
             <a href="http://www.pivotalsf.com/" target="top"><img border="0" src="images/powerby-transparent.gif" alt="Powered By Pivotal"></a>
