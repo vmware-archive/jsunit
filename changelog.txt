@@ -4,6 +4,7 @@ TRACING
 
 ASSERTION FUNCTIONS
 - assertArrayEquals(array1, array2) introduced
+- assertObjectEquals(object1, object2) introduced
 - assertHTMLEquals function introduced
 - assertEvaluatesToTrue and assertEvaluatesToFalse introduced
 - changed expected/actual values display strings to use angle brackets, rather than square brackets
@@ -16,6 +17,7 @@ ASSERTION FUNCTIONS
 - jsUnitRestoredHTMLDiv
 - turn off tracing, alerts, confirms when submitting
 - testPage parameter needs to be URL-encoded (only opera cares though)
+- Speed-up of Firefox/Mozilla (thanks to Chris Wesseling)
 
 SERVER
 - Migration of Java code to require Java 5.0
@@ -45,6 +47,7 @@ BUGS
 - bug with multiple browsers and resultId specified fixed
 - Bug 1281427 fixed (test submission for Opera)
 - Safari fix
+- Bug 1431040 fixed
 
 ECLIPSE PLUGIN
 - Eclipse plugin version 1.0
