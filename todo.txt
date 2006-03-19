@@ -4,8 +4,6 @@ Required for next release:
     - pull in pivotal's new assertion functions
 
   BUGS:
-    - look at all jsunit emails to see what feature requests/bugs there are to do
-    - SourceForge bugs
     - Mozilla 1.7.12 issues
 
 Backlog:
@@ -28,3 +26,5 @@ Backlog:
 
   BUGS:
     - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
+    - SourceForge bugs
+    
