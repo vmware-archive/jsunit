@@ -3,6 +3,9 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.TestRunResult;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class TestRunManager {
 
     private BrowserTestRunner testRunner;
@@ -12,12 +15,22 @@ public class TestRunManager {
     public static void main(String[] args) throws Exception {
         JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), true);
         int port = Integer.parseInt(args[args.length - 1]);
+        if (noLogging(args))
+            Logger.getLogger("").setLevel(Level.OFF);
         server.addBrowserTestRunListener(new TestRunNotifierServer(server, port));
         server.start();
         TestRunManager manager = new TestRunManager(server);
         manager.runTests();
         if (server.isAlive())
             server.dispose();
+    }
+
+    private static boolean noLogging(String[] arguments) {
+        for (String string : arguments) {
+            if (string.equals("-noLogging"))
+                return true;
+        }
+        return false;
     }
 
     public TestRunManager(BrowserTestRunner testRunner) {
