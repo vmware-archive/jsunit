@@ -286,7 +286,7 @@ jsUnitTestManager.prototype.getTestFunctionNames = function () {
 jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) {
     var result;
     var remainingScriptToInspect = aScript.text;
-    var currentIndex = remainingScriptToInspect.indexOf('function test');
+    var currentIndex = this._indexOfTestFunctionIn(remainingScriptToInspect);
     while (currentIndex != -1) {
         if (!result)
             result = new Array();
@@ -294,9 +294,13 @@ jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScr
         var fragment = remainingScriptToInspect.substring(currentIndex, remainingScriptToInspect.length);
         result = result.concat(fragment.substring('function '.length, fragment.indexOf('(')));
         remainingScriptToInspect = remainingScriptToInspect.substring(currentIndex + 12, remainingScriptToInspect.length);
-        currentIndex = remainingScriptToInspect.indexOf('function test');
+        currentIndex = this._indexOfTestFunctionIn(remainingScriptToInspect);
     }
     return result;
+}
+
+jsUnitTestManager.prototype._indexOfTestFunctionIn = function (string) {
+    return string.indexOf('function test');
 }
 
 jsUnitTestManager.prototype.loadPage = function (testFileName) {
