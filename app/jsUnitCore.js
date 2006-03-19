@@ -278,9 +278,9 @@ function tearDown() {
 }
 
 function getFunctionName(aFunction) {
-    var regexpResult = aFunction.toString().match(/function (\w*)/);
-    if (regexpResult && regexpResult[1]) {
-        return regexpResult[1];
+    var regexpResult = aFunction.toString().match(/function(\s*)(\w*)/);
+    if (regexpResult && regexpResult[2]) {
+        return regexpResult[2];
     }
     return 'anonymous';
 }

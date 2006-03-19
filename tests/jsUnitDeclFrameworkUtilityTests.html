@@ -12,15 +12,20 @@
         }
 
         function testStackTrace() {
-            doStackTraceTest(3);
+            doStackTraceTest(3, "testStackTrace");
         }
 
-        function doStackTraceTest(numberLeft) {
+        function testStackTraceWithWhitespaceBetweenFunctionKeywordAndTestFunctionName() {
+            doStackTraceTest(5, "testStackTraceWithWhitespaceBetweenFunctionKeywordAndTestFunctionName");
+        }
+
+        function doStackTraceTest(numberLeft, testFunctionName) {
             if (numberLeft > 0) {
-                doStackTraceTest(numberLeft - 1);
+                doStackTraceTest(numberLeft - 1, testFunctionName);
                 return;
             }
-            assertEquals("> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> testStackTrace\n", getStackTrace());
+            alert(testFunctionName);
+            assertEquals("> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> doStackTraceTest\n> " + testFunctionName + "\n", getStackTrace());
         }
 
         function testJsUnitTestSuiteClass() {
