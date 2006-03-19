@@ -205,7 +205,6 @@ function assertObjectEquals() {
     _validateArguments(2, arguments);
     var var1 = nonCommentArg(1, 2, arguments);
     var var2 = nonCommentArg(2, 2, arguments);
-    var i;
     var type;
     var msg = commentArg(2, arguments)?commentArg(2, arguments):'';
     var isSame = (var1 === var2);
@@ -279,7 +278,7 @@ function tearDown() {
 
 function getFunctionName(aFunction) {
     var regexpResult = aFunction.toString().match(/function(\s*)(\w*)/);
-    if (regexpResult && regexpResult[2]) {
+    if (regexpResult && regexpResult.length >= 2 && regexpResult[2]) {
         return regexpResult[2];
     }
     return 'anonymous';
