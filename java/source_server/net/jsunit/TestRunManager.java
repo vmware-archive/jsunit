@@ -16,7 +16,7 @@ public class TestRunManager {
         JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), true);
         int port = Integer.parseInt(args[args.length - 1]);
         if (noLogging(args))
-            Logger.getLogger("").setLevel(Level.OFF);
+            shutOffAllLogging();
         server.addBrowserTestRunListener(new TestRunNotifierServer(server, port));
         server.start();
         TestRunManager manager = new TestRunManager(server);
@@ -25,11 +25,16 @@ public class TestRunManager {
             server.dispose();
     }
 
+	private static void shutOffAllLogging() {
+		Logger.getLogger("net.jsunit").setLevel(Level.OFF);
+		Logger.getLogger("org.mortbay").setLevel(Level.OFF);
+		Logger.getLogger("com.opensymphony").setLevel(Level.OFF);
+	}
+
     private static boolean noLogging(String[] arguments) {
-        for (String string : arguments) {
+        for (String string : arguments)
             if (string.equals("-noLogging"))
                 return true;
-        }
         return false;
     }
 
