@@ -365,7 +365,7 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
     var timeTaken = (new Date() - timeBefore) / 1000;
     if (excep != null)
         this._handleTestException(excep);
-    var serializedTestCaseString = this._fullyQualifiedCurrentTestFunctionName() + "|" + timeTaken + "|";
+    var serializedTestCaseString = this._currentTestFunctionNameWithTestPageName(true) + "|" + timeTaken + "|";
     if (excep == null)
         serializedTestCaseString += "S||";
     else {
@@ -381,14 +381,15 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
             serializedTestCaseString);
 }
 
-jsUnitTestManager.prototype._fullyQualifiedCurrentTestFunctionName = function() {
+jsUnitTestManager.prototype._currentTestFunctionNameWithTestPageName = function(useFullyQualifiedTestPageName) {
     var testURL = this.containerTestFrame.location.href;
     var testQuery = testURL.indexOf("?");
     if (testQuery >= 0) {
         testURL = testURL.substring(0, testQuery);
     }
-    if (testURL.substring(0, this._baseURL.length) == this._baseURL) {
-        testURL = testURL.substring(this._baseURL.length);
+    if (!useFullyQualifiedTestPageName) {
+        if (testURL.substring(0, this._baseURL.length) == this._baseURL)
+            testURL = testURL.substring(this._baseURL.length);
     }
     return testURL + ':' + this._testFunctionName;
 }
@@ -425,7 +426,7 @@ jsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
 }
 
 jsUnitTestManager.prototype._handleTestException = function (excep) {
-    var problemMessage = this._fullyQualifiedCurrentTestFunctionName() + ' ';
+    var problemMessage = this._currentTestFunctionNameWithTestPageName(false) + ' ';
     var errOption;
     if (typeof(excep.isJsUnitException) == 'undefined' || !excep.isJsUnitException) {
         problemMessage += 'had an error';
