@@ -55,7 +55,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/");
         webTester.setWorkingForm("displayerForm");
         webTester.setFormElement("id", id);
-        webTester.setFormElement("browserId", "0");
+        webTester.selectOption("browserId", BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER);
         webTester.submit();
         assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
     }

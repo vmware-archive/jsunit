@@ -73,17 +73,21 @@
         }
     %>
 </table>
+<hr>
 <h4>testRunner.html</h4>
 The manual Test Runner is at <a href="./testRunner.html">testRunner.html</a>.
+<hr>
 <h4>config</h4>
 You can see the configuration of this server by going to <a href="/jsunit/config">config</a>. The configuration is
 displayed as XML. config is usually used programmatically.
+<hr>
 <h4>runner</h4>
 You can see tell the server to run JsUnit tests using the runner command.
 You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
-or you can specify a custom URL and/or browser ID using the following form.
+or you can specify a custom URL and/or browser ID using the following form.<br><br>
+
 <form action="/jsunit/runner" method="get" name="runnerForm">
-    URL: <input type="text" name="url" size="100"/>
+    URL: <input type="text" name="url" size="100"/><br>
     Browser:
     <select name="browserId">
         <option value="">(All browsers)</option>
@@ -91,16 +95,24 @@ or you can specify a custom URL and/or browser ID using the following form.
             for (String browserFileName : configuration.getBrowserFileNames()) {
         %><option value="<%=configuration.getBrowserId(browserFileName)%>"><%=browserFileName%></option>
         <%}%>
-    </select>
+    </select><br>
     <input type="submit" value="go"/>
 </form>
 <%if (!server.isFarmServer()) {%>
+<hr>
 <h4>displayer</h4>
 You can view the logs of past runs using the displayer command.
-Use this form to specify the ID of the run you want to see:
+Use this form to specify the ID of the run you want to see:<br><br>
+
 <form action="/jsunit/displayer" name="displayerForm">
-    ID: <input type="text" name="id" size="20"/>
-    Browser ID: <input type="text" name="browserId" size="5"/>
+    ID: <input type="text" name="id" size="20"/><br>
+    Browser:
+    <select name="browserId">
+        <%
+            for (String browserFileName : configuration.getBrowserFileNames()) {
+        %><option value="<%=configuration.getBrowserId(browserFileName)%>"><%=browserFileName%></option>
+        <%}%>
+    </select><br>
     <input type="submit" value="go"/>
 </form>
 <%}%>
