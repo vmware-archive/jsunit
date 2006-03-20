@@ -1,6 +1,8 @@
 Required for next release:
 
   FEATURES:
+    - ability to request a run by a specific browser by ID
+    - change DistributedTest to ask for the remote configuration and then ask for a run of each browser separately
     - pull in pivotal's new assertion functions
 
   BUGS:
@@ -27,4 +29,3 @@ Backlog:
   BUGS:
     - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
     - SourceForge bugs
-    
