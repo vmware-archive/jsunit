@@ -25,11 +25,12 @@ public abstract class FunctionalTestCase extends TestCase {
     protected WebTester webTester;
     protected JsUnitStandardServer server;
     protected int port;
+    protected Configuration configuration;
 
     public void setUp() throws Exception {
         super.setUp();
         port = new TestPortManager().newPort();
-        Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(port));
+        configuration = new Configuration(new FunctionalTestConfigurationSource(port));
         server = new JsUnitStandardServer(configuration, new MockBrowserResultRepository(), true);
         if (shouldMockOutProcessStarter())
             server.setProcessStarter(new MockProcessStarter());
