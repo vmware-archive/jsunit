@@ -33,8 +33,14 @@ public class TestRunManagerTest extends TestCase {
         String overrideUrl = "http://my.override.url:8080/jsunit/testRunner.html?someParam=someValue&someOtherParam=someOtherValue";
         TestRunManager manager = new TestRunManager(runner, overrideUrl);
         manager.runTests();
-        assertTrue(runner.launchSpec.hasOverrideUrl());
-        assertEquals(overrideUrl, runner.launchSpec.getOverrideUrl());
+
+        assertEquals(2, runner.launchSpecs.size());
+        BrowserLaunchSpecification spec1 = runner.launchSpecs.get(0);
+        assertTrue(spec1.hasOverrideUrl());
+        assertEquals(overrideUrl, spec1.getOverrideUrl());
+        BrowserLaunchSpecification spec2 = runner.launchSpecs.get(1);
+        assertTrue(spec2.hasOverrideUrl());
+        assertEquals(overrideUrl, spec2.getOverrideUrl());
     }
 
     public void testNoOverrideUrl() {
@@ -42,7 +48,10 @@ public class TestRunManagerTest extends TestCase {
         runner.hasReceivedResult = true;
         TestRunManager manager = new TestRunManager(runner, null);
         manager.runTests();
-        assertFalse(runner.launchSpec.hasOverrideUrl());
+
+        assertEquals(2, runner.launchSpecs.size());
+        assertFalse(runner.launchSpecs.get(0).hasOverrideUrl());
+        assertFalse(runner.launchSpecs.get(1).hasOverrideUrl());
     }
 
     public void testPropertiesSet() throws Exception {

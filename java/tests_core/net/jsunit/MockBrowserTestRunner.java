@@ -17,8 +17,8 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     public Integer browserIdPassed;
     public int timeoutSeconds;
     public boolean hasReceivedResult;
-    public BrowserLaunchSpecification launchSpec;
     public List<String> logMessages = new ArrayList<String>();
+    public List<BrowserLaunchSpecification> launchSpecs = new ArrayList<BrowserLaunchSpecification>();
 
     public void startTestRun() {
     }
@@ -27,7 +27,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     }
 
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-        this.launchSpec = launchSpec;
+        launchSpecs.add(launchSpec);
         return 0;
     }
 
@@ -58,7 +58,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     }
 
     public List<String> getBrowserFileNames() {
-        return Arrays.asList(new String[]{"mybrowser.exe"});
+        return Arrays.asList(new String[]{"mybrowser1.exe", "mybrowser2.exe"});
     }
 
     public int timeoutSeconds() {

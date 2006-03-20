@@ -1,6 +1,7 @@
 package net.jsunit.action;
 
 import junit.framework.TestCase;
+import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.model.ResultType;
 import net.jsunit.utility.XmlUtility;
@@ -36,8 +37,13 @@ public class TestRunnerActionTest extends TestCase {
         String overrideUrl = "http://www.example.com:8954/jsunit/testRunner.html?testPage=http://www.example.com:8954/tests/myTests.html?autoRun=true&submitResults=http://www.example.com:8954/tests";
         action.setUrl(overrideUrl);
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
-        assertTrue(mockRunner.launchSpec.hasOverrideUrl());
-        assertEquals(overrideUrl, mockRunner.launchSpec.getOverrideUrl());
+        assertEquals(2, mockRunner.launchSpecs.size());
+        BrowserLaunchSpecification spec1 = mockRunner.launchSpecs.get(0);
+        BrowserLaunchSpecification spec2 = mockRunner.launchSpecs.get(1);
+        assertTrue(spec1.hasOverrideUrl());
+        assertEquals(overrideUrl, spec1.getOverrideUrl());
+        assertTrue(spec2.hasOverrideUrl());
+        assertEquals(overrideUrl, spec2.getOverrideUrl());
     }
 
     public void testRequestIpAddressAndHostLogged() throws Exception {
@@ -64,6 +70,10 @@ public class TestRunnerActionTest extends TestCase {
         action.setRequestHost("12.34.56.78");
         action.execute();
         assertEquals("Received request to run tests from 12.34.56.78", mockRunner.logMessages.get(0));
+    }
+
+    public void testLimitToBrowserWithId() throws Exception {
+
     }
 
 }
