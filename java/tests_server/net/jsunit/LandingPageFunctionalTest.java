@@ -13,7 +13,7 @@ public class LandingPageFunctionalTest extends FunctionalTestCase {
         webTester.assertTextPresent(SystemUtility.osString());
         webTester.assertTextPresent(SystemUtility.hostname());
         webTester.assertTextPresent(SystemUtility.ipAddress());
-        webTester.assertLinkPresentWithText(new FunctionalTestConfigurationSource(PORT).url());
+        webTester.assertLinkPresentWithText(new FunctionalTestConfigurationSource(port).url());
     }
 
     public void testIndexDotJsp() throws Exception {

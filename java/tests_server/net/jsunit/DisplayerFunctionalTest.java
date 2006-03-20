@@ -12,8 +12,7 @@ public class DisplayerFunctionalTest extends FunctionalTestCase {
         Document responseDocument = responseXmlDocument();
 
         Element rootElement = responseDocument.getRootElement();
-        assertEquals("error", rootElement.getName());
-        assertEquals("A Test Result ID and a browser ID must both be given", rootElement.getText());
+        assertErrorResponse(rootElement, "A Test Result ID and a browser ID must both be given");
     }
 
     public void testInvalidId() throws Exception {
@@ -22,8 +21,7 @@ public class DisplayerFunctionalTest extends FunctionalTestCase {
         Document responseDocument = responseXmlDocument();
 
         Element rootElement = responseDocument.getRootElement();
-        assertEquals("error", rootElement.getName());
-        assertEquals("No Test Result has been submitted with ID '" + id + "' for browser ID '7'", rootElement.getText());
+        assertErrorResponse(rootElement, "No Test Result has been submitted with ID '" + id + "' for browser ID '7'");
     }
 
     public void testValid() throws Exception {

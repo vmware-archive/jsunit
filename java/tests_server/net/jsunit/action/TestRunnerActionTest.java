@@ -72,8 +72,19 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals("Received request to run tests from 12.34.56.78", mockRunner.logMessages.get(0));
     }
 
-    public void testLimitToBrowserWithId() throws Exception {
+    public void testLimitToParticularBrowser() throws Exception {
+        action.setBrowserId(1);
+        assertEquals(TestRunnerAction.SUCCESS, action.execute());
+        assertEquals(1, mockRunner.launchSpecs.size());
+        assertEquals("mybrowser2.exe", mockRunner.launchSpecs.get(0).getBrowserFileName());
+    }
 
+    public void testLimitToBrowserWithBadId() throws Exception {
+        action.setBrowserId(34);
+        action.execute();
+        assertEquals(TestRunnerAction.ERROR, action.execute());
+        assertTrue(mockRunner.launchSpecs.isEmpty());
+        assertEquals("<error>Invalid browser ID: 34</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
     }
 
 }

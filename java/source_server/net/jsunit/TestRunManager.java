@@ -3,6 +3,8 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.TestRunResult;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -11,6 +13,7 @@ public class TestRunManager {
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult;
     private final String overrideUrl;
+    private List<String> browserFileNames;
 
     public static void main(String[] args) throws Exception {
         JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), true);
@@ -25,11 +28,11 @@ public class TestRunManager {
             server.dispose();
     }
 
-	private static void shutOffAllLogging() {
-		Logger.getLogger("net.jsunit").setLevel(Level.OFF);
-		Logger.getLogger("org.mortbay").setLevel(Level.OFF);
-		Logger.getLogger("com.opensymphony").setLevel(Level.OFF);
-	}
+    private static void shutOffAllLogging() {
+        Logger.getLogger("net.jsunit").setLevel(Level.OFF);
+        Logger.getLogger("org.mortbay").setLevel(Level.OFF);
+        Logger.getLogger("com.opensymphony").setLevel(Level.OFF);
+    }
 
     private static boolean noLogging(String[] arguments) {
         for (String string : arguments)
@@ -45,6 +48,7 @@ public class TestRunManager {
     public TestRunManager(BrowserTestRunner testRunner, String overrideUrl) {
         this.testRunner = testRunner;
         this.overrideUrl = overrideUrl;
+        browserFileNames = testRunner.getBrowserFileNames();
     }
 
     public void runTests() {
@@ -52,7 +56,7 @@ public class TestRunManager {
         testRunner.logStatus("Starting Test Run");
         testRunner.startTestRun();
         try {
-            for (String browserFileName : testRunner.getBrowserFileNames()) {
+            for (String browserFileName : browserFileNames) {
                 BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browserFileName, overrideUrl);
                 long launchTime = testRunner.launchBrowserTestRun(launchSpec);
                 waitForResultToBeSubmitted(browserFileName, launchTime);
@@ -90,4 +94,10 @@ public class TestRunManager {
         return testRunResult;
     }
 
+    public void limitToBrowserWithId(int browserId) throws InvalidBrowserIdException {
+        String browserFileName = testRunner.getBrowserFileNameById(browserId);
+        if (browserFileName == null)
+            throw new InvalidBrowserIdException(browserId);
+        browserFileNames = Arrays.asList(new String[]{browserFileName});
+    }
 }

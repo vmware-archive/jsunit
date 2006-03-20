@@ -1,5 +1,6 @@
 package net.jsunit.action;
 
+import net.jsunit.InvalidBrowserIdException;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.StringUtility;
@@ -10,11 +11,21 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     private String url;
     private String remoteAddress;
     private String remoteHost;
+    private Integer browserId;
+    private boolean badBrowserId = false;
 
     public String execute() throws Exception {
         runner.logStatus(requestReceivedMessage());
         synchronized (runner) {
             manager = new TestRunManager(runner, url);
+            if (browserId != null) {
+                try {
+                    manager.limitToBrowserWithId(browserId);
+                } catch (InvalidBrowserIdException e) {
+                    badBrowserId = true;
+                    return ERROR;
+                }
+            }
             manager.runTests();
         }
         runner.logStatus("Done running tests");
@@ -37,6 +48,9 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     }
 
     public XmlRenderable getXmlRenderable() {
+        if (badBrowserId) {
+            return new ErrorXmlRenderable("Invalid browser ID: " + browserId);
+        }
         return manager.getTestRunResult();
     }
 
@@ -50,5 +64,9 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     public void setRequestHost(String host) {
         remoteHost = host;
+    }
+
+    public void setBrowserId(int browserId) {
+        this.browserId = browserId;
     }
 }

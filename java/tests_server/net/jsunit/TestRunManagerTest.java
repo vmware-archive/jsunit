@@ -114,6 +114,10 @@ public class TestRunManagerTest extends TestCase {
             return true;
         }
 
+        public String getBrowserFileNameById(int browserId) {
+            return null;
+        }
+
     }
 
     static class FailingBrowserTestRunner implements BrowserTestRunner {
@@ -172,6 +176,10 @@ public class TestRunManagerTest extends TestCase {
         public boolean isAlive() {
             return true;
         }
+
+        public String getBrowserFileNameById(int browserId) {
+            return null;
+        }
     }
 
     static class KillableBrowserTestRunner implements BrowserTestRunner {
@@ -223,6 +231,10 @@ public class TestRunManagerTest extends TestCase {
 
         public boolean isAlive() {
             return isAlive;
+        }
+
+        public String getBrowserFileNameById(int browserId) {
+            return null;
         }
 
         public Element asXml() {

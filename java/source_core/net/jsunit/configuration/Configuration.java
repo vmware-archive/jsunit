@@ -174,7 +174,10 @@ public final class Configuration {
     }
 
     public String getBrowserFileNameById(int id) {
-        return getBrowserFileNames().get(id);
+        List<String> browserFileNames = getBrowserFileNames();
+        if (id >= browserFileNames.size())
+            return null;
+        return browserFileNames.get(id);
     }
 
     public URL getRemoteMachineURLById(int id) {

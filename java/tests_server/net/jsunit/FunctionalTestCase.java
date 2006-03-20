@@ -15,18 +15,18 @@ import java.io.StringReader;
 
 public abstract class FunctionalTestCase extends TestCase {
 
-    protected final static int PORT = 9090;
-
     static {
         HttpUnitOptions.setScriptingEnabled(false);
     }
 
     protected WebTester webTester;
     protected JsUnitStandardServer server;
+    protected int port;
 
     public void setUp() throws Exception {
         super.setUp();
-        Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(PORT));
+        port = new TestPortManager().newPort();
+        Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(port));
         server = new JsUnitStandardServer(configuration, new MockBrowserResultRepository(), true);
         if (shouldMockOutProcessStarter())
             server.setProcessStarter(new MockProcessStarter());
@@ -40,7 +40,7 @@ public abstract class FunctionalTestCase extends TestCase {
     }
 
     protected int webTesterPort() {
-        return PORT;
+        return port;
     }
 
     public void tearDown() throws Exception {
@@ -60,5 +60,10 @@ public abstract class FunctionalTestCase extends TestCase {
         Document result = responseXmlDocument();
         Element root = result.getRootElement();
         assertEquals("configuration", root.getName());
+    }
+
+    protected void assertErrorResponse(Element rootElement, String message) {
+        assertEquals("error", rootElement.getName());
+        assertEquals(message, rootElement.getText());
     }
 }

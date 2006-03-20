@@ -9,21 +9,22 @@ import java.net.URLEncoder;
 public class FarmServerFunctionalTest extends FunctionalTestCase {
 
     private JsUnitFarmServer farmServer;
+    private int otherPort;
 
     public void setUp() throws Exception {
         super.setUp();
-        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(PORT + 1, PORT)));
+        otherPort = new TestPortManager().newPort();
+        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(otherPort, port)));
         farmServer.start();
     }
 
     protected int webTesterPort() {
-        return PORT + 1;
+        return otherPort;
     }
 
     public void testHitFarmRunner() throws Exception {
         String url =
-                "/runner?url=" +
-                        URLEncoder.encode("http://localhost:" + PORT + "/jsunit/tests/jsUnitUtilityTests.html", "UTF-8");
+                "/runner?url=" + URLEncoder.encode("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html", "UTF-8");
         webTester.beginAt(url);
         Document document = responseXmlDocument();
         assertEquals(ResultType.SUCCESS.name(), document.getRootElement().getAttribute("type").getValue());

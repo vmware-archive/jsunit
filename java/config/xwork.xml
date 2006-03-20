@@ -35,6 +35,7 @@
 
         <action name="runner" class="net.jsunit.action.TestRunnerAction">
             <result name="success" type="jsUnitXml"/>
+            <result name="error" type="jsUnitXml"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="requestSource"/>
         </action>

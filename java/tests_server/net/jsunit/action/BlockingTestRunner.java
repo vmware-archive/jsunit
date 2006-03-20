@@ -64,4 +64,8 @@ public class BlockingTestRunner implements BrowserTestRunner {
     public boolean isAlive() {
         return false;
     }
+
+    public String getBrowserFileNameById(int browserId) {
+        return null;
+    }
 }

@@ -251,4 +251,8 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return configuration.getTimeoutSeconds();
     }
 
+    public String getBrowserFileNameById(int browserId) {
+        return configuration.getBrowserFileNameById(browserId);
+    }
+
 }

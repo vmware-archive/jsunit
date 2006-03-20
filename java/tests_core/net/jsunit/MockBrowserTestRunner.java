@@ -73,4 +73,15 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
         return true;
     }
 
+    public String getBrowserFileNameById(int browserId) {
+        switch (browserId) {
+            case 0 :
+                return "mybrowser1.exe";
+            case 1 :
+                return "mybrowser2.exe";
+            default:
+                return null;
+        }
+    }
+
 }

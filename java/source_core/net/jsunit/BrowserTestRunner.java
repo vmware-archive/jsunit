@@ -30,4 +30,5 @@ public interface BrowserTestRunner extends XmlRenderable {
 
     boolean isAlive();
 
+    String getBrowserFileNameById(int browserId);
 }

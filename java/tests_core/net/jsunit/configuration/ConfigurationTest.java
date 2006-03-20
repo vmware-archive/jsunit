@@ -180,6 +180,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals("browser1.exe", configuration.getBrowserFileNameById(0));
         assertEquals("browser2.exe", configuration.getBrowserFileNameById(1));
+        assertNull(configuration.getBrowserFileNameById(900));
     }
 
     public void testGetRemoteMachineURLById() throws Exception {
