@@ -10,8 +10,7 @@ import java.util.List;
 
 public class BrowserResult extends AbstractResult implements XmlRenderable {
 
-    private String browserFileName;
-    private int browserId;
+    private Browser browser;
     private String remoteAddress;
     private String id;
     private String jsUnitVersion;
@@ -26,12 +25,8 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         this.id = String.valueOf(System.currentTimeMillis());
     }
 
-    public void setBrowserFileName(String browserFileName) {
-        this.browserFileName = browserFileName;
-    }
-
-    public String getBrowserFileName() {
-        return browserFileName;
+    public Browser getBrowser() {
+        return browser;
     }
 
     public String getId() {
@@ -196,11 +191,11 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return testPageResults;
     }
 
-    public int getBrowserId() {
-        return browserId;
+    public void setBrowser(Browser browser) {
+        this.browser = browser;
     }
 
-    public void setBrowserId(int browserId) {
-        this.browserId = browserId;
+    public boolean isForBrowser(Browser browser) {
+        return this.browser.equals(browser);
     }
 }

@@ -42,6 +42,7 @@
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">
             <result name="success" type="jsUnitXml"/>
+            <result name="error" type="jsUnitXml"/>
         </action>
 
         <action name="config" class="net.jsunit.action.BrowserTestRunnerConfigurationAction">

@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import net.jsunit.model.Browser;
 import net.jsunit.utility.XmlUtility;
 
 import java.util.ArrayList;
@@ -35,20 +36,20 @@ public class TestRunNotifierServerTest extends TestCase implements MessageReceiv
         assertEquals(1, messages.size());
         assertEquals("testRunStarted", messages.get(0));
 
-        server.browserTestRunStarted("mybrowser1.exe");
+        server.browserTestRunStarted(new Browser("mybrowser1.exe", 0));
         while (messages.size() < 3)
             Thread.sleep(10);
 
         assertEquals("browserTestRunStarted", messages.get(1));
-        assertEquals("mybrowser1.exe", messages.get(2));
+        assertEquals("0", messages.get(2));
 
         DummyBrowserResult browserResult = new DummyBrowserResult(false, 2, 3);
-        server.browserTestRunFinished("mybrowser2.exe", browserResult);
+        server.browserTestRunFinished(new Browser("mybrowser2.exe", 1), browserResult);
         while (messages.size() < 8)
             Thread.sleep(10);
 
         assertEquals("browserTestRunFinished", messages.get(3));
-        assertEquals("mybrowser2.exe", messages.get(4));
+        assertEquals("1", messages.get(4));
         String line1 = messages.get(5);
         String line2 = messages.get(6);
         String line3 = messages.get(7);

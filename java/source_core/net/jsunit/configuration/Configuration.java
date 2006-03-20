@@ -1,5 +1,7 @@
 package net.jsunit.configuration;
 
+import net.jsunit.model.Browser;
+import net.jsunit.model.BrowserSource;
 import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
@@ -9,9 +11,9 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Configuration {
+public final class Configuration implements BrowserSource {
 
-    private List<String> browserFileNames;
+    private List<Browser> browsers;
     private boolean closeBrowsersAfterTestRuns;
     private String description;
     private boolean ignoreUnresponsiveRemoteMachines;
@@ -93,12 +95,12 @@ public final class Configuration {
         return getDescription() == null ? super.toString() : getDescription();
     }
 
-    public List<String> getBrowserFileNames() {
-        return browserFileNames;
+    public List<Browser> getBrowsers() {
+        return browsers;
     }
 
-    public void setBrowserFileNames(List<String> browserFileNames) {
-        this.browserFileNames = browserFileNames;
+    public void setBrowsers(List<Browser> browsers) {
+        this.browsers = browsers;
     }
 
     public boolean shouldCloseBrowsersAfterTestRuns() {
@@ -173,18 +175,15 @@ public final class Configuration {
         this.testURL = url;
     }
 
-    public String getBrowserFileNameById(int id) {
-        List<String> browserFileNames = getBrowserFileNames();
-        if (id >= browserFileNames.size())
-            return null;
-        return browserFileNames.get(id);
+    public Browser getBrowserById(int id) {
+        for (Browser browser : browsers)
+            if (browser.hasId(id))
+                return browser;
+        return null;
     }
 
     public URL getRemoteMachineURLById(int id) {
         return getRemoteMachineURLs().get(id);
     }
 
-    public int getBrowserId(String browserFileName) {
-        return getBrowserFileNames().indexOf(browserFileName);
-    }
 }

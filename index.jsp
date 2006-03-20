@@ -2,6 +2,7 @@
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.configuration.Configuration" %>
 <%@ page import="net.jsunit.configuration.ConfigurationProperty" %>
+<%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.utility.SystemUtility" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%Configuration configuration = server.getConfiguration();%>
@@ -92,8 +93,8 @@ or you can specify a custom URL and/or browser ID using the following form.<br><
     <select name="browserId">
         <option value="">(All browsers)</option>
         <%
-            for (String browserFileName : configuration.getBrowserFileNames()) {
-        %><option value="<%=configuration.getBrowserId(browserFileName)%>"><%=browserFileName%></option>
+            for (Browser browser : configuration.getBrowsers()) {
+        %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
         <%}%>
     </select><br>
     <input type="submit" value="go"/>
@@ -109,8 +110,8 @@ Use this form to specify the ID of the run you want to see:<br><br>
     Browser:
     <select name="browserId">
         <%
-            for (String browserFileName : configuration.getBrowserFileNames()) {
-        %><option value="<%=configuration.getBrowserId(browserFileName)%>"><%=browserFileName%></option>
+            for (Browser browser : configuration.getBrowsers()) {
+        %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
         <%}%>
     </select><br>
     <input type="submit" value="go"/>

@@ -8,7 +8,7 @@ public class ExternallyShutDownBrowserResultTest extends TestCase {
             "<browserResult externallyShutDown=\"true\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"0\" />" +
+                    "<property name=\"browserId\" value=\"17\" />" +
                     "</properties>" +
                     "</browserResult>";
 
@@ -18,11 +18,11 @@ public class ExternallyShutDownBrowserResultTest extends TestCase {
         super.setUp();
         result = new BrowserResult();
         result.setExternallyShutDown();
-        result.setBrowserFileName("c:\\Program Files\\Internet Explorer\\iexplore.exe");
+        result.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 17));
     }
 
     public void testSimple() {
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", result.getBrowserFileName());
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", result.getBrowser().getFileName());
         assertEquals(0d, result.getTime());
         assertEquals(ResultType.EXTERNALLY_SHUT_DOWN.getDisplayString(), result.getDisplayString());
         assertEquals(0, result.getTestCount());
@@ -42,8 +42,9 @@ public class ExternallyShutDownBrowserResultTest extends TestCase {
     }
 
     public void testReconstituteFromXml() {
-        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(xml);
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowserFileName());
+        BrowserResultBuilder builder = new BrowserResultBuilder(new DummyBrowserSource("c:\\Program Files\\Internet Explorer\\iexplore.exe", 17));
+        BrowserResult reconstitutedResult = builder.build(xml);
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getFileName());
         assertTrue(reconstitutedResult.externallyShutDown());
         assertEquals(ResultType.EXTERNALLY_SHUT_DOWN, reconstitutedResult.getResultType());
     }

@@ -12,7 +12,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
             "<browserResult failedToLaunch=\"true\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"0\" />" +
+                    "<property name=\"browserId\" value=\"3\" />" +
                     "<property name=\"serverSideExceptionStackTrace\"><![CDATA[" +
                     StringUtility.stackTraceAsString(exception) +
                     "]]></property>" +
@@ -25,12 +25,12 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
         super.setUp();
         result = new BrowserResult();
         result.setFailedToLaunch();
-        result.setBrowserFileName("c:\\Program Files\\Internet Explorer\\iexplore.exe");
+        result.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
         result.setServerSideException(exception);
     }
 
     public void testSimple() {
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", result.getBrowserFileName());
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", result.getBrowser().getFileName());
         assertEquals(0d, result.getTime());
         assertEquals(ResultType.FAILED_TO_LAUNCH.getDisplayString(), result.getDisplayString());
         assertEquals(0, result.getTestCount());
@@ -51,8 +51,9 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     }
 
     public void testReconstituteFromXml() {
-        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(xml);
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowserFileName());
+        BrowserResultBuilder builder = new BrowserResultBuilder(new DummyBrowserSource("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
+        BrowserResult reconstitutedResult = builder.build(xml);
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getFileName());
         assertTrue(reconstitutedResult.failedToLaunch());
         assertEquals(ResultType.FAILED_TO_LAUNCH, reconstitutedResult.getResultType());
         //TODO: somehow they're not quite equal

@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.interceptor.BrowserResultInterceptor;
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 
@@ -49,7 +50,7 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     protected void submit() {
-        server.launchBrowserTestRun(new BrowserLaunchSpecification("browser2.exe"));
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("browser2.exe", 1)));
         HttpServletRequest request = new DummyHttpRequest(requestMap);
         server.accept(new BrowserResultInterceptor().build(request));
     }
@@ -88,10 +89,10 @@ public class ResultAcceptorTest extends TestCase {
         assertTrue(server.hasReceivedResultSince(time));
     }
 
-    public void testFindResultByIdInMemoryOrOnDisk() {
+    public void testFindResultByIdInMemoryOrOnDisk() throws InvalidBrowserIdException {
         assertNull(server.findResultWithId("ID_foo", 1));
         assertEquals("ID_foo", mockBrowserResultRepository.requestedId);
-        assertEquals(1, mockBrowserResultRepository.requestedBrowserId);
+        assertEquals(1, mockBrowserResultRepository.requestedBrowser.getId());
         submit();
         mockBrowserResultRepository.requestedId = null;
         assertFalse(server.getResults().isEmpty());
@@ -104,7 +105,7 @@ public class ResultAcceptorTest extends TestCase {
         assertTrue(server.getResults().isEmpty());
         server.findResultWithId("ID_foo", 1);
         assertEquals("ID_foo", mockBrowserResultRepository.requestedId);
-        assertEquals(1, mockBrowserResultRepository.requestedBrowserId);
+        assertEquals(1, mockBrowserResultRepository.requestedBrowser.getId());
     }
 
     public void testLog() {

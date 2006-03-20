@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.TestCase;
 import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 
 public class ExternallyShutDownStandaloneTestTest extends TestCase {
@@ -14,7 +15,7 @@ public class ExternallyShutDownStandaloneTestTest extends TestCase {
     protected ConfigurationSource configurationSource() {
         return new StubConfigurationSource() {
             public String browserFileNames() {
-                return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
+                return Browser.DEFAULT_SYSTEM_BROWSER;
             }
 
             public String url() {

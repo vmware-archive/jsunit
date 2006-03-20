@@ -2,10 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.ResultType;
-import net.jsunit.model.TestRunResult;
+import net.jsunit.model.*;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
@@ -14,8 +11,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
@@ -127,13 +124,13 @@ public class DistributedTestRunManagerTest extends TestCase {
         result.setOsString("my os");
         BrowserResult browserResult1 = new BrowserResult();
         browserResult1.setId("1");
-        browserResult1.setBrowserFileName("mybrowser1.exe");
+        browserResult1.setBrowser(new Browser("mybrowser.exe", 0));
         browserResult1.setTime(123.45);
         result.addBrowserResult(browserResult1);
 
         BrowserResult browserResult2 = new BrowserResult();
         browserResult2.setId("2");
-        browserResult2.setBrowserFileName("mybrowser2.exe");
+        browserResult2.setBrowser(new Browser("mybrowser.exe", 0));
         browserResult2.setFailedToLaunch();
         result.addBrowserResult(browserResult2);
 
@@ -144,7 +141,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         TestRunResult result = new TestRunResult(new URL(DummyConfigurationSource.REMOTE_URL_2));
         result.setOsString("my other os");
         BrowserResult browserResult1 = new BrowserResult();
-        browserResult1.setBrowserFileName("mybrowser3.exe");
+        browserResult1.setBrowser(new Browser("mybrowser.exe", 0));
         browserResult1.setId("a");
         browserResult1.setTime(123.45);
         browserResult1.setBaseURL("http://www.example.com");
@@ -154,7 +151,7 @@ public class DistributedTestRunManagerTest extends TestCase {
 
         BrowserResult browserResult2 = new BrowserResult();
         browserResult1.setId("b");
-        browserResult2.setBrowserFileName("mybrowser4.exe");
+        browserResult2.setBrowser(new Browser("mybrowser.exe", 0));
         browserResult2.setTimedOut();
         result.addBrowserResult(browserResult2);
 

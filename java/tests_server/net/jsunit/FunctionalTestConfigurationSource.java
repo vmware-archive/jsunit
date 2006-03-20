@@ -4,6 +4,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.model.Browser;
 
 public class FunctionalTestConfigurationSource implements ConfigurationSource {
 
@@ -26,7 +27,7 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
     }
 
     public String browserFileNames() {
-        return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER + "," + BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
+        return Browser.DEFAULT_SYSTEM_BROWSER + "," + Browser.DEFAULT_SYSTEM_BROWSER;
     }
 
     public String url() {

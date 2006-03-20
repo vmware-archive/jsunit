@@ -2,6 +2,7 @@ package net.jsunit.action;
 
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.BrowserTestRunner;
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import org.jdom.Element;
 
@@ -53,8 +54,8 @@ public class BlockingTestRunner implements BrowserTestRunner {
     public void logStatus(String message) {
     }
 
-    public List<String> getBrowserFileNames() {
-        return Arrays.asList(new String[]{"browser.exe"});
+    public List<Browser> getBrowsers() {
+        return Arrays.asList(new Browser[]{new Browser("browser.exe", 0)});
     }
 
     public int timeoutSeconds() {
@@ -65,7 +66,4 @@ public class BlockingTestRunner implements BrowserTestRunner {
         return false;
     }
 
-    public String getBrowserFileNameById(int browserId) {
-        return null;
-    }
 }

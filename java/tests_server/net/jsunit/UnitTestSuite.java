@@ -16,6 +16,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(BrowserResultInterceptorTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);
         result.addTestSuite(BrowserResultTest.class);
+        result.addTestSuite(BrowserTest.class);
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
         result.addTestSuite(ClientServerInteractionTest.class);
         result.addTestSuite(ClientServerConnectionTest.class);

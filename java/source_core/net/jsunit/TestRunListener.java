@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
 public interface TestRunListener {
@@ -10,8 +11,8 @@ public interface TestRunListener {
 
     void testRunFinished();
 
-    void browserTestRunStarted(String browserFileName);
+    void browserTestRunStarted(Browser browser);
 
-    void browserTestRunFinished(String browserFileName, BrowserResult result);
+    void browserTestRunFinished(Browser browser, BrowserResult result);
 
 }

@@ -9,11 +9,11 @@ import java.util.List;
 public class BrowserResultTest extends TestCase {
     private BrowserResult result;
 
-    private static String expectedXmlFragment =
+    private String expectedXmlFragment =
             "<browserResult id=\"An ID\" time=\"4.3\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"0\" />" +
+                    "<property name=\"browserId\" value=\"7\" />" +
                     "<property name=\"jsUnitVersion\" value=\"2.5\" />" +
                     "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
                     "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
@@ -29,6 +29,8 @@ public class BrowserResultTest extends TestCase {
                     "</testCase>" +
                     "</testCases>" +
                     "</browserResult>";
+
+    private BrowserSource browserSource = new DummyBrowserSource("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7);
 
     public void setUp() throws Exception {
         super.setUp();
@@ -69,7 +71,7 @@ public class BrowserResultTest extends TestCase {
         try {
             FileUtility.write(new File("resultXml.xml"), expectedXmlFragment);
             file = new File("resultXml.xml");
-            BrowserResult reconstitutedResult = new BrowserResultBuilder().build(file);
+            BrowserResult reconstitutedResult = new BrowserResultBuilder(browserSource).build(file);
             assertEquals(BrowserResult.class, reconstitutedResult.getClass());
             assertFields(reconstitutedResult);
         } finally {
@@ -79,7 +81,7 @@ public class BrowserResultTest extends TestCase {
     }
 
     public void testBuildFromXmlDocument() {
-        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(result.asXmlDocument());
+        BrowserResult reconstitutedResult = new BrowserResultBuilder(browserSource).build(result.asXmlDocument());
         assertFields(reconstitutedResult);
     }
 
@@ -122,9 +124,16 @@ public class BrowserResultTest extends TestCase {
         assertFalse(result.externallyShutDown());
     }
 
+    public void testIsForBrowser() throws Exception {
+        assertFalse(result.isForBrowser(new Browser("mybrowser.exe", 9)));
+        assertFalse(result.isForBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 9)));
+        assertFalse(result.isForBrowser(new Browser("mybrowser.exe", 7)));
+        assertTrue(result.isForBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7)));
+    }
+
     private BrowserResult createBrowserResult() {
         BrowserResult browserResult = new BrowserResult();
-        browserResult.setBrowserFileName("c:\\Program Files\\Internet Explorer\\iexplore.exe");
+        browserResult.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7));
         browserResult.setJsUnitVersion("2.5");
         browserResult.setId("An ID");
         browserResult.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");

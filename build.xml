@@ -154,12 +154,14 @@
     </target>
 
     <target name="_run_unit_tests" depends="_compile_tests" description="Runs the JsUnit Java unit tests">
-        <junit showoutput="yes" printsummary="withOutAndErr">
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
             <formatter type="plain" usefile="false"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
             <test name="net.jsunit.UnitTestSuite"/>
         </junit>
+        <fail if="junit_test_failed"/>
     </target>
 
     <target name="_run_all_tests" depends="_create_jar,_compile_tests"

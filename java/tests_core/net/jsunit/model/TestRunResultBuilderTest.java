@@ -7,7 +7,7 @@ import net.jsunit.utility.XmlUtility;
 public class TestRunResultBuilderTest extends TestCase {
 
     public void testSimple() throws Exception {
-        TestRunResultBuilder builder = new TestRunResultBuilder();
+        TestRunResultBuilder builder = new TestRunResultBuilder(new DummyBrowserSource("mybrowser.exe", 1));
         TestRunResult result = builder.build(XmlUtility.asXmlDocument(fullValidResult()));
         assertEquals(ResultType.SUCCESS, result.getResultType());
         assertEquals(2, result.getChildren().size());

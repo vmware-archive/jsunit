@@ -4,6 +4,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.logging.FileBrowserResultRepository;
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.StringUtility;
 
@@ -58,21 +59,17 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     public void accept(BrowserResult result) {
         long timeReceived = System.currentTimeMillis();
-        String submittingBrowserFileName = null;
-        int submittingBrowserId = -1;
-        if (launchTestRunCommand != null) {
-            submittingBrowserFileName = launchTestRunCommand.getBrowserFileName();
-            submittingBrowserId = configuration.getBrowserId(submittingBrowserFileName);
-        }
+        if (launchTestRunCommand == null)
+            return;
+        Browser submittingBrowser = launchTestRunCommand.getBrowser();
         endBrowser();
 
-        result.setBrowserFileName(submittingBrowserFileName);
-        result.setBrowserId(submittingBrowserId);
+        result.setBrowser(submittingBrowser);
 
         killTimeoutChecker();
-        BrowserResult existingResultWithSameId = findResultWithId(result.getId(), submittingBrowserId);
+        BrowserResult existingResultWithSameId = findResultWithId(result.getId(), submittingBrowser);
         for (TestRunListener listener : browserTestRunListeners)
-            listener.browserTestRunFinished(submittingBrowserFileName, result);
+            listener.browserTestRunFinished(submittingBrowser, result);
         if (existingResultWithSameId != null)
             results.remove(existingResultWithSameId);
         results.add(result);
@@ -94,16 +91,23 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         results.clear();
     }
 
-    public BrowserResult findResultWithId(String id, int browserId) {
-        BrowserResult result = findResultWithIdInResultList(id, browserId);
+    public BrowserResult findResultWithId(String id, int browserId) throws InvalidBrowserIdException {
+        Browser browser = configuration.getBrowserById(browserId);
+        if (browser == null)
+            throw new InvalidBrowserIdException(browserId);
+        return findResultWithId(id, browser);
+    }
+
+    private BrowserResult findResultWithId(String id, Browser browser) {
+        BrowserResult result = findResultWithIdInResultList(id, browser);
         if (result == null)
-            result = browserResultRepository.retrieve(id, browserId);
+            result = browserResultRepository.retrieve(id, browser);
         return result;
     }
 
-    private BrowserResult findResultWithIdInResultList(String id, int browserId) {
+    private BrowserResult findResultWithIdInResultList(String id, Browser browser) {
         for (BrowserResult result : getResults()) {
-            if (result.hasId(id) && result.getBrowserId() == browserId)
+            if (result.hasId(id) && result.isForBrowser(browser))
                 return result;
         }
         return null;
@@ -124,8 +128,8 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return "JsUnit Server";
     }
 
-    public List<String> getBrowserFileNames() {
-        return configuration.getBrowserFileNames();
+    public List<Browser> getBrowsers() {
+        return configuration.getBrowsers();
     }
 
     public boolean hasReceivedResultSince(long launchTime) {
@@ -178,11 +182,12 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         waitUntilLastReceivedTimeHasPassed();
         long launchTime = System.currentTimeMillis();
         launchTestRunCommand = new LaunchTestRunCommand(launchSpec, configuration);
-        String browserFileName = launchTestRunCommand.getBrowserFileName();
+        Browser browser = launchTestRunCommand.getBrowser();
+        String browserFileName = browser.getFileName();
         try {
-            logStatus("Launching " + launchTestRunCommand.getBrowserFileName() + " on " + launchTestRunCommand.getTestURL());
+            logStatus("Launching " + browserFileName + " on " + launchTestRunCommand.getTestURL());
             for (TestRunListener listener : browserTestRunListeners)
-                listener.browserTestRunStarted(browserFileName);
+                listener.browserTestRunStarted(browser);
             this.browserProcess = processStarter.execute(launchTestRunCommand.generateArray());
             startTimeoutChecker(launchTime);
         } catch (Throwable throwable) {
@@ -192,11 +197,11 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private void handleCrashWhileLaunching(Throwable throwable) {
-        String browserFileName = launchTestRunCommand.getBrowserFileName();
-        logStatus("Browser " + browserFileName + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
+        Browser browser = launchTestRunCommand.getBrowser();
+        logStatus("Browser " + browser.getFileName() + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
         failedToLaunchBrowserResult.setFailedToLaunch();
-        failedToLaunchBrowserResult.setBrowserFileName(browserFileName);
+        failedToLaunchBrowserResult.setBrowser(browser);
         failedToLaunchBrowserResult.setServerSideException(throwable);
         accept(failedToLaunchBrowserResult);
     }
@@ -210,7 +215,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private void startTimeoutChecker(long launchTime) {
-        timeoutChecker = new TimeoutChecker(browserProcess, launchTestRunCommand.getBrowserFileName(), launchTime, this);
+        timeoutChecker = new TimeoutChecker(browserProcess, launchTestRunCommand.getBrowser(), launchTime, this);
         timeoutChecker.start();
     }
 
@@ -249,10 +254,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     public int timeoutSeconds() {
         return configuration.getTimeoutSeconds();
-    }
-
-    public String getBrowserFileNameById(int browserId) {
-        return configuration.getBrowserFileNameById(browserId);
     }
 
 }

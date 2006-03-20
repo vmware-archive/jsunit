@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.XmlUtility;
 
@@ -16,14 +17,14 @@ public class TestRunNotifierServer implements TestRunListener {
         serverSideConnection = new ServerSideConnection(new StopMessageReceiver(runner), port);
     }
 
-    public void browserTestRunStarted(String browserFileName) {
+    public void browserTestRunStarted(Browser browser) {
         serverSideConnection.sendMessage(BROWSER_TEST_RUN_STARTED);
-        serverSideConnection.sendMessage(browserFileName);
+        serverSideConnection.sendMessage(String.valueOf(browser.getId()));
     }
 
-    public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+    public void browserTestRunFinished(Browser browser, BrowserResult result) {
         serverSideConnection.sendMessage(BROWSER_TEST_RUN_FINISHED);
-        serverSideConnection.sendMessage(browserFileName);
+        serverSideConnection.sendMessage(String.valueOf(browser.getId()));
         serverSideConnection.sendMessage(XmlUtility.asString(result.asXmlDocument()));
         serverSideConnection.sendMessage(END_XML);
     }

@@ -12,7 +12,12 @@ import java.util.logging.Logger;
 
 public class BrowserResultBuilder {
 
-    Logger logger = Logger.getLogger("net.jsunit");
+    private Logger logger = Logger.getLogger("net.jsunit");
+    private BrowserSource browserSource;
+
+    public BrowserResultBuilder(BrowserSource browserSource) {
+        this.browserSource = browserSource;
+    }
 
     public BrowserResult build(File file) {
         try {
@@ -87,9 +92,11 @@ public class BrowserResultBuilder {
 
             if (BrowserResultWriter.JSUNIT_VERSION.equals(key))
                 result.setJsUnitVersion(value);
-            else if (BrowserResultWriter.BROWSER_FILE_NAME.equals(key))
-                result.setBrowserFileName(value);
-            else if (BrowserResultWriter.USER_AGENT.equals(key))
+            else if (BrowserResultWriter.BROWSER_ID.equals(key)) {
+                int browserId = Integer.valueOf(value);
+                Browser browser = browserSource.getBrowserById(browserId);
+                result.setBrowser(browser);
+            } else if (BrowserResultWriter.USER_AGENT.equals(key))
                 result.setUserAgent(value);
             else if (BrowserResultWriter.REMOTE_ADDRESS.equals(key))
                 result.setRemoteAddress(value);

@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.Browser;
 import net.jsunit.model.TestRunResult;
 
 import java.util.Arrays;
@@ -13,7 +14,7 @@ public class TestRunManager {
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult;
     private final String overrideUrl;
-    private List<String> browserFileNames;
+    private List<Browser> browsers;
 
     public static void main(String[] args) throws Exception {
         JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), true);
@@ -48,7 +49,7 @@ public class TestRunManager {
     public TestRunManager(BrowserTestRunner testRunner, String overrideUrl) {
         this.testRunner = testRunner;
         this.overrideUrl = overrideUrl;
-        browserFileNames = testRunner.getBrowserFileNames();
+        browsers = testRunner.getBrowsers();
     }
 
     public void runTests() {
@@ -56,10 +57,10 @@ public class TestRunManager {
         testRunner.logStatus("Starting Test Run");
         testRunner.startTestRun();
         try {
-            for (String browserFileName : browserFileNames) {
-                BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browserFileName, overrideUrl);
+            for (Browser browser : browsers) {
+                BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browser, overrideUrl);
                 long launchTime = testRunner.launchBrowserTestRun(launchSpec);
-                waitForResultToBeSubmitted(browserFileName, launchTime);
+                waitForResultToBeSubmitted(browser, launchTime);
                 if (testRunner.isAlive())
                     testRunResult.addBrowserResult(testRunner.lastResult());
                 else
@@ -76,8 +77,8 @@ public class TestRunManager {
         testRunResult.initializeProperties();
     }
 
-    private void waitForResultToBeSubmitted(String browserFileName, long launchTime) {
-        testRunner.logStatus("Waiting for " + browserFileName + " to submit result");
+    private void waitForResultToBeSubmitted(Browser browser, long launchTime) {
+        testRunner.logStatus("Waiting for " + browser.getFileName() + " to submit result");
         long secondsWaited = 0;
         while (testRunner.isAlive() && !testRunner.hasReceivedResultSince(launchTime)) {
             try {
@@ -94,10 +95,14 @@ public class TestRunManager {
         return testRunResult;
     }
 
-    public void limitToBrowserWithId(int browserId) throws InvalidBrowserIdException {
-        String browserFileName = testRunner.getBrowserFileNameById(browserId);
-        if (browserFileName == null)
-            throw new InvalidBrowserIdException(browserId);
-        browserFileNames = Arrays.asList(new String[]{browserFileName});
+    public void limitToBrowserWithId(int chosenBrowserId) throws InvalidBrowserIdException {
+        Browser chosenBrowser = null;
+        for (Browser browser : browsers) {
+            if (browser.hasId(chosenBrowserId))
+                chosenBrowser = browser;
+        }
+        if (chosenBrowser == null)
+            throw new InvalidBrowserIdException(chosenBrowserId);
+        browsers = Arrays.asList(chosenBrowser);
     }
 }

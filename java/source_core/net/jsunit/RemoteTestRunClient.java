@@ -1,15 +1,19 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultBuilder;
+import net.jsunit.model.BrowserSource;
 
 public class RemoteTestRunClient implements MessageReceiver {
 
+    private BrowserSource browserSource;
     private final TestRunListener listener;
     private MessageReceiver complexMessageReceiver;
     private ClientSideConnection clientSideConnection;
 
-    public RemoteTestRunClient(TestRunListener listener, int serverPort) {
+    public RemoteTestRunClient(BrowserSource browserSource, TestRunListener listener, int serverPort) {
+        this.browserSource = browserSource;
         this.listener = listener;
         clientSideConnection = new ClientSideConnection(this, serverPort);
     }
@@ -37,22 +41,25 @@ public class RemoteTestRunClient implements MessageReceiver {
 
     private class TestRunStartedReceiver implements MessageReceiver {
 
-        public void messageReceived(String browserFileName) {
-            listener.browserTestRunStarted(browserFileName);
+        public void messageReceived(String browserIdString) {
+            int browserId = Integer.parseInt(browserIdString);
+            Browser browser = browserSource.getBrowserById(browserId);
+            listener.browserTestRunStarted(browser);
         }
     }
 
     private class TestRunFinishedReceiver implements MessageReceiver {
 
-        private String browserFileName;
+        private Browser browser;
         private String xmlString = "";
 
         public void messageReceived(String message) {
-            if (browserFileName == null)
-                browserFileName = message;
-            else if (message.equals(TestRunNotifierServer.END_XML)) {
-                BrowserResult result = new BrowserResultBuilder().build(xmlString);
-                listener.browserTestRunFinished(browserFileName, result);
+            if (browser == null) {
+                int browserId = Integer.parseInt(message);
+                browser = browserSource.getBrowserById(browserId);
+            } else if (message.equals(TestRunNotifierServer.END_XML)) {
+                BrowserResult result = new BrowserResultBuilder(browserSource).build(xmlString);
+                listener.browserTestRunFinished(browser, result);
             } else if (message.trim().length() > 0) {
                 xmlString += message;
                 xmlString += "\n";

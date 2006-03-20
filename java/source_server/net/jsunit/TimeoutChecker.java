@@ -1,22 +1,23 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
 public class TimeoutChecker extends Thread {
 
     private final BrowserTestRunner runner;
     private long launchTime;
-    private final String browserFileName;
+    private final Browser browser;
     private boolean alive;
     private long checkInterval;
     private Process browserProcess;
 
-    public TimeoutChecker(Process browserProcess, String browserFileName, long launchTime, BrowserTestRunner runner) {
-        this(browserProcess, browserFileName, launchTime, runner, 100);
+    public TimeoutChecker(Process browserProcess, Browser browser, long launchTime, BrowserTestRunner runner) {
+        this(browserProcess, browser, launchTime, runner, 100);
     }
 
-    public TimeoutChecker(Process browserProcess, String browserFileName, long launchTime, BrowserTestRunner runner, long checkInterval) {
-        this.browserFileName = browserFileName;
+    public TimeoutChecker(Process browserProcess, Browser browser, long launchTime, BrowserTestRunner runner, long checkInterval) {
+        this.browser = browser;
         this.runner = runner;
         this.launchTime = launchTime;
         this.checkInterval = checkInterval;
@@ -28,7 +29,7 @@ public class TimeoutChecker extends Thread {
 
         while (alive && !runner.hasReceivedResultSince(launchTime)) {
             if (waitedTooLong()) {
-                runner.logStatus("Browser " + browserFileName + " timed out after " + runner.timeoutSeconds() + " seconds");
+                runner.logStatus("Browser " + browser.getFileName() + " timed out after " + runner.timeoutSeconds() + " seconds");
                 runner.accept(createTimedOutBrowserResult());
                 return;
             }
@@ -63,7 +64,7 @@ public class TimeoutChecker extends Thread {
 
     private BrowserResult createRawBrowserResult() {
         BrowserResult result = new BrowserResult();
-        result.setBrowserFileName(browserFileName);
+        result.setBrowser(browser);
         return result;
     }
 

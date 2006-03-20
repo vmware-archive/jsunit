@@ -6,6 +6,7 @@ import junit.framework.TestSuite;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
+import net.jsunit.model.Browser;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 
@@ -30,10 +31,10 @@ public class StandaloneTest extends TestCase {
         TestSuite suite = new TestSuite();
         ConfigurationSource originalSource = Configuration.resolveSource();
         Configuration configuration = new Configuration(originalSource);
-        for (final String browserFileName : configuration.getBrowserFileNames())
+        for (final Browser browser : configuration.getBrowsers())
             suite.addTest(new StandaloneTest(new DelegatingConfigurationSource(originalSource) {
                 public String browserFileNames() {
-                    return browserFileName;
+                    return browser.getFileName();
                 }
             }));
         return suite;

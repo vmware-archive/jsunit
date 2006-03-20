@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 
 import java.io.InputStream;
@@ -17,7 +18,7 @@ public class TimeoutCheckerTest extends TestCase {
         mockRunner = new MockBrowserTestRunner();
         mockRunner.timeoutSeconds = Integer.MAX_VALUE;
         mockProcess = new MockProcess();
-        checker = new TimeoutChecker(mockProcess, "mybrowser.exe", 1, mockRunner, 1);
+        checker = new TimeoutChecker(mockProcess, new Browser("mybrowser.exe", 0), 1, mockRunner, 1);
         checker.start();
     }
 

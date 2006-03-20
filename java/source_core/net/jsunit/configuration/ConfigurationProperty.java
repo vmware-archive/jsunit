@@ -1,5 +1,6 @@
 package net.jsunit.configuration;
 
+import net.jsunit.model.Browser;
 import net.jsunit.utility.StringUtility;
 import org.jdom.Element;
 
@@ -13,16 +14,21 @@ public enum ConfigurationProperty {
     BROWSER_FILE_NAMES("browserFileNames", "Browser file names", false, true) {
 
         public String getValueString(Configuration configuration) {
-            return StringUtility.commaSeparatedString(configuration.getBrowserFileNames());
+            StringBuffer buffer = new StringBuffer();
+            for (Iterator it = configuration.getBrowsers().iterator(); it.hasNext();) {
+                Browser browser = (Browser) it.next();
+                buffer.append(browser.getFileName());
+                if (it.hasNext())
+                    buffer.append(",");
+            }
+            return buffer.toString();
         }
 
         protected void addContentTo(Configuration configuration, Element element) {
-            List<String> browserFileNames = configuration.getBrowserFileNames();
-            for (int i = 0; i < browserFileNames.size(); i++) {
-                String fileName = browserFileNames.get(i);
+            for (Browser browser : configuration.getBrowsers()) {
                 Element fileNameElement = new Element("browserFileName");
-                fileNameElement.setAttribute("id", String.valueOf(i));
-                fileNameElement.setText(fileName);
+                fileNameElement.setAttribute("id", String.valueOf(browser.getId()));
+                fileNameElement.setText(browser.getFileName());
                 element.addContent(fileNameElement);
             }
         }
@@ -30,7 +36,12 @@ public enum ConfigurationProperty {
         public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
             String browserFileNamesString = source.browserFileNames();
             try {
-                configuration.setBrowserFileNames(StringUtility.listFromCommaDelimitedString(browserFileNamesString));
+                List<String> browserFileNames = StringUtility.listFromCommaDelimitedString(browserFileNamesString);
+                int id = 0;
+                List<Browser> browsers = new ArrayList<Browser>();
+                for (String browserFileName : browserFileNames)
+                    browsers.add(new Browser(browserFileName, id++));
+                configuration.setBrowsers(browsers);
             } catch (Exception e) {
                 throw new ConfigurationException(this, browserFileNamesString, e);
             }

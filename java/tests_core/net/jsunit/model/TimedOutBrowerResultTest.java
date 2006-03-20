@@ -8,7 +8,7 @@ public class TimedOutBrowerResultTest extends TestCase {
             "<browserResult timedOut=\"true\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"0\" />" +
+                    "<property name=\"browserId\" value=\"3\" />" +
                     "</properties>" +
                     "</browserResult>";
 
@@ -18,11 +18,11 @@ public class TimedOutBrowerResultTest extends TestCase {
         super.setUp();
         browserResult = new BrowserResult();
         browserResult.setTimedOut();
-        browserResult.setBrowserFileName("c:\\Program Files\\Internet Explorer\\iexplore.exe");
+        browserResult.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
     }
 
     public void testSimple() {
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", browserResult.getBrowserFileName());
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", browserResult.getBrowser().getFileName());
         assertEquals(ResultType.TIMED_OUT, browserResult.getResultType());
     }
 
@@ -38,8 +38,9 @@ public class TimedOutBrowerResultTest extends TestCase {
     }
 
     public void testReconstituteFromXml() {
-        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(xml);
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowserFileName());
+        BrowserResultBuilder builder = new BrowserResultBuilder(new DummyBrowserSource("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
+        BrowserResult reconstitutedResult = builder.build(xml);
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getFileName());
         assertTrue(reconstitutedResult.timedOut());
         assertEquals(ResultType.TIMED_OUT, reconstitutedResult.getResultType());
 

@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
 public class MockTestRunListener implements TestRunListener {
@@ -8,19 +9,19 @@ public class MockTestRunListener implements TestRunListener {
     public boolean testRunFinishedCalled;
     public boolean browserTestRunStartedCalled;
     public boolean browserTestRunFinishedCalled;
-    public String browserFileName;
+    public Browser browser;
     public boolean isReady;
     public BrowserResult result;
 
-    public void browserTestRunFinished(String browserFileName, BrowserResult result) {
+    public void browserTestRunFinished(Browser browser, BrowserResult result) {
         browserTestRunFinishedCalled = true;
-        this.browserFileName = browserFileName;
+        this.browser = browser;
         this.result = result;
     }
 
-    public void browserTestRunStarted(String browserFileName) {
+    public void browserTestRunStarted(Browser browser) {
         browserTestRunStartedCalled = true;
-        this.browserFileName = browserFileName;
+        this.browser = browser;
     }
 
     public boolean isReady() {
@@ -40,7 +41,7 @@ public class MockTestRunListener implements TestRunListener {
         testRunFinishedCalled = false;
         browserTestRunStartedCalled = false;
         browserTestRunFinishedCalled = false;
-        browserFileName = null;
+        browser = null;
         isReady = false;
         result = null;
     }

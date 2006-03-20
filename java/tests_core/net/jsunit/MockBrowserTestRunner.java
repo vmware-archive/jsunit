@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import org.jdom.Element;
 
@@ -47,7 +48,7 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
         disposeCalled = true;
     }
 
-    public BrowserResult findResultWithId(String id, int browserId) {
+    public BrowserResult findResultWithId(String id, int browserId) throws InvalidBrowserIdException {
         idPassed = id;
         browserIdPassed = browserId;
         return resultToReturn;
@@ -57,8 +58,8 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
         logMessages.add(message);
     }
 
-    public List<String> getBrowserFileNames() {
-        return Arrays.asList(new String[]{"mybrowser1.exe", "mybrowser2.exe"});
+    public List<Browser> getBrowsers() {
+        return Arrays.asList(new Browser[]{new Browser("mybrowser1.exe", 0), new Browser("mybrowser2.exe", 1)});
     }
 
     public int timeoutSeconds() {
@@ -71,17 +72,6 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
 
     public boolean isAlive() {
         return true;
-    }
-
-    public String getBrowserFileNameById(int browserId) {
-        switch (browserId) {
-            case 0 :
-                return "mybrowser1.exe";
-            case 1 :
-                return "mybrowser2.exe";
-            default:
-                return null;
-        }
     }
 
 }

@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
 import java.util.List;
@@ -20,15 +21,14 @@ public interface BrowserTestRunner extends XmlRenderable {
 
     void dispose();
 
-    BrowserResult findResultWithId(String id, int browserId);
+    BrowserResult findResultWithId(String id, int browserId) throws InvalidBrowserIdException;
 
     void logStatus(String message);
 
-    List<String> getBrowserFileNames();
+    List<Browser> getBrowsers();
 
     int timeoutSeconds();
 
     boolean isAlive();
 
-    String getBrowserFileNameById(int browserId);
 }

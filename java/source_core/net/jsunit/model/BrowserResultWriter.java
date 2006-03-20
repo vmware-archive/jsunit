@@ -64,8 +64,12 @@ public class BrowserResultWriter {
     private void addPropertiesElementTo(Element element) {
         Element properties = new Element(PROPERTIES);
         element.addContent(properties);
-        addProperty(properties, BROWSER_FILE_NAME, browserResult.getBrowserFileName());
-        addProperty(properties, BROWSER_ID, String.valueOf(browserResult.getBrowserId()));
+
+        Browser browser = browserResult.getBrowser();
+        if (browser != null) {
+            addProperty(properties, BROWSER_FILE_NAME, browser.getFileName());
+            addProperty(properties, BROWSER_ID, String.valueOf(browserResult.getBrowser().getId()));
+        }
         if (browserResult.completedTestRun()) {
             addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
             addProperty(properties, USER_AGENT, browserResult.getUserAgent());

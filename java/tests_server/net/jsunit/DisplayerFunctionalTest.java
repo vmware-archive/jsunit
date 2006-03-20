@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
@@ -17,15 +18,24 @@ public class DisplayerFunctionalTest extends FunctionalTestCase {
 
     public void testInvalidId() throws Exception {
         String id = String.valueOf(System.currentTimeMillis());
-        webTester.beginAt("displayer?id=" + id + "&browserId=7");
+        webTester.beginAt("displayer?id=" + id + "&browserId=0");
         Document responseDocument = responseXmlDocument();
 
         Element rootElement = responseDocument.getRootElement();
-        assertErrorResponse(rootElement, "No Test Result has been submitted with ID '" + id + "' for browser ID '7'");
+        assertErrorResponse(rootElement, "No Test Result has been submitted with ID '" + id + "' for browser ID '0'");
+    }
+
+    public void testInvalidBrowserId() throws Exception {
+        String id = String.valueOf(System.currentTimeMillis());
+        webTester.beginAt("displayer?id=" + id + "&browserId=1000");
+        Document responseDocument = responseXmlDocument();
+
+        Element rootElement = responseDocument.getRootElement();
+        assertErrorResponse(rootElement, "Invalid Browser ID '1000'");
     }
 
     public void testValid() throws Exception {
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER));
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0)));
         BrowserResult browserResult = new BrowserResult();
         String id = String.valueOf(System.currentTimeMillis());
         browserResult.setId(id);

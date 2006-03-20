@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.Browser;
 
 public class LaunchTestRunCommand {
 
@@ -12,12 +13,12 @@ public class LaunchTestRunCommand {
         this.launchSpec = launchSpec;
     }
 
-    public String getBrowserFileName() {
-        return launchSpec.getBrowserFileName();
+    public Browser getBrowser() {
+        return launchSpec.getBrowser();
     }
 
     public String getBrowserKillCommand() {
-        String killCommand = launchSpec.getBrowserKillCommand();
+        String killCommand = launchSpec.getBrowser().getKillCommand();
         if (killCommand == null && launchSpec.isForDefaultBrowser()) {
             killCommand = PlatformType.resolve().getDefaultBrowserKillCommand();
         }
@@ -37,7 +38,7 @@ public class LaunchTestRunCommand {
             PlatformType platformType = PlatformType.resolve();
             return platformType.getDefaultCommandLineBrowserArray();
         }
-        return new String[]{launchSpec.getBrowserFileName()};
+        return new String[]{launchSpec.getBrowser().getFileName()};
     }
 
     private String generateTestUrlString() throws NoUrlSpecifiedException {

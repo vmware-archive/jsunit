@@ -2,6 +2,7 @@ package net.jsunit.configuration;
 
 import junit.framework.TestCase;
 import net.jsunit.StubConfigurationSource;
+import net.jsunit.model.Browser;
 import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
 
@@ -14,10 +15,10 @@ public class ConfigurationTest extends TestCase {
 
     public void testFull() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-        List<String> expectedBrowsers = new ArrayList<String>();
-        expectedBrowsers.add("browser1.exe");
-        expectedBrowsers.add("browser2.exe");
-        assertEquals(expectedBrowsers, configuration.getBrowserFileNames());
+        List<Browser> expectedBrowsers = new ArrayList<Browser>();
+        expectedBrowsers.add(new Browser("browser1.exe", 0));
+        expectedBrowsers.add(new Browser("browser2.exe", 1));
+        assertEquals(expectedBrowsers, configuration.getBrowsers());
         assertEquals(new File("logs" + File.separator + "directory"), configuration.getLogsDirectory());
         assertEquals(1234, configuration.getPort());
         assertEquals(new File("resource" + File.separator + "base"), configuration.getResourceBase());
@@ -178,9 +179,9 @@ public class ConfigurationTest extends TestCase {
 
     public void testGetBrowserById() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-        assertEquals("browser1.exe", configuration.getBrowserFileNameById(0));
-        assertEquals("browser2.exe", configuration.getBrowserFileNameById(1));
-        assertNull(configuration.getBrowserFileNameById(900));
+        assertEquals(new Browser("browser1.exe", 0), configuration.getBrowserById(0));
+        assertEquals(new Browser("browser2.exe", 1), configuration.getBrowserById(1));
+        assertNull(configuration.getBrowserById(900));
     }
 
     public void testGetRemoteMachineURLById() throws Exception {
@@ -231,12 +232,6 @@ public class ConfigurationTest extends TestCase {
 
         assertEquals("-url", arguments[index++]);
         assertEquals("http://www.example.com:1234/", arguments[index]);
-    }
-
-    public void testGetBrowserId() throws Exception {
-        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-        assertEquals(0, configuration.getBrowserId("browser1.exe"));
-        assertEquals(1, configuration.getBrowserId("browser2.exe"));
     }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {

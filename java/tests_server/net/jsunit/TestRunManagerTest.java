@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.SystemUtility;
@@ -67,8 +68,8 @@ public class TestRunManagerTest extends TestCase {
 
     static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
 
-        public List<String> getBrowserFileNames() {
-            return Arrays.asList(new String[]{"browser1.exe", "browser2.exe"});
+        public List<Browser> getBrowsers() {
+            return Arrays.asList(new Browser("browser1.exe", 0), new Browser("browser2.exe", 1));
         }
 
         public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
@@ -114,22 +115,22 @@ public class TestRunManagerTest extends TestCase {
             return true;
         }
 
-        public String getBrowserFileNameById(int browserId) {
-            return null;
-        }
-
     }
 
     static class FailingBrowserTestRunner implements BrowserTestRunner {
 
-        private String currentBrowser;
+        private Browser currentBrowser;
 
-        public List<String> getBrowserFileNames() {
-            return Arrays.asList(new String[]{"browser1.exe", "browser2.exe", "browser3.exe"});
+        public List<Browser> getBrowsers() {
+            return Arrays.asList(
+                    new Browser("browser1.exe", 0),
+                    new Browser("browser2.exe", 1),
+                    new Browser("browser3.exe", 2)
+            );
         }
 
         public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-            currentBrowser = launchSpec.getBrowserFileName();
+            currentBrowser = launchSpec.getBrowser();
             return 0;
         }
 
@@ -138,9 +139,9 @@ public class TestRunManagerTest extends TestCase {
         }
 
         public BrowserResult lastResult() {
-            if (currentBrowser.indexOf("1") != -1)
+            if (currentBrowser.hasId(0))
                 return new DummyBrowserResult(false, 0, 1);
-            else if (currentBrowser.indexOf("2") != -1)
+            else if (currentBrowser.hasId(1))
                 return new DummyBrowserResult(false, 1, 0);
             else
                 return new DummyBrowserResult(false, 2, 3);
@@ -177,9 +178,6 @@ public class TestRunManagerTest extends TestCase {
             return true;
         }
 
-        public String getBrowserFileNameById(int browserId) {
-            return null;
-        }
     }
 
     static class KillableBrowserTestRunner implements BrowserTestRunner {
@@ -221,8 +219,8 @@ public class TestRunManagerTest extends TestCase {
         public void logStatus(String message) {
         }
 
-        public List<String> getBrowserFileNames() {
-            return Arrays.asList(new String[]{"browser1.exe"});
+        public List<Browser> getBrowsers() {
+            return Arrays.asList(new Browser("browser1.exe", 0));
         }
 
         public int timeoutSeconds() {
@@ -231,10 +229,6 @@ public class TestRunManagerTest extends TestCase {
 
         public boolean isAlive() {
             return isAlive;
-        }
-
-        public String getBrowserFileNameById(int browserId) {
-            return null;
         }
 
         public Element asXml() {

@@ -1,7 +1,9 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.DummyBrowserSource;
 import net.jsunit.utility.XmlUtility;
 
 public class RemoteTestRunClientTest extends TestCase {
@@ -12,7 +14,7 @@ public class RemoteTestRunClientTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         listener = new MockTestRunListener();
-        client = new RemoteTestRunClient(listener, -1);
+        client = new RemoteTestRunClient(new DummyBrowserSource("mybrowser.exe", 3), listener, -1);
     }
 
     public void testTestRunStartedMessage() {
@@ -27,9 +29,9 @@ public class RemoteTestRunClientTest extends TestCase {
 
     public void testBrowserTestRunStartedMessage() {
         client.messageReceived("browserTestRunStarted");
-        client.messageReceived("mybrowser.exe");
+        client.messageReceived("3");
         assertTrue(listener.browserTestRunStartedCalled);
-        assertEquals("mybrowser.exe", listener.browserFileName);
+        assertEquals(new Browser("mybrowser.exe", 3), listener.browser);
     }
 
     public void testBrowserTestRunFinishedMessage() {
@@ -42,14 +44,14 @@ public class RemoteTestRunClientTest extends TestCase {
         result.setUserAgent("my browser version 5.6");
         result.setTestCaseStrings(new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
         client.messageReceived("browserTestRunFinished");
-        client.messageReceived("mybrowser.exe");
+        client.messageReceived("3");
         String xml = XmlUtility.asString(result.asXmlDocument());
         String[] lines = xml.split("\r\n");
         for (String line : lines)
             client.messageReceived(line);
         client.messageReceived("endXml");
         assertTrue(listener.browserTestRunFinishedCalled);
-        assertEquals("mybrowser.exe", listener.browserFileName);
+        assertEquals(new Browser("mybrowser.exe", 3), listener.browser);
         assertEquals(xml, XmlUtility.asString(listener.result.asXmlDocument()));
     }
 

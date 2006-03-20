@@ -2,6 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 
 public class OverrideURLDistributedTestTest extends EndToEndTestCase {
@@ -9,7 +10,7 @@ public class OverrideURLDistributedTestTest extends EndToEndTestCase {
     protected ConfigurationSource farmSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
-                return "http://localhost:"+port;
+                return "http://localhost:" + port;
             }
         };
     }
@@ -17,15 +18,15 @@ public class OverrideURLDistributedTestTest extends EndToEndTestCase {
     protected ConfigurationSource serverSourceWithBadTestURL() {
         return new StubConfigurationSource() {
             public String browserFileNames() {
-                return BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER;
+                return Browser.DEFAULT_SYSTEM_BROWSER;
             }
 
             public String url() {
                 return "http://www.example.com";
             }
-            
+
             public String port() {
-            	return String.valueOf(port);
+                return String.valueOf(port);
             }
         };
     }
@@ -33,8 +34,8 @@ public class OverrideURLDistributedTestTest extends EndToEndTestCase {
     public void testOverrideURL() throws Throwable {
         DistributedTest test = new DistributedTest(serverSourceWithBadTestURL(), farmSource());
         test.getDistributedTestRunManager().setOverrideURL(
-            "http://localhost:"+port+"/jsunit/testRunner.html?" +
-            "testPage=http://localhost:"+port+"/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
+                "http://localhost:" + port + "/jsunit/testRunner.html?" +
+                        "testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
         );
         TestResult result = test.run();
 

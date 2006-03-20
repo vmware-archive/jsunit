@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.utility.XmlUtility;
@@ -8,7 +9,7 @@ import org.jdom.Document;
 public class AcceptorFunctionalTest extends FunctionalTestCase {
 
     public void testSubmission() throws Exception {
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER));
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0)));
 
         StringBuffer buffer = new StringBuffer();
         addParameter(buffer, BrowserResultWriter.ID, "ID_foo", true);
@@ -21,8 +22,7 @@ public class AcceptorFunctionalTest extends FunctionalTestCase {
 
         BrowserResult result = new BrowserResult();
         result.setId("ID_foo");
-        result.setBrowserId(0);
-        result.setBrowserFileName(BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER);
+        result.setBrowser(new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0));
         result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
         result.setTime(4.3);
         result.setJsUnitVersion("12.5");

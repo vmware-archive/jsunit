@@ -1,7 +1,9 @@
 package net.jsunit.logging;
 
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultBuilder;
+import net.jsunit.model.BrowserSource;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.XmlUtility;
 
@@ -19,8 +21,8 @@ public class FileBrowserResultRepository implements BrowserResultRepository {
             logsDirectory.mkdir();
     }
 
-    private File logFileForId(String id, int browserId) {
-        return new File(logsDirectory + File.separator + LOG_PREFIX + id + "." + browserId + ".xml");
+    private File logFileForId(String id, Browser browser) {
+        return new File(logsDirectory + File.separator + LOG_PREFIX + id + "." + browser.getId() + ".xml");
     }
 
     public void deleteDirectory(String directoryName) {
@@ -30,13 +32,17 @@ public class FileBrowserResultRepository implements BrowserResultRepository {
 
     public void store(BrowserResult result) {
         String xml = XmlUtility.asString(result.asXml());
-        FileUtility.write(logFileForId(result.getId(), result.getBrowserId()), xml);
+        FileUtility.write(logFileForId(result.getId(), result.getBrowser()), xml);
     }
 
-    public BrowserResult retrieve(String id, int browserId) {
-        File logFile = logFileForId(id, browserId);
+    public BrowserResult retrieve(String id, final Browser browser) {
+        File logFile = logFileForId(id, browser);
         if (logFile.exists())
-            return new BrowserResultBuilder().build(logFile);
+            return new BrowserResultBuilder(new BrowserSource() {
+                public Browser getBrowserById(int id) {
+                    return browser;
+                }
+            }).build(logFile);
         return null;
     }
 
