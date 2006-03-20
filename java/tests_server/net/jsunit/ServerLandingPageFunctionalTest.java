@@ -33,7 +33,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         return false;
     }
 
-    public void testRunner() throws Exception {
+    public void testRunnerForParticularBrowser() throws Exception {
         webTester.beginAt("/");
         webTester.setWorkingForm("runnerForm");
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
@@ -44,6 +44,19 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
                 ResultType.SUCCESS,
                 "http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html",
                 1
+        );
+    }
+
+    public void testRunnerForAllBrowsers() throws Exception {
+        webTester.beginAt("/");
+        webTester.setWorkingForm("runnerForm");
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html");
+        webTester.submit();
+        assertSuccessfulRunResult(
+                responseXmlDocument(),
+                ResultType.SUCCESS,
+                "http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html",
+                2
         );
     }
 

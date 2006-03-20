@@ -11,17 +11,20 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     private String url;
     private String remoteAddress;
     private String remoteHost;
-    private Integer browserId;
+    private String browserId;
     private boolean badBrowserId = false;
 
     public String execute() throws Exception {
         runner.logStatus(requestReceivedMessage());
         synchronized (runner) {
             manager = new TestRunManager(runner, url);
-            if (browserId != null) {
+            if (!StringUtility.isEmpty(browserId)) {
                 try {
-                    manager.limitToBrowserWithId(browserId);
+                    manager.limitToBrowserWithId(Integer.parseInt(browserId));
                 } catch (InvalidBrowserIdException e) {
+                    badBrowserId = true;
+                    return ERROR;
+                } catch (NumberFormatException e) {
                     badBrowserId = true;
                     return ERROR;
                 }
@@ -66,7 +69,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
         remoteHost = host;
     }
 
-    public void setBrowserId(int browserId) {
+    public void setBrowserId(String browserId) {
         this.browserId = browserId;
     }
 }
