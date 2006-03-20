@@ -15,6 +15,7 @@ public class FunctionalTestSuite extends TestCase {
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
+        result.addTestSuite(SpecificBrowserDistributedTestTest.class);
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
         result.addTestSuite(TimedOutBrowserStandaloneTestTest.class);
         result.addTestSuite(TwoValidLocalhostsDistributedTestTest.class);

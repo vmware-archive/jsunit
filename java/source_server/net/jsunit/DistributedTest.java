@@ -7,6 +7,7 @@ import junit.framework.TestSuite;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
+import net.jsunit.model.Browser;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.utility.XmlUtility;
 import org.mortbay.util.MultiException;
@@ -79,14 +80,22 @@ public class DistributedTest extends TestCase {
         TestSuite suite = new ActiveTestSuite();
         ConfigurationSource originalSource = Configuration.resolveSource();
         Configuration configuration = new Configuration(originalSource);
-        for (final URL remoteMachineURL : configuration.getRemoteMachineURLs())
-            suite.addTest(new DistributedTest(
-                    originalSource,
-                    new DelegatingConfigurationSource(originalSource) {
-                        public String remoteMachineURLs() {
-                            return remoteMachineURL.toString();
+        for (final URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
+            RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new RemoteMachineRunnerHitter(), remoteMachineURL.toString());
+            Configuration remoteMachineConfiguration = new Configuration(remoteSource);
+            for (Browser browser : remoteMachineConfiguration.getBrowsers()) {
+                DistributedTest distributedTest = new DistributedTest(
+                        originalSource,
+                        new DelegatingConfigurationSource(originalSource) {
+                            public String remoteMachineURLs() {
+                                return remoteMachineURL.toString();
+                            }
                         }
-                    }));
+                );
+                distributedTest.limitToBrowser(browser);
+                suite.addTest(distributedTest);
+            }
+        }
         return suite;
     }
 
@@ -104,5 +113,10 @@ public class DistributedTest extends TestCase {
 
     public JsUnitStandardServer getTemporaryStandardServer() {
         return temporaryStandardServer;
+    }
+
+    public void limitToBrowser(Browser remoteBrowser) {
+        manager.limitToBrowser(remoteBrowser);
+        setName(getName() + " - " + remoteBrowser.getFileName());
     }
 }

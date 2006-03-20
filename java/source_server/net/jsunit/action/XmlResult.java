@@ -9,6 +9,7 @@ import org.jdom.Document;
 import org.jdom.Element;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.OutputStream;
 
 public class XmlResult implements Result {
@@ -22,8 +23,10 @@ public class XmlResult implements Result {
         HttpServletResponse response = ServletActionContext.getResponse();
         response.setContentType("text/xml");
         OutputStream out = response.getOutputStream();
-        out.write(xmlString.getBytes());
-        out.close();
+        BufferedOutputStream bufferedOut = new BufferedOutputStream(out);
+        bufferedOut.write(xmlString.getBytes());
+        bufferedOut.flush();
+        bufferedOut.close();
     }
 
 }

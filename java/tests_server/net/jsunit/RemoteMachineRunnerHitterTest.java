@@ -33,7 +33,7 @@ public class RemoteMachineRunnerHitterTest extends TestCase {
     }
 
     private URL createURL(final String xml, final int byteCount) throws MalformedURLException {
-        return new URL("http", "www/example.com", 8080, "foo", new URLStreamHandler() {
+        return new URL("http", "www.example.com", 8080, "foo", new URLStreamHandler() {
             protected URLConnection openConnection(URL u) {
                 return new URLConnection(u) {
                     public void connect() {
@@ -43,18 +43,10 @@ public class RemoteMachineRunnerHitterTest extends TestCase {
                         return new InputStream() {
 
                             private int index = 0;
-                            private int upToIndex = 0;
-
-                            public int available() {
-                                int remaining = upToIndex - index;
-                                if (remaining == 0 && upToIndex != xml.length()) {
-                                    upToIndex = Math.min(index + byteCount, xml.length());
-                                    remaining = upToIndex - index;
-                                }
-                                return remaining;
-                            }
 
                             public int read() {
+                                if (index >= xml.length())
+                                    return -1;
                                 return xml.codePointAt(index++);
                             }
                         };

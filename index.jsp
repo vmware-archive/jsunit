@@ -89,6 +89,7 @@ or you can specify a custom URL and/or browser ID using the following form.<br><
 
 <form action="/jsunit/runner" method="get" name="runnerForm">
     URL: <input type="text" name="url" size="100"/><br>
+    <%if (!server.isFarmServer()) {%>
     Browser:
     <select name="browserId">
         <option value="">(All browsers)</option>
@@ -97,6 +98,7 @@ or you can specify a custom URL and/or browser ID using the following form.<br><
         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
         <%}%>
     </select><br>
+    <%}%>
     <input type="submit" value="go"/>
 </form>
 <%if (!server.isFarmServer()) {%>

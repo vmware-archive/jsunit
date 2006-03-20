@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.Browser;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.model.TestRunResultBuilder;
@@ -22,6 +23,7 @@ public class DistributedTestRunManager {
     private Configuration configuration;
     private String overrideURL;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
+    private Browser remoteBrowser;
 
     public static DistributedTestRunManager forConfiguration(Configuration configuration) {
         return new DistributedTestRunManager(new RemoteMachineRunnerHitter(), configuration, null);
@@ -85,10 +87,18 @@ public class DistributedTestRunManager {
     private URL buildURL(URL url) throws UnsupportedEncodingException, MalformedURLException {
         String fullURLString = url.toString();
         fullURLString += "/runner";
-        if (overrideURL != null)
+        boolean hasFirstParameter = false;
+        if (overrideURL != null) {
             fullURLString += "?url=" + URLEncoder.encode(overrideURL, "UTF-8");
-        else if (configuration.getTestURL() != null)
+            hasFirstParameter = true;
+        } else if (configuration.getTestURL() != null) {
             fullURLString += "?url=" + URLEncoder.encode(configuration.getTestURL().toString(), "UTF-8");
+            hasFirstParameter = true;
+        }
+        if (remoteBrowser != null) {
+            fullURLString += (hasFirstParameter ? "&" : "?");
+            fullURLString += "browserId=" + remoteBrowser.getId();
+        }
         return new URL(fullURLString);
     }
 
@@ -102,5 +112,9 @@ public class DistributedTestRunManager {
 
     public void setOverrideURL(String overrideURL) {
         this.overrideURL = overrideURL;
+    }
+
+    public void limitToBrowser(Browser remoteBrowser) {
+        this.remoteBrowser = remoteBrowser;
     }
 }

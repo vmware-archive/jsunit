@@ -8,11 +8,9 @@ public class StreamUtility {
 
     public static String readAllFromStream(InputStream inputStream) throws IOException {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        while (inputStream.available() > 0) {
-            byte[] buffer = new byte[inputStream.available()];
-            inputStream.read(buffer);
-            outStream.write(buffer);
-        }
+        int aByte;
+        while ((aByte = inputStream.read()) != -1)
+            outStream.write(aByte);
         inputStream.close();
         return outStream.toString();
 
