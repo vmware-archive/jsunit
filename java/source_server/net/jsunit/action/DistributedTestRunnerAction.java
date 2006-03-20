@@ -13,8 +13,9 @@ public class DistributedTestRunnerAction extends JsUnitFarmServerAction {
         if (overrideURL != null)
             message += " with URL " + overrideURL;
         server.logStatus(message);
+        //noinspection SynchronizeOnNonFinalField
         synchronized (server) {
-            manager = new DistributedTestRunManager(hitter, server.getConfiguration(), overrideURL);
+            manager = DistributedTestRunManager.forConfigurationAndURL(hitter, server.getConfiguration(), overrideURL);
             manager.runTests();
         }
         server.logStatus("Done running farm tests");

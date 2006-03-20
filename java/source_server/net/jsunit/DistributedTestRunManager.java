@@ -23,15 +23,15 @@ public class DistributedTestRunManager {
     private String overrideURL;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
 
-    public DistributedTestRunManager(Configuration configuration) {
-        this(new RemoteMachineRunnerHitter(), configuration);
+    public static DistributedTestRunManager forConfiguration(Configuration configuration) {
+        return new DistributedTestRunManager(new RemoteMachineRunnerHitter(), configuration, null);
     }
 
-    public DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration) {
-        this(hitter, configuration, null);
+    public static DistributedTestRunManager forConfigurationAndURL(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+        return new DistributedTestRunManager(hitter, configuration, overrideURL);
     }
 
-    public DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    protected DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
         this.hitter = hitter;
         this.configuration = configuration;
         this.overrideURL = overrideURL;

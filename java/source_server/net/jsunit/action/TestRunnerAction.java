@@ -16,6 +16,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     public String execute() throws Exception {
         runner.logStatus(requestReceivedMessage());
+        //noinspection SynchronizeOnNonFinalField
         synchronized (runner) {
             manager = new TestRunManager(runner, url);
             if (!StringUtility.isEmpty(browserId)) {

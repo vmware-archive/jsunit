@@ -33,7 +33,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
         MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
-        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, null);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
@@ -48,7 +48,7 @@ public class DistributedTestRunManagerTest extends TestCase {
     }
 
     public void testRemoteURLBlowsUp() {
-        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteRunnerHitter(), configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteRunnerHitter(), configuration, null);
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
@@ -68,7 +68,7 @@ public class DistributedTestRunManagerTest extends TestCase {
             }
         });
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
-        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteRunnerHitter(), configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteRunnerHitter(), configuration, null);
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertTrue(result.wasSuccessful());
@@ -98,7 +98,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner";
         MockRemoteRunnerHitter hitter = createMockHitter(url1, url2);
 
-        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration);
+        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, null);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
