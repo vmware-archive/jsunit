@@ -3,6 +3,8 @@ package net.jsunit;
 import com.meterware.httpunit.HttpUnitOptions;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.BrowserResultWriter;
+import net.jsunit.model.ResultType;
 import net.sourceforge.jwebunit.WebTester;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -12,6 +14,7 @@ import org.jdom.input.SAXBuilder;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.util.List;
 
 public abstract class FunctionalTestCase extends TestCase {
 
@@ -65,5 +68,24 @@ public abstract class FunctionalTestCase extends TestCase {
     protected void assertErrorResponse(Element rootElement, String message) {
         assertEquals("error", rootElement.getName());
         assertEquals(message, rootElement.getText());
+    }
+
+    protected void assertSuccessfulRunResult(Document result, ResultType expectedResultType, String expectedUrl, int expectedBrowserResultCount) {
+        Element root = result.getRootElement();
+        assertEquals("testRunResult", root.getName());
+        assertEquals(expectedBrowserResultCount, root.getChildren("browserResult").size());
+        assertEquals(expectedResultType.name(), root.getAttribute("type").getValue());
+        Element urlProperty = urlPropertyElement(root);
+        assertEquals(expectedUrl, urlProperty.getAttribute(BrowserResultWriter.PROPERTY_VALUE).getValue());
+    }
+
+    @SuppressWarnings("unchecked")
+    private Element urlPropertyElement(Element root) {
+        List<Element> children = root.getChild("browserResult").getChild(BrowserResultWriter.PROPERTIES).getChildren(BrowserResultWriter.PROPERTY);
+        for (Element child : children) {
+            if (child.getAttribute(BrowserResultWriter.PROPERTY_KEY).getValue().equals(BrowserResultWriter.URL))
+                return child;
+        }
+        return null;
     }
 }

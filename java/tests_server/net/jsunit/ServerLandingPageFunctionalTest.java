@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.ResultType;
 import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
@@ -25,6 +26,24 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/");
         webTester.clickLinkWithText("config");
         assertConfigXml();
+    }
+
+    protected boolean shouldMockOutProcessStarter() {
+        return false;
+    }
+
+    public void testRunner() throws Exception {
+        webTester.beginAt("/");
+        webTester.setWorkingForm("runnerForm");
+        webTester.selectOption("browserId", BrowserLaunchSpecification.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html");
+        webTester.submit();
+        assertSuccessfulRunResult(
+                responseXmlDocument(),
+                ResultType.SUCCESS,
+                "http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html",
+                1
+        );
     }
 
     public void testDisplayerForm() throws Exception {

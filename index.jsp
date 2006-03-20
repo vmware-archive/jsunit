@@ -81,9 +81,17 @@ displayed as XML. config is usually used programmatically.
 <h4>runner</h4>
 You can see tell the server to run JsUnit tests using the runner command.
 You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
-or you can specify a custom URL using the following form.
+or you can specify a custom URL and/or browser ID using the following form.
 <form action="/jsunit/runner" method="get" name="runnerForm">
     URL: <input type="text" name="url" size="100"/>
+    Browser:
+    <select name="browserId">
+        <option value="">(All browsers)</option>
+        <%
+            for (String browserFileName : configuration.getBrowserFileNames()) {
+        %><option value="<%=configuration.getBrowserId(browserFileName)%>"><%=browserFileName%></option>
+        <%}%>
+    </select>
     <input type="submit" value="go"/>
 </form>
 <%if (!server.isFarmServer()) {%>
