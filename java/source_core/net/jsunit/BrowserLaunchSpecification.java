@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.model.Browser;
+import net.jsunit.utility.StringUtility;
 
 public class BrowserLaunchSpecification {
 
@@ -21,7 +22,7 @@ public class BrowserLaunchSpecification {
     }
 
     public boolean hasOverrideUrl() {
-        return overrideUrl != null;
+        return !StringUtility.isEmpty(overrideUrl);
     }
 
     public boolean isForDefaultBrowser() {

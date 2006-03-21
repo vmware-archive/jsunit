@@ -25,7 +25,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
 
     public void testConfigLink() throws Exception {
         webTester.beginAt("/");
-        webTester.clickLinkWithText("config");
+        webTester.clickLink("config");
         assertConfigXml();
     }
 

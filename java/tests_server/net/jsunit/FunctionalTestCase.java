@@ -61,6 +61,7 @@ public abstract class FunctionalTestCase extends TestCase {
     }
 
     protected void assertConfigXml() throws JDOMException, IOException {
+        System.out.println(webTester.getDialog().getResponseText());
         Document result = responseXmlDocument();
         Element root = result.getRootElement();
         assertEquals("configuration", root.getName());

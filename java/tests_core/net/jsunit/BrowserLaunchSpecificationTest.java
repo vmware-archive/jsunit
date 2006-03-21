@@ -9,6 +9,9 @@ public class BrowserLaunchSpecificationTest extends TestCase {
         BrowserLaunchSpecification spec = new BrowserLaunchSpecification(new Browser("mybrowser.exe", 0));
         assertFalse(spec.hasOverrideUrl());
         assertNull(spec.getOverrideUrl());
+
+        spec = new BrowserLaunchSpecification(new Browser("mybrowser.exe", 0), " ");
+        assertFalse(spec.hasOverrideUrl());
     }
 
     public void testOverride() {
