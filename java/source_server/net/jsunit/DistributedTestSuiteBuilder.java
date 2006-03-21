@@ -21,11 +21,11 @@ public class DistributedTestSuiteBuilder {
         for (final URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
             RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new RemoteMachineRunnerHitter(), remoteMachineURL.toString());
             Configuration remoteMachineConfiguration = new Configuration(remoteSource);
-            addDistributedTestsToSuite(remoteMachineConfiguration, originalSource, remoteMachineURL, suite);
+            addTestsForRemoteConfigurationTo(remoteMachineConfiguration, remoteMachineURL, suite);
         }
     }
 
-    private void addDistributedTestsToSuite(Configuration remoteMachineConfiguration, ConfigurationSource originalSource, URL remoteMachineURL, TestSuite suite) {
+    private void addTestsForRemoteConfigurationTo(Configuration remoteMachineConfiguration, URL remoteMachineURL, TestSuite suite) {
         List<Browser> browsers = remoteMachineConfiguration.getBrowsers();
         if (browsers.isEmpty()) {
             DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);

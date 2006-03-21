@@ -25,7 +25,6 @@ public class XmlResult implements Result {
         OutputStream out = response.getOutputStream();
         BufferedOutputStream bufferedOut = new BufferedOutputStream(out);
         bufferedOut.write(xmlString.getBytes());
-        bufferedOut.flush();
         bufferedOut.close();
     }
 
