@@ -37,10 +37,15 @@ public enum ConfigurationProperty {
             String browserFileNamesString = source.browserFileNames();
             try {
                 List<String> browserFileNames = StringUtility.listFromCommaDelimitedString(browserFileNamesString);
+                Set<String> alreadyAddedBrowserFileNames = new HashSet<String>();
                 int id = 0;
                 List<Browser> browsers = new ArrayList<Browser>();
-                for (String browserFileName : browserFileNames)
-                    browsers.add(new Browser(browserFileName, id++));
+                for (String browserFileName : browserFileNames) {
+                    if (!alreadyAddedBrowserFileNames.contains(browserFileName)) {
+                        browsers.add(new Browser(browserFileName, id++));
+                        alreadyAddedBrowserFileNames.add(browserFileName);
+                    }
+                }
                 configuration.setBrowsers(browsers);
             } catch (Exception e) {
                 throw new ConfigurationException(this, browserFileNamesString, e);
@@ -141,10 +146,15 @@ public enum ConfigurationProperty {
             String remoteMachineURLs = source.remoteMachineURLs();
             List<String> strings = StringUtility.listFromCommaDelimitedString(remoteMachineURLs);
             List<URL> result = new ArrayList<URL>(strings.size());
+            Set<String> alreadyAddedURLStrings = new HashSet<String>();
             for (String string : strings)
                 try {
                     URL attemptedURL = new URL(string);
-                    result.add(new URL(attemptedURL.getProtocol(), attemptedURL.getHost(), attemptedURL.getPort(), "/jsunit"));
+                    URL normalizedURL = new URL(attemptedURL.getProtocol(), attemptedURL.getHost(), attemptedURL.getPort(), "/jsunit");
+                    if (!alreadyAddedURLStrings.contains(normalizedURL.toString())) {
+                        result.add(normalizedURL);
+                        alreadyAddedURLStrings.add(normalizedURL.toString());
+                    }
                 } catch (MalformedURLException e) {
                     throw new ConfigurationException(this, remoteMachineURLs, e);
                 }

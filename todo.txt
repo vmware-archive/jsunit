@@ -2,7 +2,7 @@ Required for next release:
 
   FEATURES:
     - pull in pivotal's new assertion functions
-
+    - have distributed test be named better - get the os/machine info from the remote config
   BUGS:
     - Mozilla 1.7.12 issues
     - SourceForge bugs
@@ -13,7 +13,6 @@ Backlog:
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
-    - have distributed test & standalone test give nice names to the virtual tests they create - distributed test could hit the remote config and get the description or os String
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
     - admin.jsp console to change and save configuration (password protected?)
     - browser ids - ability to pass a browser id to the runner servlet

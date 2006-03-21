@@ -234,6 +234,22 @@ public class ConfigurationTest extends TestCase {
         assertEquals("http://www.example.com:1234/", arguments[index]);
     }
 
+    public void testDuplicateBrowserFileNamesAndRemoteMachineURLs() throws Exception {
+        Configuration configuration = new Configuration(new DuplicatesConfigurationSource());
+        List<Browser> browsers = configuration.getBrowsers();
+        assertEquals(3, browsers.size());
+        assertEquals(new Browser("browser1.exe", 0), browsers.get(0));
+        assertEquals(new Browser("browser2.exe", 1), browsers.get(1));
+        assertEquals(new Browser("browser3.exe", 2), browsers.get(2));
+
+        List<URL> remoteMachineURLs = configuration.getRemoteMachineURLs();
+        assertEquals(4, remoteMachineURLs.size());
+        assertEquals("http://machine1:8080/jsunit", remoteMachineURLs.get(0).toString());
+        assertEquals("http://machine2:9090/jsunit", remoteMachineURLs.get(1).toString());
+        assertEquals("http://machine1:8081/jsunit", remoteMachineURLs.get(2).toString());
+        assertEquals("http://machine3:9090/jsunit", remoteMachineURLs.get(3).toString());
+    }
+
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
 
         public String resourceBase() {
@@ -285,5 +301,15 @@ public class ConfigurationTest extends TestCase {
     }
 
     static class ValidForStandardInvalidForFarmConfigurationSource extends StubConfigurationSource {
+    }
+
+    static class DuplicatesConfigurationSource extends StubConfigurationSource {
+        public String browserFileNames() {
+            return "browser1.exe,browser2.exe,browser1.exe,browser1.exe,browser3.exe";
+        }
+
+        public String remoteMachineURLs() {
+            return "http://machine1:8080,http://machine2:9090/jsunit,http://machine1:8081,http://machine1:8080,http://machine1:8080/jsunit,http://machine3:9090";
+        }
     }
 }
