@@ -91,7 +91,7 @@
 </table>
 <br>
 <h4>
-    Services
+    Available services
 </h4>
 <table cellpadding="0" cellspacing="0">
     <tr>
@@ -99,9 +99,11 @@
             <a href="javascript:selectCell('runnerCell')">runner</a>
         </td>
         <td>&nbsp;</td>
+        <%if (!server.isFarmServer()) {%>
         <td width="1" align="center" id="displayerCellHeader">
             <a href="javascript:selectCell('displayerCell')">displayer</a>
         </td>
+        <%}%>
         <td>&nbsp;</td>
         <td width="1" align="center" id="testRunnerCellHeader">
             <a href="javascript:selectCell('testRunnerCell')">testRunner.html</a>

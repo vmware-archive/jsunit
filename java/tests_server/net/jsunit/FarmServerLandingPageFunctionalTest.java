@@ -31,6 +31,10 @@ public class FarmServerLandingPageFunctionalTest extends TestCase {
     public void testSimple() throws Exception {
         webTester.beginAt("/");
         assertOnLandingPage();
+        webTester.assertLinkPresentWithText("runner");
+        webTester.assertLinkNotPresentWithText("displayer");
+        webTester.assertLinkPresentWithText("testRunner.html");
+        webTester.assertLinkPresentWithText("config");
     }
 
     private void assertOnLandingPage() {
