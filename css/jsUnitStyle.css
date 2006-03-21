@@ -48,3 +48,36 @@ h4 {
 .jsUnitTestResultNotSuccess {
     color: #F00;
 }
+
+.unselectedTab {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    height: 26px;
+    background: #FFFFFF;
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+}
+
+.selectedTab {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    height: 26px;
+    background: #DDDDDD;
+    font-weight: bold;
+    border-style: solid;
+    border-bottom-width: 0px;
+    border-top-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+}
+
+.tabHeaderSeparator {
+    height: 26px;
+    background: #FFFFFF;
+    border-style: solid;
+    border-bottom-width: 1px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+}
