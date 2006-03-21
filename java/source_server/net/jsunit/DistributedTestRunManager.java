@@ -1,10 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
-import net.jsunit.model.Browser;
-import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.TestRunResult;
-import net.jsunit.model.TestRunResultBuilder;
+import net.jsunit.model.*;
 import org.jdom.Document;
 
 import java.io.IOException;
@@ -59,29 +56,40 @@ public class DistributedTestRunManager {
     }
 
     private void runTestsOnRemoteMachine(URL baseURL) {
-        TestRunResult testRunResult = null;
+        List<TestRunResult> results = new ArrayList<TestRunResult>();
         try {
             URL fullURL = buildURL(baseURL);
             logger.info("Requesting run on remove machine URL " + baseURL);
             Document documentFromRemoteMachine = hitter.hitURL(fullURL);
             logger.info("Received response from remove machine URL " + baseURL);
-            testRunResult = new TestRunResultBuilder(configuration).build(documentFromRemoteMachine);
+            if (isMultipleTestRunResultsResult(documentFromRemoteMachine)) {
+                DistributedTestRunResult multiple = new DistributedTestRunResultBuilder(configuration).build(documentFromRemoteMachine);
+                results.addAll(multiple.getTestRunResults());
+            } else {
+                TestRunResult single = new TestRunResultBuilder(configuration).build(documentFromRemoteMachine);
+                results.add(single);
+            }
         } catch (IOException e) {
             if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
                 logger.info("Ignoring unresponsive machine " + baseURL.toString());
             else {
                 logger.info("Remote machine URL is unresponsive: " + baseURL.toString());
-                testRunResult = new TestRunResult(baseURL);
-                testRunResult.setUnresponsive();
+                TestRunResult unresponsiveResult = new TestRunResult(baseURL);
+                unresponsiveResult.setUnresponsive();
+                results.add(unresponsiveResult);
             }
         }
-        if (testRunResult != null) {
-            testRunResult.setURL(baseURL);
+        for (TestRunResult result : results) {
+            result.setURL(baseURL);
             //noinspection SynchronizeOnNonFinalField
             synchronized (distributedTestRunResult) {
-                distributedTestRunResult.addTestRunResult(testRunResult);
+                distributedTestRunResult.addTestRunResult(result);
             }
         }
+    }
+
+    private boolean isMultipleTestRunResultsResult(Document document) {
+        return document.getRootElement().getName().equals(DistributedTestRunResult.NAME);
     }
 
     private URL buildURL(URL url) throws UnsupportedEncodingException, MalformedURLException {

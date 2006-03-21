@@ -9,6 +9,8 @@ import java.util.List;
 
 public class DistributedTestRunResult extends AbstractResult implements XmlRenderable {
 
+    public static final String NAME = "distributedTestRunResult";
+
     private List<TestRunResult> testRunResults = new ArrayList<TestRunResult>();
 
     protected List<? extends Result> getChildren() {
@@ -21,7 +23,7 @@ public class DistributedTestRunResult extends AbstractResult implements XmlRende
     }
 
     public Element asXml() {
-        Element root = new Element("distributedTestRunResult");
+        Element root = new Element(NAME);
         root.setAttribute("type", getResultType().name());
         for (TestRunResult testRunResult : testRunResults)
             root.addContent(testRunResult.asXml());

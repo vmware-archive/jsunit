@@ -8,6 +8,8 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 public class TestRunResultBuilder {
 
+    public static final String NAME = "testRunResult";
+
     private BrowserSource browserSource;
 
     public TestRunResultBuilder(BrowserSource browserSource) {
