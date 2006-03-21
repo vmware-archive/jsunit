@@ -83,20 +83,31 @@ public class DistributedTest extends TestCase {
         for (final URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
             RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new RemoteMachineRunnerHitter(), remoteMachineURL.toString());
             Configuration remoteMachineConfiguration = new Configuration(remoteSource);
-            for (Browser browser : remoteMachineConfiguration.getBrowsers()) {
-                DistributedTest distributedTest = new DistributedTest(
-                        originalSource,
-                        new DelegatingConfigurationSource(originalSource) {
-                            public String remoteMachineURLs() {
-                                return remoteMachineURL.toString();
-                            }
-                        }
-                );
-                distributedTest.limitToBrowser(browser);
+            List<Browser> browsers = remoteMachineConfiguration.getBrowsers();
+            if (browsers.isEmpty()) {
+                DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
                 suite.addTest(distributedTest);
+            } else {
+                for (Browser browser : browsers) {
+                    DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
+                    distributedTest.limitToBrowser(browser);
+                    suite.addTest(distributedTest);
+                }
             }
         }
         return suite;
+    }
+
+    private static DistributedTest createDistributedTest(ConfigurationSource originalSource, final URL remoteMachineURL) {
+        DistributedTest distributedTest = new DistributedTest(
+                originalSource,
+                new DelegatingConfigurationSource(originalSource) {
+                    public String remoteMachineURLs() {
+                        return remoteMachineURL.toString();
+                    }
+                }
+        );
+        return distributedTest;
     }
 
     protected void runTest() throws Throwable {
