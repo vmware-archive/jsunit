@@ -41,7 +41,8 @@ public enum ConfigurationProperty {
                 int id = 0;
                 List<Browser> browsers = new ArrayList<Browser>();
                 for (String browserFileName : browserFileNames) {
-                    if (!alreadyAddedBrowserFileNames.contains(browserFileName)) {
+                    if (!alreadyAddedBrowserFileNames.contains(browserFileName) || Browser.DEFAULT_SYSTEM_BROWSER.equals(browserFileName))
+                    {
                         browsers.add(new Browser(browserFileName, id++));
                         alreadyAddedBrowserFileNames.add(browserFileName);
                     }
