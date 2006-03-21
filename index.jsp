@@ -96,72 +96,108 @@
 
 <a href="javascript:selectCell('runnerCell')">runner</a>
 
-<div id="runnerCell" style="background:#DDDDDD;width:100%;">
-    <br>
-    You can see tell the server to run JsUnit tests using the <i>runner</i> servlet.
-    You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
-    or you can specify a custom URL and/or browser ID using the following form.<br><br>
+<div id="runnerCell" style="width:100%;">
+    <table>
+        <tr>
+            <td width="125">
+                &nbsp;
+            </td>
+            <td bgcolor="#DDDDDD">
+                <br>
+                You can see tell the server to run JsUnit tests using the <i>runner</i> servlet.
+                You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
+                or you can specify a custom URL and/or browser ID using the following form.<br><br>
 
-    <form action="/jsunit/runner" method="get" name="runnerForm">
-        URL: <input type="text" name="url" size="100"
-                    value=""/>
-        <br>
-        <font size="-2"><i>e.g.
-            http://www.jsunit.net/runner/testRunner.html?testPage=http://www.jsunit.net/runner/tests/jsUnitTestSuite.html</i>
-        </font><br>
-        <%if (!server.isFarmServer()) {%>
-        Browser:
-        <select name="browserId">
-            <option value="">(All browsers)</option>
-            <%
-                for (Browser browser : configuration.getBrowsers()) {
-            %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
-            <%}%>
-        </select><br>
-        <%}%>
-        <input type="submit" value="go"/>
-    </form>
-    <br>&nbsp;
+                <form action="/jsunit/runner" method="get" name="runnerForm">
+                    URL: <input type="text" name="url" size="100"
+                                value=""/>
+                    <br>
+                    <font size="-2"><i>e.g.
+                        http://www.jsunit.net/runner/testRunner.html?testPage=http://www.jsunit.net/runner/tests/jsUnitTestSuite.html</i>
+                    </font><br>
+                    <%if (!server.isFarmServer()) {%>
+                    Browser:
+                    <select name="browserId">
+                        <option value="">(All browsers)</option>
+                        <%
+                            for (Browser browser : configuration.getBrowsers()) {
+                        %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
+                        <%}%>
+                    </select><br>
+                    <%}%>
+                    <input type="submit" value="go"/>
+                </form>
+                <br>&nbsp;
+            </td>
+        </tr>
+    </table>
 </div>
 
 <%if (!server.isFarmServer()) {%>
 <a href="javascript:selectCell('displayerCell')">displayer</a>
 
-<div id="displayerCell" style="background:#DDDDDD;width:100%;">
-    <br>
-    You can view the logs of past runs using the displayer command.
-    Use this form to specify the ID of the run you want to see:<br><br>
+<div id="displayerCell" style="width:100%;">
+    <table width="100%">
+        <tr>
+            <td width="125">
+                &nbsp;
+            </td>
+            <td bgcolor="#DDDDDD">
+                <br>
+                You can view the logs of past runs using the displayer command.
+                Use this form to specify the ID of the run you want to see:<br><br>
 
-    <form action="/jsunit/displayer" name="displayerForm">
-        ID: <input type="text" name="id" size="20"/><br>
-        Browser:
-        <select name="browserId">
-            <%
-                for (Browser browser : configuration.getBrowsers()) {
-            %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
-            <%}%>
-        </select><br>
-        <input type="submit" value="go"/>
-    </form>
-    <br>&nbsp;
+                <form action="/jsunit/displayer" name="displayerForm">
+                    ID: <input type="text" name="id" size="20"/><br>
+                    Browser:
+                    <select name="browserId">
+                        <%
+                            for (Browser browser : configuration.getBrowsers()) {
+                        %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
+                        <%}%>
+                    </select><br>
+                    <input type="submit" value="go"/>
+                </form>
+                <br>&nsbp;
+            </td>
+        </tr>
+    </table>
 </div>
 <%}%>
 
 <a href="javascript:selectCell('testRunnerCell')">testRunner.html</a>
 
-<div id="testRunnerCell" style="background:#DDDDDD;width:100%;">
-    <br>
-    The manual Test Runner is at <a id="testRunnerHtml" href="./testRunner.html">testRunner.html</a>.
-    <br>&nbsp;
+<div id="testRunnerCell" style="width:100%;">
+    <table width="100%">
+        <tr>
+            <td width="125">
+                &nbsp;
+            </td>
+            <td bgcolor="#DDDDDD">
+                <br>
+                The manual Test Runner is at <a id="testRunnerHtml" href="./testRunner.html">testRunner.html</a>.
+                <br>&nbsp;
+            </td>
+        </tr>
+    </table>
 </div>
 
 <a href="javascript:selectCell('configCell')">config</a>
 
-<div id="configCell" style="background:#DDDDDD;width:100%;">
-    <br>
-    You can see the configuration of this server as XML by going to <a id="config" href="/jsunit/config">config</a>.
-    The config service is usually only used programmatically.
-    <br>&nbsp;
+<div id="configCell" style="width:100%;">
+    <table width="100%">
+        <tr>
+            <td width="125">
+                &nbsp;
+            </td>
+            <td bgcolor="#DDDDDD">
+                <br>
+                You can see the configuration of this server as XML by going to <a id="config" href="/jsunit/config">config</a>.
+                The config service is usually only used programmatically.
+                <br>&nbsp;
+            </td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
