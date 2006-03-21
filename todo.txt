@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - change DistributedTest to ask for the remote configuration and then ask for a run of each browser separately
     - pull in pivotal's new assertion functions
     - prettification
 
