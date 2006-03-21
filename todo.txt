@@ -2,10 +2,10 @@ Required for next release:
 
   FEATURES:
     - pull in pivotal's new assertion functions
-    - prettification
 
   BUGS:
     - Mozilla 1.7.12 issues
+    - SourceForge bugs
 
 Backlog:
 
@@ -27,4 +27,3 @@ Backlog:
 
   BUGS:
     - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
-    - SourceForge bugs
