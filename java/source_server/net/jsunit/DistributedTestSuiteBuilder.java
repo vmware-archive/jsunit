@@ -25,7 +25,7 @@ public class DistributedTestSuiteBuilder {
         }
     }
 
-    private static void addDistributedTestsToSuite(Configuration remoteMachineConfiguration, ConfigurationSource originalSource, URL remoteMachineURL, TestSuite suite) {
+    private void addDistributedTestsToSuite(Configuration remoteMachineConfiguration, ConfigurationSource originalSource, URL remoteMachineURL, TestSuite suite) {
         List<Browser> browsers = remoteMachineConfiguration.getBrowsers();
         if (browsers.isEmpty()) {
             DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
@@ -39,7 +39,7 @@ public class DistributedTestSuiteBuilder {
         }
     }
 
-    private static DistributedTest createDistributedTest(ConfigurationSource originalSource, final URL remoteMachineURL) {
+    private DistributedTest createDistributedTest(ConfigurationSource originalSource, final URL remoteMachineURL) {
         return new DistributedTest(
                 originalSource,
                 new DelegatingConfigurationSource(originalSource) {
