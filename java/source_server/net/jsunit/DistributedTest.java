@@ -6,14 +6,12 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
-import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.Browser;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.utility.XmlUtility;
 import org.mortbay.util.MultiException;
 
 import java.net.BindException;
-import java.net.URL;
 import java.util.List;
 
 public class DistributedTest extends TestCase {
@@ -79,35 +77,8 @@ public class DistributedTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new ActiveTestSuite();
         ConfigurationSource originalSource = Configuration.resolveSource();
-        Configuration configuration = new Configuration(originalSource);
-        for (final URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
-            RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new RemoteMachineRunnerHitter(), remoteMachineURL.toString());
-            Configuration remoteMachineConfiguration = new Configuration(remoteSource);
-            List<Browser> browsers = remoteMachineConfiguration.getBrowsers();
-            if (browsers.isEmpty()) {
-                DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
-                suite.addTest(distributedTest);
-            } else {
-                for (Browser browser : browsers) {
-                    DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
-                    distributedTest.limitToBrowser(browser);
-                    suite.addTest(distributedTest);
-                }
-            }
-        }
+        new DistributedTestSuiteBuilder(originalSource).addTestsTo(suite);
         return suite;
-    }
-
-    private static DistributedTest createDistributedTest(ConfigurationSource originalSource, final URL remoteMachineURL) {
-        DistributedTest distributedTest = new DistributedTest(
-                originalSource,
-                new DelegatingConfigurationSource(originalSource) {
-                    public String remoteMachineURLs() {
-                        return remoteMachineURL.toString();
-                    }
-                }
-        );
-        return distributedTest;
     }
 
     protected void runTest() throws Throwable {
