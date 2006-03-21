@@ -112,10 +112,31 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertEquals(XmlUtility.asString(expectedResult.asXml()), XmlUtility.asString(result.asXml()));
     }
 
+    public void testDistributedResultReturned() throws Exception {
+        String encodedURL = URLEncoder.encode(DummyConfigurationSource.DUMMY_URL, "UTF-8");
+        String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
+        String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
+        MockRemoteRunnerHitter hitter = createMockHitterWithDistributedResults(url1, url2);
+        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, null);
+        manager.runTests();
+        DistributedTestRunResult result = manager.getDistributedTestRunResult();
+        assertEquals(4, result.getTestRunResults().size());
+    }
+
     private MockRemoteRunnerHitter createMockHitter(String url1, String url2) throws MalformedURLException {
         MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
         hitter.urlToDocument.put(url1, new Document(createResult1().asXml()));
         hitter.urlToDocument.put(url2, new Document(createResult2().asXml()));
+        return hitter;
+    }
+
+    private MockRemoteRunnerHitter createMockHitterWithDistributedResults(String url1, String url2) throws MalformedURLException {
+        MockRemoteRunnerHitter hitter = new MockRemoteRunnerHitter();
+        DistributedTestRunResult distributedResult = new DistributedTestRunResult();
+        distributedResult.addTestRunResult(createResult1());
+        distributedResult.addTestRunResult(createResult2());
+        hitter.urlToDocument.put(url1, new Document(distributedResult.asXml()));
+        hitter.urlToDocument.put(url2, new Document(distributedResult.asXml()));
         return hitter;
     }
 
