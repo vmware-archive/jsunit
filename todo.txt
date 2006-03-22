@@ -2,12 +2,12 @@ Required for next release:
 
   FEATURES:
     - pull in pivotal's new assertion functions
-    
+
   BUGS:
     - Mozilla 1.7.12 issues
     - SourceForge bugs
 
-Backlog:
+Backlog for future releases:
 
   FEATURES:
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
