@@ -11,17 +11,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
     private Configuration configuration;
-
-    public DistributedTestRunManagerTest() {
-        Logger logger = Logger.getLogger("net.jsunit");
-        logger.setLevel(Level.OFF);
-    }
 
     public void setUp() throws Exception {
         super.setUp();
