@@ -1,10 +1,10 @@
 package net.jsunit.action;
 
 import junit.framework.TestCase;
-import net.jsunit.BlowingUpRemoteRunnerHitter;
+import net.jsunit.BlowingUpRemoteServerHitter;
 import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitFarmServer;
-import net.jsunit.MockRemoteRunnerHitter;
+import net.jsunit.MockRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.utility.XmlUtility;
@@ -30,7 +30,7 @@ public class FarmServerConfigurationActionTest extends TestCase {
     }
 
     public void testSimple() throws Exception {
-        MockRemoteRunnerHitter mockHitter = new MockRemoteRunnerHitter();
+        MockRemoteServerHitter mockHitter = new MockRemoteServerHitter();
         Configuration configuration1 = configuration1();
         Configuration configuration2 = configuration2();
         mockHitter.urlToDocument.put(DummyConfigurationSource.REMOTE_URL_1 + "/config", new Document(configuration1.asXml(ServerType.FARM)));
@@ -53,7 +53,7 @@ public class FarmServerConfigurationActionTest extends TestCase {
     }
 
     public void testCrashingRemoteURLs() throws Exception {
-        action.setRemoteRunnerHitter(new BlowingUpRemoteRunnerHitter());
+        action.setRemoteRunnerHitter(new BlowingUpRemoteServerHitter());
         action.execute();
         Element rootElement = action.getXmlRenderable().asXml();
         List<CDATA> stackTraceElements = getCDATAExceptionStackTracesUnder(rootElement);

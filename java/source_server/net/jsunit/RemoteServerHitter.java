@@ -5,7 +5,7 @@ import org.jdom.Document;
 import java.io.IOException;
 import java.net.URL;
 
-public interface RemoteRunnerHitter {
+public interface RemoteServerHitter {
 
     public Document hitURL(URL url) throws IOException;
 

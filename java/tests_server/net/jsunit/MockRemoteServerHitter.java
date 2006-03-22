@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MockRemoteRunnerHitter implements RemoteRunnerHitter {
+public class MockRemoteServerHitter implements RemoteServerHitter {
 
     public List<String> urlsPassed = new ArrayList<String>();
     public Map<String, Document> urlToDocument = new HashMap<String, Document>();

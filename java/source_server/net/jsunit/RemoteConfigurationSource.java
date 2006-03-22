@@ -17,7 +17,7 @@ public class RemoteConfigurationSource implements ConfigurationSource {
 
     private Document document;
 
-    public RemoteConfigurationSource(RemoteRunnerHitter hitter, String remoteMachineURL) {
+    public RemoteConfigurationSource(RemoteServerHitter hitter, String remoteMachineURL) {
         try {
             document = hitter.hitURL(new URL(remoteMachineURL + "/config"));
         } catch (IOException e) {

@@ -17,13 +17,13 @@ public class RemoteMachineRunnerHitterTest extends TestCase {
     String xml = "<my_document><my_node value=\"1\">my text</my_node></my_document>";
 
     public void testAllAtOnce() throws Exception {
-        RemoteMachineRunnerHitter hitter = new RemoteMachineRunnerHitter();
+        RemoteMachineServerHitter hitter = new RemoteMachineServerHitter();
         Document document = hitter.hitURL(createURL(xml, xml.length()));
         assertDocumentHasXml(xml, document);
     }
 
     public void testAPieceAtATime() throws Exception {
-        RemoteMachineRunnerHitter hitter = new RemoteMachineRunnerHitter();
+        RemoteMachineServerHitter hitter = new RemoteMachineServerHitter();
         Document document = hitter.hitURL(createURL(xml, 3));
         assertDocumentHasXml(xml, document);
     }

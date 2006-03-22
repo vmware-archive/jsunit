@@ -11,15 +11,15 @@ import java.util.List;
 
 public class DistributedTestSuiteBuilder {
     private ConfigurationSource localeSource;
-    private RemoteRunnerHitter hitter;
+    private RemoteServerHitter hitter;
     private Configuration localConfiguration;
     private int browserCount;
 
     public DistributedTestSuiteBuilder(ConfigurationSource localSource) {
-        this(localSource, new RemoteMachineRunnerHitter());
+        this(localSource, new RemoteMachineServerHitter());
     }
 
-    public DistributedTestSuiteBuilder(ConfigurationSource localSource, RemoteRunnerHitter hitter) {
+    public DistributedTestSuiteBuilder(ConfigurationSource localSource, RemoteServerHitter hitter) {
         this.localeSource = localSource;
         this.hitter = hitter;
         this.localConfiguration = new Configuration(localeSource);

@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 
-public class RemoteMachineRunnerHitter implements RemoteRunnerHitter {
+public class RemoteMachineServerHitter implements RemoteServerHitter {
 
     public Document hitURL(URL url) throws IOException {
         String xmlResultString = submitRequestTo(url);

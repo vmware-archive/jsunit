@@ -16,21 +16,21 @@ import java.util.logging.Logger;
 public class DistributedTestRunManager {
 
     private Logger logger = Logger.getLogger("net.jsunit");
-    private RemoteRunnerHitter hitter;
+    private RemoteServerHitter hitter;
     private Configuration configuration;
     private String overrideURL;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
     private Browser remoteBrowser;
 
     public static DistributedTestRunManager forConfiguration(Configuration configuration) {
-        return new DistributedTestRunManager(new RemoteMachineRunnerHitter(), configuration, null);
+        return new DistributedTestRunManager(new RemoteMachineServerHitter(), configuration, null);
     }
 
-    public static DistributedTestRunManager forConfigurationAndURL(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    public static DistributedTestRunManager forConfigurationAndURL(RemoteServerHitter hitter, Configuration configuration, String overrideURL) {
         return new DistributedTestRunManager(hitter, configuration, overrideURL);
     }
 
-    protected DistributedTestRunManager(RemoteRunnerHitter hitter, Configuration configuration, String overrideURL) {
+    protected DistributedTestRunManager(RemoteServerHitter hitter, Configuration configuration, String overrideURL) {
         this.hitter = hitter;
         this.configuration = configuration;
         this.overrideURL = overrideURL;

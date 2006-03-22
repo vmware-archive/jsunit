@@ -16,7 +16,7 @@ public class RemoteConfigurationSourceTest extends TestCase {
 
     public void testSimple() throws Exception {
         Configuration configuration = new Configuration(new DummyConfigurationSource());
-        MockRemoteRunnerHitter mockHitter = new MockRemoteRunnerHitter();
+        MockRemoteServerHitter mockHitter = new MockRemoteServerHitter();
         mockHitter.urlToDocument.put(baseURL + "/config", new Document(configuration.asXml(ServerType.STANDARD)));
 
         RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(mockHitter, baseURL);
@@ -29,7 +29,7 @@ public class RemoteConfigurationSourceTest extends TestCase {
     }
 
     public void testBlowingUpURL() throws Exception {
-        RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new BlowingUpRemoteRunnerHitter(), baseURL);
+        RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new BlowingUpRemoteServerHitter(), baseURL);
         assertFalse(remoteSource.isInitialized());
     }
 

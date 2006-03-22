@@ -8,13 +8,13 @@ import org.jdom.Document;
 
 public class DistributedTestSuiteBuilderTest extends TestCase {
     private DummyConfigurationSource originalSource;
-    private MockRemoteRunnerHitter mockHitter;
+    private MockRemoteServerHitter mockHitter;
     private DistributedTestSuiteBuilder builder;
 
     protected void setUp() throws Exception {
         super.setUp();
         originalSource = new DummyConfigurationSource();
-        mockHitter = new MockRemoteRunnerHitter();
+        mockHitter = new MockRemoteServerHitter();
         originalSource.setNeeds3rdRemoteMachineURL();
         mockHitter.urlToDocument.put(DummyConfigurationSource.REMOTE_URL_1 + "/config", remoteConfiguration1XmlDocument());
         mockHitter.urlToDocument.put(DummyConfigurationSource.REMOTE_URL_2 + "/config", remoteConfiguration2XmlDocument());

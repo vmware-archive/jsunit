@@ -2,7 +2,7 @@ package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.JsUnitFarmServer;
-import net.jsunit.RemoteRunnerHitter;
+import net.jsunit.RemoteServerHitter;
 
 public abstract class JsUnitFarmServerAction
         implements Action,
@@ -11,13 +11,13 @@ public abstract class JsUnitFarmServerAction
         JsUnitServerAware {
 
     protected JsUnitFarmServer server;
-    protected RemoteRunnerHitter hitter;
+    protected RemoteServerHitter hitter;
 
     public void setFarmServer(JsUnitFarmServer server) {
         this.server = server;
     }
 
-    public void setRemoteRunnerHitter(RemoteRunnerHitter hitter) {
+    public void setRemoteRunnerHitter(RemoteServerHitter hitter) {
         this.hitter = hitter;
     }
 

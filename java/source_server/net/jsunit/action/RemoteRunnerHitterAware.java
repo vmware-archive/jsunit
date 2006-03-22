@@ -1,9 +1,9 @@
 package net.jsunit.action;
 
-import net.jsunit.RemoteRunnerHitter;
+import net.jsunit.RemoteServerHitter;
 
 public interface RemoteRunnerHitterAware {
 
-    public void setRemoteRunnerHitter(RemoteRunnerHitter hitter);
+    public void setRemoteRunnerHitter(RemoteServerHitter hitter);
 
 }

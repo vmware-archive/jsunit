@@ -8,7 +8,7 @@ public class RemoteConfigurationSourceFunctionalTest extends FunctionalTestCase 
 
     public void testSimple() throws Exception {
         String remoteMachineURL = "http://localhost:" + port + "/jsunit";
-        RemoteConfigurationSource source = new RemoteConfigurationSource(new RemoteMachineRunnerHitter(), remoteMachineURL);
+        RemoteConfigurationSource source = new RemoteConfigurationSource(new RemoteMachineServerHitter(), remoteMachineURL);
         assertTrue(source.isInitialized());
         Configuration remoteConfiguration = new Configuration(source);
         assertEquals(
