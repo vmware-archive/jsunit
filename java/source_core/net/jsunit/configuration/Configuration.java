@@ -6,9 +6,7 @@ import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.List;
 
 public final class Configuration implements BrowserSource {
@@ -29,17 +27,7 @@ public final class Configuration implements BrowserSource {
     }
 
     public static ConfigurationSource resolveSource(String[] arguments) {
-        if (arguments.length > 0)
-            return new ArgumentsConfigurationSource(Arrays.asList(arguments));
-        else
-            for (ConfigurationProperty property : ConfigurationProperty.values())
-                if (System.getProperty(property.getName()) != null)
-                    return new EnvironmentVariablesConfigurationSource();
-        try {
-            return new PropertiesFileConfigurationSource();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Could not configure JsUnit - no environment variables or properties file found");
-        }
+        return CompositeConfigurationSource.productionConfiguration(arguments);
     }
 
     public static ConfigurationSource resolveSource() {
