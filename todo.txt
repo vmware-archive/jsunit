@@ -2,7 +2,7 @@ Required for next release:
 
   FEATURES:
     - pull in pivotal's new assertion functions
-    - have distributed test be named better - get the os/machine info from the remote config
+    - have distributedTest be a suite for each machine be named better - get the os/machine info from the remote config
   BUGS:
     - Mozilla 1.7.12 issues
     - SourceForge bugs

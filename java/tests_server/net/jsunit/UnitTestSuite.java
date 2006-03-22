@@ -23,6 +23,7 @@ public class UnitTestSuite extends TestCase {
         result.addTestSuite(ConfigurationSourceResolutionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(DistributedTestRunResultBuilderTest.class);
+        result.addTestSuite(DistributedTestSuiteBuilderTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
         result.addTestSuite(ErrorXmlRenderableTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);

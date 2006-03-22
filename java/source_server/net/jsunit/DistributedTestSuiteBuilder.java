@@ -10,32 +10,44 @@ import java.net.URL;
 import java.util.List;
 
 public class DistributedTestSuiteBuilder {
-    private ConfigurationSource originalSource;
+    private ConfigurationSource localeSource;
+    private RemoteRunnerHitter hitter;
+    private Configuration localConfiguration;
+    private int browserCount;
 
-    public DistributedTestSuiteBuilder(ConfigurationSource originalSource) {
-        this.originalSource = originalSource;
+    public DistributedTestSuiteBuilder(ConfigurationSource localSource) {
+        this(localSource, new RemoteMachineRunnerHitter());
+    }
+
+    public DistributedTestSuiteBuilder(ConfigurationSource localSource, RemoteRunnerHitter hitter) {
+        this.localeSource = localSource;
+        this.hitter = hitter;
+        this.localConfiguration = new Configuration(localeSource);
     }
 
     public void addTestsTo(TestSuite suite) {
-        Configuration configuration = new Configuration(originalSource);
-        for (final URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
-            RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new RemoteMachineRunnerHitter(), remoteMachineURL.toString());
-            Configuration remoteMachineConfiguration = new Configuration(remoteSource);
-            addTestsForRemoteConfigurationTo(remoteMachineConfiguration, remoteMachineURL, suite);
+        for (final URL remoteMachineURL : localConfiguration.getRemoteMachineURLs()) {
+            ConfigurationSource remoteSource = new RemoteConfigurationSource(hitter, remoteMachineURL.toString());
+            Configuration remoteConfiguration = new Configuration(remoteSource);
+            addTestsForRemoteConfigurationTo(remoteConfiguration, remoteMachineURL, suite);
         }
+        suite.setName("JsUnit Tests (" + getRemoteMachineURLCount() + " machines, " + getBrowserCount() + " direct browsers)");
     }
 
-    private void addTestsForRemoteConfigurationTo(Configuration remoteMachineConfiguration, URL remoteMachineURL, TestSuite suite) {
-        List<Browser> browsers = remoteMachineConfiguration.getBrowsers();
+    private void addTestsForRemoteConfigurationTo(Configuration remoteConfiguration, URL remoteMachineURL, TestSuite suite) {
+        List<Browser> browsers = remoteConfiguration.getBrowsers();
         if (browsers.isEmpty()) {
-            DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
+            DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
             suite.addTest(distributedTest);
         } else {
+            TestSuite suiteForRemoteMachine = new TestSuite(remoteMachineURL.toString());
             for (Browser browser : browsers) {
-                DistributedTest distributedTest = createDistributedTest(originalSource, remoteMachineURL);
+                browserCount++;
+                DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
                 distributedTest.limitToBrowser(browser);
-                suite.addTest(distributedTest);
+                suiteForRemoteMachine.addTest(distributedTest);
             }
+            suite.addTest(suiteForRemoteMachine);
         }
     }
 
@@ -50,5 +62,11 @@ public class DistributedTestSuiteBuilder {
         );
     }
 
+    public int getRemoteMachineURLCount() {
+        return localConfiguration.getRemoteMachineURLs().size();
+    }
 
+    public int getBrowserCount() {
+        return browserCount;
+    }
 }

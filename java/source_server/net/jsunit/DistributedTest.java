@@ -74,11 +74,14 @@ public class DistributedTest extends TestCase {
         super.tearDown();
     }
 
-    public static Test suite() {
+    public static Test suite(ConfigurationSource source) {
         TestSuite suite = new ActiveTestSuite();
-        ConfigurationSource originalSource = Configuration.resolveSource();
-        new DistributedTestSuiteBuilder(originalSource).addTestsTo(suite);
+        new DistributedTestSuiteBuilder(source).addTestsTo(suite);
         return suite;
+    }
+
+    public static Test suite() {
+        return suite(Configuration.resolveSource());
     }
 
     protected void runTest() throws Throwable {
@@ -99,6 +102,6 @@ public class DistributedTest extends TestCase {
 
     public void limitToBrowser(Browser remoteBrowser) {
         manager.limitToBrowser(remoteBrowser);
-        setName(getName() + " - " + remoteBrowser.getFileName());
+        setName(remoteBrowser.getFileName());
     }
 }

@@ -256,4 +256,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return configuration.getTimeoutSeconds();
     }
 
+    public boolean isAwaitingBrowserSubmission() {
+        return launchTestRunCommand != null;
+    }
 }

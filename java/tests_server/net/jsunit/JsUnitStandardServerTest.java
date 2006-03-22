@@ -145,6 +145,13 @@ public class JsUnitStandardServerTest extends TestCase {
         }
     }
 
+    public void testAwaitingBrowserSubmission() throws Exception {
+        server.setProcessStarter(new MockProcessStarter());
+        assertFalse(server.isAwaitingBrowserSubmission());
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("foo.exe", 1)));
+        assertTrue(server.isAwaitingBrowserSubmission());
+    }
+
     static class InvalidConfigurationSource extends DummyConfigurationSource {
 
         public String url() {
