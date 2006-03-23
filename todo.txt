@@ -2,10 +2,14 @@ Required for next release:
 
   FEATURES:
     - clock?
+    - Send traces back to client (IN PROGRESS - ehanson)
+    - Easier-to-read results (?)
+    - No output when tests pass (done already?)
 
   BUGS:
     - Mozilla 1.7.12 issues
     - SourceForge bugs
+    - Some tests don't run in Safari
 
 Backlog for future releases:
 
