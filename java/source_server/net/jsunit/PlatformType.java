@@ -10,7 +10,7 @@ public enum PlatformType {
             return os != null && os.startsWith("Windows");
         }
     },
-    MACINTOSH(new String[]{"open"}, null) {
+    MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh") {
         public boolean matchesSystem() {
             String os = SystemUtility.osName();
             return os != null && os.startsWith("Mac");
