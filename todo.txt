@@ -2,7 +2,6 @@ Required for next release:
 
   FEATURES:
     - clock?
-    - font of counts gets lost during the run 
 
   BUGS:
     - Mozilla 1.7.12 issues
