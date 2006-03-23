@@ -24,6 +24,7 @@ ASSERTION FUNCTIONS
 - Speed-up of Firefox/Mozilla (thanks to Chris Wesseling)
 
 SERVER
+- start-browser scripts in bin
 - Migration of Java code to require Java 5.0
 - JSPs require a JDK
 - StandaloneTest and DistributedTest continue on after a failure in a particular browser or remote server respectively
