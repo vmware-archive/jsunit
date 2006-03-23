@@ -334,6 +334,54 @@ function testAssertHTMLEquals() {
     assertHTMLEquals("a comment", "<p id='foo'>foo bar</p>", "<p id=foo>foo bar</p>");
 }
 
+function testAssertHashEquals() {
+    var hash1 = new Array();
+    hash1["key1"] = "value1";
+    hash1["key2"] = "value2";
+
+    var hash2 = new Array();
+    try {
+        assertHashEquals(hash1, hash2);
+        fail();
+    } catch (e) {
+        assertJsUnitException("hash2 is empty", e);
+    }
+    hash2["key1"] = "value1";
+    try {
+        assertHashEquals(hash1, hash2);
+        fail();
+    } catch (e) {
+        assertJsUnitException("hash2 is a of a different size", e);
+    }
+    hash2["key2"] = "foo";
+    try {
+        assertHashEquals(hash1, hash2);
+        fail();
+    } catch (e) {
+        assertJsUnitException("hash2 has different values", e);
+    }
+    hash2["key2"] = "value2";
+    assertHashEquals(hash1, hash2);
+}
+
+function testAssertRoughlyEquals() {
+    assertRoughlyEquals(1, 1.1, 0.5);
+    assertRoughlyEquals(1, 5, 6);
+    assertRoughlyEquals(-4, -5, 2);
+    assertRoughlyEquals(-0.5, 0.1, 0.7);
+    try {
+        assertRoughlyEquals(1, 2, 0.5);
+    } catch (e) {
+        assertJsUnitException("1 and 2 are more than 0.5 apart", e);
+    }
+}
+
+function testAssertContains() {
+    assertContains("foo", "foobar");
+    assertContains("ooba", "foobar");
+    assertContains("bar", "foobar");
+}
+
 function assertJsUnitException(comment, allegedJsUnitException) {
     assertNotNull(comment, allegedJsUnitException);
     assert(comment, allegedJsUnitException.isJsUnitException);

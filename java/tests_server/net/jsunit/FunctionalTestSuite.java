@@ -1,9 +1,9 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-public class FunctionalTestSuite extends TestCase {
+public class FunctionalTestSuite {
+
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
         result.addTestSuite(AcceptorFunctionalTest.class);

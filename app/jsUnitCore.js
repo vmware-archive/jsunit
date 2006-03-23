@@ -250,7 +250,7 @@ function assertEvaluatesToFalse() {
         fail(commentArg(1, arguments));
 }
 
-function assertHTMLEquals(expectedHTML, actualHTML) {
+function assertHTMLEquals() {
     _validateArguments(2, arguments);
     var var1 = nonCommentArg(1, 2, arguments);
     var var2 = nonCommentArg(2, 2, arguments);
@@ -258,6 +258,43 @@ function assertHTMLEquals(expectedHTML, actualHTML) {
     var var2Standardized = standardizeHTML(var2);
 
     _assert(commentArg(2, arguments), var1Standardized === var2Standardized, 'Expected ' + _displayStringForValue(var1Standardized) + ' but was ' + _displayStringForValue(var2Standardized));
+}
+
+function assertHashEquals() {
+    _validateArguments(2, arguments);
+    var var1 = nonCommentArg(1, 2, arguments);
+    var var2 = nonCommentArg(2, 2, arguments);
+    for (var key in var1) {
+        assertNotUndefined("Expected hash had key " + key + " that was not found", var2[key]);
+        assertEquals(
+                "Value for key " + key + " mismatch - expected = " + var1[key] + ", actual = " + var2[key],
+                var1[key], var2[key]
+                );
+    }
+    for (var key in var2) {
+        assertNotUndefined("Actual hash had key " + key + " that was not expected", var1[key]);
+    }
+}
+
+function assertRoughlyEquals() {
+    _validateArguments(3, arguments);
+    var expected = nonCommentArg(1, 3, arguments);
+    var actual = nonCommentArg(2, 3, arguments);
+    var tolerance = nonCommentArg(3, 3, arguments);
+    assertTrue(
+            "Expected " + expected + ", but got " + actual + " which was more than " + tolerance + " away",
+            Math.abs(expected - actual) < tolerance
+            );
+}
+
+function assertContains() {
+    _validateArguments(2, arguments);
+    var contained = nonCommentArg(1, 2, arguments);
+    var container = nonCommentArg(2, 2, arguments);
+    assertTrue(
+            "Expected '" + container + "' to contain '" + contained + "'",
+            container.indexOf(contained) != -1
+            );
 }
 
 function standardizeHTML(html) {

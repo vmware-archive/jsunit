@@ -1,7 +1,8 @@
 Required for next release:
 
   FEATURES:
-    - pull in pivotal's new assertion functions
+    - clock?
+    - font of counts gets lost during the run 
 
   BUGS:
     - Mozilla 1.7.12 issues
@@ -11,6 +12,7 @@ Backlog for future releases:
 
   FEATURES:
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
+    - clock.js
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
@@ -19,7 +21,6 @@ Backlog for future releases:
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
 
   REFACTORINGS:
-    - configurationsourcecomposite
     - ashcroft compliance
     - make all Result implementers implement XmlRenderable
     - change to use webwork taglib for jsps; remove all java scriptlets

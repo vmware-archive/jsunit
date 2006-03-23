@@ -1,13 +1,12 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import net.jsunit.action.*;
 import net.jsunit.configuration.*;
 import net.jsunit.interceptor.*;
 import net.jsunit.model.*;
 
-public class UnitTestSuite extends TestCase {
+public class UnitTestSuite {
 
     public static TestSuite suite() {
         TestSuite result = new TestSuite();

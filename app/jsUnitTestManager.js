@@ -359,7 +359,9 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
                 this.containerTestFrame.tearDown();
         }
         catch (e2) {
-            excep = e2;
+            //Unlike JUnit, only assign a tearDown exception to excep if there is not already an exception from the test body
+            if (excep == null)
+                excep = e2;
         }
     }
     var timeTaken = (new Date() - timeBefore) / 1000;
