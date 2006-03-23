@@ -171,7 +171,21 @@
             <formatter type="xml"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
-            <test name="net.jsunit.UnitTestSuite"/>
+            <sysproperty key="java.security.manager" value="com.thoughtworks.ashcroft.runtime.JohnAshcroft"/>
+            <test name="net.jsunit.PureUnitTestSuite"/>
+        </junit>
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
+            <formatter type="xml"/>
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+            <test name="net.jsunit.ImpureUnitTestSuite"/>
+        </junit>
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
+            <formatter type="xml"/>
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
             <test name="net.jsunit.FunctionalTestSuite"/>
         </junit>
         <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
