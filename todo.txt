@@ -9,6 +9,10 @@ Required for next release:
 
 Backlog for future releases:
 
+  CONTINUOUS BUILD
+
+    - running all tests twice in continuous build?
+
   FEATURES:
     - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
     - clock.js
@@ -26,4 +30,3 @@ Backlog for future releases:
 
   BUGS:
     - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
-
