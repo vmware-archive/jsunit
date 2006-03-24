@@ -43,6 +43,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(RemoteTestRunClientTest.class);
         result.addTestSuite(RequestSourceInterceptorTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
+        result.addTestSuite(SerialDistributedTestTest.class);
         result.addTestSuite(TestRunnerActionSimultaneousRunBlockingTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestRunResultBuilderTest.class);

@@ -20,10 +20,11 @@ public class DistributedTest extends TestCase {
     private static JsUnitStandardServer temporaryStandardServer;
     private static Object blocker = new Object();
     private static int serverCount = 0;
+    private ConfigurationSource localServerSource;
 
-    public DistributedTest(ConfigurationSource serverSource, ConfigurationSource farmSource) {
+    public DistributedTest(ConfigurationSource localServerSource, ConfigurationSource farmSource) {
         super(farmSource.remoteMachineURLs());
-        ensureTemporaryStandardServerIsCreated(serverSource);
+        this.localServerSource = localServerSource;
         manager = DistributedTestRunManager.forConfiguration(new Configuration(farmSource));
     }
 
@@ -38,6 +39,7 @@ public class DistributedTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
+        ensureTemporaryStandardServerIsCreated(localServerSource);
         startServerIfNecessary();
     }
 
