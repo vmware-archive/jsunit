@@ -28,3 +28,4 @@ Backlog for future releases:
 
   BUGS:
     - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
+
