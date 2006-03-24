@@ -7,6 +7,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
+import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
@@ -29,6 +30,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     private final ServerType serverType;
     private Date startDate;
     protected int testRunCount = 0;
+    private SkinSource skinSource = new DefaultSkinSource();
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
@@ -159,5 +161,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
     public long getTestRunCount() {
         return testRunCount;
+    }
+
+    public List<Skin> getSkins() {
+        return skinSource.getSkins();
     }
 }

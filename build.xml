@@ -150,7 +150,7 @@
 
     <target name="_generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
         <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
-              style="xsl/buildDotXmlToJsUnitDotProperties.xsl"></xslt>
+              style="tools/buildDotXmlToJsUnitDotProperties.xsl"></xslt>
     </target>
 
     <target name="_run_unit_tests" depends="_compile_tests" description="Runs the JsUnit Java unit tests">

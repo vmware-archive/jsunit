@@ -3,6 +3,7 @@
 <%@ page import="net.jsunit.configuration.Configuration" %>
 <%@ page import="net.jsunit.configuration.ConfigurationProperty" %>
 <%@ page import="net.jsunit.model.Browser" %>
+<%@ page import="net.jsunit.results.Skin" %>
 <%@ page import="net.jsunit.utility.SystemUtility" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
@@ -158,21 +159,34 @@
                     </font>
                 </td>
             </tr>
+            <%if (!server.isFarmServer()) {%>
             <tr>
                 <td width="1">
                     Browser:
                 </td>
                 <td>
-                    <%if (!server.isFarmServer()) {%>
-
                     <select name="browserId">
-                        <option value="">(All browsers)</option>
+                        <option value="">All browsers</option>
                         <%
                             for (Browser browser : configuration.getBrowsers()) {
                         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
                         <%}%>
                     </select><br>
-                    <%}%>
+                </td>
+            </tr>
+            <%}%>
+            <tr>
+                <td width="1">
+                    Skin:
+                </td>
+                <td>
+                    <select name="skinId">
+                        <option value="">None - pure XML</option>
+                        <%
+                            for (Skin skin : server.getSkins()) {
+                        %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
+                        <%}%>
+                    </select><br>
                 </td>
             </tr>
             <tr>
@@ -215,6 +229,20 @@
                         <%
                             for (Browser browser : configuration.getBrowsers()) {
                         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
+                        <%}%>
+                    </select><br>
+                </td>
+            </tr>
+            <tr>
+                <td width="1">
+                    Skin:
+                </td>
+                <td>
+                    <select name="skinId">
+                        <option value="">None - pure XML</option>
+                        <%
+                            for (Skin skin : server.getSkins()) {
+                        %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
                         <%}%>
                     </select><br>
                 </td>

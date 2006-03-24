@@ -13,6 +13,7 @@ import net.jsunit.interceptor.VersionGrabberInterceptorTest;
 import net.jsunit.model.BrowserTest;
 import net.jsunit.model.TestCaseResultTest;
 import net.jsunit.model.TestPageResultTest;
+import net.jsunit.results.SkinTest;
 
 public class PureUnitTestSuite {
 
@@ -29,6 +30,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
+        result.addTestSuite(SkinTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);

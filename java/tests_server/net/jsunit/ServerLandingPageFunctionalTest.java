@@ -37,12 +37,12 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/");
         webTester.setWorkingForm("runnerForm");
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
-        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html");
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
         webTester.submit();
         assertSuccessfulRunResult(
                 responseXmlDocument(),
                 ResultType.SUCCESS,
-                "http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html",
+                "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
                 1
         );
     }
@@ -50,14 +50,38 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
     public void testRunnerForAllBrowsers() throws Exception {
         webTester.beginAt("/");
         webTester.setWorkingForm("runnerForm");
-        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html");
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
         webTester.submit();
         assertSuccessfulRunResult(
                 responseXmlDocument(),
                 ResultType.SUCCESS,
-                "http://localhost:" + port + "/jsunit/tests/jsUnitAssertionTests.html",
+                "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
                 2
         );
+    }
+
+    public void xtestRunnerWithHTMLSkin() throws Exception {
+        webTester.beginAt("/");
+        webTester.setWorkingForm("runnerForm");
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.selectOption("skinId", "simple_html");
+        webTester.submit();
+        webTester.assertTitleEquals("JsUnit Test Results");
+        webTester.assertTextPresent("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+        webTester.assertTextPresent(ResultType.SUCCESS.getDisplayString());
+    }
+
+    public void xtestRunnerWithTextSkin() throws Exception {
+        webTester.beginAt("/");
+        webTester.setWorkingForm("runnerForm");
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.selectOption("skinId", "simple_text");
+        webTester.submit();
+        String responseText = webTester.getDialog().getResponseText();
+        assertTrue(responseText.indexOf("http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:") != -1);
+        assertTrue(responseText.indexOf(ResultType.SUCCESS.getDisplayString()) != -1);
     }
 
     public void testDisplayerForm() throws Exception {
