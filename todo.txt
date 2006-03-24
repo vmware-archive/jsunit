@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - clock?
     - Send traces back to client (IN PROGRESS - ehanson)
     - Easier-to-read results (?)
     - No output when tests pass (done already?)
@@ -13,13 +12,8 @@ Required for next release:
 
 Backlog for future releases:
 
-  CONTINUOUS BUILD
-
-    - running all tests twice in continuous build?
-
   FEATURES:
-    - make ajaxunit.js from pivotal's ajax.js and get don's and zen's input too
-    - clock.js
+    - ajaxunit.js
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)

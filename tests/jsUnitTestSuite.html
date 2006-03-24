@@ -7,27 +7,29 @@
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
     <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
     <script language="JavaScript" type="text/javascript">
-        function coreTestSuite() {
-            var newsuite = new top.jsUnitTestSuite();
-            newsuite.addTestPage("tests/jsUnitAssertionTests.html");
-            newsuite.addTestPage("tests/jsUnitSetUpTearDownTests.html");
-            newsuite.addTestPage("tests/jsUnitRestoredHTMLDivTests.html");
-            return newsuite;
+
+        function coreSuite() {
+            var result = new top.jsUnitTestSuite();
+            result.addTestPage("tests/jsUnitAssertionTests.html");
+            result.addTestPage("tests/jsUnitSetUpTearDownTests.html");
+            result.addTestPage("tests/jsUnitRestoredHTMLDivTests.html");
+            result.addTestPage("tests/jsUnitFrameworkUtilityTests.html");
+            result.addTestPage("tests/jsUnitOnLoadTests.html");
+            result.addTestPage("tests/jsUnitUtilityTests.html");
+            result.addTestPage("tests/jsUnitVersionCheckTests.html");
+            return result;
         }
 
-        function utilityTestSuite() {
-            var newsuite = new top.jsUnitTestSuite();
-            newsuite.addTestPage("tests/jsUnitUtilityTests.html");
-            newsuite.addTestPage("tests/jsUnitFrameworkUtilityTests.html");
-            newsuite.addTestPage("tests/jsUnitOnLoadTests.html");
-            newsuite.addTestPage("tests/jsUnitVersionCheckTests.html");
-            return newsuite;
+        function librariesSuite() {
+            var result = new top.jsUnitTestSuite();
+            result.addTestPage("tests/jsunitMockTimeoutTest.html");
+            return result;
         }
 
         function suite() {
             var newsuite = new top.jsUnitTestSuite();
             newsuite.addTestSuite(coreTestSuite());
-            newsuite.addTestSuite(utilityTestSuite());
+            newsuite.addTestSuite(librariesTestSuite());
             return newsuite;
         }
     </script>

@@ -20,8 +20,9 @@ ASSERTION FUNCTIONS
 - cache-buster for testpage retrieval & results submission
 - jsUnitRestoredHTMLDiv
 - turn off tracing, alerts, confirms when submitting
-- testPage parameter needs to be URL-encoded (only opera cares though)
+- testPage parameter should be URL-encoded (only opera cares though)
 - Speed-up of Firefox/Mozilla (thanks to Chris Wesseling)
+- jsUnitMockTimeout.js (thanks to Pivotal, especially Nathan Wilmes)
 
 SERVER
 - start-browser scripts in bin
