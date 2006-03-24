@@ -148,6 +148,16 @@
         <delete dir="${bin}/net"/>
     </target>
 
+    <target name="_create_src_jar" description="Creates jsunit-src.jar">
+        <delete file="./java/jsunit-src.jar"/>
+        <jar jarfile="./java/jsunit-src.jar">
+            <fileset dir="${source_core}"/>
+            <fileset dir="${source_server}"/>
+            <fileset dir="${tests_core}"/>
+            <fileset dir="${tests_server}"/>
+        </jar>
+    </target>
+
     <target name="_generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
         <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
               style="tools/buildDotXmlToJsUnitDotProperties.xsl"></xslt>

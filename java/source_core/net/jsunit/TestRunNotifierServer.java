@@ -53,7 +53,7 @@ public class TestRunNotifierServer implements TestRunListener {
 
         public void messageReceived(String message) {
             if ("stop".equals(message)) {
-                runner.logStatus("Stopping Test Run");
+                runner.logStatus("Stopping JsUnit Test Run");
                 runner.dispose();
             }
         }

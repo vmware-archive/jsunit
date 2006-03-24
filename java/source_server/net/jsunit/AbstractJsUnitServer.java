@@ -134,7 +134,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     public void dispose() {
-        logStatus("Stopping server");
+        logStatus("Stopping JsUnit server");
         try {
             if (server != null)
                 server.stop();
