@@ -14,7 +14,7 @@ public class SuccessfulStandaloneTestTest extends EndToEndTestCase {
 
             public String url() {
                 return "http://localhost:" + port + "/jsunit/testRunner.html?" +
-                        "testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html" +
+                        "testPage=http://localhost:" + port + "/jsunit/tests/jsUnitTestSuite.html" +
                         "&autoRun=true&submitresults=true&resultId=foobar";
             }
 
