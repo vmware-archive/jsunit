@@ -22,14 +22,14 @@
 
         function librariesSuite() {
             var result = new top.jsUnitTestSuite();
-            result.addTestPage("tests/jsunitMockTimeoutTest.html");
+            result.addTestPage("tests/jsUnitMockTimeoutTest.html");
             return result;
         }
 
         function suite() {
             var newsuite = new top.jsUnitTestSuite();
-            newsuite.addTestSuite(coreTestSuite());
-            newsuite.addTestSuite(librariesTestSuite());
+            newsuite.addTestSuite(coreSuite());
+            newsuite.addTestSuite(librariesSuite());
             return newsuite;
         }
     </script>

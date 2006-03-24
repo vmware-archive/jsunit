@@ -17,6 +17,7 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -25,7 +26,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     private HttpServer server;
     private Logger logger = Logger.getLogger("net.jsunit");
     protected Configuration configuration;
-	private final ServerType serverType;
+    private final ServerType serverType;
+    private Date startDate;
+    protected int testRunCount = 0;
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
@@ -43,9 +46,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     public boolean isFarmServer() {
         return serverType.isFarm();
     }
-    
+
     public boolean isTemporary() {
-    	return serverType.isTemporary();
+        return serverType.isTemporary();
     }
 
     public Configuration getConfiguration() {
@@ -56,6 +59,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
         setUpHttpServer();
         logStatus(startingServerStatusMessage());
         server.start();
+        startDate = new Date();
         if (serverType.shouldPerformUpToDateCheck())
             performUpToDateCheck();
     }
@@ -146,7 +150,14 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     }
 
     public ServerType serverType() {
-    	return serverType;
+        return serverType;
     }
-    
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public long getTestRunCount() {
+        return testRunCount;
+    }
 }

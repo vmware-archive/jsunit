@@ -13,10 +13,6 @@
             doStackTraceTest(3, "testStackTrace");
         }
 
-        function testStackTraceWithWhitespaceBetweenFunctionKeywordAndTestFunctionName() {
-            doStackTraceTest(3, "testStackTraceWithWhitespaceBetweenFunctionKeywordAndTestFunctionName");
-        }
-
         function doStackTraceTest(numberLeft, testFunctionName) {
             if (numberLeft > 0) {
                 doStackTraceTest(numberLeft - 1, testFunctionName);

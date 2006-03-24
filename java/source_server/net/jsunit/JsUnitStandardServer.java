@@ -237,6 +237,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public void finishTestRun() {
         for (TestRunListener listener : browserTestRunListeners)
             listener.testRunFinished();
+        testRunCount ++;
     }
 
     public Process getBrowserProcess() {
