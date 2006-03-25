@@ -13,16 +13,14 @@ Required for next release:
 Backlog for future releases:
 
   FEATURES:
-    - ajaxunit.js
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
     - admin.jsp console to change and save configuration (password protected?)
-    - browser ids - ability to pass a browser id to the runner servlet
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
 
   REFACTORINGS:
-    - ashcroft compliance
+    - better ashcroft compliance
     - make all Result implementers implement XmlRenderable
     - change to use webwork taglib for jsps; remove all java scriptlets
 
