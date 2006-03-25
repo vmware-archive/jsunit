@@ -19,7 +19,8 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
                 "config",
                 "latestversion",
                 "runner",
-                "serverstatus"
+                "serverstatus",
+                "testruncount"
         });
     }
 
@@ -44,4 +45,7 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
         return ServerType.FARM;
     }
 
+    public void finishedTestRun() {
+        testRunCount++;
+    }
 }

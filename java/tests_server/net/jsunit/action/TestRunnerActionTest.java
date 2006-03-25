@@ -51,28 +51,29 @@ public class TestRunnerActionTest extends TestCase {
 
     public void testRequestIpAddressAndHostLogged() throws Exception {
         action.execute();
-        assertEquals("Received request to run tests", mockRunner.logMessages.get(0));
+        assertEquals("Received request to run tests on URL '<default>'", mockRunner.logMessages.get(0));
 
         mockRunner.logMessages.clear();
         action.setRequestIPAddress("123.456.78.9");
         action.execute();
-        assertEquals("Received request to run tests from 123.456.78.9", mockRunner.logMessages.get(0));
+        assertEquals("Received request to run tests from 123.456.78.9 on URL '<default>'", mockRunner.logMessages.get(0));
 
         mockRunner.logMessages.clear();
         action.setRequestHost("www.example.com");
         action.execute();
-        assertEquals("Received request to run tests from www.example.com (123.456.78.9)", mockRunner.logMessages.get(0));
+        assertEquals("Received request to run tests from www.example.com (123.456.78.9) on URL '<default>'", mockRunner.logMessages.get(0));
 
         mockRunner.logMessages.clear();
         action.setRequestIPAddress("");
         action.execute();
-        assertEquals("Received request to run tests from www.example.com", mockRunner.logMessages.get(0));
+        assertEquals("Received request to run tests from www.example.com on URL '<default>'", mockRunner.logMessages.get(0));
 
         mockRunner.logMessages.clear();
         action.setRequestIPAddress("12.34.56.78");
         action.setRequestHost("12.34.56.78");
+        action.setUrl("http://www.example.com");
         action.execute();
-        assertEquals("Received request to run tests from 12.34.56.78", mockRunner.logMessages.get(0));
+        assertEquals("Received request to run tests from 12.34.56.78 on URL 'http://www.example.com'", mockRunner.logMessages.get(0));
     }
 
     public void testLimitToParticularBrowser() throws Exception {

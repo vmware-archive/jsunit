@@ -6,7 +6,7 @@ import net.jsunit.StatusMessage;
 
 import java.util.List;
 
-public class ServerStatusAction implements Action {
+public class ServerStatusAction implements Action, JsUnitServerAware {
     private JsUnitServer server;
 
     public String execute() throws Exception {

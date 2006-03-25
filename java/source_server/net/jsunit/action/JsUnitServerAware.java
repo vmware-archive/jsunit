@@ -1,7 +1,7 @@
 package net.jsunit.action;
 
-import net.jsunit.JsUnitFarmServer;
+import net.jsunit.JsUnitServer;
 
 public interface JsUnitServerAware {
-    void setFarmServer(JsUnitFarmServer farmServer);
+    void setJsUnitServer(JsUnitServer server);
 }

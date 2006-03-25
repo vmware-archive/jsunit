@@ -11,6 +11,7 @@
             <result-type name="jsUnitLatestVersion" class="net.jsunit.action.LatestVersionResult"/>
             <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
             <result-type name="jsUnitServerStatus" class="net.jsunit.action.StatusResult"/>
+            <result-type name="jsUnitTestRunCount" class="net.jsunit.action.TestRunCountResult"/>
         </result-types>
 
         <interceptors>
@@ -68,6 +69,11 @@
 
         <action name="serverstatus" class="net.jsunit.action.ServerStatusAction">
             <result name="success" type="jsUnitServerStatus"/>
+            <interceptor-ref name="server"/>
+        </action>
+
+        <action name="testruncount" class="net.jsunit.action.TestRunCountAction">
+            <result name="success" type="jsUnitTestRunCount"/>
             <interceptor-ref name="server"/>
         </action>
 

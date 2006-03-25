@@ -15,14 +15,16 @@
     <title>JsUnit <%if (server.isFarmServer()) {%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
-    <script type="text/javascript" src="app/server/jsUnitServerStatus.js"></script>
+    <script type="text/javascript" src="app/server/jsUnitServerAjax.js"></script>
     <script type="text/javascript">
 
         function selectDiv(selectedDivName) {
             updateDiv("testRunnerDiv", selectedDivName);
             updateDiv("configDiv", selectedDivName);
             updateDiv("runnerDiv", selectedDivName);
+        <%if (!server.isFarmServer()) {%>
             updateDiv("displayerDiv", selectedDivName);
+        <%}%>
         }
 
         function updateDiv(divName, selectedDivName) {
@@ -38,20 +40,31 @@
         function updateServerStatusDiv(messageString) {
             var messageArray = messageString.split("|");
             var messageCount = messageArray.length;
-            var theDiv = document.getElementById("serverStatusDiv");
             var newHTML = "<font size='-2'>";
             for (var i = messageCount - 1; i >= 0; i--) {
                 newHTML += messageArray[i];
                 newHTML += "<br>";
             }
-            theDiv.innerHTML = newHTML;
+            document.getElementById("serverStatusDiv").innerHTML = newHTML;
+        }
+
+        function updateTestRunCountDiv(testRunCount) {
+            var newHTML = "<font size='-2'>Test Run Count: " + testRunCount + "</font>";
+            document.getElementById("testRunCountDiv").innerHTML = newHTML;
+        }
+
+        function pageLoaded() {
+            selectDiv("runnerDiv");
+            var updater = new JsUnitServerAjaxUpdater();
+            updater.askServerForStatus();
+            updater.askServerForTestRunCount();
         }
 
     </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body onload="selectDiv('runnerDiv'); new ServerStatusUpdater().askServerForStatus()">
+<body onload="pageLoaded()">
 <table height="90" width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information"
        bgcolor="#DDDDDD">
     <tr>
@@ -62,7 +75,6 @@
         <th nowrap align="left">
             <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()) {%> Farm<%}%> Server</h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
-                since <%=new SimpleDateFormat().format(server.getStartDate())%></i></font>
         </th>
         <td nowrap align="right" valign="middle">
             <font size="-2">
@@ -117,9 +129,15 @@
                 %>
             </table>
         </td>
-        <td valign="top" width="500" height="200" nowrap>
+        <td valign="top" width="500" height="175" nowrap>
             <h4>
                 Server Status
+            </h4>
+            <h4>
+                <font size="-2">Up since <%=new SimpleDateFormat().format(server.getStartDate())%></font><br>
+
+                <div id="testRunCountDiv"></div>
+                <font size="-2">Server log:</font>
             </h4>
 
             <div style="width:90%;height:90%;overflow:scroll" id="serverStatusDiv"></div>

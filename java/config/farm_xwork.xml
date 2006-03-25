@@ -10,12 +10,16 @@
         <result-types>
             <result-type name="jsUnitXml" class="net.jsunit.action.XmlResult"/>
             <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
+            <result-type name="jsUnitServerStatus" class="net.jsunit.action.StatusResult"/>
+            <result-type name="jsUnitTestRunCount" class="net.jsunit.action.TestRunCountResult"/>
         </result-types>
 
         <interceptors>
             <interceptor name="farmServer" class="net.jsunit.interceptor.FarmServerInterceptor"/>
             <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
+            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
             <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
+            <interceptor name="server" class="net.jsunit.interceptor.ServerInterceptor"/>
 
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
@@ -33,11 +37,23 @@
         <action name="runner" class="net.jsunit.action.DistributedTestRunnerAction">
             <result name="success" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
+            <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="skin"/>
+            <interceptor-ref name="requestSource"/>
         </action>
 
         <action name="config" class="net.jsunit.action.FarmServerConfigurationAction">
             <result name="success" type="jsUnitXml"/>
+        </action>
+
+        <action name="serverstatus" class="net.jsunit.action.ServerStatusAction">
+            <result name="success" type="jsUnitServerStatus"/>
+            <interceptor-ref name="server"/>
+        </action>
+
+        <action name="testruncount" class="net.jsunit.action.TestRunCountAction">
+            <result name="success" type="jsUnitTestRunCount"/>
+            <interceptor-ref name="server"/>
         </action>
 
     </package>

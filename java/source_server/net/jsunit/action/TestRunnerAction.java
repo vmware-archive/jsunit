@@ -43,18 +43,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     }
 
     private String requestReceivedMessage() {
-        String message = "Received request to run tests";
-        if (!StringUtility.isEmpty(remoteAddress) || !StringUtility.isEmpty(remoteHost)) {
-            message += " from ";
-            if (!StringUtility.isEmpty(remoteHost)) {
-                message += remoteHost;
-                if (!StringUtility.isEmpty(remoteAddress) && !remoteAddress.equals(remoteHost))
-                    message += " (" + remoteAddress + ")";
-            } else {
-                message += remoteAddress;
-            }
-        }
-        return message;
+        return new RequestReceivedMessage(remoteHost, remoteAddress, url).generateMessage();
     }
 
     public XmlRenderable getXmlRenderable() {

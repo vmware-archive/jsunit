@@ -4,7 +4,7 @@ import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitFarmServer;
-import net.jsunit.action.JsUnitServerAware;
+import net.jsunit.action.JsUnitFarmServerAware;
 import net.jsunit.configuration.Configuration;
 
 public class FarmServerInterceptorTest extends TestCase {
@@ -22,7 +22,7 @@ public class FarmServerInterceptorTest extends TestCase {
         assertTrue(mockInvocation.wasInvokeCalled);
     }
 
-    static class MockAction implements Action, JsUnitServerAware {
+    static class MockAction implements Action, JsUnitFarmServerAware {
         public JsUnitFarmServer farmServer;
 
         public String execute() throws Exception {
