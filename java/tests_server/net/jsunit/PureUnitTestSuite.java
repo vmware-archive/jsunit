@@ -6,7 +6,6 @@ import net.jsunit.action.*;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
-import net.jsunit.interceptor.SkinInterceptorTest;
 import net.jsunit.interceptor.VersionGrabberInterceptorTest;
 import net.jsunit.model.BrowserTest;
 import net.jsunit.model.TestCaseResultTest;
@@ -28,7 +27,6 @@ public class PureUnitTestSuite {
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
-        result.addTestSuite(SkinInterceptorTest.class);
         result.addTestSuite(SkinTest.class);
         result.addTestSuite(StatusActionTest.class);
         result.addTestSuite(TestCaseResultTest.class);

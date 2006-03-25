@@ -13,6 +13,7 @@ import net.jsunit.configuration.PropertiesConfigurationSourceTest;
 import net.jsunit.interceptor.BrowserResultInterceptorTest;
 import net.jsunit.interceptor.FarmServerInterceptorTest;
 import net.jsunit.interceptor.RequestSourceInterceptorTest;
+import net.jsunit.interceptor.SkinInterceptorTest;
 import net.jsunit.model.*;
 
 public class ImpureUnitTestSuite {
@@ -44,6 +45,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(RequestSourceInterceptorTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(SerialDistributedTestTest.class);
+        result.addTestSuite(SkinInterceptorTest.class);
         result.addTestSuite(TestRunnerActionSimultaneousRunBlockingTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestRunResultBuilderTest.class);
