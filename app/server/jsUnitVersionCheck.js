@@ -1,15 +1,15 @@
-var versionRequest;
+var jsUnitVersionRequest;
 
 function isOutOfDate(newVersionNumber) {
     return JSUNIT_VERSION < newVersionNumber;
 }
 
 function sendRequestForLatestVersion(url) {
-    versionRequest = createXmlHttpRequest();
-    if (versionRequest) {
-        versionRequest.onreadystatechange = requestStateChanged;
-        versionRequest.open("GET", url, true);
-        versionRequest.send(null);
+    jsUnitVersionRequest = createXmlHttpRequest();
+    if (jsUnitVersionRequest) {
+        jsUnitVersionRequest.onreadystatechange = requestStateChanged;
+        jsUnitVersionRequest.open("GET", url, true);
+        jsUnitVersionRequest.send(null);
     }
 }
 
@@ -21,9 +21,9 @@ function createXmlHttpRequest() {
 }
 
 function requestStateChanged() {
-    if (versionRequest && versionRequest.readyState == 4) {
-        if (versionRequest.status == 200) {
-            var latestVersion = versionRequest.responseText;
+    if (jsUnitVersionRequest && jsUnitVersionRequest.readyState == 4) {
+        if (jsUnitVersionRequest.status == 200) {
+            var latestVersion = jsUnitVersionRequest.responseText;
             if (isOutOfDate(latestVersion))
                 versionNotLatest(latestVersion);
             else

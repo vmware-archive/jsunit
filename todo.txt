@@ -2,7 +2,7 @@ Required for next release:
 
   FEATURES:
     - Send traces back to client (IN PROGRESS - ehanson)
-    - Easier-to-read results (?)
+    - Easier-to-read results (IN PROGRESS - ehieatt)
     - No output when tests pass (done already?)
 
   BUGS:

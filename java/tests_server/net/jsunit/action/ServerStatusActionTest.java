@@ -2,11 +2,13 @@ package net.jsunit.action;
 
 import junit.framework.TestCase;
 import net.jsunit.JsUnitServer;
+import net.jsunit.StatusMessage;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.results.Skin;
 import org.jdom.Element;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,13 +18,13 @@ public class ServerStatusActionTest extends TestCase {
         ServerStatusAction action = new ServerStatusAction();
         MockServer mockServer = new MockServer();
         action.setJsUnitServer(mockServer);
-        assertNull(action.getStatus());
-        mockServer.status = "foo bar";
-        assertEquals("foo bar", action.getStatus());
+        assertTrue(action.getStatusMessages().isEmpty());
+        mockServer.messages.add(new StatusMessage("foo bar"));
+        assertEquals(1, action.getStatusMessages().size());
     }
 
     static class MockServer implements JsUnitServer {
-        public String status;
+        public List<StatusMessage> messages = new ArrayList<StatusMessage>();
 
         public Configuration getConfiguration() {
             return null;
@@ -52,8 +54,8 @@ public class ServerStatusActionTest extends TestCase {
             return null;
         }
 
-        public String getStatus() {
-            return status;
+        public List<StatusMessage> getStatusMessages() {
+            return messages;
         }
     }
 }

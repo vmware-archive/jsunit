@@ -14,8 +14,10 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit <%if (server.isFarmServer()) {%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
-    <script type="text/javascript" src="app/jsUnitVersionCheck.js"></script>
+    <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
+    <script type="text/javascript" src="app/server/jsUnitServerStatus.js"></script>
     <script type="text/javascript">
+
         function selectDiv(selectedDivName) {
             updateDiv("testRunnerDiv", selectedDivName);
             updateDiv("configDiv", selectedDivName);
@@ -32,11 +34,24 @@
             var theDivHeader = document.getElementById(divName + "Header");
             theDivHeader.className = isSelected ? "selectedTab" : "unselectedTab";
         }
+
+        function updateServerStatusDiv(messageString) {
+            var messageArray = messageString.split("|");
+            var messageCount = messageArray.length;
+            var theDiv = document.getElementById("serverStatusDiv");
+            var newHTML = "<font size='-2'>";
+            for (var i = 0; i < messageCount; i++) {
+                newHTML += messageArray[i];
+                newHTML += "<br>";
+            }
+            theDiv.innerHTML = newHTML;
+        }
+
     </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body onload="selectDiv('runnerDiv')">
+<body onload="selectDiv('runnerDiv'); new ServerStatusUpdater().askServerForStatus()">
 <table height="90" width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information"
        bgcolor="#DDDDDD">
     <tr>
@@ -68,39 +83,53 @@
 
     </tr>
 </table>
-<h4>
-    Server configuration
-</h4>
-<table border="0">
+<br>
+<table cellpadding="1" cellspacing="1" border="0" width="100%">
     <tr>
-        <th nowrap align="right">Server type:</th>
-        <td width="10">&nbsp;</td>
-        <td><%=server.serverType().getDisplayName()%></td>
+        <td valign="top" width="50%">
+            <h4>
+                Server configuration
+            </h4>
+            <table border="0">
+                <tr>
+                    <th nowrap align="right">Server type:</th>
+                    <td width="10">&nbsp;</td>
+                    <td><%=server.serverType().getDisplayName()%></td>
+                </tr>
+                <%
+                    for (ConfigurationProperty property : configuration.getRequiredAndOptionalConfigurationProperties(server.serverType())) {
+                %>
+                <tr>
+                    <th nowrap align="right"><%=property.getDisplayName()%>:</th>
+                    <td width="10">&nbsp;</td>
+                    <td>
+                        <%
+                            for (String valueString : property.getValueStrings(configuration)) {
+                        %><div><%
+                        if (valueString != null) {
+                            if (property.isURL()) {
+                    %><a href="<%=valueString%>"><%=valueString%></a><%
+                    } else {
+                    %><%=valueString%><%
+                            }
+                        }
+                    %></div><%
+                        }
+                    %>
+                    </td></tr>
+                <%
+                    }
+                %>
+            </table>
+        </td>
+        <td valign="top" width="50%" height="200">
+            <h4>
+                Server Status
+            </h4>
+
+            <div style="width:90%;height:90%;overflow:scroll" id="serverStatusDiv"></div>
+        </td>
     </tr>
-    <%
-        for (ConfigurationProperty property : configuration.getRequiredAndOptionalConfigurationProperties(server.serverType())) {
-    %>
-    <tr>
-        <th nowrap align="right"><%=property.getDisplayName()%>:</th>
-        <td width="10">&nbsp;</td>
-        <td>
-            <%
-                for (String valueString : property.getValueStrings(configuration)) {
-            %><div><%
-            if (valueString != null) {
-                if (property.isURL()) {
-        %><a href="<%=valueString%>"><%=valueString%></a><%
-        } else {
-        %><%=valueString%><%
-                }
-            }
-        %></div><%
-            }
-        %>
-        </td></tr>
-    <%
-        }
-    %>
 </table>
 <br>
 <h4>

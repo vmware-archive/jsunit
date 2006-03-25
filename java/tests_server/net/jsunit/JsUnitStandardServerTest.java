@@ -6,6 +6,8 @@ import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
+import java.util.List;
+
 public class JsUnitStandardServerTest extends TestCase {
 
     private JsUnitStandardServer server;
@@ -150,6 +152,39 @@ public class JsUnitStandardServerTest extends TestCase {
         assertFalse(server.isAwaitingBrowserSubmission());
         server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("foo.exe", 1)));
         assertTrue(server.isAwaitingBrowserSubmission());
+    }
+
+    public void testStatusMessages() throws Exception {
+        assertTrue(server.getStatusMessages().isEmpty());
+        server.logStatus("message 1");
+        assertEquals(1, server.getStatusMessages().size());
+        assertEquals("message 1", server.getStatusMessages().get(0).getMessage());
+
+        server.logStatus("message 2");
+        server.logStatus("message 3");
+
+        assertEquals(3, server.getStatusMessages().size());
+    }
+
+    public void testStatusMessageLimit() throws Exception {
+        for (int i = 0; i < 50; i++)
+            server.logStatus("message " + i);
+        List<StatusMessage> messages = server.getStatusMessages();
+        assertEquals(50, messages.size());
+        assertEquals("message 0", messages.get(0).getMessage());
+        assertEquals("message 1", messages.get(1).getMessage());
+
+        assertEquals("message 48", messages.get(48).getMessage());
+        assertEquals("message 49", messages.get(49).getMessage());
+
+        server.logStatus("message 50");
+        messages = server.getStatusMessages();
+        assertEquals(50, messages.size());
+        assertEquals("message 1", messages.get(0).getMessage());
+        assertEquals("message 2", messages.get(1).getMessage());
+
+        assertEquals("message 49", messages.get(48).getMessage());
+        assertEquals("message 50", messages.get(49).getMessage());
     }
 
     static class InvalidConfigurationSource extends DummyConfigurationSource {

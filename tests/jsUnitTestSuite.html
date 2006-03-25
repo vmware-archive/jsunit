@@ -16,7 +16,13 @@
             result.addTestPage("tests/jsUnitFrameworkUtilityTests.html");
             result.addTestPage("tests/jsUnitOnLoadTests.html");
             result.addTestPage("tests/jsUnitUtilityTests.html");
-            result.addTestPage("tests/jsUnitVersionCheckTests.html");
+            return result;
+        }
+
+        function serverSuite() {
+            var result = new top.jsUnitTestSuite();
+            result.addTestPage("tests/server/jsUnitVersionCheckTests.html");
+            result.addTestPage("tests/server/jsUnitServerStatusTests.html");
             return result;
         }
 
@@ -29,6 +35,7 @@
         function suite() {
             var newsuite = new top.jsUnitTestSuite();
             newsuite.addTestSuite(coreSuite());
+            newsuite.addTestSuite(serverSuite());
             newsuite.addTestSuite(librariesSuite());
             return newsuite;
         }

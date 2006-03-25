@@ -2,6 +2,9 @@ package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.JsUnitServer;
+import net.jsunit.StatusMessage;
+
+import java.util.List;
 
 public class ServerStatusAction implements Action {
     private JsUnitServer server;
@@ -14,7 +17,7 @@ public class ServerStatusAction implements Action {
         this.server = server;
     }
 
-    public String getStatus() {
-        return server.getStatus();
+    public List<StatusMessage> getStatusMessages() {
+        return server.getStatusMessages();
     }
 }

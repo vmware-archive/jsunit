@@ -6,7 +6,6 @@ import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.utility.StringUtility;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -199,7 +198,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     private void handleCrashWhileLaunching(Throwable throwable) {
         Browser browser = launchTestRunCommand.getBrowser();
-        logStatus("Browser " + browser.getFileName() + " failed to launch: " + StringUtility.stackTraceAsString(throwable));
+        logStatus("Browser " + browser.getFileName() + " failed to launch: " + throwable.getClass().getName() + " - " + throwable.getMessage());
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
         failedToLaunchBrowserResult.setFailedToLaunch();
         failedToLaunchBrowserResult.setBrowser(browser);

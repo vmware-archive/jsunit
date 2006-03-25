@@ -18,6 +18,7 @@ import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -31,7 +32,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     private Date startDate;
     protected int testRunCount = 0;
     private SkinSource skinSource = new DefaultSkinSource();
-    private String statusMessage;
+    private List<StatusMessage> statusMessages = new ArrayList<StatusMessage>();
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
@@ -121,7 +122,11 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     public void logStatus(String message) {
-        this.statusMessage = message;
+        statusMessages.add(new StatusMessage(message));
+        if (statusMessages.size() > 50) {
+            int over50Count = statusMessages.size() - 50;
+            statusMessages = statusMessages.subList(over50Count, statusMessages.size());
+        }
         logger.info(message);
     }
 
@@ -172,8 +177,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         return skinSource.getSkinById(skinId);
     }
 
-    public String getStatus() {
-        return statusMessage;
+    public List<StatusMessage> getStatusMessages() {
+        return statusMessages;
     }
 
 }
