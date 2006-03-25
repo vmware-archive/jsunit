@@ -1,15 +1,20 @@
 package net.jsunit.action;
 
 import net.jsunit.InvalidBrowserIdException;
+import net.jsunit.SkinSource;
 import net.jsunit.XmlRenderable;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.results.Skin;
 
-public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction {
+public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction implements SkinAware {
+
+    public static final String TRANSFORM = "transform";
 
     private String id;
     private BrowserResult result;
     private Integer browserId;
     private boolean browserIdInvalid;
+    private Skin skin;
 
     public void setId(String id) {
         this.id = id;
@@ -28,7 +33,7 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction {
             browserIdInvalid = true;
             return ERROR;
         }
-        return SUCCESS;
+        return skin != null ? TRANSFORM : SUCCESS;
     }
 
     public XmlRenderable getXmlRenderable() {
@@ -44,4 +49,15 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction {
         return new ErrorXmlRenderable(message);
     }
 
+    public void setSkin(Skin skin) {
+        this.skin = skin;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public SkinSource getSkinSource() {
+        return runner;
+    }
 }

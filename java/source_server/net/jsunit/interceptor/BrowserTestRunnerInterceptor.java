@@ -2,7 +2,7 @@ package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.BrowserTestRunner;
-import net.jsunit.action.JsUnitBrowserTestRunnerAction;
+import net.jsunit.action.BrowserTestRunnerAware;
 
 public class BrowserTestRunnerInterceptor extends JsUnitInterceptor {
 
@@ -13,9 +13,9 @@ public class BrowserTestRunnerInterceptor extends JsUnitInterceptor {
     }
 
     protected void execute(Action action) {
-        JsUnitBrowserTestRunnerAction jsUnitAction = ((JsUnitBrowserTestRunnerAction) action);
+        BrowserTestRunnerAware aware = (BrowserTestRunnerAware) action;
         BrowserTestRunner runner = source.getRunner();
-        jsUnitAction.setBrowserTestRunner(runner);
+        aware.setBrowserTestRunner(runner);
     }
 
 }

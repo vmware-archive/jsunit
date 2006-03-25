@@ -9,6 +9,7 @@
         <result-types>
             <result-type name="jsUnitXml" class="net.jsunit.action.XmlResult"/>
             <result-type name="jsUnitLatestVersion" class="net.jsunit.action.LatestVersionResult"/>
+            <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
         </result-types>
 
         <interceptors>
@@ -16,6 +17,7 @@
             <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
             <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
             <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
+            <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
 
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
@@ -36,13 +38,18 @@
         <action name="runner" class="net.jsunit.action.TestRunnerAction">
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
+            <result name="transform" type="jsUnitTransformedTestRunResult"/>
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="requestSource"/>
+            <interceptor-ref name="skin"/>
         </action>
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
+            <result name="transform" type="jsUnitTransformedTestRunResult"/>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="skin"/>
         </action>
 
         <action name="config" class="net.jsunit.action.BrowserTestRunnerConfigurationAction">

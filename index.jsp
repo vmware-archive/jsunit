@@ -139,7 +139,7 @@
         <table>
             <tr>
                 <td colspan="2">
-                    You can ask the server to run JsUnit tests using the <i>runner</i> servlet.
+                    You can ask the server to run JsUnit tests using the <i>runner</i> service.
                     You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
                     or you can specify a custom URL and/or browser ID using this form:
                 </td>
@@ -208,7 +208,7 @@
         <table>
             <tr>
                 <td colspan="2">
-                    You can view the logs of past runs using the displayer command.
+                    You can view the logs of past runs using the <i>displayer</i> service.
                     Use this form to specify the ID of the run you want to see:
                 </td>
             </tr>

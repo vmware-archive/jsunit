@@ -4,7 +4,10 @@ import junit.framework.TestCase;
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.model.ResultType;
+import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
+
+import java.io.File;
 
 public class TestRunnerActionTest extends TestCase {
 
@@ -93,6 +96,15 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals(TestRunnerAction.ERROR, action.execute());
         assertTrue(mockRunner.launchSpecs.isEmpty());
         assertEquals("<error>Invalid browser ID: foo</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
+    }
+
+    public void testSkin() throws Exception {
+        assertNull(action.getSkin());
+        Skin skinFile = new Skin(2, new File("foo.xsl"));
+        action.setSkin(skinFile);
+        assertEquals(skinFile, action.getSkin());
+        action.setBrowserTestRunner(mockRunner);
+        assertEquals(ResultDisplayerAction.TRANSFORM, action.execute());
     }
 
 }

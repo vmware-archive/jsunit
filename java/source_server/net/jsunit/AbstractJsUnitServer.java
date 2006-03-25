@@ -22,7 +22,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
-public abstract class AbstractJsUnitServer implements JsUnitServer {
+public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
     private HttpServer server;
     private Logger logger = Logger.getLogger("net.jsunit");
@@ -98,7 +98,6 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
 
         ConfigurationManager.clearConfigurationProviders();
         ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));
-        com.opensymphony.webwork.config.Configuration.set("webwork.action.extension", "");
 
         for (String servletName : servletNames())
             addWebworkServlet(servletContext, servletName);
@@ -166,4 +165,10 @@ public abstract class AbstractJsUnitServer implements JsUnitServer {
     public List<Skin> getSkins() {
         return skinSource.getSkins();
     }
+
+    public Skin getSkinById(int skinId) {
+        return skinSource.getSkinById(skinId);
+    }
+
+
 }

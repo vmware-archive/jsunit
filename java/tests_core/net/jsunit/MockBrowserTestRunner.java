@@ -2,13 +2,12 @@ package net.jsunit;
 
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
-import org.jdom.Element;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MockBrowserTestRunner implements BrowserTestRunner {
+public class MockBrowserTestRunner extends BrowserTestRunnerStub {
 
     public boolean disposeCalled;
     public BrowserResult acceptedResult;
@@ -20,12 +19,6 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
     public boolean hasReceivedResult;
     public List<String> logMessages = new ArrayList<String>();
     public List<BrowserLaunchSpecification> launchSpecs = new ArrayList<BrowserLaunchSpecification>();
-
-    public void startTestRun() {
-    }
-
-    public void finishTestRun() {
-    }
 
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         launchSpecs.add(launchSpec);
@@ -64,10 +57,6 @@ public class MockBrowserTestRunner implements BrowserTestRunner {
 
     public int timeoutSeconds() {
         return timeoutSeconds;
-    }
-
-    public Element asXml() {
-        return null;
     }
 
     public boolean isAlive() {

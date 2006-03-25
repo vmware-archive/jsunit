@@ -25,6 +25,14 @@ public class DefaultSkinSource implements SkinSource {
         return result;
     }
 
+    public Skin getSkinById(int skinId) {
+        for (Skin skin : getSkins()) {
+            if (skin.hasId(skinId))
+                return skin;
+        }
+        return null;
+    }
+
     private List<File> skinFiles() {
         return Arrays.asList(
                 new File("skins").listFiles(new FilenameFilter() {

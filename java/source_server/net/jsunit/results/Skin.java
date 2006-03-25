@@ -19,4 +19,12 @@ public class Skin {
         String name = xslFile.getName();
         return name.substring(0, name.lastIndexOf("."));
     }
+
+    public String getPath() {
+        return xslFile.getAbsolutePath();
+    }
+
+    public boolean hasId(int id) {
+        return this.id == id;
+    }
 }

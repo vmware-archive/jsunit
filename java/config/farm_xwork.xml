@@ -9,11 +9,13 @@
 
         <result-types>
             <result-type name="jsUnitXml" class="net.jsunit.action.XmlResult"/>
+            <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
         </result-types>
 
         <interceptors>
             <interceptor name="farmServer" class="net.jsunit.interceptor.FarmServerInterceptor"/>
             <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
+            <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
 
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
@@ -30,6 +32,8 @@
 
         <action name="runner" class="net.jsunit.action.DistributedTestRunnerAction">
             <result name="success" type="jsUnitXml"/>
+            <result name="transform" type="jsUnitTransformedTestRunResult"/>
+            <interceptor-ref name="skin"/>
         </action>
 
         <action name="config" class="net.jsunit.action.FarmServerConfigurationAction">

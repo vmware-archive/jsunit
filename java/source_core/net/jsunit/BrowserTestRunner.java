@@ -5,7 +5,7 @@ import net.jsunit.model.BrowserResult;
 
 import java.util.List;
 
-public interface BrowserTestRunner extends XmlRenderable {
+public interface BrowserTestRunner extends XmlRenderable, SkinSource {
 
     void startTestRun();
 

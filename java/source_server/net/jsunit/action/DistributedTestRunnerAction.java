@@ -1,12 +1,15 @@
 package net.jsunit.action;
 
 import net.jsunit.DistributedTestRunManager;
+import net.jsunit.SkinSource;
 import net.jsunit.XmlRenderable;
+import net.jsunit.results.Skin;
 
-public class DistributedTestRunnerAction extends JsUnitFarmServerAction {
+public class DistributedTestRunnerAction extends JsUnitFarmServerAction implements SkinAware {
 
     private DistributedTestRunManager manager;
     private String overrideURL;
+    private Skin skin;
 
     public String execute() throws Exception {
         String message = "Received request to run farm tests";
@@ -32,5 +35,17 @@ public class DistributedTestRunnerAction extends JsUnitFarmServerAction {
 
     public void setUrl(String overrideURL) {
         this.overrideURL = overrideURL;
+    }
+
+    public void setSkin(Skin skin) {
+        this.skin = skin;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public SkinSource getSkinSource() {
+        return server;
     }
 }

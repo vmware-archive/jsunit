@@ -5,7 +5,6 @@ import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.SystemUtility;
-import org.jdom.Element;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,14 +65,10 @@ public class TestRunManagerTest extends TestCase {
         assertEquals(SystemUtility.hostname(), testRunResult.getHostname());
     }
 
-    static class SuccessfulBrowserTestRunner implements BrowserTestRunner {
+    static class SuccessfulBrowserTestRunner extends BrowserTestRunnerStub {
 
         public List<Browser> getBrowsers() {
             return Arrays.asList(new Browser("browser1.exe", 0), new Browser("browser2.exe", 1));
-        }
-
-        public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-            return 0;
         }
 
         public boolean hasReceivedResultSince(long launchTime) {
@@ -84,40 +79,13 @@ public class TestRunManagerTest extends TestCase {
             return new DummyBrowserResult(true, 0, 0);
         }
 
-        public void accept(BrowserResult result) {
-        }
-
-        public void dispose() {
-        }
-
-        public BrowserResult findResultWithId(String id, int browserId) {
-            return null;
-        }
-
-        public Element asXml() {
-            return null;
-        }
-
-        public void startTestRun() {
-        }
-
-        public void finishTestRun() {
-        }
-
-        public void logStatus(String message) {
-        }
-
-        public int timeoutSeconds() {
-            return 0;
-        }
-
         public boolean isAlive() {
             return true;
         }
 
     }
 
-    static class FailingBrowserTestRunner implements BrowserTestRunner {
+    static class FailingBrowserTestRunner extends BrowserTestRunnerStub {
 
         private Browser currentBrowser;
 
@@ -147,40 +115,13 @@ public class TestRunManagerTest extends TestCase {
                 return new DummyBrowserResult(false, 2, 3);
         }
 
-        public void accept(BrowserResult result) {
-        }
-
-        public void dispose() {
-        }
-
-        public BrowserResult findResultWithId(String id, int browserId) {
-            return null;
-        }
-
-        public Element asXml() {
-            return null;
-        }
-
-        public void startTestRun() {
-        }
-
-        public void finishTestRun() {
-        }
-
-        public void logStatus(String message) {
-        }
-
-        public int timeoutSeconds() {
-            return 0;
-        }
-
         public boolean isAlive() {
             return true;
         }
 
     }
 
-    static class KillableBrowserTestRunner implements BrowserTestRunner {
+    static class KillableBrowserTestRunner extends BrowserTestRunnerStub {
 
         private boolean isAlive;
         private boolean startTestRunCalled;
@@ -194,45 +135,12 @@ public class TestRunManagerTest extends TestCase {
             finishTestRunCalled = true;
         }
 
-        public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-            return 0;
-        }
-
-        public void accept(BrowserResult result) {
-        }
-
-        public boolean hasReceivedResultSince(long launchTime) {
-            return false;
-        }
-
-        public BrowserResult lastResult() {
-            return null;
-        }
-
-        public void dispose() {
-        }
-
-        public BrowserResult findResultWithId(String id, int browserId) {
-            return null;
-        }
-
-        public void logStatus(String message) {
-        }
-
         public List<Browser> getBrowsers() {
             return Arrays.asList(new Browser("browser1.exe", 0));
         }
 
-        public int timeoutSeconds() {
-            return 0;
-        }
-
         public boolean isAlive() {
             return isAlive;
-        }
-
-        public Element asXml() {
-            return null;
         }
 
     }

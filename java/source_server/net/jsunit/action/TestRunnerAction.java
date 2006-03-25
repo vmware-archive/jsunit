@@ -1,11 +1,15 @@
 package net.jsunit.action;
 
 import net.jsunit.InvalidBrowserIdException;
+import net.jsunit.SkinSource;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
+import net.jsunit.results.Skin;
 import net.jsunit.utility.StringUtility;
 
-public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements RequestSourceAware {
+public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements RequestSourceAware, SkinAware {
+
+    public static final String TRANSFORM = "transform";
 
     private TestRunManager manager;
     private String url;
@@ -13,6 +17,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     private String remoteHost;
     private String browserId;
     private boolean badBrowserId = false;
+    private Skin skin;
 
     public String execute() throws Exception {
         runner.logStatus(requestReceivedMessage());
@@ -33,7 +38,8 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
             manager.runTests();
         }
         runner.logStatus("Done running tests");
-        return SUCCESS;
+        return skin != null ? TRANSFORM : SUCCESS;
+
     }
 
     private String requestReceivedMessage() {
@@ -72,5 +78,17 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     public void setBrowserId(String browserId) {
         this.browserId = browserId;
+    }
+
+    public void setSkin(Skin skin) {
+        this.skin = skin;
+    }
+
+    public Skin getSkin() {
+        return skin;
+    }
+
+    public SkinSource getSkinSource() {
+        return runner;
     }
 }
