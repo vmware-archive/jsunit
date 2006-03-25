@@ -30,20 +30,24 @@
     </xsl:template>
 
     <xsl:template match="properties">
-        <b>
+        <h4>
             <xsl:value-of select="property[@name='hostname']/@value"/>
             -
             <xsl:value-of select="property[@name='ipAddress']/@value"/>
             (
             <xsl:value-of select="property[@name='os']/@value"/>
             )
-        </b>
+        </h4>
         <br/>
     </xsl:template>
 
     <xsl:template match="browserResult">
-        Browser
-        <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
+        <b>Browser
+            <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
+        </b>
+        (ID
+        <xsl:value-of select="properties/property[@name='browserId']/@value"/>
+        )
         <br/>
         URL
         <xsl:value-of select="properties/property[@name='url']/@value"/>

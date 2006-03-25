@@ -26,7 +26,7 @@
         function testAskServerForStatus() {
             serverStatusUpdater.askServerForStatus();
             assertEquals("GET", serverStatusUpdater.request.method);
-            assertEquals("serverstatus", serverStatusUpdater.request.url);
+            assertEquals(0, serverStatusUpdater.request.url.indexOf("serverstatus"));
             assertTrue(serverStatusUpdater.request.isAsync);
             assertUndefined(serverStatusUpdater.request.userName);
             assertUndefined(serverStatusUpdater.request.password);
