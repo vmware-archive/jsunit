@@ -1,18 +1,15 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import junit.framework.TestResult;
+import junit.framework.TestSuite;
+import net.jsunit.configuration.ConfigurationSource;
 
 public class SerialDistributedTestTest extends TestCase {
     public void testTwoTestsInSerial() throws Throwable {
-        DummyConfigurationSource farmSource = new DummyConfigurationSource() {
-            public String remoteMachineURLs() {
-                return "http://localhost:1234/";
-            }
-        };
-
-        DummyConfigurationSource localServerSource = new DummyConfigurationSource() {
+        final int port = new TestPortManager().newPort();
+        ConfigurationSource farmSource = new FunctionalTestFarmConfigurationSource(port, port);
+        ConfigurationSource localServerSource = new FunctionalTestConfigurationSource(port) {
             public String browserFileNames() {
                 return "";
             }

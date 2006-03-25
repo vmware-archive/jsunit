@@ -118,7 +118,7 @@ public class JsUnitStandardServerTest extends TestCase {
         assertEquals(2, starter.commandPassed.length);
         assertEquals("mybrowser.exe", starter.commandPassed[0]);
         assertEquals(
-                overrideUrlWithoutSubmitResults + "&autoRun=true&submitResults=localhost:1234/jsunit/acceptor",
+                overrideUrlWithoutSubmitResults + "&autoRun=true&submitResults=localhost:123456789/jsunit/acceptor",
                 starter.commandPassed[1]
         );
     }

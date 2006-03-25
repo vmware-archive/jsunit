@@ -16,7 +16,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
     }
 
     public String port() {
-        return "1234";
+        return "123456789";
     }
 
     public String logsDirectory() {
