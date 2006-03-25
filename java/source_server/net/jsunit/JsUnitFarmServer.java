@@ -18,7 +18,8 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
                 "index",
                 "config",
                 "latestversion",
-                "runner"
+                "runner",
+                "serverstatus"
         });
     }
 

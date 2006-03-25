@@ -53,7 +53,8 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
                 "displayer",
                 "index",
                 "latestversion",
-                "runner"
+                "runner",
+                "serverstatus"
         });
     }
 

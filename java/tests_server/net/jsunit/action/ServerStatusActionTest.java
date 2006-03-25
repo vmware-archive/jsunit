@@ -10,10 +10,10 @@ import org.jdom.Element;
 import java.util.Date;
 import java.util.List;
 
-public class StatusActionTest extends TestCase {
+public class ServerStatusActionTest extends TestCase {
 
     public void testSimple() throws Exception {
-        StatusAction action = new StatusAction();
+        ServerStatusAction action = new ServerStatusAction();
         MockServer mockServer = new MockServer();
         action.setJsUnitServer(mockServer);
         assertNull(action.getStatus());

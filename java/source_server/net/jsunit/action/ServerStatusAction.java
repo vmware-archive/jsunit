@@ -3,11 +3,11 @@ package net.jsunit.action;
 import com.opensymphony.xwork.Action;
 import net.jsunit.JsUnitServer;
 
-public class StatusAction implements Action {
+public class ServerStatusAction implements Action {
     private JsUnitServer server;
 
     public String execute() throws Exception {
-        return null;
+        return SUCCESS;
     }
 
     public void setJsUnitServer(JsUnitServer server) {

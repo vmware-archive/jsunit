@@ -28,7 +28,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
         result.addTestSuite(SkinTest.class);
-        result.addTestSuite(StatusActionTest.class);
+        result.addTestSuite(ServerStatusActionTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);
