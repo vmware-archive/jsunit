@@ -1,8 +1,6 @@
 package net.jsunit;
 
-import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
-import net.jsunit.model.ResultType;
 
 public class InvalidRemoteMachinesDistributedTestTest extends EndToEndTestCase {
 
@@ -27,13 +25,7 @@ public class InvalidRemoteMachinesDistributedTestTest extends EndToEndTestCase {
     }
 
     public void testUnresponsive() {
-        DistributedTest test = new DistributedTest(serverSource(), invalidRemoteMachinesFarmSource());
-        TestResult testResult = test.run();
-        assertFalse(testResult.wasSuccessful());
-        assertEquals(
-                ResultType.UNRESPONSIVE,
-                test.getDistributedTestRunManager().getDistributedTestRunResult().getResultType()
-        );
+        assertFailure(new DistributedTest(serverSource(), invalidRemoteMachinesFarmSource()));
     }
 
 }

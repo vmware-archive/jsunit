@@ -1,11 +1,8 @@
 package net.jsunit;
 
-import junit.framework.TestResult;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.Browser;
-import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.ResultType;
 
 public class TwoValidLocalhostsDistributedTestTest extends EndToEndTestCase {
     private JsUnitStandardServer secondServer;
@@ -75,12 +72,8 @@ public class TwoValidLocalhostsDistributedTestTest extends EndToEndTestCase {
 
     public void testSuccessfulRun() {
         DistributedTest test = new DistributedTest(serverSource(), farmSource());
-        TestResult testResult = test.run();
-        assertTrue(testResult.wasSuccessful());
-        DistributedTestRunResult distributedTestRunResult = test.getDistributedTestRunManager().getDistributedTestRunResult();
-        assertEquals(ResultType.SUCCESS, distributedTestRunResult.getResultType());
-        assertEquals(2, distributedTestRunResult.getTestRunResults().size());
-
+        assertSuccessful(test);
+        assertEquals(2, test.getTestRunResults().size());
         assertNull(test.getTemporaryStandardServer());
     }
 

@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 
@@ -25,10 +24,7 @@ public class FailedToLaunchBrowserStandaloneTestTest extends EndToEndTestCase {
     }
 
     public void testFailToLaunchBrowsers() throws Exception {
-        StandaloneTest test = new StandaloneTest(configurationSource());
-        TestResult result = test.run();
-        assertFalse(result.wasSuccessful());
-        assertEquals(ResultType.FAILED_TO_LAUNCH, test.getServer().lastResult().getResultType());
+        assertFailure(new StandaloneTest(configurationSource()), ResultType.FAILED_TO_LAUNCH);
     }
 
 }

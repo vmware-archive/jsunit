@@ -1,16 +1,10 @@
 package net.jsunit;
 
-import junit.framework.TestCase;
-import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 
-public class ExternallyShutDownStandaloneTestTest extends TestCase {
-
-    public ExternallyShutDownStandaloneTestTest(String name) {
-        super(name);
-    }
+public class ExternallyShutDownStandaloneTestTest extends EndToEndTestCase {
 
     protected ConfigurationSource configurationSource() {
         return new StubConfigurationSource() {
@@ -48,11 +42,7 @@ public class ExternallyShutDownStandaloneTestTest extends TestCase {
             }
         }.start();
 
-        TestResult result = test.run();
-        assertFalse(result.wasSuccessful());
-        assertEquals(
-                ResultType.EXTERNALLY_SHUT_DOWN,
-                test.getServer().lastResult().getResultType());
+        assertFailure(test, ResultType.EXTERNALLY_SHUT_DOWN);
     }
 
 }

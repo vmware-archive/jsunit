@@ -1,9 +1,7 @@
 package net.jsunit;
 
-import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.Browser;
-import net.jsunit.model.ResultType;
 
 public class OverrideURLDistributedTestTest extends EndToEndTestCase {
 
@@ -37,13 +35,7 @@ public class OverrideURLDistributedTestTest extends EndToEndTestCase {
                 "http://localhost:" + port + "/jsunit/testRunner.html?" +
                         "testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
         );
-        TestResult result = test.run();
-
-        assertEquals(
-                ResultType.SUCCESS,
-                test.getDistributedTestRunManager().getDistributedTestRunResult().getResultType()
-        );
-        assertTrue(result.wasSuccessful());
+        assertSuccessful(test);
     }
 
 }

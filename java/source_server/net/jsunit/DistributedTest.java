@@ -8,6 +8,8 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.Browser;
 import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.model.ResultType;
+import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 import org.mortbay.util.MultiException;
 
@@ -105,5 +107,17 @@ public class DistributedTest extends TestCase {
     public void limitToBrowser(Browser remoteBrowser) {
         manager.limitToBrowser(remoteBrowser);
         setName(remoteBrowser.getFileName());
+    }
+
+    public DistributedTestRunResult getResult() {
+        return getDistributedTestRunManager().getDistributedTestRunResult();
+    }
+
+    public ResultType getResultType() {
+       return getResult().getResultType();
+    }
+
+    public List<TestRunResult> getTestRunResults() {
+       return getResult().getTestRunResults();
     }
 }

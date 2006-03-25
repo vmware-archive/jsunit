@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.Browser;
 
@@ -27,9 +26,7 @@ public class UrlOverrideStandaloneTestTest extends EndToEndTestCase {
         StandaloneTest test = new StandaloneTest(configurationSource());
         test.setOverrideURL(
                 "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");
-        TestResult testResult = test.run();
-        assertTrue(testResult.wasSuccessful());
-        assertTrue(test.getServer().lastResult().wasSuccessful());
+        assertSuccessful(test);
     }
 
 }

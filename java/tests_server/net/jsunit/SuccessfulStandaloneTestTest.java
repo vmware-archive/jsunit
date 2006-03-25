@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import junit.framework.TestResult;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.Browser;
 
@@ -26,10 +25,7 @@ public class SuccessfulStandaloneTestTest extends EndToEndTestCase {
     }
 
     public void testSuccessfulRun() throws Exception {
-        StandaloneTest test = new StandaloneTest(configurationSource());
-        TestResult result = test.run();
-        assertTrue(result.wasSuccessful());
-        assertTrue(test.getServer().lastResult().wasSuccessful());
+        assertSuccessful(new StandaloneTest(configurationSource()));
     }
 
 }
