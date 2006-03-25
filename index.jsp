@@ -63,11 +63,6 @@
             <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()) {%> Farm<%}%> Server</h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
                 since <%=new SimpleDateFormat().format(server.getStartDate())%></i></font>
-            <%if (!server.isFarmServer()) {%>
-            <br>
-            <font size="-2"><i><%=server.getTestRunCount()%> test run(s) completed</i></font>
-            <br>
-            <%}%>
         </th>
         <td nowrap align="right" valign="middle">
             <font size="-2">
