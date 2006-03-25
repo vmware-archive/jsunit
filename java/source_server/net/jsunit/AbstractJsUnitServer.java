@@ -31,6 +31,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     private Date startDate;
     protected int testRunCount = 0;
     private SkinSource skinSource = new DefaultSkinSource();
+    private String statusMessage;
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
@@ -120,6 +121,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     public void logStatus(String message) {
+        this.statusMessage = message;
         logger.info(message);
     }
 
@@ -170,5 +172,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         return skinSource.getSkinById(skinId);
     }
 
+    public String getStatus() {
+        return statusMessage;
+    }
 
 }

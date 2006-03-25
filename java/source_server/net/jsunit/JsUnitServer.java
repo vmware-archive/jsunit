@@ -19,4 +19,6 @@ public interface JsUnitServer extends XmlRenderable {
     long getTestRunCount();
 
     List<Skin> getSkins();
+
+    String getStatus();
 }

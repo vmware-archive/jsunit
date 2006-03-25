@@ -2,10 +2,7 @@ package net.jsunit;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import net.jsunit.action.ErrorXmlRenderableTest;
-import net.jsunit.action.LatestVersionActionTest;
-import net.jsunit.action.ResultAcceptorActionTest;
-import net.jsunit.action.ResultDisplayerActionTest;
+import net.jsunit.action.*;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
@@ -33,6 +30,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(ResultDisplayerActionTest.class);
         result.addTestSuite(SkinInterceptorTest.class);
         result.addTestSuite(SkinTest.class);
+        result.addTestSuite(StatusActionTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);
