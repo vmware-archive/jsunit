@@ -45,13 +45,57 @@
         <b>Browser
             <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
         </b>
-        (ID
+        ,
+        ID
         <xsl:value-of select="properties/property[@name='browserId']/@value"/>
-        )
+        <xsl:if test="@time">
+            (
+            <xsl:value-of select="@time"/>
+            seconds)
+        </xsl:if>
+        <xsl:if test="properties/property[@name='url']">
+            on URL
+            <i>
+                <xsl:value-of select="properties/property[@name='url']/@value"/>
+            </i>
+        </xsl:if>
         <br/>
-        URL
-        <xsl:value-of select="properties/property[@name='url']/@value"/>
+        <xsl:apply-templates select="testCases"/>
+    </xsl:template>
+
+    <xsl:template match="testCases">
+        <xsl:value-of select="count(testCase)"/>
+        tests run:
         <br/>
+        <ul>
+            <xsl:for-each select="testCase">
+                <li>
+                    <i>
+                        <xsl:value-of select="@name"/>
+                        (
+                        <xsl:value-of select="@time"/>
+                        seconds):
+                    </i>
+                    <xsl:if test="./failure">
+                        <font color="red">FAILED</font>
+                        <br/>
+                        <pre>
+                            <xsl:value-of select="./failure"/>
+                        </pre>
+                    </xsl:if>
+                    <xsl:if test="./error">
+                        <font color="red">ERROR</font>
+                        <br/>
+                        <pre>
+                            <xsl:value-of select="./error"/>
+                        </pre>
+                    </xsl:if>
+                    <xsl:if test="not(./failure) and not(./error)">SUCCESS
+                        <br/>
+                    </xsl:if>
+                </li>
+            </xsl:for-each>
+        </ul>
     </xsl:template>
 
 </xsl:stylesheet>
