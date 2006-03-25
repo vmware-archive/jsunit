@@ -2,8 +2,8 @@ Required for next release:
 
   FEATURES:
     - Send traces back to client (IN PROGRESS - ehanson)
-    - Easier-to-read results (IN PROGRESS - ehieatt)
-    - No output when tests pass (done already?)
+    - prettier simple_html.xsl and simple_text.xsl
+    - create minimal_text.xsl and use it as the output for JUnit tests; make sure it's blank when no failures
 
   BUGS:
     - Mozilla 1.7.12 issues
