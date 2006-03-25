@@ -1,6 +1,7 @@
 package net.jsunit.action;
 
 import com.opensymphony.webwork.ServletActionContext;
+import com.opensymphony.webwork.views.util.TextUtil;
 import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.Result;
 import net.jsunit.StatusMessage;
@@ -22,7 +23,7 @@ public class StatusResult implements Result {
             StatusMessage message = it.next();
             buffer.append(new SimpleDateFormat().format(message.getDate()));
             buffer.append(": ");
-            buffer.append(message.getMessage());
+            buffer.append(TextUtil.escapeHTML(message.getMessage()));
             if (it.hasNext())
                 buffer.append("|");
         }

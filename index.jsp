@@ -122,7 +122,7 @@
                 %>
             </table>
         </td>
-        <td valign="top" width="50%" height="200">
+        <td valign="top" width="500" height="200" nowrap>
             <h4>
                 Server Status
             </h4>
