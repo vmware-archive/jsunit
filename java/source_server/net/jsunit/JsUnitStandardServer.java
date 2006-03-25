@@ -198,12 +198,19 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
 
     private void handleCrashWhileLaunching(Throwable throwable) {
         Browser browser = launchTestRunCommand.getBrowser();
-        logStatus("Browser " + browser.getFileName() + " failed to launch: " + throwable.getClass().getName() + " - " + throwable.getMessage());
+        logStatus(failedToLaunchStatusMessage(browser, throwable));
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
         failedToLaunchBrowserResult.setFailedToLaunch();
         failedToLaunchBrowserResult.setBrowser(browser);
         failedToLaunchBrowserResult.setServerSideException(throwable);
         accept(failedToLaunchBrowserResult);
+    }
+
+    private String failedToLaunchStatusMessage(Browser browser, Throwable throwable) {
+        String result = "Browser " + browser.getFileName() + " failed to launch: " + throwable.getClass().getName();
+        if (throwable.getMessage() != null)
+            result += (" - " + throwable.getMessage());
+        return result;
     }
 
     private void waitUntilLastReceivedTimeHasPassed() {
