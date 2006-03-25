@@ -10,7 +10,7 @@ ServerStatusUpdater.prototype.askServerForStatus = function() {
     this.request = createXmlHttpRequest();
     if (this.request) {
         this.request.onreadystatechange = serverStatusRequestStateChanged;
-        this.request.open("GET", "serverstatus", true);
+        this.request.open("GET", "serverstatus?cacheBuster=" + new Date().getTime(), true);
         this.request.send(null);
     }
 }
@@ -24,7 +24,7 @@ ServerStatusUpdater.prototype.requestStateChanged = function() {
         if (this.request.status == 200) {
             updateServerStatusDiv(this.request.responseText);
         }
-        setTimeout("serverStatusUpdater.askServerForStatus()", 3000);
+        setTimeout("serverStatusUpdater.askServerForStatus()", 10000);
     }
 }
 

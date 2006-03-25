@@ -8,6 +8,7 @@ import net.jsunit.StatusMessage;
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,6 +20,8 @@ public class StatusResult implements Result {
         StringBuffer buffer = new StringBuffer();
         for (Iterator<StatusMessage> it = messages.iterator(); it.hasNext();) {
             StatusMessage message = it.next();
+            buffer.append(new SimpleDateFormat().format(message.getDate()));
+            buffer.append(": ");
             buffer.append(message.getMessage());
             if (it.hasNext())
                 buffer.append("|");

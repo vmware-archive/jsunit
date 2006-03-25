@@ -40,7 +40,7 @@
             var messageCount = messageArray.length;
             var theDiv = document.getElementById("serverStatusDiv");
             var newHTML = "<font size='-2'>";
-            for (var i = 0; i < messageCount; i++) {
+            for (var i = messageCount - 1; i >= 0; i--) {
                 newHTML += messageArray[i];
                 newHTML += "<br>";
             }
