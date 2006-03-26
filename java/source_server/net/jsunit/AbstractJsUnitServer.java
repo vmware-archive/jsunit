@@ -17,6 +17,7 @@ import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
+import org.mortbay.util.FileResource;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -86,6 +87,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     private void setUpHttpServer() throws Exception {
+        FileResource.setCheckAliases(false);
         server = new HttpServer();
         SocketListener listener = new SocketListener();
         listener.setPort(configuration.getPort());
