@@ -83,8 +83,9 @@
                 <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
                     version</a></div>
             </font>
+            <br>
             <a href="http://www.pivotalsf.com/" target="top">
-                <img border="0" src="images/powerby-transparent.gif" alt="Powered By Pivotal">
+                <img border="0" src="images/pivotal.jpg" alt="Powered By Pivotal">
             </a>
         </td>
 
