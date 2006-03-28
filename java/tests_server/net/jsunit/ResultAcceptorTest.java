@@ -56,16 +56,20 @@ public class ResultAcceptorTest extends TestCase {
     }
 
     public void testSubmitResults() {
-        assertEquals(0, server.getResults().size());
+        assertNull(server.lastResult());
         submit();
-        assertEquals(1, server.getResults().size());
+        BrowserResult browserResult1 = server.lastResult();
+        assertNotNull(browserResult1);
         submit();
-        assertEquals(1, server.getResults().size());
+        BrowserResult browserResult2 = server.lastResult();
+        assertNotNull(browserResult2);
+
+        assertNotSame(browserResult1, browserResult2);
     }
 
     public void testSubmittedResultHeaders() {
         submit();
-        BrowserResult result = server.getResults().get(0);
+        BrowserResult result = server.lastResult();
         assertEquals("ID_foo", result.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", result.getUserAgent());
         assertEquals("2.5", result.getJsUnitVersion());
@@ -77,7 +81,7 @@ public class ResultAcceptorTest extends TestCase {
 
     public void testSubmittedTestCaseResults() {
         submit();
-        BrowserResult result = server.getResults().get(0);
+        BrowserResult result = server.lastResult();
         assertEquals(3, result.getTestCaseResults().size());
     }
 
@@ -89,21 +93,8 @@ public class ResultAcceptorTest extends TestCase {
         assertTrue(server.hasReceivedResultSince(time));
     }
 
-    public void testFindResultByIdInMemoryOrOnDisk() throws InvalidBrowserIdException {
+    public void testFindResultById() throws InvalidBrowserIdException {
         assertNull(server.findResultWithId("ID_foo", 1));
-        assertEquals("ID_foo", mockBrowserResultRepository.requestedId);
-        assertEquals(1, mockBrowserResultRepository.requestedBrowser.getId());
-        submit();
-        mockBrowserResultRepository.requestedId = null;
-        assertFalse(server.getResults().isEmpty());
-        assertNotNull(server.findResultWithId("ID_foo", 1));
-        assertNull(mockBrowserResultRepository.requestedId);
-        assertNull(server.findResultWithId("Invalid ID", 1));
-        assertEquals("Invalid ID", mockBrowserResultRepository.requestedId);
-        mockBrowserResultRepository.requestedId = null;
-        server.clearResults();
-        assertTrue(server.getResults().isEmpty());
-        server.findResultWithId("ID_foo", 1);
         assertEquals("ID_foo", mockBrowserResultRepository.requestedId);
         assertEquals(1, mockBrowserResultRepository.requestedBrowser.getId());
     }

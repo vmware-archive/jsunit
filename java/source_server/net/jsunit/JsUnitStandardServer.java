@@ -14,16 +14,14 @@ import java.util.List;
 
 public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
-    private List<BrowserResult> results = new ArrayList<BrowserResult>();
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
-
     private ProcessStarter processStarter = new DefaultProcessStarter();
     private LaunchTestRunCommand launchTestRunCommand;
     private TimeoutChecker timeoutChecker;
+    private BrowserResultRepository browserResultRepository;
     private Process browserProcess;
     private long timeLastResultReceived;
-
-    private BrowserResultRepository browserResultRepository;
+    private BrowserResult lastResult;
 
     public JsUnitStandardServer(Configuration configuration, boolean temporary) {
         this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()), temporary);
@@ -68,12 +66,9 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         result.setBrowser(submittingBrowser);
 
         killTimeoutChecker();
-        BrowserResult existingResultWithSameId = findResultWithId(result.getId(), submittingBrowser);
         for (TestRunListener listener : browserTestRunListeners)
             listener.browserTestRunFinished(submittingBrowser, result);
-        if (existingResultWithSameId != null)
-            results.remove(existingResultWithSameId);
-        results.add(result);
+        lastResult = result;
         timeLastResultReceived = timeReceived;
     }
 
@@ -84,14 +79,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         }
     }
 
-    public List<BrowserResult> getResults() {
-        return results;
-    }
-
-    public void clearResults() {
-        results.clear();
-    }
-
     public BrowserResult findResultWithId(String id, int browserId) throws InvalidBrowserIdException {
         Browser browser = configuration.getBrowserById(browserId);
         if (browser == null)
@@ -100,29 +87,11 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private BrowserResult findResultWithId(String id, Browser browser) {
-        BrowserResult result = findResultWithIdInResultList(id, browser);
-        if (result == null)
-            result = browserResultRepository.retrieve(id, browser);
-        return result;
-    }
-
-    private BrowserResult findResultWithIdInResultList(String id, Browser browser) {
-        for (BrowserResult result : getResults()) {
-            if (result.hasId(id) && result.isForBrowser(browser))
-                return result;
-        }
-        return null;
+        return browserResultRepository.retrieve(id, browser);
     }
 
     public BrowserResult lastResult() {
-        List results = getResults();
-        return results.isEmpty()
-                ? null
-                : (BrowserResult) results.get(results.size() - 1);
-    }
-
-    public int resultsCount() {
-        return getResults().size();
+        return lastResult;
     }
 
     public String toString() {

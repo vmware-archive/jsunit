@@ -5,7 +5,6 @@ Required for next release:
     - prettier simple_html.xsl and simple_text.xsl
     - create minimal_text.xsl and use it as the output for JUnit tests; make sure it's blank when no failures
     - change create_distribution target to create a zip for the client and a zip for "all"
-    - don't cache results
 
   BUGS:
     - Mozilla 1.7.12 issues

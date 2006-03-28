@@ -46,6 +46,7 @@ SERVER
 - addition of new configuration property, "description", which contains a human-readable description of the server
 - new index.jsp ("/") page
 - jsunit.org registered; redirects to edwardh.com/jsunit
+- no caching of browser results in the server, to avoid the heap size growing without limit if the server is up for a long time
 
 BUGS
 - fix for "retry test run" bug

@@ -9,6 +9,10 @@ import org.jdom.Document;
 
 public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
 
+    protected boolean needsRealResultRepository() {
+        return true;
+    }
+
     public void testSlash() throws Exception {
         webTester.beginAt("/");
         assertOnLandingPage();

@@ -3,6 +3,8 @@ package net.jsunit;
 import com.meterware.httpunit.HttpUnitOptions;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.logging.BrowserResultRepository;
+import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.model.ResultType;
 import net.sourceforge.jwebunit.WebTester;
@@ -11,6 +13,7 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -31,12 +34,22 @@ public abstract class FunctionalTestCase extends TestCase {
         super.setUp();
         port = new TestPortManager().newPort();
         configuration = new Configuration(new FunctionalTestConfigurationSource(port));
-        server = new JsUnitStandardServer(configuration, new MockBrowserResultRepository(), true);
+        server = new JsUnitStandardServer(configuration, createResultRepository(), true);
         if (shouldMockOutProcessStarter())
             server.setProcessStarter(new MockProcessStarter());
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl("http://localhost:" + webTesterPort() + "/jsunit");
+    }
+
+    private BrowserResultRepository createResultRepository() {
+        return needsRealResultRepository() ?
+                new FileBrowserResultRepository(new File("logs")) :
+                new MockBrowserResultRepository();
+    }
+
+    protected boolean needsRealResultRepository() {
+        return false;
     }
 
     protected boolean shouldMockOutProcessStarter() {

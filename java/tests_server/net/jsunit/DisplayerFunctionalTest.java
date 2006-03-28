@@ -8,6 +8,10 @@ import org.jdom.Element;
 
 public class DisplayerFunctionalTest extends FunctionalTestCase {
 
+    protected boolean needsRealResultRepository() {
+        return true;
+    }
+
     public void testNoId() throws Exception {
         webTester.beginAt("displayer");
         Document responseDocument = responseXmlDocument();
