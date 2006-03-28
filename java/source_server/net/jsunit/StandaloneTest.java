@@ -42,7 +42,7 @@ public class StandaloneTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new JsUnitStandardServer(new Configuration(configurationSource), false);
+        server = new JsUnitStandardServer(new Configuration(configurationSource), true);
         server.start();
         testRunManager = createTestRunManager();
     }
