@@ -10,6 +10,7 @@ Required for next release:
     - Mozilla 1.7.12 issues
     - SourceForge bugs
     - Some tests don't run in Safari
+    - JAR the config directory by default to avoid classpath issues with config files?
 
 Backlog for future releases:
 
