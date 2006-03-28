@@ -38,22 +38,24 @@ function _trueTypeOf(something) {
                 break;
             case 'object':
             case 'function':
-                switch (something.constructor)
-                        {
-                    case String:
+                switch (something.constructor) {
+                    case new String().constructor:
                         result = 'String';
                         break;
-                    case Boolean:
+                    case new Boolean().constructor:
                         result = 'Boolean';
                         break;
-                    case Number:
+                    case new Number().constructor:
                         result = 'Number';
                         break;
-                    case Array:
+                    case new Array().constructor:
                         result = 'Array';
                         break;
-                    case RegExp:
+                    case new RegExp().constructor:
                         result = 'RegExp';
+                        break;
+                    case new Date().constructor:
+                        result = 'Date';
                         break;
                     case Function:
                         result = 'Function';
@@ -218,7 +220,7 @@ function assertObjectEquals() {
                 break;
             case 'Boolean':
             case 'Date':
-                isEqual = (var1 === var2);
+                isEqual = isSame;
                 break;
             case 'RegExp':
             case 'Function':

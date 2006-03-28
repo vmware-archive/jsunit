@@ -85,6 +85,7 @@
             assertEquals('String', _trueTypeOf(o.foo));
             assertEquals('String', _trueTypeOf(o.bar()));
             assertEquals('Function', _trueTypeOf(o.bar));
+            assertEquals('Date', _trueTypeOf(new Date()));
 
             assertEquals('Object without constructor', 'Object', _trueTypeOf(window));
         }

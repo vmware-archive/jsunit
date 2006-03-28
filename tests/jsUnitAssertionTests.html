@@ -215,6 +215,10 @@ function testAssertObjectEquals()
     {
         assertObjectEquals({ts:new Date()}, {ts:new Date()});
         fail(failure = 'Objects with different Date attributes found to be the same');
+        var d1 = new Date(1);
+        var d2 = new Date(10000);
+        assertObjectEquals(d1, d2);
+        fail(failure = 'Different Date objects (' + d1 + ' and ' + d2 + ') found to be the same');
     }
     catch (e)
     {
@@ -226,6 +230,8 @@ function testAssertObjectEquals()
     {
         assertObjectEquals(new Date(), new Date());
         fail(failure = 'Different Date objects found to be the same');
+        assertObjectEquals({ts:new Date(1)}, {ts:new Date(2)});
+        fail(failure = 'Objects with different Date attributes found to be the same');
     }
     catch (e)
     {
