@@ -3,33 +3,32 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
     <xsl:output method="text"/>
     <xsl:template match="/">
-        JsUnit Test Results
+        <xsl:text>JsUnit Test Results</xsl:text>
         <xsl:apply-templates/>
     </xsl:template>
 
     <xsl:template match="testRunResult">
 
         <xsl:apply-templates select="properties"/>
-        The overall result was
+        <xsl:text>The overall result was</xsl:text>
         <xsl:value-of select="@type"/>
-        .
+        <xsl:text>.</xsl:text>
         <xsl:apply-templates select="browserResult"/>
     </xsl:template>
 
     <xsl:template match="properties">
         <xsl:value-of select="property[@name='hostname']/@value"/>
-        -
+        <xsl:text>-</xsl:text>
         <xsl:value-of select="property[@name='ipAddress']/@value"/>
-        (
+        <xsl:text>(</xsl:text>
         <xsl:value-of select="property[@name='os']/@value"/>
-        )
+        <xsl:text>)</xsl:text>
     </xsl:template>
 
     <xsl:template match="browserResult">
-        Browser
+        <xsl:text>Browser</xsl:text>
         <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
-        ,
-        ID
+        <xsl:text>, ID</xsl:text>
         <xsl:value-of select="properties/property[@name='browserId']/@value"/>
         <xsl:if test="@time">
             (
