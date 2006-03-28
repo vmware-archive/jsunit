@@ -85,7 +85,7 @@
             </font>
             <br>
             <a href="http://www.pivotalsf.com/" target="top">
-                <img border="0" src="images/pivotal.jpg" alt="Powered By Pivotal">
+                <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal">
             </a>
         </td>
 
