@@ -16,12 +16,13 @@ import java.util.List;
 public class StatusResult implements Result {
 
     public void execute(ActionInvocation invocation) throws Exception {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss z");
         ServerStatusAction action = (ServerStatusAction) invocation.getAction();
         List<StatusMessage> messages = action.getStatusMessages();
         StringBuffer buffer = new StringBuffer();
         for (Iterator<StatusMessage> it = messages.iterator(); it.hasNext();) {
             StatusMessage message = it.next();
-            buffer.append(new SimpleDateFormat().format(message.getDate()));
+            buffer.append(dateFormat.format(message.getDate()));
             buffer.append(": ");
             buffer.append(TextUtil.escapeHTML(message.getMessage()));
             if (it.hasNext())
