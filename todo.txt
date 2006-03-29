@@ -4,13 +4,15 @@ Required for next release:
     - Send traces back to client (IN PROGRESS - ehanson)
     - prettier simple_html.xsl and simple_text.xsl
     - create minimal_text.xsl and use it as the output for JUnit tests; make sure it's blank when no failures
+
+  DISTRIBUTION PACKAGING/PROCESS:
     - change create_distribution target to create a zip for the client and a zip for "all"
+    - JAR the config directory by default to avoid classpath issues with config files
 
   BUGS:
     - Mozilla 1.7.12 issues
+    - Some tests don't run in Safari & Konqueror; there's a hang in the onload test
     - SourceForge bugs
-    - Some tests don't run in Safari
-    - JAR the config directory by default to avoid classpath issues with config files?
 
 Backlog for future releases:
 

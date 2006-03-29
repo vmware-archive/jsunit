@@ -123,7 +123,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         );
     }
 
-    public void logStatus(String message) {
+    public synchronized void logStatus(String message) {
         statusMessages.add(new StatusMessage(message));
         if (statusMessages.size() > 50) {
             int over50Count = statusMessages.size() - 50;
@@ -180,7 +180,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     public List<StatusMessage> getStatusMessages() {
-        return statusMessages;
+        return new ArrayList(statusMessages);
     }
 
 }
