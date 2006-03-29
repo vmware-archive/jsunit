@@ -23,6 +23,7 @@ Backlog for future releases:
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
     - admin.jsp console to change and save configuration (password protected?)
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
+    - warning when no tests found
 
   REFACTORINGS:
     - better ashcroft compliance
