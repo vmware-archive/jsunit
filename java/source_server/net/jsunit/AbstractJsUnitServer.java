@@ -180,7 +180,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     public List<StatusMessage> getStatusMessages() {
-        return new ArrayList(statusMessages);
+        return new ArrayList<StatusMessage>(statusMessages);
     }
 
 }
