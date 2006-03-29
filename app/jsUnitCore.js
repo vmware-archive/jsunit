@@ -513,7 +513,7 @@ function jsUnitSetOnLoad(windowRef, onloadHandler)
         // Internet Explorer, Opera
         windowRef.attachEvent("onload", onloadHandler);
     } else if (typeof(windowRef.addEventListener) != 'undefined' && !isKonqueror) {
-        // Mozilla, Konqueror
+        // Mozilla
         // exclude Konqueror due to load issues
         windowRef.addEventListener("load", onloadHandler, false);
     } else if (typeof(windowRef.document.addEventListener) != 'undefined' && !isKonqueror) {
