@@ -33,28 +33,24 @@ ChangeLog:
 	          be addressed at a later date.
 */
 
-function xbDebug()
-{
+function xbDebug() {
     this.on = false;
     this.stack = new Array();
     this.debugwindow = null;
     this.execprofile = new Object();
 }
 
-xbDebug.prototype.push = function ()
-{
+xbDebug.prototype.push = function () {
     this.stack[this.stack.length] = this.on;
     this.on = true;
 }
 
-xbDebug.prototype.pop = function ()
-{
+xbDebug.prototype.pop = function () {
     this.on = this.stack[this.stack.length - 1];
     --this.stack.length;
 }
 
-xbDebug.prototype.open = function ()
-{
+xbDebug.prototype.open = function () {
     if (this.debugwindow && !this.debugwindow.closed)
         this.close();
 
@@ -65,8 +61,7 @@ xbDebug.prototype.open = function ()
     this.debugwindow.focus();
 }
 
-xbDebug.prototype.close = function ()
-{
+xbDebug.prototype.close = function () {
     if (!this.debugwindow)
         return;
 
@@ -76,8 +71,7 @@ xbDebug.prototype.close = function ()
     // bc 2002-02-07, other windows may still hold a reference to this: this.debugwindow = null;
 }
 
-xbDebug.prototype.dump = function (msg)
-{
+xbDebug.prototype.dump = function (msg) {
     if (!this.on)
         return;
 
@@ -95,8 +89,7 @@ window.onunload = function () {
     xbDEBUG.close();
 }
 
-function xbDebugGetFunctionName(funcref)
-{
+function xbDebugGetFunctionName(funcref) {
 
     if (!funcref)
     {
@@ -115,12 +108,10 @@ function xbDebugGetFunctionName(funcref)
 }
 
 // emulate functionref.apply for IE mac and IE win < 5.5
-function xbDebugApplyFunction(funcname, funcref, thisref, argumentsref)
-{
+function xbDebugApplyFunction(funcname, funcref, thisref, argumentsref) {
     var rv;
 
-    if (!funcref)
-    {
+    if (!funcref) {
         alert('xbDebugApplyFunction: funcref is null');
     }
 
@@ -130,13 +121,11 @@ function xbDebugApplyFunction(funcname, funcref, thisref, argumentsref)
     var applyexpr = 'thisref.xbDebug_orig_' + funcname + '(';
     var i;
 
-    for (i = 0; i < argumentsref.length; i++)
-    {
+    for (i = 0; i < argumentsref.length; i++) {
         applyexpr += 'argumentsref[' + i + '],';
     }
 
-    if (argumentsref.length > 0)
-    {
+    if (argumentsref.length > 0) {
         applyexpr = applyexpr.substring(0, applyexpr.length - 1);
     }
 
@@ -145,16 +134,14 @@ function xbDebugApplyFunction(funcname, funcref, thisref, argumentsref)
     return eval(applyexpr);
 }
 
-function xbDebugCreateFunctionWrapper(scopename, funcname, precall, postcall)
-{
+function xbDebugCreateFunctionWrapper(scopename, funcname, precall, postcall) {
     var wrappedfunc;
     var scopeobject = eval(scopename);
     var funcref = scopeobject[funcname];
 
     scopeobject['xbDebug_orig_' + funcname] = funcref;
 
-    wrappedfunc = function ()
-    {
+    wrappedfunc = function () {
         var rv;
 
         precall(scopename, funcname, arguments);
@@ -172,15 +159,13 @@ function xbDebugCreateFunctionWrapper(scopename, funcname, precall, postcall)
     scopeobject[funcname] = wrappedfunc;
 }
 
-function xbDebugCreateMethodWrapper(contextname, classname, methodname, precall, postcall)
-{
+function xbDebugCreateMethodWrapper(contextname, classname, methodname, precall, postcall) {
     var context = eval(contextname);
     var methodref = context[classname].prototype[methodname];
 
     context[classname].prototype['xbDebug_orig_' + methodname] = methodref;
 
-    var wrappedmethod = function ()
-    {
+    var wrappedmethod = function () {
         var rv;
         // eval 'this' at method run time to pick up reference to the object's instance
         var thisref = eval('this');
@@ -196,8 +181,7 @@ function xbDebugCreateMethodWrapper(contextname, classname, methodname, precall,
     return wrappedmethod;
 }
 
-function xbDebugPersistToString(obj)
-{
+function xbDebugPersistToString(obj) {
     var s = '';
     var p;
 
@@ -222,16 +206,14 @@ function xbDebugPersistToString(obj)
     return null;
 }
 
-function xbDebugTraceBefore(scopename, funcname, funcarguments)
-{
+function xbDebugTraceBefore(scopename, funcname, funcarguments) {
     var i;
     var s = '';
     var execprofile = xbDEBUG.execprofile[scopename + '.' + funcname];
     if (!execprofile)
         execprofile = xbDEBUG.execprofile[scopename + '.' + funcname] = { started: 0, time: 0, count: 0 };
 
-    for (i = 0; i < funcarguments.length; i++)
-    {
+    for (i = 0; i < funcarguments.length; i++) {
         s += xbDebugPersistToString(funcarguments[i]);
         if (i < funcarguments.length - 1)
             s += ', ';
@@ -241,8 +223,7 @@ function xbDebugTraceBefore(scopename, funcname, funcarguments)
     execprofile.started = (new Date()).getTime();
 }
 
-function xbDebugTraceAfter(scopename, funcname, funcarguments, rv)
-{
+function xbDebugTraceAfter(scopename, funcname, funcarguments, rv) {
     var i;
     var s = '';
     var execprofile = xbDEBUG.execprofile[scopename + '.' + funcname];
@@ -250,15 +231,13 @@ function xbDebugTraceAfter(scopename, funcname, funcarguments, rv)
         xbDEBUG.dump('xbDebugTraceAfter: execprofile not created for ' + scopename + '.' + funcname);
     else if (execprofile.started == 0)
         xbDEBUG.dump('xbDebugTraceAfter: execprofile.started == 0 for ' + scopename + '.' + funcname);
-    else
-    {
+    else {
         execprofile.time += (new Date()).getTime() - execprofile.started;
         execprofile.count++;
         execprofile.started = 0;
     }
 
-    for (i = 0; i < funcarguments.length; i++)
-    {
+    for (i = 0; i < funcarguments.length; i++) {
         s += xbDebugPersistToString(funcarguments[i]);
         if (i < funcarguments.length - 1)
             s += ', ';
@@ -267,13 +246,11 @@ function xbDebugTraceAfter(scopename, funcname, funcarguments, rv)
     xbDEBUG.dump('exit  ' + scopename + '.' + funcname + '(' + s + ')==' + xbDebugPersistToString(rv));
 }
 
-function xbDebugTraceFunction(scopename, funcname)
-{
+function xbDebugTraceFunction(scopename, funcname) {
     xbDebugCreateFunctionWrapper(scopename, funcname, xbDebugTraceBefore, xbDebugTraceAfter);
 }
 
-function xbDebugTraceObject(contextname, classname)
-{
+function xbDebugTraceObject(contextname, classname) {
     var classref = eval(contextname + '.' + classname);
     var p;
     var sp;
@@ -281,8 +258,7 @@ function xbDebugTraceObject(contextname, classname)
     if (!classref || !classref.prototype)
         return;
 
-    for (p in classref.prototype)
-    {
+    for (p in classref.prototype) {
         sp = p + '';
         if (typeof(classref.prototype[sp]) == 'function' && (sp).indexOf('xbDebug_orig') == -1)
         {
@@ -291,14 +267,12 @@ function xbDebugTraceObject(contextname, classname)
     }
 }
 
-function xbDebugDumpProfile()
-{
+function xbDebugDumpProfile() {
     var p;
     var execprofile;
     var avg;
 
-    for (p in xbDEBUG.execprofile)
-    {
+    for (p in xbDEBUG.execprofile) {
         execprofile = xbDEBUG.execprofile[p];
         avg = Math.round(100 * execprofile.time / execprofile.count) / 100;
         xbDEBUG.dump('Execution profile ' + p + ' called ' + execprofile.count + ' times. Total time=' + execprofile.time + 'ms. Avg Time=' + avg + 'ms.');
