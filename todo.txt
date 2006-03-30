@@ -13,7 +13,6 @@ Required for next release:
     - Mozilla 1.7.12 issues
     - Some tests don't run in Safari & Konqueror; there's a hang in the onload test
     - SourceForge bugs
-    - ConcurrentModificationException in server.logStatus()
 
 Backlog for future releases:
 

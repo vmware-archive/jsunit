@@ -33,7 +33,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     private Date startDate;
     protected int testRunCount = 0;
     private SkinSource skinSource = new DefaultSkinSource();
-    private List<StatusMessage> statusMessages = new ArrayList<StatusMessage>();
+    private final List<StatusMessage> statusMessages = new ArrayList<StatusMessage>();
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
@@ -124,10 +124,13 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     public void logStatus(String message) {
-        statusMessages.add(new StatusMessage(message));
-        if (statusMessages.size() > 50) {
-            int over50Count = statusMessages.size() - 50;
-            statusMessages = statusMessages.subList(over50Count, statusMessages.size());
+        synchronized (statusMessages) {
+            statusMessages.add(new StatusMessage(message));
+            if (statusMessages.size() > 50) {
+                int over50Count = statusMessages.size() - 50;
+                for (int i = 0; i < over50Count; i++)
+                    statusMessages.remove(0);
+            }
         }
         logger.info(message);
     }
