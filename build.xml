@@ -98,7 +98,6 @@
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>
         </fileset>
-        <dirset dir="${config}"/>
     </path>
 
     <path id="self_tests_classpath">
@@ -111,7 +110,6 @@
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>
         </fileset>
-        <dirset dir="${config}"/>
     </path>
 
     <target name="_compile_source" description="Compiles the source">
@@ -144,8 +142,14 @@
 
     <target name="_create_jar" depends="_compile_source" description="Creates jsunit.jar">
         <delete file="${bin}/jsunit.jar"/>
+        <copy todir="${bin}">
+            <fileset dir="${config}" includes="*"/>
+        </copy>
         <jar jarfile="${bin}/jsunit.jar" basedir="${bin}"/>
-        <delete dir="${bin}/net"/>
+        <delete dir="${bin}/net" includeemptydirs="yes">
+        </delete>
+        <delete dir="${bin}" excludes="jsunit.jar">
+        </delete>
     </target>
 
     <target name="_create_src_jar" description="Creates jsunit-src.jar">
