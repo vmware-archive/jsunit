@@ -18,6 +18,7 @@
       <value>
         <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
         <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
+        <option name="HTML_ATTRIBUTE_WRAP" value="0" />
       </value>
     </option>
     <option name="USE_PER_PROJECT_SETTINGS" value="true" />

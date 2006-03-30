@@ -80,7 +80,7 @@ public enum ConfigurationProperty {
         }
     },
 
-    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remove machines?", false, false) {
+    IGNORE_UNRESPONSIVE_REMOTE_MACHINES("ignoreUnresponsiveRemoteMachines", "Ignore unresponsive remote machines?", false, false) {
         public String getValueString(Configuration configuration) {
             return String.valueOf(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         }

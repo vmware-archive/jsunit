@@ -59,9 +59,9 @@ public class DistributedTestRunManager {
         List<TestRunResult> results = new ArrayList<TestRunResult>();
         try {
             URL fullURL = buildURL(baseURL);
-            logger.info("Requesting run on remove machine URL " + baseURL);
+            logger.info("Requesting run on remote machine URL " + baseURL);
             Document documentFromRemoteMachine = hitter.hitURL(fullURL);
-            logger.info("Received response from remove machine URL " + baseURL);
+            logger.info("Received response from remote machine URL " + baseURL);
             if (isMultipleTestRunResultsResult(documentFromRemoteMachine)) {
                 DistributedTestRunResult multiple = new DistributedTestRunResultBuilder(configuration).build(documentFromRemoteMachine);
                 results.addAll(multiple.getTestRunResults());

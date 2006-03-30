@@ -31,7 +31,7 @@
             id="ignoreUnresponsiveRemoteMachines"
             name="ignoreUnresponsiveRemoteMachines"
             value=""
-            description="ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is whether to ignore a remove machine that does not respond.  If true, test runs will be green even if one or more remove machines fail to respond; if false, an unresponsive remove machine results in a failure.  This is not a mandatory property.  Its default is false. For example: 'true'"
+            description="ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not a mandatory property.  Its default is false. For example: 'true'"
             />
 
     <property
@@ -52,7 +52,7 @@
             id="remoteMachineURLs"
             name="remoteMachineURLs"
             value=""
-            description="remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is the list of URLs of remove machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'"
+            description="remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is the list of URLs of remote machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'"
             />
 
     <property

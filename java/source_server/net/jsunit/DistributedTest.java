@@ -56,7 +56,7 @@ public class DistributedTest extends TestCase {
                     if (!isMultiExceptionASingleBindException(e))
                         throw e;
                     //if a temporaryStandardServer is already running, fine -
-                    //we only need it to serve content to remove machines
+                    //we only need it to serve content to remote machines
                 }
             }
         }
@@ -114,10 +114,10 @@ public class DistributedTest extends TestCase {
     }
 
     public ResultType getResultType() {
-       return getResult().getResultType();
+        return getResult().getResultType();
     }
 
     public List<TestRunResult> getTestRunResults() {
-       return getResult().getTestRunResults();
+        return getResult().getTestRunResults();
     }
 }
