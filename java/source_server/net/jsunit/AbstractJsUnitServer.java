@@ -117,9 +117,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
     private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
         servletContext.addServlet(
-                "webwork",
-                "/" + name,
-                ServletDispatcher.class.getName()
+                "webwork", "/" + name, ServletDispatcher.class.getName()
         );
     }
 
