@@ -2,7 +2,7 @@ Required for next release:
 
   FEATURES:
     - Send traces back to client (IN PROGRESS - ehanson)
-    - prettier simple_html.xsl and simple_text.xsl
+    - finish simple_html.xsl and simple_text.xsl
     - create minimal_text.xsl and use it as the output for JUnit tests; make sure it's blank when no failures
 
   DISTRIBUTION PACKAGING/PROCESS:
