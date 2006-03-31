@@ -174,4 +174,14 @@ public final class Configuration implements BrowserSource {
         return getRemoteMachineURLs().get(id);
     }
 
+    public boolean equalsForServerType(Configuration other, ServerType serverType) {
+        for (ConfigurationProperty property : ConfigurationProperty.all()) {
+            String myValue = property.getValueString(this);
+            String otherValue = property.getValueString(other);
+            if (property.isUsedBy(serverType) && !myValue.equals(otherValue))
+                return false;
+        }
+        return true;
+    }
+
 }

@@ -57,7 +57,7 @@ public enum ServerType {
     private String displayName;
     private boolean isFarm;
     private boolean performUpToDateCheck;
-	private boolean isTemporary;
+    private boolean isTemporary;
 
     private ServerType(
             String displayName,
@@ -123,7 +123,11 @@ public enum ServerType {
         return performUpToDateCheck;
     }
 
-	public boolean isTemporary() {
-		return isTemporary;
-	}
+    public boolean isTemporary() {
+        return isTemporary;
+    }
+
+    public boolean isUsedBy(ConfigurationProperty property) {
+        return getRequiredAndOptionalConfigurationProperties().contains(property);
+    }
 }

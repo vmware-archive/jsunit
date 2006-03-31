@@ -250,6 +250,15 @@ public class ConfigurationTest extends TestCase {
         assertEquals("http://machine3:9090/jsunit", remoteMachineURLs.get(3).toString());
     }
 
+    public void testEquals() throws Exception {
+        Configuration configuration1 = new Configuration(new FullValidForBothConfigurationSource());
+        Configuration configuration2 = new Configuration(new FullValidForBothConfigurationSource());
+        Configuration configuration3 = new Configuration(new MinimalValidForBothConfigurationSource());
+        assertTrue(configuration1.equalsForServerType(configuration1, ServerType.STANDARD));
+        assertTrue(configuration1.equalsForServerType(configuration2, ServerType.STANDARD));
+        assertFalse(configuration1.equalsForServerType(configuration3, ServerType.STANDARD));
+    }
+
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
 
         public String resourceBase() {

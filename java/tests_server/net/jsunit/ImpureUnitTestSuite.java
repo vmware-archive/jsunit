@@ -39,6 +39,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(JsUnitFarmServerTest.class);
         result.addTestSuite(JsUnitStandardServerTest.class);
         result.addTestSuite(PropertiesConfigurationSourceTest.class);
+        result.addTestSuite(RemoteConfigurationFetcherTest.class);
         result.addTestSuite(RemoteConfigurationSourceTest.class);
         result.addTestSuite(RemoteMachineRunnerHitterTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);

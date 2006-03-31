@@ -10,6 +10,7 @@
       <sourceFolder url="file://$MODULE_DIR$/source" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tests" isTestSource="true" />
     </content>
+    <orderEntry type="jdk" jdkName="IDEA" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="JsUnit" />
     <orderEntryProperties />

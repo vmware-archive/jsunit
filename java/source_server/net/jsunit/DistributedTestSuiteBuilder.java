@@ -7,6 +7,8 @@ import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.Browser;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DistributedTestSuiteBuilder {
@@ -26,11 +28,23 @@ public class DistributedTestSuiteBuilder {
     }
 
     public void addTestsTo(TestSuite suite) {
+        List<RemoteConfigurationFetcher> remoteConfigurationFetchers = new ArrayList<RemoteConfigurationFetcher>();
         for (final URL remoteMachineURL : localConfiguration.getRemoteMachineURLs()) {
-            ConfigurationSource remoteSource = new RemoteConfigurationSource(hitter, remoteMachineURL.toString());
-            Configuration remoteConfiguration = new Configuration(remoteSource);
-            addTestsForRemoteConfigurationTo(remoteConfiguration, remoteMachineURL, suite);
+            RemoteConfigurationFetcher fetcher = new RemoteConfigurationFetcher(hitter, remoteMachineURL);
+            fetcher.start();
+            remoteConfigurationFetchers.add(fetcher);
         }
+        for (RemoteConfigurationFetcher fetcher : remoteConfigurationFetchers) {
+            try {
+                fetcher.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        Collections.sort(remoteConfigurationFetchers);
+        for (RemoteConfigurationFetcher fetcher : remoteConfigurationFetchers)
+            addTestsForRemoteConfigurationTo(fetcher.getRetrievedRemoteConfiguration(), fetcher.getRemoteMachineURL(), suite);
+
         suite.setName("JsUnit Tests (" + getRemoteMachineURLCount() + " machines, " + getBrowserCount() + " direct browsers)");
     }
 
@@ -69,4 +83,5 @@ public class DistributedTestSuiteBuilder {
     public int getBrowserCount() {
         return browserCount;
     }
+
 }

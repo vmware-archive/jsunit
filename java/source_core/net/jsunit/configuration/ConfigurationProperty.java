@@ -283,4 +283,7 @@ public enum ConfigurationProperty {
 
     public abstract void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException;
 
+    public boolean isUsedBy(ServerType serverType) {
+        return serverType.isUsedBy(this);
+    }
 }
