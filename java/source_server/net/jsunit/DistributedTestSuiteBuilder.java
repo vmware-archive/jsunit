@@ -50,7 +50,7 @@ public class DistributedTestSuiteBuilder {
     }
 
     private void addTestsForRemoteConfigurationTo(Configuration remoteConfiguration, URL remoteMachineURL, TestSuite suite) {
-        String remoteMachineDisplayName = remoteMachineURL.getHost().replace('.', '\u00B7') + ":" + remoteMachineURL.getPort();
+        String remoteMachineDisplayName = escapeForSuiteName(remoteMachineURL.getHost()) + ":" + remoteMachineURL.getPort();
         if (!StringUtility.isEmpty(remoteConfiguration.getDescription()))
             remoteMachineDisplayName += " (" + remoteConfiguration.getDescription() + ")";
         List<Browser> browsers = remoteConfiguration.getBrowsers();
@@ -69,6 +69,10 @@ public class DistributedTestSuiteBuilder {
             }
             suite.addTest(suiteForRemoteMachine);
         }
+    }
+
+    private String escapeForSuiteName(String host) {
+        return host.replace('.', '\u00B7');
     }
 
     private DistributedTest createDistributedTest(ConfigurationSource originalSource, final URL remoteMachineURL) {
