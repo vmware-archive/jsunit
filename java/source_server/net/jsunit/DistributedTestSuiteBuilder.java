@@ -56,7 +56,7 @@ public class DistributedTestSuiteBuilder {
         List<Browser> browsers = remoteConfiguration.getBrowsers();
         if (browsers.isEmpty()) {
             DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
-            String name = remoteMachineDisplayName + " - farm server with " + remoteConfiguration.getRemoteMachineURLs().size() + " remote machine(s)";
+            String name = remoteMachineDisplayName + " - farm server"; //TODO: get the remote machine count - need to have access to the actual remote config
             distributedTest.setName(name);
             suite.addTest(distributedTest);
         } else {

@@ -4,6 +4,7 @@ Required for next release:
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
     - create minimal_text.xsl and use it as the output for JUnit tests; make sure it's blank when no failures
+    - DTSB needs to add the remote machine count to the farm server
 
   DISTRIBUTION PACKAGING/PROCESS:
     - change create_distribution target to create a zip for the client and a zip for "all"
