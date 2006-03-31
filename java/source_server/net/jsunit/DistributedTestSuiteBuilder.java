@@ -5,6 +5,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.Browser;
+import net.jsunit.utility.StringUtility;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -49,12 +50,17 @@ public class DistributedTestSuiteBuilder {
     }
 
     private void addTestsForRemoteConfigurationTo(Configuration remoteConfiguration, URL remoteMachineURL, TestSuite suite) {
+        String remoteMachineDisplayName = remoteMachineURL.getHost().replace('.', '\u00B7') + ":" + remoteMachineURL.getPort();
+        if (!StringUtility.isEmpty(remoteConfiguration.getDescription()))
+            remoteMachineDisplayName += " (" + remoteConfiguration.getDescription() + ")";
         List<Browser> browsers = remoteConfiguration.getBrowsers();
         if (browsers.isEmpty()) {
             DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
+            String name = remoteMachineDisplayName + " - farm server with " + remoteConfiguration.getRemoteMachineURLs().size() + " remote machine(s)";
+            distributedTest.setName(name);
             suite.addTest(distributedTest);
         } else {
-            TestSuite suiteForRemoteMachine = new TestSuite(remoteMachineURL.toString());
+            TestSuite suiteForRemoteMachine = new TestSuite(remoteMachineDisplayName + " - server with " + remoteConfiguration.getBrowsers().size() + " browser(s)");
             for (Browser browser : browsers) {
                 browserCount++;
                 DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);

@@ -25,7 +25,7 @@ public class DistributedTest extends TestCase {
     private ConfigurationSource localServerSource;
 
     public DistributedTest(ConfigurationSource localServerSource, ConfigurationSource farmSource) {
-        super(farmSource.remoteMachineURLs());
+        super(farmSource.remoteMachineURLs().replace('.', '_'));
         this.localServerSource = localServerSource;
         manager = DistributedTestRunManager.forConfiguration(new Configuration(farmSource));
     }
