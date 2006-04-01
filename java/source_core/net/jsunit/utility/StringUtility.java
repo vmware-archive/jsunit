@@ -56,4 +56,7 @@ public class StringUtility {
         return string;
     }
 
+    public static String escapeForSuiteName(String host) {
+        return host.replace('.', '\u00B7');
+    }
 }

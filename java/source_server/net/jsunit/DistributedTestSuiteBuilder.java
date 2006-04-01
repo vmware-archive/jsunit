@@ -50,29 +50,33 @@ public class DistributedTestSuiteBuilder {
     }
 
     private void addTestsForRemoteConfigurationTo(Configuration remoteConfiguration, URL remoteMachineURL, TestSuite suite) {
-        String remoteMachineDisplayName = escapeForSuiteName(remoteMachineURL.getHost()) + ":" + remoteMachineURL.getPort();
+        String remoteMachineDisplayName = StringUtility.escapeForSuiteName(remoteMachineURL.getHost()) + ":" + remoteMachineURL.getPort();
         if (!StringUtility.isEmpty(remoteConfiguration.getDescription()))
             remoteMachineDisplayName += " (" + remoteConfiguration.getDescription() + ")";
         List<Browser> browsers = remoteConfiguration.getBrowsers();
-        if (browsers.isEmpty()) {
-            DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
-            String name = remoteMachineDisplayName + " - farm server"; //TODO: get the remote machine count - need to have access to the actual remote config
-            distributedTest.setName(name);
-            suite.addTest(distributedTest);
-        } else {
-            TestSuite suiteForRemoteMachine = new TestSuite(remoteMachineDisplayName + " - server with " + remoteConfiguration.getBrowsers().size() + " browser(s)");
-            for (Browser browser : browsers) {
-                browserCount++;
-                DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
-                distributedTest.limitToBrowser(browser);
-                suiteForRemoteMachine.addTest(distributedTest);
-            }
-            suite.addTest(suiteForRemoteMachine);
-        }
+        boolean isFarm = browsers.isEmpty();
+        if (isFarm)
+            addFarmDistributedTestTo(remoteMachineURL, remoteMachineDisplayName, suite);
+        else
+            addSuiteOfDistributedTestsTo(remoteMachineDisplayName, remoteConfiguration, browsers, remoteMachineURL, suite);
     }
 
-    private String escapeForSuiteName(String host) {
-        return host.replace('.', '\u00B7');
+    private void addSuiteOfDistributedTestsTo(String remoteMachineDisplayName, Configuration remoteConfiguration, List<Browser> browsers, URL remoteMachineURL, TestSuite suite) {
+        TestSuite suiteForRemoteMachine = new TestSuite(remoteMachineDisplayName + " - server with " + remoteConfiguration.getBrowsers().size() + " browser(s)");
+        for (Browser browser : browsers) {
+            browserCount++;
+            DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
+            distributedTest.limitToBrowser(browser);
+            suiteForRemoteMachine.addTest(distributedTest);
+        }
+        suite.addTest(suiteForRemoteMachine);
+    }
+
+    private void addFarmDistributedTestTo(URL remoteMachineURL, String remoteMachineDisplayName, TestSuite suite) {
+        DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
+        String name = remoteMachineDisplayName + " - farm server"; //TODO: get the remote machine count - need to have access to the actual remote config
+        distributedTest.setName(name);
+        suite.addTest(distributedTest);
     }
 
     private DistributedTest createDistributedTest(ConfigurationSource originalSource, final URL remoteMachineURL) {
