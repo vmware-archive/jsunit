@@ -10,7 +10,9 @@
     <script language="JavaScript" type="text/javascript">
 
         function testStackTrace() {
-            doStackTraceTest(3, "testStackTrace");
+            if (navigator.userAgent.indexOf('Safari/') == -1) {
+                doStackTraceTest(3, "testStackTrace");
+            }
         }
 
         function doStackTraceTest(numberLeft, testFunctionName) {

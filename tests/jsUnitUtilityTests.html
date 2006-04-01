@@ -71,8 +71,8 @@
             assertEquals('Using new', 'String', _trueTypeOf(new String('foo')));
 
             assertEquals('Using new', 'Function', _trueTypeOf(new Function()));
-            assertEquals('Function', _trueTypeOf(function foo() {
-            }));
+            var f = function foo() {};
+            assertEquals('Function', _trueTypeOf(f));
             assertEquals('Function', _trueTypeOf(testTrueTypeOf));
 
             assertEquals('RegExp', _trueTypeOf(/foo/));

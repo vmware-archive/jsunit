@@ -506,9 +506,8 @@ function newOnLoadEvent() {
 
 function jsUnitSetOnLoad(windowRef, onloadHandler)
 {
-    var isKonqueror = navigator.userAgent.indexOf('Konqueror/') != -1 ||
-                      navigator.userAgent.indexOf('Safari/') != -1;
-
+    var isKonqueror = navigator.userAgent.indexOf('Konqueror/') != -1;
+    
     if (typeof(windowRef.attachEvent) != 'undefined') {
         // Internet Explorer, Opera
         windowRef.attachEvent("onload", onloadHandler);
