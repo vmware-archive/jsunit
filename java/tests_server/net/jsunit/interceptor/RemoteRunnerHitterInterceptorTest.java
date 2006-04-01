@@ -25,7 +25,7 @@ public class RemoteRunnerHitterInterceptorTest extends TestCase {
             return null;
         }
 
-        public void setRemoteRunnerHitter(RemoteServerHitter hitter) {
+        public void setRemoteServerHitter(RemoteServerHitter hitter) {
             this.hitter = hitter;
         }
 

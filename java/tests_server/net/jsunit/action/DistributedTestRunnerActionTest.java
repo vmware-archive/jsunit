@@ -18,7 +18,7 @@ public class DistributedTestRunnerActionTest extends TestCase {
         super.setUp();
         action = new DistributedTestRunnerAction();
         action.setFarmServer(new JsUnitFarmServer(new Configuration(new DummyConfigurationSource())));
-        action.setRemoteRunnerHitter(new SuccessfulRemoteServerHitter());
+        action.setRemoteServerHitter(new SuccessfulRemoteServerHitter());
     }
 
     public void testSimple() throws Exception {

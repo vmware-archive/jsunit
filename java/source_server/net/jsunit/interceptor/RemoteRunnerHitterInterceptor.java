@@ -8,7 +8,7 @@ public class RemoteRunnerHitterInterceptor extends JsUnitInterceptor {
 
     protected void execute(Action targetAction) {
         RemoteRunnerHitterAware aware = ((RemoteRunnerHitterAware) targetAction);
-        aware.setRemoteRunnerHitter(new RemoteMachineServerHitter());
+        aware.setRemoteServerHitter(new RemoteMachineServerHitter());
     }
 
 }

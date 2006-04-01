@@ -17,7 +17,7 @@ public abstract class JsUnitFarmServerAction
         this.server = server;
     }
 
-    public void setRemoteRunnerHitter(RemoteServerHitter hitter) {
+    public void setRemoteServerHitter(RemoteServerHitter hitter) {
         this.hitter = hitter;
     }
 
