@@ -31,7 +31,7 @@ public class DistributedTestSuiteBuilderTest extends TestCase {
         assertEquals(3, aSuite.testCount());
 
         DistributedTest testForURL3 = (DistributedTest) aSuite.testAt(0);
-        assertEquals("his\u00B7machine\u00B7com:7070 - farm server", testForURL3.getName());
+        assertEquals("his\u00B7machine\u00B7com:7070 - farm server with 2 remote machine(s)", testForURL3.getName());
 
         TestSuite suiteForURL1 = (TestSuite) aSuite.testAt(1);
         assertEquals("my\u00B7machine\u00B7com:8080 - server with 2 browser(s)", suiteForURL1.getName());
