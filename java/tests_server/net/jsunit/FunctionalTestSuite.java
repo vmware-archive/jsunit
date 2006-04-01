@@ -15,8 +15,9 @@ public class FunctionalTestSuite {
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
-        result.addTestSuite(SpecificBrowserDistributedTestTest.class);
         result.addTestSuite(ServerStatusFunctionalTest.class);
+        result.addTestSuite(SerialDistributedTestTest.class);
+        result.addTestSuite(SpecificBrowserDistributedTestTest.class);
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
         result.addTestSuite(TestRunCountFunctionalTest.class);
         result.addTestSuite(TimedOutBrowserStandaloneTestTest.class);
