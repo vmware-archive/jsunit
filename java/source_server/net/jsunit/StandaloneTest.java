@@ -67,10 +67,10 @@ public class StandaloneTest extends TestCase {
 
     public void testStandaloneRun() throws Exception {
         testRunManager.runTests();
-        TestRunResult testRunResult = testRunManager.getTestRunResult();
-        if (!testRunResult.wasSuccessful()) {
+        TestRunResult result = testRunManager.getTestRunResult();
+        if (!result.wasSuccessful()) {
             StringBuffer buffer = new StringBuffer();
-            buffer.append(testRunResult.displayString());
+            buffer.append(result.displayString());
             buffer.append("\n");
             buffer.append(XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml()));
             fail(buffer.toString());
