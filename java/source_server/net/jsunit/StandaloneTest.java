@@ -72,8 +72,7 @@ public class StandaloneTest extends TestCase {
             StringBuffer buffer = new StringBuffer();
             buffer.append(testRunResult.displayString());
             buffer.append("\n");
-            String xml = XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml());
-            buffer.append(xml);
+            buffer.append(XmlUtility.asPrettyString(testRunManager.getTestRunResult().asXml()));
             fail(buffer.toString());
         }
     }

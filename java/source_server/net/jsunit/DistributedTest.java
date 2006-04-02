@@ -91,9 +91,13 @@ public class DistributedTest extends TestCase {
     protected void runTest() throws Throwable {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
-        temporaryStandardServer.logStatus(XmlUtility.asPrettyString(result.asXml()));
-        if (!result.wasSuccessful())
-            fail(result.displayString());
+        if (!result.wasSuccessful()) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append(result.displayString());
+            buffer.append("\n");
+            buffer.append(XmlUtility.asPrettyString(result.asXml()));
+            fail(buffer.toString());
+        }
     }
 
     public DistributedTestRunManager getDistributedTestRunManager() {
