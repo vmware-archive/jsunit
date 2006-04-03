@@ -7,6 +7,12 @@ import net.jsunit.model.BrowserSource;
 
 public class RemoteTestRunClient implements MessageReceiver {
 
+    public static final String TEST_RUN_FINISHED = "testRunFinished";
+    public static final String TEST_RUN_STARTED = "testRunStarted";
+    public static final String BROWSER_TEST_RUN_FINISHED = "browserTestRunFinished";
+    public static final String BROWSER_TEST_RUN_STARTED = "browserTestRunStarted";
+    public static final String END_XML = "endXml";
+
     private BrowserSource browserSource;
     private final TestRunListener listener;
     private MessageReceiver complexMessageReceiver;
@@ -27,13 +33,13 @@ public class RemoteTestRunClient implements MessageReceiver {
     }
 
     public void messageReceived(String message) {
-        if (message.equals(TestRunNotifierServer.TEST_RUN_STARTED))
+        if (message.equals(TEST_RUN_STARTED))
             listener.testRunStarted();
-        else if (message.equals(TestRunNotifierServer.TEST_RUN_FINISHED))
+        else if (message.equals(TEST_RUN_FINISHED))
             listener.testRunFinished();
-        else if (message.equals(TestRunNotifierServer.BROWSER_TEST_RUN_STARTED))
+        else if (message.equals(BROWSER_TEST_RUN_STARTED))
             complexMessageReceiver = new TestRunStartedReceiver();
-        else if (message.equals(TestRunNotifierServer.BROWSER_TEST_RUN_FINISHED))
+        else if (message.equals(BROWSER_TEST_RUN_FINISHED))
             complexMessageReceiver = new TestRunFinishedReceiver();
         else
             complexMessageReceiver.messageReceived(message);
@@ -57,7 +63,7 @@ public class RemoteTestRunClient implements MessageReceiver {
             if (browser == null) {
                 int browserId = Integer.parseInt(message);
                 browser = browserSource.getBrowserById(browserId);
-            } else if (message.equals(TestRunNotifierServer.END_XML)) {
+            } else if (message.equals(END_XML)) {
                 BrowserResult result = new BrowserResultBuilder(browserSource).build(xmlString);
                 listener.browserTestRunFinished(browser, result);
             } else if (message.trim().length() > 0) {
