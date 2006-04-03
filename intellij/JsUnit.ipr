@@ -196,9 +196,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/client.iml" filepath="$PROJECT_DIR$/client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core/core.iml" filepath="$PROJECT_DIR$/core/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" filepath="$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server/server.iml" filepath="$PROJECT_DIR$/server/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/server.iml" filepath="$PROJECT_DIR$/server.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />

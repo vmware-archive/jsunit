@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4" relativePaths="true" type="JAVA_MODULE">
+  <component name="ModuleRootManager" />
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/core/classes" />
+    <exclude-output />
+    <output-test url="file://$MODULE_DIR$/core/classes_test" />
+    <content url="file://$MODULE_DIR$/../java/source_core">
+      <sourceFolder url="file://$MODULE_DIR$/../java/source_core" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../java/tests_core">
+      <sourceFolder url="file://$MODULE_DIR$/../java/tests_core" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="thirdparty" level="project" />
+    <orderEntryProperties />
+  </component>
+</module>
+
