@@ -96,8 +96,8 @@ public class TestCaseResult extends AbstractResult {
         return new TestCaseResultWriter(this).getXmlFragment();
     }
 
-    public String getProblemSummary() {
-        return new TestCaseResultWriter(this).getProblemSummary();
+    public String getProblemSummary(boolean fullyQualified) {
+        return new TestCaseResultWriter(this).getProblemSummary(fullyQualified);
     }
 
     public void setTestPageName(String testPageName) {
@@ -142,6 +142,13 @@ public class TestCaseResult extends AbstractResult {
         if (hadFailure())
             return ResultType.FAILURE;
         return ResultType.SUCCESS;
+    }
+
+    public void addErrorStringTo(StringBuffer buffer) {
+        if (!wasSuccessful()) {
+            buffer.append(getProblemSummary(false));
+            buffer.append("\n");
+        }
     }
 
 }

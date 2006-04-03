@@ -14,4 +14,6 @@ public interface Result {
 
     public String displayString();
 
+    public void addErrorStringTo(StringBuffer buffer);
+
 }

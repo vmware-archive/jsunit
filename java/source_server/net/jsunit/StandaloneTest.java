@@ -8,7 +8,6 @@ import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.model.Browser;
 import net.jsunit.model.TestRunResult;
-import net.jsunit.utility.XmlUtility;
 
 public class StandaloneTest extends TestCase {
 
@@ -69,7 +68,9 @@ public class StandaloneTest extends TestCase {
         testRunManager.runTests();
         TestRunResult result = testRunManager.getTestRunResult();
         if (!result.wasSuccessful()) {
-            System.err.println(XmlUtility.asPrettyString(result.asXml()));
+            StringBuffer buffer = new StringBuffer();
+            result.addErrorStringTo(buffer);
+            System.err.println(buffer.toString());
             fail(result.displayString());
         }
     }

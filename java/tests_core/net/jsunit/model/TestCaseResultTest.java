@@ -24,7 +24,7 @@ public class TestCaseResultTest extends TestCase {
 
     public void testProblemSummary() {
         TestCaseResult result = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|");
-        assertEquals("file:///dummy/path/dummyPage.html:testFoo had an error:\nTest Error Message", result.getProblemSummary());
+        assertEquals("file:///dummy/path/dummyPage.html:testFoo had an error:\nTest Error Message", result.getProblemSummary(true));
     }
 
     public void testBuildErrorResultFromString() {
@@ -51,6 +51,27 @@ public class TestCaseResultTest extends TestCase {
         assertEquals("Test Failure Message", result.getFailure());
         assertEquals(ResultType.FAILURE, result.getResultType());
         assertEquals("<testCase name=\"file:///dummy/path/dummyPage.html:testFoo\" time=\"1.3\"><failure>Test Failure Message</failure></testCase>", result.getXmlFragment());
+    }
+
+    public void testFailureAsErrorString() throws Exception {
+        TestCaseResult failed = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|F|Test Failure Message|");
+        StringBuffer buffer = new StringBuffer();
+        failed.addErrorStringTo(buffer);
+        assertEquals("testFoo failed:\nTest Failure Message\n", buffer.toString());
+    }
+
+    public void testErrorAsErrorString() throws Exception {
+        TestCaseResult error = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|");
+        StringBuffer buffer = new StringBuffer();
+        error.addErrorStringTo(buffer);
+        assertEquals("testFoo had an error:\nTest Error Message\n", buffer.toString());
+    }
+
+    public void testSuccessAsErrorString() throws Exception {
+        TestCaseResult success = TestCaseResult.fromString("file://dummy/path/dummyPage.html:testFoo|1.3|S||");
+        StringBuffer buffer = new StringBuffer();
+        success.addErrorStringTo(buffer);
+        assertEquals("", buffer.toString());
     }
 
 }

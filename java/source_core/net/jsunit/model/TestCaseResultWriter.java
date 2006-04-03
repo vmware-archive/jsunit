@@ -50,11 +50,12 @@ public class TestCaseResultWriter {
         return testCaseElement;
     }
 
-    public String getProblemSummary() {
+    public String getProblemSummary(boolean fullyQualified) {
+        String name = fullyQualified ? result.getFullyQualifiedName() : result.getName();
         if (result.hadFailure())
-            return result.getFullyQualifiedName() + " failed:\n" + result.getFailure();
+            return name + " failed:\n" + result.getFailure();
         else if (result.hadError())
-            return result.getFullyQualifiedName() + " had an error:\n" + result.getError();
+            return name + " had an error:\n" + result.getError();
         return null;
     }
 

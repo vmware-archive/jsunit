@@ -35,4 +35,26 @@ public class TestPageResultTest extends TestCase {
         assertEquals(ResultType.ERROR, result.getResultType());
     }
 
+    public void testAsErrorString() throws Exception {
+        TestCaseResult error = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|");
+        TestCaseResult success = TestCaseResult.fromString("file://dummy/path/dummyPage.html:testFoo|1.3|S||");
+        TestCaseResult failure = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|F|Test Failure Message|");
+        TestPageResult pageResult = new TestPageResult("file:///dummy/path/dummyPage.html");
+        pageResult.addTestCaseResult(error);
+        pageResult.addTestCaseResult(failure);
+        pageResult.addTestCaseResult(success);
+
+        StringBuffer buffer = new StringBuffer();
+        pageResult.addErrorStringTo(buffer);
+
+        StringBuffer expected = new StringBuffer();
+        expected.append("file:///dummy/path/dummyPage.html\n");
+        error.addErrorStringTo(expected);
+        failure.addErrorStringTo(expected);
+        success.addErrorStringTo(expected);
+        expected.append("\n");
+
+        assertEquals(expected.toString(), buffer.toString());
+    }
+
 }

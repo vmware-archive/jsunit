@@ -10,7 +10,6 @@ import net.jsunit.model.Browser;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
-import net.jsunit.utility.XmlUtility;
 import org.mortbay.util.MultiException;
 
 import java.net.BindException;
@@ -92,7 +91,9 @@ public class DistributedTest extends TestCase {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         if (!result.wasSuccessful()) {
-            System.err.print(XmlUtility.asPrettyString(result.asXml()));
+            StringBuffer buffer = new StringBuffer();
+            result.addErrorStringTo(buffer);
+            System.err.println(buffer.toString());
             fail(result.displayString());
         }
     }

@@ -109,7 +109,7 @@ public class BrowserResultWriter {
             if (!result.wasSuccessful()) {
                 if (buffer.length() > 0)
                     buffer.append("\n");
-                String problemMessage = result.getProblemSummary();
+                String problemMessage = result.getProblemSummary(true);
                 buffer.append(problemMessage);
             }
         }

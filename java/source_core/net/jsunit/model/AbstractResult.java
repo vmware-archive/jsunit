@@ -51,4 +51,7 @@ public abstract class AbstractResult implements Result {
         return buffer.toString();
     }
 
+    public void addErrorStringTo(StringBuffer buffer) {
+    }
+
 }
