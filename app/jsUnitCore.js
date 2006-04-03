@@ -504,10 +504,9 @@ function newOnLoadEvent() {
     isTestPageLoaded = true;
 }
 
-function jsUnitSetOnLoad(windowRef, onloadHandler)
-{
+function jsUnitSetOnLoad(windowRef, onloadHandler) {
     var isKonqueror = navigator.userAgent.indexOf('Konqueror/') != -1;
-    
+
     if (typeof(windowRef.attachEvent) != 'undefined') {
         // Internet Explorer, Opera
         windowRef.attachEvent("onload", onloadHandler);
