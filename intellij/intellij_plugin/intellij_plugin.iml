@@ -12,7 +12,8 @@
     </content>
     <orderEntry type="jdk" jdkName="IDEA" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="JsUnit" />
+    <orderEntry type="module" module-name="client" />
+    <orderEntry type="module" module-name="core" />
     <orderEntryProperties />
   </component>
 </module>
