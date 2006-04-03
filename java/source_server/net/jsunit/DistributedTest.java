@@ -92,11 +92,8 @@ public class DistributedTest extends TestCase {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         if (!result.wasSuccessful()) {
-            StringBuffer buffer = new StringBuffer();
-            buffer.append(result.displayString());
-            buffer.append("\n");
-            buffer.append(XmlUtility.asPrettyString(result.asXml()));
-            fail(buffer.toString());
+            System.err.print(XmlUtility.asPrettyString(result.asXml()));
+            fail(result.displayString());
         }
     }
 
