@@ -23,6 +23,7 @@ ASSERTION FUNCTIONS
 - testPage parameter should be URL-encoded (only opera cares though)
 - Speed-up of Firefox/Mozilla (thanks to Chris Wesseling)
 - jsUnitMockTimeout.js (thanks to Pivotal, especially Nathan Wilmes)
+- new "Stop" button for stopping test runs
 
 SERVER
 - start-browser scripts in bin

@@ -118,6 +118,7 @@
 
     function submitResults() {
         window.mainFrame.mainData.document.testRunnerForm.runButton.disabled = true;
+        window.mainFrame.mainData.document.testRunnerForm.stopButton.disabled = true;
         window.mainFrame.mainResults.populateHeaderFields(getResultId(), navigator.userAgent, JSUNIT_VERSION, testManager.resolveUserEnteredTestFileName());
         window.mainFrame.mainResults.submitResults();
     }

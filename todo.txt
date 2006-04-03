@@ -3,7 +3,7 @@ Required for next release:
   FEATURES:
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
-    - create minimal_text.xsl and use it as the output for JUnit tests; make sure it's blank when no failures
+    - Only show failures in output in DT & ST
 
   DISTRIBUTION PACKAGING/PROCESS:
     - change create_distribution target to create a zip for the client and a zip for "all"
@@ -16,7 +16,6 @@ Required for next release:
 Backlog for future releases:
 
   FEATURES:
-    - "Stop" button in browser
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)

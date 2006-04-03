@@ -19,10 +19,7 @@
         }
 
         function kickOffTests() {
-            //
-            //    Check if Init was called by onload handler
-            //
-            if (typeof(top.testManager) == 'undefined') {
+            if (!top.testManager) {
                 top.init();
             }
 
@@ -49,6 +46,11 @@
             }
 
             top.testManager.start();
+        }
+
+        function stopTests() {
+            top.testManager.abort();
+            top.testManager = null;
         }
 
     </script>
@@ -123,6 +125,7 @@
                     }
                 </script>
                 <input type="button" name="runButton" value="Run" onclick="kickOffTests()">
+                <input type="button" name="stopButton" value="Stop" onclick="stopTests()" disabled>
             </td>
         </tr>
     </table>

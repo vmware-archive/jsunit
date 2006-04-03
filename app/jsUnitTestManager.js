@@ -13,6 +13,7 @@ function jsUnitTestManager() {
     // form elements on mainData frame
     this.testFileName = mainData.document.testRunnerForm.testFileName;
     this.runButton = mainData.document.testRunnerForm.runButton;
+    this.stopButton = mainData.document.testRunnerForm.stopButton;
     this.traceLevel = mainData.document.testRunnerForm.traceLevel;
     this.closeTraceWindowOnNewRun = mainData.document.testRunnerForm.closeTraceWindowOnNewRun;
     this.timeout = mainData.document.testRunnerForm.timeout;
@@ -163,7 +164,7 @@ jsUnitTestManager.prototype._runTest = function () {
     this.totalCount++;
     this.updateProgressIndicators();
     this._testIndex++;
-    setTimeout('top.testManager._runTest()', jsUnitTestManager.TIMEOUT_LENGTH);
+    setTimeout('if (top.testManager) top.testManager._runTest()', jsUnitTestManager.TIMEOUT_LENGTH);
 }
 
 jsUnitTestManager.prototype._done = function () {
@@ -323,7 +324,7 @@ jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
         }
     }
     if (!this._isTestFrameLoaded()) {
-        setTimeout('top.testManager._callBackWhenPageIsLoaded();', jsUnitTestManager.TIMEOUT_LENGTH);
+        setTimeout('if (top.testManager) top.testManager._callBackWhenPageIsLoaded();', jsUnitTestManager.TIMEOUT_LENGTH);
         return;
     }
     this.doneLoadingPage(this._testFileName);
@@ -591,6 +592,7 @@ jsUnitTestManager.prototype.finalize = function () {
 
 jsUnitTestManager.prototype._setRunButtonEnabled = function (b) {
     this.runButton.disabled = !b;
+    this.stopButton.disabled = b;
 }
 
 jsUnitTestManager.prototype.getTestFileName = function () {
