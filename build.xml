@@ -254,6 +254,7 @@
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
+            <sysproperty key="java.util.logging.config.file" value="${loggingPropertiesFile}"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
@@ -270,6 +271,7 @@
         <junit showoutput="true" haltonerror="true" haltonfailure="true">
             <formatter type="plain" usefile="false"/>
             <classpath refid="classpath"/>
+            <sysproperty key="java.util.logging.config.file" value="${loggingPropertiesFile}"/>
             <sysproperty key="browserFileNames" value="${browserFileNames}"/>
             <sysproperty key="description" value="${description}"/>
             <sysproperty key="ignoreUnresponsiveRemoteMachines" value="${ignoreUnresponsiveRemoteMachines}"/>
