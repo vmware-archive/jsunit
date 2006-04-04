@@ -184,6 +184,8 @@
                         <include name="net.jsunit.JsUnitStandardServer"/>
                         <include name="net.jsunit.JsUnitFarmServer"/>
                         <include name="net.jsunit.action.*Action"/>
+                        <include name="net.jsunit.action.*Result"/>
+                        <include name="net.jsunit.interceptor.*Interceptor"/>
                     </patternset>
                 </class>
             </expose>
