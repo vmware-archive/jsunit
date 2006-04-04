@@ -168,7 +168,7 @@
     </target>
 
     <target name="_obfuscate_jar" description="Obfuscates jsunit.jar">
-        <obfuscate logfile="obfuscation.log" replaceclassnamestrings="true">
+        <obfuscate logfile="tools/obfuscation.xml" replaceclassnamestrings="true">
             <property name="error-checking" value="pedantic"/>
             <inoutpair in="${bin}/jsunit.jar" out="${bin}/jsunit_obfuscated.jar"/>
             <externalclasses>
@@ -183,6 +183,7 @@
                         <include name="net.jsunit.DistributedTest"/>
                         <include name="net.jsunit.JsUnitStandardServer"/>
                         <include name="net.jsunit.JsUnitFarmServer"/>
+                        <include name="net.jsunit.action.*Action"/>
                     </patternset>
                 </class>
             </expose>
