@@ -52,7 +52,9 @@ public abstract class AbstractResult implements Result {
     }
 
     public final void addErrorStringTo(StringBuffer buffer) {
-        addMyErrorString(buffer);
+        if (wasSuccessful())
+            return;
+        addMyErrorStringTo(buffer);
         if (hasChildren()) {
             boolean isFirstProblem = true;
             for (Result result : getChildren()) {
@@ -70,7 +72,7 @@ public abstract class AbstractResult implements Result {
         return getChildren() != null && !getChildren().isEmpty();
     }
 
-    protected void addMyErrorString(StringBuffer buffer) {
+    protected void addMyErrorStringTo(StringBuffer buffer) {
     }
 
 }

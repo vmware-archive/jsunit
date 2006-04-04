@@ -28,7 +28,7 @@ public class TestPageResult extends AbstractResult {
         return testCaseResults;
     }
 
-    protected void addMyErrorString(StringBuffer buffer) {
+    protected void addMyErrorStringTo(StringBuffer buffer) {
         if (!wasSuccessful()) {
             buffer.append(getTestPageName());
             buffer.append("\n");

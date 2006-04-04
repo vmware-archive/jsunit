@@ -203,7 +203,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return browser.getDisplayString() + " at " + getRemoteAddress();
     }
 
-    protected void addMyErrorString(StringBuffer buffer) {
+    protected void addMyErrorStringTo(StringBuffer buffer) {
         buffer.append(getBrowserDisplayString());
         buffer.append("\n");
     }
