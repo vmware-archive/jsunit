@@ -80,6 +80,41 @@ public class TestRunResultTest extends TestCase {
         assertEquals("<testRunResult type=\"SUCCESS\" />", XmlUtility.asString(result.asXml()));
     }
 
+    public void testGetDisplayString() throws Exception {
+        TestRunResult result = new TestRunResult();
+        result.setHostname("myhost");
+        result.setIpAddress("123.45.67.8");
+        result.setOsString("Red Hat Linux");
+        result.setURL(new URL("http://www.example.com:9070"));
+
+        assertEquals(
+                "http://www.example.com:9070 (IP address: 123.45.67.8, host name: myhost, OS: Red Hat Linux)",
+                result.getDisplayString()
+        );
+    }
+
+    public void testGetDisplayStringWithUnknownRemoteMachiineInformation() throws Exception {
+        TestRunResult result = new TestRunResult();
+        result.setURL(new URL("http://www.example.com:9070"));
+
+        assertEquals(
+                "http://www.example.com:9070 (IP address: unknown, host name: unknown, OS: unknown)",
+                result.getDisplayString()
+        );
+    }
+
+    public void testGetDisplayStringWithNoURL() throws Exception {
+        TestRunResult result = new TestRunResult();
+        result.setHostname("myhost");
+        result.setIpAddress("123.45.67.8");
+        result.setOsString("Red Hat Linux");
+
+        assertEquals(
+                "localhost (IP address: 123.45.67.8, host name: myhost, OS: Red Hat Linux)",
+                result.getDisplayString()
+        );
+    }
+
     private BrowserResult successResult() {
         BrowserResult browserResult = new BrowserResult();
         browserResult.setId("foo");

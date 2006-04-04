@@ -126,4 +126,33 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         setHostname(SystemUtility.hostname());
         setIpAddress(SystemUtility.ipAddress());
     }
+
+    protected void addMyErrorStringTo(StringBuffer buffer) {
+        buffer.append(getDisplayString());
+        buffer.append("\n");
+    }
+
+    public String getDisplayString() {
+        boolean hasURL = url != null;
+        StringBuffer buffer = new StringBuffer();
+        if (hasURL)
+            buffer.append(url.toString());
+        else
+            buffer.append("localhost");
+        buffer.append(" (IP address: ");
+        if (ipAddress != null)
+            buffer.append(ipAddress);
+        else
+            buffer.append("unknown");
+        buffer.append(", host name: ");
+        if (hostname != null)
+            buffer.append(hostname);
+        else buffer.append("unknown");
+        buffer.append(", OS: ");
+        if (osString != null)
+            buffer.append(osString);
+        else buffer.append("unknown");
+        buffer.append(")");
+        return buffer.toString();
+    }
 }

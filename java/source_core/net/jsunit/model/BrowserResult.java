@@ -200,7 +200,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     public String getBrowserDisplayString() {
-        return browser.getDisplayString() + " at " + getRemoteAddress();
+        return browser.getDisplayString();
     }
 
     protected void addMyErrorStringTo(StringBuffer buffer) {
