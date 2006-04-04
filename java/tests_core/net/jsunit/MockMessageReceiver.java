@@ -3,7 +3,7 @@
  */
 package net.jsunit;
 
-class MockMessageReceiver implements MessageReceiver {
+public class MockMessageReceiver implements MessageReceiver {
 
     public String message;
 

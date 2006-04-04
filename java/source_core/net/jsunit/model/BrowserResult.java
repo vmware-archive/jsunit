@@ -184,7 +184,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     public boolean hasServerSideExceptionStackTrace() {
-        return getServerSideExceptionStackTrace() != null;
+        return serverSideExceptionStackTrace != null;
     }
 
     protected List<? extends Result> getChildren() {

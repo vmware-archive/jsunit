@@ -61,11 +61,15 @@ public abstract class AbstractResult implements Result {
                 if (!result.wasSuccessful()) {
                     if (!isFirstProblem)
                         buffer.append("\n");
-                    result.addErrorStringTo(buffer);
+                    addChildErrorStringTo(result, buffer);
                     isFirstProblem = false;
                 }
             }
         }
+    }
+
+    protected void addChildErrorStringTo(Result child, StringBuffer buffer) {
+        child.addErrorStringTo(buffer);
     }
 
     private boolean hasChildren() {

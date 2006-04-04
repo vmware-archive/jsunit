@@ -4,6 +4,7 @@ import net.jsunit.XmlRenderable;
 import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -130,6 +131,27 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     protected void addMyErrorStringTo(StringBuffer buffer) {
         buffer.append(getDisplayString());
         buffer.append("\n");
+    }
+
+    protected void addChildErrorStringTo(Result child, StringBuffer buffer) {
+        if (!child.wasSuccessful()) {
+            child.addErrorStringTo(buffer);
+            if (url != null) {
+                buffer.append("\n");
+                buffer.append("The full result log is at ");
+                BrowserResult childBrowserResult = (BrowserResult) child;
+                buffer.append(logUrlFor(childBrowserResult));
+            }
+        }
+    }
+
+    private URL logUrlFor(BrowserResult browserResult) {
+        String path = "jsunit/displayer?id=" + browserResult.getId() + "browserId=" + browserResult.getBrowser().getId();
+        try {
+            return new URL(url.getProtocol(), url.getHost(), url.getPort(), path);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getDisplayString() {

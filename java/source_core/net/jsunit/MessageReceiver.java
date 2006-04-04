@@ -3,6 +3,6 @@
  */
 package net.jsunit;
 
-interface MessageReceiver {
+public interface MessageReceiver {
     public void messageReceived(String message);
 }
