@@ -9,7 +9,7 @@ Required for next release:
 
   BUGS:
     - Mozilla 1.7.12 issues
-    - Some tests don't run in Safari & Konqueror; there's a hang in the onload test
+    - Some tests don't run in Konqueror; there's a hang in the onload test
     - SourceForge bugs
 
 Backlog for future releases:
