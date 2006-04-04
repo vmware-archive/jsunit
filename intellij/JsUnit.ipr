@@ -217,7 +217,6 @@
   <component name="libraryTable">
     <library name="thirdparty">
       <CLASSES>
-        <root url="file://$PROJECT_DIR$/../java/source_core" />
         <root url="jar://$PROJECT_DIR$/../java/lib/stop.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/xwork-1.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/javax.servlet.jar!/" />
