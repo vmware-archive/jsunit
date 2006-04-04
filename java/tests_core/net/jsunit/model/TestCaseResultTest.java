@@ -24,7 +24,7 @@ public class TestCaseResultTest extends TestCase {
 
     public void testProblemSummary() {
         TestCaseResult result = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|");
-        assertEquals("file:///dummy/path/dummyPage.html:testFoo had an error:\nTest Error Message", result.getProblemSummary(true));
+        assertEquals("file:///dummy/path/dummyPage.html:testFoo had an error: Test Error Message", result.getProblemSummary(true));
     }
 
     public void testBuildErrorResultFromString() {
@@ -57,14 +57,14 @@ public class TestCaseResultTest extends TestCase {
         TestCaseResult failed = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|F|Test Failure Message|");
         StringBuffer buffer = new StringBuffer();
         failed.addErrorStringTo(buffer);
-        assertEquals("testFoo failed:\nTest Failure Message\n", buffer.toString());
+        assertEquals("testFoo failed: Test Failure Message", buffer.toString());
     }
 
     public void testErrorAsErrorString() throws Exception {
         TestCaseResult error = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|");
         StringBuffer buffer = new StringBuffer();
         error.addErrorStringTo(buffer);
-        assertEquals("testFoo had an error:\nTest Error Message\n", buffer.toString());
+        assertEquals("testFoo had an error: Test Error Message", buffer.toString());
     }
 
     public void testSuccessAsErrorString() throws Exception {

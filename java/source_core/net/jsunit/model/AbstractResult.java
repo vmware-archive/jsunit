@@ -51,7 +51,26 @@ public abstract class AbstractResult implements Result {
         return buffer.toString();
     }
 
-    public void addErrorStringTo(StringBuffer buffer) {
+    public final void addErrorStringTo(StringBuffer buffer) {
+        addMyErrorString(buffer);
+        if (hasChildren()) {
+            boolean isFirstProblem = true;
+            for (Result result : getChildren()) {
+                if (!result.wasSuccessful()) {
+                    if (!isFirstProblem)
+                        buffer.append("\n");
+                    result.addErrorStringTo(buffer);
+                    isFirstProblem = false;
+                }
+            }
+        }
+    }
+
+    private boolean hasChildren() {
+        return getChildren() != null && !getChildren().isEmpty();
+    }
+
+    protected void addMyErrorString(StringBuffer buffer) {
     }
 
 }

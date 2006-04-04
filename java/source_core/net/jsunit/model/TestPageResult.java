@@ -28,14 +28,12 @@ public class TestPageResult extends AbstractResult {
         return testCaseResults;
     }
 
-    public void addErrorStringTo(StringBuffer buffer) {
+    protected void addMyErrorString(StringBuffer buffer) {
         if (!wasSuccessful()) {
             buffer.append(getTestPageName());
             buffer.append("\n");
-            for (TestCaseResult testCaseResult : testCaseResults)
-                testCaseResult.addErrorStringTo(buffer);
-            buffer.append("\n");
         }
+
     }
 
 }

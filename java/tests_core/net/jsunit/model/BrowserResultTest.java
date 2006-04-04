@@ -167,6 +167,8 @@ public class BrowserResultTest extends TestCase {
         page1.addTestCaseResult(success1);
         page1.addErrorStringTo(expected);
 
+        expected.append("\n");
+
         TestPageResult page2 = new TestPageResult("file:///dummy/path/dummyPage2.html");
         page2.addTestCaseResult(error2);
         page2.addTestCaseResult(failure2);

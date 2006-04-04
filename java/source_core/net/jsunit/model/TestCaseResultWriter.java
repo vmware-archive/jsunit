@@ -53,9 +53,9 @@ public class TestCaseResultWriter {
     public String getProblemSummary(boolean fullyQualified) {
         String name = fullyQualified ? result.getFullyQualifiedName() : result.getName();
         if (result.hadFailure())
-            return name + " failed:\n" + result.getFailure();
+            return name + " failed: " + result.getFailure();
         else if (result.hadError())
-            return name + " had an error:\n" + result.getError();
+            return name + " had an error: " + result.getError();
         return null;
     }
 

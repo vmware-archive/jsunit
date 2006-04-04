@@ -50,9 +50,8 @@ public class TestPageResultTest extends TestCase {
         StringBuffer expected = new StringBuffer();
         expected.append("file:///dummy/path/dummyPage.html\n");
         error.addErrorStringTo(expected);
-        failure.addErrorStringTo(expected);
-        success.addErrorStringTo(expected);
         expected.append("\n");
+        failure.addErrorStringTo(expected);
 
         assertEquals(expected.toString(), buffer.toString());
     }
