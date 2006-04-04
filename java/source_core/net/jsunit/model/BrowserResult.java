@@ -198,4 +198,15 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     public boolean isForBrowser(Browser browser) {
         return this.browser.equals(browser);
     }
+
+    public String getBrowserDisplayString() {
+        return browser.getDisplayString() + " at " + getRemoteAddress();
+    }
+
+    public void addErrorStringTo(StringBuffer buffer) {
+        buffer.append(getBrowserDisplayString());
+        buffer.append("\n");
+        for (TestPageResult testPageResult : testPageResults)
+            testPageResult.addErrorStringTo(buffer);
+    }
 }

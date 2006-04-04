@@ -26,4 +26,9 @@ public class BrowserTest extends TestCase {
         assertEquals("kill-mybrowser.bat", browser.getKillCommand());
     }
 
+    public void testDisplayString() throws Exception {
+        Browser browser = new Browser("mybrowser.exe", 4);
+        assertEquals("mybrowser.exe (ID 4)", browser.getDisplayString());
+    }
+
 }

@@ -57,4 +57,7 @@ public class Browser {
         return fileName.equals(DEFAULT_SYSTEM_BROWSER);
     }
 
+    public String getDisplayString() {
+        return getFileName() + " (ID " + getId() + ")";
+    }
 }

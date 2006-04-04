@@ -16,7 +16,7 @@ public class BrowserResultTest extends TestCase {
                     "<property name=\"browserId\" value=\"7\" />" +
                     "<property name=\"jsUnitVersion\" value=\"2.5\" />" +
                     "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
-                    "<property name=\"remoteAddress\" value=\"Dummy Remote Address\" />" +
+                    "<property name=\"remoteAddress\" value=\"123.45.67.8\" />" +
                     "<property name=\"url\" value=\"http://www.example.com/\" />" +
                     "</properties>" +
                     "<testCases>" +
@@ -131,13 +131,58 @@ public class BrowserResultTest extends TestCase {
         assertTrue(result.isForBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7)));
     }
 
+    public void testBrowserDisplayString() throws Exception {
+        BrowserResult browserResult = createBrowserResult();
+        assertEquals(
+                "c:\\Program Files\\Internet Explorer\\iexplore.exe (ID 7) at 123.45.67.8",
+                browserResult.getBrowserDisplayString()
+        );
+    }
+
+    public void testAsErrorString() throws Exception {
+        BrowserResult result = createBrowserResult();
+        TestCaseResult error1 = TestCaseResult.fromString("file:///dummy/path/dummyPage1.html:testFoo|1.3|E|Test Error Message|");
+        TestCaseResult success1 = TestCaseResult.fromString("file://dummy/path/dummyPage1.html:testFoo|1.3|S||");
+        TestCaseResult failure1 = TestCaseResult.fromString("file:///dummy/path/dummyPage1.html:testFoo|1.3|F|Test Failure Message|");
+        result.addTestCaseResult(error1);
+        result.addTestCaseResult(failure1);
+        result.addTestCaseResult(success1);
+
+        TestCaseResult error2 = TestCaseResult.fromString("file:///dummy/path/dummyPage2.html:testFoo|1.3|E|Test Error Message|");
+        TestCaseResult success2 = TestCaseResult.fromString("file://dummy/path/dummyPage2.html:testFoo|1.3|S||");
+        TestCaseResult failure2 = TestCaseResult.fromString("file:///dummy/path/dummyPage2.html:testFoo|1.3|F|Test Failure Message|");
+        result.addTestCaseResult(error2);
+        result.addTestCaseResult(failure2);
+        result.addTestCaseResult(success2);
+
+        StringBuffer buffer = new StringBuffer();
+        result.addErrorStringTo(buffer);
+
+        StringBuffer expected = new StringBuffer();
+        expected.append(result.getBrowserDisplayString());
+        expected.append("\n");
+        TestPageResult page1 = new TestPageResult("file:///dummy/path/dummyPage1.html");
+        page1.addTestCaseResult(error1);
+        page1.addTestCaseResult(failure1);
+        page1.addTestCaseResult(success1);
+        page1.addErrorStringTo(expected);
+
+        TestPageResult page2 = new TestPageResult("file:///dummy/path/dummyPage2.html");
+        page2.addTestCaseResult(error2);
+        page2.addTestCaseResult(failure2);
+        page2.addTestCaseResult(success2);
+        page2.addErrorStringTo(expected);
+
+        assertEquals(expected.toString(), buffer.toString());
+    }
+
     private BrowserResult createBrowserResult() {
         BrowserResult browserResult = new BrowserResult();
         browserResult.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7));
         browserResult.setJsUnitVersion("2.5");
         browserResult.setId("An ID");
         browserResult.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-        browserResult.setRemoteAddress("Dummy Remote Address");
+        browserResult.setRemoteAddress("123.45.67.8");
         browserResult.setBaseURL("http://www.example.com/");
         browserResult.setTime(4.3);
         return browserResult;
@@ -147,7 +192,7 @@ public class BrowserResultTest extends TestCase {
         assertEquals("2.5", aResult.getJsUnitVersion());
         assertEquals("An ID", aResult.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", aResult.getUserAgent());
-        assertEquals("Dummy Remote Address", aResult.getRemoteAddress());
+        assertEquals("123.45.67.8", aResult.getRemoteAddress());
         assertEquals(4.3d, aResult.getTime(), 0.001d);
         assertEquals(3, aResult.getTestCaseResults().size());
         for (TestCaseResult testCaseResult : aResult.getTestCaseResults()) {
