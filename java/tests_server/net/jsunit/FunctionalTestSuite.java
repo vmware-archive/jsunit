@@ -2,6 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestSuite;
 import net.jsunit.model.BrowserResultBuilderTest;
+import net.jsunit.model.DistributedTestRunResultBuilderTest;
 
 public class FunctionalTestSuite {
 
@@ -11,6 +12,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(BrowserResultBuilderTest.class);
         result.addTestSuite(ConfigurationFunctionalTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);
+        result.addTestSuite(DistributedTestRunResultBuilderTest.class);
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
 //        result.addTestSuite(FailingDistributedTestTest.class);
