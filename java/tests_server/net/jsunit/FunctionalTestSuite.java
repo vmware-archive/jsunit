@@ -1,12 +1,14 @@
 package net.jsunit;
 
 import junit.framework.TestSuite;
+import net.jsunit.model.BrowserResultBuilderTest;
 
 public class FunctionalTestSuite {
 
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
         result.addTestSuite(AcceptorFunctionalTest.class);
+        result.addTestSuite(BrowserResultBuilderTest.class);
         result.addTestSuite(ConfigurationFunctionalTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
