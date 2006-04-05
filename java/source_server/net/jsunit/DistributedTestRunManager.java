@@ -17,28 +17,24 @@ public class DistributedTestRunManager {
 
     private Logger logger = Logger.getLogger("net.jsunit");
     private RemoteServerHitter hitter;
-    private Configuration configuration;
+    private Configuration localConfiguration;
     private String overrideURL;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
-    private Browser remoteBrowser;
+    private Browser singleRemoteBrowser;
 
-    public static DistributedTestRunManager forConfiguration(Configuration configuration) {
-        return new DistributedTestRunManager(new RemoteMachineServerHitter(), configuration, null);
+    public static DistributedTestRunManager forConfigurationAndURL(RemoteServerHitter hitter, Configuration localConfiguration, String overrideURL) {
+        return new DistributedTestRunManager(hitter, localConfiguration, overrideURL);
     }
 
-    public static DistributedTestRunManager forConfigurationAndURL(RemoteServerHitter hitter, Configuration configuration, String overrideURL) {
-        return new DistributedTestRunManager(hitter, configuration, overrideURL);
-    }
-
-    protected DistributedTestRunManager(RemoteServerHitter hitter, Configuration configuration, String overrideURL) {
+    protected DistributedTestRunManager(RemoteServerHitter hitter, Configuration localConfiguration, String overrideURL) {
         this.hitter = hitter;
-        this.configuration = configuration;
+        this.localConfiguration = localConfiguration;
         this.overrideURL = overrideURL;
     }
 
     public void runTests() {
         List<Thread> threads = new ArrayList<Thread>();
-        for (final URL baseURL : configuration.getRemoteMachineURLs())
+        for (final URL baseURL : localConfiguration.getRemoteMachineURLs())
             threads.add(new Thread("Run JsUnit tests on " + baseURL) {
                 public void run() {
                     runTestsOnRemoteMachine(baseURL);
@@ -63,14 +59,14 @@ public class DistributedTestRunManager {
             Document documentFromRemoteMachine = hitter.hitURL(fullURL);
             logger.info("Received response from remote machine URL " + baseURL);
             if (isMultipleTestRunResultsResult(documentFromRemoteMachine)) {
-                DistributedTestRunResult multiple = new DistributedTestRunResultBuilder(configuration).build(documentFromRemoteMachine);
+                DistributedTestRunResult multiple = new DistributedTestRunResultBuilder(localConfiguration).build(documentFromRemoteMachine);
                 results.addAll(multiple.getTestRunResults());
             } else {
-                TestRunResult single = new TestRunResultBuilder(configuration).build(documentFromRemoteMachine);
+                TestRunResult single = new TestRunResultBuilder(localConfiguration).build(documentFromRemoteMachine);
                 results.add(single);
             }
         } catch (IOException e) {
-            if (configuration.shouldIgnoreUnresponsiveRemoteMachines())
+            if (localConfiguration.shouldIgnoreUnresponsiveRemoteMachines())
                 logger.info("Ignoring unresponsive machine " + baseURL.toString());
             else {
                 logger.info("Remote machine URL is unresponsive: " + baseURL.toString());
@@ -99,13 +95,13 @@ public class DistributedTestRunManager {
         if (overrideURL != null) {
             fullURLString += "?url=" + URLEncoder.encode(overrideURL, "UTF-8");
             hasFirstParameter = true;
-        } else if (configuration.getTestURL() != null) {
-            fullURLString += "?url=" + URLEncoder.encode(configuration.getTestURL().toString(), "UTF-8");
+        } else if (localConfiguration.getTestURL() != null) {
+            fullURLString += "?url=" + URLEncoder.encode(localConfiguration.getTestURL().toString(), "UTF-8");
             hasFirstParameter = true;
         }
-        if (remoteBrowser != null) {
+        if (singleRemoteBrowser != null) {
             fullURLString += (hasFirstParameter ? "&" : "?");
-            fullURLString += "browserId=" + remoteBrowser.getId();
+            fullURLString += "browserId=" + singleRemoteBrowser.getId();
         }
         return new URL(fullURLString);
     }
@@ -123,6 +119,6 @@ public class DistributedTestRunManager {
     }
 
     public void limitToBrowser(Browser remoteBrowser) {
-        this.remoteBrowser = remoteBrowser;
+        this.singleRemoteBrowser = remoteBrowser;
     }
 }

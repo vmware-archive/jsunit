@@ -22,11 +22,14 @@ public class DistributedTest extends TestCase {
     private static Object blocker = new Object();
     private static int serverCount = 0;
     private ConfigurationSource localServerSource;
+    private ConfigurationSource farmSource;
+    private Browser remoteBrowser;
+    private String overrideURL;
 
     public DistributedTest(ConfigurationSource localServerSource, ConfigurationSource farmSource) {
         super(farmSource.remoteMachineURLs().replace('.', '_'));
         this.localServerSource = localServerSource;
-        manager = DistributedTestRunManager.forConfiguration(new Configuration(farmSource));
+        this.farmSource = farmSource;
     }
 
     private void ensureTemporaryStandardServerIsCreated(ConfigurationSource serverSource) {
@@ -40,6 +43,9 @@ public class DistributedTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
+        manager = DistributedTestRunManager.forConfigurationAndURL(new RemoteMachineServerHitter(), new Configuration(farmSource), overrideURL);
+        if (remoteBrowser != null)
+            manager.limitToBrowser(remoteBrowser);
         ensureTemporaryStandardServerIsCreated(localServerSource);
         startServerIfNecessary();
     }
@@ -107,12 +113,12 @@ public class DistributedTest extends TestCase {
     }
 
     public void limitToBrowser(Browser remoteBrowser) {
-        manager.limitToBrowser(remoteBrowser);
+        this.remoteBrowser = remoteBrowser;
         setName(remoteBrowser.getFileName());
     }
 
     public DistributedTestRunResult getResult() {
-        return getDistributedTestRunManager().getDistributedTestRunResult();
+        return manager.getDistributedTestRunResult();
     }
 
     public ResultType getResultType() {
@@ -121,5 +127,9 @@ public class DistributedTest extends TestCase {
 
     public List<TestRunResult> getTestRunResults() {
         return getResult().getTestRunResults();
+    }
+
+    public void setOverrideURL(String overrideURL) {
+        this.overrideURL = overrideURL;
     }
 }

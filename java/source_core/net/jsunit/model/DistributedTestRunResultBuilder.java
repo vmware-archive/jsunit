@@ -8,16 +8,16 @@ import java.util.List;
 
 public class DistributedTestRunResultBuilder {
 
-    private BrowserSource browserSource;
+    private BrowserSource remoteBrowserSource;
 
-    public DistributedTestRunResultBuilder(BrowserSource browserSource) {
-        this.browserSource = browserSource;
+    public DistributedTestRunResultBuilder(BrowserSource remoteBrowserSource) {
+        this.remoteBrowserSource = remoteBrowserSource;
     }
 
     public DistributedTestRunResult build(Document document) {
         DistributedTestRunResult result = new DistributedTestRunResult();
         Element root = document.getRootElement();
-        TestRunResultBuilder individualTestRunResultBuilder = new TestRunResultBuilder(browserSource);
+        TestRunResultBuilder individualTestRunResultBuilder = new TestRunResultBuilder(remoteBrowserSource);
         //noinspection unchecked
         List<Element> children = (List<Element>) root.getChildren(TestRunResultBuilder.NAME);
         for (Element testRunResultElement : new ArrayList<Element>(children)) {

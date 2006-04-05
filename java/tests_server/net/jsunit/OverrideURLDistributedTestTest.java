@@ -31,7 +31,7 @@ public class OverrideURLDistributedTestTest extends EndToEndTestCase {
 
     public void testOverrideURL() throws Throwable {
         DistributedTest test = new DistributedTest(serverSourceWithBadTestURL(), farmSource());
-        test.getDistributedTestRunManager().setOverrideURL(
+        test.setOverrideURL(
                 "http://localhost:" + port + "/jsunit/testRunner.html?" +
                         "testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"
         );
