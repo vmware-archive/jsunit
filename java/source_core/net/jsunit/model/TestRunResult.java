@@ -177,4 +177,9 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         buffer.append(")");
         return buffer.toString();
     }
+
+    public List<BrowserResult> getBrowserResults() {
+        return browserResults;
+    }
+
 }
