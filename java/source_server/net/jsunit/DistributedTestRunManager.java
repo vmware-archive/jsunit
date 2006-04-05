@@ -13,17 +13,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class DistributedTestRunManager {
+public abstract class DistributedTestRunManager {
 
     private Logger logger = Logger.getLogger("net.jsunit");
     private RemoteServerHitter hitter;
     private Configuration localConfiguration;
     private String overrideURL;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
-    private Browser singleRemoteBrowser;
 
-    public static DistributedTestRunManager forConfigurationAndURL(RemoteServerHitter hitter, Configuration localConfiguration, String overrideURL) {
-        return new DistributedTestRunManager(hitter, localConfiguration, overrideURL);
+    public static DistributedTestRunManager forSingleRemoteBrowser(RemoteServerHitter serverHitter, Configuration farmConfiguration, String overrideURL, Browser remoteBrowser) {
+        return new SingleBrowserDistributedTestRunManager(serverHitter, farmConfiguration, overrideURL, remoteBrowser);
+    }
+
+    public static DistributedTestRunManager forMultipleRemoteBrowsers(RemoteServerHitter serverHitter, Configuration farmConfiguration, String overrideURL) {
+        return new MultipleMachineBrowserDistributedTestRunManager(serverHitter, farmConfiguration, overrideURL);
     }
 
     protected DistributedTestRunManager(RemoteServerHitter hitter, Configuration localConfiguration, String overrideURL) {
@@ -89,21 +92,21 @@ public class DistributedTestRunManager {
     }
 
     private URL buildURL(URL url) throws UnsupportedEncodingException, MalformedURLException {
-        String fullURLString = url.toString();
-        fullURLString += "/runner";
+        StringBuffer buffer = new StringBuffer(url.toString());
+        buffer.append("/runner");
         boolean hasFirstParameter = false;
         if (overrideURL != null) {
-            fullURLString += "?url=" + URLEncoder.encode(overrideURL, "UTF-8");
+            buffer.append("?url=").append(URLEncoder.encode(overrideURL, "UTF-8"));
             hasFirstParameter = true;
         } else if (localConfiguration.getTestURL() != null) {
-            fullURLString += "?url=" + URLEncoder.encode(localConfiguration.getTestURL().toString(), "UTF-8");
+            buffer.append("?url=").append(URLEncoder.encode(localConfiguration.getTestURL().toString(), "UTF-8"));
             hasFirstParameter = true;
         }
-        if (singleRemoteBrowser != null) {
-            fullURLString += (hasFirstParameter ? "&" : "?");
-            fullURLString += "browserId=" + singleRemoteBrowser.getId();
-        }
-        return new URL(fullURLString);
+        appendExtraParametersToURL(buffer, hasFirstParameter);
+        return new URL(buffer.toString());
+    }
+
+    protected void appendExtraParametersToURL(StringBuffer buffer, boolean hasExistingParameter) {
     }
 
     public DistributedTestRunResult getDistributedTestRunResult() {
@@ -118,7 +121,4 @@ public class DistributedTestRunManager {
         this.overrideURL = overrideURL;
     }
 
-    public void limitToBrowser(Browser remoteBrowser) {
-        this.singleRemoteBrowser = remoteBrowser;
-    }
 }

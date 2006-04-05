@@ -26,7 +26,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
         MockRemoteServerHitter hitter = createMockHitter(url1, url2);
-        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, null);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteBrowsers(hitter, configuration, null);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
@@ -41,7 +41,7 @@ public class DistributedTestRunManagerTest extends TestCase {
     }
 
     public void testRemoteURLBlowsUp() {
-        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteServerHitter(), configuration, null);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteBrowsers(new BlowingUpRemoteServerHitter(), configuration, null);
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
@@ -61,7 +61,7 @@ public class DistributedTestRunManagerTest extends TestCase {
             }
         });
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
-        DistributedTestRunManager manager = new DistributedTestRunManager(new BlowingUpRemoteServerHitter(), configuration, null);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteBrowsers(new BlowingUpRemoteServerHitter(), configuration, null);
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertTrue(result.wasSuccessful());
@@ -74,7 +74,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedOverrideURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedOverrideURL;
         MockRemoteServerHitter hitter = createMockHitter(url1, url2);
-        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, overrideURL);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteBrowsers(hitter, configuration, overrideURL);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
@@ -91,7 +91,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner";
         MockRemoteServerHitter hitter = createMockHitter(url1, url2);
 
-        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, null);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteBrowsers(hitter, configuration, null);
         manager.runTests();
         assertEquals(2, hitter.urlsPassed.size());
         assertTrue(hitter.urlsPassed.contains(url1));
@@ -110,7 +110,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
         MockRemoteServerHitter hitter = createMockHitterWithDistributedResults(url1, url2);
-        DistributedTestRunManager manager = new DistributedTestRunManager(hitter, configuration, null);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteBrowsers(hitter, configuration, null);
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertEquals(4, result.getTestRunResults().size());

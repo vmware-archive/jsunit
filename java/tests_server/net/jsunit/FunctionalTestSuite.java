@@ -15,7 +15,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(DistributedTestRunResultBuilderTest.class);
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
-        result.addTestSuite(FailingDistributedTestTest.class);
+//        result.addTestSuite(FailingDistributedTestTest.class);
         result.addTestSuite(ServerLandingPageFunctionalTest.class);
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);

@@ -43,9 +43,12 @@ public class DistributedTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        manager = DistributedTestRunManager.forConfigurationAndURL(new RemoteMachineServerHitter(), new Configuration(farmSource), overrideURL);
+        RemoteMachineServerHitter serverHitter = new RemoteMachineServerHitter();
+        Configuration farmConfiguration = new Configuration(farmSource);
         if (remoteBrowser != null)
-            manager.limitToBrowser(remoteBrowser);
+            manager = DistributedTestRunManager.forSingleRemoteBrowser(serverHitter, farmConfiguration, overrideURL, remoteBrowser);
+        else
+            manager = DistributedTestRunManager.forMultipleRemoteBrowsers(serverHitter, farmConfiguration, overrideURL);
         ensureTemporaryStandardServerIsCreated(localServerSource);
         startServerIfNecessary();
     }

@@ -18,7 +18,7 @@ public class DistributedTestRunnerAction extends JsUnitFarmServerAction implemen
         server.logStatus(message);
         //noinspection SynchronizeOnNonFinalField
         synchronized (server) {
-            manager = DistributedTestRunManager.forConfigurationAndURL(hitter, server.getConfiguration(), overrideURL);
+            manager = DistributedTestRunManager.forMultipleRemoteBrowsers(hitter, server.getConfiguration(), overrideURL);
             manager.runTests();
         }
         server.finishedTestRun();
