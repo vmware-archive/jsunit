@@ -18,8 +18,9 @@ public class DistributedTestRunResultBuilder {
         DistributedTestRunResult result = new DistributedTestRunResult();
         Element root = document.getRootElement();
         TestRunResultBuilder individualTestRunResultBuilder = new TestRunResultBuilder(browserSource);
-        for (Element testRunResultElement : new ArrayList<Element>((List<Element>) root.getChildren(TestRunResultBuilder.NAME)))
-        {
+        //noinspection unchecked
+        List<Element> children = (List<Element>) root.getChildren(TestRunResultBuilder.NAME);
+        for (Element testRunResultElement : new ArrayList<Element>(children)) {
             testRunResultElement.detach();
             TestRunResult testRunResult = individualTestRunResultBuilder.build(new Document(testRunResultElement));
             result.addTestRunResult(testRunResult);
