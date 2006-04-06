@@ -6,6 +6,8 @@ import net.jsunit.configuration.ServerType;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
+import java.io.IOException;
+
 public class RemoteConfigurationSourceTest extends TestCase {
     private String baseURL;
 
@@ -29,8 +31,11 @@ public class RemoteConfigurationSourceTest extends TestCase {
     }
 
     public void testBlowingUpURL() throws Exception {
-        RemoteConfigurationSource remoteSource = new RemoteConfigurationSource(new BlowingUpRemoteServerHitter(), baseURL);
-        assertFalse(remoteSource.isInitialized());
+        try {
+            new RemoteConfigurationSource(new BlowingUpRemoteServerHitter(), baseURL);
+            fail();
+        } catch (IOException e) {
+        }
     }
 
 }

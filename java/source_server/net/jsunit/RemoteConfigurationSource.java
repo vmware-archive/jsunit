@@ -9,20 +9,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class RemoteConfigurationSource implements ConfigurationSource {
 
-    private Logger logger = Logger.getLogger("net.jsunit");
-
     private Document document;
 
-    public RemoteConfigurationSource(RemoteServerHitter hitter, String remoteMachineURL) {
-        try {
-            document = hitter.hitURL(new URL(remoteMachineURL + "/config"));
-        } catch (IOException e) {
-            logger.severe("Could not retrieve configuration from remoteMachine URL " + remoteMachineURL);
-        }
+    public RemoteConfigurationSource(RemoteServerHitter hitter, String remoteMachineURL) throws IOException {
+        document = hitter.hitURL(new URL(remoteMachineURL + "/config"));
     }
 
     public boolean isInitialized() {
@@ -80,6 +73,7 @@ public class RemoteConfigurationSource implements ConfigurationSource {
         Element parent = document.getRootElement().getChild(property.getName());
         if (parent == null)
             return "";
+        //noinspection unchecked
         List<Element> children = parent.getChildren();
         StringBuffer buffer = new StringBuffer();
         for (Iterator<Element> it = children.iterator(); it.hasNext();) {

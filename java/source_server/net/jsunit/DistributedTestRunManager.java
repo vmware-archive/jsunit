@@ -16,32 +16,40 @@ import java.util.logging.Logger;
 public abstract class DistributedTestRunManager {
 
     private Logger logger = Logger.getLogger("net.jsunit");
-    private RemoteServerHitter hitter;
-    private Configuration localConfiguration;
+    protected RemoteServerHitter hitter;
     private String overrideURL;
+    protected Configuration localConfiguration;
     private DistributedTestRunResult distributedTestRunResult = new DistributedTestRunResult();
 
-    public static DistributedTestRunManager forSingleRemoteBrowser(RemoteServerHitter serverHitter, Configuration farmConfiguration, String overrideURL, Browser remoteBrowser) {
-        return new SingleBrowserDistributedTestRunManager(serverHitter, farmConfiguration, overrideURL, remoteBrowser);
+    public static DistributedTestRunManager forSingleRemoteBrowser(
+            RemoteServerHitter serverHitter, Configuration localConfiguration, URL remoteMachineURL, String overrideURL, Browser remoteBrowser) {
+        return new SingleBrowserDistributedTestRunManager(serverHitter, localConfiguration, remoteMachineURL, overrideURL, remoteBrowser);
     }
 
-    public static DistributedTestRunManager forMultipleRemoteBrowsers(RemoteServerHitter serverHitter, Configuration farmConfiguration, String overrideURL) {
-        return new MultipleMachineBrowserDistributedTestRunManager(serverHitter, farmConfiguration, overrideURL);
+    public static DistributedTestRunManager forSingleRemoteMachine(
+            RemoteServerHitter serverHitter, Configuration localConfiguration, URL remoteMachineURL, String overrideURL) {
+        return new SingleMachineDistributedTestRunManager(serverHitter, localConfiguration, remoteMachineURL, overrideURL);
+    }
+
+    public static DistributedTestRunManager forMultipleRemoteMachines(
+            RemoteServerHitter serverHitter, Configuration localConfiguration, List<URL> remoteMachineURLs, String overrideURL) {
+        return new MultipleMachineBrowserDistributedTestRunManager(serverHitter, localConfiguration, remoteMachineURLs, overrideURL);
     }
 
     protected DistributedTestRunManager(RemoteServerHitter hitter, Configuration localConfiguration, String overrideURL) {
-        this.hitter = hitter;
         this.localConfiguration = localConfiguration;
+        this.hitter = hitter;
         this.overrideURL = overrideURL;
     }
 
     public void runTests() {
         List<Thread> threads = new ArrayList<Thread>();
-        for (final URL baseURL : localConfiguration.getRemoteMachineURLs())
+        for (final URL baseURL : remoteMachineURLs())
             threads.add(new Thread("Run JsUnit tests on " + baseURL) {
                 public void run() {
-                    runTestsOnRemoteMachine(baseURL);
+                    runTestsOnRemoteMachine(baseURL, remoteConfigurationFor(baseURL));
                 }
+
             });
         for (Thread thread : threads)
             thread.start();
@@ -54,7 +62,11 @@ public abstract class DistributedTestRunManager {
         }
     }
 
-    private void runTestsOnRemoteMachine(URL baseURL) {
+    protected abstract List<URL> remoteMachineURLs();
+
+    protected abstract Configuration remoteConfigurationFor(URL baseURL);
+
+    private void runTestsOnRemoteMachine(URL baseURL, Configuration remoteConfiguration) {
         List<TestRunResult> results = new ArrayList<TestRunResult>();
         try {
             URL fullURL = buildURL(baseURL);
@@ -65,7 +77,7 @@ public abstract class DistributedTestRunManager {
                 DistributedTestRunResult multiple = new DistributedTestRunResultBuilder(localConfiguration).build(documentFromRemoteMachine);
                 results.addAll(multiple.getTestRunResults());
             } else {
-                TestRunResult single = new TestRunResultBuilder(localConfiguration).build(documentFromRemoteMachine);
+                TestRunResult single = new TestRunResultBuilder(remoteConfiguration).build(documentFromRemoteMachine);
                 results.add(single);
             }
         } catch (IOException e) {
