@@ -1,4 +1,9 @@
 package net.jsunit.upload;
 
-public class TestGeneratorTest {
+import junit.framework.TestCase;
+
+public class TestGeneratorTest extends TestCase {
+    public void testSimple() throws Exception {
+        fail();
+    }
 }
