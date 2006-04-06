@@ -6,6 +6,7 @@ Required for next release:
     - pastable tests
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
+    - surround tracing with pre tags (maybe CDATA if the trace is XML?)
 
   DISTRIBUTION PACKAGING/PROCESS:
     - change create_distribution target to create a zip for the client and a zip for "all"
