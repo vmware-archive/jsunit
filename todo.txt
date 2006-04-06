@@ -3,6 +3,7 @@ Required for next release:
   FEATURES:
     - have testrun xml contain configuration xml to avoid the double-hit
     - rename server type "farm" to "delegator"
+    - pastable tests
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
 
