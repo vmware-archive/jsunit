@@ -47,7 +47,7 @@ public abstract class DistributedTestRunManager {
         for (final URL baseURL : remoteMachineURLs())
             threads.add(new Thread("Run JsUnit tests on " + baseURL) {
                 public void run() {
-                    runTestsOnRemoteMachine(baseURL, remoteConfigurationFor(baseURL));
+                    runTestsOnRemoteMachine(baseURL);
                 }
 
             });
@@ -64,9 +64,7 @@ public abstract class DistributedTestRunManager {
 
     protected abstract List<URL> remoteMachineURLs();
 
-    protected abstract Configuration remoteConfigurationFor(URL baseURL);
-
-    private void runTestsOnRemoteMachine(URL baseURL, Configuration remoteConfiguration) {
+    private void runTestsOnRemoteMachine(URL baseURL) {
         List<TestRunResult> results = new ArrayList<TestRunResult>();
         try {
             URL fullURL = buildURL(baseURL);
@@ -74,10 +72,10 @@ public abstract class DistributedTestRunManager {
             Document documentFromRemoteMachine = hitter.hitURL(fullURL);
             logger.info("Received response from remote machine URL " + baseURL);
             if (isMultipleTestRunResultsResult(documentFromRemoteMachine)) {
-                DistributedTestRunResult multiple = new DistributedTestRunResultBuilder(localConfiguration).build(documentFromRemoteMachine);
+                DistributedTestRunResult multiple = new DistributedTestRunResultBuilder().build(documentFromRemoteMachine);
                 results.addAll(multiple.getTestRunResults());
             } else {
-                TestRunResult single = new TestRunResultBuilder(remoteConfiguration).build(documentFromRemoteMachine);
+                TestRunResult single = new TestRunResultBuilder().build(documentFromRemoteMachine);
                 results.add(single);
             }
         } catch (IOException e) {

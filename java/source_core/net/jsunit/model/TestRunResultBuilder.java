@@ -10,12 +10,6 @@ public class TestRunResultBuilder {
 
     public static final String NAME = "testRunResult";
 
-    private BrowserSource browserSource;
-
-    public TestRunResultBuilder(BrowserSource browserSource) {
-        this.browserSource = browserSource;
-    }
-
     public TestRunResult build(Document document) {
         TestRunResult result = new TestRunResult();
         Element propertiesElement = document.getRootElement().getChild("properties");
@@ -26,7 +20,7 @@ public class TestRunResultBuilder {
     }
 
     private void updateWithBrowserResults(Document document, TestRunResult result) {
-        BrowserResultBuilder browserBuilder = new BrowserResultBuilder(browserSource);
+        BrowserResultBuilder browserBuilder = new BrowserResultBuilder();
         List<Element> children = document.getRootElement().getChildren("browserResult");
         for (Element element : children) {
             BrowserResult browserResult = browserBuilder.build(element);

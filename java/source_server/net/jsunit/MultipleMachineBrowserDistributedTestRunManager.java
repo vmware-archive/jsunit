@@ -18,13 +18,4 @@ public class MultipleMachineBrowserDistributedTestRunManager extends Distributed
         return remoteMachineURLs;
     }
 
-    protected Configuration remoteConfigurationFor(URL baseURL) {
-        RemoteConfigurationFetcher fetcher = new RemoteConfigurationFetcher(hitter, baseURL);
-        try {
-            fetcher.run();
-            return fetcher.getRetrievedRemoteConfiguration();
-        } catch (Throwable t) {
-            return null;
-        }
-    }
 }

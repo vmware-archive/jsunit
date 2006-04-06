@@ -64,7 +64,7 @@ public class RemoteTestRunClient implements MessageReceiver {
                 int browserId = Integer.parseInt(message);
                 browser = browserSource.getBrowserById(browserId);
             } else if (message.equals(END_XML)) {
-                BrowserResult result = new BrowserResultBuilder(browserSource).build(xmlString);
+                BrowserResult result = new BrowserResultBuilder().build(xmlString);
                 listener.browserTestRunFinished(browser, result);
             } else if (message.trim().length() > 0) {
                 xmlString += message;

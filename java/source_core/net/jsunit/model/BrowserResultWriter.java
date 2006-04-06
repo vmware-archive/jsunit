@@ -68,7 +68,7 @@ public class BrowserResultWriter {
         Browser browser = browserResult.getBrowser();
         if (browser != null) {
             addProperty(properties, BROWSER_FILE_NAME, browser.getFileName());
-            addProperty(properties, BROWSER_ID, String.valueOf(browserResult.getBrowser().getId()));
+            addProperty(properties, BROWSER_ID, String.valueOf(browser.getId()));
         }
         if (browserResult.completedTestRun()) {
             addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());

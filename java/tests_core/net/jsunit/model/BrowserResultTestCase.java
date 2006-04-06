@@ -27,8 +27,6 @@ public abstract class BrowserResultTestCase extends TestCase {
                     "</testCases>" +
                     "</browserResult>";
 
-    protected BrowserSource browserSource = new DummyBrowserSource("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7);
-
     public void setUp() throws Exception {
         super.setUp();
         result = createBrowserResult();

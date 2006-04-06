@@ -7,7 +7,7 @@ import net.jsunit.utility.XmlUtility;
 public class DistributedTestRunResultBuilderTest extends TestCase {
 
     public void testSimple() throws Exception {
-        DistributedTestRunResultBuilder builder = new DistributedTestRunResultBuilder(new DummyBrowserSource("mybrowser.exe", 0));
+        DistributedTestRunResultBuilder builder = new DistributedTestRunResultBuilder();
         DistributedTestRunResult result = builder.build(XmlUtility.asXmlDocument(distributedTestRunResultString()));
         assertEquals(2, result.getTestRunResults().size());
     }

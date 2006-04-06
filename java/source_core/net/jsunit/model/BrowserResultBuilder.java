@@ -13,11 +13,6 @@ import java.util.logging.Logger;
 public class BrowserResultBuilder {
 
     private Logger logger = Logger.getLogger("net.jsunit");
-    private BrowserSource browserSource;
-
-    public BrowserResultBuilder(BrowserSource browserSource) {
-        this.browserSource = browserSource;
-    }
 
     public BrowserResult build(File file) {
         try {
@@ -85,6 +80,8 @@ public class BrowserResultBuilder {
     }
 
     private void updateWithProperties(Element element, BrowserResult result) {
+        Integer browserId = null;
+        String browserFileName = null;
         for (Object child : element.getChildren()) {
             Element next = (Element) child;
             String key = next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY);
@@ -92,11 +89,7 @@ public class BrowserResultBuilder {
 
             if (BrowserResultWriter.JSUNIT_VERSION.equals(key))
                 result.setJsUnitVersion(value);
-            else if (BrowserResultWriter.BROWSER_ID.equals(key)) {
-                int browserId = Integer.valueOf(value);
-                Browser browser = browserSource.getBrowserById(browserId);
-                result.setBrowser(browser);
-            } else if (BrowserResultWriter.USER_AGENT.equals(key))
+            else if (BrowserResultWriter.USER_AGENT.equals(key))
                 result.setUserAgent(value);
             else if (BrowserResultWriter.REMOTE_ADDRESS.equals(key))
                 result.setRemoteAddress(value);
@@ -105,7 +98,14 @@ public class BrowserResultBuilder {
             else if (BrowserResultWriter.SERVER_SIDE_EXCEPTION_STACK_TRACE.equals(key)) {
                 String stackTrace = next.getText();
                 result.setServerSideExceptionStackTrace(stackTrace);
-            }
+            } else if (BrowserResultWriter.BROWSER_ID.equals(key))
+                browserId = Integer.parseInt(value);
+            else if (BrowserResultWriter.BROWSER_FILE_NAME.equals(key))
+                browserFileName = value;
+        }
+        if (browserId != null && browserFileName != null) {
+            Browser remoteBrowser = new Browser(browserFileName, browserId);
+            result.setBrowser(remoteBrowser);
         }
     }
 

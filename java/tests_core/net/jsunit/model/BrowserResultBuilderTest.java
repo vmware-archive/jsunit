@@ -11,7 +11,7 @@ public class BrowserResultBuilderTest extends BrowserResultTestCase {
         try {
             FileUtility.write(new File("resultXml.xml"), expectedXmlFragment);
             file = new File("resultXml.xml");
-            BrowserResult reconstitutedResult = new BrowserResultBuilder(browserSource).build(file);
+            BrowserResult reconstitutedResult = new BrowserResultBuilder().build(file);
             assertEquals(BrowserResult.class, reconstitutedResult.getClass());
             assertFields(reconstitutedResult);
         } finally {
@@ -21,9 +21,8 @@ public class BrowserResultBuilderTest extends BrowserResultTestCase {
     }
 
     public void testBuildFromXmlDocument() {
-        BrowserResult reconstitutedResult = new BrowserResultBuilder(browserSource).build(result.asXmlDocument());
+        BrowserResult reconstitutedResult = new BrowserResultBuilder().build(result.asXmlDocument());
         assertFields(reconstitutedResult);
     }
-
 
 }

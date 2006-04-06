@@ -3,7 +3,6 @@ package net.jsunit.logging;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultBuilder;
-import net.jsunit.model.BrowserSource;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.XmlUtility;
 
@@ -38,11 +37,7 @@ public class FileBrowserResultRepository implements BrowserResultRepository {
     public BrowserResult retrieve(String id, final Browser browser) {
         File logFile = logFileForId(id, browser);
         if (logFile.exists())
-            return new BrowserResultBuilder(new BrowserSource() {
-                public Browser getBrowserById(int id) {
-                    return browser;
-                }
-            }).build(logFile);
+            return new BrowserResultBuilder().build(logFile);
         return null;
     }
 

@@ -19,9 +19,4 @@ public class SingleMachineDistributedTestRunManager extends DistributedTestRunMa
         return Arrays.asList(new URL[]{remoteMachineURL});
     }
 
-    protected Configuration remoteConfigurationFor(URL baseURL) {
-        RemoteConfigurationFetcher fetcher = new RemoteConfigurationFetcher(hitter, baseURL);
-        fetcher.run();
-        return fetcher.getRetrievedRemoteConfiguration();
-    }
 }

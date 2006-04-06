@@ -38,7 +38,7 @@ public class TimedOutBrowerResultTest extends TestCase {
     }
 
     public void testReconstituteFromXml() {
-        BrowserResultBuilder builder = new BrowserResultBuilder(new DummyBrowserSource("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
+        BrowserResultBuilder builder = new BrowserResultBuilder();
         BrowserResult reconstitutedResult = builder.build(xml);
         assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getFileName());
         assertTrue(reconstitutedResult.timedOut());
