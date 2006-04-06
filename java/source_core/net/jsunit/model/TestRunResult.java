@@ -146,7 +146,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     }
 
     private URL logUrlFor(BrowserResult browserResult) {
-        String path = "jsunit/displayer?id=" + browserResult.getId() + "browserId=" + browserResult.getBrowser().getId();
+        String path = "/jsunit/displayer?id=" + browserResult.getId() + "&browserId=" + browserResult.getBrowser().getId();
         try {
             return new URL(url.getProtocol(), url.getHost(), url.getPort(), path);
         } catch (MalformedURLException e) {
