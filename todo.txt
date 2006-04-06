@@ -1,7 +1,7 @@
 Required for next release:
 
   FEATURES:
-    - have testrun xml contain configuration xml to avoid the double-hit
+    - avoid the double-hit for the config - does TRR/DTRR really need the remote config?
     - rename server type "farm" to "delegator"
     - pastable tests
     - Send traces back to client (IN PROGRESS - ehanson)
