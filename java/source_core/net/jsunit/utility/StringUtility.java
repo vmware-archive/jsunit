@@ -59,4 +59,8 @@ public class StringUtility {
     public static String escapeForSuiteName(String host) {
         return host.replace('.', '\u00B7');
     }
+
+    public static String stripWhiteSpace(String text) {
+        return text.replaceAll("\\s", "");
+    }
 }

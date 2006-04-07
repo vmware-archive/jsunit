@@ -11,6 +11,8 @@
     <content url="file://$MODULE_DIR$/../java/tests_server">
       <sourceFolder url="file://$MODULE_DIR$/../java/tests_server" isTestSource="true" />
     </content>
+    <content url="file://$MODULE_DIR$/../skins" />
+    <content url="file://$MODULE_DIR$/../uploaded" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="thirdparty" level="project" />

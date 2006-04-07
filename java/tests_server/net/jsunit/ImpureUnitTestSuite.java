@@ -15,6 +15,7 @@ import net.jsunit.interceptor.FarmServerInterceptorTest;
 import net.jsunit.interceptor.RequestSourceInterceptorTest;
 import net.jsunit.interceptor.SkinInterceptorTest;
 import net.jsunit.model.*;
+import net.jsunit.upload.TestPageGeneratorTest;
 
 public class ImpureUnitTestSuite {
 
@@ -45,6 +46,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(RequestSourceInterceptorTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(SkinInterceptorTest.class);
+        result.addTestSuite(TestPageGeneratorTest.class);
         result.addTestSuite(TestRunnerActionSimultaneousRunBlockingTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestRunResultBuilderTest.class);

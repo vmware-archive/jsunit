@@ -3,6 +3,7 @@ Required for next release:
   FEATURES:
     - rename server type "farm" to "delegator"
     - pastable tests
+    - uploadable test pages
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
