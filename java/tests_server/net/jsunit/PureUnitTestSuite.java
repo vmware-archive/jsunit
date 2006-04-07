@@ -11,7 +11,6 @@ import net.jsunit.model.BrowserTest;
 import net.jsunit.model.TestCaseResultTest;
 import net.jsunit.model.TestPageResultTest;
 import net.jsunit.results.SkinTest;
-import net.jsunit.upload.TestPageGeneratorTest;
 import net.jsunit.upload.TestPageTest;
 
 public class PureUnitTestSuite {
@@ -33,7 +32,6 @@ public class PureUnitTestSuite {
         result.addTestSuite(ServerStatusActionTest.class);
         result.addTestSuite(StatusMessageTest.class);
         result.addTestSuite(TestCaseResultTest.class);
-        result.addTestSuite(TestPageGeneratorTest.class);
         result.addTestSuite(TestPageTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);
