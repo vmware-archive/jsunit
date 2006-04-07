@@ -25,8 +25,8 @@
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
                 <interceptor-ref name="prepare"/>
-                <interceptor-ref name="params"/>
                 <interceptor-ref name="browserTestRunner"/>
+                <interceptor-ref name="params"/>
             </interceptor-stack>
         </interceptors>
 

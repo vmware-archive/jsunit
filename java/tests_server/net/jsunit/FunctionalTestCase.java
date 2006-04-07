@@ -85,13 +85,14 @@ public abstract class FunctionalTestCase extends TestCase {
         assertEquals(message, rootElement.getText());
     }
 
-    protected void assertSuccessfulRunResult(Document result, ResultType expectedResultType, String expectedUrl, int expectedBrowserResultCount) {
+    protected void assertRunResult(Document result, ResultType expectedResultType, String expectedUrl, int expectedBrowserResultCount) {
         Element root = result.getRootElement();
         assertEquals("testRunResult", root.getName());
         assertEquals(expectedBrowserResultCount, root.getChildren("browserResult").size());
         assertEquals(expectedResultType.name(), root.getAttribute("type").getValue());
         Element urlProperty = urlPropertyElement(root);
-        assertEquals(expectedUrl, urlProperty.getAttribute(BrowserResultWriter.PROPERTY_VALUE).getValue());
+        if (expectedUrl != null)
+            assertEquals(expectedUrl, urlProperty.getAttribute(BrowserResultWriter.PROPERTY_VALUE).getValue());
     }
 
     @SuppressWarnings("unchecked")

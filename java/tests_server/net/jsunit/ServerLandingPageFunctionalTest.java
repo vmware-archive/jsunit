@@ -41,7 +41,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         setUpRunnerSubmission();
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
         webTester.submit();
-        assertSuccessfulRunResult(
+        assertRunResult(
                 responseXmlDocument(),
                 ResultType.SUCCESS,
                 "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
@@ -51,14 +51,14 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
 
     private void setUpRunnerSubmission() {
         webTester.beginAt("/");
-        webTester.setWorkingForm("runnerForm");
+        webTester.setWorkingForm("urlRunnerForm");
         webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
     }
 
     public void testRunnerForAllBrowsers() throws Exception {
         setUpRunnerSubmission();
         webTester.submit();
-        assertSuccessfulRunResult(
+        assertRunResult(
                 responseXmlDocument(),
                 ResultType.SUCCESS,
                 "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
@@ -98,6 +98,33 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
         webTester.submit();
         assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
+    }
+
+    public void testPasteInFragment() throws Exception {
+        webTester.beginAt("/");
+        webTester.setWorkingForm("fragmentRunnerForm");
+        webTester.setFormElement("fragment", "assertTrue(true);");
+        webTester.submit();
+        assertRunResult(
+                responseXmlDocument(),
+                ResultType.SUCCESS,
+                null,
+                2
+        );
+    }
+
+    public void testPasteInFailingFragmentSingleBrowser() throws Exception {
+        webTester.beginAt("/");
+        webTester.setWorkingForm("fragmentRunnerForm");
+        webTester.setFormElement("fragment", "assertTrue(false);");
+        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.submit();
+        assertRunResult(
+                responseXmlDocument(),
+                ResultType.FAILURE,
+                null,
+                1
+        );
     }
 
     private void assertOnLandingPage() {

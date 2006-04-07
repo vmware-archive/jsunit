@@ -5,6 +5,7 @@
     <output url="file://$MODULE_DIR$/classes_server" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes_server_test" />
+    <content url="file://$MODULE_DIR$/../java/config" />
     <content url="file://$MODULE_DIR$/../java/source_server">
       <sourceFolder url="file://$MODULE_DIR$/../java/source_server" isTestSource="false" />
     </content>

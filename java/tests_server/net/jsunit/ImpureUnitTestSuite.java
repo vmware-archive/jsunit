@@ -2,10 +2,7 @@ package net.jsunit;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import net.jsunit.action.DistributedTestRunnerActionTest;
-import net.jsunit.action.FarmServerConfigurationActionTest;
-import net.jsunit.action.TestRunnerActionSimultaneousRunBlockingTest;
-import net.jsunit.action.TestRunnerActionTest;
+import net.jsunit.action.*;
 import net.jsunit.configuration.ConfigurationSourceResolutionTest;
 import net.jsunit.configuration.ConfigurationTest;
 import net.jsunit.configuration.EnvironmentVariablesConfigurationSourceTest;
@@ -53,6 +50,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(TestRunManagerTest.class);
         result.addTestSuite(TestRunResultTest.class);
         result.addTestSuite(TestRunnerActionTest.class);
+        result.addTestSuite(TestRunnerActionFragmentTest.class);
         result.addTestSuite(TimeoutCheckerTest.class);
         result.addTestSuite(TimedOutBrowerResultTest.class);
         return result;

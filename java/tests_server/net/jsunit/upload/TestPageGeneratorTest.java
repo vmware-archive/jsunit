@@ -13,23 +13,19 @@ public class TestPageGeneratorTest extends TestCase {
 
     public void testFunctionFragment() throws Exception {
         String text = "function testSomething() {\nvar foo=7;\nassertEquals(7, foo);\n}";
-        String html = generator.generateHTML(text);
-        assertPageContains(html, text);
+        TestPage page = generator.generateFrom(text);
+        assertPageContains(page, text);
     }
 
     public void testFragment() throws Exception {
         String text = "var foo=7;\nassertEquals(7, foo);";
-        String html = generator.generateHTML(text);
+        TestPage page = generator.generateFrom(text);
         String expectedText = "function testSomething() {var foo=7;\nassertEquals(7, foo);\n}";
-        assertPageContains(html, expectedText);
+        assertPageContains(page, expectedText);
     }
 
-    public void testWriteToFile() throws Exception {
-
-    }
-
-    private void assertPageContains(String html, String text) {
-        String collapsedHtml = StringUtility.stripWhiteSpace(html);
+    private void assertPageContains(TestPage page, String text) {
+        String collapsedHtml = StringUtility.stripWhiteSpace(page.getHtml());
         String collapsedText = StringUtility.stripWhiteSpace(text);
         assertTrue(collapsedHtml.indexOf(collapsedText) != -1);
     }

@@ -19,12 +19,13 @@
     <script type="text/javascript">
 
         function selectDiv(selectedDivName) {
-            updateDiv("testRunnerDiv", selectedDivName);
-            updateDiv("configDiv", selectedDivName);
-            updateDiv("runnerDiv", selectedDivName);
+            updateDiv("urlRunnerDiv", selectedDivName);
+            updateDiv("fragmentRunnerDiv", selectedDivName);
         <%if (!server.isFarmServer()) {%>
             updateDiv("displayerDiv", selectedDivName);
         <%}%>
+            updateDiv("testRunnerDiv", selectedDivName);
+            updateDiv("configDiv", selectedDivName);
         }
 
         function updateDiv(divName, selectedDivName) {
@@ -54,7 +55,7 @@
         }
 
         function pageLoaded() {
-            selectDiv("runnerDiv");
+            selectDiv("fragmentRunnerDiv");
             var updater = new JsUnitServerAjaxUpdater();
             updater.askServerForStatus();
             updater.askServerForTestRunCount();
@@ -153,8 +154,12 @@
 <table cellpadding="0" cellspacing="0">
 <tr>
     <td class="tabHeaderSeparator">&nbsp;</td>
-    <td id="runnerDivHeader" class="selectedTab">
-        &nbsp;&nbsp;<a href="javascript:selectDiv('runnerDiv')">runner</a>&nbsp;&nbsp;
+    <td id="fragmentRunnerDivHeader" class="selectedTab">
+        &nbsp;&nbsp;<a href="javascript:selectDiv('fragmentRunnerDiv')">fragmentRunner</a>&nbsp;&nbsp;
+    </td>
+    <td class="tabHeaderSeparator">&nbsp;</td>
+    <td id="urlRunnerDivHeader" class="selectedTab">
+        &nbsp;&nbsp;<a href="javascript:selectDiv('urlRunnerDiv')">urlRunner</a>&nbsp;&nbsp;
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
     <%if (!server.isFarmServer()) {%>
@@ -173,12 +178,82 @@
     <td class="tabHeaderSeparator" width="99%">&nbsp;</td>
 </tr>
 <tr>
-<td colspan="9"
-    style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
-<div id="runnerDiv" style="width:100%;visibility:visible;background:#DDDDDD">
+<td colspan="11" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
+
+<%if (!server.isFarmServer()) {%>
+<div id="fragmentRunnerDiv" style="width:100%;visibility:visible;background:#DDDDDD">
     <br>
 
-    <form action="/jsunit/runner" method="get" name="runnerForm">
+    <form action="/jsunit/runner" method="post" name="fragmentRunnerForm">
+        <table>
+            <tr>
+                <td colspan="2">
+                    You can ask the server to run JsUnit tests of test code fragments using the <i>fragmentrunner</i>
+                    service.
+                    Type in your test code fragments below; choose a specific browser if desired.<br/>
+                </td>
+            </tr>
+            <tr>
+                <td width="1" valign="top">
+                    Fragment:
+                </td>
+                <td>
+                    <textarea name="fragment" cols="50" rows="10"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <font size="-2">
+                        <i>e.g. assertTrue(true);</i>
+                    </font>
+                </td>
+            </tr>
+            <%if (!server.isFarmServer()) {%>
+            <tr>
+                <td width="1">
+                    Browser:
+                </td>
+                <td>
+                    <select name="browserId">
+                        <option value="">All browsers</option>
+                        <%
+                            for (Browser browser : configuration.getBrowsers()) {
+                        %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
+                        <%}%>
+                    </select><br>
+                </td>
+            </tr>
+            <%}%>
+            <tr>
+                <td width="1">
+                    Skin:
+                </td>
+                <td>
+                    <select name="skinId">
+                        <option value="">None - pure XML</option>
+                        <%
+                            for (Skin skin : server.getSkins()) {
+                        %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
+                        <%}%>
+                    </select><br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="go"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <br>&nbsp;
+</div>
+<%}%>
+
+<div id="urlRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
+    <br>
+
+    <form action="/jsunit/runner" method="get" name="urlRunnerForm">
         <table>
             <tr>
                 <td colspan="2">
@@ -196,7 +271,8 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td>&nbsp;</td>
+                <td>
                     <font size="-2"><i>e.g.
                         http://www.jsunit.net/runner/testRunner.html?testPage=http://www.jsunit.net/runner/tests/jsUnitTestSuite.html</i>
                     </font>
@@ -243,7 +319,6 @@
 </div>
 
 <%if (!server.isFarmServer()) {%>
-
 <div id="displayerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
     <br>
 
@@ -307,7 +382,6 @@
     <br>&nbsp;
 </div>
 
-
 <div id="configDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
     <br>
     You can see the configuration of this server as XML by going to <a id="config"
@@ -315,6 +389,7 @@
     The config service is usually only used programmatically.
     <br>&nbsp;
 </div>
+
 </td>
 </tr>
 </table>

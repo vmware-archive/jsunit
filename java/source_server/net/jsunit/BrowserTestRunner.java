@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
@@ -30,5 +31,7 @@ public interface BrowserTestRunner extends XmlRenderable, SkinSource {
     int timeoutSeconds();
 
     boolean isAlive();
+
+    Configuration getConfiguration();
 
 }

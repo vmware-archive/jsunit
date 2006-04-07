@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.results.Skin;
@@ -49,6 +50,10 @@ public class BrowserTestRunnerStub implements BrowserTestRunner {
 
     public boolean isAlive() {
         return false;
+    }
+
+    public Configuration getConfiguration() {
+        return null;
     }
 
     public Element asXml() {

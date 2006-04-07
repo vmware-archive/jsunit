@@ -1,5 +1,6 @@
 package net.jsunit;
 
+import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 
@@ -19,6 +20,7 @@ public class MockBrowserTestRunner extends BrowserTestRunnerStub {
     public boolean hasReceivedResult;
     public List<String> logMessages = new ArrayList<String>();
     public List<BrowserLaunchSpecification> launchSpecs = new ArrayList<BrowserLaunchSpecification>();
+    public Configuration configuration;
 
     public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         launchSpecs.add(launchSpec);
@@ -61,6 +63,10 @@ public class MockBrowserTestRunner extends BrowserTestRunnerStub {
 
     public boolean isAlive() {
         return true;
+    }
+
+    public Configuration getConfiguration() {
+        return configuration;
     }
 
 }
