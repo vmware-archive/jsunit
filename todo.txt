@@ -2,7 +2,7 @@ Required for next release:
 
   FEATURES:
     - rename server type "farm" to "delegator"
-    - pastable tests
+    - Distributed pastable tests - just need support on the DTRA
     - uploadable test pages
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
