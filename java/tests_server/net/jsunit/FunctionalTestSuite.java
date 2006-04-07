@@ -16,10 +16,11 @@ public class FunctionalTestSuite {
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
         result.addTestSuite(FailingDistributedTestTest.class);
-        result.addTestSuite(ServerLandingPageFunctionalTest.class);
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
+        result.addTestSuite(ServerLandingPageFunctionalTest.class);
+        result.addTestSuite(ServerAdminPageFunctionalTest.class);
         result.addTestSuite(ServerStatusFunctionalTest.class);
         result.addTestSuite(SerialDistributedTestTest.class);
         result.addTestSuite(SpecificBrowserDistributedTestTest.class);

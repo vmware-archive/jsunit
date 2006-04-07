@@ -2,6 +2,7 @@ Required for next release:
 
   FEATURES:
     - rename server type "farm" to "delegator"
+    - break out admin page
     - Distributed pastable tests - just need support on the DTRA
     - uploadable test pages
     - Send traces back to client (IN PROGRESS - ehanson)

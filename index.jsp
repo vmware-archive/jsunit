@@ -5,7 +5,8 @@
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.results.Skin" %>
 <%@ page import="net.jsunit.utility.SystemUtility" %>
-<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%Configuration configuration = server.getConfiguration();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -15,7 +16,6 @@
     <title>JsUnit <%if (server.isFarmServer()) {%> Farm<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
-    <script type="text/javascript" src="app/server/jsUnitServerAjax.js"></script>
     <script type="text/javascript">
 
         function selectDiv(selectedDivName) {
@@ -38,27 +38,8 @@
             theDivHeader.className = isSelected ? "selectedTab" : "unselectedTab";
         }
 
-        function updateServerStatusDiv(messageString) {
-            var messageArray = messageString.split("|");
-            var messageCount = messageArray.length;
-            var newHTML = "<font size='-2'>";
-            for (var i = messageCount - 1; i >= 0; i--) {
-                newHTML += messageArray[i];
-                newHTML += "<br>";
-            }
-            document.getElementById("serverStatusDiv").innerHTML = newHTML;
-        }
-
-        function updateTestRunCountDiv(testRunCount) {
-            var newHTML = "<font size='-2'>Test Run Count: " + testRunCount + "</font>";
-            document.getElementById("testRunCountDiv").innerHTML = newHTML;
-        }
-
         function pageLoaded() {
             selectDiv("fragmentRunnerDiv");
-            var updater = new JsUnitServerAjaxUpdater();
-            updater.askServerForStatus();
-            updater.askServerForTestRunCount();
         }
 
     </script>
@@ -106,12 +87,16 @@
                     <td><%=server.serverType().getDisplayName()%></td>
                 </tr>
                 <%
-                    for (ConfigurationProperty property : configuration.getRequiredAndOptionalConfigurationProperties(server.serverType())) {
+                    List<ConfigurationProperty> propertiesToDisplay = new ArrayList<ConfigurationProperty>();
+                    propertiesToDisplay.add(ConfigurationProperty.DESCRIPTION);
+                    propertiesToDisplay.add(ConfigurationProperty.BROWSER_FILE_NAMES);
+                    propertiesToDisplay.add(ConfigurationProperty.TIMEOUT_SECONDS);
+                    for (ConfigurationProperty property : propertiesToDisplay) {
                 %>
                 <tr>
-                    <th nowrap align="right"><%=property.getDisplayName()%>:</th>
+                    <th nowrap align="right" valign="top"><%=property.getDisplayName()%>:</th>
                     <td width="10">&nbsp;</td>
-                    <td>
+                    <td valign="top">
                         <%
                             for (String valueString : property.getValueStrings(configuration)) {
                         %><div><%
@@ -130,19 +115,6 @@
                     }
                 %>
             </table>
-        </td>
-        <td valign="top" width="500" height="175" nowrap>
-            <h4>
-                Server Status
-            </h4>
-            <h4>
-                <font size="-2">Up since <%=new SimpleDateFormat().format(server.getStartDate())%></font><br>
-
-                <div id="testRunCountDiv"></div>
-                <font size="-2">Server log:</font>
-            </h4>
-
-            <div style="width:90%;height:90%;overflow:scroll" id="serverStatusDiv"></div>
         </td>
     </tr>
 </table>

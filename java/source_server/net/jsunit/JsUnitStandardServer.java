@@ -46,6 +46,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     protected List<String> servletNames() {
         return Arrays.asList(new String[]{
                 "acceptor",
+                "admin",
                 "config",
                 "displayer",
                 "index",

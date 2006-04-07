@@ -77,6 +77,13 @@
             <interceptor-ref name="server"/>
         </action>
 
+        <action name="admin" class="net.jsunit.action.AdminAction">
+            <result name="success" type="dispatcher">
+                <param name="location">admin.jsp</param>
+            </result>
+            <interceptor-ref name="server"/>
+        </action>
+
     </package>
 
 </xwork>

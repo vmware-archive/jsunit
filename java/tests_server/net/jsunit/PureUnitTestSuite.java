@@ -17,6 +17,7 @@ public class PureUnitTestSuite {
 
     public static Test suite() {
         TestSuite result = new TestSuite();
+        result.addTestSuite(AdminActionTest.class);
         result.addTestSuite(ArgumentsConfigurationSourceTest.class);
         result.addTestSuite(BrowserLaunchSpecificationTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);
