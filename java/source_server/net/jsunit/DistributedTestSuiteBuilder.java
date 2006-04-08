@@ -54,8 +54,8 @@ public class DistributedTestSuiteBuilder {
         String remoteMachineDisplayName = StringUtility.escapeForSuiteName(remoteMachineURL.getHost()) + ":" + remoteMachineURL.getPort();
         if (!StringUtility.isEmpty(remoteConfiguration.getDescription()))
             remoteMachineDisplayName += " (" + remoteConfiguration.getDescription() + ")";
-        if (remoteConfiguration.isValidFor(ServerType.FARM))
-            addFarmDistributedTestTo(remoteMachineURL, remoteMachineDisplayName, remoteConfiguration, suite);
+        if (remoteConfiguration.isValidFor(ServerType.AGGREGATE))
+            addAggregateDistributedTestTo(remoteMachineURL, remoteMachineDisplayName, remoteConfiguration, suite);
         else
             addSuiteOfDistributedTestsTo(remoteMachineURL, remoteMachineDisplayName, remoteConfiguration, suite);
     }
@@ -72,9 +72,9 @@ public class DistributedTestSuiteBuilder {
         suite.addTest(suiteForRemoteMachine);
     }
 
-    private void addFarmDistributedTestTo(URL remoteMachineURL, String remoteMachineDisplayName, Configuration remoteConfiguration, TestSuite suite) {
+    private void addAggregateDistributedTestTo(URL remoteMachineURL, String remoteMachineDisplayName, Configuration remoteConfiguration, TestSuite suite) {
         DistributedTest distributedTest = createDistributedTest(localeSource, remoteMachineURL);
-        String name = remoteMachineDisplayName + " - farm server with " + remoteConfiguration.getRemoteMachineURLs().size() + " remote machine(s)";
+        String name = remoteMachineDisplayName + " - aggregate server with " + remoteConfiguration.getRemoteMachineURLs().size() + " remote machine(s)";
         distributedTest.setName(name);
         suite.addTest(distributedTest);
     }

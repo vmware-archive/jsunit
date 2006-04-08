@@ -48,8 +48,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         }
     }
 
-    public boolean isFarmServer() {
-        return serverType.isFarm();
+    public boolean isAggregateServer() {
+        return serverType.isAggregate();
     }
 
     public boolean isTemporary() {

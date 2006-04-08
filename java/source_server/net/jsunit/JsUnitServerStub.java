@@ -17,7 +17,7 @@ public class JsUnitServerStub implements JsUnitServer {
         return null;
     }
 
-    public boolean isFarmServer() {
+    public boolean isAggregateServer() {
         return false;
     }
 

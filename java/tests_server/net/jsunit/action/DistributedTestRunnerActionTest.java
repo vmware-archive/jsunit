@@ -2,7 +2,7 @@ package net.jsunit.action;
 
 import junit.framework.TestCase;
 import net.jsunit.DummyConfigurationSource;
-import net.jsunit.JsUnitFarmServer;
+import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.RemoteServerHitter;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.TestRunResult;
@@ -17,7 +17,7 @@ public class DistributedTestRunnerActionTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         action = new DistributedTestRunnerAction();
-        action.setFarmServer(new JsUnitFarmServer(new Configuration(new DummyConfigurationSource())));
+        action.setAggregateServer(new JsUnitAggregateServer(new Configuration(new DummyConfigurationSource())));
         action.setRemoteServerHitter(new SuccessfulRemoteServerHitter());
     }
 

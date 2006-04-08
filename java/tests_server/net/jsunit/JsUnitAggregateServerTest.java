@@ -4,17 +4,17 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 
-public class JsUnitFarmServerTest extends TestCase {
+public class JsUnitAggregateServerTest extends TestCase {
 
-    private JsUnitFarmServer server;
+    private JsUnitAggregateServer server;
 
     public void setUp() throws Exception {
         super.setUp();
-        server = new JsUnitFarmServer(new Configuration(new DummyFarmConfigurationSource()));
+        server = new JsUnitAggregateServer(new Configuration(new DummyAggregateConfigurationSource()));
     }
 
     public void testStartTestRun() throws Exception {
-        assertEquals(ServerType.FARM, server.serverType());
+        assertEquals(ServerType.AGGREGATE, server.serverType());
     }
 
 }

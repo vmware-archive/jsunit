@@ -9,10 +9,10 @@
             #closeBrowsersAfterTestRuns determines whether to attempt to close browsers after test runs. This is not a mandatory property. The default is true. For example: 'true'
             closeBrowsersAfterTestRuns=
             
-            #description is a human-readable description of a standard or farm server. This is not a mandatory property. The default is blank. For example: 'This is our Mac - it's only running Safari right now'
+            #description is a human-readable description of a standard or aggregate server. This is not a mandatory property. The default is blank. For example: 'This is our Mac - it's only running Safari right now'
             description=
             
-            #ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not a mandatory property.  Its default is false. For example: 'true'
+            #ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Aggregate Server and the distributed_test target. Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not a mandatory property.  Its default is false. For example: 'true'
             ignoreUnresponsiveRemoteMachines=
             
             #logsDirectory is the directory in which the JsUnitStandardServer stores the XML logs produced from tests run. It can be specified relative to the working directory. This is not a mandatory property. If not specified, the directory called 'logs' inside resourceBase is assumed. For example: 'c:\jsunit\java\logs'
@@ -21,7 +21,7 @@
             #port is the port on which the JsUnitStandardServer runs. This is not a mandatory property. If not specified, 8080 is assumed. For exapmle: '8080'
             port=
             
-            #remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is the list of URLs of remote machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'
+            #remoteMachineURLs is a property used only by the JsUnit Aggregate Server and the distributed_test target. Its value is the list of URLs of remote machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'
             remoteMachineURLs=
             
             #resourceBase is the directory that the JsUnitStandardServer considers to be its document root. It can be specified relative to the working directory. This is not a mandatory property. If not specified, the working directory is assumed. For example: 'c:\jsunit'

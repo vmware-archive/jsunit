@@ -5,7 +5,7 @@ import net.jsunit.model.Browser;
 
 public class SpecificBrowserDistributedTestTest extends EndToEndTestCase {
 
-    protected ConfigurationSource farmSource() {
+    protected ConfigurationSource aggregateSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:" + port;
@@ -37,7 +37,7 @@ public class SpecificBrowserDistributedTestTest extends EndToEndTestCase {
     }
 
     public void testSuccessfulRun() {
-        DistributedTest test = new DistributedTest(serverSource(), farmSource());
+        DistributedTest test = new DistributedTest(serverSource(), aggregateSource());
         test.limitToBrowser(new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 1));
         assertSuccessful(test);
         assertEquals(1, test.getTestRunResults().size());

@@ -13,7 +13,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JsUnit <%if (server.isFarmServer()) {%> Farm<%}%> Server</title>
+    <title>JsUnit <%if (server.isAggregateServer()) {%> Aggregate<%}%> Server</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <script type="text/javascript">
@@ -21,7 +21,7 @@
         function selectDiv(selectedDivName) {
             updateDiv("urlRunnerDiv", selectedDivName);
             updateDiv("fragmentRunnerDiv", selectedDivName);
-        <%if (!server.isFarmServer()) {%>
+        <%if (!server.isAggregateServer()) {%>
             updateDiv("displayerDiv", selectedDivName);
         <%}%>
             updateDiv("testRunnerDiv", selectedDivName);
@@ -55,7 +55,7 @@
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()) {%> Farm<%}%> Server</h4>
+            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%> Server</h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
         </th>
         <td nowrap align="right" valign="middle">
@@ -134,7 +134,7 @@
         &nbsp;&nbsp;<a href="javascript:selectDiv('urlRunnerDiv')">urlRunner</a>&nbsp;&nbsp;
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
-    <%if (!server.isFarmServer()) {%>
+    <%if (!server.isAggregateServer()) {%>
     <td id="displayerDivHeader" class="unselectedTab">
         &nbsp;&nbsp;<a href="javascript:selectDiv('displayerDiv')">displayer</a>&nbsp;&nbsp;
     </td>
@@ -152,7 +152,7 @@
 <tr>
 <td colspan="11" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
 
-<%if (!server.isFarmServer()) {%>
+<%if (!server.isAggregateServer()) {%>
 <div id="fragmentRunnerDiv" style="width:100%;visibility:visible;background:#DDDDDD">
     <br>
 
@@ -181,7 +181,7 @@
                     </font>
                 </td>
             </tr>
-            <%if (!server.isFarmServer()) {%>
+            <%if (!server.isAggregateServer()) {%>
             <tr>
                 <td width="1">
                     Browser:
@@ -250,7 +250,7 @@
                     </font>
                 </td>
             </tr>
-            <%if (!server.isFarmServer()) {%>
+            <%if (!server.isAggregateServer()) {%>
             <tr>
                 <td width="1">
                     Browser:
@@ -290,7 +290,7 @@
     <br>&nbsp;
 </div>
 
-<%if (!server.isFarmServer()) {%>
+<%if (!server.isAggregateServer()) {%>
 <div id="displayerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
     <br>
 

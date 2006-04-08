@@ -28,14 +28,14 @@ public enum ServerType {
     ),
     STANDARD_TEMPORARY(
             "Standard Temporary",
-            STANDARD.isFarm(),
+            STANDARD.isAggregate(),
             false,
             true,
             STANDARD.getRequiredConfigurationProperties(),
             STANDARD.getOptionalConfigurationProperties()
     ),
-    FARM(
-            "Farm",
+    AGGREGATE(
+            "Aggregate",
             true,
             true,
             false,
@@ -55,20 +55,20 @@ public enum ServerType {
     private List<ConfigurationProperty> requiredProperties;
     private List<ConfigurationProperty> optionalProperties;
     private String displayName;
-    private boolean isFarm;
+    private boolean isAggregate;
     private boolean performUpToDateCheck;
     private boolean isTemporary;
 
     private ServerType(
             String displayName,
-            boolean isFarm,
+            boolean isAggregate,
             boolean performVersionUpToDateCheck,
             boolean isTemporary,
             List<ConfigurationProperty> required,
             List<ConfigurationProperty> optional) {
         this.performUpToDateCheck = performVersionUpToDateCheck;
         this.displayName = displayName;
-        this.isFarm = isFarm;
+        this.isAggregate = isAggregate;
         this.isTemporary = isTemporary;
         this.requiredProperties = required;
         this.optionalProperties = optional;
@@ -111,8 +111,8 @@ public enum ServerType {
         return result;
     }
 
-    public boolean isFarm() {
-        return isFarm;
+    public boolean isAggregate() {
+        return isAggregate;
     }
 
     public String getDisplayName() {

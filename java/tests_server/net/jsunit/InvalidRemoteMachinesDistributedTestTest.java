@@ -4,7 +4,7 @@ import net.jsunit.configuration.ConfigurationSource;
 
 public class InvalidRemoteMachinesDistributedTestTest extends EndToEndTestCase {
 
-    protected ConfigurationSource invalidRemoteMachinesFarmSource() {
+    protected ConfigurationSource invalidRemoteMachinesAggregateSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://invalid_machine1:8080, http://invalid_machine2:8080";
@@ -25,7 +25,7 @@ public class InvalidRemoteMachinesDistributedTestTest extends EndToEndTestCase {
     }
 
     public void testUnresponsive() {
-        assertFailure(new DistributedTest(serverSource(), invalidRemoteMachinesFarmSource()));
+        assertFailure(new DistributedTest(serverSource(), invalidRemoteMachinesAggregateSource()));
     }
 
 }

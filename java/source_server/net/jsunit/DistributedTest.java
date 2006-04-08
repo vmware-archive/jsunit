@@ -22,14 +22,14 @@ public class DistributedTest extends TestCase {
     private static Object blocker = new Object();
     private static int serverCount = 0;
     private ConfigurationSource localServerSource;
-    private ConfigurationSource farmSource;
+    private ConfigurationSource aggregateSource;
     private Browser remoteBrowser;
     private String overrideURL;
 
-    public DistributedTest(ConfigurationSource localServerSource, ConfigurationSource farmSource) {
-        super(farmSource.remoteMachineURLs().replace('.', '_'));
+    public DistributedTest(ConfigurationSource localServerSource, ConfigurationSource aggregateSource) {
+        super(aggregateSource.remoteMachineURLs().replace('.', '_'));
         this.localServerSource = localServerSource;
-        this.farmSource = farmSource;
+        this.aggregateSource = aggregateSource;
     }
 
     private void ensureTemporaryStandardServerIsCreated(ConfigurationSource serverSource) {
@@ -44,12 +44,12 @@ public class DistributedTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         RemoteMachineServerHitter serverHitter = new RemoteMachineServerHitter();
-        Configuration farmConfiguration = new Configuration(farmSource);
+        Configuration aggregateConfiguration = new Configuration(aggregateSource);
         Configuration localConfiguration = new Configuration(localServerSource);
         if (remoteBrowser != null)
-            manager = DistributedTestRunManager.forSingleRemoteBrowser(serverHitter, localConfiguration, farmConfiguration.getRemoteMachineURLs().get(0), overrideURL, remoteBrowser);
+            manager = DistributedTestRunManager.forSingleRemoteBrowser(serverHitter, localConfiguration, aggregateConfiguration.getRemoteMachineURLs().get(0), overrideURL, remoteBrowser);
         else
-            manager = DistributedTestRunManager.forMultipleRemoteMachines(serverHitter, localConfiguration, farmConfiguration.getRemoteMachineURLs(), overrideURL);
+            manager = DistributedTestRunManager.forMultipleRemoteMachines(serverHitter, localConfiguration, aggregateConfiguration.getRemoteMachineURLs(), overrideURL);
         ensureTemporaryStandardServerIsCreated(localServerSource);
         startServerIfNecessary();
     }

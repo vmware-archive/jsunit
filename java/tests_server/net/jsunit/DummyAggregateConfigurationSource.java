@@ -2,7 +2,7 @@ package net.jsunit;
 
 import net.jsunit.configuration.ConfigurationSource;
 
-public class DummyFarmConfigurationSource implements ConfigurationSource {
+public class DummyAggregateConfigurationSource implements ConfigurationSource {
 
     public String resourceBase() {
         return ".";

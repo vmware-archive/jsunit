@@ -12,7 +12,7 @@ public interface JsUnitServer extends XmlRenderable {
 
     ServerType serverType();
 
-    boolean isFarmServer();
+    boolean isAggregateServer();
 
     Date getStartDate();
 

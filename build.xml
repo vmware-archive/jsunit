@@ -24,14 +24,14 @@
             id="description"
             name="description"
             value=""
-            description="description is a human-readable description of a standard or farm server. This is not a mandatory property. The default is blank. For example: 'This is our Mac - it's only running Safari right now'"
+            description="description is a human-readable description of a standard or aggregate server. This is not a mandatory property. The default is blank. For example: 'This is our Mac - it's only running Safari right now'"
             />
 
     <property
             id="ignoreUnresponsiveRemoteMachines"
             name="ignoreUnresponsiveRemoteMachines"
             value=""
-            description="ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not a mandatory property.  Its default is false. For example: 'true'"
+            description="ignoreUnresponsiveRemoteMachines is a property used only by the JsUnit Aggregate Server and the distributed_test target. Its value is whether to ignore a remote machine that does not respond.  If true, test runs will be green even if one or more remote machines fail to respond; if false, an unresponsive remote machine results in a failure.  This is not a mandatory property.  Its default is false. For example: 'true'"
             />
 
     <property
@@ -52,7 +52,7 @@
             id="remoteMachineURLs"
             name="remoteMachineURLs"
             value=""
-            description="remoteMachineURLs is a property used only by the JsUnit Farm Server and the distributed_test target. Its value is the list of URLs of remote machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'"
+            description="remoteMachineURLs is a property used only by the JsUnit Aggregate Server and the distributed_test target. Its value is the list of URLs of remote machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'"
             />
 
     <property
@@ -182,7 +182,7 @@
                         <include name="net.jsunit.StandaloneTest"/>
                         <include name="net.jsunit.DistributedTest"/>
                         <include name="net.jsunit.JsUnitStandardServer"/>
-                        <include name="net.jsunit.JsUnitFarmServer"/>
+                        <include name="net.jsunit.JsUnitAggregateServer"/>
                         <include name="net.jsunit.action.*Action"/>
                         <include name="net.jsunit.action.*Result"/>
                         <include name="net.jsunit.interceptor.*Interceptor"/>
@@ -237,7 +237,7 @@
             <formatter type="xml"/>
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
-            <test name="net.jsunit.FarmServerFunctionalTestSuite"/>
+            <test name="net.jsunit.AggregateServerFunctionalTestSuite"/>
         </junit>
         <fail if="junit_test_failed"/>
     </target>
@@ -260,8 +260,8 @@
         </java>
     </target>
 
-    <target name="start_farm_server" description="Starts a JsUnit Farm Server">
-        <java fork="true" classname="net.jsunit.JsUnitFarmServer">
+    <target name="start_aggregate_server" description="Starts a JsUnit Aggregate Server">
+        <java fork="true" classname="net.jsunit.JsUnitAggregateServer">
             <classpath refid="classpath"/>
             <sysproperty key="java.util.logging.config.file" value="${loggingPropertiesFile}"/>
             <sysproperty key="description" value="${description}"/>

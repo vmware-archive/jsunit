@@ -10,7 +10,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JsUnit <%if (server.isFarmServer()) {%> Farm<%}%> Server Administration</title>
+    <title>JsUnit <%if (server.isAggregateServer()) {%> Aggregate<%}%> Server Administration</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <script type="text/javascript" src="app/server/jsUnitServerAjax.js"></script>
@@ -51,7 +51,7 @@
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isFarmServer()) {%> Farm<%}%> Server
+            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%> Server
                 Administration</h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
         </th>

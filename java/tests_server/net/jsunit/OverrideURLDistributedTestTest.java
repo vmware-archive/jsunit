@@ -5,7 +5,7 @@ import net.jsunit.model.Browser;
 
 public class OverrideURLDistributedTestTest extends EndToEndTestCase {
 
-    protected ConfigurationSource farmSource() {
+    protected ConfigurationSource aggregateSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:" + port;
@@ -30,7 +30,7 @@ public class OverrideURLDistributedTestTest extends EndToEndTestCase {
     }
 
     public void testOverrideURL() throws Throwable {
-        DistributedTest test = new DistributedTest(serverSourceWithBadTestURL(), farmSource());
+        DistributedTest test = new DistributedTest(serverSourceWithBadTestURL(), aggregateSource());
         test.setOverrideURL(
                 "http://localhost:" + port + "/jsunit/testRunner.html?" +
                         "testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true"

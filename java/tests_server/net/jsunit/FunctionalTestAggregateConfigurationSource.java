@@ -2,12 +2,12 @@ package net.jsunit;
 
 import net.jsunit.configuration.ConfigurationSource;
 
-public class FunctionalTestFarmConfigurationSource implements ConfigurationSource {
+public class FunctionalTestAggregateConfigurationSource implements ConfigurationSource {
 
     private int port;
     private int remotePort;
 
-    public FunctionalTestFarmConfigurationSource(int port, int remotePort) {
+    public FunctionalTestAggregateConfigurationSource(int port, int remotePort) {
         this.port = port;
         this.remotePort = remotePort;
     }

@@ -8,7 +8,7 @@ import net.jsunit.configuration.ConfigurationSource;
 public class SerialDistributedTestTest extends TestCase {
     public void testTwoTestsInSerial() throws Throwable {
         final int port = new TestPortManager().newPort();
-        ConfigurationSource farmSource = new FunctionalTestFarmConfigurationSource(port, port);
+        ConfigurationSource aggregateSource = new FunctionalTestAggregateConfigurationSource(port, port);
         ConfigurationSource localServerSource = new FunctionalTestConfigurationSource(port) {
             public String browserFileNames() {
                 return "";
@@ -16,8 +16,8 @@ public class SerialDistributedTestTest extends TestCase {
         };
 
         TestSuite testSuite = new TestSuite();
-        testSuite.addTest(new DistributedTest(localServerSource, farmSource));
-        testSuite.addTest(new DistributedTest(localServerSource, farmSource));
+        testSuite.addTest(new DistributedTest(localServerSource, aggregateSource));
+        testSuite.addTest(new DistributedTest(localServerSource, aggregateSource));
         TestResult testResult = new TestResult();
         testSuite.run(testResult);
         assertTrue(testResult.wasSuccessful());

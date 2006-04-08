@@ -32,7 +32,7 @@ public class ConfigurationTest extends TestCase {
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
         assertTrue(configuration.isValidFor(ServerType.STANDARD));
-        assertTrue(configuration.isValidFor(ServerType.FARM));
+        assertTrue(configuration.isValidFor(ServerType.AGGREGATE));
     }
 
     public void testMinimal() throws Exception {
@@ -44,7 +44,7 @@ public class ConfigurationTest extends TestCase {
         assertFalse(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
         assertTrue(configuration.isValidFor(ServerType.STANDARD));
-        assertTrue(configuration.isValidFor(ServerType.FARM));
+        assertTrue(configuration.isValidFor(ServerType.AGGREGATE));
     }
 
     public void testBadRemoteMachineURLs() throws Exception {
@@ -95,11 +95,11 @@ public class ConfigurationTest extends TestCase {
         }
     }
 
-    public void testValidForStandardInvalidForFarm() throws Exception {
-        Configuration configuration = new Configuration(new ValidForStandardInvalidForFarmConfigurationSource());
+    public void testValidForStandardInvalidForAggregate() throws Exception {
+        Configuration configuration = new Configuration(new ValidForStandardInvalidForAggregateConfigurationSource());
         assertTrue(configuration.isValidFor(ServerType.STANDARD));
-        assertFalse(configuration.isValidFor(ServerType.FARM));
-        List<ConfigurationProperty> invalidProperties = ServerType.FARM.getPropertiesInvalidFor(configuration);
+        assertFalse(configuration.isValidFor(ServerType.AGGREGATE));
+        List<ConfigurationProperty> invalidProperties = ServerType.AGGREGATE.getPropertiesInvalidFor(configuration);
         assertEquals(1, invalidProperties.size());
         assertEquals(ConfigurationProperty.REMOTE_MACHINE_URLS, invalidProperties.get(0));
     }
@@ -152,13 +152,13 @@ public class ConfigurationTest extends TestCase {
         assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD_TEMPORARY)));
     }
 
-    public void testAsXmlForFarmConfiguration() throws Exception {
+    public void testAsXmlForAggregateConfiguration() throws Exception {
         FullValidForBothConfigurationSource source = new FullValidForBothConfigurationSource();
         Configuration configuration = new Configuration(source);
         File logsDirectory = new File(source.logsDirectory());
         File resourceBase = new File(source.resourceBase());
         assertEquals(
-                "<configuration type=\"" + ServerType.FARM.name() + "\">" +
+                "<configuration type=\"" + ServerType.AGGREGATE.name() + "\">" +
                         "<os>" + SystemUtility.osString() + "</os>" +
                         "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
                         "<hostname>" + SystemUtility.hostname() + "</hostname>" +
@@ -173,7 +173,7 @@ public class ConfigurationTest extends TestCase {
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                         "<url>http://www.example.com:1234/</url>" +
                         "</configuration>",
-                XmlUtility.asString(configuration.asXml(ServerType.FARM))
+                XmlUtility.asString(configuration.asXml(ServerType.AGGREGATE))
         );
     }
 
@@ -309,7 +309,7 @@ public class ConfigurationTest extends TestCase {
 
     }
 
-    static class ValidForStandardInvalidForFarmConfigurationSource extends StubConfigurationSource {
+    static class ValidForStandardInvalidForAggregateConfigurationSource extends StubConfigurationSource {
     }
 
     static class DuplicatesConfigurationSource extends StubConfigurationSource {

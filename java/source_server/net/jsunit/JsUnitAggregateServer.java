@@ -6,11 +6,11 @@ import net.jsunit.configuration.ServerType;
 import java.util.Arrays;
 import java.util.List;
 
-public class JsUnitFarmServer extends AbstractJsUnitServer {
+public class JsUnitAggregateServer extends AbstractJsUnitServer {
 
-    public JsUnitFarmServer(Configuration configuration) {
-        super(configuration, ServerType.FARM);
-        ServerRegistry.registerFarmServer(this);
+    public JsUnitAggregateServer(Configuration configuration) {
+        super(configuration, ServerType.AGGREGATE);
+        ServerRegistry.registerAggregateServer(this);
     }
 
     protected List<String> servletNames() {
@@ -26,7 +26,7 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
 
     public static void main(String args[]) {
         try {
-            JsUnitFarmServer server = new JsUnitFarmServer(Configuration.resolve(args));
+            JsUnitAggregateServer server = new JsUnitAggregateServer(Configuration.resolve(args));
             server.start();
         } catch (Throwable t) {
             t.printStackTrace();
@@ -34,15 +34,15 @@ public class JsUnitFarmServer extends AbstractJsUnitServer {
     }
 
     public String toString() {
-        return "JsUnit Farm Server";
+        return "JsUnit Aggregate Server";
     }
 
     protected String xworkXmlName() {
-        return "farm_xwork.xml";
+        return "aggregate_xwork.xml";
     }
 
     public ServerType serverType() {
-        return ServerType.FARM;
+        return ServerType.AGGREGATE;
     }
 
     public void finishedTestRun() {

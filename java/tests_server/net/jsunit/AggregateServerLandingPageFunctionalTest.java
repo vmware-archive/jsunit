@@ -5,20 +5,20 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.sourceforge.jwebunit.WebTester;
 
-public class FarmServerLandingPageFunctionalTest extends TestCase {
+public class AggregateServerLandingPageFunctionalTest extends TestCase {
 
     static {
         HttpUnitOptions.setScriptingEnabled(false);
     }
 
     private WebTester webTester;
-    private JsUnitFarmServer server;
+    private JsUnitAggregateServer server;
 
     protected void setUp() throws Exception {
         super.setUp();
         int port = new TestPortManager().newPort();
         Configuration configuration = new Configuration(new FunctionalTestConfigurationSource(port));
-        server = new JsUnitFarmServer(configuration);
+        server = new JsUnitAggregateServer(configuration);
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl("http://localhost:" + port + "/jsunit");
@@ -39,7 +39,7 @@ public class FarmServerLandingPageFunctionalTest extends TestCase {
     }
 
     private void assertOnLandingPage() {
-        webTester.assertTitleEquals("JsUnit  Farm Server");
+        webTester.assertTitleEquals("JsUnit  Aggregate Server");
     }
 
 }

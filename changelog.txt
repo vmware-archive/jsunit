@@ -40,7 +40,7 @@ SERVER
 - New "config" servlet that shows the configuration as XML of the server
 - Distributed Tests now send back an XML document that includes the XML for browser results as opposed to just a "success"/"failure" node
 - runner servlet takes a "url" querystring parameter that overrides the server's url property
-- test run requests to the JsUnitServer and the FarmServer are queued up and in serial so that different clients don't step on eachother
+- test run requests to the JsUnitServer and the AggregateServer are queued up and in serial so that different clients don't step on eachother
 - addition of new configuration parameter, "closeBrowsersAfterTestRuns", for whether to attempt to close browsers after test runs
 - addition of new configuration property, "timeoutSeconds", for how long to time browsers out
 - addition of new configuration property, "ignoreUnresponsiveRemoteMachines", for whether to care that remote machines don't uccessfully run the tests

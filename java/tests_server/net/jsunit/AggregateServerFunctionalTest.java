@@ -6,23 +6,23 @@ import org.jdom.Document;
 
 import java.net.URLEncoder;
 
-public class FarmServerFunctionalTest extends FunctionalTestCase {
+public class AggregateServerFunctionalTest extends FunctionalTestCase {
 
-    private JsUnitFarmServer farmServer;
+    private JsUnitAggregateServer aggregateServer;
     private int otherPort;
 
     public void setUp() throws Exception {
         super.setUp();
         otherPort = new TestPortManager().newPort();
-        farmServer = new JsUnitFarmServer(new Configuration(new FunctionalTestFarmConfigurationSource(otherPort, port)));
-        farmServer.start();
+        aggregateServer = new JsUnitAggregateServer(new Configuration(new FunctionalTestAggregateConfigurationSource(otherPort, port)));
+        aggregateServer.start();
     }
 
     protected int webTesterPort() {
         return otherPort;
     }
 
-    public void testHitFarmRunner() throws Exception {
+    public void testHitAggregateRunner() throws Exception {
         String url =
                 "/runner?url=" + URLEncoder.encode("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html", "UTF-8");
         webTester.beginAt(url);
@@ -31,7 +31,7 @@ public class FarmServerFunctionalTest extends FunctionalTestCase {
     }
 
     public void tearDown() throws Exception {
-        farmServer.dispose();
+        aggregateServer.dispose();
         super.tearDown();
     }
 

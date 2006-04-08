@@ -8,7 +8,7 @@ import net.jsunit.model.TestRunResult;
 
 public class FailingDistributedTestTest extends EndToEndTestCase {
 
-    protected ConfigurationSource farmSource() {
+    protected ConfigurationSource aggregateSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:" + port;
@@ -39,7 +39,7 @@ public class FailingDistributedTestTest extends EndToEndTestCase {
     }
 
     public void testFailedRun() {
-        DistributedTest test = new DistributedTest(serverSource(), farmSource());
+        DistributedTest test = new DistributedTest(serverSource(), aggregateSource());
         TestResult testResult = test.run();
         assertFalse(testResult.wasSuccessful());
         assertEquals(1, test.getTestRunResults().size());

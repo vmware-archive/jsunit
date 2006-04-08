@@ -5,7 +5,7 @@ import net.jsunit.SkinSource;
 import net.jsunit.XmlRenderable;
 import net.jsunit.results.Skin;
 
-public class DistributedTestRunnerAction extends JsUnitFarmServerAction implements RequestSourceAware, SkinAware {
+public class DistributedTestRunnerAction extends JsUnitAggregateServerAction implements RequestSourceAware, SkinAware {
 
     private DistributedTestRunManager manager;
     private String overrideURL;
@@ -24,7 +24,7 @@ public class DistributedTestRunnerAction extends JsUnitFarmServerAction implemen
             manager.runTests();
         }
         server.finishedTestRun();
-        server.logStatus("Done running farm tests");
+        server.logStatus("Done running aggregate tests");
         return SUCCESS;
     }
 

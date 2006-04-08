@@ -1,19 +1,19 @@
 package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
-import net.jsunit.JsUnitFarmServer;
+import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.RemoteServerHitter;
 
-public abstract class JsUnitFarmServerAction
+public abstract class JsUnitAggregateServerAction
         implements Action,
         XmlProducer,
         RemoteRunnerHitterAware,
-        JsUnitFarmServerAware {
+        JsUnitAggregateServerAware {
 
-    protected JsUnitFarmServer server;
+    protected JsUnitAggregateServer server;
     protected RemoteServerHitter hitter;
 
-    public void setFarmServer(JsUnitFarmServer server) {
+    public void setAggregateServer(JsUnitAggregateServer server) {
         this.server = server;
     }
 

@@ -21,7 +21,7 @@ public class TwoValidLocalhostsDistributedTestTest extends EndToEndTestCase {
         super.tearDown();
     }
 
-    protected ConfigurationSource farmSource() {
+    protected ConfigurationSource aggregateSource() {
         return new StubConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:" + port + ", http://localhost:" + otherPort;
@@ -71,7 +71,7 @@ public class TwoValidLocalhostsDistributedTestTest extends EndToEndTestCase {
     }
 
     public void testSuccessfulRun() {
-        DistributedTest test = new DistributedTest(serverSource(), farmSource());
+        DistributedTest test = new DistributedTest(serverSource(), aggregateSource());
         assertSuccessful(test);
         assertEquals(2, test.getTestRunResults().size());
         assertNull(test.getTemporaryStandardServer());
