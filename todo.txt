@@ -1,9 +1,9 @@
 Required for next release:
 
   FEATURES:
-    - break out admin page
-    - Distributed pastable tests - just need support on the DTRA
+    - Distributed pastable tests - need to have fragmentinterceptor for DTRA
     - uploadable test pages
+    - break out admin page
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)

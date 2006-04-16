@@ -12,7 +12,7 @@ public class BrowserTestRunnerInterceptor extends JsUnitInterceptor {
         source = aSource;
     }
 
-    protected void execute(Action action) {
+    protected void execute(Action action) throws Exception {
         BrowserTestRunnerAware aware = (BrowserTestRunnerAware) action;
         BrowserTestRunner runner = source.getRunner();
         aware.setBrowserTestRunner(runner);

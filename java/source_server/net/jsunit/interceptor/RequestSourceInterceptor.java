@@ -1,15 +1,14 @@
 package net.jsunit.interceptor;
 
-import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.Action;
 import net.jsunit.action.RequestSourceAware;
 
 public class RequestSourceInterceptor extends JsUnitInterceptor {
 
-    protected void execute(Action targetAction) {
+    protected void execute(Action targetAction) throws Exception {
         RequestSourceAware aware = ((RequestSourceAware) targetAction);
-        aware.setRequestIPAddress(ServletActionContext.getRequest().getRemoteAddr());
-        aware.setRequestHost(ServletActionContext.getRequest().getRemoteHost());
+        aware.setRequestIPAddress(request().getRemoteAddr());
+        aware.setRequestHost(request().getRemoteHost());
     }
 
 }

@@ -1,6 +1,5 @@
 package net.jsunit.interceptor;
 
-import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.Action;
 import net.jsunit.action.BrowserResultAware;
 import net.jsunit.model.BrowserResult;
@@ -11,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 
 public class BrowserResultInterceptor extends JsUnitInterceptor {
 
-    protected void execute(Action targetAction) {
-        HttpServletRequest request = ServletActionContext.getRequest();
+    protected void execute(Action targetAction) throws Exception {
+        HttpServletRequest request = request();
         BrowserResult result = build(request);
         BrowserResultAware aware = (BrowserResultAware) targetAction;
         aware.setBrowserResult(result);

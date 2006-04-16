@@ -21,6 +21,7 @@
             <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
             <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
             <interceptor name="server" class="net.jsunit.interceptor.ServerInterceptor"/>
+            <interceptor name="fragment" class="net.jsunit.interceptor.FragmentInterceptor"/>
 
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
@@ -45,6 +46,7 @@
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="requestSource"/>
             <interceptor-ref name="skin"/>
+            <interceptor-ref name="fragment"/>
         </action>
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">

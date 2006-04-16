@@ -2,15 +2,15 @@ package net.jsunit;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import net.jsunit.action.*;
+import net.jsunit.action.AggregateServerConfigurationActionTest;
+import net.jsunit.action.DistributedTestRunnerActionTest;
+import net.jsunit.action.TestRunnerActionSimultaneousRunBlockingTest;
+import net.jsunit.action.TestRunnerActionTest;
 import net.jsunit.configuration.ConfigurationSourceResolutionTest;
 import net.jsunit.configuration.ConfigurationTest;
 import net.jsunit.configuration.EnvironmentVariablesConfigurationSourceTest;
 import net.jsunit.configuration.PropertiesConfigurationSourceTest;
-import net.jsunit.interceptor.BrowserResultInterceptorTest;
-import net.jsunit.interceptor.AggregateServerInterceptorTest;
-import net.jsunit.interceptor.RequestSourceInterceptorTest;
-import net.jsunit.interceptor.SkinInterceptorTest;
+import net.jsunit.interceptor.*;
 import net.jsunit.model.*;
 import net.jsunit.upload.TestPageGeneratorTest;
 
@@ -18,6 +18,8 @@ public class ImpureUnitTestSuite {
 
     public static Test suite() {
         TestSuite result = new TestSuite();
+        result.addTestSuite(AggregateServerConfigurationActionTest.class);
+        result.addTestSuite(AggregateServerInterceptorTest.class);
         result.addTestSuite(BrowserResultInterceptorTest.class);
         result.addTestSuite(BrowserResultTest.class);
         result.addTestSuite(ClientServerInteractionTest.class);
@@ -29,8 +31,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
         result.addTestSuite(ExternallyShutDownBrowserResultTest.class);
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
-        result.addTestSuite(AggregateServerConfigurationActionTest.class);
-        result.addTestSuite(AggregateServerInterceptorTest.class);
+        result.addTestSuite(FragmentInterceptorTest.class);
         result.addTestSuite(DistributedTestRunManagerTest.class);
         result.addTestSuite(DistributedTestRunnerActionTest.class);
         result.addTestSuite(JsUnitAggregateServerTest.class);
@@ -50,7 +51,6 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(TestRunManagerTest.class);
         result.addTestSuite(TestRunResultTest.class);
         result.addTestSuite(TestRunnerActionTest.class);
-        result.addTestSuite(TestRunnerActionFragmentTest.class);
         result.addTestSuite(TimeoutCheckerTest.class);
         result.addTestSuite(TimedOutBrowerResultTest.class);
         return result;

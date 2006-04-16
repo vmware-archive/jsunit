@@ -1,8 +1,11 @@
 package net.jsunit.interceptor;
 
+import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.Action;
 import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.interceptor.Interceptor;
+
+import javax.servlet.http.HttpServletRequest;
 
 public abstract class JsUnitInterceptor implements Interceptor {
 
@@ -17,6 +20,9 @@ public abstract class JsUnitInterceptor implements Interceptor {
         return invocation.invoke();
     }
 
-    protected abstract void execute(Action targetAction);
+    protected abstract void execute(Action targetAction) throws Exception;
 
+    protected HttpServletRequest request() {
+        return ServletActionContext.getRequest();
+    }
 }
