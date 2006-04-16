@@ -20,6 +20,7 @@
             <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
             <interceptor name="server" class="net.jsunit.interceptor.ServerInterceptor"/>
             <interceptor name="fragment" class="net.jsunit.interceptor.FragmentInterceptor"/>
+            <interceptor name="upload" class="net.jsunit.interceptor.UploadedTestPageInterceptor"/>
 
             <interceptor-stack name="defaultStack">
                 <interceptor-ref name="servlet-config"/>
@@ -41,6 +42,7 @@
             <interceptor-ref name="skin"/>
             <interceptor-ref name="requestSource"/>
             <interceptor-ref name="fragment"/>
+            <interceptor-ref name="upload"/>
         </action>
 
         <action name="config" class="net.jsunit.action.AggregateServerConfigurationAction">

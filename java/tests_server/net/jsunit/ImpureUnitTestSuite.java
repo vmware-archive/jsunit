@@ -53,6 +53,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(TestRunnerActionTest.class);
         result.addTestSuite(TimeoutCheckerTest.class);
         result.addTestSuite(TimedOutBrowerResultTest.class);
+        result.addTestSuite(UploadedTestPageInterceptorTest.class);
         return result;
     }
 }

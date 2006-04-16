@@ -9,6 +9,7 @@ import net.jsunit.action.TestPageURLAware;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.utility.SystemUtility;
 
+import java.io.File;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +43,7 @@ public class FragmentInterceptorTest extends TestCase {
                         URLEncoder.encode("http://" + SystemUtility.hostname() + ":" + DummyConfigurationSource.PORT + "/jsunit/uploaded/generated_" + id + ".html&resultId=" + id, "UTF-8"),
                 action.url
         );
+        assertTrue(new File("uploaded", "generated_" + id + ".html").exists());
     }
 
     static class MockAction implements Action, TestPageURLAware {

@@ -234,6 +234,7 @@
         <root url="jar://$PROJECT_DIR$/../java/lib/jasper-runtime.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-el.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/start.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/commons-fileupload.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

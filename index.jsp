@@ -21,6 +21,7 @@
         function selectDiv(selectedDivName) {
             updateDiv("urlRunnerDiv", selectedDivName);
             updateDiv("fragmentRunnerDiv", selectedDivName);
+            updateDiv("uploadRunnerDiv", selectedDivName);
         <%if (!server.isAggregateServer()) {%>
             updateDiv("displayerDiv", selectedDivName);
         <%}%>
@@ -131,6 +132,10 @@
         &nbsp;&nbsp;<a href="javascript:selectDiv('fragmentRunnerDiv')">fragmentRunner</a>&nbsp;&nbsp;
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
+    <td id="uploadRunnerDivHeader" class="selectedTab">
+        &nbsp;&nbsp;<a href="javascript:selectDiv('uploadRunnerDiv')">uploadRunner</a>&nbsp;&nbsp;
+    </td>
+    <td class="tabHeaderSeparator">&nbsp;</td>
     <td id="urlRunnerDivHeader" class="selectedTab">
         &nbsp;&nbsp;<a href="javascript:selectDiv('urlRunnerDiv')">urlRunner</a>&nbsp;&nbsp;
     </td>
@@ -151,7 +156,7 @@
     <td class="tabHeaderSeparator" width="99%">&nbsp;</td>
 </tr>
 <tr>
-<td colspan="11" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
+<td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
 
 <div id="fragmentRunnerDiv" style="width:100%;visibility:visible;background:#DDDDDD">
     <br>
@@ -160,9 +165,9 @@
         <table>
             <tr>
                 <td colspan="2">
-                    You can ask the server to run JsUnit tests of test code fragments using the <i>fragmentrunner</i>
+                    You can ask the server to run JsUnit tests of test code fragments using the <i>fragment runner</i>
                     service.
-                    Type in your test code fragments below; choose a specific browser if desired.<br/>
+                    Type in your test code fragments below; choose a specific browser and/or skin if desired.<br/>
                 </td>
             </tr>
             <tr>
@@ -221,6 +226,66 @@
     <br>&nbsp;
 </div>
 
+<div id="uploadRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
+    <br>
+
+    <form action="/jsunit/runner" method="post" enctype="multipart/form-data" name="uploadRunnerForm">
+        <table>
+            <tr>
+                <td colspan="2">
+                    You can upload a Test Page and ask the server to run it using the <i>upload runner</i>
+                    service.
+                    Select your Test Page below; choose a specific browser and/or skin if desired.<br/>
+                </td>
+            </tr>
+            <tr>
+                <td nowrap width="1" valign="top">
+                    Test Page:
+                </td>
+                <td>
+                    <input type="file" name="testPageFile">
+                </td>
+            </tr>
+            <%if (!server.isAggregateServer()) {%>
+            <tr>
+                <td width="1">
+                    Browser:
+                </td>
+                <td>
+                    <select name="browserId">
+                        <option value="">All browsers</option>
+                        <%
+                            for (Browser browser : configuration.getBrowsers()) {
+                        %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
+                        <%}%>
+                    </select><br>
+                </td>
+            </tr>
+            <%}%>
+            <tr>
+                <td width="1">
+                    Skin:
+                </td>
+                <td>
+                    <select name="skinId">
+                        <option value="">None - pure XML</option>
+                        <%
+                            for (Skin skin : server.getSkins()) {
+                        %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
+                        <%}%>
+                    </select><br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" value="go"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <br>&nbsp;
+</div>
+
 <div id="urlRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
     <br>
 
@@ -228,7 +293,7 @@
         <table>
             <tr>
                 <td colspan="2">
-                    You can ask the server to run JsUnit tests using the <i>runner</i> service.
+                    You can ask the server to run JsUnit tests using the <i>URL runner</i> service.
                     You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
                     or you can specify a custom URL and/or browser ID using this form:
                 </td>
@@ -355,8 +420,7 @@
 
 <div id="configDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
     <br>
-    You can see the configuration of this server as XML by going to <a id="config"
-                                                                       href="/jsunit/config">config</a>.
+    You can see the configuration of this server as XML by going to <a id="config" href="/jsunit/config">config</a>.
     The config service is usually only used programmatically.
     <br>&nbsp;
 </div>

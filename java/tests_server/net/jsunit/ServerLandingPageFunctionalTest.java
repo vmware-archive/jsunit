@@ -1,11 +1,19 @@
 package net.jsunit;
 
+import com.meterware.httpunit.UploadFileSpec;
+import com.meterware.httpunit.WebForm;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
+import net.jsunit.upload.TestPageGenerator;
+import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
+
+import javax.xml.transform.TransformerException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
 public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
 
@@ -118,6 +126,45 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
                 null,
                 1
         );
+    }
+
+    public void testUploadSuccessfulPageSingleBrowser() throws Exception {
+        File file = saveTestLocally("assertTrue(true);");
+        webTester.beginAt("/");
+        webTester.setWorkingForm("uploadRunnerForm");
+        WebForm form = webTester.getDialog().getForm();
+        form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
+        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.submit();
+        assertRunResult(
+                responseXmlDocument(),
+                ResultType.SUCCESS,
+                null,
+                1
+        );
+    }
+
+    public void testUploadFailingPageBothBrowsers() throws Exception {
+        File file = saveTestLocally("assertTrue(false);");
+        webTester.beginAt("/");
+        webTester.setWorkingForm("uploadRunnerForm");
+        webTester.setWorkingForm("uploadRunnerForm");
+        WebForm form = webTester.getDialog().getForm();
+        form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
+        webTester.submit();
+        assertRunResult(
+                responseXmlDocument(),
+                ResultType.FAILURE,
+                null,
+                2
+        );
+    }
+
+    private File saveTestLocally(String fragment) throws FileNotFoundException, TransformerException {
+        File file = new File("scratch", "testTestPage_" + System.currentTimeMillis() + ".html");
+        String contents = new TestPageGenerator().generateHtmlFrom(fragment);
+        FileUtility.write(file, contents);
+        return file;
     }
 
     private void assertOnLandingPage() {

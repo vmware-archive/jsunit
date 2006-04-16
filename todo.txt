@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - uploadable test pages
     - break out admin page
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl

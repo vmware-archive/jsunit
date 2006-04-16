@@ -10,7 +10,12 @@ import java.io.FileNotFoundException;
 
 public class TestPageGenerator {
 
-    public TestPage generateFrom(String testFragment) throws FileNotFoundException, TransformerException {
+    public TestPage generateTestPageFrom(String testFragment) throws FileNotFoundException, TransformerException {
+        String html = generateHtmlFrom(testFragment);
+        return new TestPage(html, true);
+    }
+
+    public String generateHtmlFrom(String testFragment) throws FileNotFoundException, TransformerException {
         if (testFragment.indexOf("function test") == -1)
             testFragment = "function testSomething() {\n" + testFragment + "\n}";
         String xml = "<testFragmentXml>" + testFragment + "</testFragmentXml>";
@@ -19,6 +24,6 @@ public class TestPageGenerator {
         XsltTransformer transformer = new XsltTransformer(new FileInputStream(testPageDotXsl), xml);
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
         transformer.writeToOuputStream(outStream);
-        return new TestPage(new String(outStream.toByteArray()));
+        return new String(outStream.toByteArray());
     }
 }

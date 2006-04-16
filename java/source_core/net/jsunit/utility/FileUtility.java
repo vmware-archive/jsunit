@@ -1,8 +1,6 @@
 package net.jsunit.utility;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
+import java.io.*;
 
 public class FileUtility {
 
@@ -21,5 +19,27 @@ public class FileUtility {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static String read(File file) {
+        StringBuffer buffer = new StringBuffer();
+        BufferedInputStream in = null;
+        try {
+            in = new BufferedInputStream(new FileInputStream(file));
+            int aByte;
+            while ((aByte = in.read()) != -1)
+                buffer.append((char) aByte);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return buffer.toString();
     }
 }

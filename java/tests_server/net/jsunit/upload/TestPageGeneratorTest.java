@@ -13,13 +13,13 @@ public class TestPageGeneratorTest extends TestCase {
 
     public void testFunctionFragment() throws Exception {
         String text = "function testSomething() {\nvar foo=7;\nassertEquals(7, foo);\n}";
-        TestPage page = generator.generateFrom(text);
+        TestPage page = generator.generateTestPageFrom(text);
         assertPageContains(page, text);
     }
 
     public void testFragment() throws Exception {
         String text = "var foo=7;\nassertEquals(7, foo);";
-        TestPage page = generator.generateFrom(text);
+        TestPage page = generator.generateTestPageFrom(text);
         String expectedText = "function testSomething() {var foo=7;\nassertEquals(7, foo);\n}";
         assertPageContains(page, expectedText);
     }

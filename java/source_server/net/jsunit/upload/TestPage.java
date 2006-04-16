@@ -6,11 +6,13 @@ import java.io.File;
 
 public class TestPage {
     private String html;
+    private boolean isGenerated;
     private long id;
 
-    public TestPage(String html) {
+    public TestPage(String html, boolean isGenerated) {
         this.html = html;
-        id = System.currentTimeMillis();
+        this.isGenerated = isGenerated;
+        this.id = System.currentTimeMillis();
     }
 
     public String getHtml() {
@@ -22,7 +24,8 @@ public class TestPage {
     }
 
     public String getFilename() {
-        return "generated_" + id + ".html";
+        String prefix = isGenerated ? "generated" : "uploaded";
+        return prefix + "_" + id + ".html";
     }
 
     public void write() {
