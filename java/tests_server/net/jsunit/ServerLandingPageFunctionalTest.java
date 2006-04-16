@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
+    private File createdFile;
 
     protected boolean needsRealResultRepository() {
         return true;
@@ -161,14 +162,20 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
     }
 
     private File saveTestLocally(String fragment) throws FileNotFoundException, TransformerException {
-        File file = new File("scratch", "testTestPage_" + System.currentTimeMillis() + ".html");
+        createdFile = new File("scratch", "testTestPage_" + System.currentTimeMillis() + ".html");
         String contents = new TestPageGenerator().generateHtmlFrom(fragment);
-        FileUtility.write(file, contents);
-        return file;
+        FileUtility.write(createdFile, contents);
+        return createdFile;
     }
 
     private void assertOnLandingPage() {
         webTester.assertTitleEquals("JsUnit  Server");
+    }
+
+    public void tearDown() throws Exception {
+        if (createdFile != null)
+            createdFile.delete();
+        super.tearDown();
     }
 
 }
