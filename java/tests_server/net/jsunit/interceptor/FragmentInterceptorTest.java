@@ -3,10 +3,8 @@ package net.jsunit.interceptor;
 import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
-import net.jsunit.BrowserTestRunner;
 import net.jsunit.DummyConfigurationSource;
 import net.jsunit.DummyHttpRequest;
-import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.action.TestPageURLAware;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.utility.SystemUtility;
@@ -57,14 +55,10 @@ public class FragmentInterceptorTest extends TestCase {
             this.url = url;
         }
 
-        public void setBrowserTestRunner(BrowserTestRunner runner) {
+        public Configuration getServerConfiguration() {
+            return new Configuration(new DummyConfigurationSource());
         }
 
-        public BrowserTestRunner getBrowserTestRunner() {
-            MockBrowserTestRunner mockBrowserTestRunner = new MockBrowserTestRunner();
-            mockBrowserTestRunner.configuration = new Configuration(new DummyConfigurationSource());
-            return mockBrowserTestRunner;
-        }
     }
 
 }

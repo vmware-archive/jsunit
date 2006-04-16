@@ -3,9 +3,10 @@ package net.jsunit.action;
 import net.jsunit.DistributedTestRunManager;
 import net.jsunit.SkinSource;
 import net.jsunit.XmlRenderable;
+import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 
-public class DistributedTestRunnerAction extends JsUnitAggregateServerAction implements RequestSourceAware, SkinAware {
+public class DistributedTestRunnerAction extends JsUnitAggregateServerAction implements RequestSourceAware, SkinAware, TestPageURLAware {
 
     private DistributedTestRunManager manager;
     private String overrideURL;
@@ -38,6 +39,10 @@ public class DistributedTestRunnerAction extends JsUnitAggregateServerAction imp
 
     public void setUrl(String overrideURL) {
         this.overrideURL = overrideURL;
+    }
+
+    public Configuration getServerConfiguration() {
+        return server.getConfiguration();
     }
 
     public void setSkin(Skin skin) {

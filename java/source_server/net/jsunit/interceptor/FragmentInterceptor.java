@@ -1,7 +1,6 @@
 package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
-import net.jsunit.BrowserTestRunner;
 import net.jsunit.action.TestPageURLAware;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.upload.TestPage;
@@ -17,12 +16,11 @@ public class FragmentInterceptor extends JsUnitInterceptor {
         String fragment = request().getParameter("fragment");
         if (fragment != null) {
             TestPageURLAware aware = (TestPageURLAware) targetAction;
-            BrowserTestRunner runner = aware.getBrowserTestRunner();
+            Configuration configuration = aware.getServerConfiguration();
 
             TestPage uploadedTestPage = new TestPageGenerator().generateFrom(fragment);
             uploadedTestPage.write();
 
-            Configuration configuration = runner.getConfiguration();
             URL runnerURL = new URL("http", SystemUtility.hostname(), configuration.getPort(), "/jsunit/testRunner.html");
             URL testPageURL = new URL("http", SystemUtility.hostname(), configuration.getPort(), "/jsunit/uploaded/" + uploadedTestPage.getFilename());
 

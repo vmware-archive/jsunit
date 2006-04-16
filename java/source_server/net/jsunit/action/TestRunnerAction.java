@@ -4,6 +4,7 @@ import net.jsunit.InvalidBrowserIdException;
 import net.jsunit.SkinSource;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
+import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.StringUtility;
 
@@ -54,6 +55,10 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public Configuration getServerConfiguration() {
+        return runner.getConfiguration();
     }
 
     public void setRequestIPAddress(String ipAddress) {

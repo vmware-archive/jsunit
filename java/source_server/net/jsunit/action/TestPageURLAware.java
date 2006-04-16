@@ -1,6 +1,11 @@
 package net.jsunit.action;
 
-public interface TestPageURLAware extends BrowserTestRunnerAware {
+import net.jsunit.configuration.Configuration;
+
+public interface TestPageURLAware {
 
     void setUrl(String url);
+
+    Configuration getServerConfiguration();
+
 }

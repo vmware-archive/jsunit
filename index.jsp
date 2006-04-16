@@ -55,7 +55,8 @@
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%> Server</h4>
+            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%>
+                Server</h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
         </th>
         <td nowrap align="right" valign="middle">
@@ -152,7 +153,6 @@
 <tr>
 <td colspan="11" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
 
-<%if (!server.isAggregateServer()) {%>
 <div id="fragmentRunnerDiv" style="width:100%;visibility:visible;background:#DDDDDD">
     <br>
 
@@ -220,7 +220,6 @@
     </form>
     <br>&nbsp;
 </div>
-<%}%>
 
 <div id="urlRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
     <br>
