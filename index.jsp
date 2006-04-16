@@ -43,6 +43,46 @@
             selectDiv("fragmentRunnerDiv");
         }
 
+        function removeReferencedDotJsFile(anId) {
+            var theRow = document.getElementById(anId);
+            theRow.parentNode.removeChild(theRow);
+        }
+
+        function addReferencedDotJsFile() {
+            var id = new Date().getTime();
+
+            var rowNode = document.createElement("tr");
+            rowNode.setAttribute("id", id);
+            var leftCellNode = document.createElement("td");
+            leftCellNode.appendChild(document.createTextNode(".js file:"));
+
+            rowNode.appendChild(leftCellNode);
+
+            var middleCellNode = document.createElement("td");
+            middleCellNode.setAttribute("width", "1");
+            var fileUploadField = document.createElement("input");
+            fileUploadField.setAttribute("type", "file");
+            fileUploadField.setAttribute("name", "referencedDotJsFile");
+            middleCellNode.appendChild(fileUploadField);
+
+            rowNode.appendChild(middleCellNode);
+
+            var rightCellNode = document.createElement("td");
+            var fontElement = document.createElement("font");
+            fontElement.setAttribute("size", "-2");
+            var removeLink = document.createElement("a");
+            removeLink.setAttribute("href", "javascript:removeReferencedDotJsFile(\"" + id + "\")");
+            removeLink.appendChild(document.createTextNode("[remove]"));
+            fontElement.appendChild(removeLink);
+            rightCellNode.appendChild(fontElement);
+
+            rowNode.appendChild(rightCellNode);
+
+            var addReferencedJsFileRowNode = document.getElementById("addReferencedJsFileRow");
+            var rowParentNode = addReferencedJsFileRowNode.parentNode;
+            rowParentNode.insertBefore(rowNode, addReferencedJsFileRowNode);
+        }
+
     </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
@@ -230,9 +270,9 @@
     <br>
 
     <form action="/jsunit/runner" method="post" enctype="multipart/form-data" name="uploadRunnerForm">
-        <table>
+        <table id="uploadRunnerTable">
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     You can upload a Test Page and ask the server to run it using the <i>upload runner</i>
                     service.
                     Select your Test Page below; choose a specific browser and/or skin if desired.<br/>
@@ -242,8 +282,14 @@
                 <td nowrap width="1" valign="top">
                     Test Page:
                 </td>
-                <td>
+                <td colspan="2">
                     <input type="file" name="testPageFile">
+                </td>
+            </tr>
+            <tr id="addReferencedJsFileRow">
+                <td>&nbsp;</td>
+                <td colspan="2">
+                    <font size="-2"><a href="javascript:addReferencedDotJsFile()">add referenced .js file</a></font>
                 </td>
             </tr>
             <%if (!server.isAggregateServer()) {%>
@@ -251,7 +297,7 @@
                 <td width="1">
                     Browser:
                 </td>
-                <td>
+                <td colspan="2">
                     <select name="browserId">
                         <option value="">All browsers</option>
                         <%
@@ -266,7 +312,7 @@
                 <td width="1">
                     Skin:
                 </td>
-                <td>
+                <td colspan="2">
                     <select name="skinId">
                         <option value="">None - pure XML</option>
                         <%
@@ -277,7 +323,7 @@
                 </td>
             </tr>
             <tr>
-                <td colspan="2">
+                <td colspan="3">
                     <input type="submit" value="go"/>
                 </td>
             </tr>
