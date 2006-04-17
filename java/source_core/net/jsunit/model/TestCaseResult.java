@@ -145,9 +145,8 @@ public class TestCaseResult extends AbstractResult {
     }
 
     protected void addMyErrorStringTo(StringBuffer buffer) {
-        if (!wasSuccessful()) {
+        if (!wasSuccessful())
             buffer.append(getProblemSummary(false));
-        }
     }
 
 }
