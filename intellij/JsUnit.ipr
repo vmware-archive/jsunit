@@ -235,6 +235,7 @@
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-el.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/start.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-fileupload.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml-0.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -247,7 +248,6 @@
         <root url="jar://$PROJECT_DIR$/../java/testlib/xml-apis-1.0.b2.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/jwebunit-1.2.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/httpunit-1.5.4.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/testlib/nekohtml-0.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

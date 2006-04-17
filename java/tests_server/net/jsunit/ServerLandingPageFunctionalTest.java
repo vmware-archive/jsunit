@@ -5,18 +5,20 @@ import com.meterware.httpunit.WebForm;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.ResultType;
-import net.jsunit.upload.TestPageGenerator;
+import net.jsunit.upload.TestPage;
+import net.jsunit.upload.TestPageFactory;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
-import javax.xml.transform.TransformerException;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
-    private File createdFile;
+
+    private List<File> createdFiles = new ArrayList<File>();
 
     protected boolean needsRealResultRepository() {
         return true;
@@ -34,8 +36,8 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.assertTextPresent(SystemUtility.ipAddress());
     }
 
-    public void testIndexDotJsp() throws Exception {
-        webTester.beginAt("/index.jsp");
+    public void testIndex() throws Exception {
+        webTester.beginAt("/index");
         assertOnLandingPage();
     }
 
@@ -130,7 +132,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testUploadSuccessfulPageSingleBrowser() throws Exception {
-        File file = saveTestLocally("assertTrue(true);");
+        File file = saveTestPageLocally("assertTrue(true);");
         webTester.beginAt("/");
         webTester.setWorkingForm("uploadRunnerForm");
         WebForm form = webTester.getDialog().getForm();
@@ -146,9 +148,8 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testUploadFailingPageBothBrowsers() throws Exception {
-        File file = saveTestLocally("assertTrue(false);");
+        File file = saveTestPageLocally("assertTrue(false);");
         webTester.beginAt("/");
-        webTester.setWorkingForm("uploadRunnerForm");
         webTester.setWorkingForm("uploadRunnerForm");
         WebForm form = webTester.getDialog().getForm();
         form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
@@ -161,20 +162,56 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         );
     }
 
-    private File saveTestLocally(String fragment) throws FileNotFoundException, TransformerException {
-        createdFile = new File("scratch", "testTestPage_" + System.currentTimeMillis() + ".html");
-        String contents = new TestPageGenerator().generateHtmlFrom(fragment);
-        FileUtility.write(createdFile, contents);
-        return createdFile;
+    public void testUploadWithReferencedJsFiles() throws Exception {
+        File referencedJsFile1 = new File("scratch", "testReferencedJs1" + System.currentTimeMillis() + ".js");
+        File referencedJsFile2 = new File("scratch", "testReferencedJs2" + System.currentTimeMillis() + ".js");
+        FileUtility.write(referencedJsFile1, "function trueFunction() {return true;}");
+        FileUtility.write(referencedJsFile2, "function anotherTrueFunction() {return true;}");
+
+        File testPageFile = new File("scratch", "testPage" + System.currentTimeMillis() + ".html");
+        String html =
+                "<html><head>" +
+                        "<script language=\"javascript\" src=\"/my/own/jsUnitCore.js\"></script>" +
+                        "<script language=\"javascript\" src=\"" + referencedJsFile1.getName() + "\"></script>" +
+                        "<script language=\"javascript\" src=\"" + referencedJsFile2.getName() + "\"></script>" +
+                        "<script language=\"javascript\">function testSimple() {assertTrue(trueFunction()); assertTrue(anotherTrueFunction());}" +
+                        "</script></head><body></body></html>";
+        FileUtility.write(testPageFile, html);
+
+        createdFiles.add(referencedJsFile1);
+        createdFiles.add(referencedJsFile2);
+        createdFiles.add(testPageFile);
+
+        webTester.beginAt("/index?referencedJsFileFieldCount=2");
+        webTester.setWorkingForm("uploadRunnerForm");
+        WebForm form = webTester.getDialog().getForm();
+        form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(testPageFile)});
+        form.setParameter(
+                "referencedJsFiles",
+                new UploadFileSpec[]{new UploadFileSpec(referencedJsFile1), new UploadFileSpec(referencedJsFile2)}
+        );
+
+        webTester.submit();
+        assertRunResult(
+                responseXmlDocument(),
+                ResultType.SUCCESS,
+                null,
+                2
+        );
     }
 
-    private void assertOnLandingPage() {
-        webTester.assertTitleEquals("JsUnit  Server");
+    private File saveTestPageLocally(String fragment) {
+        File testPageFile = new File("scratch", "testTestPage_" + System.currentTimeMillis() + ".html");
+        TestPage page = new TestPageFactory().fromFragment(fragment);
+        FileUtility.write(testPageFile, page.getHtml());
+        createdFiles.add(testPageFile);
+        return testPageFile;
     }
 
     public void tearDown() throws Exception {
-        if (createdFile != null)
-            createdFile.delete();
+        for (File file : createdFiles)
+            if (file != null)
+                file.delete();
         super.tearDown();
     }
 

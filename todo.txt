@@ -1,6 +1,9 @@
 Required for next release:
 
   FEATURES:
+    - keep original names & place in temporary uniquely named subdirectories
+    - remove all files with an around interceptor
+    - uploaded test suites
     - break out admin page
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl

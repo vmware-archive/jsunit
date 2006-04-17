@@ -96,9 +96,12 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         ServletHttpContext servletContext = new ServletHttpContext();
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
-
+        servletContext.addWelcomeFile("java/jsp/index.jsp");
         servletContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
-        servletContext.addHandler(new ResourceHandler());
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirAllowed(false);
+        servletContext.addHandler(resourceHandler);
 
         ConfigurationManager.clearConfigurationProviders();
         ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));

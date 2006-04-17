@@ -25,6 +25,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
         result.addTestSuite(ErrorXmlRenderableTest.class);
         result.addTestSuite(DistributedTestRunResultTest.class);
+        result.addTestSuite(IndexActionTest.class);
         result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);

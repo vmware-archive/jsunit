@@ -8,6 +8,7 @@
     <content url="file://$MODULE_DIR$/..">
       <excludeFolder url="file://$MODULE_DIR$/../bin" />
       <excludeFolder url="file://$MODULE_DIR$/../java" />
+      <excludeFolder url="file://$MODULE_DIR$/../scratch" />
       <excludeFolder url="file://$MODULE_DIR$/../skins" />
       <excludeFolder url="file://$MODULE_DIR$/../uploaded" />
     </content>

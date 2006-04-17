@@ -104,4 +104,8 @@ public abstract class FunctionalTestCase extends TestCase {
         }
         return null;
     }
+
+    protected void assertOnLandingPage() {
+        webTester.assertTitleEquals("JsUnit  Server");
+    }
 }

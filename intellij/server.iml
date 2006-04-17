@@ -6,12 +6,14 @@
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes_server_test" />
     <content url="file://$MODULE_DIR$/../java/config" />
+    <content url="file://$MODULE_DIR$/../java/jsp" />
     <content url="file://$MODULE_DIR$/../java/source_server">
       <sourceFolder url="file://$MODULE_DIR$/../java/source_server" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/../java/tests_server">
       <sourceFolder url="file://$MODULE_DIR$/../java/tests_server" isTestSource="true" />
     </content>
+    <content url="file://$MODULE_DIR$/../scratch" />
     <content url="file://$MODULE_DIR$/../skins" />
     <content url="file://$MODULE_DIR$/../uploaded" />
     <orderEntry type="inheritedJdk" />

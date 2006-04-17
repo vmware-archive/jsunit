@@ -14,7 +14,6 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit <%if (server.isAggregateServer()) {%> Aggregate<%}%> Server</title>
-    <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <script type="text/javascript">
 
@@ -43,12 +42,12 @@
             selectDiv("fragmentRunnerDiv");
         }
 
-        function removeReferencedDotJsFile(anId) {
+        function removeReferencedJsFile(anId) {
             var theRow = document.getElementById(anId);
             theRow.parentNode.removeChild(theRow);
         }
 
-        function addReferencedDotJsFile() {
+        function addReferencedJsFile() {
             var id = new Date().getTime();
 
             var rowNode = document.createElement("tr");
@@ -62,7 +61,7 @@
             middleCellNode.setAttribute("width", "1");
             var fileUploadField = document.createElement("input");
             fileUploadField.setAttribute("type", "file");
-            fileUploadField.setAttribute("name", "referencedDotJsFile");
+            fileUploadField.setAttribute("name", "referencedJsFiles");
             middleCellNode.appendChild(fileUploadField);
 
             rowNode.appendChild(middleCellNode);
@@ -71,7 +70,7 @@
             var fontElement = document.createElement("font");
             fontElement.setAttribute("size", "-2");
             var removeLink = document.createElement("a");
-            removeLink.setAttribute("href", "javascript:removeReferencedDotJsFile(\"" + id + "\")");
+            removeLink.setAttribute("href", "javascript:removeReferencedJsFile(\"" + id + "\")");
             removeLink.appendChild(document.createTextNode("[remove]"));
             fontElement.appendChild(removeLink);
             rightCellNode.appendChild(fontElement);
@@ -172,11 +171,11 @@
         &nbsp;&nbsp;<a href="javascript:selectDiv('fragmentRunnerDiv')">fragmentRunner</a>&nbsp;&nbsp;
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
-    <td id="uploadRunnerDivHeader" class="selectedTab">
+    <td id="uploadRunnerDivHeader" class="unselectedTab">
         &nbsp;&nbsp;<a href="javascript:selectDiv('uploadRunnerDiv')">uploadRunner</a>&nbsp;&nbsp;
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
-    <td id="urlRunnerDivHeader" class="selectedTab">
+    <td id="urlRunnerDivHeader" class="unselectedTab">
         &nbsp;&nbsp;<a href="javascript:selectDiv('urlRunnerDiv')">urlRunner</a>&nbsp;&nbsp;
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
@@ -286,10 +285,27 @@
                     <input type="file" name="testPageFile">
                 </td>
             </tr>
+            <%
+                String countString = request.getParameter("referencedJsFileFieldCount");
+                if (countString != null) {
+                    int count = Integer.parseInt(countString);
+                    for (int i = 0; i < count; i++) {
+            %>
+            <tr id="defaultReferencedJsFileField<%=i%>">
+                <td>.js file</td>
+                <td width="1"><input type="file" name="referencedJsFiles"></td>
+                <td><font size="-2"><a href="javascript:removeReferencedJsFile('defaultReferencedJsFileField<%=i%>')">[remove]</a>
+                </font></td>
+            </tr>
+            <%
+                    }
+                }
+            %>
             <tr id="addReferencedJsFileRow">
                 <td>&nbsp;</td>
                 <td colspan="2">
-                    <font size="-2"><a href="javascript:addReferencedDotJsFile()">add referenced .js file</a></font>
+                    <font size="-2"><a href="javascript:addReferencedJsFile()" id="addReferencedJsFile">add referenced
+                        .js file</a></font>
                 </td>
             </tr>
             <%if (!server.isAggregateServer()) {%>

@@ -24,7 +24,7 @@
             <interceptor name="fragment" class="net.jsunit.interceptor.FragmentInterceptor"/>
             <interceptor name="upload" class="net.jsunit.interceptor.UploadedTestPageInterceptor"/>
 
-            <interceptor-stack name="defaultStack">
+            <interceptor-stack name="standardStack">
                 <interceptor-ref name="servlet-config"/>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="browserTestRunner"/>
@@ -32,11 +32,9 @@
             </interceptor-stack>
         </interceptors>
 
-        <default-interceptor-ref name="defaultStack"/>
-
         <action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
             <result name="success" type="jsUnitXml"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="standardStack"/>
             <interceptor-ref name="browserResult"/>
         </action>
 
@@ -44,7 +42,7 @@
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="standardStack"/>
             <interceptor-ref name="requestSource"/>
             <interceptor-ref name="skin"/>
             <interceptor-ref name="fragment"/>
@@ -55,12 +53,13 @@
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
-            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="standardStack"/>
             <interceptor-ref name="skin"/>
         </action>
 
         <action name="config" class="net.jsunit.action.BrowserTestRunnerConfigurationAction">
             <result name="success" type="jsUnitXml"/>
+            <interceptor-ref name="standardStack"/>
         </action>
 
         <action name="latestversion" class="net.jsunit.action.LatestVersionAction">
@@ -83,9 +82,21 @@
 
         <action name="admin" class="net.jsunit.action.AdminAction">
             <result name="success" type="dispatcher">
-                <param name="location">admin.jsp</param>
+                <param name="location">java/jsp/admin.jsp</param>
             </result>
             <interceptor-ref name="server"/>
+        </action>
+
+        <action name="index" class="net.jsunit.action.IndexAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/index.jsp</param>
+            </result>
+        </action>
+
+        <action name="/" class="net.jsunit.action.IndexAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/index.jsp</param>
+            </result>
         </action>
 
     </package>
