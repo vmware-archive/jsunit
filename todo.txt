@@ -5,6 +5,7 @@ Required for next release:
     - remove all files with an around interceptor
     - uploaded test suites
     - break out admin page
+    - incorrect url in "The full result log is at <URL>" 
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
