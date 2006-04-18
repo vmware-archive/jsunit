@@ -57,6 +57,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/");
         webTester.setWorkingForm("urlRunnerForm");
         webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+        webTester.selectOption("skinId", "None (raw XML)");
     }
 
     public void testRunnerForAllBrowsers() throws Exception {
@@ -73,7 +74,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
     public void testRunnerWithHTMLSkin() throws Exception {
         setUpURLRunnerSubmission();
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
-        webTester.selectOption("skinId", "simple_html");
+        webTester.selectOption("skinId", "HTML");
         webTester.submit();
         webTester.assertTitleEquals("JsUnit Test Results");
         webTester.assertTextPresent("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
@@ -83,7 +84,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
     public void testRunnerWithTextSkin() throws Exception {
         setUpURLRunnerSubmission();
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
-        webTester.selectOption("skinId", "simple_text");
+        webTester.selectOption("skinId", "Text");
         webTester.submit();
 //        String responseText = webTester.getDialog().getResponseText();
 //        assertTrue(responseText.indexOf("http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:") != -1);
@@ -99,6 +100,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/");
         webTester.setWorkingForm("displayerForm");
         webTester.setFormElement("id", id);
+        webTester.selectOption("skinId", "None (raw XML)");
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
         webTester.submit();
         assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
@@ -108,6 +110,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.beginAt("/");
         webTester.setWorkingForm("fragmentRunnerForm");
         webTester.setFormElement("fragment", "assertTrue(true);");
+        webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         assertRunResult(
                 responseXmlDocument(),
@@ -122,6 +125,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.setWorkingForm("fragmentRunnerForm");
         webTester.setFormElement("fragment", "assertTrue(false);");
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         assertRunResult(
                 responseXmlDocument(),
@@ -138,6 +142,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         WebForm form = webTester.getDialog().getForm();
         form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
         webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         assertRunResult(
                 responseXmlDocument(),
@@ -153,6 +158,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
         webTester.setWorkingForm("uploadRunnerForm");
         WebForm form = webTester.getDialog().getForm();
         form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
+        webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         assertRunResult(
                 responseXmlDocument(),
@@ -190,6 +196,7 @@ public class ServerLandingPageFunctionalTest extends FunctionalTestCase {
                 "referencedJsFiles",
                 new UploadFileSpec[]{new UploadFileSpec(referencedJsFile1), new UploadFileSpec(referencedJsFile2)}
         );
+        webTester.selectOption("skinId", "None (raw XML)");
 
         webTester.submit();
         assertRunResult(

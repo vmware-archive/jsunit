@@ -8,6 +8,7 @@ import net.jsunit.utility.StringUtility;
 import javax.servlet.http.HttpServletRequest;
 
 public class SkinInterceptor extends JsUnitInterceptor {
+
     protected void execute(Action targetAction) throws Exception {
         SkinAware skinAware = (SkinAware) targetAction;
         HttpServletRequest request = request();

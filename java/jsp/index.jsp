@@ -5,8 +5,6 @@
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.results.Skin" %>
 <%@ page import="net.jsunit.utility.SystemUtility" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%Configuration configuration = server.getConfiguration();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -25,7 +23,6 @@
         <%if (!server.isAggregateServer()) {%>
             updateDiv("displayerDiv", selectedDivName);
         <%}%>
-            updateDiv("testRunnerDiv", selectedDivName);
             updateDiv("configDiv", selectedDivName);
         }
 
@@ -68,6 +65,7 @@
             rowNode.appendChild(middleCellNode);
 
             var rightCellNode = document.createElement("td");
+            rightCellNode.setAttribute("align", "left");
             var fontElement = document.createElement("font");
             fontElement.setAttribute("size", "-2");
             var removeLink = document.createElement("a");
@@ -116,55 +114,6 @@
     </tr>
 </table>
 <br>
-<table cellpadding="1" cellspacing="1" border="0" width="100%">
-    <tr>
-        <td valign="top" width="50%">
-            <h4>
-                Server configuration
-            </h4>
-            <table border="0">
-                <tr>
-                    <th nowrap align="right">Server type:</th>
-                    <td width="10">&nbsp;</td>
-                    <td><%=server.serverType().getDisplayName()%></td>
-                </tr>
-                <%
-                    List<ConfigurationProperty> propertiesToDisplay = new ArrayList<ConfigurationProperty>();
-                    propertiesToDisplay.add(ConfigurationProperty.DESCRIPTION);
-                    propertiesToDisplay.add(ConfigurationProperty.BROWSER_FILE_NAMES);
-                    propertiesToDisplay.add(ConfigurationProperty.TIMEOUT_SECONDS);
-                    for (ConfigurationProperty property : propertiesToDisplay) {
-                %>
-                <tr>
-                    <th nowrap align="right" valign="top"><%=property.getDisplayName()%>:</th>
-                    <td width="10">&nbsp;</td>
-                    <td valign="top">
-                        <%
-                            for (String valueString : property.getValueStrings(configuration)) {
-                        %><div><%
-                        if (valueString != null) {
-                            if (property.isURL()) {
-                    %><a href="<%=valueString%>"><%=valueString%></a><%
-                    } else {
-                    %><%=valueString%><%
-                            }
-                        }
-                    %></div><%
-                        }
-                    %>
-                    </td></tr>
-                <%
-                    }
-                %>
-            </table>
-        </td>
-    </tr>
-</table>
-<br>
-<h4>
-    Available services
-</h4>
-
 <table cellpadding="0" cellspacing="0">
 <tr>
     <td class="tabHeaderSeparator">&nbsp;</td>
@@ -186,9 +135,6 @@
     </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
     <%}%>
-    <td id="testRunnerDivHeader" class="unselectedTab">
-        &nbsp;&nbsp;<a href="javascript:selectDiv('testRunnerDiv')">testRunner.html</a>&nbsp;&nbsp;
-    </td>
     <td class="tabHeaderSeparator">&nbsp;</td>
     <td id="configDivHeader" class="unselectedTab">
         &nbsp;&nbsp;<a href="javascript:selectDiv('configDiv')">config</a>&nbsp;&nbsp;
@@ -199,14 +145,12 @@
 <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
 
 <div id="fragmentRunnerDiv" style="width:100%;visibility:visible;background:#DDDDDD">
-    <br>
-
-    <form action="/jsunit/runner" method="post" name="fragmentRunnerForm">
+    <form action="/jsunit/runner" method="post" target="resultsFrame" name="fragmentRunnerForm">
         <table>
             <tr>
                 <td colspan="2">
                     You can ask the server to run JsUnit tests of test code fragments using the <i>fragment runner</i>
-                    service.
+                    service. You may enter any kind of JavaScript - statements or Test Functions.
                     Type in your test code fragments below; choose a specific browser and/or skin if desired.<br/>
                 </td>
             </tr>
@@ -215,7 +159,7 @@
                     Fragment:
                 </td>
                 <td>
-                    <textarea name="fragment" cols="50" rows="10"></textarea>
+                    <textarea name="fragment" width="100%" cols="75" rows="10"></textarea>
                 </td>
             </tr>
             <tr>
@@ -248,11 +192,11 @@
                 </td>
                 <td>
                     <select name="skinId">
-                        <option value="">None - pure XML</option>
                         <%
                             for (Skin skin : server.getSkins()) {
                         %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
                         <%}%>
+                        <option value="">None (raw XML)</option>
                     </select><br>
                 </td>
             </tr>
@@ -263,27 +207,28 @@
             </tr>
         </table>
     </form>
-    <br>&nbsp;
 </div>
 
 <div id="uploadRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
-    <br>
-
-    <form action="/jsunit/runner" method="post" enctype="multipart/form-data" name="uploadRunnerForm">
+    <form action="/jsunit/runner" method="post" target="resultsFrame" enctype="multipart/form-data" name="uploadRunnerForm">
         <table id="uploadRunnerTable">
             <tr>
                 <td colspan="3">
                     You can upload a Test Page and ask the server to run it using the <i>upload runner</i>
                     service.
-                    Select your Test Page below; choose a specific browser and/or skin if desired.<br/>
+                    Select your Test Page and any referenced .js files below; choose a specific browser and/or skin if
+                    desired.<br/>
                 </td>
             </tr>
             <tr>
-                <td nowrap width="1" valign="top">
+                <td nowrap width="10%" valign="top">
                     Test Page:
                 </td>
-                <td colspan="2">
+                <td width="10%">
                     <input type="file" name="testPageFile">
+                </td>
+                <td width="80%">
+                    &nbsp;
                 </td>
             </tr>
             <%
@@ -294,7 +239,7 @@
             %>
             <tr id="defaultReferencedJsFileField<%=i%>">
                 <td>.js file</td>
-                <td width="1"><input type="file" name="referencedJsFiles"></td>
+                <td align="left" width="1"><input type="file" name="referencedJsFiles"></td>
                 <td><font size="-2"><a href="javascript:removeReferencedJsFile('defaultReferencedJsFileField<%=i%>')">[remove]</a>
                 </font></td>
             </tr>
@@ -331,11 +276,11 @@
                 </td>
                 <td colspan="2">
                     <select name="skinId">
-                        <option value="">None - pure XML</option>
                         <%
                             for (Skin skin : server.getSkins()) {
                         %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
                         <%}%>
+                        <option value="">None (raw XML)</option>
                     </select><br>
                 </td>
             </tr>
@@ -346,19 +291,16 @@
             </tr>
         </table>
     </form>
-    <br>&nbsp;
 </div>
 
 <div id="urlRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
-    <br>
-
-    <form action="/jsunit/runner" method="get" name="urlRunnerForm">
+    <form action="/jsunit/runner" method="get" target="resultsFrame" name="urlRunnerForm">
         <table>
             <tr>
                 <td colspan="2">
-                    You can ask the server to run JsUnit tests using the <i>URL runner</i> service.
-                    You can run using the server's default URL for tests by going to <a href="/jsunit/runner">runner</a>,
-                    or you can specify a custom URL and/or browser ID using this form:
+                    If you have JsUnit tests hosted on a web server (such as a JsUnit server), you can ask this server
+                    to run them using the <i>URL runner</i> service.
+                    You can specify a URL and/or browser ID and skin using this form:
                 </td>
             </tr>
             <tr>
@@ -399,11 +341,11 @@
                 </td>
                 <td>
                     <select name="skinId">
-                        <option value="">None - pure XML</option>
                         <%
                             for (Skin skin : server.getSkins()) {
                         %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
                         <%}%>
+                        <option value="">None (raw XML)</option>
                     </select><br>
                 </td>
             </tr>
@@ -414,19 +356,16 @@
             </tr>
         </table>
     </form>
-    <br>&nbsp;
 </div>
 
 <%if (!server.isAggregateServer()) {%>
 <div id="displayerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
-    <br>
-
     <form action="/jsunit/displayer" name="displayerForm">
         <table>
             <tr>
                 <td colspan="2">
                     You can view the logs of past runs using the <i>displayer</i> service.
-                    Use this form to specify the ID of the run you want to see:
+                    Use this form to specify the ID and browser of the run you want to see:
                 </td>
             </tr>
             <tr>
@@ -456,11 +395,11 @@
                 </td>
                 <td>
                     <select name="skinId">
-                        <option value="">None - pure XML</option>
                         <%
                             for (Skin skin : server.getSkins()) {
                         %><option value="<%=skin.getId()%>"><%=skin.getDisplayName()%></option>
                         <%}%>
+                        <option value="">None (raw XML)</option>
                     </select><br>
                 </td>
             </tr>
@@ -471,26 +410,54 @@
             </tr>
         </table>
     </form>
-    <br>&nbsp;
 </div>
 <%}%>
 
-<div id="testRunnerDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
-    <br>
-    The manual Test Runner is at <a id="testRunnerHtml" href="./testRunner.html">testRunner.html</a>.
-    <br>&nbsp;
-</div>
-
 <div id="configDiv" style="width:100%;visibility:hidden;background:#DDDDDD">
+    <table cellpadding="1" cellspacing="1" border="0" width="100%">
+        <tr>
+            <th nowrap align="right">Server type:</th>
+            <td width="10">&nbsp;</td>
+            <td><%=server.serverType().getDisplayName()%></td>
+        </tr>
+        <%
+            for (ConfigurationProperty property : ConfigurationProperty.all()) {
+        %>
+        <tr>
+            <th nowrap align="right" valign="top"><%=property.getDisplayName()%>:</th>
+            <td width="10">&nbsp;</td>
+            <td valign="top">
+                <%
+                    for (String valueString : property.getValueStrings(configuration)) {
+                %><div><%
+                if (valueString != null) {
+                    if (property.isURL()) {
+            %><a href="<%=valueString%>"><%=valueString%></a><%
+            } else {
+            %><%=valueString%><%
+                    }
+                }
+            %></div><%
+                }
+            %>
+            </td></tr>
+        <%
+            }
+        %>
+    </table>
     <br>
-    You can see the configuration of this server as XML by going to <a id="config" href="/jsunit/config">config</a>.
-    The config service is usually only used programmatically.
-    <br>&nbsp;
+    You can see the configuration of this server as XML by going to
+    <a id="config" href="/jsunit/config" target="resultsFrame">config</a>.
+    <br>
+    <br>
 </div>
-
 </td>
 </tr>
 </table>
+<br>
+<font size="-2">Server output:</font>
+<br>
+<iframe name="resultsFrame" width="100%" height="250" border="0"></iframe>
 
 </body>
 </html>

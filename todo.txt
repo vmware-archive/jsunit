@@ -4,14 +4,13 @@ Required for next release:
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites
-    - break out admin page
-    - incorrect url in "The full result log is at <URL>" 
+    - incorrect url in "The full result log is at <URL>"
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
 
   DISTRIBUTION PACKAGING/PROCESS:
-    - change create_distribution target to create a zip for the client and a zip for "all"
+    - change create_distribution target to create a zip for the js client and a zip for the java client
 
   BUGS:
     - Mozilla 1.7.12 issues

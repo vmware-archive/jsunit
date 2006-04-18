@@ -11,6 +11,7 @@ import net.jsunit.model.BrowserTest;
 import net.jsunit.model.TestCaseResultTest;
 import net.jsunit.model.TestPageResultTest;
 import net.jsunit.results.SkinTest;
+import net.jsunit.upload.ReferencedJsFileTest;
 
 public class PureUnitTestSuite {
 
@@ -26,6 +27,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(DistributedTestRunResultTest.class);
         result.addTestSuite(IndexActionTest.class);
         result.addTestSuite(LatestVersionActionTest.class);
+        result.addTestSuite(ReferencedJsFileTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
