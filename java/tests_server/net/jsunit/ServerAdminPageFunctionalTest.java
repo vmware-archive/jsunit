@@ -15,6 +15,7 @@ public class ServerAdminPageFunctionalTest extends FunctionalTestCase {
     public void testConfigLink() throws Exception {
         webTester.beginAt("/");
         webTester.clickLink("config");
+        webTester.gotoFrame("resultsFrame");
         assertConfigXml();
     }
 
