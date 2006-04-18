@@ -29,7 +29,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="client" />
     <orderEntryProperties />
   </component>
 </module>
