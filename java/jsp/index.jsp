@@ -4,9 +4,7 @@
 <%@ page import="net.jsunit.configuration.ConfigurationProperty" %>
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.results.Skin" %>
-<%@ page import="net.jsunit.utility.SystemUtility" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
-<%Configuration configuration = server.getConfiguration();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -86,33 +84,7 @@
 </head>
 
 <body onload="pageLoaded()">
-<table height="90" width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information"
-       bgcolor="#DDDDDD">
-    <tr>
-        <td width="1">
-            <a href="http://www.jsunit.net" target="_blank"><img src="images/logo_jsunit.gif" alt="JsUnit" border="0"/></a>
-        </td>
-        <td width="50">&nbsp;</td>
-        <th nowrap align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%>
-                Server</h4>
-            <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
-        </th>
-        <td nowrap align="right" valign="middle">
-            <font size="-2">
-                <b><a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a></b><br>
-
-                <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
-                    version</a></div>
-            </font>
-            <br>
-            <a href="http://www.pivotalsf.com/" target="top">
-                <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal">
-            </a>
-        </td>
-
-    </tr>
-</table>
+<jsp:include page="header.jsp"/>
 <br>
 <table cellpadding="0" cellspacing="0">
 <tr>
@@ -179,7 +151,7 @@
                     <select name="browserId">
                         <option value="">All browsers</option>
                         <%
-                            for (Browser browser : configuration.getBrowsers()) {
+                            for (Browser browser : server.getConfiguration().getBrowsers()) {
                         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
                         <%}%>
                     </select><br>
@@ -263,7 +235,7 @@
                     <select name="browserId">
                         <option value="">All browsers</option>
                         <%
-                            for (Browser browser : configuration.getBrowsers()) {
+                            for (Browser browser : server.getConfiguration().getBrowsers()) {
                         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
                         <%}%>
                     </select><br>
@@ -328,7 +300,7 @@
                     <select name="browserId">
                         <option value="">All browsers</option>
                         <%
-                            for (Browser browser : configuration.getBrowsers()) {
+                            for (Browser browser : server.getConfiguration().getBrowsers()) {
                         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
                         <%}%>
                     </select><br>
@@ -383,7 +355,7 @@
                 <td>
                     <select name="browserId">
                         <%
-                            for (Browser browser : configuration.getBrowsers()) {
+                            for (Browser browser : server.getConfiguration().getBrowsers()) {
                         %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
                         <%}%>
                     </select><br>
@@ -428,7 +400,7 @@
             <td width="10">&nbsp;</td>
             <td valign="top">
                 <%
-                    for (String valueString : property.getValueStrings(configuration)) {
+                    for (String valueString : property.getValueStrings(server.getConfiguration())) {
                 %><div><%
                 if (valueString != null) {
                     if (property.isURL()) {
