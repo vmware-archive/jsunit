@@ -3,12 +3,8 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitAggregateServer;
-import net.jsunit.RemoteServerHitter;
+import net.jsunit.SuccessfulRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.model.TestRunResult;
-import org.jdom.Document;
-
-import java.net.URL;
 
 public class DistributedTestRunnerActionTest extends TestCase {
 
@@ -34,11 +30,4 @@ public class DistributedTestRunnerActionTest extends TestCase {
         assertEquals(overrideURL, action.getTestRunManager().getOverrideURL());
     }
 
-    static class SuccessfulRemoteServerHitter implements RemoteServerHitter {
-
-        public Document hitURL(URL url) {
-            return new Document(new TestRunResult().asXml());
-        }
-
-    }
 }
