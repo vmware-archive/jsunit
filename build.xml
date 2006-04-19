@@ -82,8 +82,10 @@
      -->
 
     <property name="source_core" location="java/source_core"/>
+    <property name="source_client" location="java/source_client"/>
     <property name="source_server" location="java/source_server"/>
     <property name="tests_core" location="java/tests_core"/>
+    <property name="tests_client" location="java/tests_client"/>
     <property name="tests_server" location="java/tests_server"/>
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
@@ -125,6 +127,13 @@
                 </fileset>
             </classpath>
         </javac>
+        <javac srcdir="${source_client}" destdir="${bin}" debug="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
         <javac srcdir="${source_server}" destdir="${bin}" debug="true">
             <classpath>
                 <fileset dir="${lib}">
@@ -137,6 +146,9 @@
 
     <target name="_compile_tests" description="Compiles the self-tests">
         <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+        </javac>
+        <javac srcdir="${tests_client}" destdir="${bin}" debug="true">
             <classpath refid="self_tests_classpath"/>
         </javac>
         <javac srcdir="${tests_server}" destdir="${bin}" debug="true">
