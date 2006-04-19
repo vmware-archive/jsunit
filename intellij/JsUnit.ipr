@@ -196,7 +196,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/browser.iml" filepath="$PROJECT_DIR$/browser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/client.iml" filepath="$PROJECT_DIR$/client.iml" />
       <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" filepath="$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/server.iml" filepath="$PROJECT_DIR$/server.iml" />
