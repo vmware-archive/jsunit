@@ -8,20 +8,15 @@ import org.jdom.input.SAXBuilder;
 
 import java.io.File;
 import java.util.List;
-import java.util.logging.Logger;
 
 public class BrowserResultBuilder {
-
-    private Logger logger = Logger.getLogger("net.jsunit");
 
     public BrowserResult build(File file) {
         try {
             Document document = new SAXBuilder().build(file);
             return build(document);
         } catch (Exception e) {
-            logger.severe("Failed to read file " + file + ": " + e.getMessage());
-            e.printStackTrace();
-            return null;
+            throw new RuntimeException(e);
         }
     }
 
