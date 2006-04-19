@@ -39,7 +39,11 @@ public abstract class FunctionalTestCase extends TestCase {
             server.setProcessStarter(new MockProcessStarter());
         server.start();
         webTester = new WebTester();
-        webTester.getTestContext().setBaseUrl("http://localhost:" + webTesterPort() + "/jsunit");
+        webTester.getTestContext().setBaseUrl(baseURL());
+    }
+
+    protected String baseURL() {
+        return "http://localhost:" + webTesterPort() + "/jsunit";
     }
 
     private BrowserResultRepository createResultRepository() {

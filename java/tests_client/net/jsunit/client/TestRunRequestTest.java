@@ -4,27 +4,28 @@ import junit.framework.TestCase;
 import net.jsunit.MockRemoteServerHitter;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestCaseResult;
-import net.jsunit.model.TestPage;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
+
+import java.io.File;
 
 public class TestRunRequestTest extends TestCase {
 
     public void testBadServiceURL() throws Exception {
         try {
-            new TestRunRequest("not a url");
+            new TestRunClient("not a url");
             fail();
         } catch (RuntimeException e) {
         }
     }
 
-    public void xtestSimple() throws Exception {
+    public void testSimple() throws Exception {
         MockRemoteServerHitter mockHitter = new MockRemoteServerHitter();
         mockHitter.urlToDocument.put("http://server.jsunit.net/runner", new Document(dummyResult().asXml()));
-        TestRunRequest request = new TestRunRequest("http://server.jsunit.net/runner", mockHitter);
-        TestPage page = new TestPage("<html>my stuff</html>", false);
-        TestRunResult result = request.send(page);
+        TestRunClient client = new TestRunClient("http://server.jsunit.net/runner", mockHitter);
+        File page = new File("myPage.html");
+        TestRunResult result = client.send(page);
         String expectedXML = XmlUtility.asString(dummyResult().asXml());
         assertEquals(expectedXML, XmlUtility.asString(result.asXml()));
     }
