@@ -77,7 +77,7 @@ public class BrowserResultTest extends BrowserResultTestCase {
     public void testBrowserDisplayString() throws Exception {
         BrowserResult browserResult = createBrowserResult();
         assertEquals(
-                "c:\\Program Files\\Internet Explorer\\iexplore.exe (ID 7)",
+                "c:\\Program Files\\Internet Explorer\\iexplore.exe",
                 browserResult.getBrowserDisplayString()
         );
     }

@@ -10,6 +10,7 @@ public class BrowserTest extends TestCase {
         assertEquals(4, browser.getId());
         assertTrue(browser.hasId(4));
         assertFalse(browser.hasId(2));
+        assertNull(browser.getKillCommand());
     }
 
     public void testKillCommand() throws Exception {
@@ -26,9 +27,22 @@ public class BrowserTest extends TestCase {
         assertEquals("kill-mybrowser.bat", browser.getKillCommand());
     }
 
-    public void testDisplayString() throws Exception {
+    public void testDisplayName() throws Exception {
+        Browser browser = new Browser("c:\\dir\\browser.exe;;Internet Explorer 5.5", 3);
+        assertEquals("c:\\dir\\browser.exe", browser.getFileName());
+        assertEquals("Internet Explorer 5.5", browser.getDisplayString());
+    }
+
+    public void testKillCommandAndDisplayName() throws Exception {
+        Browser browser = new Browser("/usr/local/mozilla;/usr/local/kill-moz.sh;Mozilla 7.4", 2);
+        assertEquals("/usr/local/mozilla", browser.getFileName());
+        assertEquals("/usr/local/kill-moz.sh", browser.getKillCommand());
+        assertEquals("Mozilla 7.4", browser.getDisplayString());
+    }
+
+    public void testDisplayNameWhenNoneGiven() throws Exception {
         Browser browser = new Browser("mybrowser.exe", 4);
-        assertEquals("mybrowser.exe (ID 4)", browser.getDisplayString());
+        assertEquals("mybrowser.exe", browser.getDisplayString());
     }
 
 }

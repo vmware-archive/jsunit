@@ -11,12 +11,14 @@ public class Browser {
     private String fileName;
     private String killCommand;
     private int id;
+    private String displayName;
 
     public Browser(String fullFileName, int id) {
         this.id = id;
-        List<String> launchAndKill = StringUtility.listFromSemiColonDelimitedString(fullFileName);
-        this.fileName = launchAndKill.size() >= 1 ? launchAndKill.get(0) : null;
-        this.killCommand = launchAndKill.size() >= 2 ? launchAndKill.get(1) : null;
+        List<String> list = StringUtility.listFromSemiColonDelimitedString(fullFileName);
+        this.fileName = list.size() >= 1 ? list.get(0) : null;
+        this.killCommand = list.size() >= 2 ? list.get(1) : null;
+        this.displayName = list.size() >= 3 ? list.get(2) : fileName;
     }
 
     public String getFileName() {
@@ -58,6 +60,6 @@ public class Browser {
     }
 
     public String getDisplayString() {
-        return getFileName() + " (ID " + getId() + ")";
+        return displayName;
     }
 }
