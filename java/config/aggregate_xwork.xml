@@ -8,32 +8,30 @@
 
         <result-types>
             <result-type name="jsUnitXml" class="net.jsunit.action.XmlResult"/>
+            <result-type name="jsUnitLatestVersion" class="net.jsunit.action.LatestVersionResult"/>
             <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
             <result-type name="jsUnitServerStatus" class="net.jsunit.action.StatusResult"/>
             <result-type name="jsUnitTestRunCount" class="net.jsunit.action.TestRunCountResult"/>
         </result-types>
 
         <interceptors>
-            <interceptor name="aggregateServer" class="net.jsunit.interceptor.AggregateServerInterceptor"/>
-            <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
-            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
             <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
             <interceptor name="server" class="net.jsunit.interceptor.ServerInterceptor"/>
             <interceptor name="fragment" class="net.jsunit.interceptor.FragmentInterceptor"/>
             <interceptor name="upload" class="net.jsunit.interceptor.UploadedTestPageInterceptor"/>
+            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
+            <interceptor name="aggregateServer" class="net.jsunit.interceptor.AggregateServerInterceptor"/>
+            <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
 
-            <interceptor-stack name="defaultStack">
+
+            <interceptor-stack name="standardStack">
                 <interceptor-ref name="servlet-config"/>
                 <interceptor-ref name="prepare"/>
-                <interceptor-ref name="static-params"/>
                 <interceptor-ref name="params"/>
-                <interceptor-ref name="conversionError"/>
                 <interceptor-ref name="aggregateServer"/>
                 <interceptor-ref name="remoteRunnerHitter"/>
             </interceptor-stack>
         </interceptors>
-
-        <default-interceptor-ref name="defaultStack"/>
 
         <action name="runner" class="net.jsunit.action.DistributedTestRunnerAction">
             <result name="success" type="jsUnitXml"/>
@@ -57,6 +55,19 @@
         <action name="testruncount" class="net.jsunit.action.TestRunCountAction">
             <result name="success" type="jsUnitTestRunCount"/>
             <interceptor-ref name="server"/>
+        </action>
+
+        <action name="admin" class="net.jsunit.action.AdminAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/admin.jsp</param>
+            </result>
+            <interceptor-ref name="server"/>
+        </action>
+
+        <action name="index" class="net.jsunit.action.IndexAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/index.jsp</param>
+            </result>
         </action>
 
     </package>

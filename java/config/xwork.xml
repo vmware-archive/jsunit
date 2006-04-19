@@ -15,14 +15,14 @@
         </result-types>
 
         <interceptors>
-            <interceptor name="browserTestRunner" class="net.jsunit.interceptor.BrowserTestRunnerInterceptor"/>
-            <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
-            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
-            <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
             <interceptor name="skin" class="net.jsunit.interceptor.SkinInterceptor"/>
             <interceptor name="server" class="net.jsunit.interceptor.ServerInterceptor"/>
             <interceptor name="fragment" class="net.jsunit.interceptor.FragmentInterceptor"/>
             <interceptor name="upload" class="net.jsunit.interceptor.UploadedTestPageInterceptor"/>
+            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>            
+            <interceptor name="browserTestRunner" class="net.jsunit.interceptor.BrowserTestRunnerInterceptor"/>
+            <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
+            <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
 
             <interceptor-stack name="standardStack">
                 <interceptor-ref name="servlet-config"/>
@@ -88,12 +88,6 @@
         </action>
 
         <action name="index" class="net.jsunit.action.IndexAction">
-            <result name="success" type="dispatcher">
-                <param name="location">java/jsp/index.jsp</param>
-            </result>
-        </action>
-
-        <action name="/" class="net.jsunit.action.IndexAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/index.jsp</param>
             </result>

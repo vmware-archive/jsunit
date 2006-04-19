@@ -15,8 +15,9 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer {
 
     protected List<String> servletNames() {
         return Arrays.asList(new String[]{
-                "index",
+                "admin",
                 "config",
+                "index",
                 "latestversion",
                 "runner",
                 "serverstatus",
