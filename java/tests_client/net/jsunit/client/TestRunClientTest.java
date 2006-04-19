@@ -10,7 +10,7 @@ import org.jdom.Document;
 
 import java.io.File;
 
-public class TestRunRequestTest extends TestCase {
+public class TestRunClientTest extends TestCase {
 
     public void testBadServiceURL() throws Exception {
         try {

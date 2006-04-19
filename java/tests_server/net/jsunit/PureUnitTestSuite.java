@@ -12,7 +12,7 @@ import net.jsunit.model.TestCaseResultTest;
 import net.jsunit.model.TestPageResultTest;
 import net.jsunit.results.SkinTest;
 import net.jsunit.model.ReferencedJsFileTest;
-import net.jsunit.client.TestRunRequestTest;
+import net.jsunit.client.TestRunClientTest;
 
 public class PureUnitTestSuite {
 
@@ -37,7 +37,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(StatusMessageTest.class);
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestPageResultTest.class);
-        result.addTestSuite(TestRunRequestTest.class);
+        result.addTestSuite(TestRunClientTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);
         return result;
     }
