@@ -22,11 +22,12 @@ public class TestRunClientTest extends TestCase {
 
     public void testSimple() throws Exception {
         MockRemoteServerHitter mockHitter = new MockRemoteServerHitter();
-        mockHitter.urlToDocument.put("http://server.jsunit.net/runner", new Document(dummyResult().asXml()));
+        TestRunResult testRunResult = dummyResult();
+        mockHitter.urlToDocument.put("http://server.jsunit.net/runner", new Document(testRunResult.asXml()));
         TestRunClient client = new TestRunClient("http://server.jsunit.net/runner", mockHitter);
         File page = new File("myPage.html");
         TestRunResult result = client.send(page);
-        String expectedXML = XmlUtility.asString(dummyResult().asXml());
+        String expectedXML = XmlUtility.asString(testRunResult.asXml());
         assertEquals(expectedXML, XmlUtility.asString(result.asXml()));
     }
 
