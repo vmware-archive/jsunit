@@ -12,8 +12,8 @@ import net.jsunit.configuration.EnvironmentVariablesConfigurationSourceTest;
 import net.jsunit.configuration.PropertiesConfigurationSourceTest;
 import net.jsunit.interceptor.*;
 import net.jsunit.model.*;
-import net.jsunit.upload.TestPageFactoryTest;
-import net.jsunit.upload.TestPageTest;
+import net.jsunit.uploaded.TestPageFactoryTest;
+import net.jsunit.model.TestPageTest;
 
 public class ImpureUnitTestSuite {
 

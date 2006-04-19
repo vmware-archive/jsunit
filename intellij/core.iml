@@ -15,6 +15,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="thirdparty" level="project" />
     <orderEntry type="module" module-name="browser" />
+    <orderEntry type="library" name="thirdparty_test" level="project" />
     <orderEntryProperties />
   </component>
 </module>

@@ -1,4 +1,4 @@
-package net.jsunit.upload;
+package net.jsunit.model;
 
 import net.jsunit.utility.FileUtility;
 
@@ -12,7 +12,7 @@ public class TestPage {
     private List<ReferencedJsFile> referencedJsFiles;
     private long id;
 
-    TestPage(String html, boolean isGenerated, ReferencedJsFile... referencedJsFiles) {
+    public TestPage(String html, boolean isGenerated, ReferencedJsFile... referencedJsFiles) {
         this.html = html;
         this.isGenerated = isGenerated;
         this.id = System.currentTimeMillis();

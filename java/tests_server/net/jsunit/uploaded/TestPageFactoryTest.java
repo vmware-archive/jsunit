@@ -1,7 +1,9 @@
-package net.jsunit.upload;
+package net.jsunit.uploaded;
 
 import junit.framework.TestCase;
 import net.jsunit.utility.StringUtility;
+import net.jsunit.model.TestPage;
+import net.jsunit.model.ReferencedJsFile;
 
 public class TestPageFactoryTest extends TestCase {
 

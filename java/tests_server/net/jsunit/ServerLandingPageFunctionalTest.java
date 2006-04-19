@@ -2,11 +2,8 @@ package net.jsunit;
 
 import com.meterware.httpunit.UploadFileSpec;
 import com.meterware.httpunit.WebForm;
-import net.jsunit.model.Browser;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.ResultType;
-import net.jsunit.upload.TestPage;
-import net.jsunit.upload.TestPageFactory;
+import net.jsunit.model.*;
+import net.jsunit.uploaded.TestPageFactory;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;

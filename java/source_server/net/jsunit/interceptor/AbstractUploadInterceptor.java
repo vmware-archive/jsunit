@@ -3,7 +3,7 @@ package net.jsunit.interceptor;
 import com.opensymphony.xwork.Action;
 import net.jsunit.action.TestPageURLAware;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.upload.TestPage;
+import net.jsunit.model.TestPage;
 import net.jsunit.utility.SystemUtility;
 
 import java.io.UnsupportedEncodingException;

@@ -1,4 +1,4 @@
-package net.jsunit.upload;
+package net.jsunit.model;
 
 import net.jsunit.utility.FileUtility;
 

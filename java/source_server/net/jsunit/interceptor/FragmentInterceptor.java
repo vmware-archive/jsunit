@@ -1,8 +1,8 @@
 package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
-import net.jsunit.upload.TestPage;
-import net.jsunit.upload.TestPageFactory;
+import net.jsunit.model.TestPage;
+import net.jsunit.uploaded.TestPageFactory;
 
 public class FragmentInterceptor extends AbstractUploadInterceptor {
 

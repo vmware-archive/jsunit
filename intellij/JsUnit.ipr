@@ -196,7 +196,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/browser.iml" filepath="$PROJECT_DIR$/browser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/client.iml" filepath="$PROJECT_DIR$/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" filepath="$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/server.iml" filepath="$PROJECT_DIR$/server.iml" />
     </modules>
@@ -217,36 +218,48 @@
   <component name="libraryTable">
     <library name="thirdparty">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../java/lib/stop.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xwork-1.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/javax.servlet.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/webwork-2.2-beta-4.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/ant.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/org.mortbay.jetty.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/oscore.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-logging.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/jdom.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/ognl.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/junit.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/jasper-compiler.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/rife-continuations.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xercesImpl-2.6.2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/jasper-runtime.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-el.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/start.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-fileupload.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml-0.8.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="thirdparty_test">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../java/lib/xwork-1.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/testlib/js-1.5R4.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/ashcroft.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/xml-apis-1.0.b2.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="thirdparty_web">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/../java/lib/oscore.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml-0.8.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/org.mortbay.jetty.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/jasper-runtime.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/jasper-compiler.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/javax.servlet.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/ognl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/start.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/xercesImpl-2.6.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/webwork-2.2-beta-4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/stop.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/rife-continuations.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/xwork-1.1.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="thirdparty_web_test">
+      <CLASSES>
         <root url="jar://$PROJECT_DIR$/../java/testlib/jwebunit-1.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/testlib/nekohtml-0.8.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/testlib/js-1.5R4.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/httpunit-1.5.4.jar!/" />
       </CLASSES>
       <JAVADOC />

@@ -1,6 +1,8 @@
-package net.jsunit.upload;
+package net.jsunit.uploaded;
 
 import net.jsunit.results.XsltTransformer;
+import net.jsunit.model.TestPage;
+import net.jsunit.model.ReferencedJsFile;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -9,6 +11,7 @@ import org.w3c.dom.html.HTMLScriptElement;
 import org.xml.sax.InputSource;
 
 import javax.xml.transform.*;
+import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
