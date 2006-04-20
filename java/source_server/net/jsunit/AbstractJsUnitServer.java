@@ -97,16 +97,13 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         ServletHttpContext servletContext = new ServletHttpContext();
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
-        servletContext.addWelcomeFile("java/jsp/fragmentRunner.jsp");
         servletContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);
         servletContext.addHandler(resourceHandler);
 
-        ForwardHandler forwardHandler = new ForwardHandler();
-        forwardHandler.addForward("runner", runnerActionName());
-        servletContext.addHandler(forwardHandler);
+        servletContext.addHandler(new ForwardHandler("fragmentRunnerPage"));
 
         for (String servletName : servletNames())
             addWebworkServlet(servletContext, servletName);
