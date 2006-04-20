@@ -25,4 +25,5 @@ public abstract class JsUnitInterceptor implements Interceptor {
     protected HttpServletRequest request() {
         return ServletActionContext.getRequest();
     }
+    
 }

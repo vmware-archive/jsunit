@@ -9,7 +9,7 @@ import net.jsunit.action.JsUnitBrowserTestRunnerAction;
 public class BrowserTestRunnerInterceptorTest extends TestCase {
 
     public void testSimple() throws Exception {
-        MockJsUnitAction action = new MockJsUnitAction();
+        MockBrowserTestRunnerAction action = new MockBrowserTestRunnerAction();
         final BrowserTestRunner mockRunner = new MockBrowserTestRunner();
         BrowserTestRunnerInterceptor.setBrowserTestRunnerSource(new BrowserTestRunnerSource() {
             public BrowserTestRunner getRunner() {
@@ -32,7 +32,7 @@ public class BrowserTestRunnerInterceptorTest extends TestCase {
         super.tearDown();
     }
 
-    static class MockJsUnitAction extends JsUnitBrowserTestRunnerAction {
+    static class MockBrowserTestRunnerAction extends JsUnitBrowserTestRunnerAction {
 
         public String execute() throws Exception {
             return null;

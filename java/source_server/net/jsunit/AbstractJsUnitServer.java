@@ -1,8 +1,6 @@
 package net.jsunit;
 
 import com.opensymphony.webwork.dispatcher.ServletDispatcher;
-import com.opensymphony.xwork.config.ConfigurationManager;
-import com.opensymphony.xwork.config.providers.XmlConfigurationProvider;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
@@ -15,11 +13,13 @@ import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
 import org.mortbay.http.handler.ResourceHandler;
+import org.mortbay.http.handler.ForwardHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 import org.mortbay.util.FileResource;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -39,6 +39,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         this.configuration = configuration;
         this.serverType = type;
         ensureConfigurationIsValid();
+        ServerRegistry.registerServer(this);
     }
 
     protected void ensureConfigurationIsValid() {
@@ -96,15 +97,16 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         ServletHttpContext servletContext = new ServletHttpContext();
         servletContext.setContextPath("jsunit");
         servletContext.setResourceBase(configuration.getResourceBase().toString());
-        servletContext.addWelcomeFile("java/jsp/index.jsp");
+        servletContext.addWelcomeFile("java/jsp/fragmentRunner.jsp");
         servletContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);
         servletContext.addHandler(resourceHandler);
 
-        ConfigurationManager.clearConfigurationProviders();
-        ConfigurationManager.addConfigurationProvider(new XmlConfigurationProvider(xworkXmlName()));
+        ForwardHandler forwardHandler = new ForwardHandler();
+        forwardHandler.addForward("runner", runnerActionName());
+        servletContext.addHandler(forwardHandler);
 
         for (String servletName : servletNames())
             addWebworkServlet(servletContext, servletName);
@@ -114,9 +116,26 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
             Monitor.monitor();
     }
 
-    protected abstract String xworkXmlName();
+    protected List<String> servletNames() {
+        return Arrays.asList(new String[]{
+                "fragmentRunnerPage",
+                "uploadRunnerPage",
+                "urlRunnerPage",
+                "logDisplayerPage",
+                "configurationPage",
 
-    protected abstract List<String> servletNames();
+                "acceptor",
+                "admin",
+                "config",
+                "displayer",
+                "latestversion",
+                runnerActionName(),
+                "serverstatus",
+                "testruncount"
+        });
+    }
+
+    protected abstract String runnerActionName();
 
     private void addWebworkServlet(ServletHttpContext servletContext, String name) throws Exception {
         servletContext.addServlet(

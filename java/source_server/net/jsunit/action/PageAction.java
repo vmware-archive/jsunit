@@ -2,7 +2,7 @@ package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
 
-public class IndexAction implements Action {
+public class PageAction implements Action {
 
     private int referencedJsFileFieldCount;
 

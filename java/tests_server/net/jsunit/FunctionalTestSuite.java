@@ -17,11 +17,14 @@ public class FunctionalTestSuite {
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
         result.addTestSuite(FailingDistributedTestTest.class);
+        result.addTestSuite(FragmentRunnerPageFunctionalTest.class);
+        result.addTestSuite(LogDisplayerPageFunctionalTest.class);
+        result.addTestSuite(ConfigurationPageFunctionalTest.class);
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
-        result.addTestSuite(ServerLandingPageFunctionalTest.class);
         result.addTestSuite(ServerAdminPageFunctionalTest.class);
+        result.addTestSuite(ServerDefaultPageFunctionalTest.class);
         result.addTestSuite(ServerStatusFunctionalTest.class);
         result.addTestSuite(SerialDistributedTestTest.class);
         result.addTestSuite(SpecificBrowserDistributedTestTest.class);
@@ -29,6 +32,8 @@ public class FunctionalTestSuite {
         result.addTestSuite(TestRunCountFunctionalTest.class);
         result.addTestSuite(TimedOutBrowserStandaloneTestTest.class);
         result.addTestSuite(TwoValidLocalhostsDistributedTestTest.class);
+        result.addTestSuite(UploadRunnerPageFunctionalTest.class);
+        result.addTestSuite(UrlRunnerPageFunctionalTest.class);        
         result.addTestSuite(UrlOverrideStandaloneTestTest.class);
         return result;
     }

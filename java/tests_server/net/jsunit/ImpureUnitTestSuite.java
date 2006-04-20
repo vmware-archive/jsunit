@@ -2,7 +2,6 @@ package net.jsunit;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import net.jsunit.action.AggregateServerConfigurationActionTest;
 import net.jsunit.action.DistributedTestRunnerActionTest;
 import net.jsunit.action.TestRunnerActionSimultaneousRunBlockingTest;
 import net.jsunit.action.TestRunnerActionTest;
@@ -19,7 +18,6 @@ public class ImpureUnitTestSuite {
 
     public static Test suite() {
         TestSuite result = new TestSuite();
-        result.addTestSuite(AggregateServerConfigurationActionTest.class);
         result.addTestSuite(AggregateServerInterceptorTest.class);
         result.addTestSuite(BrowserResultInterceptorTest.class);
         result.addTestSuite(BrowserResultTest.class);

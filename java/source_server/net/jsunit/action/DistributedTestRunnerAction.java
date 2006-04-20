@@ -1,18 +1,34 @@
 package net.jsunit.action;
 
-import net.jsunit.DistributedTestRunManager;
-import net.jsunit.SkinSource;
-import net.jsunit.XmlRenderable;
+import com.opensymphony.xwork.Action;
+import net.jsunit.*;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 
-public class DistributedTestRunnerAction extends JsUnitAggregateServerAction implements RequestSourceAware, SkinAware, TestPageURLAware {
+public class DistributedTestRunnerAction implements
+        RequestSourceAware,
+        SkinAware,
+        TestPageURLAware,
+        Action,
+        XmlProducer,
+        RemoteRunnerHitterAware,
+        JsUnitAggregateServerAware {
 
     private DistributedTestRunManager manager;
     private String overrideURL;
     private Skin skin;
     private String remoteIpAddress;
     private String remoteHost;
+    protected JsUnitAggregateServer server;
+    protected RemoteServerHitter hitter;
+
+    public void setAggregateServer(JsUnitAggregateServer server) {
+        this.server = server;
+    }
+
+    public void setRemoteServerHitter(RemoteServerHitter hitter) {
+        this.hitter = hitter;
+    }
 
     public String execute() throws Exception {
         String message = new RequestReceivedMessage(remoteHost, remoteIpAddress, overrideURL).generateMessage();

@@ -2,7 +2,6 @@
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.configuration.Configuration" %>
 <%@ page import="net.jsunit.configuration.ConfigurationProperty" %>
-<%@ page import="net.jsunit.utility.SystemUtility" %>
 <%@ page import="java.text.SimpleDateFormat" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%Configuration configuration = server.getConfiguration();%>
@@ -10,7 +9,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JsUnit <%if (server.isAggregateServer()) {%> Aggregate<%}%> Server Administration</title>
+    <title>JsUnit Server Administration</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <script type="text/javascript" src="app/server/jsUnitServerAjax.js"></script>

@@ -8,15 +8,8 @@ public class ServerAdminPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testInitialConditiions() throws Exception {
-        webTester.assertTitleEquals("JsUnit  Server Administration");
+        webTester.assertTitleEquals("JsUnit Server Administration");
         webTester.assertLinkPresentWithText(new FunctionalTestConfigurationSource(port).url());
-    }
-
-    public void testConfigLink() throws Exception {
-        webTester.beginAt("/");
-        webTester.clickLink("config");
-        webTester.gotoFrame("resultsFrame");
-        assertConfigXml();
     }
 
 }

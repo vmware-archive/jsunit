@@ -3,26 +3,10 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class JsUnitAggregateServer extends AbstractJsUnitServer {
 
     public JsUnitAggregateServer(Configuration configuration) {
         super(configuration, ServerType.AGGREGATE);
-        ServerRegistry.registerAggregateServer(this);
-    }
-
-    protected List<String> servletNames() {
-        return Arrays.asList(new String[]{
-                "admin",
-                "config",
-                "index",
-                "latestversion",
-                "runner",
-                "serverstatus",
-                "testruncount"
-        });
     }
 
     public static void main(String args[]) {
@@ -38,8 +22,8 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer {
         return "JsUnit Aggregate Server";
     }
 
-    protected String xworkXmlName() {
-        return "aggregate_xwork.xml";
+    protected String runnerActionName() {
+        return "distributedTestRunner";
     }
 
     public ServerType serverType() {

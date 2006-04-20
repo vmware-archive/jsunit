@@ -23,12 +23,23 @@
             <interceptor name="browserTestRunner" class="net.jsunit.interceptor.BrowserTestRunnerInterceptor"/>
             <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
             <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
+            <interceptor name="aggregateServer" class="net.jsunit.interceptor.AggregateServerInterceptor"/>
+            <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
 
             <interceptor-stack name="standardStack">
                 <interceptor-ref name="servlet-config"/>
                 <interceptor-ref name="prepare"/>
                 <interceptor-ref name="browserTestRunner"/>
+                <interceptor-ref name="aggregateServer"/>
                 <interceptor-ref name="params"/>
+            </interceptor-stack>
+
+            <interceptor-stack name="runnerStack">
+                <interceptor-ref name="standardStack"/>
+                <interceptor-ref name="requestSource"/>
+                <interceptor-ref name="skin"/>
+                <interceptor-ref name="fragment"/>
+                <interceptor-ref name="upload"/>
             </interceptor-stack>
         </interceptors>
 
@@ -38,15 +49,19 @@
             <interceptor-ref name="browserResult"/>
         </action>
 
-        <action name="runner" class="net.jsunit.action.TestRunnerAction">
+        <action name="browserTestRunner" class="net.jsunit.action.TestRunnerAction">
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
-            <interceptor-ref name="standardStack"/>
-            <interceptor-ref name="requestSource"/>
-            <interceptor-ref name="skin"/>
-            <interceptor-ref name="fragment"/>
-            <interceptor-ref name="upload"/>
+            <interceptor-ref name="runnerStack"/>
+        </action>
+
+        <action name="distributedTestRunner" class="net.jsunit.action.DistributedTestRunnerAction">
+            <result name="success" type="jsUnitXml"/>
+            <result name="error" type="jsUnitXml"/>
+            <result name="transform" type="jsUnitTransformedTestRunResult"/>
+            <interceptor-ref name="runnerStack"/>
+            <interceptor-ref name="remoteRunnerHitter"/>
         </action>
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">
@@ -57,9 +72,9 @@
             <interceptor-ref name="skin"/>
         </action>
 
-        <action name="config" class="net.jsunit.action.BrowserTestRunnerConfigurationAction">
+        <action name="config" class="net.jsunit.action.ConfigurationAction">
             <result name="success" type="jsUnitXml"/>
-            <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="server"/>
         </action>
 
         <action name="latestversion" class="net.jsunit.action.LatestVersionAction">
@@ -87,9 +102,33 @@
             <interceptor-ref name="server"/>
         </action>
 
-        <action name="index" class="net.jsunit.action.IndexAction">
+        <action name="fragmentRunnerPage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
-                <param name="location">java/jsp/index.jsp</param>
+                <param name="location">java/jsp/fragmentRunner.jsp</param>
+            </result>
+        </action>
+
+        <action name="uploadRunnerPage" class="net.jsunit.action.PageAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/uploadRunner.jsp</param>
+            </result>
+        </action>
+
+        <action name="urlRunnerPage" class="net.jsunit.action.PageAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/urlRunner.jsp</param>
+            </result>
+        </action>
+
+        <action name="logDisplayerPage" class="net.jsunit.action.PageAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/logDisplayer.jsp</param>
+            </result>
+        </action>
+
+        <action name="configurationPage" class="net.jsunit.action.PageAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/configuration.jsp</param>
             </result>
         </action>
 

@@ -1,6 +1,7 @@
-<%@ page import="net.jsunit.utility.SystemUtility"%>
-<%@ page import="net.jsunit.JsUnitServer"%>
-<%@ page import="net.jsunit.ServerRegistry"%>
+<%@ page import="net.jsunit.JsUnitServer" %>
+<%@ page import="net.jsunit.ServerRegistry" %>
+<%@ page import="net.jsunit.utility.SystemUtility" %>
+<%@ page import="net.jsunit.utility.StringUtility"%>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <table height="90" width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information"
        bgcolor="#DDDDDD">
@@ -10,8 +11,12 @@
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%>
-                Server</h4>
+            <h4>
+                <%if (!StringUtility.isEmpty(server.getConfiguration().getDescription())) {%>
+                    <%=server.getConfiguration().getDescription()%> - 
+                <%}%>
+                JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%> Aggregate<%}%> Server
+            </h4>
             <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
         </th>
         <td nowrap align="right" valign="middle">
@@ -29,3 +34,5 @@
 
     </tr>
 </table>
+<br>
+

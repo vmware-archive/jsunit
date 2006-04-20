@@ -9,7 +9,6 @@ import net.jsunit.model.BrowserResult;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
@@ -31,7 +30,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         super(configuration, temporary ? ServerType.STANDARD_TEMPORARY : ServerType.STANDARD);
         this.browserResultRepository = browserResultRepository;
         addBrowserTestRunListener(new BrowserResultLogWriter(browserResultRepository));
-        ServerRegistry.registerServer(this);
     }
 
     public static void main(String args[]) {
@@ -41,20 +39,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         } catch (Throwable t) {
             t.printStackTrace();
         }
-    }
-
-    protected List<String> servletNames() {
-        return Arrays.asList(new String[]{
-                "acceptor",
-                "admin",
-                "config",
-                "displayer",
-                "index",
-                "latestversion",
-                "runner",
-                "serverstatus",
-                "testruncount"
-        });
     }
 
     public void accept(BrowserResult result) {
@@ -222,13 +206,13 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return browserProcess;
     }
 
+    protected String runnerActionName() {
+        return "browserTestRunner";
+    }
+
     public void dispose() {
         super.dispose();
         endBrowser();
-    }
-
-    protected String xworkXmlName() {
-        return "xwork.xml";
     }
 
     public int timeoutSeconds() {
