@@ -10,15 +10,14 @@ import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.jdom.Document;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.Map;
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class RemoteMachineServerHitter implements RemoteServerHitter {
 
@@ -34,17 +33,6 @@ public class RemoteMachineServerHitter implements RemoteServerHitter {
 
     private String doGet(URL url) throws IOException {
         URLConnection connection = openConnection(url);
-        return StreamUtility.readAllFromStream(connection.getInputStream());
-    }
-
-    private String doPost(URL url, String content) throws IOException {
-        URLConnection connection = openConnection(url);
-        connection.setDoInput(true);
-        connection.setDoOutput(true);
-        connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-        DataOutputStream outStream = new DataOutputStream(connection.getOutputStream());
-        outStream.writeBytes(content);
-        outStream.close();
         return StreamUtility.readAllFromStream(connection.getInputStream());
     }
 
