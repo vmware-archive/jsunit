@@ -56,7 +56,7 @@
 <br>
 <font size="-2">Server output:</font>
 <br>
-<iframe name="resultsFrame" width="100%" height="250" border="0"></iframe>
+<iframe name="resultsFrame" width="100%" height="250"></iframe>
 
 </body>
 </html>
