@@ -28,7 +28,7 @@ public enum ConfigurationProperty {
             for (Browser browser : configuration.getBrowsers()) {
                 Element fileNameElement = new Element("browserFileName");
                 fileNameElement.setAttribute("id", String.valueOf(browser.getId()));
-                fileNameElement.setText(browser.getFileName());
+                fileNameElement.setText(browser.getFullFileName());
                 element.addContent(fileNameElement);
             }
         }

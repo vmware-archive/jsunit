@@ -10,11 +10,13 @@ public class Browser {
 
     private String fileName;
     private String killCommand;
+    private String fullFileName;
     private int id;
     private String displayName;
     private BrowserType type;
 
     public Browser(String fullFileName, int id) {
+        this.fullFileName = fullFileName;
         this.id = id;
         List<String> list = StringUtility.listFromSemiColonDelimitedString(fullFileName);
         this.fileName = list.size() >= 1 ? list.get(0) : null;
@@ -68,4 +70,9 @@ public class Browser {
     public BrowserType getType() {
         return type;
     }
+
+    public String getFullFileName() {
+        return fullFileName;
+    }
+
 }

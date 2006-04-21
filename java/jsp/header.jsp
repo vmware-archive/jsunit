@@ -1,6 +1,9 @@
+<%@ page import="net.jsunit.JsUnitAggregateServer" %>
 <%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.PlatformType" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
+<%@ page import="net.jsunit.configuration.Configuration" %>
+<%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.utility.StringUtility" %>
 <%@ page import="net.jsunit.utility.SystemUtility" %>
 <%
@@ -54,22 +57,31 @@
     </tr>
 </table>
 <br>
-<%--
 <%if (server.isAggregateServer()) {%>
-    <b>Remote Machines:</b>
-    <table>
+<table>
+    <tr>
         <%for (Configuration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
-        <tr>
-            <td>
-                <%for (Browser browser : remoteConfiguration.getBrowsers()) {
-                    if (browser.getType() != null) {%>
-                <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>">
-                    <%}%>
-                    <%=browser.getDisplayString()%>
-                    <br>
-                <%}%>
-            </td>
-        </tr>
+        <td>
+            <b><%=remoteConfiguration.getDescription()%></b>
+        </td>
+        <td>&nbsp;</td>
         <%}%>
-    </table>
-<%}%>--%>
+    </tr>
+    <tr>
+        <%for (Configuration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
+        <td valign="top">
+            <%
+                for (Browser browser : remoteConfiguration.getBrowsers()) {
+                    if (browser.getType() != null) {
+            %>
+            <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>">
+            <%}%>
+            <%=browser.getDisplayString()%>
+            <br>
+            <%}%>
+        </td>
+        <td>&nbsp;</td>
+        <%}%>
+    </tr>
+</table>
+<%}%>

@@ -9,7 +9,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public final class Configuration implements BrowserSource {
+public class Configuration implements BrowserSource {
 
     private List<Browser> browsers;
     private boolean closeBrowsersAfterTestRuns;
