@@ -3,10 +3,21 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 public class JsUnitAggregateServer extends AbstractJsUnitServer {
+    private RemoteServerHitter hitter;
+    private ArrayList<Configuration> cachedRemoteConfigurations;
 
     public JsUnitAggregateServer(Configuration configuration) {
+        this(configuration, new RemoteMachineServerHitter());
+    }
+
+    public JsUnitAggregateServer(Configuration configuration, RemoteServerHitter hitter) {
         super(configuration, ServerType.AGGREGATE);
+        this.hitter = hitter;
     }
 
     public static void main(String args[]) {
@@ -32,5 +43,18 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer {
 
     public void finishedTestRun() {
         testRunCount++;
+    }
+
+    protected void postStart() {
+        cachedRemoteConfigurations = new ArrayList<Configuration>();
+        for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
+            RemoteConfigurationFetcher fetcher = new RemoteConfigurationFetcher(hitter, remoteMachineURL);
+            fetcher.run();
+            cachedRemoteConfigurations.add(fetcher.getRetrievedRemoteConfiguration());
+        }
+    }
+
+    public List<Configuration> getCachedRemoteConfigurations() {
+        return cachedRemoteConfigurations;
     }
 }

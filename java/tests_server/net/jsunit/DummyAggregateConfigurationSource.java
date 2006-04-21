@@ -3,13 +3,15 @@ package net.jsunit;
 import net.jsunit.configuration.ConfigurationSource;
 
 public class DummyAggregateConfigurationSource implements ConfigurationSource {
+    public static final String REMOTE_URL_1 = "http://www.example.com:8081";
+    public static final String REMOTE_URL_2 = "http://www.example.com:8082";
 
     public String resourceBase() {
         return ".";
     }
 
     public String port() {
-        return "123456789";
+        return String.valueOf(new TestPortManager().newPort());
     }
 
     public String logsDirectory() {
@@ -45,7 +47,7 @@ public class DummyAggregateConfigurationSource implements ConfigurationSource {
     }
 
     public String remoteMachineURLs() {
-        return "http://www.example.com:8081,http://www.example.com:8082";
+        return REMOTE_URL_1 + "," + REMOTE_URL_2;
     }
 
 }

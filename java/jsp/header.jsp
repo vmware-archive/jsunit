@@ -54,3 +54,22 @@
     </tr>
 </table>
 <br>
+<%--
+<%if (server.isAggregateServer()) {%>
+    <b>Remote Machines:</b>
+    <table>
+        <%for (Configuration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
+        <tr>
+            <td>
+                <%for (Browser browser : remoteConfiguration.getBrowsers()) {
+                    if (browser.getType() != null) {%>
+                <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>">
+                    <%}%>
+                    <%=browser.getDisplayString()%>
+                    <br>
+                <%}%>
+            </td>
+        </tr>
+        <%}%>
+    </table>
+<%}%>--%>
