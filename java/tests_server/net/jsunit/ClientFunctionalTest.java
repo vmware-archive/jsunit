@@ -13,7 +13,7 @@ public class ClientFunctionalTest extends FunctionalTestCase {
     }
 
     public void testSimple() throws Exception {
-        File file = new File("tests\\jsUnitUtilityTests.html");
+        File file = new File("tests" + File.separatorChar + "jsUnitUtilityTests.html");
         TestRunResult testRunResult = new TestRunClient(baseURL() + "/runner").send(file);
         assertTrue(testRunResult.wasSuccessful());
         assertEquals(2, testRunResult.getBrowserResults().size());

@@ -204,6 +204,11 @@
         </obfuscate>
     </target>
 
+    <target name="_create_tar" description="Create a tar of the entire project except the SVN directories">
+        <delete file="./jsunit.tgz"/>
+        <tar basedir="." excludes="**/.svn uploaded/** TEST-*.xml **/*.class logs/**" destfile="jsunit.tgz" compression="gzip"/>
+    </target>
+
     <target name="_generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
         <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
               style="tools/buildDotXmlToJsUnitDotProperties.xsl"></xslt>
@@ -254,7 +259,7 @@
         <fail if="junit_test_failed"/>
     </target>
 
-    <target name="create_distribution" depends="_create_jar,_run_unit_tests,_obfuscate_jar"
+    <target name="create_distribution" depends="_create_jar,_run_unit_tests,_obfuscate_jar,_create_src_jar,_create_tar"
             description="Creates and tests the JsUnit distribution"/>
 
     <target name="start_server" description="Starts a JsUnit Server">
