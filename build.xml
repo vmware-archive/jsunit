@@ -206,8 +206,22 @@
 
     <target name="_create_tar" description="Create a tar of the entire project except the SVN directories">
         <delete file="./jsunit.tgz"/>
-        <tar basedir="." excludes="**/.svn uploaded/** TEST-*.xml **/*.class logs/**" destfile="jsunit.tgz"
-             compression="gzip"/>
+        <tar destfile="jsunit.tgz" compression="gzip">
+            <tarfileset dir="." mode="755">
+                <include name="bin/unix/*.sh"/>
+                <include name="bin/mac/*.sh"/>
+            </tarfileset>
+            <tarfileset dir=".">
+                <include name="**"/>
+                <exclude name="bin/unix/*.sh"/>
+                <exclude name="bin/mac/*.sh"/>
+                <exclude name="**/.svn" />        
+                <exclude name="uploaded/**" />        
+                <exclude name="TEST-*.xml" />        
+                <exclude name="**/*.class" />        
+                <exclude name="logs/**" />        
+            </tarfileset>
+        </tar>
     </target>
 
     <target name="_generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
