@@ -12,6 +12,7 @@ public class Browser {
     private String killCommand;
     private int id;
     private String displayName;
+    private BrowserType type;
 
     public Browser(String fullFileName, int id) {
         this.id = id;
@@ -19,6 +20,7 @@ public class Browser {
         this.fileName = list.size() >= 1 ? list.get(0) : null;
         this.killCommand = list.size() >= 2 ? list.get(1) : null;
         this.displayName = list.size() >= 3 ? list.get(2) : fileName;
+        this.type = BrowserType.resolve(fileName);
     }
 
     public String getFileName() {
@@ -61,5 +63,9 @@ public class Browser {
 
     public String getDisplayString() {
         return displayName;
+    }
+
+    public BrowserType getType() {
+        return type;
     }
 }

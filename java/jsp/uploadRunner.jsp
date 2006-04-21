@@ -76,10 +76,10 @@
                     </tr>
                     <tr>
                         <td nowrap width="10%" valign="top">
-                            Test Page:
+                            <b>Test Page:</b>
                         </td>
                         <td width="10%">
-                            <input type="file" name="testPageFile">
+                            <input type="file" name="testPageFile" size="50">
                         </td>
                         <td width="80%">
                             &nbsp;

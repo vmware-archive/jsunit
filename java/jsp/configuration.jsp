@@ -21,13 +21,7 @@
     </jsp:include>
     <tr>
         <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
-
             <table cellpadding="1" cellspacing="1" border="0" width="100%">
-                <tr>
-                    <th nowrap align="right">Server type:</th>
-                    <td width="10">&nbsp;</td>
-                    <td><%=server.serverType().getDisplayName()%></td>
-                </tr>
                 <%
                     for (ConfigurationProperty property : server.getConfiguration().getRequiredAndOptionalConfigurationProperties(server.serverType())) {
                 %>

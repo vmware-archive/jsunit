@@ -2,7 +2,6 @@ package net.jsunit;
 
 import com.meterware.httpunit.UploadFileSpec;
 import com.meterware.httpunit.WebForm;
-import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestPage;
 import net.jsunit.uploaded.TestPageFactory;
@@ -33,7 +32,7 @@ public class UploadRunnerPageFunctionalTest extends FunctionalTestCase {
         File file = saveTestPageLocally("assertTrue(true);");
         WebForm form = webTester.getDialog().getForm();
         form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
-        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("browserId", "0");
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         assertRunResult(

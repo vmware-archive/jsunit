@@ -28,7 +28,7 @@ public class LogDisplayerPageFunctionalTest extends FunctionalTestCase {
         server.accept(browserResult);
         webTester.setFormElement("id", id);
         webTester.selectOption("skinId", "None (raw XML)");
-        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("browserId", "0");
         webTester.submit();
         assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
     }

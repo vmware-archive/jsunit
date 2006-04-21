@@ -31,7 +31,7 @@
                     </tr>
                     <tr>
                         <td width="1">
-                            URL:
+                            <b>URL:</b>
                         </td>
                         <td>
                             <input type="text" name="url" size="100" value=""/>

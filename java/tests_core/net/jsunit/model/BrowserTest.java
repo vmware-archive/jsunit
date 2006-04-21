@@ -45,4 +45,14 @@ public class BrowserTest extends TestCase {
         assertEquals("mybrowser.exe", browser.getDisplayString());
     }
 
+    public void testBrowserType() throws Exception {
+        Browser browser = new Browser("/some/path/to/opera.exe", 2);
+        assertEquals(BrowserType.OPERA, browser.getType());
+    }
+
+    public void testUnknownBrowserType() throws Exception {
+        Browser browser = new Browser("/some/path/to/something/unknown.sh", 2);
+        assertNull(browser.getType());
+    }
+
 }

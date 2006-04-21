@@ -17,22 +17,23 @@
         <td nowrap align="left">
             <table>
                 <tr>
-                    <td colspan="2">
-                        <h4>
+                    <td></td>
+                    <td>
+                        <b>
                             <%if (!StringUtility.isEmpty(server.getConfiguration().getDescription())) {%>
                             <%=server.getConfiguration().getDescription()%> -
                             <%}%>
                             JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%>
                             Aggregate<%}%> Server
-                        </h4>
+                        </b>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <font size="-2"><i>Running on <%=SystemUtility.displayString()%>
+                    <td valign="middle">
+                        <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>">
                     </td>
                     <td>
-                        <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>">
+                        Running on <%=SystemUtility.displayString()%>
                     </td>
                 </tr>
             </table>
@@ -53,4 +54,3 @@
     </tr>
 </table>
 <br>
-

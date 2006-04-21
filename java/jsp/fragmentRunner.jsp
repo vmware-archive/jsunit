@@ -32,10 +32,10 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="1" valign="top">
-                            Fragment:
+                        <td width="10%" valign="top">
+                            <b>Fragment:</b>
                         </td>
-                        <td>
+                        <td width="90%">
                             <textarea name="fragment" width="100%" cols="75" rows="10"></textarea>
                         </td>
                     </tr>

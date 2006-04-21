@@ -5,23 +5,35 @@
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <%if (!server.isAggregateServer()) {%>
 <tr>
-    <td width="1">
-        Browser:
+    <td width="10%" valign="top">
+        <b>Browser:</b>
     </td>
     <td>
-        <select name="browserId">
-            <option value="">All browsers</option>
-            <%
-                for (Browser browser : server.getConfiguration().getBrowsers()) {
-            %><option value="<%=browser.getId()%>"><%=browser.getFileName()%></option>
+        <table width="100%">
+            <tr>
+                <td>
+                    <input type="radio" name="browserId" value="" checked>
+                    All available browsers
+                </td>
+            </tr>
+            <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
+            <tr>
+                <td valign="top">
+                    <input type="radio" name="browserId" value="<%=browser.getId()%>">
+                    <%if (browser.getType() != null) {%>
+                    <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>">
+                    <%}%>
+                    <%=browser.getDisplayString()%>
+                </td>
+            </tr>
             <%}%>
-        </select><br>
+        </table>
     </td>
 </tr>
 <%}%>
 <tr>
     <td width="1">
-        Skin:
+        <b>Skin:</b>
     </td>
     <td>
         <select name="skinId">

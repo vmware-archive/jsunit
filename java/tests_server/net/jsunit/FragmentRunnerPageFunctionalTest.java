@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 
 public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
@@ -34,7 +33,7 @@ public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
     public void testPasteInFailingFragmentSingleBrowser() throws Exception {
         webTester.beginAt("/");
         webTester.setFormElement("fragment", "assertTrue(false);");
-        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("browserId", "0");
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         assertRunResult(

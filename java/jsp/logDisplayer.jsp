@@ -21,7 +21,6 @@
         </jsp:include>
         <tr>
             <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
-
                 <table>
                     <tr>
                         <td colspan="2">
@@ -31,7 +30,7 @@
                     </tr>
                     <tr>
                         <td width="1">
-                            ID:
+                            <b>ID:</b>
                         </td>
                         <td>
                             <input type="text" name="id" size="20"/>
@@ -46,7 +45,6 @@
 <br>
 <font size="-2">Server output:</font>
 <br>
-<iframe name="resultsFrame" width="100%" height="250" border="0"></iframe>
-
+<iframe name="resultsFrame" width="100%" height="250"></iframe>
 </body>
 </html>

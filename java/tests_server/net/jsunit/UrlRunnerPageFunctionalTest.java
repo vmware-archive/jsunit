@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 
 public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
@@ -20,7 +19,7 @@ public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void testRunnerForParticularBrowser() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("browserId", "0");
         webTester.submit();
         assertRunResult(
                 responseXmlDocument(),
@@ -48,7 +47,7 @@ public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void testRunnerWithHTMLSkin() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("browserId", "");
         webTester.selectOption("skinId", "HTML");
         webTester.submit();
         webTester.assertTitleEquals("JsUnit Test Results");
@@ -58,7 +57,7 @@ public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void testRunnerWithTextSkin() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.selectOption("browserId", Browser.DEFAULT_SYSTEM_BROWSER);
+        webTester.setFormElement("browserId", "");
         webTester.selectOption("skinId", "Text");
         webTester.submit();
 //        String responseText = webTester.getDialog().getResponseText();
