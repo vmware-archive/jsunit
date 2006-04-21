@@ -1,0 +1,58 @@
+<distributedTestRunResult type="UNRESPONSIVE">
+    <testRunResult type="UNRESPONSIVE" url="http://iceman:8080/jsunit"/>
+    <testRunResult type="SUCCESS" url="http://maverick:8080/jsunit">
+        <properties>
+            <property name="os" value="x86 - Windows XP"/>
+            <property name="ipAddress" value="192.168.1.100"/>
+            <property name="hostname" value="maverick"/>
+        </properties>
+        <browserResult id="1145634043114" time="0.249">
+            <properties>
+                <property name="browserFileName" value="c:\program files\internet explorer\iexplore.exe"/>
+                <property name="browserId" value="0"/>
+                <property name="jsUnitVersion" value="2.2"/>
+                <property name="userAgent"
+                          value="Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1; SV1; .NET CLR 1.1.4322)"/>
+                <property name="remoteAddress" value="127.0.0.1"/>
+                <property name="url" value="http://maverick:80/jsunit/uploaded/uploaded_1145634043114.html"/>
+            </properties>
+            <testCases>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrim" time="0.0"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testIsBlank" time="0.0"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testPushAndPop" time="0.0"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrueTypeOf" time="0.0"/>
+            </testCases>
+        </browserResult>
+        <browserResult id="1145634043114" time="0.156">
+            <properties>
+                <property name="browserFileName" value="c:\program files\mozilla firefox\firefox.exe"/>
+                <property name="browserId" value="1"/>
+                <property name="jsUnitVersion" value="2.2"/>
+                <property name="userAgent"
+                          value="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.0.2) Gecko/20060308 Firefox/1.5.0.2"/>
+                <property name="remoteAddress" value="127.0.0.1"/>
+                <property name="url" value="http://maverick:80/jsunit/uploaded/uploaded_1145634043114.html"/>
+            </properties>
+            <testCases>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrueTypeOf"
+                          time="0.016"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testPushAndPop" time="0.0"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testIsBlank" time="0.0"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrim" time="0.0"/>
+            </testCases>
+        </browserResult>
+    </testRunResult>
+    <testRunResult type="TIMED_OUT" url="http://slider:8080/jsunit">
+        <properties>
+            <property name="os" value="i386 - Linux"/>
+            <property name="ipAddress" value="192.168.1.104"/>
+            <property name="hostname" value="slider.jsunit.net"/>
+        </properties>
+        <browserResult timedOut="true">
+            <properties>
+                <property name="browserFileName" value="/usr/bin/mozilla"/>
+                <property name="browserId" value="0"/>
+            </properties>
+        </browserResult>
+    </testRunResult>
+</distributedTestRunResult>

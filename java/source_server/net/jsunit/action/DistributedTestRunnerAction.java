@@ -14,6 +14,8 @@ public class DistributedTestRunnerAction implements
         RemoteRunnerHitterAware,
         JsUnitAggregateServerAware {
 
+    public static final String TRANSFORM = "transform";
+
     private DistributedTestRunManager manager;
     private String overrideURL;
     private Skin skin;
@@ -42,7 +44,7 @@ public class DistributedTestRunnerAction implements
         }
         server.finishedTestRun();
         server.logStatus("Done running aggregate tests");
-        return SUCCESS;
+        return skin != null ? TRANSFORM : SUCCESS;
     }
 
     public XmlRenderable getXmlRenderable() {

@@ -206,12 +206,18 @@
 
     <target name="_create_tar" description="Create a tar of the entire project except the SVN directories">
         <delete file="./jsunit.tgz"/>
-        <tar basedir="." excludes="**/.svn uploaded/** TEST-*.xml **/*.class logs/**" destfile="jsunit.tgz" compression="gzip"/>
+        <tar basedir="." excludes="**/.svn uploaded/** TEST-*.xml **/*.class logs/**" destfile="jsunit.tgz"
+             compression="gzip"/>
     </target>
 
     <target name="_generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
         <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
               style="tools/buildDotXmlToJsUnitDotProperties.xsl"></xslt>
+    </target>
+
+    <target name="_transformResultXmlUsingSkin">
+        <xslt in="tools/sample_xml/distributedResult.xml" out="scratch/result.html" destdir="scratch"
+              style="skins/HTML.xsl"></xslt>
     </target>
 
     <target name="_run_unit_tests" depends="_compile_tests" description="Runs the JsUnit Java unit tests">

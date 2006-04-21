@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsUnitAggregateServer extends AbstractJsUnitServer {
+
     private RemoteServerHitter hitter;
     private ArrayList<Configuration> cachedRemoteConfigurations;
 
@@ -50,11 +51,14 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer {
         for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
             RemoteConfigurationFetcher fetcher = new RemoteConfigurationFetcher(hitter, remoteMachineURL);
             fetcher.run();
-            cachedRemoteConfigurations.add(fetcher.getRetrievedRemoteConfiguration());
+            Configuration retrievedRemoteConfiguration = fetcher.getRetrievedRemoteConfiguration();
+            if (retrievedRemoteConfiguration != null)
+                cachedRemoteConfigurations.add(retrievedRemoteConfiguration);
         }
     }
 
     public List<Configuration> getCachedRemoteConfigurations() {
         return cachedRemoteConfigurations;
     }
+
 }

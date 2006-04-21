@@ -5,6 +5,9 @@ import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.SuccessfulRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.results.Skin;
+
+import java.io.File;
 
 public class DistributedTestRunnerActionTest extends TestCase {
 
@@ -21,6 +24,11 @@ public class DistributedTestRunnerActionTest extends TestCase {
         assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
         assertTrue(action.getTestRunManager().getDistributedTestRunResult().wasSuccessful());
         assertNull(action.getTestRunManager().getOverrideURL());
+    }
+
+    public void testSimpleWithSkin() throws Exception {
+        action.setSkin(new Skin(3, new File("aSkin.xsl")));
+        assertEquals(DistributedTestRunnerAction.TRANSFORM, action.execute());
     }
 
     public void testOverrideURL() throws Exception {

@@ -25,7 +25,7 @@ public class RemoteConfigurationFetcher extends Thread implements Comparable<Rem
             ConfigurationSource remoteSource = new RemoteConfigurationSource(hitter, remoteMachineURL.toString());
             retrievedRemoteConfiguration = new Configuration(remoteSource);
         } catch (IOException e) {
-            logger.severe("Cannot retrieve remote configuration: " + e.getMessage());
+            logger.severe("Cannot retrieve remote configuration on " + remoteMachineURL.toString() + ": " + e.getMessage());
         }
     }
 
