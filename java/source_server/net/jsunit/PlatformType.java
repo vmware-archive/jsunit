@@ -18,7 +18,7 @@ public enum PlatformType {
         }
 
     },
-    LINUX(new String[]{"bin/unix/start-firefox.sh"}, "bin/unix/stop-firefox.sh", "logo_linux.gif", "Linux") {
+    LINUX(new String[]{"bin/unix/start-firefox.sh"}, "bin/unix/stop-firefox.sh", "images/logo_linux.gif", "Linux") {
         public boolean matchesSystem() {
             //TODO: uhhh...
             return false;
