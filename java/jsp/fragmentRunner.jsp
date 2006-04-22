@@ -8,6 +8,14 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
+    <script type="text/javascript">
+        function verifyFragmentNotBlank() {
+            var isBlank = document.getElementById("fragment").value == "";
+            if (isBlank)
+                alert("Please enter a fragment.")
+            return !isBlank;
+        }
+    </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
@@ -15,7 +23,7 @@
 <jsp:include page="header.jsp"/>
 
 <form action="/jsunit/runner" method="post" target="resultsFrame">
-    <table cellpadding="0" cellspacing="0">
+    <table cellpadding="0" cellspacing="0" width="100%">
         <jsp:include page="tabRow.jsp">
             <jsp:param name="selectedPage" value="fragmentRunner"/>
         </jsp:include>
@@ -36,7 +44,7 @@
                             <b>Fragment:</b>
                         </td>
                         <td width="90%">
-                            <textarea name="fragment" width="100%" cols="75" rows="10"></textarea>
+                            <textarea id="fragment" name="fragment" width="100%" cols="75" rows="10"></textarea>
                         </td>
                     </tr>
                     <tr>
@@ -47,7 +55,10 @@
                             </font>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp"/>
+                    <jsp:include page="browserSkinAndGo.jsp">
+                        <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
+                        <jsp:param name="includeAllBrowsersOption" value="true"/>
+                    </jsp:include>
                 </table>
             </td>
         </tr>

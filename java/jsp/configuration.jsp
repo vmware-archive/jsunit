@@ -13,15 +13,15 @@
 </head>
 
 <body>
-<jsp:include page="header.jsp"/>
 
-<table cellpadding="0" cellspacing="0">
+<jsp:include page="header.jsp"/>
+<table cellpadding="0" cellspacing="0" width="100%">
     <jsp:include page="tabRow.jsp">
         <jsp:param name="selectedPage" value="configuration"/>
     </jsp:include>
     <tr>
         <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
-            <table cellpadding="1" cellspacing="1" border="0" width="100%">
+            <table>
                 <%
                     for (ConfigurationProperty property : server.getConfiguration().getRequiredAndOptionalConfigurationProperties(server.serverType())) {
                 %>
@@ -50,6 +50,5 @@
         </td>
     </tr>
 </table>
-
 </body>
 </html>

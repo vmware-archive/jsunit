@@ -33,10 +33,12 @@
                             <b>ID:</b>
                         </td>
                         <td>
-                            <input type="text" name="id" size="20"/>
+                            <input type="text" name="id" size="50"/>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp"/>
+                    <jsp:include page="browserSkinAndGo.jsp">
+                        <jsp:param name="includeAllBrowsersOption" value="false"/>
+                    </jsp:include>
                 </table>
             </td>
         </tr>

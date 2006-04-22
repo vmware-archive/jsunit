@@ -10,12 +10,17 @@
     </td>
     <td>
         <table width="100%">
+            <%
+                boolean includeAllBrowsersOption = Boolean.parseBoolean(request.getParameter("includeAllBrowsersOption"));
+                if (includeAllBrowsersOption) {
+            %>
             <tr>
                 <td>
                     <input type="radio" name="browserId" value="" checked>
                     All available browsers
                 </td>
             </tr>
+            <%}%>
             <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
             <tr>
                 <td valign="top">
@@ -47,6 +52,6 @@
 </tr>
 <tr>
     <td colspan="2">
-        <input type="submit" value="Go"/>
+        <input type="submit" value="Go"<%if (request.getParameter("goOnClick") != null) {%> onclick="<%=request.getParameter("goOnClick")%>"<%}%>/>
     </td>
 </tr>

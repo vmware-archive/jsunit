@@ -1,5 +1,6 @@
 <%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
+
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -12,9 +13,10 @@
 </head>
 
 <body>
+
 <jsp:include page="header.jsp"/>
 <form action="/jsunit/runner" method="get" target="resultsFrame">
-    <table cellpadding="0" cellspacing="0">
+    <table cellpadding="0" cellspacing="0" width="100%">
         <jsp:include page="tabRow.jsp">
             <jsp:param name="selectedPage" value="urlRunner"/>
         </jsp:include>
@@ -30,7 +32,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="1">
+                        <td width="10%">
                             <b>URL:</b>
                         </td>
                         <td>
@@ -45,7 +47,9 @@
                             </font>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp"/>
+                    <jsp:include page="browserSkinAndGo.jsp">
+                        <jsp:param name="includeAllBrowsersOption" value="true"/>
+                    </jsp:include>
                 </table>
             </td>
         </tr>

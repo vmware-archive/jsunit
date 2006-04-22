@@ -21,7 +21,10 @@
             var rowNode = document.createElement("tr");
             rowNode.setAttribute("id", id);
             var leftCellNode = document.createElement("td");
-            leftCellNode.appendChild(document.createTextNode(".js file:"));
+            var boldElement = document.createElement("b");
+            var textNode = document.createTextNode(".js file:");
+            boldElement.appendChild(textNode);
+            leftCellNode.appendChild(boldElement);
 
             rowNode.appendChild(leftCellNode);
 
@@ -29,6 +32,7 @@
             middleCellNode.setAttribute("width", "1");
             var fileUploadField = document.createElement("input");
             fileUploadField.setAttribute("type", "file");
+            fileUploadField.setAttribute("size", "50");
             fileUploadField.setAttribute("name", "referencedJsFiles");
             middleCellNode.appendChild(fileUploadField);
 
@@ -58,7 +62,7 @@
 <body>
 <jsp:include page="header.jsp"/>
 <form action="/jsunit/runner" method="post" target="resultsFrame" enctype="multipart/form-data">
-    <table cellpadding="0" cellspacing="0">
+    <table cellpadding="0" cellspacing="0" width="100%">
         <jsp:include page="tabRow.jsp">
             <jsp:param name="selectedPage" value="uploadRunner"/>
         </jsp:include>
@@ -114,7 +118,9 @@
                                 .js file</a></font>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp"/>
+                    <jsp:include page="browserSkinAndGo.jsp">
+                        <jsp:param name="includeAllBrowsersOption" value="true"/>
+                    </jsp:include>
                 </table>
             </td></tr></table>
 </form>
