@@ -29,7 +29,7 @@ public enum BrowserType {
 
     public static BrowserType resolve(String fileName) {
         for (BrowserType type : values()) {
-            if (fileName.indexOf(type.fileNameSubstring.toLowerCase()) != -1)
+            if (fileName.toLowerCase().indexOf(type.fileNameSubstring.toLowerCase()) != -1)
                 return type;
         }
         return null;
