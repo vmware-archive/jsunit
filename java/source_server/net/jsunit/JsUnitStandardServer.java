@@ -6,12 +6,13 @@ import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.utility.StringUtility;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
@@ -95,7 +96,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private void endBrowser(Browser browser) {
         Process process = launchedBrowsersToProcesses.get(browser);
         if (process != null && configuration.shouldCloseBrowsersAfterTestRuns()) {
-            if (browser.getKillCommand() != null) {
+            if (!StringUtility.isEmpty(browser.getKillCommand())) {
                 try {
                     processStarter.execute(new String[]{browser.getKillCommand()});
                 } catch (IOException e) {
