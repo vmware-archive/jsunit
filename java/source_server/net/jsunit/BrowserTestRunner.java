@@ -12,13 +12,15 @@ public interface BrowserTestRunner extends XmlRenderable, SkinSource {
 
     void finishTestRun();
 
-    long launchBrowserTestRun(BrowserLaunchSpecification launchSpec);
+    void launchBrowserTestRun(BrowserLaunchSpecification launchSpec);
 
     void accept(BrowserResult result);
 
-    boolean hasReceivedResultSince(long launchTime);
+    boolean isWaitingForBrowser(Browser browser);
 
-    BrowserResult lastResult();
+    void addTestRunListener(TestRunListener listener);
+
+    void removeTestRunListener(TestRunListener listener);
 
     void dispose();
 

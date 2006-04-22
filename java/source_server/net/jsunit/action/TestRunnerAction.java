@@ -21,6 +21,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     private Skin skin;
 
     public String execute() throws Exception {
+        long startTime = System.currentTimeMillis();
         runner.logStatus(requestReceivedMessage());
         //noinspection SynchronizeOnNonFinalField
         synchronized (runner) {
@@ -38,7 +39,8 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
             }
             manager.runTests();
         }
-        runner.logStatus("Done running tests");
+        long millis = System.currentTimeMillis() - startTime;
+        runner.logStatus("Done running tests (" + (millis / 1000d) + ") seconds)");
         return skin != null ? TRANSFORM : SUCCESS;
     }
 

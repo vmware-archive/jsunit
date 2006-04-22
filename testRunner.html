@@ -50,6 +50,7 @@
                 p == 'autorun' ||
                 p == 'submitresults' ||
                 p == 'showtestframe' ||
+                p == 'browserid' ||
                 p == 'resultid') {
                 continue;
             }
@@ -116,10 +117,16 @@
         return "";
     }
 
+    function getBrowserId() {
+        if (jsUnitGetParm('browserid'))
+            return jsUnitGetParm('browserid');
+        return "";
+    }
+
     function submitResults() {
         window.mainFrame.mainData.document.testRunnerForm.runButton.disabled = true;
         window.mainFrame.mainData.document.testRunnerForm.stopButton.disabled = true;
-        window.mainFrame.mainResults.populateHeaderFields(getResultId(), navigator.userAgent, JSUNIT_VERSION, testManager.resolveUserEnteredTestFileName());
+        window.mainFrame.mainResults.populateHeaderFields(getResultId(), getBrowserId(), navigator.userAgent, JSUNIT_VERSION, testManager.resolveUserEnteredTestFileName());
         window.mainFrame.mainResults.submitResults();
     }
 

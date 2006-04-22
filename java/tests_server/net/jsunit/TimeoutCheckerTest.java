@@ -40,6 +40,7 @@ public class TimeoutCheckerTest extends TestCase {
     }
 
     public void testTimeOut() throws InterruptedException {
+        mockRunner.waitingForBrowser = true;
         mockRunner.timeoutSeconds = 0;
         while (mockRunner.acceptedResult == null)
             Thread.sleep(10);
@@ -47,18 +48,8 @@ public class TimeoutCheckerTest extends TestCase {
     }
 
     public void testNotTimeOut() throws InterruptedException {
-        mockRunner.hasReceivedResult = true;
         while (checker.isAlive())
             Thread.sleep(10);
-        assertFalse(checker.isAlive());
-    }
-
-    public void xtestExternallyShutDown() throws InterruptedException {
-        assertFalse(mockRunner.hasReceivedResult);
-        mockProcess.done = true;
-        while (mockRunner.acceptedResult == null)
-            Thread.sleep(10);
-        assertTrue(mockRunner.acceptedResult.externallyShutDown());
         assertFalse(checker.isAlive());
     }
 

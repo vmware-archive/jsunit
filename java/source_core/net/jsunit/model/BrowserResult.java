@@ -155,10 +155,6 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return getResultType().failedToLaunch();
     }
 
-    public boolean externallyShutDown() {
-        return getResultType().externallyShutDown();
-    }
-
     public void setServerSideException(Throwable throwable) {
         serverSideExceptionStackTrace = StringUtility.stackTraceAsString(throwable);
     }
@@ -169,10 +165,6 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
 
     public void setTimedOut() {
         this.resultType = ResultType.TIMED_OUT;
-    }
-
-    public void setExternallyShutDown() {
-        this.resultType = ResultType.EXTERNALLY_SHUT_DOWN;
     }
 
     public String getServerSideExceptionStackTrace() {

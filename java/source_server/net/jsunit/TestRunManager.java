@@ -2,6 +2,7 @@ package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
+import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 
 import java.util.Arrays;
@@ -9,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class TestRunManager {
+public class TestRunManager implements TestRunListener {
 
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult;
@@ -21,7 +22,7 @@ public class TestRunManager {
         int port = Integer.parseInt(args[args.length - 1]);
         if (noLogging(args))
             shutOffAllLogging();
-        server.addBrowserTestRunListener(new TestRunNotifierServer(server, port));
+        server.addTestRunListener(new TestRunNotifierServer(server, port));
         server.start();
         TestRunManager manager = new TestRunManager(server);
         manager.runTests();
@@ -54,20 +55,19 @@ public class TestRunManager {
 
     public void runTests() {
         initializeTestRunResult();
+        testRunner.addTestRunListener(this);
         testRunner.logStatus("Starting Test Run");
         testRunner.startTestRun();
         try {
             for (Browser browser : browsers) {
                 BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browser, overrideUrl);
-                long launchTime = testRunner.launchBrowserTestRun(launchSpec);
-                waitForResultToBeSubmitted(browser, launchTime);
-                if (testRunner.isAlive())
-                    testRunResult.addBrowserResult(testRunner.lastResult());
-                else
-                    return;
+                testRunner.launchBrowserTestRun(launchSpec);
+                testRunner.logStatus("Waiting for " + browser.getFileName() + " to submit result");
             }
+            waitForResultsToBeSubmitted();
         } finally {
             testRunner.finishTestRun();
+            testRunner.removeTestRunListener(this);
         }
         testRunner.logStatus("Test Run Completed");
     }
@@ -77,16 +77,15 @@ public class TestRunManager {
         testRunResult.initializeProperties();
     }
 
-    private void waitForResultToBeSubmitted(Browser browser, long launchTime) {
-        testRunner.logStatus("Waiting for " + browser.getFileName() + " to submit result");
+    private void waitForResultsToBeSubmitted() {
         long secondsWaited = 0;
-        while (testRunner.isAlive() && !testRunner.hasReceivedResultSince(launchTime)) {
+        while (testRunner.isAlive() && testRunResult.getBrowserResults().size() < browsers.size()) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
             }
             secondsWaited++;
-            if (secondsWaited > (testRunner.timeoutSeconds()) + 3)
+            if (secondsWaited > testRunner.timeoutSeconds() + 3)
                 throw new RuntimeException("Server not responding");
         }
     }
@@ -104,5 +103,22 @@ public class TestRunManager {
         if (chosenBrowser == null)
             throw new InvalidBrowserIdException(chosenBrowserId);
         browsers = Arrays.asList(chosenBrowser);
+    }
+
+    public boolean isReady() {
+        return true;
+    }
+
+    public void testRunStarted() {
+    }
+
+    public void testRunFinished() {
+    }
+
+    public void browserTestRunStarted(Browser browser) {
+    }
+
+    public void browserTestRunFinished(Browser browser, BrowserResult result) {
+        testRunResult.addBrowserResult(result);
     }
 }

@@ -18,7 +18,6 @@ public class TestRunnerActionTest extends TestCase {
         super.setUp();
         action = new TestRunnerAction();
         mockRunner = new MockBrowserTestRunner();
-        mockRunner.hasReceivedResult = true;
         action.setBrowserTestRunner(mockRunner);
     }
 

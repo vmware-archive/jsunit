@@ -20,7 +20,7 @@ public class JsUnitStandardServerTest extends TestCase {
     public void testStartTestRun() throws Exception {
         server.setProcessStarter(new MockProcessStarter());
         MockTestRunListener listener = new MockTestRunListener();
-        server.addBrowserTestRunListener(listener);
+        server.addTestRunListener(listener);
         Thread thread = new Thread() {
             public void run() {
                 try {
@@ -41,13 +41,13 @@ public class JsUnitStandardServerTest extends TestCase {
         MockProcessStarter starter = new MockProcessStarter();
         server.setProcessStarter(starter);
         MockTestRunListener listener = new MockTestRunListener();
-        server.addBrowserTestRunListener(listener);
+        server.addTestRunListener(listener);
 
         server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser(DummyConfigurationSource.BROWSER_FILE_NAME, 0)));
         assertTrue(listener.browserTestRunStartedCalled);
         assertEquals(2, starter.commandPassed.length);
         assertEquals("mybrowser.exe", starter.commandPassed[0]);
-        assertEquals(DummyConfigurationSource.DUMMY_URL, starter.commandPassed[1]);
+        assertEquals(DummyConfigurationSource.DUMMY_URL+"&browserId=0", starter.commandPassed[1]);
         assertFalse(listener.testRunFinishedCalled);
         server.accept(new DummyBrowserResult(true, 0, 0));
         assertTrue(listener.browserTestRunFinishedCalled);
@@ -57,31 +57,33 @@ public class JsUnitStandardServerTest extends TestCase {
         BlowingUpProcessStarter starter = new BlowingUpProcessStarter();
         server.setProcessStarter(starter);
         MockTestRunListener listener = new MockTestRunListener();
-        server.addBrowserTestRunListener(listener);
+        server.addTestRunListener(listener);
 
-        long launchTime = server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser(DummyConfigurationSource.BROWSER_FILE_NAME, 0)));
+        Browser browser = new Browser(DummyConfigurationSource.BROWSER_FILE_NAME, 0);
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
         assertTrue(listener.browserTestRunStartedCalled);
         assertTrue(listener.browserTestRunFinishedCalled);
         assertTrue(listener.result.failedToLaunch());
-        assertTrue(server.hasReceivedResultSince(launchTime));
+        assertFalse(server.isWaitingForBrowser(browser));
         assertEquals(new Browser("mybrowser.exe", 0), listener.browser);
         assertEquals("mybrowser.exe", listener.result.getBrowser().getFileName());
         assertSame(listener.result, server.lastResult());
 
         server.setProcessStarter(new MockProcessStarter());
         listener.reset();
-        launchTime = server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("mybrowser2.exe", 1)));
-        assertFalse(server.hasReceivedResultSince(launchTime));
+        browser = new Browser("mybrowser2.exe", 1);
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
+        assertTrue(server.isWaitingForBrowser(browser));
         assertTrue(listener.browserTestRunStartedCalled);
         assertFalse(listener.browserTestRunFinishedCalled);
-        assertEquals(new Browser("mybrowser2.exe", 1), listener.browser);
+        assertEquals(browser, listener.browser);
     }
 
     public void testStartEnd() {
         server.setProcessStarter(new MockProcessStarter());
         MockTestRunListener listener = new MockTestRunListener();
         listener.isReady = true;
-        server.addBrowserTestRunListener(listener);
+        server.addTestRunListener(listener);
         server.startTestRun();
         assertTrue(listener.testRunStartedCalled);
         server.finishTestRun();
@@ -90,8 +92,10 @@ public class JsUnitStandardServerTest extends TestCase {
 
     public void testAcceptResult() {
         server.setProcessStarter(new MockProcessStarter());
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("mybrowser.exe", 0)));
+        Browser browser = new Browser("mybrowser.exe", 0);
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
         BrowserResult result = new BrowserResult();
+        result.setBrowser(browser);
         server.accept(result);
         assertEquals("mybrowser.exe", result.getBrowser().getFileName());
     }
@@ -100,9 +104,9 @@ public class JsUnitStandardServerTest extends TestCase {
         MockProcessStarter starter = new MockProcessStarter();
         server.setProcessStarter(starter);
         MockTestRunListener listener = new MockTestRunListener();
-        server.addBrowserTestRunListener(listener);
+        server.addTestRunListener(listener);
 
-        String overrideUrl = "http://my.example.com:8080?submitResults=true&autoRun=true";
+        String overrideUrl = "http://my.example.com:8080?submitResults=true&autoRun=true&browserId=0";
         server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("mybrowser.exe", 0), overrideUrl));
         assertEquals(2, starter.commandPassed.length);
         assertEquals("mybrowser.exe", starter.commandPassed[0]);
@@ -113,14 +117,14 @@ public class JsUnitStandardServerTest extends TestCase {
         MockProcessStarter starter = new MockProcessStarter();
         server.setProcessStarter(starter);
         MockTestRunListener listener = new MockTestRunListener();
-        server.addBrowserTestRunListener(listener);
+        server.addTestRunListener(listener);
 
         String overrideUrlWithoutSubmitResults = "http://my.example.com:8080?param=value";
         server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("mybrowser.exe", 0), overrideUrlWithoutSubmitResults));
         assertEquals(2, starter.commandPassed.length);
         assertEquals("mybrowser.exe", starter.commandPassed[0]);
         assertEquals(
-                overrideUrlWithoutSubmitResults + "&autoRun=true&submitResults=localhost:123456789/jsunit/acceptor",
+                overrideUrlWithoutSubmitResults + "&autoRun=true&browserId=0&submitResults=localhost:123456789/jsunit/acceptor",
                 starter.commandPassed[1]
         );
     }
@@ -145,13 +149,6 @@ public class JsUnitStandardServerTest extends TestCase {
         } catch (ConfigurationException e) {
 
         }
-    }
-
-    public void testAwaitingBrowserSubmission() throws Exception {
-        server.setProcessStarter(new MockProcessStarter());
-        assertFalse(server.isAwaitingBrowserSubmission());
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser("foo.exe", 1)));
-        assertTrue(server.isAwaitingBrowserSubmission());
     }
 
     public void testStatusMessages() throws Exception {

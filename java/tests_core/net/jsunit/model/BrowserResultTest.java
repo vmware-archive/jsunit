@@ -64,7 +64,6 @@ public class BrowserResultTest extends BrowserResultTestCase {
         assertTrue(result.completedTestRun());
         assertFalse(result.timedOut());
         assertFalse(result.failedToLaunch());
-        assertFalse(result.externallyShutDown());
     }
 
     public void testIsForBrowser() throws Exception {

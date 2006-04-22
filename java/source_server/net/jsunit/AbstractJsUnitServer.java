@@ -2,9 +2,7 @@ package net.jsunit;
 
 import com.opensymphony.webwork.dispatcher.ServletDispatcher;
 import com.opensymphony.xwork.config.ConfigurationManager;
-import com.opensymphony.xwork.config.entities.ActionConfig;
-import com.opensymphony.xwork.config.entities.PackageConfig;
-import com.opensymphony.xwork.config.providers.XmlConfigurationProvider;
+import com.opensymphony.xwork.config.ConfigurationProvider;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
@@ -22,7 +20,10 @@ import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 import org.mortbay.util.FileResource;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
@@ -115,29 +116,13 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
             addWebworkServlet(servletContext, servletName);
         server.addContext(servletContext);
 
-        if (Monitor.activeCount() == 0)
-            Monitor.monitor();
-
-        XmlConfigurationProvider provider = new XmlConfigurationProvider() {
-            public void init(com.opensymphony.xwork.config.Configuration configuration) {
-                super.init(configuration);
-                PackageConfig packageConfig = configuration.getPackageConfig("default");
-                ActionConfig runnerConfig = findRunnerActionConfig(packageConfig.getActionConfigs());
-                packageConfig.addActionConfig("runner", runnerConfig);
-            }
-
-            private ActionConfig findRunnerActionConfig(Map actionConfigs) {
-                for (Object name : actionConfigs.keySet()) {
-                    if (name.equals(runnerActionName()))
-                        return (ActionConfig) actionConfigs.get(name);
-                }
-                throw new RuntimeException("Should not happen");
-            }
-
-        };
+        ConfigurationProvider provider = new ConfigurationProviderWithRunner(runnerActionName());
 
         ConfigurationManager.clearConfigurationProviders();
         ConfigurationManager.addConfigurationProvider(provider);
+
+        if (Monitor.activeCount() == 0)
+            Monitor.monitor();
     }
 
     protected List<String> servletNames() {

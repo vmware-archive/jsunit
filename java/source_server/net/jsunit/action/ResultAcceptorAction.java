@@ -2,6 +2,7 @@ package net.jsunit.action;
 
 import net.jsunit.XmlRenderable;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.Browser;
 
 public class ResultAcceptorAction extends JsUnitBrowserTestRunnerAction implements BrowserResultAware {
 
@@ -25,4 +26,7 @@ public class ResultAcceptorAction extends JsUnitBrowserTestRunnerAction implemen
         return getResult();
     }
 
+    public Browser getBrowserById(int id) {
+        return runner.getConfiguration().getBrowserById(id);
+    }
 }

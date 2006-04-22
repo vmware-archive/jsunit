@@ -17,25 +17,45 @@ public class MockBrowserTestRunner extends BrowserTestRunnerStub {
     public String idPassed;
     public Integer browserIdPassed;
     public int timeoutSeconds;
-    public boolean hasReceivedResult;
     public List<String> logMessages = new ArrayList<String>();
     public List<BrowserLaunchSpecification> launchSpecs = new ArrayList<BrowserLaunchSpecification>();
     public Configuration configuration;
+    private TestRunListener testRunManager;
+    public boolean waitingForBrowser;
 
-    public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
+    public void launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         launchSpecs.add(launchSpec);
-        return 0;
+        BrowserResult result = createResult();
+        Browser browser = launchSpec.getBrowser();
+        result.setBrowser(browser);
+        accept(result);
+    }
+
+    public void addTestRunListener(TestRunListener listener) {
+        if (listener instanceof TestRunManager)
+            this.testRunManager = listener;
+    }
+
+    public void removeTestRunListener(TestRunListener listener) {
+        if (listener instanceof TestRunManager)
+            this.testRunManager = null;
+    }
+
+    public boolean isWaitingForBrowser(Browser browser) {
+        return waitingForBrowser;
     }
 
     public void accept(BrowserResult result) {
         this.acceptedResult = result;
-    }
-
-    public boolean hasReceivedResultSince(long launchTime) {
-        return hasReceivedResult;
+        if (testRunManager != null)
+            testRunManager.browserTestRunFinished(result.getBrowser(), result);
     }
 
     public BrowserResult lastResult() {
+        return createResult();
+    }
+
+    private DummyBrowserResult createResult() {
         return new DummyBrowserResult(shouldSucceed, shouldSucceed ? 0 : 1, 0);
     }
 

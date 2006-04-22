@@ -42,7 +42,6 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     public void testCompleted() {
         assertFalse(result.completedTestRun());
         assertFalse(result.timedOut());
-        assertFalse(result.externallyShutDown());
         assertTrue(result.failedToLaunch());
     }
 

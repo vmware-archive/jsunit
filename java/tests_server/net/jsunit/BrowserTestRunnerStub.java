@@ -15,19 +15,20 @@ public class BrowserTestRunnerStub implements BrowserTestRunner {
     public void finishTestRun() {
     }
 
-    public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-        return 0;
+    public void launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
     }
 
     public void accept(BrowserResult result) {
     }
 
-    public boolean hasReceivedResultSince(long launchTime) {
+    public boolean isWaitingForBrowser(Browser browser) {
         return false;
     }
 
-    public BrowserResult lastResult() {
-        return null;
+    public void addTestRunListener(TestRunListener listener) {
+    }
+
+    public void removeTestRunListener(TestRunListener listener) {
     }
 
     public void dispose() {

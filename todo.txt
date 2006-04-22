@@ -4,7 +4,7 @@ Required for next release:
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites
-    - incorrect url in "The full result log is at <URL>"
+    - incorrect url in "The full result log is at <URL>" - just the host that's wrong
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish simple_html.xsl and simple_text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
@@ -34,5 +34,3 @@ Backlog for future releases:
 
   BUGS:
     - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
-
-

@@ -26,8 +26,7 @@ public class TimeoutChecker extends Thread {
     }
 
     public void run() {
-
-        while (alive && !runner.hasReceivedResultSince(launchTime)) {
+        while (alive && runner.isWaitingForBrowser(browser)) {
             if (waitedTooLong()) {
                 runner.logStatus("Browser " + browser.getFileName() + " timed out after " + runner.timeoutSeconds() + " seconds");
                 runner.accept(createTimedOutBrowserResult());
@@ -48,14 +47,6 @@ public class TimeoutChecker extends Thread {
         }
     }
 
-    //TODO: finish implementing external shutdown
-    @SuppressWarnings("unused")
-    private BrowserResult createExternallyShutdownBrowserResult() {
-        BrowserResult result = createRawBrowserResult();
-        result.setExternallyShutDown();
-        return result;
-    }
-
     private BrowserResult createTimedOutBrowserResult() {
         BrowserResult result = createRawBrowserResult();
         result.setTimedOut();
@@ -66,19 +57,6 @@ public class TimeoutChecker extends Thread {
         BrowserResult result = new BrowserResult();
         result.setBrowser(browser);
         return result;
-    }
-
-    //TODO: finish implementing external shutdown
-    @SuppressWarnings("unused")
-    private boolean isBrowserProcessAlive() {
-        try {
-            if (browserProcess == null)
-                return false;
-            browserProcess.exitValue();
-            return false;
-        } catch (IllegalThreadStateException e) {
-            return true;
-        }
     }
 
     public void die() {

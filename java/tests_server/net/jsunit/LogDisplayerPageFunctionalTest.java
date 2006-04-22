@@ -21,10 +21,12 @@ public class LogDisplayerPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testDisplayerForm() throws Exception {
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0)));
+        Browser browser = new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0);
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
         BrowserResult browserResult = new BrowserResult();
         String id = String.valueOf(System.currentTimeMillis());
         browserResult.setId(id);
+        browserResult.setBrowser(browser);
         server.accept(browserResult);
         webTester.setFormElement("id", id);
         webTester.selectOption("skinId", "None (raw XML)");

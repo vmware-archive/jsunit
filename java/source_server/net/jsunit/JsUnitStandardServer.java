@@ -10,16 +10,16 @@ import net.jsunit.model.BrowserResult;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public class JsUnitStandardServer extends AbstractJsUnitServer implements BrowserTestRunner {
 
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
     private ProcessStarter processStarter = new DefaultProcessStarter();
-    private LaunchTestRunCommand launchTestRunCommand;
     private TimeoutChecker timeoutChecker;
     private BrowserResultRepository browserResultRepository;
-    private Process browserProcess;
-    private long timeLastResultReceived;
+    private Map<Browser, Process> launchedBrowsersToProcesses = new HashMap<Browser, Process>();
     private BrowserResult lastResult;
 
     public JsUnitStandardServer(Configuration configuration, boolean temporary) {
@@ -29,7 +29,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public JsUnitStandardServer(Configuration configuration, BrowserResultRepository browserResultRepository, boolean temporary) {
         super(configuration, temporary ? ServerType.STANDARD_TEMPORARY : ServerType.STANDARD);
         this.browserResultRepository = browserResultRepository;
-        addBrowserTestRunListener(new BrowserResultLogWriter(browserResultRepository));
+        addTestRunListener(new BrowserResultLogWriter(browserResultRepository));
     }
 
     public static void main(String args[]) {
@@ -42,19 +42,12 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     public void accept(BrowserResult result) {
-        long timeReceived = System.currentTimeMillis();
-        if (launchTestRunCommand == null)
-            return;
-        Browser submittingBrowser = launchTestRunCommand.getBrowser();
-        endBrowser();
-
-        result.setBrowser(submittingBrowser);
-
-        killTimeoutChecker();
+        Browser submittingBrowser = result.getBrowser();
+        endBrowser(submittingBrowser);
         for (TestRunListener listener : browserTestRunListeners)
             listener.browserTestRunFinished(submittingBrowser, result);
+        launchedBrowsersToProcesses.remove(submittingBrowser);
         lastResult = result;
-        timeLastResultReceived = timeReceived;
     }
 
     private void killTimeoutChecker() {
@@ -75,10 +68,6 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return browserResultRepository.retrieve(id, browser);
     }
 
-    public BrowserResult lastResult() {
-        return lastResult;
-    }
-
     public String toString() {
         return "JsUnit Server";
     }
@@ -87,38 +76,41 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return configuration.getBrowsers();
     }
 
-    public boolean hasReceivedResultSince(long launchTime) {
-        return timeLastResultReceived >= launchTime;
+    public boolean isWaitingForBrowser(Browser browser) {
+        return launchedBrowsersToProcesses.containsKey(browser);
     }
 
-    public void addBrowserTestRunListener(TestRunListener listener) {
+    public void addTestRunListener(TestRunListener listener) {
         browserTestRunListeners.add(listener);
+    }
+
+    public void removeTestRunListener(TestRunListener listener) {
+        browserTestRunListeners.remove(listener);
     }
 
     public List<TestRunListener> getBrowserTestRunListeners() {
         return browserTestRunListeners;
     }
 
-    private void endBrowser() {
-        if (browserProcess != null && configuration.shouldCloseBrowsersAfterTestRuns()) {
-            if (launchTestRunCommand.getBrowserKillCommand() != null) {
+    private void endBrowser(Browser browser) {
+        Process process = launchedBrowsersToProcesses.get(browser);
+        if (process != null && configuration.shouldCloseBrowsersAfterTestRuns()) {
+            if (browser.getKillCommand() != null) {
                 try {
-                    processStarter.execute(new String[]{launchTestRunCommand.getBrowserKillCommand()});
+                    processStarter.execute(new String[]{browser.getKillCommand()});
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                browserProcess.destroy();
+                process.destroy();
                 try {
-                    browserProcess.waitFor();
+                    process.waitFor();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                waitUntilProcessHasExitValue(browserProcess);
+                waitUntilProcessHasExitValue(process);
             }
         }
-        browserProcess = null;
-        launchTestRunCommand = null;
         killTimeoutChecker();
     }
 
@@ -133,26 +125,24 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         }
     }
 
-    public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
-        waitUntilLastReceivedTimeHasPassed();
+    public void launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
         long launchTime = System.currentTimeMillis();
-        launchTestRunCommand = new LaunchTestRunCommand(launchSpec, configuration);
-        Browser browser = launchTestRunCommand.getBrowser();
+        Browser browser = launchSpec.getBrowser();
+        LaunchTestRunCommand command = new LaunchTestRunCommand(launchSpec, configuration);
         String browserFileName = browser.getFileName();
         try {
-            logStatus("Launching " + browserFileName + " on " + launchTestRunCommand.getTestURL());
+            logStatus("Launching " + browserFileName + " on " + command.getTestURL());
             for (TestRunListener listener : browserTestRunListeners)
                 listener.browserTestRunStarted(browser);
-            this.browserProcess = processStarter.execute(launchTestRunCommand.generateArray());
-            startTimeoutChecker(launchTime);
+            Process process = processStarter.execute(command.generateArray());
+            launchedBrowsersToProcesses.put(browser, process);
+            startTimeoutChecker(launchTime, browser, process);
         } catch (Throwable throwable) {
-            handleCrashWhileLaunching(throwable);
+            handleCrashWhileLaunching(throwable, browser);
         }
-        return launchTime;
     }
 
-    private void handleCrashWhileLaunching(Throwable throwable) {
-        Browser browser = launchTestRunCommand.getBrowser();
+    private void handleCrashWhileLaunching(Throwable throwable, Browser browser) {
         logStatus(failedToLaunchStatusMessage(browser, throwable));
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
         failedToLaunchBrowserResult.setFailedToLaunch();
@@ -168,16 +158,8 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         return result;
     }
 
-    private void waitUntilLastReceivedTimeHasPassed() {
-        while (System.currentTimeMillis() == timeLastResultReceived)
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-            }
-    }
-
-    private void startTimeoutChecker(long launchTime) {
-        timeoutChecker = new TimeoutChecker(browserProcess, launchTestRunCommand.getBrowser(), launchTime, this);
+    private void startTimeoutChecker(long launchTime, Browser browser, Process process) {
+        timeoutChecker = new TimeoutChecker(process, browser, launchTime, this);
         timeoutChecker.start();
     }
 
@@ -202,24 +184,21 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         testRunCount ++;
     }
 
-    public Process getBrowserProcess() {
-        return browserProcess;
-    }
-
     protected String runnerActionName() {
         return "browserTestRunner";
     }
 
     public void dispose() {
         super.dispose();
-        endBrowser();
+        for (Browser browser : new HashMap<Browser, Process>(launchedBrowsersToProcesses).keySet())
+            endBrowser(browser);
     }
 
     public int timeoutSeconds() {
         return configuration.getTimeoutSeconds();
     }
 
-    public boolean isAwaitingBrowserSubmission() {
-        return launchTestRunCommand != null;
+    public BrowserResult lastResult() {
+        return lastResult;
     }
 }

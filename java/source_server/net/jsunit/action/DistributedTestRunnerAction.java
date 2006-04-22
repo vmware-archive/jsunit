@@ -33,6 +33,7 @@ public class DistributedTestRunnerAction implements
     }
 
     public String execute() throws Exception {
+        long startTime = System.currentTimeMillis();
         String message = new RequestReceivedMessage(remoteHost, remoteIpAddress, overrideURL).generateMessage();
         server.logStatus(message);
         //noinspection SynchronizeOnNonFinalField
@@ -43,7 +44,8 @@ public class DistributedTestRunnerAction implements
             manager.runTests();
         }
         server.finishedTestRun();
-        server.logStatus("Done running aggregate tests");
+        long millis = System.currentTimeMillis() - startTime;
+        server.logStatus("Done running aggregate tests ( "+ (millis/1000d)+ " seconds)");
         return skin != null ? TRANSFORM : SUCCESS;
     }
 

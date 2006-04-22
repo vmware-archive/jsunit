@@ -28,7 +28,6 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(DefaultSkinSourceTest.class);
         result.addTestSuite(DistributedTestSuiteBuilderTest.class);
         result.addTestSuite(EnvironmentVariablesConfigurationSourceTest.class);
-        result.addTestSuite(ExternallyShutDownBrowserResultTest.class);
         result.addTestSuite(FailedToLaunchBrowserResultTest.class);
         result.addTestSuite(FragmentInterceptorTest.class);
         result.addTestSuite(DistributedTestRunManagerTest.class);

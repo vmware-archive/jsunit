@@ -29,7 +29,6 @@ public class TestRunManagerTest extends TestCase {
 
     public void testOverrideUrl() {
         MockBrowserTestRunner runner = new MockBrowserTestRunner();
-        runner.hasReceivedResult = true;
         String overrideUrl = "http://my.override.url:8080/jsunit/testRunner.html?someParam=someValue&someOtherParam=someOtherValue";
         TestRunManager manager = new TestRunManager(runner, overrideUrl);
         manager.runTests();
@@ -45,7 +44,6 @@ public class TestRunManagerTest extends TestCase {
 
     public void testNoOverrideUrl() {
         MockBrowserTestRunner runner = new MockBrowserTestRunner();
-        runner.hasReceivedResult = true;
         TestRunManager manager = new TestRunManager(runner, null);
         manager.runTests();
 
@@ -56,7 +54,6 @@ public class TestRunManagerTest extends TestCase {
 
     public void testPropertiesSet() throws Exception {
         MockBrowserTestRunner runner = new MockBrowserTestRunner();
-        runner.hasReceivedResult = true;
         TestRunManager manager = new TestRunManager(runner, null);
         manager.runTests();
         TestRunResult testRunResult = manager.getTestRunResult();
@@ -69,10 +66,6 @@ public class TestRunManagerTest extends TestCase {
 
         public List<Browser> getBrowsers() {
             return Arrays.asList(new Browser("browser1.exe", 0), new Browser("browser2.exe", 1));
-        }
-
-        public boolean hasReceivedResultSince(long launchTime) {
-            return true;
         }
 
         public BrowserResult lastResult() {
@@ -97,13 +90,8 @@ public class TestRunManagerTest extends TestCase {
             );
         }
 
-        public long launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
+        public void launchBrowserTestRun(BrowserLaunchSpecification launchSpec) {
             currentBrowser = launchSpec.getBrowser();
-            return 0;
-        }
-
-        public boolean hasReceivedResultSince(long launchTime) {
-            return true;
         }
 
         public BrowserResult lastResult() {

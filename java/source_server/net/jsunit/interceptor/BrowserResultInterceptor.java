@@ -4,6 +4,7 @@ import com.opensymphony.xwork.Action;
 import net.jsunit.action.BrowserResultAware;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
+import net.jsunit.model.BrowserSource;
 import net.jsunit.utility.StringUtility;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,12 +13,12 @@ public class BrowserResultInterceptor extends JsUnitInterceptor {
 
     protected void execute(Action targetAction) throws Exception {
         HttpServletRequest request = request();
-        BrowserResult result = build(request);
         BrowserResultAware aware = (BrowserResultAware) targetAction;
+        BrowserResult result = build(request, aware);
         aware.setBrowserResult(result);
     }
 
-    public BrowserResult build(HttpServletRequest request) {
+    public BrowserResult build(HttpServletRequest request, BrowserSource source) {
         BrowserResult result = new BrowserResult();
         String testId = request.getParameter(BrowserResultWriter.ID);
         if (!StringUtility.isEmpty(testId))
@@ -30,6 +31,9 @@ public class BrowserResultInterceptor extends JsUnitInterceptor {
             result.setTime(Double.parseDouble(time));
         result.setJsUnitVersion(request.getParameter(BrowserResultWriter.JSUNIT_VERSION));
         result.setTestCaseStrings(request.getParameterValues(BrowserResultWriter.TEST_CASES));
+        String browserIdString = request.getParameter(BrowserResultWriter.BROWSER_ID);
+        if (browserIdString != null)
+            result.setBrowser(source.getBrowserById(Integer.parseInt(browserIdString)));
         return result;
     }
 

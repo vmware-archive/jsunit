@@ -38,8 +38,6 @@ public class BrowserResultBuilder {
             result.setFailedToLaunch();
         else if (timedOut(root))
             result.setTimedOut();
-        else if (externallyShutDown(root))
-            result.setExternallyShutDown();
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
         Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASES);
@@ -58,11 +56,6 @@ public class BrowserResultBuilder {
     private boolean timedOut(Element root) {
         Attribute timedOutAttribute = root.getAttribute(BrowserResultWriter.TIMED_OUT);
         return timedOutAttribute != null && timedOutAttribute.getValue().equals(String.valueOf(true));
-    }
-
-    private boolean externallyShutDown(Element root) {
-        Attribute externallyShutDownAttribute = root.getAttribute(BrowserResultWriter.EXTERNALLY_SHUT_DOWN);
-        return externallyShutDownAttribute != null && externallyShutDownAttribute.getValue().equals(String.valueOf(true));
     }
 
     private void updateWithHeaders(BrowserResult result, Element element) {

@@ -46,6 +46,7 @@ public class LaunchTestRunCommand {
             throw new NoUrlSpecifiedException();
         String urlString = launchSpec.hasOverrideUrl() ? launchSpec.getOverrideUrl() : configuration.getTestURL().toString();
         urlString = addAutoRunParameterIfNeeded(urlString);
+        urlString = addBrowserIdParameterIfNeeded(urlString, launchSpec.getBrowser());
         urlString = addSubmitResultsParameterIfNeeded(urlString);
         return urlString;
     }
@@ -59,6 +60,13 @@ public class LaunchTestRunCommand {
     private String addAutoRunParameterIfNeeded(String urlString) {
         if (urlString.toLowerCase().indexOf("autorun") == -1) {
             urlString = addParameter(urlString, "autoRun=true");
+        }
+        return urlString;
+    }
+
+    private String addBrowserIdParameterIfNeeded(String urlString, Browser browser) {
+        if (urlString.toLowerCase().indexOf("browserid") == -1) {
+            urlString = addParameter(urlString, "browserId=" + browser.getId());
         }
         return urlString;
     }

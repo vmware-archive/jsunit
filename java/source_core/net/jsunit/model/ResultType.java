@@ -25,16 +25,6 @@ public enum ResultType {
             return true;
         }
     },
-    EXTERNALLY_SHUT_DOWN {
-        public String getDisplayString() {
-            return "externally shut down";
-        }
-
-        public boolean externallyShutDown() {
-            return true;
-        }
-
-    },
     ERROR {
         public String getDisplayString() {
             return "error";
@@ -54,7 +44,7 @@ public enum ResultType {
     public abstract String getDisplayString();
 
     public final boolean completedTestRun() {
-        return !timedOut() && !failedToLaunch() && !externallyShutDown();
+        return !timedOut() && !failedToLaunch();
     }
 
     public boolean timedOut() {
@@ -62,10 +52,6 @@ public enum ResultType {
     }
 
     public boolean failedToLaunch() {
-        return false;
-    }
-
-    public boolean externallyShutDown() {
         return false;
     }
 
