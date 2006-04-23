@@ -14,7 +14,7 @@
        bgcolor="#DDDDDD">
     <tr>
         <td width="1">
-            <a href="http://www.jsunit.net" target="_blank"><img src="images/logo_jsunit.gif" alt="JsUnit" border="0"/></a>
+            <a href="http://www.jsunit.net" target="_blank"><img src="images/logo_jsunit.gif" title="JsUnit" alt="JsUnit" border="0"/></a>
         </td>
         <td width="50">&nbsp;</td>
         <td nowrap align="left">
@@ -33,7 +33,7 @@
                 </tr>
                 <tr>
                     <td valign="middle">
-                        <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>">
+                        <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>" title="<%=platformType.getDisplayName()%>">
                     </td>
                     <td>
                         Running on <%=SystemUtility.displayString()%>
@@ -50,7 +50,7 @@
             </font>
             <br>
             <a href="http://www.pivotalsf.com/" target="top">
-                <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal">
+                <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal" title="Powered by Pivotal">
             </a>
         </td>
 
@@ -74,7 +74,7 @@
                 for (Browser browser : remoteConfiguration.getBrowsers()) {
                     if (browser.getType() != null) {
             %>
-            <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>">
+            <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>" title="<%=browser.getType().getDisplayName()%>">
             <%}%>
             <%=browser.getDisplayString()%>
             <br>

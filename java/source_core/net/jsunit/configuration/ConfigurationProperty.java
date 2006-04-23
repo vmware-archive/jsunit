@@ -17,7 +17,7 @@ public enum ConfigurationProperty {
             StringBuffer buffer = new StringBuffer();
             for (Iterator it = configuration.getBrowsers().iterator(); it.hasNext();) {
                 Browser browser = (Browser) it.next();
-                buffer.append(browser.getFileName());
+                buffer.append(browser.getFullFileName());
                 if (it.hasNext())
                     buffer.append(",");
             }
