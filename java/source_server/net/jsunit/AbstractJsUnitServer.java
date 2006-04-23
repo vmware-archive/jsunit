@@ -64,16 +64,16 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     public void start() throws Exception {
+        preStart();
         setUpHttpServer();
         logStatus(startingServerStatusMessage());
         server.start();
         startDate = new Date();
         if (serverType.shouldPerformUpToDateCheck())
             performUpToDateCheck();
-        postStart();
     }
 
-    protected void postStart() {
+    protected void preStart() {
     }
 
     private void performUpToDateCheck() {

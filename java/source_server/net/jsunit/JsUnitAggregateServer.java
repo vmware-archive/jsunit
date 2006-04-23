@@ -46,7 +46,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer {
         testRunCount++;
     }
 
-    protected void postStart() {
+    protected void preStart() {
         cachedRemoteConfigurations = new ArrayList<Configuration>();
         for (URL remoteMachineURL : configuration.getRemoteMachineURLs()) {
             RemoteConfigurationFetcher fetcher = new RemoteConfigurationFetcher(hitter, remoteMachineURL);
