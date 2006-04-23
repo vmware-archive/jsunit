@@ -6,10 +6,10 @@ public class ServerDefaultPageFunctionalTest extends FunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/");
     }
 
     public void testLandingPage() throws Exception {
+        webTester.beginAt("/");
         assertOnFragmentRunnerPage();
         webTester.assertTextPresent(SystemUtility.osString());
         webTester.assertTextPresent(SystemUtility.hostname());
@@ -17,12 +17,19 @@ public class ServerDefaultPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testLinks() throws Exception {
+        webTester.beginAt("/");
         webTester.clickLinkWithText("UploadRunner");
         assertOnUploadRunnerPage();
         webTester.clickLinkWithText("URLRunner");
         assertOnUrlRunnerPage();
         webTester.clickLinkWithText("LogDisplayer");
         assertOnLogDisplayerPage();
+    }
+
+    public void testAbsoluteSlash() throws Exception {
+        webTester.getTestContext().setBaseUrl("http://localhost:" + port + "/");
+        webTester.beginAt("/");
+        assertOnFragmentRunnerPage();
     }
 
 }

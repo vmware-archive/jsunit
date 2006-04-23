@@ -100,21 +100,26 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         listener.setPort(configuration.getPort());
         server.addListener(listener);
 
-        ServletHttpContext servletContext = new ServletHttpContext();
-        servletContext.setContextPath("jsunit");
-        servletContext.setResourceBase(configuration.getResourceBase().toString());
-        servletContext.addWelcomeFile("java/jsp/fragmentRunner.jsp");
-        servletContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
+        ServletHttpContext rootContext = new ServletHttpContext();
+        rootContext.setContextPath("/");
+        rootContext.addHandler(new ForwardHandler("/jsunit"));
+        server.addContext(rootContext);
+
+        ServletHttpContext jsunitContext = new ServletHttpContext();
+        jsunitContext.setContextPath("jsunit");
+        jsunitContext.setResourceBase(configuration.getResourceBase().toString());
+        jsunitContext.addWelcomeFile("java/jsp/fragmentRunner.jsp");
+        jsunitContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);
-        servletContext.addHandler(resourceHandler);
+        jsunitContext.addHandler(resourceHandler);
 
-        servletContext.addHandler(new ForwardHandler("fragmentRunnerPage"));
+        jsunitContext.addHandler(new ForwardHandler("fragmentRunnerPage"));
 
         for (String servletName : servletNames())
-            addWebworkServlet(servletContext, servletName);
-        server.addContext(servletContext);
+            addWebworkServlet(jsunitContext, servletName);
+        server.addContext(jsunitContext);
 
         ConfigurationProvider provider = new ConfigurationProviderWithRunner(runnerActionName());
 
