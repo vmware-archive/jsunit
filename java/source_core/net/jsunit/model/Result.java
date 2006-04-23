@@ -1,6 +1,8 @@
 package net.jsunit.model;
 
-public interface Result {
+import net.jsunit.XmlRenderable;
+
+public interface Result extends XmlRenderable {
 
     public int getErrorCount();
 

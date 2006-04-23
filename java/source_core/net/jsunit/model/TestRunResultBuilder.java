@@ -8,8 +8,6 @@ import java.util.List;
 @SuppressWarnings({"unchecked"})
 public class TestRunResultBuilder {
 
-    public static final String NAME = "testRunResult";
-
     public TestRunResult build(Document document) {
         TestRunResult result = new TestRunResult();
         Element propertiesElement = document.getRootElement().getChild("properties");

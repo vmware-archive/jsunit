@@ -108,10 +108,6 @@ public abstract class FunctionalTestCase extends TestCase {
         return null;
     }
 
-    protected void assertOnConfigurationPage() {
-        webTester.assertTitleEquals("JsUnit Server - Configuration");
-    }
-
     protected void assertOnLogDisplayerPage() {
         webTester.assertTitleEquals("JsUnit Server - LogDisplayer");
     }

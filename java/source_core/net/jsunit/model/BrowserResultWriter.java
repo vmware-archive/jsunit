@@ -33,17 +33,13 @@ public class BrowserResultWriter {
         this.browserResult = result;
     }
 
-    public String writeXml() {
-        Element root = createRootElement();
+    public String writeXmlString() {
+        Element root = writeXml();
         Document document = new Document(root);
         return new XMLOutputter().outputString(document);
     }
 
     public String writeXmlFragment() {
-        return new XMLOutputter().outputString(createRootElement());
-    }
-
-    private Element createRootElement() {
         Element root = new Element(BROWSER_RESULT);
         if (browserResult.timedOut())
             root.setAttribute(TIMED_OUT, String.valueOf(true));
@@ -55,7 +51,7 @@ public class BrowserResultWriter {
             root.setAttribute(TIME, String.valueOf(browserResult.getTime()));
             addTestCasesElementTo(root);
         }
-        return root;
+        return new XMLOutputter().outputString(root);
     }
 
     private void addPropertiesElementTo(Element element) {
@@ -113,7 +109,18 @@ public class BrowserResultWriter {
         return buffer.toString();
     }
 
-    public Element asXml() {
-        return createRootElement();
+    public Element writeXml() {
+        Element root = new Element(BROWSER_RESULT);
+        if (browserResult.timedOut())
+            root.setAttribute(TIMED_OUT, String.valueOf(true));
+        if (browserResult.failedToLaunch())
+            root.setAttribute(FAILED_TO_LAUNCH, String.valueOf(true));
+        addPropertiesElementTo(root);
+        if (browserResult.completedTestRun()) {
+            root.setAttribute(ID, browserResult.getId());
+            root.setAttribute(TIME, String.valueOf(browserResult.getTime()));
+            addTestCasesElementTo(root);
+        }
+        return root;
     }
 }

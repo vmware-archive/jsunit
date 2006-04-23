@@ -11,6 +11,8 @@ import java.util.List;
 
 public class TestRunResult extends AbstractResult implements XmlRenderable, Comparable<TestRunResult> {
 
+    public static final String NAME = "testRunResult";
+
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
     private URL url;
     private String osString;
@@ -31,7 +33,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     }
 
     public Element asXml() {
-        Element root = new Element("testRunResult");
+        Element root = new Element(NAME);
         root.setAttribute("type", getResultType().name());
         if (url != null)
             root.setAttribute("url", url.toString());

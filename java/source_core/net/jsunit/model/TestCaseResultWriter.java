@@ -19,10 +19,10 @@ public class TestCaseResultWriter {
     }
 
     public void addXmlTo(Element element) {
-        element.addContent(createTestCaseElement());
+        element.addContent(writeXml());
     }
 
-    public Element createTestCaseElement() {
+    public Element writeXml() {
         Element testCaseElement = new Element(TEST_CASE);
         try {
             testCaseElement.setAttribute(NAME, result.getFullyQualifiedName().replace('\u0000', ' '));
@@ -60,6 +60,7 @@ public class TestCaseResultWriter {
     }
 
     public String getXmlFragment() {
-        return new XMLOutputter().outputString(createTestCaseElement());
+        return new XMLOutputter().outputString(writeXml());
     }
+
 }

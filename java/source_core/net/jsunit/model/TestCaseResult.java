@@ -149,4 +149,7 @@ public class TestCaseResult extends AbstractResult {
             buffer.append(getProblemSummary(false));
     }
 
+    public Element asXml() {
+        return new TestCaseResultWriter(this).writeXml();
+    }
 }

@@ -50,15 +50,5 @@
     <td class="tabHeaderSeparator">&nbsp;</td>
     <%}%>
 
-    <td class="tabHeaderSeparator">&nbsp;</td>
-    <%if (selectedPage.equals("configuration")) {%>
-    <td class="selectedTab">
-        &nbsp;&nbsp;Configuration&nbsp;&nbsp;
-    </td>
-    <%} else {%>
-    <td class="unselectedTab">
-        &nbsp;&nbsp;<a href="configurationPage">Configuration</a>&nbsp;&nbsp;
-    </td>
-    <%}%>
     <td class="tabHeaderSeparator" width="99%">&nbsp;</td>
 </tr>

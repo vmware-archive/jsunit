@@ -101,7 +101,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     public Element asXml() {
-        return new BrowserResultWriter(this).asXml();
+        return new BrowserResultWriter(this).writeXml();
     }
 
     public String asXmlFragment() {

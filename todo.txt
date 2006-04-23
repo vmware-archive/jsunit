@@ -1,6 +1,8 @@
 Required for next release:
 
   FEATURES:
+    - green/red bar on server pages
+    - agg server explanation
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites

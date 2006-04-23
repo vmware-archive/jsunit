@@ -19,7 +19,7 @@
             <interceptor name="server" class="net.jsunit.interceptor.ServerInterceptor"/>
             <interceptor name="fragment" class="net.jsunit.interceptor.FragmentInterceptor"/>
             <interceptor name="upload" class="net.jsunit.interceptor.UploadedTestPageInterceptor"/>
-            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>            
+            <interceptor name="requestSource" class="net.jsunit.interceptor.RequestSourceInterceptor"/>
             <interceptor name="browserTestRunner" class="net.jsunit.interceptor.BrowserTestRunnerInterceptor"/>
             <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
             <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
@@ -123,12 +123,6 @@
         <action name="logDisplayerPage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/logDisplayer.jsp</param>
-            </result>
-        </action>
-
-        <action name="configurationPage" class="net.jsunit.action.PageAction">
-            <result name="success" type="dispatcher">
-                <param name="location">java/jsp/configuration.jsp</param>
             </result>
         </action>
 

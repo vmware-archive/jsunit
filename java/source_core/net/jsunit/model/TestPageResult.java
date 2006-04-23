@@ -1,5 +1,7 @@
 package net.jsunit.model;
 
+import org.jdom.Element;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,4 +38,7 @@ public class TestPageResult extends AbstractResult {
 
     }
 
+    public Element asXml() {
+        return null;
+    }
 }

@@ -3,16 +3,13 @@ package net.jsunit;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import net.jsunit.action.*;
+import net.jsunit.client.TestRunClientTest;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
 import net.jsunit.interceptor.VersionGrabberInterceptorTest;
-import net.jsunit.model.BrowserTest;
-import net.jsunit.model.TestCaseResultTest;
-import net.jsunit.model.TestPageResultTest;
+import net.jsunit.model.*;
 import net.jsunit.results.SkinTest;
-import net.jsunit.model.ReferencedJsFileTest;
-import net.jsunit.client.TestRunClientTest;
 
 public class PureUnitTestSuite {
 
@@ -31,6 +28,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(ReferencedJsFileTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
+        result.addTestSuite(ResultBuilderTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
         result.addTestSuite(SkinTest.class);
         result.addTestSuite(ServerStatusActionTest.class);

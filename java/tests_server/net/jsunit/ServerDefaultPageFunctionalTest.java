@@ -23,8 +23,6 @@ public class ServerDefaultPageFunctionalTest extends FunctionalTestCase {
         assertOnUrlRunnerPage();
         webTester.clickLinkWithText("LogDisplayer");
         assertOnLogDisplayerPage();
-        webTester.clickLinkWithText("Configuration");
-        assertOnConfigurationPage();
     }
 
 }

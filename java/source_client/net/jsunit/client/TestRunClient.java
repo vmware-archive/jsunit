@@ -2,8 +2,8 @@ package net.jsunit.client;
 
 import net.jsunit.RemoteMachineServerHitter;
 import net.jsunit.RemoteServerHitter;
-import net.jsunit.model.TestRunResult;
-import net.jsunit.model.TestRunResultBuilder;
+import net.jsunit.model.Result;
+import net.jsunit.model.ResultBuilder;
 import org.jdom.Document;
 
 import java.io.File;
@@ -32,11 +32,11 @@ public class TestRunClient {
         this.hitter = hitter;
     }
 
-    public TestRunResult send(File testPage) throws IOException {
+    public Result send(File testPage) throws IOException {
         Map<String, List<File>> map = new HashMap<String, List<File>>();
         map.put("testPageFile", Arrays.asList(testPage));
         Document document = hitter.postToURL(serviceURL, map);
-        TestRunResultBuilder builder = new TestRunResultBuilder();
+        ResultBuilder builder = new ResultBuilder();
         return builder.build(document);
     }
 }

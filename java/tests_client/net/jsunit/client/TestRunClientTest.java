@@ -3,6 +3,7 @@ package net.jsunit.client;
 import junit.framework.TestCase;
 import net.jsunit.MockRemoteServerHitter;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.Result;
 import net.jsunit.model.TestCaseResult;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
@@ -26,7 +27,7 @@ public class TestRunClientTest extends TestCase {
         mockHitter.urlToDocument.put("http://server.jsunit.net/runner", new Document(testRunResult.asXml()));
         TestRunClient client = new TestRunClient("http://server.jsunit.net/runner", mockHitter);
         File page = new File("myPage.html");
-        TestRunResult result = client.send(page);
+        Result result = client.send(page);
         String expectedXML = XmlUtility.asString(testRunResult.asXml());
         assertEquals(expectedXML, XmlUtility.asString(result.asXml()));
     }
