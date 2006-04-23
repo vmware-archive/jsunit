@@ -76,7 +76,7 @@
             %>
             <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>" title="<%=browser.getType().getDisplayName()%>">
             <%}%>
-            <%=browser.getDisplayString()%>
+            <%=browser.getDisplayName()%>
             <br>
             <%}%>
         </td>

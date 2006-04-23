@@ -38,7 +38,7 @@ public class LaunchTestRunCommand {
             PlatformType platformType = PlatformType.resolve();
             return platformType.getDefaultCommandLineBrowserArray();
         }
-        return new String[]{launchSpec.getBrowser().getFileName()};
+        return new String[]{launchSpec.getBrowser().getStartCommand()};
     }
 
     private String generateTestUrlString() throws NoUrlSpecifiedException {

@@ -9,7 +9,7 @@ public class ResultAcceptorAction extends JsUnitBrowserTestRunnerAction implemen
     protected BrowserResult result;
 
     public String execute() throws Exception {
-        runner.logStatus("Received submission from browser " + result.getBrowser().getFileName());
+        runner.logStatus("Received submission from browser " + result.getBrowser().getDisplayName());
         runner.accept(result);
         return SUCCESS;
     }

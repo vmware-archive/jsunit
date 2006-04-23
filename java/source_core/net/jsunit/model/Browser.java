@@ -8,7 +8,7 @@ public class Browser {
 
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
 
-    private String fileName;
+    private String startCommand;
     private String killCommand;
     private String fullFileName;
     private int id;
@@ -19,14 +19,14 @@ public class Browser {
         this.fullFileName = fullFileName;
         this.id = id;
         List<String> list = StringUtility.listFromSemiColonDelimitedString(fullFileName);
-        this.fileName = list.size() >= 1 ? list.get(0) : null;
+        this.startCommand = list.size() >= 1 ? list.get(0) : null;
         this.killCommand = list.size() >= 2 ? list.get(1) : null;
-        this.displayName = list.size() >= 3 ? list.get(2) : fileName;
-        this.type = BrowserType.resolve(fileName);
+        this.displayName = list.size() >= 3 ? list.get(2) : startCommand;
+        this.type = BrowserType.resolve(startCommand);
     }
 
-    public String getFileName() {
-        return fileName;
+    public String getStartCommand() {
+        return startCommand;
     }
 
     public String getKillCommand() {
@@ -48,22 +48,22 @@ public class Browser {
         final Browser browser = (Browser) o;
 
         if (id != browser.id) return false;
-        return !(fileName != null ? !fileName.equals(browser.fileName) : browser.fileName != null);
+        return !(startCommand != null ? !startCommand.equals(browser.startCommand) : browser.startCommand != null);
 
     }
 
     public int hashCode() {
         int result;
-        result = (fileName != null ? fileName.hashCode() : 0);
+        result = (startCommand != null ? startCommand.hashCode() : 0);
         result = 29 * result + id;
         return result;
     }
 
     public boolean isDefault() {
-        return fileName.equals(DEFAULT_SYSTEM_BROWSER);
+        return startCommand.equals(DEFAULT_SYSTEM_BROWSER);
     }
 
-    public String getDisplayString() {
+    public String getDisplayName() {
         return displayName;
     }
 
@@ -75,4 +75,7 @@ public class Browser {
         return fullFileName;
     }
 
+    public boolean conflictsWith(Browser another) {
+        return getType() == another.getType();
+    }
 }

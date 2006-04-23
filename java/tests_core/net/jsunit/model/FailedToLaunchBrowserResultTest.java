@@ -30,7 +30,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     }
 
     public void testSimple() {
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", result.getBrowser().getFileName());
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", result.getBrowser().getStartCommand());
         assertEquals(0d, result.getTime());
         assertEquals(ResultType.FAILED_TO_LAUNCH.getDisplayString(), result.getDisplayString());
         assertEquals(0, result.getTestCount());
@@ -52,7 +52,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     public void testReconstituteFromXml() {
         BrowserResultBuilder builder = new BrowserResultBuilder();
         BrowserResult reconstitutedResult = builder.build(xml);
-        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getFileName());
+        assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getStartCommand());
         assertTrue(reconstitutedResult.failedToLaunch());
         assertEquals(ResultType.FAILED_TO_LAUNCH, reconstitutedResult.getResultType());
         //TODO: somehow they're not quite equal

@@ -3,6 +3,7 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.HeterogenousBrowserGroup;
 import net.jsunit.model.TestRunResult;
 
 import java.util.Arrays;
@@ -15,7 +16,10 @@ public class TestRunManager implements TestRunListener {
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult;
     private final String overrideUrl;
-    private List<Browser> browsers;
+    private List<Browser> allBrowsers;
+    private List<HeterogenousBrowserGroup> groups;
+    private HeterogenousBrowserGroup currentGroup;
+    private int currentGroupResultCount;
 
     public static void main(String[] args) throws Exception {
         JsUnitStandardServer server = new JsUnitStandardServer(Configuration.resolve(args), true);
@@ -50,7 +54,12 @@ public class TestRunManager implements TestRunListener {
     public TestRunManager(BrowserTestRunner testRunner, String overrideUrl) {
         this.testRunner = testRunner;
         this.overrideUrl = overrideUrl;
-        browsers = testRunner.getBrowsers();
+        setBrowsers(testRunner.getBrowsers());
+    }
+
+    private void setBrowsers(List<Browser> browsers) {
+        this.allBrowsers = browsers;
+        groups = HeterogenousBrowserGroup.createFrom(browsers);
     }
 
     public void runTests() {
@@ -59,17 +68,25 @@ public class TestRunManager implements TestRunListener {
         testRunner.logStatus("Starting Test Run");
         testRunner.startTestRun();
         try {
-            for (Browser browser : browsers) {
-                BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browser, overrideUrl);
-                testRunner.launchBrowserTestRun(launchSpec);
-                testRunner.logStatus("Waiting for " + browser.getFileName() + " to submit result");
+            for (HeterogenousBrowserGroup group : groups) {
+                newGroup(group);
+                for (Browser browser : group) {
+                    BrowserLaunchSpecification launchSpec = new BrowserLaunchSpecification(browser, overrideUrl);
+                    testRunner.launchBrowserTestRun(launchSpec);
+                    testRunner.logStatus("Waiting for " + browser.getDisplayName() + " to submit result");
+                }
+                waitForResultsToBeSubmitted();
             }
-            waitForResultsToBeSubmitted();
         } finally {
-            testRunner.finishTestRun();
             testRunner.removeTestRunListener(this);
+            testRunner.finishTestRun();
         }
         testRunner.logStatus("Test Run Completed");
+    }
+
+    private void newGroup(HeterogenousBrowserGroup group) {
+        currentGroup = group;
+        currentGroupResultCount = 0;
     }
 
     private void initializeTestRunResult() {
@@ -79,7 +96,7 @@ public class TestRunManager implements TestRunListener {
 
     private void waitForResultsToBeSubmitted() {
         long secondsWaited = 0;
-        while (testRunner.isAlive() && testRunResult.getBrowserResults().size() < browsers.size()) {
+        while (testRunner.isAlive() && currentGroupResultCount < currentGroup.size()) {
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -96,13 +113,13 @@ public class TestRunManager implements TestRunListener {
 
     public void limitToBrowserWithId(int chosenBrowserId) throws InvalidBrowserIdException {
         Browser chosenBrowser = null;
-        for (Browser browser : browsers) {
+        for (Browser browser : allBrowsers) {
             if (browser.hasId(chosenBrowserId))
                 chosenBrowser = browser;
         }
         if (chosenBrowser == null)
             throw new InvalidBrowserIdException(chosenBrowserId);
-        browsers = Arrays.asList(chosenBrowser);
+        setBrowsers(Arrays.asList(chosenBrowser));
     }
 
     public boolean isReady() {
@@ -120,5 +137,6 @@ public class TestRunManager implements TestRunListener {
 
     public void browserTestRunFinished(Browser browser, BrowserResult result) {
         testRunResult.addBrowserResult(result);
+        currentGroupResultCount ++;
     }
 }

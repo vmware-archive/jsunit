@@ -118,7 +118,7 @@ public class DistributedTest extends TestCase {
 
     public void limitToBrowser(Browser remoteBrowser) {
         this.remoteBrowser = remoteBrowser;
-        setName(remoteBrowser.getFileName());
+        setName(remoteBrowser.getDisplayName());
     }
 
     public DistributedTestRunResult getResult() {

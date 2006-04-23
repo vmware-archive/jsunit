@@ -130,7 +130,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         long launchTime = System.currentTimeMillis();
         Browser browser = launchSpec.getBrowser();
         LaunchTestRunCommand command = new LaunchTestRunCommand(launchSpec, configuration);
-        String browserFileName = browser.getFileName();
+        String browserFileName = browser.getDisplayName();
         try {
             logStatus("Launching " + browserFileName + " on " + command.getTestURL());
             for (TestRunListener listener : browserTestRunListeners)
@@ -153,7 +153,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     }
 
     private String failedToLaunchStatusMessage(Browser browser, Throwable throwable) {
-        String result = "Browser " + browser.getFileName() + " failed to launch: " + throwable.getClass().getName();
+        String result = "Browser " + browser.getDisplayName() + " failed to launch: " + throwable.getClass().getName();
         if (throwable.getMessage() != null)
             result += (" - " + throwable.getMessage());
         return result;

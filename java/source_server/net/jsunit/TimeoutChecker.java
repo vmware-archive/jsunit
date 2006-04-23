@@ -28,7 +28,7 @@ public class TimeoutChecker extends Thread {
     public void run() {
         while (alive && runner.isWaitingForBrowser(browser)) {
             if (waitedTooLong()) {
-                runner.logStatus("Browser " + browser.getFileName() + " timed out after " + runner.timeoutSeconds() + " seconds");
+                runner.logStatus("Browser " + browser.getDisplayName() + " timed out after " + runner.timeoutSeconds() + " seconds");
                 runner.accept(createTimedOutBrowserResult());
                 return;
             }

@@ -192,7 +192,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     public String getBrowserDisplayString() {
-        return browser.getDisplayString();
+        return browser.getDisplayName();
     }
 
     protected void addMyErrorStringTo(StringBuffer buffer) {

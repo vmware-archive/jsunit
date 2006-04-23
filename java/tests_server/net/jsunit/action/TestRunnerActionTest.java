@@ -79,7 +79,7 @@ public class TestRunnerActionTest extends TestCase {
         action.setBrowserId("1");
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         assertEquals(1, mockRunner.launchSpecs.size());
-        assertEquals("mybrowser2.exe", mockRunner.launchSpecs.get(0).getBrowser().getFileName());
+        assertEquals("mybrowser2.exe", mockRunner.launchSpecs.get(0).getBrowser().getStartCommand());
     }
 
     public void testLimitToBrowserWithBadId() throws Exception {
