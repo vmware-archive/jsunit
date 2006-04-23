@@ -21,11 +21,13 @@ public class RemoteConfigurationFetcher extends Thread implements Comparable<Rem
     }
 
     public void run() {
+        String urlString = remoteMachineURL.toString();
         try {
-            ConfigurationSource remoteSource = new RemoteConfigurationSource(hitter, remoteMachineURL.toString());
+            logger.info("Fetching remote machine configuration from " + urlString);
+            ConfigurationSource remoteSource = new RemoteConfigurationSource(hitter, urlString);
             retrievedRemoteConfiguration = new Configuration(remoteSource);
         } catch (IOException e) {
-            logger.severe("Cannot retrieve remote configuration on " + remoteMachineURL.toString() + ": " + e.getMessage());
+            logger.severe("Cannot retrieve remote configuration on " + urlString + ": " + e.getMessage());
         }
     }
 
