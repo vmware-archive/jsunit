@@ -8,6 +8,7 @@ public enum BrowserType {
     MOZILLA("images/logo_mozilla.gif", "Mozilla", "mozilla"),
     OPERA("images/logo_opera.gif", "Opera", "opera"),
     SAFARI("images/logo_safari.gif", "Safari", "safari"),
+    KONQUEROR("images/logo_konqueror.gif", "Konqueror", "konqueror"),
     UNKNOWN("images/logo_ie.gif", "Unknown", "unknown browser");
 
     private String logoPath;
