@@ -36,6 +36,10 @@ public class FunctionalTestAggregateConfigurationSource implements Configuration
         return null;
     }
 
+    public String osString() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return null;
     }

@@ -46,4 +46,8 @@ public class DelegatingConfigurationSource implements ConfigurationSource {
     public String ignoreUnresponsiveRemoteMachines() {
         return source.ignoreUnresponsiveRemoteMachines();
     }
+
+    public String osString() {
+        return source.osString();
+    }
 }

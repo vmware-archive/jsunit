@@ -30,6 +30,10 @@ public class DummyAggregateConfigurationSource implements ConfigurationSource {
         return null;
     }
 
+    public String osString() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return null;
     }

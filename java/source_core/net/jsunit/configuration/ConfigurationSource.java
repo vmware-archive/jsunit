@@ -21,4 +21,7 @@ public interface ConfigurationSource {
     String url();
 
     String ignoreUnresponsiveRemoteMachines();
+
+    String osString();
+
 }

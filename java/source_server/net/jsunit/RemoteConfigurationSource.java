@@ -63,7 +63,11 @@ public class RemoteConfigurationSource implements ConfigurationSource {
     }
 
     private String textOfElement(ConfigurationProperty property) {
-        Element element = document.getRootElement().getChild(property.getName());
+        return textOfElement(property.getName());
+    }
+
+    private String textOfElement(String elementName) {
+        Element element = document.getRootElement().getChild(elementName);
         if (element == null)
             return "";
         return element.getTextTrim();
@@ -83,6 +87,10 @@ public class RemoteConfigurationSource implements ConfigurationSource {
                 buffer.append(",");
         }
         return buffer.toString();
+    }
+
+    public String osString() {
+        return textOfElement("os");
     }
 
 }

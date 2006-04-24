@@ -6,13 +6,13 @@ public enum PlatformType {
 
     WINDOWS(new String[]{"rundll32", "url.dll,FileProtocolHandler"}, null, "images/logo_windows.gif", "Windows") {
         public boolean matchesSystem(String osName) {
-            return osName != null && osName.startsWith("Windows");
+            return osName != null && osName.toLowerCase().indexOf("windows") != -1;
         }
 
     },
     MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh", "images/logo_mac.gif", "Macintosh") {
         public boolean matchesSystem(String osName) {
-            return osName != null && osName.startsWith("Mac");
+            return osName != null && osName.toLowerCase().indexOf("mac") != -1;
         }
 
     },

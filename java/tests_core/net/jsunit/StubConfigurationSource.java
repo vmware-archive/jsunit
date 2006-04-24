@@ -48,4 +48,8 @@ public class StubConfigurationSource implements ConfigurationSource {
         return null;
     }
 
+    public String osString() {
+        return null;
+    }
+
 }

@@ -1,6 +1,7 @@
 package net.jsunit.plugin.intellij.configuration;
 
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.utility.SystemUtility;
 
 class ConfigurationComponentSource implements ConfigurationSource {
 
@@ -43,6 +44,10 @@ class ConfigurationComponentSource implements ConfigurationSource {
 
     public String ignoreUnresponsiveRemoteMachines() {
         return null;
+    }
+
+    public String osString() {
+        return SystemUtility.osString();
     }
 
     public String closeBrowsersAfterTestRuns() {

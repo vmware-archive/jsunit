@@ -53,6 +53,7 @@
                     <%} else {%>
                     <tr>
                         <td colspan="100">
+                            <br>
                             <i>This server runs tests on these remote machines:</i>
                         </td>
                     </tr>
@@ -105,7 +106,7 @@
         </tr>
     </table>
 </td>
-<td nowrap align="right" valign="middle">
+<td nowrap align="right" valign="top">
     <font size="-2">
         <b><a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a></b><br>
 

@@ -1,5 +1,7 @@
 package net.jsunit.configuration;
 
+import net.jsunit.utility.SystemUtility;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Properties;
@@ -75,6 +77,10 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
 
     public String timeoutSeconds() {
         return propertyValue(ConfigurationProperty.TIMEOUT_SECONDS);
+    }
+
+    public String osString() {
+        return SystemUtility.osString();
     }
 
 }

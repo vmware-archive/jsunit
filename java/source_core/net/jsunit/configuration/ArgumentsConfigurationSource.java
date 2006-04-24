@@ -1,5 +1,7 @@
 package net.jsunit.configuration;
 
+import net.jsunit.utility.SystemUtility;
+
 import java.util.List;
 
 public class ArgumentsConfigurationSource implements ConfigurationSource {
@@ -61,6 +63,10 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
 
     public String timeoutSeconds() {
         return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
+    }
+
+    public String osString() {
+        return SystemUtility.osString();
     }
 
 }

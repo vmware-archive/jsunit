@@ -110,7 +110,7 @@ public class ConfigurationTest extends TestCase {
         File logsDirectory = new File(source.logsDirectory());
         File resourceBase = new File(source.resourceBase());
         String expectedXML = "<configuration type=\"" + ServerType.STANDARD.name() + "\">" +
-                "<os>" + SystemUtility.osString() + "</os>" +
+                "<os>386 - Windows XP</os>" +
                 "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
                 "<hostname>" + SystemUtility.hostname() + "</hostname>" +
                 "<browserFileNames>" +
@@ -134,7 +134,7 @@ public class ConfigurationTest extends TestCase {
         File logsDirectory = new File(source.logsDirectory());
         File resourceBase = new File(source.resourceBase());
         String expectedXML = "<configuration type=\"" + ServerType.STANDARD_TEMPORARY.name() + "\">" +
-                "<os>" + SystemUtility.osString() + "</os>" +
+                "<os>386 - Windows XP</os>" +
                 "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
                 "<hostname>" + SystemUtility.hostname() + "</hostname>" +
                 "<browserFileNames>" +
@@ -159,7 +159,7 @@ public class ConfigurationTest extends TestCase {
         File resourceBase = new File(source.resourceBase());
         assertEquals(
                 "<configuration type=\"" + ServerType.AGGREGATE.name() + "\">" +
-                        "<os>" + SystemUtility.osString() + "</os>" +
+                        "<os>386 - Windows XP</os>" +
                         "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
                         "<hostname>" + SystemUtility.hostname() + "</hostname>" +
                         "<description>This is the best server ever</description>" +
@@ -283,6 +283,10 @@ public class ConfigurationTest extends TestCase {
 
         public String ignoreUnresponsiveRemoteMachines() {
             return "true";
+        }
+
+        public String osString() {
+            return "386 - Windows XP";
         }
 
         public String closeBrowsersAfterTestRuns() {

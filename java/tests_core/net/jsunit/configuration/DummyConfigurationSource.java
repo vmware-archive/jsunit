@@ -34,6 +34,10 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return "";
     }
 
+    public String osString() {
+        return "";
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return "true";
     }

@@ -1,5 +1,7 @@
 package net.jsunit.configuration;
 
+import net.jsunit.utility.SystemUtility;
+
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -131,5 +133,9 @@ public class CompositeConfigurationSource implements ConfigurationSource {
             }
         }
         return null;
+    }
+
+    public String osString() {
+        return SystemUtility.osString();
     }
 }

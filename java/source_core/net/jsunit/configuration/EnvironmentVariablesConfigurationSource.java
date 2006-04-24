@@ -1,5 +1,7 @@
 package net.jsunit.configuration;
 
+import net.jsunit.utility.SystemUtility;
+
 public class EnvironmentVariablesConfigurationSource implements ConfigurationSource {
 
     private String environmentVariableValue(ConfigurationProperty property) {
@@ -46,4 +48,7 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
         return environmentVariableValue(ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES);
     }
 
+    public String osString() {
+        return SystemUtility.osString();
+    }
 }

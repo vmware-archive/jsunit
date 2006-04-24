@@ -22,6 +22,7 @@ public class Configuration implements BrowserSource {
     private File resourceBase;
     private int timeoutSeconds;
     private URL testURL;
+    private String osString;
 
     public static Configuration resolve(String[] arguments) {
         return new Configuration(resolveSource(arguments));
@@ -38,6 +39,7 @@ public class Configuration implements BrowserSource {
     public Configuration(ConfigurationSource source) {
         for (ConfigurationProperty property : ConfigurationProperty.values())
             property.configure(this, source);
+        osString = source.osString();
     }
 
     public Element asXml(ServerType serverType) {
@@ -51,7 +53,7 @@ public class Configuration implements BrowserSource {
 
     private void addSystemElementsTo(Element element) {
         Element osElement = new Element("os");
-        osElement.setText(SystemUtility.osString());
+        osElement.setText(osString);
         element.addContent(osElement);
         Element ipAddressElement = new Element("ipAddress");
         ipAddressElement.setText(SystemUtility.ipAddress());
@@ -186,6 +188,6 @@ public class Configuration implements BrowserSource {
     }
 
     public PlatformType getPlatformType() {
-        return PlatformType.resolve();
+        return PlatformType.resolve(osString);
     }
 }

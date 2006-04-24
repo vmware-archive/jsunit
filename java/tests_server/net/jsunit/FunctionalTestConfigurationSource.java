@@ -38,6 +38,10 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return "";
     }
 
+    public String osString() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return String.valueOf(Boolean.TRUE);
     }
