@@ -24,7 +24,7 @@ public class Browser {
         this.type = BrowserType.resolve(startCommand);
         if (list.size() >= 3)
             this.displayName = list.get(2);
-        else if (type != null)
+        else if (type != BrowserType.UNKNOWN)
             this.displayName = type.getDisplayName();
         else
             this.displayName = startCommand;

@@ -39,7 +39,7 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
     }
 
     public String osString() {
-        return null;
+        return "Intel PIII, Windows 2000";
     }
 
     public String closeBrowsersAfterTestRuns() {

@@ -7,7 +7,8 @@ public enum BrowserType {
     NETSCAPE("images/logo_netscape.gif", "Netscape", "netscape"),
     MOZILLA("images/logo_mozilla.gif", "Mozilla", "mozilla"),
     OPERA("images/logo_opera.gif", "Opera", "opera"),
-    SAFARI("images/logo_safari.gif", "Safari", "safari");
+    SAFARI("images/logo_safari.gif", "Safari", "safari"),
+    UNKNOWN("images/logo_ie.gif", "Unknown", "unknown browser");
 
     private String logoPath;
     private String displayName;
@@ -32,7 +33,7 @@ public enum BrowserType {
             if (fileName.toLowerCase().indexOf(type.fileNameSubstring.toLowerCase()) != -1)
                 return type;
         }
-        return null;
+        return BrowserType.UNKNOWN;
     }
 
 }
