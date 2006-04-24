@@ -1,6 +1,4 @@
-package net.jsunit;
-
-import net.jsunit.configuration.ConfigurationSource;
+package net.jsunit.configuration;
 
 public class DummyConfigurationSource implements ConfigurationSource {
 

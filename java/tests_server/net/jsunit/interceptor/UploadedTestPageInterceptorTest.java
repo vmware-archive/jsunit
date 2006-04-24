@@ -4,10 +4,10 @@ import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.webwork.dispatcher.multipart.MultiPartRequestWrapper;
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
-import net.jsunit.DummyConfigurationSource;
 import net.jsunit.DummyHttpRequest;
 import net.jsunit.action.TestPageURLAware;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.SystemUtility;
 

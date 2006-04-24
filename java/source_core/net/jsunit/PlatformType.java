@@ -5,21 +5,19 @@ import net.jsunit.utility.SystemUtility;
 public enum PlatformType {
 
     WINDOWS(new String[]{"rundll32", "url.dll,FileProtocolHandler"}, null, "images/logo_windows.gif", "Windows") {
-        public boolean matchesSystem() {
-            String os = SystemUtility.osName();
-            return os != null && os.startsWith("Windows");
+        public boolean matchesSystem(String osName) {
+            return osName != null && osName.startsWith("Windows");
         }
 
     },
     MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh", "images/logo_mac.gif", "Macintosh") {
-        public boolean matchesSystem() {
-            String os = SystemUtility.osName();
-            return os != null && os.startsWith("Mac");
+        public boolean matchesSystem(String osName) {
+            return osName != null && osName.startsWith("Mac");
         }
 
     },
     LINUX(new String[]{"bin/unix/start-firefox.sh"}, "bin/unix/stop-firefox.sh", "images/logo_linux.gif", "Linux") {
-        public boolean matchesSystem() {
+        public boolean matchesSystem(String osName) {
             //TODO: uhhh...
             return false;
         }
@@ -41,14 +39,18 @@ public enum PlatformType {
     }
 
     public static PlatformType resolve() {
+        return resolve(SystemUtility.osName());
+    }
+
+    public static PlatformType resolve(String osName) {
         for (PlatformType type : values()) {
-            if (type.matchesSystem())
+            if (type.matchesSystem(osName))
                 return type;
         }
         return DEFAULT;
     }
 
-    protected abstract boolean matchesSystem();
+    protected abstract boolean matchesSystem(String osString);
 
     public String[] getDefaultCommandLineBrowserArray() {
         return defaultBrowserCommandLineArray;

@@ -1,10 +1,10 @@
 package net.jsunit.action;
 
 import junit.framework.TestCase;
-import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.SuccessfulRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.results.Skin;
 
 import java.io.File;

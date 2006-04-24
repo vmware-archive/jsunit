@@ -2,6 +2,7 @@ package net.jsunit;
 
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;

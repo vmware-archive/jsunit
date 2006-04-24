@@ -1,7 +1,7 @@
 package net.jsunit;
 
-import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.configuration.RemoteConfiguration;
 
 import java.io.IOException;
 import java.net.URL;
@@ -13,7 +13,7 @@ public class RemoteConfigurationFetcher extends Thread implements Comparable<Rem
 
     private RemoteServerHitter hitter;
     private URL remoteMachineURL;
-    private Configuration retrievedRemoteConfiguration;
+    private RemoteConfiguration retrievedRemoteConfiguration;
 
     public RemoteConfigurationFetcher(RemoteServerHitter hitter, URL remoteMachineURL) {
         this.hitter = hitter;
@@ -25,7 +25,7 @@ public class RemoteConfigurationFetcher extends Thread implements Comparable<Rem
         try {
             logger.info("Fetching remote machine configuration from " + urlString);
             ConfigurationSource remoteSource = new RemoteConfigurationSource(hitter, urlString);
-            retrievedRemoteConfiguration = new Configuration(remoteSource);
+            retrievedRemoteConfiguration = new RemoteConfiguration(remoteMachineURL, remoteSource);
         } catch (IOException e) {
             logger.severe("Cannot retrieve remote configuration on " + urlString + ": " + e.getMessage());
         }
@@ -35,7 +35,7 @@ public class RemoteConfigurationFetcher extends Thread implements Comparable<Rem
         return remoteMachineURL;
     }
 
-    public Configuration getRetrievedRemoteConfiguration() {
+    public RemoteConfiguration getRetrievedRemoteConfiguration() {
         return retrievedRemoteConfiguration;
     }
 

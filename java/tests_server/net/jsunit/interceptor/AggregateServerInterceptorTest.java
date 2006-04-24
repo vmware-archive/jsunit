@@ -2,10 +2,10 @@ package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
-import net.jsunit.DummyConfigurationSource;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.action.JsUnitAggregateServerAware;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 
 public class AggregateServerInterceptorTest extends TestCase {
 

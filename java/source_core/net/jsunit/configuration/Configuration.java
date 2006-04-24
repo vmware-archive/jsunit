@@ -1,5 +1,6 @@
 package net.jsunit.configuration;
 
+import net.jsunit.PlatformType;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
 import net.jsunit.utility.SystemUtility;
@@ -184,4 +185,7 @@ public class Configuration implements BrowserSource {
         return true;
     }
 
+    public PlatformType getPlatformType() {
+        return PlatformType.resolve();
+    }
 }

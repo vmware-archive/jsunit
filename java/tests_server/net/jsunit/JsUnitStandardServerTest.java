@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationException;
+import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 

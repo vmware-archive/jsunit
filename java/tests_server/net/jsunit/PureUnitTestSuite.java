@@ -5,6 +5,7 @@ import junit.framework.TestSuite;
 import net.jsunit.action.*;
 import net.jsunit.client.TestRunClientTest;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
+import net.jsunit.configuration.RemoteConfigurationTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
 import net.jsunit.interceptor.VersionGrabberInterceptorTest;
@@ -27,6 +28,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(PageActionTest.class);
         result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(ReferencedJsFileTest.class);
+        result.addTestSuite(RemoteConfigurationTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultBuilderTest.class);
