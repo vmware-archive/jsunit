@@ -110,6 +110,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         jsunitContext.setResourceBase(configuration.getResourceBase().toString());
         jsunitContext.addWelcomeFile("java/jsp/fragmentRunner.jsp");
         jsunitContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
+        jsunitContext.setInitParameter("scratchdir", "scratch");
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);

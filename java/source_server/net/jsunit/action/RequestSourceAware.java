@@ -5,4 +5,6 @@ public interface RequestSourceAware {
     void setRequestIPAddress(String ipAddress);
 
     void setRequestHost(String host);
+
+    String getRequestIpAddress();
 }

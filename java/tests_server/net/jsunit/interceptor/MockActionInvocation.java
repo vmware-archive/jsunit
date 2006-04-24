@@ -49,7 +49,7 @@ public class MockActionInvocation implements ActionInvocation {
 
     public String invoke() throws Exception {
         wasInvokeCalled = true;
-        return null;
+        return action.execute();
     }
 
     public String invokeActionOnly() throws Exception {

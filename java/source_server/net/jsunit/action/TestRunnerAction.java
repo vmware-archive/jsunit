@@ -14,7 +14,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     private TestRunManager manager;
     private String url;
-    private String remoteAddress;
+    private String remoteIpAddress;
     private String remoteHost;
     private String browserId;
     private boolean badBrowserId = false;
@@ -45,7 +45,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     }
 
     private String requestReceivedMessage() {
-        return new RequestReceivedMessage(remoteHost, remoteAddress, url).generateMessage();
+        return new RequestReceivedMessage(remoteHost, remoteIpAddress, url).generateMessage();
     }
 
     public XmlRenderable getXmlRenderable() {
@@ -64,7 +64,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     }
 
     public void setRequestIPAddress(String ipAddress) {
-        remoteAddress = ipAddress;
+        remoteIpAddress = ipAddress;
     }
 
     public void setRequestHost(String host) {
@@ -89,6 +89,10 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     public String getUrl() {
         return url;
+    }
+
+    public String getRequestIpAddress() {
+        return this.remoteIpAddress;
     }
 
 }

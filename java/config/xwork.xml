@@ -12,6 +12,7 @@
             <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
             <result-type name="jsUnitServerStatus" class="net.jsunit.action.StatusResult"/>
             <result-type name="jsUnitTestRunCount" class="net.jsunit.action.TestRunCountResult"/>
+            <result-type name="jsUnitAccessDenied" class="net.jsunit.action.AccessDeniedResult"/>
         </result-types>
 
         <interceptors>
@@ -25,6 +26,7 @@
             <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
             <interceptor name="aggregateServer" class="net.jsunit.interceptor.AggregateServerInterceptor"/>
             <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
+            <interceptor name="security" class="net.jsunit.interceptor.SecurityInterceptor"/>
 
             <interceptor-stack name="standardStack">
                 <interceptor-ref name="servlet-config"/>
@@ -37,15 +39,24 @@
             <interceptor-stack name="runnerStack">
                 <interceptor-ref name="standardStack"/>
                 <interceptor-ref name="requestSource"/>
+                <interceptor-ref name="security"/>
                 <interceptor-ref name="skin"/>
                 <interceptor-ref name="fragment"/>
                 <interceptor-ref name="upload"/>
             </interceptor-stack>
         </interceptors>
 
+        <global-results>
+            <result name="denied" type="dispatcher">
+                <param name="location">java/jsp/accessDenied.jsp</param>
+            </result>
+
+        </global-results>
+
         <action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
             <result name="success" type="jsUnitXml"/>
             <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="security"/>
             <interceptor-ref name="browserResult"/>
         </action>
 
@@ -69,6 +80,7 @@
             <result name="error" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
             <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="security"/>
             <interceptor-ref name="skin"/>
         </action>
 

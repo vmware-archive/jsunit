@@ -6,7 +6,7 @@ import net.jsunit.XmlRenderable;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.results.Skin;
 
-public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction implements SkinAware {
+public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction implements SkinAware, RequestSourceAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -15,6 +15,7 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction impleme
     private Integer browserId;
     private boolean browserIdInvalid;
     private Skin skin;
+    private String ipAddress;
 
     public void setId(String id) {
         this.id = id;
@@ -59,5 +60,16 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction impleme
 
     public SkinSource getSkinSource() {
         return runner;
+    }
+
+    public void setRequestIPAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public void setRequestHost(String host) {
+    }
+
+    public String getRequestIpAddress() {
+        return ipAddress;
     }
 }

@@ -45,7 +45,7 @@ public class DistributedTestRunnerAction implements
         }
         server.finishedTestRun();
         long millis = System.currentTimeMillis() - startTime;
-        server.logStatus("Done running aggregate tests ( "+ (millis/1000d)+ " seconds)");
+        server.logStatus("Done running aggregate tests ( " + (millis / 1000d) + " seconds)");
         return skin != null ? TRANSFORM : SUCCESS;
     }
 
@@ -83,6 +83,10 @@ public class DistributedTestRunnerAction implements
 
     public void setRequestHost(String host) {
         this.remoteHost = host;
+    }
+
+    public String getRequestIpAddress() {
+        return this.remoteIpAddress;
     }
 
 }

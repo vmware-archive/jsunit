@@ -9,11 +9,8 @@ Required for next release:
     - uploaded test suites
     - incorrect url in "The full result log is at <URL>" - just the host that's wrong
     - Send traces back to client (IN PROGRESS - ehanson)
-    - finish simple_html.xsl and simple_text.xsl
+    - finish HTML.xsl and Text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
-
-  DISTRIBUTION PACKAGING/PROCESS:
-    - change create_distribution target to create a zip for the js client and a zip for the java client
 
   BUGS:
     - Mozilla 1.7.12 issues
@@ -24,7 +21,7 @@ Backlog for future releases:
 
   FEATURES:
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
-    - EXTERNALLY_SHUT_DOWN browser result type (tests are currently x'ed out)
+    - EXTERNALLY_SHUT_DOWN browser result type
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
     - admin.jsp console to change and save configuration (password protected?)
     - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
@@ -32,7 +29,6 @@ Backlog for future releases:
 
   REFACTORINGS:
     - better ashcroft compliance
-    - make all Result implementers implement XmlRenderable
     - change to use webwork taglib for jsps; remove all java scriptlets
 
   BUGS:

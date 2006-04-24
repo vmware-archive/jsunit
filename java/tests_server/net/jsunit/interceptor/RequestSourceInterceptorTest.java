@@ -37,6 +37,10 @@ public class RequestSourceInterceptorTest extends TestCase {
             this.host = host;
         }
 
+        public String getRequestIpAddress() {
+            return null;
+        }
+
         public String execute() throws Exception {
             return null;
         }
