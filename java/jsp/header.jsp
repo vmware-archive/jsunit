@@ -36,7 +36,24 @@
                         <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>" title="<%=platformType.getDisplayName()%>">
                     </td>
                     <td>
-                        Running on <%=SystemUtility.displayString()%>
+                        <table width="100%">
+                            <tr>
+                                <td>
+                                    Running on <%=SystemUtility.displayString()%>
+                                </td>
+                            </tr>
+                            <%if (!server.isAggregateServer()) {%>
+                            <tr>
+                                <td valign="top">
+                                    Available browsers:
+                                    <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
+                                    <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                                    <%}%>
+                                    <%}%>
+                                </td>
+
+                            </tr>
+                        </table>
                     </td>
                 </tr>
             </table>
@@ -74,7 +91,7 @@
                 for (Browser browser : remoteConfiguration.getBrowsers()) {
                     if (browser.getType() != null) {
             %>
-            <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>" title="<%=browser.getType().getDisplayName()%>">
+            <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
             <%}%>
             <%=browser.getDisplayName()%>
             <br>

@@ -32,6 +32,12 @@ public class BrowserTest extends TestCase {
         assertEquals("c:\\dir\\browser.exe;;Internet Explorer 5.5", browser.getFullFileName());
         assertEquals("c:\\dir\\browser.exe", browser.getStartCommand());
         assertEquals("Internet Explorer 5.5", browser.getDisplayName());
+
+        browser = new Browser("c:\\dir\\iexplore.exe;", 9);
+        assertEquals(BrowserType.INTERNET_EXPLORER.getDisplayName(), browser.getDisplayName());
+
+        browser = new Browser("c:\\dir\\mybrowser.exe;", 9);
+        assertEquals("c:\\dir\\mybrowser.exe", browser.getDisplayName());
     }
 
     public void testKillCommandAndDisplayName() throws Exception {

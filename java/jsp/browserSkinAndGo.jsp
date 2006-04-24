@@ -26,7 +26,7 @@
                 <td valign="top">
                     <input type="radio" name="browserId" value="<%=browser.getId()%>">
                     <%if (browser.getType() != null) {%>
-                    <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getType().getDisplayName()%>" title="<%=browser.getType().getDisplayName()%>">
+                    <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                     <%}%>
                     <%=browser.getDisplayName()%>
                 </td>

@@ -21,8 +21,13 @@ public class Browser {
         List<String> list = StringUtility.listFromSemiColonDelimitedString(fullFileName);
         this.startCommand = list.size() >= 1 ? list.get(0) : null;
         this.killCommand = list.size() >= 2 ? list.get(1) : null;
-        this.displayName = list.size() >= 3 ? list.get(2) : startCommand;
         this.type = BrowserType.resolve(startCommand);
+        if (list.size() >= 3)
+            this.displayName = list.get(2);
+        else if (type != null)
+            this.displayName = type.getDisplayName();
+        else
+            this.displayName = startCommand;
     }
 
     public String getStartCommand() {
