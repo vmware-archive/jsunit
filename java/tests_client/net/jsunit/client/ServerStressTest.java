@@ -19,8 +19,10 @@ public class ServerStressTest extends TestCase {
         List<Thread> threads = new ArrayList<Thread>();
         for (int i = 0; i < 5; i++)
             threads.add(new Runner(i));
-        for (Thread thread : threads)
+        for (Thread thread : threads) {
             thread.start();
+            Thread.sleep(250);
+        }
         for (Thread thread : threads)
             thread.join();
     }
