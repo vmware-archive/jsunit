@@ -23,7 +23,7 @@ function jsUnitTestManager() {
     this.progressBar = this.mainFrame.frames.mainProgress.document.progress;
 
     this.problemsListField = this.mainFrame.frames.mainErrors.document.testRunnerForm.problemsList;
-    this.testCaseResultsField = this.mainFrame.frames.mainResults.document.resultsForm.testCases;
+    this.testCaseResultsField = this.mainFrame.frames.mainResults.document.resultsForm.testCaseResults;
     this.resultsTimeField = this.mainFrame.frames.mainResults.document.resultsForm.time;
 
     // 'layer' output frames

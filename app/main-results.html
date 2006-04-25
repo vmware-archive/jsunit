@@ -46,7 +46,7 @@
 <input type="hidden" name="time">
 <input type="hidden" name="url">
 <input type="hidden" name="cacheBuster">
-<select size="5" name="testCases" multiple></select>
+<select size="5" name="testCaseResults" multiple></select>
 </form>
 <script language="javascript" type="text/javascript">
     function populateHeaderFields(id, browserId, userAgent, jsUnitVersion, baseURL) {
@@ -58,7 +58,7 @@
         document.resultsForm.cacheBuster.value = new Date().getTime();
     }
     function submitResults() {
-        var testCasesField = document.resultsForm.testCases;
+        var testCasesField = document.resultsForm.testCaseResults;
         for (var i = 0; i < testCasesField.length; i++) {
             testCasesField[i].selected = true;
         }
