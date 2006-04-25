@@ -38,6 +38,14 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return "";
     }
 
+    public String ipAddress() {
+        return "";
+    }
+
+    public String hostname() {
+        return "";
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return "true";
     }

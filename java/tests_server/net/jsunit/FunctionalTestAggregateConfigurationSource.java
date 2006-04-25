@@ -40,6 +40,14 @@ public class FunctionalTestAggregateConfigurationSource implements Configuration
         return null;
     }
 
+    public String ipAddress() {
+        return null;
+    }
+
+    public String hostname() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return null;
     }

@@ -289,6 +289,14 @@ public class ConfigurationTest extends TestCase {
             return "386 - Windows XP";
         }
 
+        public String ipAddress() {
+            return "123.45.67.890";
+        }
+
+        public String hostname() {
+            return "server.jsunit.net";
+        }
+
         public String closeBrowsersAfterTestRuns() {
             return "true";
         }

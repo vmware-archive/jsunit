@@ -50,4 +50,12 @@ public class DelegatingConfigurationSource implements ConfigurationSource {
     public String osString() {
         return source.osString();
     }
+
+    public String ipAddress() {
+        return source.ipAddress();
+    }
+
+    public String hostname() {
+        return source.hostname();
+    }
 }

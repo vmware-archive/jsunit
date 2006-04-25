@@ -23,6 +23,8 @@ public class Configuration implements BrowserSource {
     private int timeoutSeconds;
     private URL testURL;
     private String osString;
+    private String ipAddress;
+    private String hostname;
 
     public static Configuration resolve(String[] arguments) {
         return new Configuration(resolveSource(arguments));
@@ -40,6 +42,8 @@ public class Configuration implements BrowserSource {
         for (ConfigurationProperty property : ConfigurationProperty.values())
             property.configure(this, source);
         osString = source.osString();
+        ipAddress = source.ipAddress();
+        hostname = source.hostname();
     }
 
     public Element asXml(ServerType serverType) {

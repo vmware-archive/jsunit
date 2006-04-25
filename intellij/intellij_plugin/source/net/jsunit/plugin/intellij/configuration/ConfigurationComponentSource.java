@@ -50,6 +50,14 @@ class ConfigurationComponentSource implements ConfigurationSource {
         return SystemUtility.osString();
     }
 
+    public String ipAddress() {
+        return SystemUtility.ipAddress();
+    }
+
+    public String hostname() {
+        return SystemUtility.hostname();
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return String.valueOf(configurationComponent.isCloseBrowserAfterTestRuns());
     }

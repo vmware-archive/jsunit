@@ -42,6 +42,14 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return "Intel PIII, Windows 2000";
     }
 
+    public String ipAddress() {
+        return "98.76.54.321";
+    }
+
+    public String hostname() {
+        return "windows.jsunit.net";
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return String.valueOf(Boolean.TRUE);
     }

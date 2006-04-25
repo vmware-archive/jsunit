@@ -52,4 +52,12 @@ public class StubConfigurationSource implements ConfigurationSource {
         return null;
     }
 
+    public String ipAddress() {
+        return null;
+    }
+
+    public String hostname() {
+        return null;
+    }
+
 }

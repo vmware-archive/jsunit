@@ -69,4 +69,12 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         return SystemUtility.osString();
     }
 
+    public String ipAddress() {
+        return SystemUtility.ipAddress();
+    }
+
+    public String hostname() {
+        return SystemUtility.hostname();
+    }
+
 }

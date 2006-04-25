@@ -138,4 +138,13 @@ public class CompositeConfigurationSource implements ConfigurationSource {
     public String osString() {
         return SystemUtility.osString();
     }
+
+    public String ipAddress() {
+        return SystemUtility.ipAddress();
+    }
+
+    public String hostname() {
+        return SystemUtility.hostname();
+    }
+
 }

@@ -93,4 +93,12 @@ public class RemoteConfigurationSource implements ConfigurationSource {
         return textOfElement("os");
     }
 
+    public String ipAddress() {
+        return textOfElement("ipAdress");
+    }
+
+    public String hostname() {
+        return textOfElement("hostname");
+    }
+
 }

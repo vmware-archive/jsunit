@@ -24,4 +24,7 @@ public interface ConfigurationSource {
 
     String osString();
 
+    String ipAddress();
+
+    String hostname();
 }
