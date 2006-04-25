@@ -16,8 +16,6 @@ public class BrowserResultWriter {
             TIME = "time",
             TEST_CASES = "testCases",
             TEST_CASE = "testCase",
-            TIMED_OUT = "timedOut",
-            FAILED_TO_LAUNCH = "failedToLaunch",
             JSUNIT_VERSION = "jsUnitVersion",
             REMOTE_ADDRESS = "remoteAddress",
             SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
@@ -40,18 +38,7 @@ public class BrowserResultWriter {
     }
 
     public String writeXmlFragment() {
-        Element root = new Element(BROWSER_RESULT);
-        if (browserResult.timedOut())
-            root.setAttribute(TIMED_OUT, String.valueOf(true));
-        if (browserResult.failedToLaunch())
-            root.setAttribute(FAILED_TO_LAUNCH, String.valueOf(true));
-        addPropertiesElementTo(root);
-        if (browserResult.completedTestRun()) {
-            root.setAttribute(ID, browserResult.getId());
-            root.setAttribute(TIME, String.valueOf(browserResult.getTime()));
-            addTestCasesElementTo(root);
-        }
-        return new XMLOutputter().outputString(root);
+        return new XMLOutputter().outputString(writeXml());
     }
 
     private void addPropertiesElementTo(Element element) {
@@ -111,10 +98,7 @@ public class BrowserResultWriter {
 
     public Element writeXml() {
         Element root = new Element(BROWSER_RESULT);
-        if (browserResult.timedOut())
-            root.setAttribute(TIMED_OUT, String.valueOf(true));
-        if (browserResult.failedToLaunch())
-            root.setAttribute(FAILED_TO_LAUNCH, String.valueOf(true));
+        root.setAttribute("type", browserResult.getResultType().name());
         addPropertiesElementTo(root);
         if (browserResult.completedTestRun()) {
             root.setAttribute(ID, browserResult.getId());

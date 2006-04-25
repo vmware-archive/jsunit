@@ -146,7 +146,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         BrowserResult browserResult2 = new BrowserResult();
         browserResult2.setId("2");
         browserResult2.setBrowser(new Browser("mybrowser.exe", 0));
-        browserResult2.setFailedToLaunch();
+        browserResult2.setResultType(ResultType.FAILED_TO_LAUNCH);
         result.addBrowserResult(browserResult2);
 
         return result;
@@ -167,7 +167,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         BrowserResult browserResult2 = new BrowserResult();
         browserResult1.setId("b");
         browserResult2.setBrowser(new Browser("mybrowser.exe", 0));
-        browserResult2.setTimedOut();
+        browserResult2.setResultType(ResultType.FAILED_TO_LAUNCH);        
         result.addBrowserResult(browserResult2);
 
         return result;

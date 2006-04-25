@@ -34,10 +34,8 @@ public class BrowserResultBuilder {
     @SuppressWarnings("unchecked")
     public BrowserResult build(Element root) {
         BrowserResult result = new BrowserResult();
-        if (failedToLaunch(root))
-            result.setFailedToLaunch();
-        else if (timedOut(root))
-            result.setTimedOut();
+        ResultType type = ResultType.valueOf(root.getAttribute("type").getValue());
+        result.setResultType(type);
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
         Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASES);
@@ -49,13 +47,13 @@ public class BrowserResultBuilder {
     }
 
     private boolean failedToLaunch(Element root) {
-        Attribute failedToLaunchAttribute = root.getAttribute(BrowserResultWriter.FAILED_TO_LAUNCH);
-        return failedToLaunchAttribute != null && failedToLaunchAttribute.getValue().equals(String.valueOf(true));
+        Attribute type = root.getAttribute("type");
+        return type.getValue().equals(ResultType.FAILED_TO_LAUNCH.name());
     }
 
     private boolean timedOut(Element root) {
-        Attribute timedOutAttribute = root.getAttribute(BrowserResultWriter.TIMED_OUT);
-        return timedOutAttribute != null && timedOutAttribute.getValue().equals(String.valueOf(true));
+        Attribute type = root.getAttribute("type");
+        return type.getValue().equals(ResultType.TIMED_OUT.name());
     }
 
     private void updateWithHeaders(BrowserResult result, Element element) {

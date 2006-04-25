@@ -159,14 +159,6 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         serverSideExceptionStackTrace = StringUtility.stackTraceAsString(throwable);
     }
 
-    public void setFailedToLaunch() {
-        this.resultType = ResultType.FAILED_TO_LAUNCH;
-    }
-
-    public void setTimedOut() {
-        this.resultType = ResultType.TIMED_OUT;
-    }
-
     public String getServerSideExceptionStackTrace() {
         return serverSideExceptionStackTrace;
     }
@@ -200,4 +192,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         buffer.append("\n");
     }
 
+    public void setResultType(ResultType type) {
+        this.resultType = type;
+    }
 }

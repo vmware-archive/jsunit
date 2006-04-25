@@ -5,7 +5,7 @@ import junit.framework.TestCase;
 public class TimedOutBrowerResultTest extends TestCase {
 
     private String xml =
-            "<browserResult timedOut=\"true\">" +
+            "<browserResult type=\"TIMED_OUT\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
                     "<property name=\"browserId\" value=\"3\" />" +
@@ -17,7 +17,7 @@ public class TimedOutBrowerResultTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         browserResult = new BrowserResult();
-        browserResult.setTimedOut();
+        browserResult.setResultType(ResultType.TIMED_OUT);
         browserResult.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
     }
 

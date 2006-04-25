@@ -2,6 +2,7 @@ package net.jsunit;
 
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.ResultType;
 
 public class TimeoutChecker extends Thread {
 
@@ -49,7 +50,7 @@ public class TimeoutChecker extends Thread {
 
     private BrowserResult createTimedOutBrowserResult() {
         BrowserResult result = createRawBrowserResult();
-        result.setTimedOut();
+        result.setResultType(ResultType.TIMED_OUT);
         return result;
     }
 

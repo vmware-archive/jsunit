@@ -7,7 +7,7 @@ public abstract class BrowserResultTestCase extends TestCase {
     protected BrowserResult result;
 
     protected String expectedXmlFragment =
-            "<browserResult id=\"An ID\" time=\"4.3\">" +
+            "<browserResult type=\"ERROR\" id=\"An ID\" time=\"4.3\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
                     "<property name=\"browserId\" value=\"7\" />" +

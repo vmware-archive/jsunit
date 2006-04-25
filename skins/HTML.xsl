@@ -6,23 +6,39 @@
         <html>
             <head>
                 <title>JsUnit Test Results</title>
-                <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css"/>
+                <link rel="stylesheet" type="text/css" href="/jsunit/css/jsUnitStyle.css"/>
             </head>
             <body>
-                <h2>JsUnit Test Results</h2>
+                <h4>JsUnit Test Results</h4>
                 <xsl:apply-templates/>
             </body>
         </html>
     </xsl:template>
 
     <xsl:template match="testRunResult">
-        <hr/>
-        <xsl:apply-templates select="properties"/>
-        The overall result was
-        <i>
-            <xsl:value-of select="@type"/>
-        </i>
-        .
+        <table>
+            <tr>
+                <td>
+                    <xsl:if test="@type='SUCCESS'">
+                        <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
+                    </xsl:if>
+                    <xsl:if test="@type!='SUCCESS'">
+                        <img src="/jsunit/images/red_x.gif">
+                            <xsl:attribute name="alt" value="@type"/>
+                            <xsl:attribute name="title" value="@type"/>
+                        </img>
+                    </xsl:if>
+                </td>
+                <td>
+                    <xsl:apply-templates select="properties"/>
+                </td>
+                <td>
+                    <xsl:text>(</xsl:text>
+                    <xsl:value-of select="@type"/>
+                    <xsl:text>)</xsl:text>
+                </td>
+            </tr>
+        </table>
         <br/>
         <xsl:apply-templates select="browserResult"/>
         <hr/>
@@ -30,15 +46,14 @@
     </xsl:template>
 
     <xsl:template match="properties">
-        <h4>
+        <b>
             <xsl:value-of select="property[@name='hostname']/@value"/>
-            -
+            <xsl:text>-</xsl:text>
             <xsl:value-of select="property[@name='ipAddress']/@value"/>
-            (
+            <xsl:text> (</xsl:text>
             <xsl:value-of select="property[@name='os']/@value"/>
-            )
-        </h4>
-        <br/>
+            <xsl:text>)</xsl:text>
+        </b>
     </xsl:template>
 
     <xsl:template match="browserResult">

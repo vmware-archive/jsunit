@@ -6,6 +6,7 @@ import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.ResultType;
 import net.jsunit.utility.StringUtility;
 
 import java.io.IOException;
@@ -146,7 +147,7 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private void handleCrashWhileLaunching(Throwable throwable, Browser browser) {
         logStatus(failedToLaunchStatusMessage(browser, throwable));
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
-        failedToLaunchBrowserResult.setFailedToLaunch();
+        failedToLaunchBrowserResult.setResultType(ResultType.FAILED_TO_LAUNCH);
         failedToLaunchBrowserResult.setBrowser(browser);
         failedToLaunchBrowserResult.setServerSideException(throwable);
         accept(failedToLaunchBrowserResult);

@@ -9,7 +9,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
 
     private Throwable exception = new FileNotFoundException();
     private String xml =
-            "<browserResult failedToLaunch=\"true\">" +
+            "<browserResult type=\"FAILED_TO_LAUNCH\">" +
                     "<properties>" +
                     "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
                     "<property name=\"browserId\" value=\"3\" />" +
@@ -24,7 +24,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         result = new BrowserResult();
-        result.setFailedToLaunch();
+        result.setResultType(ResultType.FAILED_TO_LAUNCH);
         result.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
         result.setServerSideException(exception);
     }
