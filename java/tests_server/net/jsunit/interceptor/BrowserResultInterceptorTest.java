@@ -5,9 +5,9 @@ import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.DummyHttpRequest;
 import net.jsunit.action.BrowserResultAware;
+import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.BrowserResultWriter;
-import net.jsunit.model.Browser;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -24,8 +24,8 @@ public class BrowserResultInterceptorTest extends TestCase {
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[]{"user agent"});
         requestMap.put(BrowserResultWriter.TIME, new String[]{"4.3"});
         requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[]{"2.5"});
-        requestMap.put(BrowserResultWriter.TEST_CASES, new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
-        requestMap.put(BrowserResultWriter.BROWSER_ID, new String[] {String.valueOf(browser.getId())});
+        requestMap.put(BrowserResultWriter.TEST_CASE_RESULTS, new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
+        requestMap.put(BrowserResultWriter.BROWSER_ID, new String[]{String.valueOf(browser.getId())});
         HttpServletRequest request = new DummyHttpRequest(requestMap);
         ServletActionContext.setRequest(request);
     }

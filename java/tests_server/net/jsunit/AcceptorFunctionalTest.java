@@ -17,7 +17,7 @@ public class AcceptorFunctionalTest extends FunctionalTestCase {
         addParameter(buffer, BrowserResultWriter.USER_AGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", false);
         addParameter(buffer, BrowserResultWriter.TIME, "4.3", false);
         addParameter(buffer, BrowserResultWriter.JSUNIT_VERSION, "12.5", false);
-        addParameter(buffer, BrowserResultWriter.TEST_CASES, "/dummy/path/dummyPage.html:testFoo|1.3|S||", false);
+        addParameter(buffer, BrowserResultWriter.TEST_CASE_RESULTS, "/dummy/path/dummyPage.html:testFoo|1.3|S||", false);
         addParameter(buffer, BrowserResultWriter.BROWSER_ID, "0", false);
 
         webTester.beginAt("acceptor" + buffer.toString());

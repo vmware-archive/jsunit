@@ -38,7 +38,7 @@ public class BrowserResultBuilder {
         result.setResultType(type);
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
-        Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASES);
+        Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASE_RESULTS);
         if (testCasesElement != null) {
             List children = testCasesElement.getChildren(TestCaseResultWriter.TEST_CASE);
             updateWithTestCaseResults(children, result);

@@ -6,7 +6,7 @@
             <property name="ipAddress" value="192.168.1.100"/>
             <property name="hostname" value="maverick"/>
         </properties>
-        <browserResult id="1145634043114" time="0.249">
+        <browserResult type="SUCCESS" id="1145634043114" time="0.249">
             <properties>
                 <property name="browserFileName" value="c:\program files\internet explorer\iexplore.exe"/>
                 <property name="browserId" value="0"/>
@@ -23,7 +23,7 @@
                 <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrueTypeOf" time="0.0"/>
             </testCases>
         </browserResult>
-        <browserResult id="1145634043114" time="0.156">
+        <browserResult type="SUCCESS" id="1145634043114" time="0.156">
             <properties>
                 <property name="browserFileName" value="c:\program files\mozilla firefox\firefox.exe"/>
                 <property name="browserId" value="1"/>
@@ -36,7 +36,17 @@
             <testCases>
                 <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrueTypeOf"
                           time="0.016"/>
-                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testPushAndPop" time="0.0"/>
+                <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testPushAndPop" time="0.0">
+                    <failure>
+                        Call to assertFalse(boolean) with true
+
+                        Stack trace follows:
+                        JsUnitException
+                        > _assert
+                        > assertFalse
+                        > testSomething
+                    </failure>
+                </testCase>
                 <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testIsBlank" time="0.0"/>
                 <testCase name="http://maverick/jsunit/uploaded/uploaded_1145634043114.html:testTrim" time="0.0"/>
             </testCases>
@@ -48,7 +58,7 @@
             <property name="ipAddress" value="192.168.1.104"/>
             <property name="hostname" value="slider.jsunit.net"/>
         </properties>
-        <browserResult timedOut="true">
+        <browserResult type="TIMED_OUT">
             <properties>
                 <property name="browserFileName" value="/usr/bin/mozilla"/>
                 <property name="browserId" value="0"/>

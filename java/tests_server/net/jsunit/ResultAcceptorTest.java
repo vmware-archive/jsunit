@@ -45,8 +45,8 @@ public class ResultAcceptorTest extends TestCase {
         requestMap.put(BrowserResultWriter.USER_AGENT, new String[]{"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)"});
         requestMap.put(BrowserResultWriter.TIME, new String[]{"4.3"});
         requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[]{"2.5"});
-        requestMap.put(BrowserResultWriter.TEST_CASES, dummyTestCaseStrings());
-        requestMap.put(BrowserResultWriter.BROWSER_ID, new String[] {String.valueOf(browser.getId())});
+        requestMap.put(BrowserResultWriter.TEST_CASE_RESULTS, dummyTestCaseStrings());
+        requestMap.put(BrowserResultWriter.BROWSER_ID, new String[]{String.valueOf(browser.getId())});
     }
 
     protected String[] dummyTestCaseStrings() {

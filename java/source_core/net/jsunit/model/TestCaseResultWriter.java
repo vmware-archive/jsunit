@@ -5,7 +5,7 @@ import org.jdom.output.XMLOutputter;
 
 public class TestCaseResultWriter {
     public static final String
-            TEST_CASE = "testCase",
+            TEST_CASE = "testCaseResult",
             NAME = "name",
             TIME = "time",
             FAILURE = "failure",
@@ -24,6 +24,7 @@ public class TestCaseResultWriter {
 
     public Element writeXml() {
         Element testCaseElement = new Element(TEST_CASE);
+        testCaseElement.setAttribute("type", result.getResultType().name());
         try {
             testCaseElement.setAttribute(NAME, result.getFullyQualifiedName().replace('\u0000', ' '));
         } catch (Exception ex) {

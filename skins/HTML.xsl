@@ -34,7 +34,13 @@
                 </td>
                 <td>
                     <xsl:text>(</xsl:text>
-                    <xsl:value-of select="@type"/>
+                    <font>
+                        <xsl:attribute name="color">
+                            <xsl:if test="@type='SUCCESS'">green</xsl:if>
+                            <xsl:if test="@type!='SUCCESS'">red</xsl:if>
+                        </xsl:attribute>
+                        <xsl:value-of select="@type"/>
+                    </font>
                     <xsl:text>)</xsl:text>
                 </td>
             </tr>
@@ -50,23 +56,31 @@
             <xsl:value-of select="property[@name='hostname']/@value"/>
             <xsl:text>-</xsl:text>
             <xsl:value-of select="property[@name='ipAddress']/@value"/>
-            <xsl:text> (</xsl:text>
+            <xsl:text>(</xsl:text>
             <xsl:value-of select="property[@name='os']/@value"/>
             <xsl:text>)</xsl:text>
         </b>
     </xsl:template>
 
     <xsl:template match="browserResult">
+        <xsl:if test="@type='SUCCESS'">
+            <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
+        </xsl:if>
+        <xsl:if test="@type!='SUCCESS'">
+            <img src="/jsunit/images/red_x.gif">
+                <xsl:attribute name="alt" value="@type"/>
+                <xsl:attribute name="title" value="@type"/>
+            </img>
+        </xsl:if>
         <b>Browser
             <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
         </b>
-        ,
-        ID
+        <xsl:text>, ID</xsl:text>
         <xsl:value-of select="properties/property[@name='browserId']/@value"/>
         <xsl:if test="@time">
-            (
+            <xsl:text>(</xsl:text>
             <xsl:value-of select="@time"/>
-            seconds)
+            <xsl:text>seconds)</xsl:text>
         </xsl:if>
         <xsl:if test="properties/property[@name='url']">
             on URL

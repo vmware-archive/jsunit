@@ -16,15 +16,15 @@ public abstract class BrowserResultTestCase extends TestCase {
                     "<property name=\"remoteAddress\" value=\"123.45.67.8\" />" +
                     "<property name=\"url\" value=\"http://www.example.com/\" />" +
                     "</properties>" +
-                    "<testCases>" +
-                    "<testCase name=\"page1.html:testFoo\" time=\"1.3\" />" +
-                    "<testCase name=\"page1.html:testFoo\" time=\"1.3\">" +
+                    "<testCaseResults>" +
+                    "<testCaseResult type=\"SUCCESS\" name=\"page1.html:testFoo\" time=\"1.3\" />" +
+                    "<testCaseResult type=\"ERROR\" name=\"page1.html:testFoo\" time=\"1.3\">" +
                     "<error>Test Error Message</error>" +
-                    "</testCase>" +
-                    "<testCase name=\"page2.html:testFoo\" time=\"1.3\">" +
+                    "</testCaseResult>" +
+                    "<testCaseResult type=\"FAILURE\" name=\"page2.html:testFoo\" time=\"1.3\">" +
                     "<failure>Test Failure Message</failure>" +
-                    "</testCase>" +
-                    "</testCases>" +
+                    "</testCaseResult>" +
+                    "</testCaseResults>" +
                     "</browserResult>";
 
     public void setUp() throws Exception {

@@ -14,8 +14,7 @@ public class BrowserResultWriter {
             BROWSER_ID = "browserId",
             USER_AGENT = "userAgent",
             TIME = "time",
-            TEST_CASES = "testCases",
-            TEST_CASE = "testCase",
+            TEST_CASE_RESULTS = "testCaseResults",
             JSUNIT_VERSION = "jsUnitVersion",
             REMOTE_ADDRESS = "remoteAddress",
             SERVER_SIDE_EXCEPTION_STACK_TRACE = "serverSideExceptionStackTrace",
@@ -76,7 +75,7 @@ public class BrowserResultWriter {
     }
 
     private void addTestCasesElementTo(Element element) {
-        Element testCasesElement = new Element(TEST_CASES);
+        Element testCasesElement = new Element(TEST_CASE_RESULTS);
         for (TestCaseResult result : browserResult.getTestCaseResults()) {
             new TestCaseResultWriter(result).addXmlTo(testCasesElement);
         }
