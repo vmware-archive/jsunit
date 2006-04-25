@@ -14,7 +14,7 @@
        bgcolor="#DDDDDD">
 <tr>
 <td width="1" valign="top">
-    <a href="http://www.jsunit.net" target="_blank"><img src="images/logo_jsunit.gif" title="JsUnit" alt="JsUnit" border="0"/></a>
+    <a href="http://www.jsunit.net"><img src="images/logo_jsunit.gif" title="JsUnit" alt="JsUnit" border="0"/></a>
 </td>
 <td width="50">&nbsp;</td>
 <td nowrap align="left">
@@ -108,10 +108,13 @@
 </td>
 <td nowrap align="right" valign="top">
     <font size="-2">
-        <b><a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a></b><br>
-
+        <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
+        <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
+        <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
+        <%if (false) {%>
         <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
             version</a></div>
+        <%}%>
     </font>
     <br>
     <a href="http://www.pivotalsf.com/" target="top">

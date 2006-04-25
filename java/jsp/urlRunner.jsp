@@ -25,7 +25,7 @@
                 <table>
                     <tr>
                         <td colspan="3">
-                            If you have JsUnit tests hosted on a web server (such as a JsUnit server), you can ask this
+                            If you have JsUnit tests hosted on a JsUnit server (or any web server), you can ask this
                             server
                             to run them using the <i>URL runner</i> service.
                             You can specify a URL and/or browser ID and skin using this form:
