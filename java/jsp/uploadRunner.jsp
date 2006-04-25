@@ -75,7 +75,9 @@
                             service.
                             Select your Test Page and any referenced .js files below; choose a specific browser and/or
                             skin if
-                            desired.<br/>
+                            desired.
+                            <br/>
+                            <br/>
                         </td>
                     </tr>
                     <tr>
@@ -86,7 +88,7 @@
                             <input type="file" name="testPageFile" size="50">
                         </td>
                         <td width="80%">
-                            &nbsp;
+                            <input type="submit" value="Run">
                         </td>
                     </tr>
                     <%
@@ -118,7 +120,7 @@
                                 .js file</a></font>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp">
+                    <jsp:include page="browserAndSkin.jsp">
                         <jsp:param name="includeAllBrowsersOption" value="true"/>
                     </jsp:include>
                 </table>

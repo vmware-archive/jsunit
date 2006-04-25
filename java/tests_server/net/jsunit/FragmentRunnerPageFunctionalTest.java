@@ -10,7 +10,7 @@ public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/fragmentRunnerPage");
+        webTester.beginAt("/fragmentRunnerPage?showSkinOptions");
     }
 
     public void testInitialConditions() throws Exception {
@@ -18,7 +18,6 @@ public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testPasteInFragment() throws Exception {
-        webTester.beginAt("/");
         webTester.setFormElement("fragment", "assertTrue(true);");
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
@@ -31,7 +30,6 @@ public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
     }
 
     public void testPasteInFailingFragmentSingleBrowser() throws Exception {
-        webTester.beginAt("/");
         webTester.setFormElement("fragment", "assertTrue(false);");
         webTester.setFormElement("browserId", "0");
         webTester.selectOption("skinId", "None (raw XML)");

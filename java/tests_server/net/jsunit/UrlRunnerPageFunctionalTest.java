@@ -10,7 +10,7 @@ public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/urlRunnerPage");
+        webTester.beginAt("/urlRunnerPage?showSkinOptions");
     }
 
     public void testInitialConditions() throws Exception {

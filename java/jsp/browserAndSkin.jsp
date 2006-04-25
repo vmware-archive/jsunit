@@ -8,7 +8,7 @@
     <td width="10%" valign="top">
         <b>Browser:</b>
     </td>
-    <td>
+    <td colspan="*">
         <table width="100%">
             <%
                 boolean includeAllBrowsersOption = Boolean.parseBoolean(request.getParameter("includeAllBrowsersOption"));
@@ -36,6 +36,7 @@
     </td>
 </tr>
 <%}%>
+<%if (request.getParameter("showSkinOptions")!=null) {%>
 <tr>
     <td width="1">
         <b>Skin:</b>
@@ -50,8 +51,6 @@
         </select><br>
     </td>
 </tr>
-<tr>
-    <td colspan="2">
-        <input type="submit" value="Go"<%if (request.getParameter("goOnClick") != null) {%> onclick="<%=request.getParameter("goOnClick")%>"<%}%>/>
-    </td>
-</tr>
+<%} else {%>
+<input type="hidden" name="skinId" value="0">
+<%}%>

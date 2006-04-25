@@ -31,11 +31,12 @@
             <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
                 <table>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             You can ask the server to run JsUnit tests of test code fragments using the <i>fragment
                             runner</i>
                             service. You may enter any kind of JavaScript - statements or Test Functions.
                             Type in your test code fragments below; choose a specific browser and/or skin if desired.
+                            <br/>
                             <br/>
                         </td>
                     </tr>
@@ -43,19 +44,22 @@
                         <td width="10%" valign="top">
                             <b>Fragment:</b>
                         </td>
-                        <td width="90%">
+                        <td width="10%">
                             <textarea id="fragment" name="fragment" width="100%" cols="75" rows="10"></textarea>
+                        </td>
+                        <td width="80%" valign="top">
+                            <input type="submit" value="Run" onclick="return verifyFragmentNotBlank()">
                         </td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td>
+                        <td colspan="2">
                             <font size="-2">
                                 <i>e.g. assertTrue(true);</i>
                             </font>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp">
+                    <jsp:include page="browserAndSkin.jsp">
                         <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
                         <jsp:param name="includeAllBrowsersOption" value="true"/>
                     </jsp:include>

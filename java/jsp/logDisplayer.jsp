@@ -23,20 +23,25 @@
             <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
                 <table>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             You can view the logs of past runs using the <i>displayer</i> service.
                             Use this form to specify the ID and browser of the run you want to see:
+                            <br/>
+                            <br/>
                         </td>
                     </tr>
                     <tr>
-                        <td width="1">
+                        <td width="10%">
                             <b>ID:</b>
                         </td>
-                        <td>
-                            <input type="text" name="id" size="50"/>
+                        <td width="10%">
+                            <input type="text" name="id" size="60"/>
+                        </td>
+                        <td width="80%">
+                            <input type="submit" value="Show log">
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp">
+                    <jsp:include page="browserAndSkin.jsp">
                         <jsp:param name="includeAllBrowsersOption" value="false"/>
                     </jsp:include>
                 </table>

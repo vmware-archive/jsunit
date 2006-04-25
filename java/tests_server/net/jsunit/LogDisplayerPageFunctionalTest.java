@@ -13,7 +13,7 @@ public class LogDisplayerPageFunctionalTest extends FunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/logDisplayerPage");
+        webTester.beginAt("/logDisplayerPage?showSkinOptions");
     }
 
     public void testInitialConditions() throws Exception {

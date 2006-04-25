@@ -24,30 +24,35 @@
             <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
                 <table>
                     <tr>
-                        <td colspan="2">
+                        <td colspan="3">
                             If you have JsUnit tests hosted on a web server (such as a JsUnit server), you can ask this
                             server
                             to run them using the <i>URL runner</i> service.
                             You can specify a URL and/or browser ID and skin using this form:
+                            <br/>
+                            <br/>
                         </td>
                     </tr>
                     <tr>
                         <td width="10%">
                             <b>URL:</b>
                         </td>
-                        <td>
-                            <input type="text" name="url" size="100" value=""/>
+                        <td width="10%">
+                            <input type="text" name="url" size="60" value="">
+                        </td>
+                        <td width="80%">
+                            <input type="submit" value="Run">
                         </td>
                     </tr>
                     <tr>
                         <td>&nbsp;</td>
-                        <td>
+                        <td colspan="2">
                             <font size="-2"><i>e.g.
                                 http://www.jsunit.net/runner/testRunner.html?testPage=http://www.jsunit.net/runner/tests/jsUnitTestSuite.html</i>
                             </font>
                         </td>
                     </tr>
-                    <jsp:include page="browserSkinAndGo.jsp">
+                    <jsp:include page="browserAndSkin.jsp">
                         <jsp:param name="includeAllBrowsersOption" value="true"/>
                     </jsp:include>
                 </table>
