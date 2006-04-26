@@ -31,7 +31,7 @@ public class BrowserResultInterceptor extends JsUnitInterceptor {
             result.setTime(Double.parseDouble(time));
         result.setJsUnitVersion(request.getParameter(BrowserResultWriter.JSUNIT_VERSION));
         result.setTestCaseStrings(request.getParameterValues(BrowserResultWriter.TEST_CASE_RESULTS));
-        String browserIdString = request.getParameter(BrowserResultWriter.BROWSER_ID);
+        String browserIdString = request.getParameter("browserId");
         if (browserIdString != null)
             result.setBrowser(source.getBrowserById(Integer.parseInt(browserIdString)));
         return result;

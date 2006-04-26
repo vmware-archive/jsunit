@@ -25,7 +25,7 @@ public class BrowserResultInterceptorTest extends TestCase {
         requestMap.put(BrowserResultWriter.TIME, new String[]{"4.3"});
         requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[]{"2.5"});
         requestMap.put(BrowserResultWriter.TEST_CASE_RESULTS, new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
-        requestMap.put(BrowserResultWriter.BROWSER_ID, new String[]{String.valueOf(browser.getId())});
+        requestMap.put("browserId", new String[]{String.valueOf(browser.getId())});
         HttpServletRequest request = new DummyHttpRequest(requestMap);
         ServletActionContext.setRequest(request);
     }

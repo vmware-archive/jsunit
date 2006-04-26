@@ -75,6 +75,7 @@ public class BrowserTest extends TestCase {
         assertEquals(
                 "<browser>" +
                         "<fullFileName>/usr/bin/start_mozilla.sh;/usr/bin/stop_mozilla.sh;Mozilla 0.9.2.1</fullFileName>" +
+                        "<id>5</id>" +
                         "<displayName>Mozilla 0.9.2.1</displayName>" +
                         "<logoPath>/jsunit/images/logo_mozilla.gif</logoPath>" +
                         "</browser>",

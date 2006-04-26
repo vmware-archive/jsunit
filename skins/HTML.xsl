@@ -105,11 +105,7 @@
                             <xsl:attribute name="title" value="@type"/>
                         </img>
                     </xsl:if>
-                    <b>Browser
-                        <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
-                    </b>
-                    <xsl:text>,&#160;ID&#160;</xsl:text>
-                    <xsl:value-of select="properties/property[@name='browserId']/@value"/>
+                    <xsl:apply-templates select="browser"/>
                     <xsl:text>&#160;-&#160;</xsl:text>
                     <font>
                         <xsl:attribute name="color">
@@ -185,6 +181,25 @@
                 <xsl:value-of select="error"/>
             </pre>
         </xsl:if>
+    </xsl:template>
+
+    <xsl:template match="browser">
+        <img>
+            <xsl:attribute name="src">
+                <xsl:value-of select="logoPath"/>
+            </xsl:attribute>
+            <xsl:attribute name="alt">
+                <xsl:value-of select="displayName"/>
+            </xsl:attribute>
+            <xsl:attribute name="title">
+                <xsl:value-of select="displayName"/>
+            </xsl:attribute>
+        </img>
+        <b>
+            <xsl:value-of select="displayName"/>
+        </b>
+        <xsl:text>,&#160;ID&#160;</xsl:text>
+        <xsl:value-of select="id"/>
     </xsl:template>
 
 </xsl:stylesheet>

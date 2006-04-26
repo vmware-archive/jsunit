@@ -10,8 +10,6 @@ public class BrowserResultWriter {
     public static final String
             ID = "id",
             BROWSER_RESULT = "browserResult",
-            BROWSER_FILE_NAME = "browserFileName",
-            BROWSER_ID = "browserId",
             USER_AGENT = "userAgent",
             TIME = "time",
             TEST_CASE_RESULTS = "testCaseResults",
@@ -44,11 +42,6 @@ public class BrowserResultWriter {
         Element properties = new Element(PROPERTIES);
         element.addContent(properties);
 
-        Browser browser = browserResult.getBrowser();
-        if (browser != null) {
-            addProperty(properties, BROWSER_FILE_NAME, browser.getFullFileName());
-            addProperty(properties, BROWSER_ID, String.valueOf(browser.getId()));
-        }
         if (browserResult.completedTestRun()) {
             addProperty(properties, JSUNIT_VERSION, browserResult.getJsUnitVersion());
             addProperty(properties, USER_AGENT, browserResult.getUserAgent());
@@ -98,6 +91,9 @@ public class BrowserResultWriter {
     public Element writeXml() {
         Element root = new Element(BROWSER_RESULT);
         root.setAttribute("type", browserResult.getResultType().name());
+        Browser browser = browserResult.getBrowser();
+        if (browser != null)
+            root.addContent(browser.asXml());
         addPropertiesElementTo(root);
         if (browserResult.completedTestRun()) {
             root.setAttribute(ID, browserResult.getId());

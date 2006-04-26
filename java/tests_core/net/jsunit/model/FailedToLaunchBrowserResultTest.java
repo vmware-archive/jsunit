@@ -10,9 +10,13 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     private Throwable exception = new FileNotFoundException();
     private String xml =
             "<browserResult type=\"FAILED_TO_LAUNCH\">" +
+                    "<browser>" +
+                    "<fullFileName>c:\\Program Files\\Internet Explorer\\iexplore.exe</fullFileName>" +
+                    "<id>3</id>" +
+                    "<displayName>Internet Explorer</displayName>" +
+                    "<logoPath>/jsunit/images/logo_ie.gif</logoPath>" +
+                    "</browser>" +
                     "<properties>" +
-                    "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"3\" />" +
                     "<property name=\"serverSideExceptionStackTrace\"><![CDATA[" +
                     StringUtility.stackTraceAsString(exception) +
                     "]]></property>" +

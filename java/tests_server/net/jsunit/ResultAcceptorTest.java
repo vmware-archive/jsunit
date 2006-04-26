@@ -46,7 +46,7 @@ public class ResultAcceptorTest extends TestCase {
         requestMap.put(BrowserResultWriter.TIME, new String[]{"4.3"});
         requestMap.put(BrowserResultWriter.JSUNIT_VERSION, new String[]{"2.5"});
         requestMap.put(BrowserResultWriter.TEST_CASE_RESULTS, dummyTestCaseStrings());
-        requestMap.put(BrowserResultWriter.BROWSER_ID, new String[]{String.valueOf(browser.getId())});
+        requestMap.put("browserId", new String[]{String.valueOf(browser.getId())});
     }
 
     protected String[] dummyTestCaseStrings() {

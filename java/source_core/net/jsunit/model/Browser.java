@@ -16,6 +16,9 @@ public class Browser implements XmlRenderable {
     private int id;
     private String displayName;
     private BrowserType type;
+    public static final String BROWSER = "browser";
+    public static final String FULL_FILE_NAME = "fullFileName";
+    public static final String ID = "id";
 
     public Browser(String fullFileName, int id) {
         this.fullFileName = fullFileName;
@@ -55,13 +58,15 @@ public class Browser implements XmlRenderable {
         final Browser browser = (Browser) o;
 
         if (id != browser.id) return false;
-        return !(startCommand != null ? !startCommand.equals(browser.startCommand) : browser.startCommand != null);
+        if (fullFileName != null ? !fullFileName.equals(browser.fullFileName) : browser.fullFileName != null)
+            return false;
 
+        return true;
     }
 
     public int hashCode() {
         int result;
-        result = (startCommand != null ? startCommand.hashCode() : 0);
+        result = (fullFileName != null ? fullFileName.hashCode() : 0);
         result = 29 * result + id;
         return result;
     }
@@ -91,10 +96,13 @@ public class Browser implements XmlRenderable {
     }
 
     public Element asXml() {
-        Element browserElement = new Element("browser");
-        Element fullFileNameElement = new Element("fullFileName");
+        Element browserElement = new Element(BROWSER);
+        Element fullFileNameElement = new Element(FULL_FILE_NAME);
         fullFileNameElement.setText(getFullFileName());
         browserElement.addContent(fullFileNameElement);
+        Element idElement = new Element(ID);
+        idElement.setText(String.valueOf(getId()));
+        browserElement.addContent(idElement);
         Element displayNameElement = new Element("displayName");
         displayNameElement.setText(getDisplayName());
         browserElement.addContent(displayNameElement);
@@ -102,5 +110,11 @@ public class Browser implements XmlRenderable {
         logoElement.setText(getLogoPath());
         browserElement.addContent(logoElement);
         return browserElement;
+    }
+
+    public static Browser buildFrom(Element element) {
+        String fullFileName = element.getChild(FULL_FILE_NAME).getTextTrim();
+        int id = Integer.parseInt(element.getChild(ID).getTextTrim());
+        return new Browser(fullFileName, id);
     }
 }

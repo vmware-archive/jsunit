@@ -8,9 +8,13 @@ public abstract class BrowserResultTestCase extends TestCase {
 
     protected String expectedXmlFragment =
             "<browserResult type=\"ERROR\" id=\"An ID\" time=\"4.3\">" +
+                    "<browser>" +
+                    "<fullFileName>c:\\Program Files\\Internet Explorer\\iexplore.exe</fullFileName>" +
+                    "<id>7</id>" +
+                    "<displayName>Internet Explorer</displayName>" +
+                    "<logoPath>/jsunit/images/logo_ie.gif</logoPath>" +
+                    "</browser>" +
                     "<properties>" +
-                    "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"7\" />" +
                     "<property name=\"jsUnitVersion\" value=\"2.5\" />" +
                     "<property name=\"userAgent\" value=\"Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)\" />" +
                     "<property name=\"remoteAddress\" value=\"123.45.67.8\" />" +
@@ -26,9 +30,11 @@ public abstract class BrowserResultTestCase extends TestCase {
                     "</testCaseResult>" +
                     "</testCaseResults>" +
                     "</browserResult>";
+    private Browser browser;
 
     public void setUp() throws Exception {
         super.setUp();
+        browser = new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7);
         result = createBrowserResult();
         result.setTestCaseStrings(new String[]{
                 "page1.html:testFoo|1.3|S||",
@@ -39,7 +45,7 @@ public abstract class BrowserResultTestCase extends TestCase {
 
     protected BrowserResult createBrowserResult() {
         BrowserResult browserResult = new BrowserResult();
-        browserResult.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7));
+        browserResult.setBrowser(browser);
         browserResult.setJsUnitVersion("2.5");
         browserResult.setId("An ID");
         browserResult.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
@@ -50,6 +56,7 @@ public abstract class BrowserResultTestCase extends TestCase {
     }
 
     protected void assertFields(BrowserResult aResult) {
+        assertEquals(browser, aResult.getBrowser());
         assertEquals("2.5", aResult.getJsUnitVersion());
         assertEquals("An ID", aResult.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", aResult.getUserAgent());

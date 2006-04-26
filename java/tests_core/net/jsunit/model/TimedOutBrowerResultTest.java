@@ -6,10 +6,13 @@ public class TimedOutBrowerResultTest extends TestCase {
 
     private String xml =
             "<browserResult type=\"TIMED_OUT\">" +
-                    "<properties>" +
-                    "<property name=\"browserFileName\" value=\"c:\\Program Files\\Internet Explorer\\iexplore.exe\" />" +
-                    "<property name=\"browserId\" value=\"3\" />" +
-                    "</properties>" +
+                    "<browser>" +
+                    "<fullFileName>c:\\Program Files\\Internet Explorer\\iexplore.exe</fullFileName>" +
+                    "<id>3</id>" +
+                    "<displayName>Internet Explorer</displayName>" +
+                    "<logoPath>/jsunit/images/logo_ie.gif</logoPath>" +
+                    "</browser>" +
+                    "<properties />" +
                     "</browserResult>";
 
     private BrowserResult browserResult;

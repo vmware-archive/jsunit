@@ -36,6 +36,7 @@ public class BrowserResultBuilder {
         BrowserResult result = new BrowserResult();
         ResultType type = ResultType.valueOf(root.getAttribute("type").getValue());
         result.setResultType(type);
+        updateWithBrowser(result, root.getChild(Browser.BROWSER));
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);
         Element testCasesElement = root.getChild(BrowserResultWriter.TEST_CASE_RESULTS);
@@ -44,6 +45,11 @@ public class BrowserResultBuilder {
             updateWithTestCaseResults(children, result);
         }
         return result;
+    }
+
+    private void updateWithBrowser(BrowserResult result, Element browserElement) {
+        if (browserElement != null)
+            result.setBrowser(Browser.buildFrom(browserElement));
     }
 
     private boolean failedToLaunch(Element root) {
@@ -67,7 +73,6 @@ public class BrowserResultBuilder {
 
     private void updateWithProperties(Element element, BrowserResult result) {
         Integer browserId = null;
-        String browserFileName = null;
         for (Object child : element.getChildren()) {
             Element next = (Element) child;
             String key = next.getAttributeValue(BrowserResultWriter.PROPERTY_KEY);
@@ -84,14 +89,7 @@ public class BrowserResultBuilder {
             else if (BrowserResultWriter.SERVER_SIDE_EXCEPTION_STACK_TRACE.equals(key)) {
                 String stackTrace = next.getText();
                 result.setServerSideExceptionStackTrace(stackTrace);
-            } else if (BrowserResultWriter.BROWSER_ID.equals(key))
-                browserId = Integer.parseInt(value);
-            else if (BrowserResultWriter.BROWSER_FILE_NAME.equals(key))
-                browserFileName = value;
-        }
-        if (browserId != null && browserFileName != null) {
-            Browser remoteBrowser = new Browser(browserFileName, browserId);
-            result.setBrowser(remoteBrowser);
+            }
         }
     }
 
