@@ -23,7 +23,7 @@ function jsUnitTestManager() {
     this.progressBar = this.mainFrame.frames.mainProgress.document.progress;
 
     this.problemsListField = this.mainFrame.frames.mainErrors.document.testRunnerForm.problemsList;
-    this.testCaseResultsField = this.mainFrame.frames.mainResults.document.resultsForm.testCaseRs;
+    this.testCaseResultsField = this.mainFrame.frames.mainResults.document.resultsForm.testCaseResults;
     this.resultsTimeField = this.mainFrame.frames.mainResults.document.resultsForm.time;
 
     // 'layer' output frames
@@ -548,7 +548,7 @@ jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
     var resDoc = this._windowForAllProblemMessages.document;
     resDoc.write('<html><head><link rel="stylesheet" href="../css/jsUnitStyle.css"><title>Tests with problems - JsUnit<\/title><head><body>');
     resDoc.write('<p class="jsUnitSubHeading">Tests with problems (' + this.problemsListField.length + ' total) - JsUnit<\/p>');
-    resDoc.write('<p class="jsUnitSubSubHeading"><i>Running on ' + navigator.userAgent + '</i></p>');
+    resDoc.write('<p class="jsUnitSubSubHeading">Running on ' + navigator.userAgent + '</p>');
     for (var i = 0; i < this.problemsListField.length; i++)
     {
         resDoc.write('<p class="jsUnitDefault">');
