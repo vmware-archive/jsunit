@@ -9,7 +9,6 @@
                 <link rel="stylesheet" type="text/css" href="/jsunit/css/jsUnitStyle.css"/>
             </head>
             <body>
-                <h4>JsUnit Test Results</h4>
                 <xsl:apply-templates/>
             </body>
         </html>
@@ -33,7 +32,7 @@
                     <xsl:apply-templates select="properties"/>
                 </td>
                 <td>
-                    <xsl:text>(</xsl:text>
+                    <xsl:text>&#160;-&#160;</xsl:text>
                     <font>
                         <xsl:attribute name="color">
                             <xsl:if test="@type='SUCCESS'">green</xsl:if>
@@ -41,7 +40,6 @@
                         </xsl:attribute>
                         <xsl:value-of select="@type"/>
                     </font>
-                    <xsl:text>)</xsl:text>
                 </td>
             </tr>
         </table>
@@ -54,15 +52,69 @@
     <xsl:template match="properties">
         <b>
             <xsl:value-of select="property[@name='hostname']/@value"/>
-            <xsl:text>-</xsl:text>
+            <xsl:text>&#160;-&#160;</xsl:text>
             <xsl:value-of select="property[@name='ipAddress']/@value"/>
-            <xsl:text>(</xsl:text>
+            <xsl:text>&#160;(</xsl:text>
             <xsl:value-of select="property[@name='os']/@value"/>
             <xsl:text>)</xsl:text>
         </b>
     </xsl:template>
 
     <xsl:template match="browserResult">
+        <table>
+            <tr>
+                <td>
+                    <xsl:if test="@type='SUCCESS'">
+                        <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
+                    </xsl:if>
+                    <xsl:if test="@type!='SUCCESS'">
+                        <img src="/jsunit/images/red_x.gif">
+                            <xsl:attribute name="alt" value="@type"/>
+                            <xsl:attribute name="title" value="@type"/>
+                        </img>
+                    </xsl:if>
+                </td>
+                <td>
+                    <b>Browser
+                        <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
+                    </b>
+                    <xsl:text>,&#160;ID&#160;</xsl:text>
+                    <xsl:value-of select="properties/property[@name='browserId']/@value"/>
+                    <xsl:if test="@time">
+                        <xsl:text>(</xsl:text>
+                        <xsl:value-of select="@time"/>
+                        <xsl:text>seconds)</xsl:text>
+                    </xsl:if>
+                    <xsl:if test="properties/property[@name='url']">
+                        <xsl:text>&#160;on URL&#160;</xsl:text>
+                        <xsl:value-of select="properties/property[@name='url']/@value"/>
+                    </xsl:if>
+                    <xsl:text>&#160;-&#160;</xsl:text>
+                    <font>
+                        <xsl:attribute name="color">
+                            <xsl:if test="@type='SUCCESS'">green</xsl:if>
+                            <xsl:if test="@type!='SUCCESS'">red</xsl:if>
+                        </xsl:attribute>
+                        <xsl:value-of select="@type"/>
+                    </font>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <xsl:apply-templates select="testCaseResults"/>
+    </xsl:template>
+
+    <xsl:template match="testCaseResults">
+        <xsl:value-of select="count(testCaseResult)"/>
+        <xsl:text>&#160;tests run:</xsl:text>
+        <br/>
+        <xsl:for-each select="testCaseResult">
+            <xsl:apply-templates select="."/>
+            <br/>
+        </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template match="testCaseResult">
         <xsl:if test="@type='SUCCESS'">
             <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
         </xsl:if>
@@ -72,59 +124,28 @@
                 <xsl:attribute name="title" value="@type"/>
             </img>
         </xsl:if>
-        <b>Browser
-            <xsl:value-of select="properties/property[@name='browserFileName']/@value"/>
-        </b>
-        <xsl:text>, ID</xsl:text>
-        <xsl:value-of select="properties/property[@name='browserId']/@value"/>
-        <xsl:if test="@time">
-            <xsl:text>(</xsl:text>
-            <xsl:value-of select="@time"/>
-            <xsl:text>seconds)</xsl:text>
+        <xsl:value-of select="@name"/>
+        <xsl:text>&#160;(</xsl:text>
+        <xsl:value-of select="@time"/>
+        <xsl:text>&#160;seconds)</xsl:text>
+        <xsl:text>&#160;-&#160;</xsl:text>
+        <font>
+            <xsl:attribute name="color">
+                <xsl:if test="@type='SUCCESS'">green</xsl:if>
+                <xsl:if test="@type!='SUCCESS'">red</xsl:if>
+            </xsl:attribute>
+            <xsl:value-of select="@type"/>
+        </font>
+        <xsl:if test="@type='FAILURE'">
+            <pre>
+                <xsl:value-of select="failure"/>
+            </pre>
         </xsl:if>
-        <xsl:if test="properties/property[@name='url']">
-            on URL
-            <i>
-                <xsl:value-of select="properties/property[@name='url']/@value"/>
-            </i>
+        <xsl:if test="@type='ERROR'">
+            <pre>
+                <xsl:value-of select="error"/>
+            </pre>
         </xsl:if>
-        <br/>
-        <xsl:apply-templates select="testCases"/>
-    </xsl:template>
-
-    <xsl:template match="testCases">
-        <xsl:value-of select="count(testCase)"/>
-        tests run:
-        <br/>
-        <ul>
-            <xsl:for-each select="testCase">
-                <li>
-                    <i>
-                        <xsl:value-of select="@name"/>
-                        (
-                        <xsl:value-of select="@time"/>
-                        seconds):
-                    </i>
-                    <xsl:if test="./failure">
-                        <font color="red">FAILED</font>
-                        <br/>
-                        <pre>
-                            <xsl:value-of select="./failure"/>
-                        </pre>
-                    </xsl:if>
-                    <xsl:if test="./error">
-                        <font color="red">ERROR</font>
-                        <br/>
-                        <pre>
-                            <xsl:value-of select="./error"/>
-                        </pre>
-                    </xsl:if>
-                    <xsl:if test="not(./failure) and not(./error)">SUCCESS
-                        <br/>
-                    </xsl:if>
-                </li>
-            </xsl:for-each>
-        </ul>
     </xsl:template>
 
 </xsl:stylesheet>
