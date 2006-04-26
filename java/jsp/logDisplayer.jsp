@@ -50,7 +50,7 @@
     </table>
 </form>
 <br>
-<font size="-2">Server output:</font>
+Server output:
 <br>
 <iframe name="resultsFrame" width="100%" height="250"></iframe>
 </body>

@@ -94,10 +94,10 @@
                     Server Status
                 </h4>
                 <h4>
-                    <font size="-2">Up since <%=new SimpleDateFormat().format(server.getStartDate())%></font><br>
+                    Up since <%=new SimpleDateFormat().format(server.getStartDate())%><br>
 
                     <div id="testRunCountDiv"></div>
-                    <font size="-2">Server log:</font>
+                    Server log:
                 </h4>
 
                 <div style="width:90%;height:90%;overflow:scroll" id="serverStatusDiv"></div>

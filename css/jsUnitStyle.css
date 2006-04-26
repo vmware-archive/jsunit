@@ -1,10 +1,10 @@
 body {
     margin-top: 0;
     margin-bottom: 0;
-    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font: x-small / 1.5em "Trebuchet MS", Verdana, Arial, Sans-serif;
     color: #000;
-    font-size: 0.8em;
-    background-color: #fff;
+    font-size: 0.8em; /*background-color: #710;*/
+    background-color: #FFF;
 }
 
 a:link, a:visited {
@@ -80,4 +80,39 @@ h4 {
     border-top-width: 0px;
     border-left-width: 0px;
     border-right-width: 0px;
+}
+
+.rbroundbox {
+    background: url( nt.gif ) repeat;
+}
+
+.rbtop div {
+    background: url( tl.gif ) no-repeat top left;
+}
+
+.rbtop {
+    background: url( tr.gif ) no-repeat top right;
+}
+
+.rbbot div {
+    background: url( bl.gif ) no-repeat bottom left;
+}
+
+.rbbot {
+    background: url( br.gif ) no-repeat bottom right;
+}
+
+.rbtop div, .rbtop, .rbbot div, .rbbot {
+    width: 100%;
+    height: 7px;
+    font-size: 1px;
+}
+
+.rbcontent {
+    margin: 0 7px;
+}
+
+.rbroundbox {
+    width: 50%;
+    margin: 1em auto;
 }

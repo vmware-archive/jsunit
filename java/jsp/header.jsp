@@ -107,15 +107,13 @@
     </table>
 </td>
 <td nowrap align="right" valign="top">
-    <font size="-2">
-        <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
-        <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
-        <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
-        <%if (false) {%>
-        <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
-            version</a></div>
-        <%}%>
-    </font>
+    <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
+    <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
+    <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
+    <%if (false) {%>
+    <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
+        version</a></div>
+    <%}%>
     <br>
     <a href="http://www.pivotalsf.com/" target="top">
         <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal" title="Powered by Pivotal">

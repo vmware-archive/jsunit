@@ -47,9 +47,8 @@
                     <tr>
                         <td>&nbsp;</td>
                         <td colspan="2">
-                            <font size="-2"><i>e.g.
+                            <i>e.g.
                                 http://www.jsunit.net/runner/testRunner.html?testPage=http://www.jsunit.net/runner/tests/jsUnitTestSuite.html</i>
-                            </font>
                         </td>
                     </tr>
                     <jsp:include page="browserAndSkin.jsp">
@@ -61,7 +60,7 @@
     </table>
 </form>
 <br>
-<font size="-2">Server output:</font>
+Server output:
 <br>
 <iframe name="resultsFrame" width="100%" height="250" border="0"></iframe>
 

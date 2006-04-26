@@ -40,13 +40,10 @@
 
             var rightCellNode = document.createElement("td");
             rightCellNode.setAttribute("align", "left");
-            var fontElement = document.createElement("font");
-            fontElement.setAttribute("size", "-2");
             var removeLink = document.createElement("a");
             removeLink.setAttribute("href", "javascript:removeReferencedJsFile(\"" + id + "\")");
             removeLink.appendChild(document.createTextNode("[remove]"));
-            fontElement.appendChild(removeLink);
-            rightCellNode.appendChild(fontElement);
+            rightCellNode.appendChild(removeLink);
 
             rowNode.appendChild(rightCellNode);
 
@@ -102,9 +99,9 @@
                     <tr id="defaultReferencedJsFileField<%=i%>">
                         <td>.js file</td>
                         <td align="left" width="1"><input type="file" name="referencedJsFiles"></td>
-                        <td><font size="-2">
+                        <td>
                             <a href="javascript:removeReferencedJsFile('defaultReferencedJsFileField<%=i%>')">[remove]</a>
-                        </font></td>
+                        </td>
                     </tr>
                     <%
 
@@ -115,9 +112,9 @@
                     <tr id="addReferencedJsFileRow">
                         <td>&nbsp;</td>
                         <td colspan="2">
-                            <font size="-2"><a href="javascript:addReferencedJsFile()" id="addReferencedJsFile">add
-                                referenced
-                                .js file</a></font>
+                            <a href="javascript:addReferencedJsFile()" id="addReferencedJsFile">
+                                add referenced .js file
+                            </a>
                         </td>
                     </tr>
                     <jsp:include page="browserAndSkin.jsp">
@@ -127,7 +124,7 @@
             </td></tr></table>
 </form>
 <br>
-<font size="-2">Server output:</font>
+Server output:
 <br>
 <iframe name="resultsFrame" width="100%" height="250" border="0"></iframe>
 
