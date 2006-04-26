@@ -46,7 +46,7 @@
                         <td colspan="100">
                             <i>Available browsers:</i>
                             <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
-                            <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                            <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                             <%}%>
                         </td>
                     </tr>
@@ -87,7 +87,7 @@
                                                         for (Browser browser : remoteConfiguration.getBrowsers()) {
                                                             if (browser.getType() != null) {
                                                     %>
-                                                    <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                                                    <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                                                     <%}%>
                                                     <%}%>
                                                 </td>

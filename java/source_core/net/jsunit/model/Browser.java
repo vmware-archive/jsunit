@@ -1,10 +1,12 @@
 package net.jsunit.model;
 
+import net.jsunit.XmlRenderable;
 import net.jsunit.utility.StringUtility;
+import org.jdom.Element;
 
 import java.util.List;
 
-public class Browser {
+public class Browser implements XmlRenderable {
 
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
 
@@ -81,6 +83,24 @@ public class Browser {
     }
 
     public boolean conflictsWith(Browser another) {
-        return getType() == another.getType();
+        return getType().conflictsWith(another.getType());
+    }
+
+    public String getLogoPath() {
+        return getType().getLogoPath();
+    }
+
+    public Element asXml() {
+        Element browserElement = new Element("browser");
+        Element fullFileNameElement = new Element("fullFileName");
+        fullFileNameElement.setText(getFullFileName());
+        browserElement.addContent(fullFileNameElement);
+        Element displayNameElement = new Element("displayName");
+        displayNameElement.setText(getDisplayName());
+        browserElement.addContent(displayNameElement);
+        Element logoElement = new Element("logoPath");
+        logoElement.setText(getLogoPath());
+        browserElement.addContent(logoElement);
+        return browserElement;
     }
 }

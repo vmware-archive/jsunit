@@ -26,7 +26,7 @@
                 <td valign="top">
                     <input type="radio" name="browserId" value="<%=browser.getId()%>">
                     <%if (browser.getType() != null) {%>
-                    <img src="<%=browser.getType().getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                    <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                     <%}%>
                     <%=browser.getDisplayName()%>
                 </td>
@@ -36,7 +36,7 @@
     </td>
 </tr>
 <%}%>
-<%if (request.getParameter("showSkinOptions")!=null) {%>
+<%if (request.getParameter("showSkinOptions") != null) {%>
 <tr>
     <td width="1">
         <b>Skin:</b>

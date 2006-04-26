@@ -1,6 +1,7 @@
 package net.jsunit.model;
 
 import junit.framework.TestCase;
+import net.jsunit.utility.XmlUtility;
 
 public class BrowserTest extends TestCase {
 
@@ -67,6 +68,18 @@ public class BrowserTest extends TestCase {
         Browser opera = new Browser("/usr/bin/opera", 1);
         assertFalse(mozilla.conflictsWith(opera));
         assertTrue(mozilla.conflictsWith(mozilla));
+    }
+
+    public void testAsXml() throws Exception {
+        Browser browser = new Browser("/usr/bin/start_mozilla.sh;/usr/bin/stop_mozilla.sh;Mozilla 0.9.2.1", 5);
+        assertEquals(
+                "<browser>" +
+                        "<fullFileName>/usr/bin/start_mozilla.sh;/usr/bin/stop_mozilla.sh;Mozilla 0.9.2.1</fullFileName>" +
+                        "<displayName>Mozilla 0.9.2.1</displayName>" +
+                        "<logoPath>/jsunit/images/logo_mozilla.gif</logoPath>" +
+                        "</browser>",
+                XmlUtility.asString(browser.asXml())
+        );
     }
 
 }

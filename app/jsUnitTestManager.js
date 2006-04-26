@@ -1,7 +1,7 @@
 function jsUnitTestManager() {
     this._windowForAllProblemMessages = null;
 
-    this.container = top.frames.testContainer
+    this.container = top.frames.testContainer;
     this.documentLoader = top.frames.documentLoader;
     this.mainFrame = top.frames.mainFrame;
 

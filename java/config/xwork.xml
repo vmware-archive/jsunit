@@ -12,7 +12,6 @@
             <result-type name="jsUnitTransformedTestRunResult" class="net.jsunit.action.TransformedTestRunResult"/>
             <result-type name="jsUnitServerStatus" class="net.jsunit.action.StatusResult"/>
             <result-type name="jsUnitTestRunCount" class="net.jsunit.action.TestRunCountResult"/>
-            <result-type name="jsUnitAccessDenied" class="net.jsunit.action.AccessDeniedResult"/>
         </result-types>
 
         <interceptors>
