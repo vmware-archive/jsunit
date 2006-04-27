@@ -7,6 +7,13 @@
             <head>
                 <title>JsUnit Test Results</title>
                 <link rel="stylesheet" type="text/css" href="/jsunit/css/jsUnitStyle.css"/>
+                <script language="javascript">
+                    function toggleVisibility(divId) {
+                    var theDiv = document.getElementById(divId);
+                    var isVisible = theDiv.style.display=="block";
+                    theDiv.style.display = isVisible ? "none" : "block";
+                    }
+                </script>
             </head>
             <body>
                 <xsl:apply-templates/>
@@ -14,44 +21,10 @@
         </html>
     </xsl:template>
 
-    <xsl:template match="distributedTestRunResult">
-        <table>
-            <tr>
-                <td colspan="2" nowrap="nowrap">
-                    <xsl:if test="@type='SUCCESS'">
-                        <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
-                    </xsl:if>
-                    <xsl:if test="@type!='SUCCESS'">
-                        <img src="/jsunit/images/red_x.gif">
-                            <xsl:attribute name="alt" value="@type"/>
-                            <xsl:attribute name="title" value="@type"/>
-                        </img>
-                    </xsl:if>
-                    <font>
-                        <xsl:attribute name="color">
-                            <xsl:if test="@type='SUCCESS'">green</xsl:if>
-                            <xsl:if test="@type!='SUCCESS'">red</xsl:if>
-                        </xsl:attribute>
-                        <b>The overall result was
-                            <xsl:value-of select="@type"/>
-                            .
-                        </b>
-                    </font>
-                </td>
-            </tr>
-            <tr>
-                <td>&#160;</td>
-                <td>
-                    <xsl:apply-templates/>
-                </td>
-            </tr>
-        </table>
-    </xsl:template>
-
     <xsl:template match="testRunResult">
         <table>
             <tr>
-                <td colspan="2" nowrap="nowrap">
+                <td colspan="2" nowrap="nowrap" class="jsUnitDefault">
                     <xsl:if test="@type='SUCCESS'">
                         <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
                     </xsl:if>
@@ -114,28 +87,53 @@
                         </xsl:attribute>
                         <xsl:value-of select="@type"/>
                     </font>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" nowrap="nowrap">
-                    <xsl:value-of select="count(./testCaseResults/testCaseResult)"/>
-                    <xsl:text>&#160;tests run</xsl:text>
-                    <xsl:if test="@time">
-                        <xsl:text>&#160;in&#160;</xsl:text>
-                        <xsl:value-of select="@time"/>
-                        <xsl:text>&#160;seconds</xsl:text>
-                    </xsl:if>
-                    <xsl:if test="properties/property[@name='url']">
-                        <xsl:text>&#160;on URL&#160;</xsl:text>
-                        <xsl:value-of select="properties/property[@name='url']/@value"/>
+                    <xsl:if test="testCaseResults">
+                        <xsl:text>&#160;[</xsl:text>
+                        <a>
+                            <xsl:attribute name="href">
+                                <xsl:text>javascript:toggleVisibility("</xsl:text>
+                                <xsl:value-of
+                                        select="concat(../properties/property[@name='hostname']/@value, '_', browser/id)"/>
+                                <xsl:text>")</xsl:text>
+                            </xsl:attribute>
+                            <xsl:text>details</xsl:text>
+                        </a>
+                        <xsl:text>]</xsl:text>
                     </xsl:if>
                 </td>
             </tr>
             <xsl:if test="testCaseResults">
                 <tr>
-                    <td>&#160;</td>
                     <td>
-                        <xsl:apply-templates select="testCaseResults"/>
+                        <div style="display:none">
+                            <xsl:attribute name="id">
+                                <xsl:value-of
+                                        select="concat(../properties/property[@name='hostname']/@value, '_', browser/id)"/>
+                            </xsl:attribute>
+                            <table>
+                                <tr>
+                                    <td colspan="2" nowrap="nowrap">
+                                        <xsl:value-of select="count(./testCaseResults/testCaseResult)"/>
+                                        <xsl:text>&#160;test(s) run</xsl:text>
+                                        <xsl:if test="@time">
+                                            <xsl:text>&#160;in&#160;</xsl:text>
+                                            <xsl:value-of select="@time"/>
+                                            <xsl:text>&#160;seconds</xsl:text>
+                                        </xsl:if>
+                                        <xsl:if test="properties/property[@name='url']">
+                                            <xsl:text>&#160;on URL&#160;</xsl:text>
+                                            <xsl:value-of select="properties/property[@name='url']/@value"/>
+                                        </xsl:if>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>
+                                        <xsl:apply-templates select="testCaseResults"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
                     </td>
                 </tr>
             </xsl:if>
@@ -159,7 +157,7 @@
                 <xsl:attribute name="title" value="@type"/>
             </img>
         </xsl:if>
-        <xsl:value-of select="@name"/>
+        <xsl:value-of select="substring-after(@name, '.html:')"/>
         <xsl:text>&#160;(</xsl:text>
         <xsl:value-of select="@time"/>
         <xsl:text>&#160;seconds)</xsl:text>
@@ -198,8 +196,6 @@
         <b>
             <xsl:value-of select="displayName"/>
         </b>
-        <xsl:text>,&#160;ID&#160;</xsl:text>
-        <xsl:value-of select="id"/>
     </xsl:template>
 
 </xsl:stylesheet>
