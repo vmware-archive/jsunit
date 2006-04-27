@@ -50,14 +50,12 @@
     </xsl:template>
 
     <xsl:template match="properties">
-        <b>
-            <xsl:value-of select="property[@name='hostname']/@value"/>
-            <xsl:text>&#160;-&#160;</xsl:text>
-            <xsl:value-of select="property[@name='ipAddress']/@value"/>
-            <xsl:text>&#160;(</xsl:text>
-            <xsl:value-of select="property[@name='os']/@value"/>
-            <xsl:text>)</xsl:text>
-        </b>
+        <xsl:value-of select="property[@name='hostname']/@value"/>
+        <xsl:text>&#160;-&#160;</xsl:text>
+        <xsl:value-of select="property[@name='ipAddress']/@value"/>
+        <xsl:text>&#160;(</xsl:text>
+        <xsl:value-of select="property[@name='os']/@value"/>
+        <xsl:text>)</xsl:text>
     </xsl:template>
 
     <xsl:template match="browserResult">
@@ -188,9 +186,7 @@
                 <xsl:value-of select="displayName"/>
             </xsl:attribute>
         </img>
-        <b>
-            <xsl:value-of select="displayName"/>
-        </b>
+        <xsl:value-of select="displayName"/>
     </xsl:template>
 
 </xsl:stylesheet>
