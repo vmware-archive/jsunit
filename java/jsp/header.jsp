@@ -10,92 +10,92 @@
     JsUnitServer server = ServerRegistry.getServer();
     PlatformType platformType = PlatformType.resolve();
 %>
-<table height="90" width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information"
-       bgcolor="#DDDDDD">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#DDDDDD">
 <tr>
-<td width="1" valign="top">
+<td>&nbsp;</td>
+<td>
     <a href="http://www.jsunit.net"><img src="images/logo_jsunit.gif" title="JsUnit" alt="JsUnit" border="0"/></a>
 </td>
-<td width="50">&nbsp;</td>
-<td nowrap align="left">
-    <table width="100%">
+<td>&nbsp;</td>
+<td nowrap align="center">
+    <table cellpadding="0" cellspacing="0">
         <tr>
-            <td width="1" rowspan="2" valign="top">
-                <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>" title="<%=platformType.getDisplayName()%>">
-            </td>
-            <td colspan="*">
-                <b>
-                    <%if (!StringUtility.isEmpty(server.getConfiguration().getDescription())) {%>
-                    <%=server.getConfiguration().getDescription()%> -
-                    <%}%>
-                    JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%>
-                    Aggregate<%}%> Server
-                </b>
+            <td>
+                <div class="rbroundbox">
+                    <div class="rbtop"><div></div></div>
+
+                    <div class="rbcontent" style="width:200;" align="center">
+                        <table cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <img src="<%=platformType.getLogoPath()%>" alt="<%=platformType.getDisplayName()%>" title="<%=platformType.getDisplayName()%>">
+                                </td>
+                                <td>
+                                    <b>
+                                        <%if (!StringUtility.isEmpty(server.getConfiguration().getDescription())) {%>
+                                        <%=server.getConfiguration().getDescription()%> -
+                                        <%}%>
+                                        JsUnit <%=SystemUtility.jsUnitVersion()%><%if (server.isAggregateServer()) {%>
+                                        Aggregate<%}%> Server
+                                    </b>
+                                    <br>
+                                    Running on <%=SystemUtility.displayString()%>
+                                    <%if (!server.isAggregateServer()) {%>
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <i>Available browsers:</i>
+                                            </td>
+                                            <td>
+                                                <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
+                                                <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                                                <%}%>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <%} else {%>
+                                    <br>
+                                    This server aggregates results
+                                    from <%=((JsUnitAggregateServer) server).getCachedRemoteConfigurations().size()%>
+                                    other servers
+                                    <%}%>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="rbbot"><div></div></div>
+                </div>
             </td>
         </tr>
         <tr>
             <td>
                 <table width="100%">
-                    <tr>
-                        <td colspan="100">
-                            Running on <%=SystemUtility.displayString()%>
-                        </td>
-                    </tr>
                     <%if (!server.isAggregateServer()) {%>
-                    <tr>
-                        <td colspan="100">
-                            <i>Available browsers:</i>
-                            <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
-                            <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
-                            <%}%>
-                        </td>
-                    </tr>
                     <%} else {%>
-                    <tr>
-                        <td colspan="100">
-                            <br>
-                            <i>This server runs tests on these remote machines:</i>
-                        </td>
-                    </tr>
                     <tr>
                         <%for (RemoteConfiguration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
                         <td>
-                            <table bgcolor="#EEEEEE">
-                                <tr>
-                                    <td align="center">
-                                        <b>
-                                            <%=remoteConfiguration.getDescription()%>
-                                        </b>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <a href="<%=remoteConfiguration.getRemoteURL().toString()%>">
-                                            <%=remoteConfiguration.getRemoteURL().getHost().toString()%>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td align="center">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
-                                                </td>
-                                                <td>
-                                                    <%
-                                                        for (Browser browser : remoteConfiguration.getBrowsers()) {
-                                                            if (browser.getType() != null) {
-                                                    %>
-                                                    <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
-                                                    <%}%>
-                                                    <%}%>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
+                            <div class="rbroundbox">
+                                <div class="rbtop"><div></div></div>
+
+                                <div class="rbcontent" style="width:200;" align="center">
+                                    <%=remoteConfiguration.getDescription()%><br>
+                                    <a href="<%=remoteConfiguration.getRemoteURL().toString()%>">
+                                        <%=remoteConfiguration.getRemoteURL().getHost().toString()%>
+                                    </a><br>
+                                    <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
+                                    <%
+                                        for (Browser browser : remoteConfiguration.getBrowsers()) {
+                                            if (browser.getType() != null) {
+                                    %>
+                                    <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                                    <%}%>
+                                    <%}%>
+                                </div>
+
+                                <div class="rbbot"><div></div></div>
+                            </div>
                         </td>
                         <td width="2">&nbsp;</td>
                         <%}%>
@@ -106,11 +106,13 @@
         </tr>
     </table>
 </td>
+<td>&nbsp;</td>
 <td nowrap align="right" valign="top">
     <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
     <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
     <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
     <%if (false) {%>
+
     <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
         version</a></div>
     <%}%>
@@ -119,7 +121,7 @@
         <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal" title="Powered by Pivotal">
     </a>
 </td>
-
+<td>&nbsp;</td>
 </tr>
 </table>
 <br>
