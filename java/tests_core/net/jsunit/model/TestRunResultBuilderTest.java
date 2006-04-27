@@ -11,7 +11,7 @@ public class TestRunResultBuilderTest extends TestCase {
         TestRunResult result = builder.build(XmlUtility.asXmlDocument(fullValidResult()));
         assertEquals(ResultType.SUCCESS, result.getResultType());
         assertEquals(2, result.getChildren().size());
-        assertEquals("my cool os", result.getOsString());
+        assertEquals("my cool os", result.getOsName());
         assertEquals("127.0.0.1", result.getIpAddress());
         assertEquals("machine.example.com", result.getHostname());
     }

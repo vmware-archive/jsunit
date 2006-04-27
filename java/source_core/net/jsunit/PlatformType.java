@@ -1,22 +1,23 @@
 package net.jsunit;
 
 import net.jsunit.utility.SystemUtility;
+import org.jdom.Element;
 
-public enum PlatformType {
+public enum PlatformType implements XmlRenderable {
 
-    WINDOWS(new String[]{"rundll32", "url.dll,FileProtocolHandler"}, null, "images/logo_windows.gif", "Windows") {
+    WINDOWS(new String[]{"rundll32", "url.dll,FileProtocolHandler"}, null, "/jsunit/images/logo_windows.gif", "Windows") {
         public boolean matchesSystem(String osName) {
             return osName != null && osName.toLowerCase().indexOf("windows") != -1;
         }
 
     },
-    MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh", "images/logo_mac.gif", "Macintosh") {
+    MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh", "/jsunit/images/logo_mac.gif", "Macintosh") {
         public boolean matchesSystem(String osName) {
             return osName != null && osName.toLowerCase().indexOf("mac") != -1;
         }
 
     },
-    LINUX(new String[]{"bin/unix/start-firefox.sh"}, "bin/unix/stop-firefox.sh", "images/logo_linux.gif", "Linux") {
+    LINUX(new String[]{"bin/unix/start-firefox.sh"}, "bin/unix/stop-firefox.sh", "/jsunit/images/logo_linux.gif", "Linux") {
         public boolean matchesSystem(String osName) {
             //TODO: uhhh...
             return false;
@@ -66,5 +67,12 @@ public enum PlatformType {
 
     public String getDisplayName() {
         return displayName;
+    }
+
+    public Element asXml() {
+        Element element = new Element("platform");
+        element.addContent(new Element("name").setText(getDisplayName()));
+        element.addContent(new Element("logoPath").setText(getLogoPath()));
+        return element;
     }
 }

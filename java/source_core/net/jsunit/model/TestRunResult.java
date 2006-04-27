@@ -1,5 +1,6 @@
 package net.jsunit.model;
 
+import net.jsunit.PlatformType;
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
@@ -15,7 +16,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
 
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
     private URL url;
-    private String osString;
+    private String osName;
     private String ipAddress;
     private String hostname;
     private boolean unresponsive = false;
@@ -37,6 +38,8 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         root.setAttribute("type", getResultType().name());
         if (url != null)
             root.setAttribute("url", url.toString());
+        if (hasPlatformType())
+            addPlatformType(root);
         if (hasProperties()) {
             Element properties = new Element("properties");
             addProperties(properties);
@@ -47,13 +50,22 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         return root;
     }
 
+    private void addPlatformType(Element root) {
+        PlatformType type = PlatformType.resolve(osName);
+        root.addContent(type.asXml());
+    }
+
+    private boolean hasPlatformType() {
+        return osName != null;
+    }
+
     private boolean hasProperties() {
-        return osString != null || ipAddress != null || hostname != null;
+        return osName != null || ipAddress != null || hostname != null;
     }
 
     private void addProperties(Element element) {
-        if (osString != null)
-            addProperty(element, "os", osString);
+        if (osName != null)
+            addProperty(element, "os", osName);
         if (ipAddress != null)
             addProperty(element, "ipAddress", ipAddress);
         if (hostname != null)
@@ -90,8 +102,8 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
             return super.getResultType();
     }
 
-    public void setOsString(String osString) {
-        this.osString = osString;
+    public void setOsName(String osName) {
+        this.osName = osName;
     }
 
     public void setIpAddress(String ipAddress) {
@@ -106,8 +118,8 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         this.url = url;
     }
 
-    public String getOsString() {
-        return osString;
+    public String getOsName() {
+        return osName;
     }
 
     public String getIpAddress() {
@@ -125,7 +137,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     }
 
     public void initializeProperties() {
-        setOsString(SystemUtility.osString());
+        setOsName(SystemUtility.osString());
         setHostname(SystemUtility.hostname());
         setIpAddress(SystemUtility.ipAddress());
     }
@@ -173,8 +185,8 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
             buffer.append(hostname);
         else buffer.append("unknown");
         buffer.append(", OS: ");
-        if (osString != null)
-            buffer.append(osString);
+        if (osName != null)
+            buffer.append(osName);
         else buffer.append("unknown");
         buffer.append(")");
         return buffer.toString();

@@ -46,12 +46,16 @@ public class TestRunResultTest extends TestCase {
         testRunResult.addBrowserResult(successResult());
         testRunResult.addBrowserResult(failureResult());
         testRunResult.addBrowserResult(errorResult());
-        testRunResult.setOsString("my cool os");
+        testRunResult.setOsName("my cool os");
         testRunResult.setIpAddress("127.0.0.1");
         testRunResult.setHostname("machine.example.com");
         testRunResult.setURL(new URL("http://www.example.com"));
         assertEquals(
                 "<testRunResult type=\"ERROR\" url=\"http://www.example.com\">" +
+                        "<platform>" +
+                        "<name>Linux</name>" +
+                        "<logoPath>/jsunit/images/logo_linux.gif</logoPath>" +
+                        "</platform>" +
                         "<properties>" +
                         "<property name=\"os\" value=\"my cool os\" />" +
                         "<property name=\"ipAddress\" value=\"127.0.0.1\" />" +
@@ -84,7 +88,7 @@ public class TestRunResultTest extends TestCase {
         TestRunResult result = new TestRunResult();
         result.setHostname("myhost");
         result.setIpAddress("123.45.67.8");
-        result.setOsString("Red Hat Linux");
+        result.setOsName("Red Hat Linux");
         result.setURL(new URL("http://www.example.com:9070"));
 
         assertEquals(
@@ -107,7 +111,7 @@ public class TestRunResultTest extends TestCase {
         TestRunResult result = new TestRunResult();
         result.setHostname("myhost");
         result.setIpAddress("123.45.67.8");
-        result.setOsString("Red Hat Linux");
+        result.setOsName("Red Hat Linux");
 
         assertEquals(
                 "localhost (IP address: 123.45.67.8, host name: myhost, OS: Red Hat Linux)",

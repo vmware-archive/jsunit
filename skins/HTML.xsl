@@ -24,29 +24,24 @@
     <xsl:template match="testRunResult">
         <table>
             <tr>
-                <td colspan="2" nowrap="nowrap" class="jsUnitDefault">
-                    <xsl:if test="@type='SUCCESS'">
-                        <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
-                    </xsl:if>
-                    <xsl:if test="@type!='SUCCESS'">
-                        <img src="/jsunit/images/red_x.gif">
-                            <xsl:attribute name="alt" value="@type"/>
-                            <xsl:attribute name="title" value="@type"/>
-                        </img>
-                    </xsl:if>
-                    <xsl:apply-templates select="properties"/>
-                    <xsl:text>&#160;-&#160;</xsl:text>
-                    <font>
-                        <xsl:attribute name="color">
-                            <xsl:if test="@type='SUCCESS'">green</xsl:if>
-                            <xsl:if test="@type!='SUCCESS'">red</xsl:if>
+                <td valign="top" rowspan="2" nowrap="nowrap">
+                    <img>
+                        <xsl:attribute name="src">
+                            <xsl:value-of select="platform/logoPath"/>
                         </xsl:attribute>
-                        <xsl:value-of select="@type"/>
-                    </font>
+                        <xsl:attribute name="alt">
+                            <xsl:value-of select="platform/name"/>
+                        </xsl:attribute>
+                        <xsl:attribute name="title">
+                            <xsl:value-of select="platform/name"/>
+                        </xsl:attribute>
+                    </img>
+                </td>
+                <td>
+                    <xsl:apply-templates select="properties"/>
                 </td>
             </tr>
             <tr>
-                <td>&#160;</td>
                 <td>
                     <xsl:apply-templates select="browserResult"/>
                 </td>

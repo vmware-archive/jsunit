@@ -57,7 +57,7 @@ public class TestRunManagerTest extends TestCase {
         TestRunManager manager = new TestRunManager(runner, null);
         manager.runTests();
         TestRunResult testRunResult = manager.getTestRunResult();
-        assertEquals(SystemUtility.osString(), testRunResult.getOsString());
+        assertEquals(SystemUtility.osString(), testRunResult.getOsName());
         assertEquals(SystemUtility.ipAddress(), testRunResult.getIpAddress());
         assertEquals(SystemUtility.hostname(), testRunResult.getHostname());
     }

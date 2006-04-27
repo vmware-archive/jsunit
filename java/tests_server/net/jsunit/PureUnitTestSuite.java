@@ -28,6 +28,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(DistributedTestRunResultTest.class);
         result.addTestSuite(PageActionTest.class);
         result.addTestSuite(LatestVersionActionTest.class);
+        result.addTestSuite(PlatformTypeTest.class);
         result.addTestSuite(ReferencedJsFileTest.class);
         result.addTestSuite(RemoteConfigurationTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);

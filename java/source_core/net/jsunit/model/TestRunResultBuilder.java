@@ -31,7 +31,7 @@ public class TestRunResultBuilder {
             String name = propertyElement.getAttribute("name").getValue();
             String value = propertyElement.getAttribute("value").getValue();
             if (name.equals("os"))
-                result.setOsString(value);
+                result.setOsName(value);
             else if (name.equals("ipAddress"))
                 result.setIpAddress(value);
             else if (name.equals("hostname"))

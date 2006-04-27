@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <distributedTestRunResult type="FAILED_TO_LAUNCH">
     <testRunResult type="FAILED_TO_LAUNCH" url="http://localhost:8080/jsunit">
+        <platform>
+            <name>Windows</name>
+            <logoPath>/jsunit/images/logo_windows.gif</logoPath>
+        </platform>
         <properties>
             <property name="os" value="x86 - Windows XP"/>
-            <property name="ipAddress" value="192.168.2.19"/>
+            <property name="ipAddress" value="192.168.1.103"/>
             <property name="hostname" value="EHIEATT-CORP.corp.google.com"/>
         </properties>
         <browserResult type="FAILED_TO_LAUNCH">
@@ -14,7 +18,7 @@
                 <logoPath>/jsunit/images/logo_opera.gif</logoPath>
             </browser>
             <properties>
-                <property name="serverSideExceptionStackTrace"><![CDATA[java.io.IOException: CreateProcess: bin\winxp\start-opera.bat http://EHIEATT-CORP.corp.google.com:9090/jsunit/testRunner.html?testPage=http%3A%2F%2FEHIEATT-CORP.corp.google.com%3A9090%2Fjsunit%2Fuploaded%2Fuploaded_1146071607563.html%26resultId%3D1146071607563&autoRun=true&browserId=2&submitResults=localhost:8080/jsunit/acceptor error=2
+                <property name="serverSideExceptionStackTrace"><![CDATA[java.io.IOException: CreateProcess: bin\winxp\start-opera.bat http://EHIEATT-CORP.corp.google.com:9090/jsunit/testRunner.html?testPage=http%3A%2F%2FEHIEATT-CORP.corp.google.com%3A9090%2Fjsunit%2Fuploaded%2Fuploaded_1146113937464.html%26resultId%3D1146113937464&autoRun=true&browserId=2&submitResults=localhost:8080/jsunit/acceptor error=2
 	at java.lang.ProcessImpl.create(Native Method)
 	at java.lang.ProcessImpl.<init>(ProcessImpl.java:81)
 	at java.lang.ProcessImpl.start(ProcessImpl.java:30)
@@ -71,7 +75,7 @@
 ]]></property>
             </properties>
         </browserResult>
-        <browserResult type="ERROR" id="1146071607563" time="0.941">
+        <browserResult type="ERROR" id="1146113937464" time="0.921">
             <browser>
                 <fullFileName>c:\program files\mozilla firefox\firefox.exe;;Firefox 2.0alpha</fullFileName>
                 <id>1</id>
@@ -84,134 +88,134 @@
                           value="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20060321 Firefox/2.0a1"/>
                 <property name="remoteAddress" value="127.0.0.1"/>
                 <property name="url"
-                          value="http://EHIEATT-CORP.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html"/>
+                          value="http://EHIEATT-CORP.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html"/>
             </properties>
             <testCaseResults>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertContains"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertContains"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertRoughlyEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertRoughlyEquals"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertHashEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertHashEquals"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertHTMLEquals"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEvaluatesToFalse"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEvaluatesToTrue"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEqualsOnNumbers"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEqualsOnStrings"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEquals"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertArrayEquals"
                                 time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertHTMLEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testInvalidArgumentType"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEvaluatesToFalse"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testInvalidCommentArgumentType"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEvaluatesToTrue"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testTooManyArguments"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEqualsOnNumbers"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testTooFewArguments"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEqualsOnStrings"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testFail"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEquals"
-                                time="0.01"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertArrayEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotNaN"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testInvalidArgumentType"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNaN"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testInvalidCommentArgumentType"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotUndefined"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testTooManyArguments"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertUndefined"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testTooFewArguments"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotNull"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testFail"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNull"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotNaN"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotEquals"
                                 time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNaN"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotUndefined"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertUndefined"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotNull"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNull"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotEquals"
-                                time="0.0"/>
-                <testCaseResult type="FAILURE"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEquals"
-                                time="0.0">
-                    <failure>"1 should equal 1"&#xD;
-                        Expected &lt;2&gt; (Number) but was &lt;1&gt; (Number)&#xD;
-
-                        &#xD;
-                        Stack trace follows:&#xD;
-                        &gt; JsUnitException&#xD;
-                        &gt; _assert&#xD;
-                        &gt; assertEquals&#xD;
-                        &gt; testAssertEquals&#xD;
-                    </failure>
-                </testCaseResult>
                 <testCaseResult type="ERROR"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertFalse"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEquals"
                                 time="0.0">
                     <error>Error message is:&#xD;
-
-                        "ReferenceError: asserdfdftFalse is not defined"&#xD;
+                        "ReferenceError: assertEqualssss is not defined"&#xD;
                         &#xD;
                         Stack trace follows:&#xD;
-                        testAssertFalse()@http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html?cacheBuster=1146071608394:27&#xD;
+
+                        testAssertEquals()@http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html?cacheBuster=1146113938415:33&#xD;
+                        ("testAssertEquals")@http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:352&#xD;
+                        ()@http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:163&#xD;
+                        @http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:167&#xD;
+                    </error>
+                </testCaseResult>
+                <testCaseResult type="ERROR"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertFalse"
+                                time="0.0">
+                    <error>Error message is:&#xD;
+                        "ReferenceError: assertFasdsdlse is not defined"&#xD;
+                        &#xD;
+                        Stack trace follows:&#xD;
+                        testAssertFalse()@http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html?cacheBuster=1146113938415:27&#xD;
+
                         ("testAssertFalse")@http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:352&#xD;
                         ()@http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:163&#xD;
                         @http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:167&#xD;
                     </error>
                 </testCaseResult>
                 <testCaseResult type="FAILURE"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertTrue"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertTrue"
                                 time="0.0">
                     <failure>"true should be true"&#xD;
                         Call to assertTrue(boolean) with false&#xD;
-
                         &#xD;
                         Stack trace follows:&#xD;
                         &gt; JsUnitException&#xD;
                         &gt; _assert&#xD;
+
                         &gt; assertTrue&#xD;
                         &gt; testAssertTrue&#xD;
                     </failure>
                 </testCaseResult>
-                <testCaseResult type="ERROR"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssert"
+                <testCaseResult type="FAILURE"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssert"
                                 time="0.0">
-                    <error>Error message is:&#xD;
-
-                        "ReferenceError: asseasrt is not defined"&#xD;
+                    <failure>"true should be true"&#xD;
+                        Call to assert(boolean) with false&#xD;
                         &#xD;
                         Stack trace follows:&#xD;
-                        testAssert()@http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html?cacheBuster=1146071608394:17&#xD;
-                        ("testAssert")@http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:352&#xD;
-                        ()@http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:163&#xD;
-                        @http://ehieatt-corp.corp.google.com:9090/jsunit/app/jsUnitTestManager.js:167&#xD;
-                    </error>
+                        &gt; JsUnitException&#xD;
+                        &gt; _assert&#xD;
+
+                        &gt; assert&#xD;
+                        &gt; testAssert&#xD;
+                    </failure>
                 </testCaseResult>
             </testCaseResults>
         </browserResult>
-        <browserResult type="ERROR" id="1146071607563" time="0.921">
+        <browserResult type="ERROR" id="1146113937464" time="1.161">
             <browser>
                 <fullFileName>c:\program files\internet explorer\iexplore.exe;;Internet Explorer 7.0alpha</fullFileName>
                 <id>0</id>
@@ -223,23 +227,30 @@
                 <property name="userAgent" value="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)"/>
                 <property name="remoteAddress" value="127.0.0.1"/>
                 <property name="url"
-                          value="http://EHIEATT-CORP.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html"/>
+                          value="http://EHIEATT-CORP.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html"/>
             </properties>
             <testCaseResults>
-                <testCaseResult type="ERROR"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssert"
+                <testCaseResult type="FAILURE"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssert"
                                 time="0.0">
-                    <error>Error message is:
-                        "Object expected"</error>
+                    <failure>"true should be true"
+                        Call to assert(boolean) with false
+
+                        Stack trace follows:
+                        &gt; JsUnitException
+                        &gt; _assert
+                        &gt; assert
+
+                        &gt; testAssert
+                    </failure>
                 </testCaseResult>
                 <testCaseResult type="FAILURE"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertTrue"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertTrue"
                                 time="0.0">
                     <failure>"true should be true"
                         Call to assertTrue(boolean) with false
 
                         Stack trace follows:
-
                         &gt; JsUnitException
                         &gt; _assert
                         &gt; assertTrue
@@ -247,101 +258,97 @@
                     </failure>
                 </testCaseResult>
                 <testCaseResult type="ERROR"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertFalse"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertFalse"
                                 time="0.0">
                     <error>Error message is:
                         "Object expected"</error>
                 </testCaseResult>
-                <testCaseResult type="FAILURE"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEquals"
-                                time="0.0">
-                    <failure>"1 should equal 1"
-                        Expected &lt;2&gt; (Number) but was &lt;1&gt; (Number)
-
-                        Stack trace follows:
-                        &gt; JsUnitException
-
-                        &gt; _assert
-                        &gt; assertEquals
-                        &gt; testAssertEquals
-                    </failure>
+                <testCaseResult type="ERROR"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEquals"
+                                time="0.01">
+                    <error>Error message is:
+                        "Object expected"</error>
                 </testCaseResult>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotEquals"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNull"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNull"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotNull"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertUndefined"
                                 time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotNull"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertUndefined"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotUndefined"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotUndefined"
                                 time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNaN"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNaN"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotNaN"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotNaN"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testFail"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testFail"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testTooFewArguments"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testTooFewArguments"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testTooManyArguments"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testTooManyArguments"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testInvalidCommentArgumentType"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testInvalidCommentArgumentType"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testInvalidArgumentType"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testInvalidArgumentType"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertArrayEquals"
+                                time="0.03"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEquals"
                                 time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertArrayEquals"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEqualsOnStrings"
                                 time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEqualsOnStrings"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEqualsOnNumbers"
+                                time="0.02"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEvaluatesToTrue"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEqualsOnNumbers"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEvaluatesToFalse"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEvaluatesToTrue"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertHTMLEquals"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEvaluatesToFalse"
-                                time="0.0"/>
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertHashEquals"
+                                time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertHTMLEquals"
-                                time="0.0"/>
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertRoughlyEquals"
+                                time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertHashEquals"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertRoughlyEquals"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertContains"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertContains"
                                 time="0.0"/>
             </testCaseResults>
         </browserResult>
     </testRunResult>
     <testRunResult type="ERROR" url="http://localhost:8081/jsunit">
+        <platform>
+            <name>Windows</name>
+            <logoPath>/jsunit/images/logo_windows.gif</logoPath>
+        </platform>
         <properties>
             <property name="os" value="x86 - Windows XP"/>
-            <property name="ipAddress" value="192.168.2.19"/>
+            <property name="ipAddress" value="192.168.1.103"/>
             <property name="hostname" value="EHIEATT-CORP.corp.google.com"/>
         </properties>
-        <browserResult type="ERROR" id="1146071607563" time="1.322">
+        <browserResult type="ERROR" id="1146113937464" time="0.872">
             <browser>
                 <fullFileName>c:\program files\internet explorer\iexplore.exe;;Internet Explorer 7.0alpha</fullFileName>
                 <id>0</id>
@@ -353,17 +360,25 @@
                 <property name="userAgent" value="Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 5.1)"/>
                 <property name="remoteAddress" value="127.0.0.1"/>
                 <property name="url"
-                          value="http://EHIEATT-CORP.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html"/>
+                          value="http://EHIEATT-CORP.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html"/>
             </properties>
             <testCaseResults>
-                <testCaseResult type="ERROR"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssert"
+                <testCaseResult type="FAILURE"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssert"
                                 time="0.0">
-                    <error>Error message is:
-                        "Object expected"</error>
+                    <failure>"true should be true"
+                        Call to assert(boolean) with false
+
+                        Stack trace follows:
+
+                        &gt; JsUnitException
+                        &gt; _assert
+                        &gt; assert
+                        &gt; testAssert
+                    </failure>
                 </testCaseResult>
                 <testCaseResult type="FAILURE"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertTrue"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertTrue"
                                 time="0.0">
                     <failure>"true should be true"
                         Call to assertTrue(boolean) with false
@@ -372,95 +387,87 @@
                         &gt; JsUnitException
                         &gt; _assert
                         &gt; assertTrue
-
                         &gt; testAssertTrue
+
                     </failure>
                 </testCaseResult>
                 <testCaseResult type="ERROR"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertFalse"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertFalse"
                                 time="0.0">
                     <error>Error message is:
                         "Object expected"</error>
                 </testCaseResult>
-                <testCaseResult type="FAILURE"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEquals"
-                                time="0.02">
-                    <failure>"1 should equal 1"
-                        Expected &lt;2&gt; (Number) but was &lt;1&gt; (Number)
-
-                        Stack trace follows:
-                        &gt; JsUnitException
-                        &gt; _assert
-                        &gt; assertEquals
-                        &gt; testAssertEquals
-
-                    </failure>
+                <testCaseResult type="ERROR"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEquals"
+                                time="0.0">
+                    <error>Error message is:
+                        "Object expected"</error>
                 </testCaseResult>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotEquals"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNull"
-                                time="0.01"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotNull"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertUndefined"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotUndefined"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNaN"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertNotNaN"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testFail"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testTooFewArguments"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testTooManyArguments"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testInvalidCommentArgumentType"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testInvalidArgumentType"
-                                time="0.0"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertArrayEquals"
-                                time="0.01"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotEquals"
                                 time="0.02"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEqualsOnStrings"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNull"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertObjectEqualsOnNumbers"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotNull"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEvaluatesToTrue"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertUndefined"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotUndefined"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNaN"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertNotNaN"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testFail"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testTooFewArguments"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testTooManyArguments"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testInvalidCommentArgumentType"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testInvalidArgumentType"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertArrayEquals"
                                 time="0.01"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertEvaluatesToFalse"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEquals"
+                                time="0.01"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEqualsOnStrings"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertHTMLEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertObjectEqualsOnNumbers"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertHashEquals"
-                                time="0.02"/>
-                <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertRoughlyEquals"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEvaluatesToTrue"
                                 time="0.0"/>
                 <testCaseResult type="SUCCESS"
-                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146071607563.html:testAssertContains"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertEvaluatesToFalse"
+                                time="0.01"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertHTMLEquals"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertHashEquals"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertRoughlyEquals"
+                                time="0.0"/>
+                <testCaseResult type="SUCCESS"
+                                name="http://ehieatt-corp.corp.google.com:9090/jsunit/uploaded/uploaded_1146113937464.html:testAssertContains"
                                 time="0.0"/>
             </testCaseResults>
         </browserResult>
