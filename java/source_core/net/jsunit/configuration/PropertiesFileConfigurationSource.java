@@ -79,6 +79,10 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         return propertyValue(ConfigurationProperty.TIMEOUT_SECONDS);
     }
 
+    public String runnerReferrerRestrict() {
+        return propertyValue(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
+    }
+
     public String osString() {
         return SystemUtility.osString();
     }

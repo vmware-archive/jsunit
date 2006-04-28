@@ -48,7 +48,7 @@
 
         <global-results>
             <result name="denied" type="dispatcher">
-                <param name="location">java/jsp/accessDenied.jsp</param>
+                <param name="location">java/jsp/runnerAccessDeniedBadReferrer.jsp</param>
             </result>
 
         </global-results>
@@ -56,7 +56,7 @@
         <action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
             <result name="success" type="jsUnitXml"/>
             <result name="deniedNotLocalhost" type="dispatcher">
-                <param name="location">java/jsp/accessDeniedNotLocalhost.jsp</param>
+                <param name="location">java/jsp/acceptorAccessDeniedNotLocalhost.jsp</param>
             </result>
             <interceptor-ref name="standardStack"/>
             <interceptor-ref name="localhostOnly"/>
@@ -83,7 +83,6 @@
             <result name="error" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
             <interceptor-ref name="standardStack"/>
-            <interceptor-ref name="security"/>
             <interceptor-ref name="skin"/>
         </action>
 

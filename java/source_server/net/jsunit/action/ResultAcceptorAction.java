@@ -41,4 +41,7 @@ public class ResultAcceptorAction extends JsUnitBrowserTestRunnerAction implemen
     public String getRequestIpAddress() {
         return ipAddress;
     }
+
+    public void setReferrer(String referrer) {
+    }
 }

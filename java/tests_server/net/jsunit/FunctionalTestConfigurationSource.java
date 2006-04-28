@@ -50,6 +50,10 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return "windows.jsunit.net";
     }
 
+    public String runnerReferrerRestrict() {
+        return "http://localhost";
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return String.valueOf(Boolean.TRUE);
     }

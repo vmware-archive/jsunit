@@ -17,4 +17,5 @@ public class AdminAction implements Action, JsUnitServerAware {
     public String execute() throws Exception {
         return SUCCESS;
     }
+
 }

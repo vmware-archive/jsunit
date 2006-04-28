@@ -18,12 +18,13 @@ public enum ServerType {
                     ConfigurationProperty.LOGS_DIRECTORY,
                     ConfigurationProperty.PORT,
                     ConfigurationProperty.RESOURCE_BASE,
-                    ConfigurationProperty.TIMEOUT_SECONDS,
+                    ConfigurationProperty.TIMEOUT_SECONDS
             }),
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.BROWSER_FILE_NAMES,
                     ConfigurationProperty.DESCRIPTION,
                     ConfigurationProperty.URL,
+                    ConfigurationProperty.RUNNER_REFERRER_RESTRICT
             })
     ),
     STANDARD_TEMPORARY(
@@ -43,12 +44,13 @@ public enum ServerType {
                     ConfigurationProperty.LOGS_DIRECTORY,
                     ConfigurationProperty.PORT,
                     ConfigurationProperty.REMOTE_MACHINE_URLS,
-                    ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES,
+                    ConfigurationProperty.IGNORE_UNRESPONSIVE_REMOTE_MACHINES
             }),
             Arrays.asList(new ConfigurationProperty []{
                     ConfigurationProperty.DESCRIPTION,
                     ConfigurationProperty.RESOURCE_BASE,
                     ConfigurationProperty.URL,
+                    ConfigurationProperty.RUNNER_REFERRER_RESTRICT
             })
     );
 

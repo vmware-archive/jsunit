@@ -3,6 +3,7 @@ package net.jsunit;
 import com.meterware.httpunit.HttpUnitOptions;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.BrowserResultWriter;
@@ -33,13 +34,17 @@ public abstract class FunctionalTestCase extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         port = new TestPortManager().newPort();
-        configuration = new Configuration(new FunctionalTestConfigurationSource(port));
+        configuration = new Configuration(createConfigurationSource());
         server = new JsUnitStandardServer(configuration, createResultRepository(), true);
         if (shouldMockOutProcessStarter())
             server.setProcessStarter(new MockProcessStarter());
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl(baseURL());
+    }
+
+    protected ConfigurationSource createConfigurationSource() {
+        return new FunctionalTestConfigurationSource(port);
     }
 
     protected String baseURL() {

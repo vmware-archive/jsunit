@@ -58,6 +58,10 @@ class ConfigurationComponentSource implements ConfigurationSource {
         return SystemUtility.hostname();
     }
 
+    public String runnerReferrerRestrict() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return String.valueOf(configurationComponent.isCloseBrowserAfterTestRuns());
     }

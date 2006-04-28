@@ -94,11 +94,15 @@ public class RemoteConfigurationSource implements ConfigurationSource {
     }
 
     public String ipAddress() {
-        return textOfElement("ipAdress");
+        return textOfElement("ipAddress");
     }
 
     public String hostname() {
         return textOfElement("hostname");
+    }
+
+    public String runnerReferrerRestrict() {
+        return textOfElement(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
     }
 
 }

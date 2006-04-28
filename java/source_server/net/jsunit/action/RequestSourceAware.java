@@ -7,4 +7,6 @@ public interface RequestSourceAware {
     void setRequestHost(String host);
 
     String getRequestIpAddress();
+
+    void setReferrer(String referrer);
 }

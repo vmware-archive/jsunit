@@ -1,14 +1,13 @@
 package net.jsunit.action;
 
-import net.jsunit.InvalidBrowserIdException;
-import net.jsunit.SkinSource;
-import net.jsunit.TestRunManager;
-import net.jsunit.XmlRenderable;
+import net.jsunit.*;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.StringUtility;
 
-public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements RequestSourceAware, SkinAware, TestPageURLAware {
+public class TestRunnerAction
+        extends JsUnitBrowserTestRunnerAction
+        implements RequestSourceAware, SkinAware, TestPageURLAware, ReferrerAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -19,6 +18,7 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
     private String browserId;
     private boolean badBrowserId = false;
     private Skin skin;
+    private String referrer;
 
     public String execute() throws Exception {
         long startTime = System.currentTimeMillis();
@@ -93,6 +93,18 @@ public class TestRunnerAction extends JsUnitBrowserTestRunnerAction implements R
 
     public String getRequestIpAddress() {
         return this.remoteIpAddress;
+    }
+
+    public String getReferrer() {
+        return referrer;
+    }
+
+    public Configuration getConfiguration() {
+        return runner.getConfiguration();
+    }
+
+    public void setReferrer(String referrer) {
+        this.referrer = referrer;
     }
 
 }

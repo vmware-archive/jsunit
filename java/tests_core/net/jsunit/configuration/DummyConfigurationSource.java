@@ -46,6 +46,10 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return "";
     }
 
+    public String runnerReferrerRestrict() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return "true";
     }

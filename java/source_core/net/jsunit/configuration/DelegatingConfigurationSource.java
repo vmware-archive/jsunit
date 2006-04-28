@@ -58,4 +58,8 @@ public class DelegatingConfigurationSource implements ConfigurationSource {
     public String hostname() {
         return source.hostname();
     }
+
+    public String runnerReferrerRestrict() {
+        return source.runnerReferrerRestrict();
+    }
 }

@@ -215,6 +215,24 @@ public enum ConfigurationProperty {
             }
 
         }
+    },
+    RUNNER_REFERRER_RESTRICT("runnerReferrerRestrict", "Restriction on runner referrer", true, false) {
+        public String getValueString(Configuration configuration) {
+            URL referrerURL = configuration.getRunnerReferrerRestrict();
+            return referrerURL == null ? "" : referrerURL.toString();
+        }
+
+        public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
+            String referrerString = source.runnerReferrerRestrict();
+            if (StringUtility.isEmpty(referrerString))
+                return;
+            try {
+                configuration.setRunnerReferrerRestrict(new URL(referrerString));
+            } catch (MalformedURLException e) {
+                throw new ConfigurationException(this, referrerString, e);
+            }
+
+        }
     };
 
     private String name;

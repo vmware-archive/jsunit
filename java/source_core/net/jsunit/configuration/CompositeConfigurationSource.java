@@ -147,4 +147,12 @@ public class CompositeConfigurationSource implements ConfigurationSource {
         return SystemUtility.hostname();
     }
 
+    public String runnerReferrerRestrict() {
+        for (ConfigurationSource source : sources) {
+            if (source.runnerReferrerRestrict() != null)
+                return source.runnerReferrerRestrict();
+        }
+        return null;
+    }
+
 }

@@ -36,6 +36,9 @@ public class LocalhostOnlyInterceptorTest extends TestCase {
             return "127.0.0.1";
         }
 
+        public void setReferrer(String referrer) {
+        }
+
         public String execute() throws Exception {
             return SUCCESS;
         }
@@ -50,6 +53,9 @@ public class LocalhostOnlyInterceptorTest extends TestCase {
 
         public String getRequestIpAddress() {
             return "74.231.9.342";
+        }
+
+        public void setReferrer(String referrer) {
         }
 
         public String execute() throws Exception {

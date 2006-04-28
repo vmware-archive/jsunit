@@ -2,57 +2,71 @@ package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
-import net.jsunit.action.RequestSourceAware;
+import net.jsunit.action.ReferrerAware;
+import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 
 public class SecurityInterceptorTest extends TestCase {
     private SecurityInterceptor interceptor;
+    private ReferrerAction action;
+    private MockActionInvocation mockInvocation;
 
     protected void setUp() throws Exception {
         super.setUp();
         interceptor = new SecurityInterceptor();
+        action = new ReferrerAction();
+        mockInvocation = new MockActionInvocation(action);
     }
 
-    public void testOK() throws Exception {
-        MockActionInvocation mockInvocation = new MockActionInvocation(new OKSourceAction());
+    public void testNoReferrer() throws Exception {
+        action.referrer = null;
+        action.restrict = "http://www.jsunit.net";
         assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
         assertTrue(mockInvocation.wasInvokeCalled);
     }
 
-    public void testNotOK() throws Exception {
-        MockActionInvocation mockInvocation = new MockActionInvocation(new BadSourceAction());
+    public void testNoRestrict() throws Exception {
+        action.referrer = "http://www.jsunit.net/myPage.html";
+        action.restrict = null;
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testReferrerMatchesRestrict() throws Exception {
+        action.referrer = "http://www.jsunit.net/myPage.html";
+        action.restrict = "http://www.jsunit.net";
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testReferrerDoesNotMatchRestrict() throws Exception {
+        action.referrer = "http://www.hacker.com/hackerPage.html";
+        action.restrict = "http://www.jsunit.net";
         assertEquals(SecurityInterceptor.DENIED, interceptor.intercept(mockInvocation));
         assertFalse(mockInvocation.wasInvokeCalled);
     }
 
-    static class OKSourceAction implements RequestSourceAware, Action {
-        public void setRequestIPAddress(String ipAddress) {
-        }
-
-        public void setRequestHost(String host) {
-        }
-
-        public String getRequestIpAddress() {
-            return "192.168.1.103";
-        }
+    static class ReferrerAction implements ReferrerAware, Action {
+        private String referrer;
+        private String restrict;
 
         public String execute() throws Exception {
             return SUCCESS;
         }
-    }
 
-    static class BadSourceAction implements RequestSourceAware, Action {
-        public void setRequestIPAddress(String ipAddress) {
+        public void setReferrer(String referrer) {
         }
 
-        public void setRequestHost(String host) {
+        public String getReferrer() {
+            return referrer;
         }
 
-        public String getRequestIpAddress() {
-            return "74.231.9.342";
-        }
-
-        public String execute() throws Exception {
-            return null;
+        public Configuration getConfiguration() {
+            return new Configuration(new DummyConfigurationSource() {
+                public String runnerReferrerRestrict() {
+                    return restrict;
+                }
+            });
         }
     }
 

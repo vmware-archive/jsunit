@@ -65,6 +65,10 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
     }
 
+    public String runnerReferrerRestrict() {
+        return argumentValue(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
+    }
+
     public String osString() {
         return SystemUtility.osString();
     }

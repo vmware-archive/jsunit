@@ -3,7 +3,6 @@ package net.jsunit.configuration;
 import net.jsunit.PlatformType;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
-import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
 import java.io.File;
@@ -25,6 +24,7 @@ public class Configuration implements BrowserSource {
     private String osString;
     private String ipAddress;
     private String hostname;
+    private URL runnerReferrerRestrict;
 
     public static Configuration resolve(String[] arguments) {
         return new Configuration(resolveSource(arguments));
@@ -60,10 +60,10 @@ public class Configuration implements BrowserSource {
         osElement.setText(osString);
         element.addContent(osElement);
         Element ipAddressElement = new Element("ipAddress");
-        ipAddressElement.setText(SystemUtility.ipAddress());
+        ipAddressElement.setText(ipAddress);
         element.addContent(ipAddressElement);
         Element hostnameElement = new Element("hostname");
-        hostnameElement.setText(SystemUtility.hostname());
+        hostnameElement.setText(hostname);
         element.addContent(hostnameElement);
     }
 
@@ -193,5 +193,13 @@ public class Configuration implements BrowserSource {
 
     public PlatformType getPlatformType() {
         return PlatformType.resolve(osString);
+    }
+
+    public URL getRunnerReferrerRestrict() {
+        return runnerReferrerRestrict;
+    }
+
+    public void setRunnerReferrerRestrict(URL runnerReferrerRestrict) {
+        this.runnerReferrerRestrict = runnerReferrerRestrict;
     }
 }

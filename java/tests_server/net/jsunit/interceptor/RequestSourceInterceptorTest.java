@@ -41,6 +41,9 @@ public class RequestSourceInterceptorTest extends TestCase {
             return null;
         }
 
+        public void setReferrer(String referrer) {
+        }
+
         public String execute() throws Exception {
             return null;
         }

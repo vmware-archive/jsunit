@@ -12,7 +12,8 @@ public class DistributedTestRunnerAction implements
         Action,
         XmlProducer,
         RemoteRunnerHitterAware,
-        JsUnitAggregateServerAware {
+        JsUnitAggregateServerAware,
+        ReferrerAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -21,6 +22,7 @@ public class DistributedTestRunnerAction implements
     private Skin skin;
     private String remoteIpAddress;
     private String remoteHost;
+    private String referrer;
     protected JsUnitAggregateServer server;
     protected RemoteServerHitter hitter;
 
@@ -87,6 +89,18 @@ public class DistributedTestRunnerAction implements
 
     public String getRequestIpAddress() {
         return this.remoteIpAddress;
+    }
+
+    public String getReferrer() {
+        return this.referrer;
+    }
+
+    public Configuration getConfiguration() {
+        return server.getConfiguration();
+    }
+
+    public void setReferrer(String referrer) {
+        this.referrer = referrer;
     }
 
 }

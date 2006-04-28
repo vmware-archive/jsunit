@@ -72,4 +72,7 @@ public class ResultDisplayerAction extends JsUnitBrowserTestRunnerAction impleme
     public String getRequestIpAddress() {
         return ipAddress;
     }
+
+    public void setReferrer(String referrer) {
+    }
 }

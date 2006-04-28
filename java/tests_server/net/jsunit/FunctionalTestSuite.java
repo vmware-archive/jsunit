@@ -21,6 +21,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
+        result.addTestSuite(SecurityFunctionalTest.class);
         result.addTestSuite(ServerAdminPageFunctionalTest.class);
         result.addTestSuite(ServerDefaultPageFunctionalTest.class);
         result.addTestSuite(ServerStatusFunctionalTest.class);

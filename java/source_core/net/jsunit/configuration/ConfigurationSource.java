@@ -27,4 +27,6 @@ public interface ConfigurationSource {
     String ipAddress();
 
     String hostname();
+
+    String runnerReferrerRestrict();
 }

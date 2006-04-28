@@ -60,4 +60,8 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
         return SystemUtility.hostname();
     }
 
+    public String runnerReferrerRestrict() {
+        return environmentVariableValue(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
+    }
+
 }

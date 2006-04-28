@@ -3,7 +3,6 @@ package net.jsunit.configuration;
 import junit.framework.TestCase;
 import net.jsunit.StubConfigurationSource;
 import net.jsunit.model.Browser;
-import net.jsunit.utility.SystemUtility;
 import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
@@ -111,8 +110,8 @@ public class ConfigurationTest extends TestCase {
         File resourceBase = new File(source.resourceBase());
         String expectedXML = "<configuration type=\"" + ServerType.STANDARD.name() + "\">" +
                 "<os>386 - Windows XP</os>" +
-                "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
-                "<hostname>" + SystemUtility.hostname() + "</hostname>" +
+                "<ipAddress>" + FullValidForBothConfigurationSource.IP_ADDRESS + "</ipAddress>" +
+                "<hostname>" + FullValidForBothConfigurationSource.HOSTNAME + "</hostname>" +
                 "<browserFileNames>" +
                 "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
                 "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
@@ -122,6 +121,7 @@ public class ConfigurationTest extends TestCase {
                 "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                "<runnerReferrerRestrict>" + FullValidForBothConfigurationSource.RUNNER_REFERRER_RESTRICT + "</runnerReferrerRestrict>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
                 "<url>http://www.example.com:1234/</url>" +
                 "</configuration>";
@@ -135,8 +135,8 @@ public class ConfigurationTest extends TestCase {
         File resourceBase = new File(source.resourceBase());
         String expectedXML = "<configuration type=\"" + ServerType.STANDARD_TEMPORARY.name() + "\">" +
                 "<os>386 - Windows XP</os>" +
-                "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
-                "<hostname>" + SystemUtility.hostname() + "</hostname>" +
+                "<ipAddress>" + FullValidForBothConfigurationSource.IP_ADDRESS + "</ipAddress>" +
+                "<hostname>" + FullValidForBothConfigurationSource.HOSTNAME + "</hostname>" +
                 "<browserFileNames>" +
                 "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
                 "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
@@ -146,6 +146,7 @@ public class ConfigurationTest extends TestCase {
                 "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                "<runnerReferrerRestrict>" + FullValidForBothConfigurationSource.RUNNER_REFERRER_RESTRICT + "</runnerReferrerRestrict>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
                 "<url>http://www.example.com:1234/</url>" +
                 "</configuration>";
@@ -160,8 +161,8 @@ public class ConfigurationTest extends TestCase {
         assertEquals(
                 "<configuration type=\"" + ServerType.AGGREGATE.name() + "\">" +
                         "<os>386 - Windows XP</os>" +
-                        "<ipAddress>" + SystemUtility.ipAddress() + "</ipAddress>" +
-                        "<hostname>" + SystemUtility.hostname() + "</hostname>" +
+                        "<ipAddress>" + FullValidForBothConfigurationSource.IP_ADDRESS + "</ipAddress>" +
+                        "<hostname>" + FullValidForBothConfigurationSource.HOSTNAME + "</hostname>" +
                         "<description>This is the best server ever</description>" +
                         "<ignoreUnresponsiveRemoteMachines>true</ignoreUnresponsiveRemoteMachines>" +
                         "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
@@ -171,6 +172,7 @@ public class ConfigurationTest extends TestCase {
                         "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
                         "</remoteMachineURLs>" +
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
+                        "<runnerReferrerRestrict>" + FullValidForBothConfigurationSource.RUNNER_REFERRER_RESTRICT + "</runnerReferrerRestrict>" +                        
                         "<url>http://www.example.com:1234/</url>" +
                         "</configuration>",
                 XmlUtility.asString(configuration.asXml(ServerType.AGGREGATE))
@@ -200,7 +202,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
 
-        assertEquals(20, arguments.length);
+        assertEquals(22, arguments.length);
         int index = 0;
 
         assertEquals("-browserFileNames", arguments[index++]);
@@ -226,6 +228,9 @@ public class ConfigurationTest extends TestCase {
 
         assertEquals("-resourceBase", arguments[index++]);
         assertEquals(new File("resource/base").getAbsolutePath(), arguments[index++]);
+
+        assertEquals("-runnerReferrerRestrict", arguments[index++]);
+        assertEquals("http://www.jsunit.net/jsunit/fragmentRunnerPage", arguments[index++]);
 
         assertEquals("-timeoutSeconds", arguments[index++]);
         assertEquals("76", arguments[index++]);
@@ -260,6 +265,9 @@ public class ConfigurationTest extends TestCase {
     }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
+        public static final String IP_ADDRESS = "123.45.67.890";
+        public static final String HOSTNAME = "server.jsunit.net";
+        public static final String RUNNER_REFERRER_RESTRICT = "http://www.jsunit.net/jsunit/fragmentRunnerPage";
 
         public String resourceBase() {
             return "resource" + File.separator + "base";
@@ -290,11 +298,15 @@ public class ConfigurationTest extends TestCase {
         }
 
         public String ipAddress() {
-            return "123.45.67.890";
+            return IP_ADDRESS;
         }
 
         public String hostname() {
-            return "server.jsunit.net";
+            return HOSTNAME;
+        }
+
+        public String runnerReferrerRestrict() {
+            return RUNNER_REFERRER_RESTRICT;
         }
 
         public String closeBrowsersAfterTestRuns() {
