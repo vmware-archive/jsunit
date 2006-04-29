@@ -1,5 +1,6 @@
 package net.jsunit.model;
 
+import java.net.URL;
 import java.util.List;
 
 public class BrowserResultTest extends BrowserResultTestCase {
@@ -118,6 +119,12 @@ public class BrowserResultTest extends BrowserResultTestCase {
         page2.addErrorStringTo(expected);
 
         assertEquals(expected.toString(), buffer.toString());
+    }
+
+    public void testLogUrl() throws Exception {
+        BrowserResult result = createBrowserResult();
+        URL logUrl = result.getLogUrl(new URL("http://mac.jsunit.net/jsunit"));
+        assertEquals("http://mac.jsunit.net/jsunit/displayer?id=12345&browserId=7", logUrl.toString());
     }
 
 }

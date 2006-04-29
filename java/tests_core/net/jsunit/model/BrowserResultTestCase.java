@@ -7,7 +7,7 @@ public abstract class BrowserResultTestCase extends TestCase {
     protected BrowserResult result;
 
     protected String expectedXmlFragment =
-            "<browserResult type=\"ERROR\" id=\"An ID\" time=\"4.3\">" +
+            "<browserResult type=\"ERROR\" id=\"12345\" time=\"4.3\">" +
                     "<browser>" +
                     "<fullFileName>c:\\Program Files\\Internet Explorer\\iexplore.exe</fullFileName>" +
                     "<id>7</id>" +
@@ -47,7 +47,7 @@ public abstract class BrowserResultTestCase extends TestCase {
         BrowserResult browserResult = new BrowserResult();
         browserResult.setBrowser(browser);
         browserResult.setJsUnitVersion("2.5");
-        browserResult.setId("An ID");
+        browserResult.setId("12345");
         browserResult.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
         browserResult.setRemoteAddress("123.45.67.8");
         browserResult.setBaseURL("http://www.example.com/");
@@ -58,7 +58,7 @@ public abstract class BrowserResultTestCase extends TestCase {
     protected void assertFields(BrowserResult aResult) {
         assertEquals(browser, aResult.getBrowser());
         assertEquals("2.5", aResult.getJsUnitVersion());
-        assertEquals("An ID", aResult.getId());
+        assertEquals("12345", aResult.getId());
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", aResult.getUserAgent());
         assertEquals("123.45.67.8", aResult.getRemoteAddress());
         assertEquals(4.3d, aResult.getTime(), 0.001d);

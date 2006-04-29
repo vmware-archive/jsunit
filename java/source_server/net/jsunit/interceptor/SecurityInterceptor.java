@@ -19,7 +19,7 @@ public class SecurityInterceptor implements Interceptor {
         ReferrerAware aware = (ReferrerAware) invocation.getAction();
         String referrer = aware.getReferrer();
         URL restrict = aware.getConfiguration().getRunnerReferrerRestrict();
-        if (referrer == null || restrict == null || referrer.startsWith(restrict.toString()))
+        if (restrict == null || (referrer != null && referrer.startsWith(restrict.toString())))
             return invocation.invoke();
         else
             return DENIED;

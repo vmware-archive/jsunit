@@ -5,6 +5,8 @@ import net.jsunit.utility.StringUtility;
 import org.jdom.Document;
 import org.jdom.Element;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -195,4 +197,14 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     public void setResultType(ResultType type) {
         this.resultType = type;
     }
+
+    public URL getLogUrl(URL baseURL) {
+        String path = "/jsunit/displayer?id=" + getId() + "&browserId=" + getBrowser().getId();
+        try {
+            return new URL(baseURL.getProtocol(), baseURL.getHost(), baseURL.getPort(), path);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

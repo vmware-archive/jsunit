@@ -21,8 +21,8 @@ public class SecurityInterceptorTest extends TestCase {
     public void testNoReferrer() throws Exception {
         action.referrer = null;
         action.restrict = "http://www.jsunit.net";
-        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
-        assertTrue(mockInvocation.wasInvokeCalled);
+        assertEquals(SecurityInterceptor.DENIED, interceptor.intercept(mockInvocation));
+        assertFalse(mockInvocation.wasInvokeCalled);
     }
 
     public void testNoRestrict() throws Exception {

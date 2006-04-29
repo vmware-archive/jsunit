@@ -2,9 +2,6 @@ Required for next release:
 
   FEATURES:
     - green/red bar on server pages
-    - why do we need null checks on the ip address in the security interceptors?
-    - agg server explanation
-    - security interceptor
     - queuing needs work
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor

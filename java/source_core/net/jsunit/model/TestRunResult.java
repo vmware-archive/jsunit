@@ -5,7 +5,6 @@ import net.jsunit.XmlRenderable;
 import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
 
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -154,17 +153,8 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
                 buffer.append("\n");
                 buffer.append("The full result log is at ");
                 BrowserResult childBrowserResult = (BrowserResult) child;
-                buffer.append(logUrlFor(childBrowserResult));
+                buffer.append(childBrowserResult.getLogUrl(url).toString());
             }
-        }
-    }
-
-    private URL logUrlFor(BrowserResult browserResult) {
-        String path = "/jsunit/displayer?id=" + browserResult.getId() + "&browserId=" + browserResult.getBrowser().getId();
-        try {
-            return new URL(url.getProtocol(), url.getHost(), url.getPort(), path);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
         }
     }
 
