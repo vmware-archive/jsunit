@@ -10,7 +10,7 @@ public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/fragmentRunnerPage?showSkinOptions");
+        webTester.beginAt("/fragmentRunnerPage");
     }
 
     public void testInitialConditions() throws Exception {

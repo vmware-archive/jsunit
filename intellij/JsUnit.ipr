@@ -253,6 +253,8 @@
         <root url="jar://$PROJECT_DIR$/../java/lib/stop.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/rife-continuations.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/xwork-1.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/lsimplecaptcha-20050925.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/imaging.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

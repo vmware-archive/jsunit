@@ -36,7 +36,6 @@
     </td>
 </tr>
 <%}%>
-<%if (request.getParameter("showSkinOptions") != null) {%>
 <tr>
     <td width="1">
         <b>Skin:</b>
@@ -51,6 +50,3 @@
         </select><br>
     </td>
 </tr>
-<%} else {%>
-<input type="hidden" name="skinId" value="0">
-<%}%>

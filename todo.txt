@@ -6,7 +6,7 @@ Required for next release:
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites
-    - incorrect url in "The full result log is at <URL>" - just the host that's wrong
+    - incorrect url in "The full result log is at <URL>" - just the host & port that's wrong
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish HTML.xsl and Text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)

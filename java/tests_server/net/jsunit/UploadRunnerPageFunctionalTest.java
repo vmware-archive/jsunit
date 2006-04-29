@@ -21,7 +21,7 @@ public class UploadRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/uploadRunnerPage?referencedJsFileFieldCount=2&showSkinOptions");
+        webTester.beginAt("/uploadRunnerPage?referencedJsFileFieldCount=2");
     }
 
     public void testInitialConditions() throws Exception {

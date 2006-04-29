@@ -1,11 +1,20 @@
 package net.jsunit;
 
+import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 import org.jdom.Document;
 
 import java.net.URLEncoder;
 
 public class RunnerFunctionalTest extends FunctionalTestCase {
+
+    protected ConfigurationSource createConfigurationSource() {
+        return new FunctionalTestConfigurationSource(port) {
+            public String runnerReferrerRestrict() {
+                return null;
+            }
+        };
+    }
 
     public void testSimple() throws Exception {
         webTester.beginAt("runner");

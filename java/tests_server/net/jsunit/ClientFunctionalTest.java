@@ -1,12 +1,21 @@
 package net.jsunit;
 
 import net.jsunit.client.TestRunClient;
+import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 
 import java.io.File;
 
 public class ClientFunctionalTest extends FunctionalTestCase {
+
+    protected ConfigurationSource createConfigurationSource() {
+        return new FunctionalTestConfigurationSource(port) {
+            public String runnerReferrerRestrict() {
+                return null;
+            }
+        };
+    }
 
     protected boolean shouldMockOutProcessStarter() {
         return false;
