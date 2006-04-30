@@ -50,7 +50,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     private void loadSecretKey() {
-        File file = new File(new File("tools"), "secretKey.txt");
+        File file = new File(new File("java" + File.separator + "config"), "secretKey.txt");
         if (!file.exists())
             throw new ConfigurationException(ConfigurationProperty.USE_CAPTCHA, "Cannot find secretKey.txt in ./tools");
         secretKey = FileUtility.read(file);
