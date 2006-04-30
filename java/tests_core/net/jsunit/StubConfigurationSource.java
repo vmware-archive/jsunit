@@ -64,4 +64,7 @@ public class StubConfigurationSource implements ConfigurationSource {
         return null;
     }
 
+    public String trustedIpAddresses() {
+        return null;
+    }
 }

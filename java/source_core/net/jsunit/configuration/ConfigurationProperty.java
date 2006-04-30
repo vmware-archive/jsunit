@@ -198,6 +198,35 @@ public enum ConfigurationProperty {
         }
     },
 
+    TRUSTED_IP_ADDRESSES("trustedIpAddresses", "IP addresses that can use this server without authentication", false, true) {
+        public String getValueString(Configuration configuration) {
+            StringBuffer buffer = new StringBuffer();
+            for (Iterator it = configuration.getTrustedIpAddresses().iterator(); it.hasNext();) {
+                buffer.append(it.next());
+                if (it.hasNext())
+                    buffer.append(",");
+            }
+            return buffer.toString();
+        }
+
+        protected void addContentTo(Configuration configuration, Element element) {
+            for (int i = 0; i < configuration.getTrustedIpAddresses().size(); i++) {
+                String ipAddressString = configuration.getTrustedIpAddresses().get(i);
+                element.addContent(new Element("trustedIpAddress").setText(ipAddressString));
+            }
+        }
+
+        public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
+            String trustedIpAddressesString = source.trustedIpAddresses();
+            try {
+                List<String> ipAddresses = StringUtility.listFromCommaDelimitedString(trustedIpAddressesString);
+                configuration.setTrustedIpAddresses(ipAddresses);
+            } catch (Exception e) {
+                throw new ConfigurationException(this, trustedIpAddressesString, e);
+            }
+        }
+    },
+
     URL("url", "Test Page URL", true, false) {
         public String getValueString(Configuration configuration) {
             URL testURL = configuration.getTestURL();

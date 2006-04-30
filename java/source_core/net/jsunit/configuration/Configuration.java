@@ -25,6 +25,7 @@ public class Configuration implements BrowserSource {
     private String ipAddress;
     private String hostname;
     private boolean useCaptcha;
+    private List<String> trustedIpAddresses;
 
     public static Configuration resolve(String[] arguments) {
         return new Configuration(resolveSource(arguments));
@@ -201,6 +202,14 @@ public class Configuration implements BrowserSource {
 
     public void setUseCaptcha(boolean useCaptcha) {
         this.useCaptcha = useCaptcha;
+    }
+
+    public List<String> getTrustedIpAddresses() {
+        return trustedIpAddresses;
+    }
+
+    public void setTrustedIpAddresses(List<String> trustedIpAddresses) {
+        this.trustedIpAddresses = trustedIpAddresses;
     }
 
 }

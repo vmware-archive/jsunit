@@ -4,6 +4,9 @@ import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.utility.SystemUtility;
 
 class ConfigurationComponentSource implements ConfigurationSource {
+    public String trustedIpAddresses() {
+        return null;
+    }
 
     public String description() {
         return "IntelliJ plugin configuration source";

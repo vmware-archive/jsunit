@@ -1,6 +1,7 @@
 Required for next release:
 
   FEATURES:
+    - aggregate server should be allowed to hit captcha-protected servers
     - green/red bar on server pages
     - queuing needs work
     - keep original names & place in temporary uniquely named subdirectories

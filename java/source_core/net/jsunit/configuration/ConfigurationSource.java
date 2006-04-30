@@ -29,4 +29,6 @@ public interface ConfigurationSource {
     String hostname();
 
     String useCaptcha();
+
+    String trustedIpAddresses();
 }

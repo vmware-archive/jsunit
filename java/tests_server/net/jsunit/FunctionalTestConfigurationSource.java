@@ -54,6 +54,10 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return "false";
     }
 
+    public String trustedIpAddresses() {
+        return null;
+    }
+
     public String closeBrowsersAfterTestRuns() {
         return String.valueOf(Boolean.TRUE);
     }

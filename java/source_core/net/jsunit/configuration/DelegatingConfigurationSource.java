@@ -62,4 +62,8 @@ public class DelegatingConfigurationSource implements ConfigurationSource {
     public String useCaptcha() {
         return source.useCaptcha();
     }
+
+    public String trustedIpAddresses() {
+        return source.trustedIpAddresses();
+    }
 }

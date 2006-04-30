@@ -105,4 +105,8 @@ public class RemoteConfigurationSource implements ConfigurationSource {
         return textOfElement(ConfigurationProperty.USE_CAPTCHA);
     }
 
+    public String trustedIpAddresses() {
+        return commaSeparatedTextOfChildrenOfElement(ConfigurationProperty.TRUSTED_IP_ADDRESSES);
+    }
+
 }

@@ -46,6 +46,7 @@ public class SecurityInterceptorTest extends TestCase {
         private boolean isProtected;
         private String key;
         private String answer;
+        private String ipAddress;
 
         public String execute() throws Exception {
             return SUCCESS;
@@ -65,6 +66,19 @@ public class SecurityInterceptorTest extends TestCase {
 
         public String getSecretKey() {
             return SECRET_KEY;
+        }
+
+        public void setRequestIPAddress(String ipAddress) {
+        }
+
+        public void setRequestHost(String host) {
+        }
+
+        public String getRequestIpAddress() {
+            return ipAddress;
+        }
+
+        public void setReferrer(String referrer) {
         }
     }
 

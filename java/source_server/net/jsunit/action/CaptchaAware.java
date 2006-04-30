@@ -1,6 +1,6 @@
 package net.jsunit.action;
 
-public interface CaptchaAware  {
+public interface CaptchaAware extends RequestSourceAware {
     boolean isProtectedByCaptcha();
 
     String getCaptchaKey();
