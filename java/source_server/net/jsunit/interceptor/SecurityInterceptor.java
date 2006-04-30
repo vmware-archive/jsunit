@@ -16,14 +16,13 @@ public class SecurityInterceptor implements Interceptor {
 
     public String intercept(ActionInvocation invocation) throws Exception {
         CaptchaAware captchaAware = (CaptchaAware) invocation.getAction();
-        if (captchaAware.isProtectedByCaptcha()) {
+        if (captchaAware.isProtectedByCaptcha() && !captchaAware.isIpAddressesTrusted()) {
             CaptchaValidator validator = new CaptchaValidator(captchaAware.getSecretKey());
             String key = captchaAware.getCaptchaKey();
             String answer = captchaAware.getAttemptedCaptchaAnswer();
             CaptchaValidity captchaValidity = validator.determineValidity(key, answer);
             return captchaValidity.isValid() ? invocation.invoke() : "captcha_" + captchaValidity.name().toLowerCase();
-        }
-        else
+        } else
             return invocation.invoke();
     }
 

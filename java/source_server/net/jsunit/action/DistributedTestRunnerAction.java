@@ -5,7 +5,7 @@ import net.jsunit.*;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 
-public class DistributedTestRunnerAction 
+public class DistributedTestRunnerAction
         implements
         RequestSourceAware,
         SkinAware,
@@ -120,6 +120,10 @@ public class DistributedTestRunnerAction
 
     public String getSecretKey() {
         return server.getSecretKey();
+    }
+
+    public boolean isIpAddressesTrusted() {
+        return server.getConfiguration().getTrustedIpAddresses().contains(remoteIpAddress);
     }
 
     public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {

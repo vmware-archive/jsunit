@@ -9,7 +9,6 @@ public class SecurityInterceptorTest extends TestCase {
     private SecurityInterceptor interceptor;
     private MockCaptchaAware action;
     private MockActionInvocation mockInvocation;
-    private String originalSecretKey;
     private static final String SECRET_KEY = "1234567890123456";
 
     protected void setUp() throws Exception {
@@ -24,7 +23,7 @@ public class SecurityInterceptorTest extends TestCase {
         CaptchaGenerator generator = new CaptchaGenerator(SECRET_KEY);
         action.key = generator.generateKey(System.currentTimeMillis(), "theCorrectAnswer");
         action.answer = "theCorrectAnswer";
-        assertEquals(Action.SUCCESS.toLowerCase(), interceptor.intercept(mockInvocation));
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
         assertTrue(mockInvocation.wasInvokeCalled);
     }
 
@@ -34,6 +33,15 @@ public class SecurityInterceptorTest extends TestCase {
         action.answer = "bad answer";
         assertEquals("captcha_invalid", interceptor.intercept(mockInvocation));
         assertFalse(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testProtectedInvalidTrusted() throws Exception {
+        action.isProtected = true;
+        action.isRequestFromTrustedIpAddress = true;
+        action.key = "bad key";
+        action.answer = "bad answer";
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
     }
 
     public void testUnprotected() throws Exception {
@@ -46,7 +54,7 @@ public class SecurityInterceptorTest extends TestCase {
         private boolean isProtected;
         private String key;
         private String answer;
-        private String ipAddress;
+        public boolean isRequestFromTrustedIpAddress;
 
         public String execute() throws Exception {
             return SUCCESS;
@@ -68,14 +76,14 @@ public class SecurityInterceptorTest extends TestCase {
             return SECRET_KEY;
         }
 
+        public boolean isIpAddressesTrusted() {
+            return isRequestFromTrustedIpAddress;
+        }
+
         public void setRequestIPAddress(String ipAddress) {
         }
 
         public void setRequestHost(String host) {
-        }
-
-        public String getRequestIpAddress() {
-            return ipAddress;
         }
 
         public void setReferrer(String referrer) {

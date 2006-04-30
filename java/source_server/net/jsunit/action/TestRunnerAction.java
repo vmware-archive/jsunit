@@ -1,6 +1,9 @@
 package net.jsunit.action;
 
-import net.jsunit.*;
+import net.jsunit.InvalidBrowserIdException;
+import net.jsunit.SkinSource;
+import net.jsunit.TestRunManager;
+import net.jsunit.XmlRenderable;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.StringUtility;
@@ -123,6 +126,10 @@ public class TestRunnerAction
 
     public String getSecretKey() {
         return runner.getSecretKey();
+    }
+
+    public boolean isIpAddressesTrusted() {
+        return runner.getConfiguration().getTrustedIpAddresses().contains(remoteIpAddress);
     }
 
     public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {
