@@ -79,8 +79,8 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         return propertyValue(ConfigurationProperty.TIMEOUT_SECONDS);
     }
 
-    public String runnerReferrerRestrict() {
-        return propertyValue(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
+    public String useCaptcha() {
+        return propertyValue(ConfigurationProperty.USE_CAPTCHA);
     }
 
     public String osString() {

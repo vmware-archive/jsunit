@@ -8,7 +8,6 @@ import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
 import net.jsunit.configuration.RemoteConfigurationTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
 import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
-import net.jsunit.interceptor.SecurityInterceptorTest;
 import net.jsunit.interceptor.VersionGrabberInterceptorTest;
 import net.jsunit.model.*;
 import net.jsunit.results.SkinTest;
@@ -19,6 +18,7 @@ public class PureUnitTestSuite {
         TestSuite result = new TestSuite();
         result.addTestSuite(AdminActionTest.class);
         result.addTestSuite(ArgumentsConfigurationSourceTest.class);
+        result.addTestSuite(CaptchaActionTest.class);
         result.addTestSuite(HeterogenousBrowserGroupTest.class);
         result.addTestSuite(BrowserLaunchSpecificationTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);
@@ -35,7 +35,6 @@ public class PureUnitTestSuite {
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultBuilderTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);
-        result.addTestSuite(SecurityInterceptorTest.class);
         result.addTestSuite(ServerStatusActionTest.class);
         result.addTestSuite(SkinTest.class);
         result.addTestSuite(StatusMessageTest.class);

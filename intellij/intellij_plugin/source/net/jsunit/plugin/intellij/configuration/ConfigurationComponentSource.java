@@ -58,7 +58,7 @@ class ConfigurationComponentSource implements ConfigurationSource {
         return SystemUtility.hostname();
     }
 
-    public String runnerReferrerRestrict() {
+    public String useCaptcha() {
         return null;
     }
 

@@ -24,7 +24,7 @@ public class Configuration implements BrowserSource {
     private String osString;
     private String ipAddress;
     private String hostname;
-    private URL runnerReferrerRestrict;
+    private boolean useCaptcha;
 
     public static Configuration resolve(String[] arguments) {
         return new Configuration(resolveSource(arguments));
@@ -195,11 +195,12 @@ public class Configuration implements BrowserSource {
         return PlatformType.resolve(osString);
     }
 
-    public URL getRunnerReferrerRestrict() {
-        return runnerReferrerRestrict;
+    public boolean useCaptcha() {
+        return useCaptcha;
     }
 
-    public void setRunnerReferrerRestrict(URL runnerReferrerRestrict) {
-        this.runnerReferrerRestrict = runnerReferrerRestrict;
+    public void setUseCaptcha(boolean useCaptcha) {
+        this.useCaptcha = useCaptcha;
     }
+
 }

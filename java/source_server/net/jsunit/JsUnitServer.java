@@ -21,4 +21,6 @@ public interface JsUnitServer extends XmlRenderable {
     List<Skin> getSkins();
 
     List<StatusMessage> getStatusMessages();
+
+    String getSecretKey();
 }

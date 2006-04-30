@@ -46,7 +46,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return "";
     }
 
-    public String runnerReferrerRestrict() {
+    public String useCaptcha() {
         return null;
     }
 

@@ -48,7 +48,7 @@ public class FunctionalTestAggregateConfigurationSource implements Configuration
         return null;
     }
 
-    public String runnerReferrerRestrict() {
+    public String useCaptcha() {
         return null;
     }
 

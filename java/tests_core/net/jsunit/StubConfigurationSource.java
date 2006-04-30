@@ -60,7 +60,7 @@ public class StubConfigurationSource implements ConfigurationSource {
         return null;
     }
 
-    public String runnerReferrerRestrict() {
+    public String useCaptcha() {
         return null;
     }
 

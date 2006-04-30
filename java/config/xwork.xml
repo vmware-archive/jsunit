@@ -47,10 +47,12 @@
         </interceptors>
 
         <global-results>
-            <result name="denied" type="dispatcher">
-                <param name="location">java/jsp/runnerAccessDeniedBadReferrer.jsp</param>
+            <result name="captcha_invalid" type="dispatcher">
+                <param name="location">java/jsp/accessDeniedFailedCaptcha.jsp</param>
             </result>
-
+            <result name="captcha_outdated" type="dispatcher">
+                <param name="location">java/jsp/accessDeniedOutdatedCaptcha.jsp</param>
+            </result>
         </global-results>
 
         <action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
@@ -138,6 +140,16 @@
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/logDisplayer.jsp</param>
             </result>
+        </action>
+
+        <action name="captchaImage" class="net.jsunit.action.CaptchaImageAction">
+            <result name="success" type="stream">
+                <param name="contentType">image/jpeg</param>
+                <param name="inputName">imageStream</param>
+                <param name="bufferSize">1024</param>
+            </result>
+            <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="server"/>
         </action>
 
     </package>

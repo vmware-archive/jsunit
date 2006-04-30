@@ -24,7 +24,7 @@ public enum ServerType {
                     ConfigurationProperty.BROWSER_FILE_NAMES,
                     ConfigurationProperty.DESCRIPTION,
                     ConfigurationProperty.URL,
-                    ConfigurationProperty.RUNNER_REFERRER_RESTRICT
+                    ConfigurationProperty.USE_CAPTCHA
             })
     ),
     STANDARD_TEMPORARY(
@@ -50,7 +50,7 @@ public enum ServerType {
                     ConfigurationProperty.DESCRIPTION,
                     ConfigurationProperty.RESOURCE_BASE,
                     ConfigurationProperty.URL,
-                    ConfigurationProperty.RUNNER_REFERRER_RESTRICT
+                    ConfigurationProperty.USE_CAPTCHA
             })
     );
 

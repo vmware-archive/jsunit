@@ -2,71 +2,69 @@ package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
-import net.jsunit.action.ReferrerAware;
-import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.DummyConfigurationSource;
+import net.jsunit.action.CaptchaAware;
+import net.jsunit.captcha.CaptchaGenerator;
 
 public class SecurityInterceptorTest extends TestCase {
     private SecurityInterceptor interceptor;
-    private ReferrerAction action;
+    private MockCaptchaAware action;
     private MockActionInvocation mockInvocation;
+    private String originalSecretKey;
+    private static final String SECRET_KEY = "1234567890123456";
 
     protected void setUp() throws Exception {
         super.setUp();
         interceptor = new SecurityInterceptor();
-        action = new ReferrerAction();
+        action = new MockCaptchaAware();
         mockInvocation = new MockActionInvocation(action);
     }
 
-    public void testNoReferrer() throws Exception {
-        action.referrer = null;
-        action.restrict = "http://www.jsunit.net";
-        assertEquals(SecurityInterceptor.DENIED, interceptor.intercept(mockInvocation));
+    public void testProtectedValid() throws Exception {
+        action.isProtected = true;
+        CaptchaGenerator generator = new CaptchaGenerator(SECRET_KEY);
+        action.key = generator.generateKey(System.currentTimeMillis(), "theCorrectAnswer");
+        action.answer = "theCorrectAnswer";
+        assertEquals(Action.SUCCESS.toLowerCase(), interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testProtectedInvalid() throws Exception {
+        action.isProtected = true;
+        action.key = "bad key";
+        action.answer = "bad answer";
+        assertEquals("captcha_invalid", interceptor.intercept(mockInvocation));
         assertFalse(mockInvocation.wasInvokeCalled);
     }
 
-    public void testNoRestrict() throws Exception {
-        action.referrer = "http://www.jsunit.net/myPage.html";
-        action.restrict = null;
+    public void testUnprotected() throws Exception {
+        action.isProtected = false;
         assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
         assertTrue(mockInvocation.wasInvokeCalled);
     }
 
-    public void testReferrerMatchesRestrict() throws Exception {
-        action.referrer = "http://www.jsunit.net/myPage.html";
-        action.restrict = "http://www.jsunit.net";
-        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
-        assertTrue(mockInvocation.wasInvokeCalled);
-    }
-
-    public void testReferrerDoesNotMatchRestrict() throws Exception {
-        action.referrer = "http://www.hacker.com/hackerPage.html";
-        action.restrict = "http://www.jsunit.net";
-        assertEquals(SecurityInterceptor.DENIED, interceptor.intercept(mockInvocation));
-        assertFalse(mockInvocation.wasInvokeCalled);
-    }
-
-    static class ReferrerAction implements ReferrerAware, Action {
-        private String referrer;
-        private String restrict;
+    static class MockCaptchaAware implements CaptchaAware, Action {
+        private boolean isProtected;
+        private String key;
+        private String answer;
 
         public String execute() throws Exception {
             return SUCCESS;
         }
 
-        public void setReferrer(String referrer) {
+        public boolean isProtectedByCaptcha() {
+            return isProtected;
         }
 
-        public String getReferrer() {
-            return referrer;
+        public String getCaptchaKey() {
+            return key;
         }
 
-        public Configuration getConfiguration() {
-            return new Configuration(new DummyConfigurationSource() {
-                public String runnerReferrerRestrict() {
-                    return restrict;
-                }
-            });
+        public String getAttemptedCaptchaAnswer() {
+            return answer;
+        }
+
+        public String getSecretKey() {
+            return SECRET_KEY;
         }
     }
 

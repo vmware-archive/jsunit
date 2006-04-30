@@ -147,10 +147,10 @@ public class CompositeConfigurationSource implements ConfigurationSource {
         return SystemUtility.hostname();
     }
 
-    public String runnerReferrerRestrict() {
+    public String useCaptcha() {
         for (ConfigurationSource source : sources) {
-            if (source.runnerReferrerRestrict() != null)
-                return source.runnerReferrerRestrict();
+            if (source.useCaptcha() != null)
+                return source.useCaptcha();
         }
         return null;
     }

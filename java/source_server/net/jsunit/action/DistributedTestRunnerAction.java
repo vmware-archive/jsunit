@@ -5,7 +5,8 @@ import net.jsunit.*;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 
-public class DistributedTestRunnerAction implements
+public class DistributedTestRunnerAction 
+        implements
         RequestSourceAware,
         SkinAware,
         TestPageURLAware,
@@ -13,7 +14,7 @@ public class DistributedTestRunnerAction implements
         XmlProducer,
         RemoteRunnerHitterAware,
         JsUnitAggregateServerAware,
-        ReferrerAware {
+        CaptchaAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -25,6 +26,8 @@ public class DistributedTestRunnerAction implements
     private String referrer;
     protected JsUnitAggregateServer server;
     protected RemoteServerHitter hitter;
+    private String captchaKey;
+    private String attemptedCaptchaAnswer;
 
     public void setAggregateServer(JsUnitAggregateServer server) {
         this.server = server;
@@ -95,12 +98,32 @@ public class DistributedTestRunnerAction implements
         return this.referrer;
     }
 
-    public Configuration getConfiguration() {
-        return server.getConfiguration();
-    }
-
     public void setReferrer(String referrer) {
         this.referrer = referrer;
+    }
+
+    public boolean isProtectedByCaptcha() {
+        return server.getConfiguration().useCaptcha();
+    }
+
+    public String getCaptchaKey() {
+        return captchaKey;
+    }
+
+    public void setCaptchaKey(String captchaKey) {
+        this.captchaKey = captchaKey;
+    }
+
+    public String getAttemptedCaptchaAnswer() {
+        return attemptedCaptchaAnswer;
+    }
+
+    public String getSecretKey() {
+        return server.getSecretKey();
+    }
+
+    public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {
+        this.attemptedCaptchaAnswer = attemptedCaptchaAnswer;
     }
 
 }

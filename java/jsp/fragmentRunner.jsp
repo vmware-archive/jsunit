@@ -57,10 +57,22 @@
                             e.g. assertTrue(true);
                         </td>
                     </tr>
-                    <jsp:include page="browserAndSkin.jsp">
-                        <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
-                        <jsp:param name="includeAllBrowsersOption" value="true"/>
-                    </jsp:include>
+                </table>
+                <table>
+                    <tr>
+                        <td valign="top">
+                            <jsp:include page="browserAndSkin.jsp">
+                                <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
+                                <jsp:param name="includeAllBrowsersOption" value="true"/>
+                            </jsp:include>
+                        </td>
+                        <td width="100">&nbsp;</td>
+                        <td valign="top">
+                            <%if (server.getConfiguration().useCaptcha()) {%>
+                            <jsp:include page="captcha.jsp"/>
+                            <%}%>
+                        </td>
+                    </tr>
                 </table>
             </td>
         </tr>

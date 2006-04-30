@@ -216,22 +216,16 @@ public enum ConfigurationProperty {
 
         }
     },
-    RUNNER_REFERRER_RESTRICT("runnerReferrerRestrict", "Restriction on runner referrer", true, false) {
+    USE_CAPTCHA("useCaptcha", "Whether to protect with a CAPTCHA", false, false) {
         public String getValueString(Configuration configuration) {
-            URL referrerURL = configuration.getRunnerReferrerRestrict();
-            return referrerURL == null ? "" : referrerURL.toString();
+            return String.valueOf(configuration.useCaptcha());
         }
 
         public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
-            String referrerString = source.runnerReferrerRestrict();
-            if (StringUtility.isEmpty(referrerString))
-                return;
-            try {
-                configuration.setRunnerReferrerRestrict(new URL(referrerString));
-            } catch (MalformedURLException e) {
-                throw new ConfigurationException(this, referrerString, e);
-            }
-
+            String string = source.useCaptcha();
+            if (StringUtility.isEmpty(string))
+                string = String.valueOf(false);
+            configuration.setUseCaptcha(Boolean.valueOf(string));
         }
     };
 

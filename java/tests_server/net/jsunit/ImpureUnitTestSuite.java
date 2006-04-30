@@ -13,6 +13,7 @@ import net.jsunit.interceptor.*;
 import net.jsunit.model.*;
 import net.jsunit.uploaded.TestPageFactoryTest;
 import net.jsunit.model.TestPageTest;
+import net.jsunit.captcha.CaptchaValidatorTest;
 
 public class ImpureUnitTestSuite {
 
@@ -21,6 +22,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(AggregateServerInterceptorTest.class);
         result.addTestSuite(BrowserResultInterceptorTest.class);
         result.addTestSuite(BrowserResultTest.class);
+        result.addTestSuite(CaptchaValidatorTest.class);
         result.addTestSuite(ClientServerInteractionTest.class);
         result.addTestSuite(ClientServerConnectionTest.class);
         result.addTestSuite(ConfigurationSourceResolutionTest.class);
@@ -41,6 +43,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(RemoteTestRunClientTest.class);
         result.addTestSuite(RequestSourceInterceptorTest.class);
         result.addTestSuite(ResultAcceptorTest.class);
+        result.addTestSuite(SecurityInterceptorTest.class);        
         result.addTestSuite(SkinInterceptorTest.class);
         result.addTestSuite(TestPageFactoryTest.class);
         result.addTestSuite(TestPageTest.class);

@@ -7,7 +7,7 @@ import net.jsunit.utility.StringUtility;
 
 public class TestRunnerAction
         extends JsUnitBrowserTestRunnerAction
-        implements RequestSourceAware, SkinAware, TestPageURLAware, ReferrerAware {
+        implements RequestSourceAware, SkinAware, TestPageURLAware, CaptchaAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -19,6 +19,8 @@ public class TestRunnerAction
     private boolean badBrowserId = false;
     private Skin skin;
     private String referrer;
+    private String captchaKey;
+    private String attemptedCaptchaAnswer;
 
     public String execute() throws Exception {
         long startTime = System.currentTimeMillis();
@@ -99,12 +101,32 @@ public class TestRunnerAction
         return referrer;
     }
 
-    public Configuration getConfiguration() {
-        return runner.getConfiguration();
-    }
-
     public void setReferrer(String referrer) {
         this.referrer = referrer;
+    }
+
+    public boolean isProtectedByCaptcha() {
+        return runner.getConfiguration().useCaptcha();
+    }
+
+    public String getCaptchaKey() {
+        return captchaKey;
+    }
+
+    public void setCaptchaKey(String captchaKey) {
+        this.captchaKey = captchaKey;
+    }
+
+    public String getAttemptedCaptchaAnswer() {
+        return attemptedCaptchaAnswer;
+    }
+
+    public String getSecretKey() {
+        return runner.getSecretKey();
+    }
+
+    public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {
+        this.attemptedCaptchaAnswer = attemptedCaptchaAnswer;
     }
 
 }

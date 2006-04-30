@@ -9,8 +9,7 @@
 <h4>JsUnit: Access Denied</h4>
 
 <p>
-    To use the public JsUnit servers from a site other than www.jsunit.net, you must supply a username and password.
-    See <a href="http://server.jsunit.net">server.jsunit.net</a> for more information.
+    Sorry, you did not enter the correct CAPTCHA text.  Please try again.    
 </p>
 </body>
 </html>

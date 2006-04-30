@@ -101,8 +101,8 @@ public class RemoteConfigurationSource implements ConfigurationSource {
         return textOfElement("hostname");
     }
 
-    public String runnerReferrerRestrict() {
-        return textOfElement(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
+    public String useCaptcha() {
+        return textOfElement(ConfigurationProperty.USE_CAPTCHA);
     }
 
 }

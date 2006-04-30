@@ -65,8 +65,8 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         return argumentValue(ConfigurationProperty.TIMEOUT_SECONDS);
     }
 
-    public String runnerReferrerRestrict() {
-        return argumentValue(ConfigurationProperty.RUNNER_REFERRER_RESTRICT);
+    public String useCaptcha() {
+        return argumentValue(ConfigurationProperty.USE_CAPTCHA);
     }
 
     public String osString() {

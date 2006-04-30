@@ -28,5 +28,5 @@ public interface ConfigurationSource {
 
     String hostname();
 
-    String runnerReferrerRestrict();
+    String useCaptcha();
 }

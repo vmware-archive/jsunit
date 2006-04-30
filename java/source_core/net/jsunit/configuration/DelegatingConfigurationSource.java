@@ -59,7 +59,7 @@ public class DelegatingConfigurationSource implements ConfigurationSource {
         return source.hostname();
     }
 
-    public String runnerReferrerRestrict() {
-        return source.runnerReferrerRestrict();
+    public String useCaptcha() {
+        return source.useCaptcha();
     }
 }

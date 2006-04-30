@@ -37,6 +37,10 @@ public class JsUnitServerStub implements JsUnitServer {
         return null;
     }
 
+    public String getSecretKey() {
+        return null;
+    }
+
     public Element asXml() {
         return null;
     }

@@ -121,9 +121,9 @@ public class ConfigurationTest extends TestCase {
                 "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
-                "<runnerReferrerRestrict>" + FullValidForBothConfigurationSource.RUNNER_REFERRER_RESTRICT + "</runnerReferrerRestrict>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
                 "<url>http://www.example.com:1234/</url>" +
+                "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                 "</configuration>";
         assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD)));
     }
@@ -146,9 +146,9 @@ public class ConfigurationTest extends TestCase {
                 "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
-                "<runnerReferrerRestrict>" + FullValidForBothConfigurationSource.RUNNER_REFERRER_RESTRICT + "</runnerReferrerRestrict>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
                 "<url>http://www.example.com:1234/</url>" +
+                "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                 "</configuration>";
         assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD_TEMPORARY)));
     }
@@ -172,8 +172,8 @@ public class ConfigurationTest extends TestCase {
                         "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
                         "</remoteMachineURLs>" +
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
-                        "<runnerReferrerRestrict>" + FullValidForBothConfigurationSource.RUNNER_REFERRER_RESTRICT + "</runnerReferrerRestrict>" +                        
                         "<url>http://www.example.com:1234/</url>" +
+                        "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                         "</configuration>",
                 XmlUtility.asString(configuration.asXml(ServerType.AGGREGATE))
         );
@@ -229,14 +229,14 @@ public class ConfigurationTest extends TestCase {
         assertEquals("-resourceBase", arguments[index++]);
         assertEquals(new File("resource/base").getAbsolutePath(), arguments[index++]);
 
-        assertEquals("-runnerReferrerRestrict", arguments[index++]);
-        assertEquals("http://www.jsunit.net/jsunit/fragmentRunnerPage", arguments[index++]);
-
         assertEquals("-timeoutSeconds", arguments[index++]);
         assertEquals("76", arguments[index++]);
 
         assertEquals("-url", arguments[index++]);
-        assertEquals("http://www.example.com:1234/", arguments[index]);
+        assertEquals("http://www.example.com:1234/", arguments[index++]);
+
+        assertEquals("-useCaptcha", arguments[index++]);
+        assertEquals("true", arguments[index]);
     }
 
     public void testDuplicateBrowserFileNamesAndRemoteMachineURLs() throws Exception {
@@ -267,7 +267,7 @@ public class ConfigurationTest extends TestCase {
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
         public static final String IP_ADDRESS = "123.45.67.890";
         public static final String HOSTNAME = "server.jsunit.net";
-        public static final String RUNNER_REFERRER_RESTRICT = "http://www.jsunit.net/jsunit/fragmentRunnerPage";
+        public static final String USE_CAPTCHA = "true";
 
         public String resourceBase() {
             return "resource" + File.separator + "base";
@@ -305,8 +305,8 @@ public class ConfigurationTest extends TestCase {
             return HOSTNAME;
         }
 
-        public String runnerReferrerRestrict() {
-            return RUNNER_REFERRER_RESTRICT;
+        public String useCaptcha() {
+            return USE_CAPTCHA;
         }
 
         public String closeBrowsersAfterTestRuns() {

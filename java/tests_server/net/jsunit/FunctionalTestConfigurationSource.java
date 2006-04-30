@@ -50,8 +50,8 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
         return "windows.jsunit.net";
     }
 
-    public String runnerReferrerRestrict() {
-        return "http://localhost";
+    public String useCaptcha() {
+        return "false";
     }
 
     public String closeBrowsersAfterTestRuns() {

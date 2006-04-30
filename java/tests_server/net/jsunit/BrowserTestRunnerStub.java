@@ -57,6 +57,10 @@ public class BrowserTestRunnerStub implements BrowserTestRunner {
         return null;
     }
 
+    public String getSecretKey() {
+        return null;
+    }
+
     public Element asXml() {
         return null;
     }

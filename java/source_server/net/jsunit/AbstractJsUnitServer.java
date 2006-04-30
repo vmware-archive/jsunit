@@ -9,6 +9,7 @@ import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
+import net.jsunit.utility.FileUtility;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
 import org.jdom.Element;
@@ -25,6 +26,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
+import java.io.File;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
@@ -36,12 +38,22 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     protected int testRunCount = 0;
     private SkinSource skinSource = new DefaultSkinSource();
     private final List<StatusMessage> statusMessages = new ArrayList<StatusMessage>();
+    private String secretKey;
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
         this.serverType = type;
         ensureConfigurationIsValid();
+        if (configuration.useCaptcha())
+            loadSecretKey();
         ServerRegistry.registerServer(this);
+    }
+
+    private void loadSecretKey() {
+        File file = new File(new File("tools"), "secretKey.txt");
+        if (!file.exists())
+            throw new ConfigurationException(ConfigurationProperty.USE_CAPTCHA, "Cannot find secretKey.txt in ./tools");
+        secretKey = FileUtility.read(file);
     }
 
     protected void ensureConfigurationIsValid() {
@@ -141,6 +153,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
                 "acceptor",
                 "admin",
+                "captchaImage",
                 "config",
                 "displayer",
                 "latestversion",
@@ -219,6 +232,10 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
     public List<StatusMessage> getStatusMessages() {
         return new ArrayList<StatusMessage>(statusMessages);
+    }
+
+    public String getSecretKey() {
+        return secretKey;
     }
 
 }
