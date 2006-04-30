@@ -144,6 +144,24 @@
         </javac>
     </target>
 
+    <target name="_compile_client_source" description="Compiles the client source">
+        <delete dir="${bin}/net"/>
+        <javac srcdir="${source_core}" destdir="${bin}" debug="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+        <javac srcdir="${source_client}" destdir="${bin}" debug="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+            </classpath>
+        </javac>
+    </target>
+
     <target name="_compile_tests" description="Compiles the self-tests">
         <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
             <classpath refid="self_tests_classpath"/>
@@ -166,6 +184,15 @@
         <delete dir="${bin}/net" includeemptydirs="yes">
         </delete>
         <delete dir="${bin}" excludes="jsunit.jar">
+        </delete>
+    </target>
+
+    <target name="_create_client_jar" depends="_compile_client_source" description="Creates jsunit_client.jar">
+        <delete file="${bin}/jsunit_client.jar"/>
+        <jar jarfile="${bin}/jsunit_client.jar" basedir="${bin}"/>
+        <delete dir="${bin}/net" includeemptydirs="yes">
+        </delete>
+        <delete dir="${bin}" excludes="jsunit_client.jar">
         </delete>
     </target>
 
@@ -215,11 +242,11 @@
                 <include name="**"/>
                 <exclude name="bin/unix/*.sh"/>
                 <exclude name="bin/mac/*.sh"/>
-                <exclude name="**/.svn" />        
-                <exclude name="uploaded/**" />        
-                <exclude name="TEST-*.xml" />        
-                <exclude name="**/*.class" />        
-                <exclude name="logs/**" />        
+                <exclude name="**/.svn"/>
+                <exclude name="uploaded/**"/>
+                <exclude name="TEST-*.xml"/>
+                <exclude name="**/*.class"/>
+                <exclude name="logs/**"/>
             </tarfileset>
         </tar>
     </target>
