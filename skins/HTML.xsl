@@ -67,8 +67,12 @@
                     </xsl:if>
                     <xsl:if test="@type!='SUCCESS'">
                         <img src="/jsunit/images/red_x.gif">
-                            <xsl:attribute name="alt" value="@type"/>
-                            <xsl:attribute name="title" value="@type"/>
+                            <xsl:attribute name="alt">
+                                <xsl:value-of select="@type"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="title">
+                                <xsl:value-of select="@type"/>
+                            </xsl:attribute>
                         </img>
                     </xsl:if>
                     <xsl:apply-templates select="browser"/>
@@ -146,8 +150,12 @@
         </xsl:if>
         <xsl:if test="@type!='SUCCESS'">
             <img src="/jsunit/images/red_x.gif">
-                <xsl:attribute name="alt" value="@type"/>
-                <xsl:attribute name="title" value="@type"/>
+                <xsl:attribute name="alt">
+                    <xsl:value-of select="@type"/>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:value-of select="@type"/>
+                </xsl:attribute>
             </img>
         </xsl:if>
         <xsl:value-of select="substring-after(@name, '.html:')"/>

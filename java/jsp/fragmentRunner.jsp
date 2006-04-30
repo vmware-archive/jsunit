@@ -51,12 +51,6 @@
                             <input type="submit" value="Run" onclick="return verifyFragmentNotBlank()">
                         </td>
                     </tr>
-                    <tr>
-                        <td>&nbsp;</td>
-                        <td colspan="2">
-                            e.g. assertTrue(true);
-                        </td>
-                    </tr>
                 </table>
                 <table>
                     <tr>
