@@ -11,12 +11,13 @@
 <input type="hidden" name="captchaKey" value="<%=generator.generateKey(System.currentTimeMillis(), answer)%>">
 <table>
     <tr>
-        <td colspan="2">
+        <td colspan="3">
             <img src="/jsunit/captchaImage?answer=<%=URLEncoder.encode(new AesCipher(server.getSecretKey()).encrypt(answer), "UTF-8")%>">
         </td>
     </tr>
     <td width="10%" nowrap>
         <b>Enter text:</b>
     </td>
-    <td><input type="text" size="15" name="attemptedCaptchaAnswer"></td>
+    <td><input type="text" size="7" name="attemptedCaptchaAnswer"></td>
+    <td nowrap><font size="-2"><a href="#">what's this?</a></font></td>
 </table>

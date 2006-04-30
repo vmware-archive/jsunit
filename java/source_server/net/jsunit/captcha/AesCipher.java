@@ -11,14 +11,13 @@ public class AesCipher {
     public static final String ENCRYPTION_TYPE = "AES";
     public static final String ENCODING = "UTF8";
 
-    private SecretKeySpec keySpec;
     private Cipher encryptCipher;
     private Cipher decryptCipher;
 
     public AesCipher(String secretKey) {
         try {
             byte[] rawSecretKey = secretKey.getBytes();
-            keySpec = new SecretKeySpec(rawSecretKey, ENCRYPTION_TYPE);
+            SecretKeySpec keySpec = new SecretKeySpec(rawSecretKey, ENCRYPTION_TYPE);
             this.encryptCipher = Cipher.getInstance(ENCRYPTION_TYPE);
             this.encryptCipher.init(Cipher.ENCRYPT_MODE, keySpec);
             this.decryptCipher = Cipher.getInstance(ENCRYPTION_TYPE);

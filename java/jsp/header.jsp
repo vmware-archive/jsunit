@@ -107,7 +107,7 @@
     </table>
 </td>
 <td>&nbsp;</td>
-<td nowrap align="right" valign="top">
+<td nowrap align="right" valign="middle">
     <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
     <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
     <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
@@ -115,11 +115,11 @@
 
     <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
         version</a></div>
-    <%}%>
     <br>
     <a href="http://www.pivotalsf.com/" target="top">
         <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal" title="Powered by Pivotal">
     </a>
+    <%}%>
 </td>
 <td>&nbsp;</td>
 </tr>
