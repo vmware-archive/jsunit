@@ -1,7 +1,6 @@
 Required for next release:
 
   FEATURES:
-    - aggregate server should be allowed to hit captcha-protected servers
     - protect secretKey file from web access
     - send captchaKey, not answer, to captchaAction; captchaAction could even blow up if expired
     - queuing needs work

@@ -17,6 +17,8 @@ public class CaptchaGenerator {
         aes = new AesCipher(secretKey);
         Properties properties = new Properties();
         properties.put(Constants.SIMPLE_CAPTCHA_BOX, "true");
+        properties.put(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTC, "129,0,0");
+        properties.put(Constants.SIMPLE_CAPTCHA_BOX_C, "0,0,0");
         properties.put(
                 Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_CHARR,
                 "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z"
