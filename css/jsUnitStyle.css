@@ -13,10 +13,12 @@ table {
 
 a:link, a:visited {
     color: #00F;
+    text-decoration: underline;
 }
 
 a:hover {
     color: #F00;
+    text-decoration: underline;
 }
 
 h1 {
@@ -86,40 +88,115 @@ h4 {
     border-right-width: 0px;
 }
 
-/* set millions of background images */
-.rbroundbox {
-    background: url( /jsunit/images/nt.gif ) repeat;
+.rb0roundbox {
+    background: url( /jsunit/images/nt0.gif ) repeat;
 }
 
-.rbtop div {
-    background: url( /jsunit/images/tl.gif ) no-repeat top left;
+.rb0top div {
+    background: url( /jsunit/images/tl0.gif ) no-repeat top left;
 }
 
-.rbtop {
-    background: url( /jsunit/images/tr.gif ) no-repeat top right;
+.rb0top {
+    background: url( /jsunit/images/tr0.gif ) no-repeat top right;
 }
 
-.rbbot div {
-    background: url( /jsunit/images/bl.gif ) no-repeat bottom left;
+.rb0bot div {
+    background: url( /jsunit/images/bl0.gif ) no-repeat bottom left;
 }
 
-.rbbot {
-    background: url( /jsunit/images/br.gif ) no-repeat bottom right;
+.rb0bot {
+    background: url( /jsunit/images/br0.gif ) no-repeat bottom right;
 }
 
-/* height and width stuff, width not really nessisary. */
-.rbtop div, .rbtop, .rbbot div, .rbbot {
+.rb0top div, .rb0top, .rb0bot div, .rb0bot {
     width: 100%;
     height: 7px;
     font-size: 1px;
 }
 
-.rbcontent {
+.rb0content {
     margin: 0 7px;
     background-color: #FFFFFF
 }
 
-.rbroundbox {
+.rb0roundbox {
     width: 100%;
-    margin: 1em auto;
+    margin: 3px auto;
+}
+
+.rb1roundbox {
+    background: url( /jsunit/images/nt1.gif ) repeat;
+}
+
+.rb1top div {
+    background: url( /jsunit/images/tl1.gif ) no-repeat top left;
+}
+
+.rb1top {
+    background: url( /jsunit/images/tr1.gif ) no-repeat top right;
+}
+
+.rb1bot div {
+    background: url( /jsunit/images/bl1.gif ) no-repeat bottom left;
+}
+
+.rb1bot {
+    background: url( /jsunit/images/br1.gif ) no-repeat bottom right;
+}
+
+.rb1top div, .rb1top, .rb1bot div, .rb1bot {
+    width: 100%;
+    height: 7px;
+    font-size: 0px;
+}
+
+.rb1content {
+    margin: 0 7px;
+    color: #FFFFFF;
+}
+
+.rb1roundbox {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.rb1content a {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.rb2roundbox {
+    background: url( /jsunit/images/nt2.gif ) repeat;
+}
+
+.rb2top div {
+    background: url( /jsunit/images/tl2.gif ) no-repeat top left;
+}
+
+.rb2top {
+    background: url( /jsunit/images/tr2.gif ) no-repeat top right;
+}
+
+.rb2bot div {
+    background: url( /jsunit/images/bl2.gif ) no-repeat bottom left;
+}
+
+.rb2bot {
+    background: url( /jsunit/images/br2.gif ) no-repeat bottom right;
+}
+
+.rb2top div, .rb2top, .rb2bot div, .rb2bot {
+    width: 100%;
+    height: 7px;
+    font-size: 0px;
+}
+
+.rb2content {
+    margin: 0 7px;
+    color: #FFFFFF;
+}
+
+.rb2roundbox {
+    width: 100%;
+    margin: 0px auto;
 }

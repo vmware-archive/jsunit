@@ -7,13 +7,7 @@
             <head>
                 <title>JsUnit Test Results</title>
                 <link rel="stylesheet" type="text/css" href="/jsunit/css/jsUnitStyle.css"/>
-                <script language="javascript">
-                    function toggleVisibility(divId) {
-                    var theDiv = document.getElementById(divId);
-                    var isVisible = theDiv.style.display=="block";
-                    theDiv.style.display = isVisible ? "none" : "block";
-                    }
-                </script>
+                <script language="javascript" src="/jsunit/app/server/jsUnitServerUtilities.js"></script>
             </head>
             <body>
                 <xsl:apply-templates/>
@@ -62,41 +56,61 @@
         <table>
             <tr>
                 <td colspan="2" nowrap="nowrap">
-                    <xsl:if test="@type='SUCCESS'">
-                        <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
-                    </xsl:if>
-                    <xsl:if test="@type!='SUCCESS'">
-                        <img src="/jsunit/images/red_x.gif">
-                            <xsl:attribute name="alt">
-                                <xsl:value-of select="@type"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="title">
-                                <xsl:value-of select="@type"/>
-                            </xsl:attribute>
-                        </img>
-                    </xsl:if>
-                    <xsl:apply-templates select="browser"/>
-                    <xsl:text>&#160;-&#160;</xsl:text>
-                    <font>
-                        <xsl:attribute name="color">
-                            <xsl:if test="@type='SUCCESS'">green</xsl:if>
-                            <xsl:if test="@type!='SUCCESS'">red</xsl:if>
-                        </xsl:attribute>
-                        <xsl:value-of select="@type"/>
-                    </font>
-                    <xsl:if test="testCaseResults">
-                        <xsl:text>&#160;[</xsl:text>
-                        <a>
-                            <xsl:attribute name="href">
-                                <xsl:text>javascript:toggleVisibility("</xsl:text>
-                                <xsl:value-of
-                                        select="concat(../properties/property[@name='hostname']/@value, '_', browser/id)"/>
-                                <xsl:text>")</xsl:text>
-                            </xsl:attribute>
-                            <xsl:text>details</xsl:text>
-                        </a>
-                        <xsl:text>]</xsl:text>
-                    </xsl:if>
+                    <table>
+                        <tr>
+                            <td valign="center">
+                                <xsl:if test="@type='SUCCESS'">
+                                    <img src="/jsunit/images/green_tick.gif" alt="SUCCESS" title="SUCCESS"/>
+                                </xsl:if>
+                                <xsl:if test="@type!='SUCCESS'">
+                                    <img src="/jsunit/images/red_x.gif">
+                                        <xsl:attribute name="alt">
+                                            <xsl:value-of select="@type"/>
+                                        </xsl:attribute>
+                                        <xsl:attribute name="title">
+                                            <xsl:value-of select="@type"/>
+                                        </xsl:attribute>
+                                    </img>
+                                </xsl:if>
+                            </td>
+                            <xsl:apply-templates select="browser"/>
+                            <td valign="center">
+                                <xsl:text>-&#160;</xsl:text>
+                                <font>
+                                    <xsl:attribute name="color">
+                                        <xsl:if test="@type='SUCCESS'">green</xsl:if>
+                                        <xsl:if test="@type!='SUCCESS'">red</xsl:if>
+                                    </xsl:attribute>
+                                    <xsl:value-of select="@type"/>
+                                </font>
+                            </td>
+                            <xsl:if test="testCaseResults">
+                                <td></td>
+                                <td valign="center">
+                                    <font size="-2">
+                                        <a>
+                                            <xsl:attribute name="href">
+                                                <xsl:text>javascript:toggleVisibility("</xsl:text>
+                                                <xsl:value-of
+                                                        select="concat(../properties/property[@name='hostname']/@value, '_', browser/id)"/>
+                                                <xsl:text>","</xsl:text>
+                                                <xsl:value-of
+                                                        select="concat(../properties/property[@name='hostname']/@value, '_', browser/id, '_link')"/>
+                                                <xsl:text>", "show details")</xsl:text>
+                                            </xsl:attribute>
+                                            <div style="text-decoration:underline;valign:center">
+                                                <xsl:attribute name="id">
+                                                    <xsl:value-of
+                                                            select="concat(../properties/property[@name='hostname']/@value, '_', browser/id, '_link')"/>
+                                                </xsl:attribute>
+                                                <xsl:text>show details</xsl:text>
+                                            </div>
+                                        </a>
+                                    </font>
+                                </td>
+                            </xsl:if>
+                        </tr>
+                    </table>
                 </td>
             </tr>
             <xsl:if test="testCaseResults">
@@ -183,18 +197,22 @@
     </xsl:template>
 
     <xsl:template match="browser">
-        <img>
-            <xsl:attribute name="src">
-                <xsl:value-of select="logoPath"/>
-            </xsl:attribute>
-            <xsl:attribute name="alt">
-                <xsl:value-of select="displayName"/>
-            </xsl:attribute>
-            <xsl:attribute name="title">
-                <xsl:value-of select="displayName"/>
-            </xsl:attribute>
-        </img>
-        <xsl:value-of select="displayName"/>
+        <td valign="center">
+            <img>
+                <xsl:attribute name="src">
+                    <xsl:value-of select="logoPath"/>
+                </xsl:attribute>
+                <xsl:attribute name="alt">
+                    <xsl:value-of select="displayName"/>
+                </xsl:attribute>
+                <xsl:attribute name="title">
+                    <xsl:value-of select="displayName"/>
+                </xsl:attribute>
+            </img>
+        </td>
+        <td valign="center">
+            <xsl:value-of select="displayName"/>
+        </td>
     </xsl:template>
 
 </xsl:stylesheet>

@@ -34,7 +34,8 @@
                         <td colspan="3">
                             You can ask the server to run JsUnit tests of test code fragments using the <i>fragment
                             runner</i>
-                            service. You may enter any kind of JavaScript - statements or Test Functions.
+                            service. You may enter any kind of JavaScript - statements or Test Functions. For example,
+                            you could enter "var myVar = 3; assertEquals(myVar, 2);".
                             Type in your test code fragments below; choose a specific browser and/or skin if desired.
                             <br/>
                             <br/>

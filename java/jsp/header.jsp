@@ -21,10 +21,10 @@
     <table cellpadding="0" cellspacing="0">
         <tr>
             <td>
-                <div class="rbroundbox">
-                    <div class="rbtop"><div></div></div>
+                <div class="rb0roundbox">
+                    <div class="rb0top"><div></div></div>
 
-                    <div class="rbcontent" style="width:200;" align="center">
+                    <div class="rb0content" style="width:200;" align="center">
                         <table cellpadding="0" cellspacing="0">
                             <tr>
                                 <td>
@@ -64,7 +64,7 @@
                         </table>
                     </div>
 
-                    <div class="rbbot"><div></div></div>
+                    <div class="rb0bot"><div></div></div>
                 </div>
             </td>
         </tr>
@@ -76,14 +76,13 @@
                     <tr>
                         <%for (RemoteConfiguration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
                         <td>
-                            <div class="rbroundbox">
-                                <div class="rbtop"><div></div></div>
+                            <div class="rb0roundbox">
+                                <div class="rb0top"><div></div></div>
 
-                                <div class="rbcontent" style="width:200;" align="center">
-                                    <%=remoteConfiguration.getDescription()%><br>
-                                    <a href="<%=remoteConfiguration.getRemoteURL().toString()%>">
-                                        <%=remoteConfiguration.getRemoteURL().getHost().toString()%>
-                                    </a><br>
+                                <div class="rb0content" style="width:200;" align="center">
+                                    <%=remoteConfiguration.getDescription()%> -
+                                    <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><%=remoteConfiguration.getRemoteURL().getHost().toString()%></a>
+                                    <br>
                                     <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
                                     <%
                                         for (Browser browser : remoteConfiguration.getBrowsers()) {
@@ -94,7 +93,7 @@
                                     <%}%>
                                 </div>
 
-                                <div class="rbbot"><div></div></div>
+                                <div class="rb0bot"><div></div></div>
                             </div>
                         </td>
                         <td width="2">&nbsp;</td>
@@ -107,12 +106,31 @@
     </table>
 </td>
 <td>&nbsp;</td>
+<td nowrap align="center" width="50">
+    <table cellpadding="0" cellspacing="0" width="50">
+        <tr>
+            <td>
+                <div class="rb0roundbox">
+                    <div class="rb0top"><div></div></div>
+
+                    <div class="rb0content" align="center">
+                        <b><a href="#">Sign up</a></b> for a JsUnit account<br>
+                        to get programmatic access to the<br>
+                        fragment and upload runner services.
+                    </div>
+
+                    <div class="rb0bot"><div></div></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+</td>
+<td>&nbsp;</td>
 <td nowrap align="right" valign="middle">
     <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
     <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
     <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
     <%if (false) {%>
-
     <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
         version</a></div>
     <br>
