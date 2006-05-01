@@ -196,6 +196,14 @@ public class Configuration implements BrowserSource {
         return PlatformType.resolve(osString);
     }
 
+    public String getSystemDisplayString() {
+        return hostname + " (" + ipAddress + "), " + osString;
+    }
+
+    public String getOsString() {
+        return osString;
+    }
+
     public boolean useCaptcha() {
         return useCaptcha;
     }

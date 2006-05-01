@@ -47,7 +47,4 @@ public class SystemUtility {
         }
     }
 
-    public static String displayString() {
-        return hostname() + " (" + ipAddress() + "), " + osString();
-    }
 }

@@ -1,6 +1,7 @@
 Required for next release:
 
   FEATURES:
+    - remove trustedIp concept and pass a captcha for auth
     - protect secretKey file from web access
     - queuing needs work
     - keep original names & place in temporary uniquely named subdirectories
