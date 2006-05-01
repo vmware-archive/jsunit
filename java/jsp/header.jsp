@@ -57,7 +57,7 @@
                                     <br>
                                     This server aggregates results
                                     from <%=((JsUnitAggregateServer) server).getCachedRemoteConfigurations().size()%>
-                                    other servers
+                                    other servers.
                                     <%}%>
                                 </td>
                             </tr>
@@ -106,8 +106,8 @@
     </table>
 </td>
 <td>&nbsp;</td>
-<td nowrap align="center" width="50">
-    <table cellpadding="0" cellspacing="0" width="50">
+<td nowrap align="center">
+    <table cellpadding="0" cellspacing="0">
         <tr>
             <td>
                 <div class="rb0roundbox">
