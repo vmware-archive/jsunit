@@ -3,7 +3,7 @@ package net.jsunit.interceptor;
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.action.CaptchaAware;
-import net.jsunit.captcha.CaptchaGenerator;
+import net.jsunit.captcha.AesCipher;
 
 public class SecurityInterceptorTest extends TestCase {
     private SecurityInterceptor interceptor;
@@ -20,8 +20,7 @@ public class SecurityInterceptorTest extends TestCase {
 
     public void testProtectedValid() throws Exception {
         action.isProtected = true;
-        CaptchaGenerator generator = new CaptchaGenerator(SECRET_KEY);
-        action.key = generator.generateKey(System.currentTimeMillis(), "theCorrectAnswer");
+        action.key = new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theCorrectAnswer");
         action.answer = "theCorrectAnswer";
         assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
         assertTrue(mockInvocation.wasInvokeCalled);
@@ -29,16 +28,24 @@ public class SecurityInterceptorTest extends TestCase {
 
     public void testProtectedInvalid() throws Exception {
         action.isProtected = true;
-        action.key = "bad key";
+        action.key = new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theCorrectAnswer");
         action.answer = "bad answer";
         assertEquals("captcha_invalid", interceptor.intercept(mockInvocation));
+        assertFalse(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testProtectedOutdated() throws Exception {
+        action.isProtected = true;
+        action.key = new AesCipher(SECRET_KEY).encrypt("0_theCorrectAnswer");
+        action.answer = "theCorrectAnswer";
+        assertEquals("captcha_outdated", interceptor.intercept(mockInvocation));
         assertFalse(mockInvocation.wasInvokeCalled);
     }
 
     public void testProtectedInvalidTrusted() throws Exception {
         action.isProtected = true;
         action.isRequestFromTrustedIpAddress = true;
-        action.key = "bad key";
+        action.key = new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theCorrectAnswer");
         action.answer = "bad answer";
         assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
         assertTrue(mockInvocation.wasInvokeCalled);
@@ -46,6 +53,22 @@ public class SecurityInterceptorTest extends TestCase {
 
     public void testUnprotected() throws Exception {
         action.isProtected = false;
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testProtectedBadKey() throws Exception {
+        action.isProtected = true;
+        action.key = "bad key";
+        action.answer = "bad answer";
+        assertEquals("captcha_invalid", interceptor.intercept(mockInvocation));
+        assertFalse(mockInvocation.wasInvokeCalled);
+    }
+
+    public void testUnprotectedBadKey() throws Exception {
+        action.isProtected = false;
+        action.key = "bad key";
+        action.answer = "bad answer";
         assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
         assertTrue(mockInvocation.wasInvokeCalled);
     }

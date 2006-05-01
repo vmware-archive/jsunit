@@ -10,11 +10,9 @@ import java.util.Properties;
 
 public class CaptchaGenerator {
 
-    private AesCipher aes;
     private CaptchaProducer producer;
 
-    public CaptchaGenerator(String secretKey) {
-        aes = new AesCipher(secretKey);
+    public CaptchaGenerator() {
         Properties properties = new Properties();
         properties.put(Constants.SIMPLE_CAPTCHA_BOX, "true");
         properties.put(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTC, "129,0,0");
@@ -28,10 +26,6 @@ public class CaptchaGenerator {
 
     public void createImage(String answer, OutputStream stream) throws IOException {
         producer.createImage(stream, answer);
-    }
-
-    public String generateKey(long timeMillis, String answer) {
-        return aes.encrypt(timeMillis + "_" + answer);
     }
 
     public String generateRandomAnswer() {

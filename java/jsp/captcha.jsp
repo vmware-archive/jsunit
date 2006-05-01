@@ -1,21 +1,23 @@
 <%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
-<%@ page import="net.jsunit.captcha.AesCipher" %>
 <%@ page import="net.jsunit.captcha.CaptchaGenerator" %>
+<%@ page import="net.jsunit.captcha.CaptchaSpec" %>
 <%@ page import="java.net.URLEncoder" %>
 <%
     JsUnitServer server = ServerRegistry.getServer();
-    CaptchaGenerator generator = new CaptchaGenerator(server.getSecretKey());
-    String answer = generator.generateRandomAnswer();%>
+    CaptchaGenerator generator = new CaptchaGenerator();
+    String answer = generator.generateRandomAnswer();
+    CaptchaSpec captchaSpec = CaptchaSpec.fromAnswerAndTime(server.getSecretKey(), answer, System.currentTimeMillis());
+    String key = captchaSpec.getEncryptedKey();%>
 
 <script language="javascript" src="/jsunit/app/server/jsUnitServerUtilities.js"></script>
 
-<input type="hidden" name="captchaKey" value="<%=generator.generateKey(System.currentTimeMillis(), answer)%>">
+<input type="hidden" name="captchaKey" value="<%=key%>">
 
 <table>
     <tr>
         <td colspan="3" width="200" height="50">
-            <img src="/jsunit/captchaImage?answer=<%=URLEncoder.encode(new AesCipher(server.getSecretKey()).encrypt(answer), "UTF-8")%>">
+            <img src="/jsunit/captchaImage?captchaKey=<%=URLEncoder.encode(key, "UTF-8")%>">
         </td>
         <td rowspan="2" valign="top" width="400">
             <div class="rb1roundbox" id="whatIsCaptchaDiv" style="display:none">

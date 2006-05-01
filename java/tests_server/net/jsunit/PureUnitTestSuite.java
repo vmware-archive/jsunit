@@ -3,6 +3,7 @@ package net.jsunit;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import net.jsunit.action.*;
+import net.jsunit.captcha.CaptchaGeneratorTest;
 import net.jsunit.client.TestRunClientTest;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
 import net.jsunit.configuration.RemoteConfigurationTest;
@@ -19,6 +20,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(AdminActionTest.class);
         result.addTestSuite(ArgumentsConfigurationSourceTest.class);
         result.addTestSuite(CaptchaActionTest.class);
+        result.addTestSuite(CaptchaGeneratorTest.class);
         result.addTestSuite(HeterogenousBrowserGroupTest.class);
         result.addTestSuite(BrowserLaunchSpecificationTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);

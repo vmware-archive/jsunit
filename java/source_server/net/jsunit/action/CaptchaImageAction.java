@@ -1,31 +1,38 @@
 package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
-import net.jsunit.captcha.AesCipher;
-import net.jsunit.captcha.CaptchaGenerator;
 import net.jsunit.JsUnitServer;
+import net.jsunit.captcha.CaptchaGenerator;
+import net.jsunit.captcha.CaptchaSpec;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 public class CaptchaImageAction implements Action, JsUnitServerAware {
     private String secretKey;
     private byte[] imageBytes;
-    private String encryptedAnswer;
+    private String encryptedKey;
 
     public String execute() throws Exception {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        String plainTextAnswer = new AesCipher(secretKey).decrypt(encryptedAnswer);
-        new CaptchaGenerator(secretKey).createImage(plainTextAnswer, stream);
-        this.imageBytes = stream.toByteArray();
-        return SUCCESS;
+        CaptchaSpec key = CaptchaSpec.fromEncryptedKey(secretKey, encryptedKey);
+        if (key.isValid()) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            new CaptchaGenerator().createImage(key.getAnswer(), stream);
+            this.imageBytes = stream.toByteArray();
+            return SUCCESS;
+        } else {
+            return ERROR;
+        }
     }
 
-    public void setAnswer(String encryptedAnswer) {
-        this.encryptedAnswer = encryptedAnswer;
+    public void setCaptchaKey(String encryptedAnswer) {
+        this.encryptedKey = encryptedAnswer;
     }
 
     public InputStream getImageStream() throws IOException {
-        return new ByteArrayInputStream(imageBytes);
+        return imageBytes != null ? new ByteArrayInputStream(imageBytes) : null;
     }
 
     public void setJsUnitServer(JsUnitServer server) {
