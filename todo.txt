@@ -12,6 +12,23 @@ Required for next release:
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish HTML.xsl and Text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
+    - jslint service
+    - stack traces for failures
+    - notion of non-test fragment runs
+--------------------
+    - jsUnitCore.js (line 239): assignment to undeclared variable assertArrayEquals
+
+jsUnitCore.js (line 231): test for equality (==) mistyped as assignment (=)?
+if (isEqual = (var1.length === var2.length))
+
+This one is solved by adding an extra set of parenthesis.
+
+if ((isEqual = ( var1.length === var2.length)))
+
+To test these start firefox and go to about:config and set
+javascript.options.strict to true
+
+---------------
 
   BUGS:
     - Mozilla 1.7.12 issues
