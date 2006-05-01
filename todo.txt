@@ -2,7 +2,6 @@ Required for next release:
 
   FEATURES:
     - protect secretKey file from web access
-    - send captchaKey, not answer, to captchaAction; captchaAction could even blow up if expired
     - queuing needs work
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
