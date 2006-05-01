@@ -59,13 +59,13 @@
                 parms += '&';
             }
 
-            parms += p;
+            parms += escape(p);
 
             if (typeof(value) != 'boolean') {
-                parms += '=' + value;
+                parms += '=' + escape(value);
             }
         }
-        return escape(parms);
+        return parms;
     }
 
     var jsUnitParmHash = jsUnitParseParms(document.location.search);
