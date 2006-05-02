@@ -64,8 +64,4 @@ public class EnvironmentVariablesConfigurationSource implements ConfigurationSou
         return environmentVariableValue(ConfigurationProperty.USE_CAPTCHA);
     }
 
-    public String trustedIpAddresses() {
-        return environmentVariableValue(ConfigurationProperty.TRUSTED_IP_ADDRESSES);
-    }
-
 }

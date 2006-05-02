@@ -3,6 +3,8 @@ package net.jsunit.action;
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.JsUnitServerStub;
+import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.captcha.AesCipher;
 
 import java.io.ByteArrayInputStream;
@@ -16,8 +18,12 @@ public class CaptchaActionTest extends TestCase {
         super.setUp();
         action = new CaptchaImageAction();
         action.setJsUnitServer(new JsUnitServerStub() {
-            public String getSecretKey() {
-                return SECRET_KEY;
+            public Configuration getConfiguration() {
+                return new Configuration(new DummyConfigurationSource()) {
+                    public String getSecretKey() {
+                        return SECRET_KEY;
+                    }
+                };
             }
         });
     }

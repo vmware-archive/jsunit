@@ -69,10 +69,6 @@ public class ArgumentsConfigurationSource implements ConfigurationSource {
         return argumentValue(ConfigurationProperty.USE_CAPTCHA);
     }
 
-    public String trustedIpAddresses() {
-        return argumentValue(ConfigurationProperty.TRUSTED_IP_ADDRESSES);
-    }
-
     public String osString() {
         return SystemUtility.osString();
     }

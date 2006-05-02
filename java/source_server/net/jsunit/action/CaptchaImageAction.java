@@ -36,6 +36,6 @@ public class CaptchaImageAction implements Action, JsUnitServerAware {
     }
 
     public void setJsUnitServer(JsUnitServer server) {
-        secretKey = server.getSecretKey();
+        secretKey = server.getConfiguration().getSecretKey();
     }
 }

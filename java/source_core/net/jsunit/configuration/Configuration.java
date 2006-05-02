@@ -1,6 +1,7 @@
 package net.jsunit.configuration;
 
 import net.jsunit.PlatformType;
+import net.jsunit.utility.FileUtility;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
 import org.jdom.Element;
@@ -25,7 +26,7 @@ public class Configuration implements BrowserSource {
     private String ipAddress;
     private String hostname;
     private boolean useCaptcha;
-    private List<String> trustedIpAddresses;
+    private String secretKey;
 
     public static Configuration resolve(String[] arguments) {
         return new Configuration(resolveSource(arguments));
@@ -45,6 +46,15 @@ public class Configuration implements BrowserSource {
         osString = source.osString();
         ipAddress = source.ipAddress();
         hostname = source.hostname();
+        if (useCaptcha)
+            loadSecretKey();
+    }
+
+    private void loadSecretKey() {
+        File file = new File(new File("java" + File.separator + "config"), "secretKey.txt");
+        if (!file.exists())
+            throw new ConfigurationException(ConfigurationProperty.USE_CAPTCHA, "Cannot find secretKey.txt in ./tools");
+        secretKey = FileUtility.read(file);
     }
 
     public Element asXml(ServerType serverType) {
@@ -212,12 +222,7 @@ public class Configuration implements BrowserSource {
         this.useCaptcha = useCaptcha;
     }
 
-    public List<String> getTrustedIpAddresses() {
-        return trustedIpAddresses;
+    public String getSecretKey() {
+        return secretKey;
     }
-
-    public void setTrustedIpAddresses(List<String> trustedIpAddresses) {
-        this.trustedIpAddresses = trustedIpAddresses;
-    }
-
 }

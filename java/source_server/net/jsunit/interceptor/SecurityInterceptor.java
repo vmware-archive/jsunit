@@ -16,7 +16,7 @@ public class SecurityInterceptor implements Interceptor {
 
     public String intercept(ActionInvocation invocation) throws Exception {
         CaptchaAware captchaAware = (CaptchaAware) invocation.getAction();
-        if (captchaAware.isProtectedByCaptcha() && !captchaAware.isIpAddressesTrusted()) {
+        if (captchaAware.isProtectedByCaptcha()) {
             String key = captchaAware.getCaptchaKey();
             CaptchaSpec spec = CaptchaSpec.fromEncryptedKey(captchaAware.getSecretKey(), key);
             if (!spec.isValid())

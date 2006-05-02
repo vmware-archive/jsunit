@@ -155,13 +155,4 @@ public class CompositeConfigurationSource implements ConfigurationSource {
         return null;
     }
 
-    public String trustedIpAddresses() {
-        for (ConfigurationSource source : sources) {
-            String result = source.trustedIpAddresses();
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
-    }
 }

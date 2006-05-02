@@ -122,10 +122,6 @@ public class ConfigurationTest extends TestCase {
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
-                "<trustedIpAddresses>" +
-                "<trustedIpAddress>123.45.67.89</trustedIpAddress>" +
-                "<trustedIpAddress>987.65.43.21</trustedIpAddress>" +
-                "</trustedIpAddresses>" +
                 "<url>http://www.example.com:1234/</url>" +
                 "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                 "</configuration>";
@@ -151,10 +147,6 @@ public class ConfigurationTest extends TestCase {
                 "<port>1234</port>" +
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
-                "<trustedIpAddresses>" +
-                "<trustedIpAddress>123.45.67.89</trustedIpAddress>" +
-                "<trustedIpAddress>987.65.43.21</trustedIpAddress>" +
-                "</trustedIpAddresses>" +
                 "<url>http://www.example.com:1234/</url>" +
                 "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                 "</configuration>";
@@ -180,10 +172,6 @@ public class ConfigurationTest extends TestCase {
                         "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
                         "</remoteMachineURLs>" +
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
-                        "<trustedIpAddresses>" +
-                        "<trustedIpAddress>123.45.67.89</trustedIpAddress>" +
-                        "<trustedIpAddress>987.65.43.21</trustedIpAddress>" +
-                        "</trustedIpAddresses>" +
                         "<url>http://www.example.com:1234/</url>" +
                         "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                         "</configuration>",
@@ -214,7 +202,7 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
 
-        assertEquals(24, arguments.length);
+        assertEquals(22, arguments.length);
         int index = 0;
 
         assertEquals("-browserFileNames", arguments[index++]);
@@ -243,9 +231,6 @@ public class ConfigurationTest extends TestCase {
 
         assertEquals("-timeoutSeconds", arguments[index++]);
         assertEquals("76", arguments[index++]);
-
-        assertEquals("-trustedIpAddresses", arguments[index++]);
-        assertEquals("123.45.67.89,987.65.43.21", arguments[index++]);
 
         assertEquals("-url", arguments[index++]);
         assertEquals("http://www.example.com:1234/", arguments[index++]);
@@ -322,10 +307,6 @@ public class ConfigurationTest extends TestCase {
 
         public String useCaptcha() {
             return USE_CAPTCHA;
-        }
-
-        public String trustedIpAddresses() {
-            return "123.45.67.89,987.65.43.21";
         }
 
         public String closeBrowsersAfterTestRuns() {

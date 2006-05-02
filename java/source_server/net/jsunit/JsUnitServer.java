@@ -22,5 +22,4 @@ public interface JsUnitServer extends XmlRenderable {
 
     List<StatusMessage> getStatusMessages();
 
-    String getSecretKey();
 }

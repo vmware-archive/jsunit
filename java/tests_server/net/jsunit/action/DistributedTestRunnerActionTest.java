@@ -38,16 +38,4 @@ public class DistributedTestRunnerActionTest extends TestCase {
         assertEquals(overrideURL, action.getTestRunManager().getOverrideURL());
     }
 
-    public void testIsIpAddressTrusted() throws Exception {
-        action.setAggregateServer(new JsUnitAggregateServer(new Configuration(new DummyConfigurationSource() {
-            public String trustedIpAddresses() {
-                return "123.456.786,987.654.32.10";
-            }
-        })));
-        action.setRequestIPAddress("111.22.33.44");
-        assertFalse(action.isIpAddressesTrusted());
-        action.setRequestIPAddress("123.456.786");
-        assertTrue(action.isIpAddressesTrusted());
-    }
-
 }

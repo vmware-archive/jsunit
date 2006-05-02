@@ -3,8 +3,6 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
-import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.model.ResultType;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
@@ -107,18 +105,6 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals(skinFile, action.getSkin());
         action.setBrowserTestRunner(mockRunner);
         assertEquals(ResultDisplayerAction.TRANSFORM, action.execute());
-    }
-
-    public void testIsIpAddressTrusted() throws Exception {
-        mockRunner.configuration = new Configuration(new DummyConfigurationSource() {
-            public String trustedIpAddresses() {
-                return "123.456.786,987.654.32.10";
-            }
-        });
-        action.setRequestIPAddress("111.22.33.44");
-        assertFalse(action.isIpAddressesTrusted());
-        action.setRequestIPAddress("123.456.786");
-        assertTrue(action.isIpAddressesTrusted());
     }
 
 }

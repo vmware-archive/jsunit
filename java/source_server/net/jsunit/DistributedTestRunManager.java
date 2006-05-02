@@ -2,6 +2,7 @@ package net.jsunit;
 
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.*;
+import net.jsunit.captcha.CaptchaSpec;
 import org.jdom.Document;
 
 import java.io.IOException;
@@ -110,6 +111,16 @@ public abstract class DistributedTestRunManager {
             hasFirstParameter = true;
         } else if (localConfiguration.getTestURL() != null) {
             buffer.append("?url=").append(URLEncoder.encode(localConfiguration.getTestURL().toString(), "UTF-8"));
+            hasFirstParameter = true;
+        }
+        if (localConfiguration.useCaptcha()) {
+            CaptchaSpec spec = CaptchaSpec.create(localConfiguration.getSecretKey());
+            if (hasFirstParameter)
+                buffer.append("&");
+            else
+                buffer.append("?");
+            buffer.append("captchaKey=").append(URLEncoder.encode(spec.getEncryptedKey(), "UTF-8"));
+            buffer.append("&attemptedCaptchaAnswer=").append(URLEncoder.encode(spec.getAnswer(), "UTF-8"));
             hasFirstParameter = true;
         }
         appendExtraParametersToURL(buffer, hasFirstParameter);

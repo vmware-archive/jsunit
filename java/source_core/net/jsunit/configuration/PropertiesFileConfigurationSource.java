@@ -83,10 +83,6 @@ public class PropertiesFileConfigurationSource implements ConfigurationSource {
         return propertyValue(ConfigurationProperty.USE_CAPTCHA);
     }
 
-    public String trustedIpAddresses() {
-        return propertyValue(ConfigurationProperty.TRUSTED_IP_ADDRESSES);
-    }
-
     public String osString() {
         return SystemUtility.osString();
     }

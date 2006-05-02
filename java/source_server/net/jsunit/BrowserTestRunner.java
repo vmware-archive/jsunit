@@ -36,5 +36,4 @@ public interface BrowserTestRunner extends XmlRenderable, SkinSource {
 
     Configuration getConfiguration();
 
-    String getSecretKey();
 }

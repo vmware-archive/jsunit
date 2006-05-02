@@ -5,9 +5,7 @@
 <%@ page import="java.net.URLEncoder" %>
 <%
     JsUnitServer server = ServerRegistry.getServer();
-    CaptchaGenerator generator = new CaptchaGenerator();
-    String answer = generator.generateRandomAnswer();
-    CaptchaSpec captchaSpec = CaptchaSpec.fromAnswerAndTime(server.getSecretKey(), answer, System.currentTimeMillis());
+    CaptchaSpec captchaSpec = CaptchaSpec.create(server.getConfiguration().getSecretKey());
     String key = captchaSpec.getEncryptedKey();%>
 
 <script language="javascript" src="/jsunit/app/server/jsUnitServerUtilities.js"></script>

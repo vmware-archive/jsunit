@@ -119,11 +119,7 @@ public class DistributedTestRunnerAction
     }
 
     public String getSecretKey() {
-        return server.getSecretKey();
-    }
-
-    public boolean isIpAddressesTrusted() {
-        return server.getConfiguration().getTrustedIpAddresses().contains(remoteIpAddress);
+        return server.getConfiguration().getSecretKey();
     }
 
     public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {

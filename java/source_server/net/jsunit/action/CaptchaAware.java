@@ -9,5 +9,4 @@ public interface CaptchaAware {
 
     String getSecretKey();
 
-    boolean isIpAddressesTrusted();
 }

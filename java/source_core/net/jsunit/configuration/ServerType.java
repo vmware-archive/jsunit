@@ -23,7 +23,6 @@ public enum ServerType {
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.BROWSER_FILE_NAMES,
                     ConfigurationProperty.DESCRIPTION,
-                    ConfigurationProperty.TRUSTED_IP_ADDRESSES,
                     ConfigurationProperty.URL,
                     ConfigurationProperty.USE_CAPTCHA
             })
@@ -50,7 +49,6 @@ public enum ServerType {
             Arrays.asList(new ConfigurationProperty []{
                     ConfigurationProperty.DESCRIPTION,
                     ConfigurationProperty.RESOURCE_BASE,
-                    ConfigurationProperty.TRUSTED_IP_ADDRESSES,
                     ConfigurationProperty.URL,
                     ConfigurationProperty.USE_CAPTCHA
             })

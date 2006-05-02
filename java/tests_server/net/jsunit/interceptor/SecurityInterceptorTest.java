@@ -42,15 +42,6 @@ public class SecurityInterceptorTest extends TestCase {
         assertFalse(mockInvocation.wasInvokeCalled);
     }
 
-    public void testProtectedInvalidTrusted() throws Exception {
-        action.isProtected = true;
-        action.isRequestFromTrustedIpAddress = true;
-        action.key = new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theCorrectAnswer");
-        action.answer = "bad answer";
-        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
-        assertTrue(mockInvocation.wasInvokeCalled);
-    }
-
     public void testUnprotected() throws Exception {
         action.isProtected = false;
         assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
@@ -77,7 +68,6 @@ public class SecurityInterceptorTest extends TestCase {
         private boolean isProtected;
         private String key;
         private String answer;
-        public boolean isRequestFromTrustedIpAddress;
 
         public String execute() throws Exception {
             return SUCCESS;
@@ -97,10 +87,6 @@ public class SecurityInterceptorTest extends TestCase {
 
         public String getSecretKey() {
             return SECRET_KEY;
-        }
-
-        public boolean isIpAddressesTrusted() {
-            return isRequestFromTrustedIpAddress;
         }
 
         public void setRequestIPAddress(String ipAddress) {

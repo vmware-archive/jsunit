@@ -125,11 +125,7 @@ public class TestRunnerAction
     }
 
     public String getSecretKey() {
-        return runner.getSecretKey();
-    }
-
-    public boolean isIpAddressesTrusted() {
-        return runner.getConfiguration().getTrustedIpAddresses().contains(remoteIpAddress);
+        return runner.getConfiguration().getSecretKey();
     }
 
     public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {

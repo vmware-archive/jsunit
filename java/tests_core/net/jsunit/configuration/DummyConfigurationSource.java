@@ -50,10 +50,6 @@ public class DummyConfigurationSource implements ConfigurationSource {
         return null;
     }
 
-    public String trustedIpAddresses() {
-        return null;
-    }
-
     public String closeBrowsersAfterTestRuns() {
         return "true";
     }

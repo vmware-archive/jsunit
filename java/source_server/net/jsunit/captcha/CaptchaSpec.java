@@ -66,6 +66,10 @@ public class CaptchaSpec {
         return new CaptchaSpec(secretKey, answer, time);
     }
 
+    public static CaptchaSpec create(String secretKey) {
+        return fromAnswerAndTime(secretKey, new CaptchaGenerator().generateRandomAnswer(), System.currentTimeMillis());
+    }
+
     public String getEncryptedKey() {
         return encryptedKey;
     }
@@ -77,4 +81,5 @@ public class CaptchaSpec {
     public long getTime() {
         return time;
     }
+
 }

@@ -11,11 +11,13 @@ import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.Arrays;
 import java.util.List;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
     private Configuration configuration;
+    public static final String SECRET_KEY = "1234567890123456";
 
     public void setUp() throws Exception {
         super.setUp();
@@ -111,10 +113,31 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
         MockRemoteServerHitter hitter = createMockHitterWithDistributedResults(url1, url2);
-        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteMachines(hitter, configuration, configuration.getRemoteMachineURLs(), null);
+        DistributedTestRunManager manager =
+                DistributedTestRunManager.forMultipleRemoteMachines(hitter, configuration, configuration.getRemoteMachineURLs(), null);
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertEquals(4, result.getTestRunResults().size());
+    }
+
+    public void testUseCaptcha() throws Exception {
+        DummyConfigurationSource source = new DummyConfigurationSource() {
+            public String useCaptcha() {
+                return String.valueOf(true);
+            }
+        };
+        configuration = new Configuration(source) {
+            public String getSecretKey() {
+                return SECRET_KEY;
+            }
+        };
+        MockRemoteServerHitter hitter = new MockRemoteServerHitter();
+        List<URL> list = Arrays.asList(new URL[]{new URL("http://www.example.com")});
+        DistributedTestRunManager manager =
+                DistributedTestRunManager.forMultipleRemoteMachines(hitter, configuration, list, null);
+        manager.runTests();
+        String urlHit = hitter.urlsPassed.get(0);
+        System.out.println(urlHit);
     }
 
     private MockRemoteServerHitter createMockHitter(String url1, String url2) throws MalformedURLException {

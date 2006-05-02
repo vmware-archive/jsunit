@@ -30,5 +30,4 @@ public interface ConfigurationSource {
 
     String useCaptcha();
 
-    String trustedIpAddresses();
 }
