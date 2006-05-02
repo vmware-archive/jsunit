@@ -143,16 +143,16 @@
     <table cellpadding="0" cellspacing="0">
         <tr>
             <td>
-                <div class="rb0roundbox">
-                    <div class="rb0top"><div></div></div>
+                <div class="rb2roundbox">
+                    <div class="rb2top"><div></div></div>
 
-                    <div class="rb0content" align="center">
+                    <div class="rb2content" align="center">
                         <b><a href="#">Sign up</a></b> for a JsUnit account<br>
                         to get programmatic access to the<br>
                         fragment and upload runner services.
                     </div>
 
-                    <div class="rb0bot"><div></div></div>
+                    <div class="rb2bot"><div></div></div>
                 </div>
             </td>
         </tr>

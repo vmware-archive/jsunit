@@ -200,3 +200,8 @@ h4 {
     width: 100%;
     margin: 0px auto;
 }
+
+.rb2content a {
+    color: #FFFFFF;
+    text-decoration: underline;
+}

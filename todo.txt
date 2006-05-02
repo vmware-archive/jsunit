@@ -8,7 +8,7 @@ Required for next release:
     - uploaded test suites
     - incorrect url in "The full result log is at <URL>" - just the host & port that's wrong
     - Send traces back to client (IN PROGRESS - ehanson)
-    - finish HTML.xsl and Text.xsl
+    - finish Text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
     - jslint service
     - stack traces for failures
