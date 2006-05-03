@@ -17,6 +17,10 @@ public class TestRunnerActionTest extends TestCase {
 
     public void setUp() throws Exception {
         super.setUp();
+        createAction();
+    }
+
+    private void createAction() {
         action = new TestRunnerAction();
         mockRunner = new MockBrowserTestRunner();
         action.setBrowserTestRunner(mockRunner);
@@ -76,15 +80,23 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals("Received request to run tests from 12.34.56.78 on URL 'http://www.example.com'", mockRunner.logMessages.get(0));
     }
 
-    public void testLimitToParticularBrowser() throws Exception {
-        action.setBrowserId("1");
+    public void testSelectBrowsers() throws Exception {
+        action.setBrowserId(new String[] {"1"});
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         assertEquals(1, mockRunner.launchSpecs.size());
         assertEquals("mybrowser2.exe", mockRunner.launchSpecs.get(0).getBrowser().getStartCommand());
+
+        createAction();
+        action.setBrowserId(new String[] {"0", "1"});
+        assertEquals(TestRunnerAction.SUCCESS, action.execute());
+        assertEquals(2, mockRunner.launchSpecs.size());
+        assertEquals("mybrowser1.exe", mockRunner.launchSpecs.get(0).getBrowser().getStartCommand());
+        assertEquals("mybrowser2.exe", mockRunner.launchSpecs.get(1).getBrowser().getStartCommand());
+
     }
 
-    public void testLimitToBrowserWithBadId() throws Exception {
-        action.setBrowserId("34");
+    public void testSelectBadBrowserId() throws Exception {
+        action.setBrowserId(new String[] {"1", "34"});
         action.execute();
         assertEquals(TestRunnerAction.ERROR, action.execute());
         assertTrue(mockRunner.launchSpecs.isEmpty());
@@ -92,7 +104,7 @@ public class TestRunnerActionTest extends TestCase {
     }
 
     public void testLimitToBrowserWithNonIntegerId() throws Exception {
-        action.setBrowserId("foo");
+        action.setBrowserId(new String[] {"foo"});
         action.execute();
         assertEquals(TestRunnerAction.ERROR, action.execute());
         assertTrue(mockRunner.launchSpecs.isEmpty());

@@ -19,7 +19,8 @@ public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void testRunnerForParticularBrowser() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.setFormElement("browserId", "0");
+        webTester.checkCheckbox("browserId", "0");
+        webTester.uncheckCheckbox("browserId", "1");
         webTester.submit();
         assertRunResult(
                 responseXmlDocument(),
@@ -47,22 +48,24 @@ public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
 
     public void testRunnerWithHTMLSkin() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.setFormElement("browserId", "");
+        webTester.checkCheckbox("browserId", "0");
         webTester.selectOption("skinId", "HTML");
         webTester.submit();
+        webTester.gotoFrame("resultsFrame");
         webTester.assertTitleEquals("JsUnit Test Results");
         webTester.assertTextPresent("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
-//        webTester.assertTextPresent(ResultType.SUCCESS.getDisplayString());
+        webTester.assertTextPresent(ResultType.SUCCESS.name());
     }
 
     public void testRunnerWithTextSkin() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.setFormElement("browserId", "");
+        webTester.checkCheckbox("browserId", "1");
         webTester.selectOption("skinId", "Text");
         webTester.submit();
-//        String responseText = webTester.getDialog().getResponseText();
-//        assertTrue(responseText.indexOf("http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:") != -1);
-//        assertTrue(responseText.indexOf(ResultType.SUCCESS.getDisplayString()) != -1);
+        webTester.gotoFrame("resultsFrame");
+//        webTester.assertTitleEquals("JsUnit Test Results");
+//        webTester.assertTextPresent("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+//        webTester.assertTextPresent(ResultType.SUCCESS.name());
     }
 
 }

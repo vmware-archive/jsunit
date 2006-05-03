@@ -18,6 +18,7 @@ public class LogDisplayerPageFunctionalTest extends FunctionalTestCase {
 
     public void testInitialConditions() throws Exception {
         assertOnLogDisplayerPage();
+        webTester.assertRadioOptionSelected("browserId", "0");
     }
 
     public void testDisplayerForm() throws Exception {

@@ -13,7 +13,7 @@ public class CaptchaGeneratorTest extends TestCase {
     }
 
     public void testRandomAnswer() throws Exception {
-        assertEquals(5, generator.generateRandomAnswer().length());
+        assertEquals(6, generator.generateRandomAnswer().length());
     }
 
     public void testImage() throws Exception {

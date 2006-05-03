@@ -6,8 +6,11 @@ import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
 import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.model.Browser;
 import net.jsunit.results.Skin;
-import net.jsunit.utility.StringUtility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestRunnerAction
         extends JsUnitBrowserTestRunnerAction
@@ -19,8 +22,8 @@ public class TestRunnerAction
     private String url;
     private String remoteIpAddress;
     private String remoteHost;
-    private String browserId;
-    private boolean badBrowserId = false;
+    private String[] browserIds;
+    private String badBrowserId;
     private Skin skin;
     private String referrer;
     private String captchaKey;
@@ -34,16 +37,11 @@ public class TestRunnerAction
             //noinspection SynchronizeOnNonFinalField
             synchronized (runner) {
                 manager = new TestRunManager(runner, url);
-                if (!StringUtility.isEmpty(browserId)) {
-                    try {
-                        manager.limitToBrowserWithId(Integer.parseInt(browserId));
-                    } catch (InvalidBrowserIdException e) {
-                        badBrowserId = true;
-                        return ERROR;
-                    } catch (NumberFormatException e) {
-                        badBrowserId = true;
-                        return ERROR;
-                    }
+                try {
+                    manager.limitToBrowsers(selectedBrowsers());
+                } catch (InvalidBrowserIdException e) {
+                    badBrowserId = e.getIdString();
+                    return ERROR;
                 }
                 manager.runTests();
             }
@@ -54,13 +52,39 @@ public class TestRunnerAction
         return skin != null ? TRANSFORM : SUCCESS;
     }
 
+    private List<Browser> selectedBrowsers() throws InvalidBrowserIdException {
+        List<Browser> result = new ArrayList<Browser>();
+        List<Browser> allBrowsers = runner.getBrowsers();
+        if (browserIds != null && browserIds.length > 0) {
+            for (String idString : browserIds) {
+                Browser chosenBrowser = null;
+                for (Browser browser : allBrowsers) {
+                    try {
+                        int id = Integer.parseInt(idString);
+                        if (browser.hasId(id))
+                            chosenBrowser = browser;
+                    } catch (NumberFormatException e) {
+                        throw new InvalidBrowserIdException(idString);
+                    }
+                }
+                if (chosenBrowser == null)
+                    throw new InvalidBrowserIdException(idString);
+                else
+                    result.add(chosenBrowser);
+            }
+        } else {
+            result.addAll(allBrowsers);
+        }
+        return result;
+    }
+
     private String requestReceivedMessage() {
         return new RequestReceivedMessage(remoteHost, remoteIpAddress, url).generateMessage();
     }
 
     public XmlRenderable getXmlRenderable() {
-        if (badBrowserId)
-            return new ErrorXmlRenderable("Invalid browser ID: " + browserId);
+        if (badBrowserId != null)
+            return new ErrorXmlRenderable("Invalid browser ID: " + badBrowserId);
         if (securityViolation != null)
             return new SimpleXmlRenderable(securityViolation.asXml());
         return manager.getTestRunResult();
@@ -82,8 +106,8 @@ public class TestRunnerAction
         remoteHost = host;
     }
 
-    public void setBrowserId(String browserId) {
-        this.browserId = browserId;
+    public void setBrowserId(String[] browserIds) {
+        this.browserIds = browserIds;
     }
 
     public void setSkin(Skin skin) {

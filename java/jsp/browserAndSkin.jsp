@@ -2,31 +2,27 @@
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.results.Skin" %>
-<%JsUnitServer server = ServerRegistry.getServer();%>
+<%@ page import="java.util.List"%>
+<%
+    JsUnitServer server = ServerRegistry.getServer();
+    boolean multipleBrowsersAllowed = Boolean.parseBoolean(request.getParameter("multipleBrowsersAllowed"));%>
 <table width="50%">
     <%if (!server.isAggregateServer()) {%>
     <tr>
         <td width="10%" valign="top">
-            <b>Browser:</b>
+            <b>Browser<%if (multipleBrowsersAllowed){%>s<%}%>:</b>
         </td>
         <td>
             <table width="100%">
                 <%
-                    boolean includeAllBrowsersOption = Boolean.parseBoolean(request.getParameter("includeAllBrowsersOption"));
-                    if (includeAllBrowsersOption) {
+                    List<Browser> browsers = server.getConfiguration().getBrowsers();
+                    for (int i = 0; i<browsers.size(); i++) {
+                        Browser browser = browsers.get(i);
                 %>
                 <tr>
-                    <td nowrap>
-                        <input type="radio" name="browserId" value="" checked>
-                        All available browsers
-                    </td>
-                </tr>
-                <%}%>
-                <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
-                <tr>
                     <td valign="top" nowrap>
-                        <input type="radio" name="browserId" value="<%=browser.getId()%>">
-                        <%if (browser.getType() != null) {%>
+                        <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" name="browserId" value="<%=browser.getId()%>" <%if (multipleBrowsersAllowed || i==0) {%> checked<%}%>
+                                <%if (browser.getType() != null) {%>
                         <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                         <%}%>
                         <%=browser.getDisplayName()%>

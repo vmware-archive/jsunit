@@ -62,6 +62,18 @@ public class TestRunManagerTest extends TestCase {
         assertEquals(SystemUtility.hostname(), testRunResult.getHostname());
     }
 
+    public void testBrowsers() throws Exception, InvalidBrowserIdException {
+        MockBrowserTestRunner runner = new MockBrowserTestRunner();
+        TestRunManager manager = new TestRunManager(runner, null);
+        assertEquals(2, manager.getGroups().size());
+
+        List<Browser> threeUniqueBrowsers = Arrays.asList(new Browser[]{
+                new Browser("browser1.exe", 0), new Browser("browser2.exe", 1), new Browser("browser3.exe", 2)}
+        );
+        manager.limitToBrowsers(threeUniqueBrowsers);
+        assertEquals(3, manager.getGroups().size());
+    }
+
     static class SuccessfulBrowserTestRunner extends BrowserTestRunnerStub {
 
         public List<Browser> getBrowsers() {

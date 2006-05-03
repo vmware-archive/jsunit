@@ -56,7 +56,7 @@
                     <tr>
                         <td nowrap valign="top">
                             <jsp:include page="browserAndSkin.jsp">
-                                <jsp:param name="includeAllBrowsersOption" value="true"/>
+                                <jsp:param name="multipleBrowsersAllowed" value="true"/>
                             </jsp:include>
                         </td>
                         <td width="100">&nbsp;</td>

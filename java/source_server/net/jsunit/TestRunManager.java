@@ -6,7 +6,6 @@ import net.jsunit.model.BrowserResult;
 import net.jsunit.model.HeterogenousBrowserGroup;
 import net.jsunit.model.TestRunResult;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,7 +15,6 @@ public class TestRunManager implements TestRunListener {
     private BrowserTestRunner testRunner;
     private TestRunResult testRunResult;
     private final String overrideUrl;
-    private List<Browser> allBrowsers;
     private List<HeterogenousBrowserGroup> groups;
     private HeterogenousBrowserGroup currentGroup;
     private int currentGroupResultCount;
@@ -58,7 +56,6 @@ public class TestRunManager implements TestRunListener {
     }
 
     private void setBrowsers(List<Browser> browsers) {
-        this.allBrowsers = browsers;
         groups = HeterogenousBrowserGroup.createFrom(browsers);
     }
 
@@ -111,15 +108,8 @@ public class TestRunManager implements TestRunListener {
         return testRunResult;
     }
 
-    public void limitToBrowserWithId(int chosenBrowserId) throws InvalidBrowserIdException {
-        Browser chosenBrowser = null;
-        for (Browser browser : allBrowsers) {
-            if (browser.hasId(chosenBrowserId))
-                chosenBrowser = browser;
-        }
-        if (chosenBrowser == null)
-            throw new InvalidBrowserIdException(chosenBrowserId);
-        setBrowsers(Arrays.asList(chosenBrowser));
+    public void limitToBrowsers(List<Browser> browsers) {
+        setBrowsers(browsers);
     }
 
     public boolean isReady() {
@@ -138,5 +128,9 @@ public class TestRunManager implements TestRunListener {
     public void browserTestRunFinished(Browser browser, BrowserResult result) {
         testRunResult.addBrowserResult(result);
         currentGroupResultCount ++;
+    }
+
+    public List<HeterogenousBrowserGroup> getGroups() {
+        return groups;
     }
 }

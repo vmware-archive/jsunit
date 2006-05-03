@@ -46,13 +46,13 @@ public class TestRunnerActionSimultaneousRunBlockingTest extends TestCase {
 
         public Executor(TestRunnerAction action) {
             this.action = action;
-
         }
 
         public void run() {
             try {
                 action.execute();
             } catch (Exception e) {
+                e.printStackTrace();
                 fail();
             }
         }

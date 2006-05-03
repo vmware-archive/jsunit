@@ -42,7 +42,7 @@
                         </td>
                     </tr>
                     <jsp:include page="browserAndSkin.jsp">
-                        <jsp:param name="includeAllBrowsersOption" value="false"/>
+                        <jsp:param name="multipleBrowsersAllowed" value="false"/>
                     </jsp:include>
                 </table>
             </td>
