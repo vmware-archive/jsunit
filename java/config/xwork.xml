@@ -46,15 +46,6 @@
             </interceptor-stack>
         </interceptors>
 
-        <global-results>
-            <result name="captcha_invalid" type="dispatcher">
-                <param name="location">java/jsp/accessDeniedFailedCaptcha.jsp</param>
-            </result>
-            <result name="captcha_outdated" type="dispatcher">
-                <param name="location">java/jsp/accessDeniedOutdatedCaptcha.jsp</param>
-            </result>
-        </global-results>
-
         <action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
             <result name="success" type="jsUnitXml"/>
             <result name="deniedNotLocalhost" type="dispatcher">

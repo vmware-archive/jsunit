@@ -3,6 +3,7 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
+import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.model.ResultType;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
@@ -105,6 +106,14 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals(skinFile, action.getSkin());
         action.setBrowserTestRunner(mockRunner);
         assertEquals(ResultDisplayerAction.TRANSFORM, action.execute());
+    }
+
+    public void testSecurityFailure() throws Exception {
+        action.setSecurityViolation(SecurityViolation.FAILED_CAPTCHA);
+        assertEquals(
+                XmlUtility.asString(SecurityViolation.FAILED_CAPTCHA.asXml()),
+                XmlUtility.asString(action.getXmlRenderable().asXml())
+        );
     }
 
 }

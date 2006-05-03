@@ -4,7 +4,7 @@ import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.interceptor.Interceptor;
 import net.jsunit.action.CaptchaAware;
 import net.jsunit.captcha.CaptchaSpec;
-import net.jsunit.captcha.CaptchaValidity;
+import net.jsunit.captcha.SecurityViolation;
 
 public class SecurityInterceptor implements Interceptor {
 
@@ -19,14 +19,15 @@ public class SecurityInterceptor implements Interceptor {
         if (captchaAware.isProtectedByCaptcha()) {
             String key = captchaAware.getCaptchaKey();
             CaptchaSpec spec = CaptchaSpec.fromEncryptedKey(captchaAware.getSecretKey(), key);
+            SecurityViolation violation = null;
             if (!spec.isValid())
-                return "captcha_" + spec.getValidity().name().toLowerCase();
-            String answer = captchaAware.getAttemptedCaptchaAnswer();
-            return spec.getAnswer().equals(answer) ?
-                    invocation.invoke() :
-                    "captcha_" + CaptchaValidity.INVALID.name().toLowerCase();
-        } else
-            return invocation.invoke();
+                violation = spec.getValidity().getSecurityViolation();
+            else if (!spec.getAnswer().equals(captchaAware.getAttemptedCaptchaAnswer()))
+                violation = SecurityViolation.FAILED_CAPTCHA;
+            if (violation != null)
+                captchaAware.setSecurityViolation(violation);
+        }
+        return invocation.invoke();
     }
 
 }

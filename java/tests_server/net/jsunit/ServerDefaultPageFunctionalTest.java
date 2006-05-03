@@ -1,19 +1,14 @@
 package net.jsunit;
 
-import net.jsunit.utility.SystemUtility;
-
 public class ServerDefaultPageFunctionalTest extends FunctionalTestCase {
-
-    public void setUp() throws Exception {
-        super.setUp();
-    }
 
     public void testLandingPage() throws Exception {
         webTester.beginAt("/");
         assertOnFragmentRunnerPage();
-        webTester.assertTextPresent(SystemUtility.osString());
-        webTester.assertTextPresent(SystemUtility.hostname());
-        webTester.assertTextPresent(SystemUtility.ipAddress());
+
+        webTester.assertTextPresent(FunctionalTestConfigurationSource.OS_STRING);
+        webTester.assertTextPresent(FunctionalTestConfigurationSource.HOSTNAME);
+        webTester.assertTextPresent(FunctionalTestConfigurationSource.IP_ADDRESS);
     }
 
     public void testLinks() throws Exception {

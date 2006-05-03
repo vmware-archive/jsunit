@@ -9,6 +9,9 @@ import net.jsunit.model.Browser;
 public class FunctionalTestConfigurationSource implements ConfigurationSource {
 
     private final int port;
+    public static final String OS_STRING = "Intel PIII, Windows 2000";
+    public static final String IP_ADDRESS = "98.76.54.321";
+    public static final String HOSTNAME = "windows.jsunit.net";
 
     public FunctionalTestConfigurationSource(int port) {
         this.port = port;
@@ -39,15 +42,15 @@ public class FunctionalTestConfigurationSource implements ConfigurationSource {
     }
 
     public String osString() {
-        return "Intel PIII, Windows 2000";
+        return OS_STRING;
     }
 
     public String ipAddress() {
-        return "98.76.54.321";
+        return IP_ADDRESS;
     }
 
     public String hostname() {
-        return "windows.jsunit.net";
+        return HOSTNAME;
     }
 
     public String useCaptcha() {

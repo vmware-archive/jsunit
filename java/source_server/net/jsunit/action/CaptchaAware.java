@@ -1,5 +1,7 @@
 package net.jsunit.action;
 
+import net.jsunit.captcha.SecurityViolation;
+
 public interface CaptchaAware {
     boolean isProtectedByCaptcha();
 
@@ -8,5 +10,7 @@ public interface CaptchaAware {
     String getAttemptedCaptchaAnswer();
 
     String getSecretKey();
+
+    void setSecurityViolation(SecurityViolation violation);
 
 }

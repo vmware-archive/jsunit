@@ -3,6 +3,8 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.SuccessfulRemoteServerHitter;
+import net.jsunit.utility.XmlUtility;
+import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.results.Skin;
@@ -36,6 +38,14 @@ public class DistributedTestRunnerActionTest extends TestCase {
         action.setUrl(overrideURL);
         assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
         assertEquals(overrideURL, action.getTestRunManager().getOverrideURL());
+    }
+
+    public void testSecurityFailure() throws Exception {
+        action.setSecurityViolation(SecurityViolation.OUTDATED_CAPTCHA);
+        assertEquals(
+                XmlUtility.asString(SecurityViolation.OUTDATED_CAPTCHA.asXml()),
+                XmlUtility.asString(action.getXmlRenderable().asXml())
+        );
     }
 
 }

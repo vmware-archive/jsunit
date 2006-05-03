@@ -15,6 +15,14 @@
         </html>
     </xsl:template>
 
+    <xsl:template match="securityViolation">
+        <h4>JsUnit Access denied</h4>
+        <xsl:value-of select="."/>
+        <xsl:if test="@resetRequired='true'">
+            Please click <a href="/" target="_top">here</a> to start over.
+        </xsl:if>
+    </xsl:template>
+
     <xsl:template match="testRunResult">
         <table>
             <tr>

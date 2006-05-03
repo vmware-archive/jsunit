@@ -4,6 +4,7 @@ import net.jsunit.InvalidBrowserIdException;
 import net.jsunit.SkinSource;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
+import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.StringUtility;
@@ -24,28 +25,32 @@ public class TestRunnerAction
     private String referrer;
     private String captchaKey;
     private String attemptedCaptchaAnswer;
+    private SecurityViolation securityViolation;
 
     public String execute() throws Exception {
-        long startTime = System.currentTimeMillis();
-        runner.logStatus(requestReceivedMessage());
-        //noinspection SynchronizeOnNonFinalField
-        synchronized (runner) {
-            manager = new TestRunManager(runner, url);
-            if (!StringUtility.isEmpty(browserId)) {
-                try {
-                    manager.limitToBrowserWithId(Integer.parseInt(browserId));
-                } catch (InvalidBrowserIdException e) {
-                    badBrowserId = true;
-                    return ERROR;
-                } catch (NumberFormatException e) {
-                    badBrowserId = true;
-                    return ERROR;
+        if (securityViolation == null) {
+            long startTime = System.currentTimeMillis();
+            runner.logStatus(requestReceivedMessage());
+            //noinspection SynchronizeOnNonFinalField
+            synchronized (runner) {
+                manager = new TestRunManager(runner, url);
+                if (!StringUtility.isEmpty(browserId)) {
+                    try {
+                        manager.limitToBrowserWithId(Integer.parseInt(browserId));
+                    } catch (InvalidBrowserIdException e) {
+                        badBrowserId = true;
+                        return ERROR;
+                    } catch (NumberFormatException e) {
+                        badBrowserId = true;
+                        return ERROR;
+                    }
                 }
+                manager.runTests();
             }
-            manager.runTests();
-        }
-        long millis = System.currentTimeMillis() - startTime;
-        runner.logStatus("Done running tests (" + (millis / 1000d) + ") seconds)");
+            long millis = System.currentTimeMillis() - startTime;
+            runner.logStatus("Done running tests (" + (millis / 1000d) + ") seconds)");
+        } else
+            runner.logStatus("Security violation from IP address " + remoteIpAddress);
         return skin != null ? TRANSFORM : SUCCESS;
     }
 
@@ -54,9 +59,10 @@ public class TestRunnerAction
     }
 
     public XmlRenderable getXmlRenderable() {
-        if (badBrowserId) {
+        if (badBrowserId)
             return new ErrorXmlRenderable("Invalid browser ID: " + browserId);
-        }
+        if (securityViolation != null)
+            return new SimpleXmlRenderable(securityViolation.asXml());
         return manager.getTestRunResult();
     }
 
@@ -126,6 +132,10 @@ public class TestRunnerAction
 
     public String getSecretKey() {
         return runner.getConfiguration().getSecretKey();
+    }
+
+    public void setSecurityViolation(SecurityViolation violation) {
+        this.securityViolation = violation;
     }
 
     public void setAttemptedCaptchaAnswer(String attemptedCaptchaAnswer) {

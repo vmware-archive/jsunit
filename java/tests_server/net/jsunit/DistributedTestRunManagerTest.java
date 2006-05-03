@@ -13,6 +13,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class DistributedTestRunManagerTest extends TestCase {
 
@@ -113,11 +115,22 @@ public class DistributedTestRunManagerTest extends TestCase {
         String url1 = DummyConfigurationSource.REMOTE_URL_1 + "/runner?url=" + encodedURL;
         String url2 = DummyConfigurationSource.REMOTE_URL_2 + "/runner?url=" + encodedURL;
         MockRemoteServerHitter hitter = createMockHitterWithDistributedResults(url1, url2);
-        DistributedTestRunManager manager =
-                DistributedTestRunManager.forMultipleRemoteMachines(hitter, configuration, configuration.getRemoteMachineURLs(), null);
+        DistributedTestRunManager manager = DistributedTestRunManager.forMultipleRemoteMachines(
+                hitter, configuration, configuration.getRemoteMachineURLs(), null
+        );
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
-        assertEquals(4, result.getTestRunResults().size());
+        List<TestRunResult> results = result.getTestRunResults();
+        assertEquals(4, results.size());
+        Collections.sort(results, new Comparator<TestRunResult>() {
+            public int compare(TestRunResult o1, TestRunResult o2) {
+                return o1.getUrl().toString().compareTo(o2.getUrl().toString());
+            }
+        });
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1, results.get(0).getUrl().toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_1, results.get(1).getUrl().toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_2, results.get(2).getUrl().toString());
+        assertEquals(DummyConfigurationSource.REMOTE_URL_2, results.get(3).getUrl().toString());
     }
 
     public void testUseCaptcha() throws Exception {
@@ -137,7 +150,8 @@ public class DistributedTestRunManagerTest extends TestCase {
                 DistributedTestRunManager.forMultipleRemoteMachines(hitter, configuration, list, null);
         manager.runTests();
         String urlHit = hitter.urlsPassed.get(0);
-        System.out.println(urlHit);
+        assertTrue(urlHit.indexOf("captchaKey") !=-1);
+        assertTrue(urlHit.indexOf("attemptedCaptchaAnswer") !=-1);
     }
 
     private MockRemoteServerHitter createMockHitter(String url1, String url2) throws MalformedURLException {

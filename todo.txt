@@ -1,18 +1,21 @@
 Required for next release:
 
   FEATURES:
+    - make runners always return XML unless skin is specified
+    - incorrect url in "The full result log is at <URL>" - just the host & port that's wrong    
     - protect secretKey file from web access
     - queuing needs work
+    - choice of multiple remote browsers & multiple remote machines
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites
-    - incorrect url in "The full result log is at <URL>" - just the host & port that's wrong
     - Send traces back to client (IN PROGRESS - ehanson)
     - finish Text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
     - jslint service
     - stack traces for failures
     - notion of non-test fragment runs
+    - make DT not need 2 configurations
 --------------------
     - jsUnitCore.js (line 239): assignment to undeclared variable assertArrayEquals
 

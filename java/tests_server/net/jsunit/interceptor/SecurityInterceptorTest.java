@@ -4,6 +4,7 @@ import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.action.CaptchaAware;
 import net.jsunit.captcha.AesCipher;
+import net.jsunit.captcha.SecurityViolation;
 
 public class SecurityInterceptorTest extends TestCase {
     private SecurityInterceptor interceptor;
@@ -30,16 +31,19 @@ public class SecurityInterceptorTest extends TestCase {
         action.isProtected = true;
         action.key = new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theCorrectAnswer");
         action.answer = "bad answer";
-        assertEquals("captcha_invalid", interceptor.intercept(mockInvocation));
-        assertFalse(mockInvocation.wasInvokeCalled);
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+        assertEquals(SecurityViolation.FAILED_CAPTCHA, action.securityViolation);
     }
 
     public void testProtectedOutdated() throws Exception {
         action.isProtected = true;
         action.key = new AesCipher(SECRET_KEY).encrypt("0_theCorrectAnswer");
         action.answer = "theCorrectAnswer";
-        assertEquals("captcha_outdated", interceptor.intercept(mockInvocation));
-        assertFalse(mockInvocation.wasInvokeCalled);
+
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+        assertEquals(SecurityViolation.OUTDATED_CAPTCHA, action.securityViolation);
     }
 
     public void testUnprotected() throws Exception {
@@ -52,8 +56,9 @@ public class SecurityInterceptorTest extends TestCase {
         action.isProtected = true;
         action.key = "bad key";
         action.answer = "bad answer";
-        assertEquals("captcha_invalid", interceptor.intercept(mockInvocation));
-        assertFalse(mockInvocation.wasInvokeCalled);
+        assertEquals(Action.SUCCESS, interceptor.intercept(mockInvocation));
+        assertTrue(mockInvocation.wasInvokeCalled);
+        assertEquals(SecurityViolation.FAILED_CAPTCHA, action.securityViolation);
     }
 
     public void testUnprotectedBadKey() throws Exception {
@@ -68,6 +73,7 @@ public class SecurityInterceptorTest extends TestCase {
         private boolean isProtected;
         private String key;
         private String answer;
+        private SecurityViolation securityViolation;
 
         public String execute() throws Exception {
             return SUCCESS;
@@ -87,6 +93,10 @@ public class SecurityInterceptorTest extends TestCase {
 
         public String getSecretKey() {
             return SECRET_KEY;
+        }
+
+        public void setSecurityViolation(SecurityViolation violation) {
+            this.securityViolation = violation;
         }
 
         public void setRequestIPAddress(String ipAddress) {
