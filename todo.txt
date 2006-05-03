@@ -1,9 +1,9 @@
 Required for next release:
 
   FEATURES:
+    - choice of multiple remote browsers & multiple remote machines
     - protect secretKey file from web access
     - queuing needs work
-    - choice of multiple remote browsers & multiple remote machines
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites
