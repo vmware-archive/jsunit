@@ -101,18 +101,14 @@
                         <div class="rb0content" style="width:200;" align="center">
                             <table>
                                 <tr>
-                                    <td colspan="2">
-                                        <%=remoteConfiguration.getDescription()%> -
-                                        <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><%=remoteConfiguration.getRemoteURL().getHost()%></a>
-                                    </td>
-                                </tr>
-                                <tr>
                                     <td width="1">
                                         <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
                                     </td>
                                     <td align="left">
-                                        <%=remoteConfiguration.getOsString()%>
+                                        <%=remoteConfiguration.getDescription()%> -
+                                        <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><%=remoteConfiguration.getRemoteURL().getHost()%></a>
                                         <br>
+                                        <%=remoteConfiguration.getOsString()%>
                                         <%
                                             for (Browser browser : remoteConfiguration.getBrowsers()) {
                                                 if (browser.getType() != null) {
