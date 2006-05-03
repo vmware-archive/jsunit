@@ -63,7 +63,7 @@
         <div class="rb2roundbox">
             <div class="rb2top"><div></div></div>
 
-            <div class="rb2content" style="width:200;" align="center">
+            <div class="rb2content" align="center">
                 <table cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
@@ -73,10 +73,8 @@
                                 <%}%>
                                 JsUnit <%=SystemUtility.jsUnitVersion()%> Aggregate Server
                             </b>
-                            <br>
-                            This server aggregates results
-                            from <%=((JsUnitAggregateServer) server).getCachedRemoteConfigurations().size()%>
-                            other servers.
+                            (<%=((JsUnitAggregateServer) server).getCachedRemoteConfigurations().size()%> remote
+                            servers)
                         </td>
                     </tr>
                 </table>
