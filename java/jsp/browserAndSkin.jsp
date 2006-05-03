@@ -2,7 +2,7 @@
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.results.Skin" %>
-<%@ page import="java.util.List"%>
+<%@ page import="java.util.List" %>
 <%
     JsUnitServer server = ServerRegistry.getServer();
     boolean multipleBrowsersAllowed = Boolean.parseBoolean(request.getParameter("multipleBrowsersAllowed"));%>
@@ -10,18 +10,18 @@
     <%if (!server.isAggregateServer()) {%>
     <tr>
         <td width="10%" valign="top">
-            <b>Browser<%if (multipleBrowsersAllowed){%>s<%}%>:</b>
+            <b>Browser<%if (multipleBrowsersAllowed) {%>s<%}%>:</b>
         </td>
         <td>
             <table width="100%">
                 <%
                     List<Browser> browsers = server.getConfiguration().getBrowsers();
-                    for (int i = 0; i<browsers.size(); i++) {
+                    for (int i = 0; i < browsers.size(); i++) {
                         Browser browser = browsers.get(i);
                 %>
                 <tr>
                     <td valign="top" nowrap>
-                        <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" name="browserId" value="<%=browser.getId()%>" <%if (multipleBrowsersAllowed || i==0) {%> checked<%}%>
+                        <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" name="browserId" value="<%=browser.getId()%>" <%if (multipleBrowsersAllowed || i == 0) {%> checked<%}%>
                                 <%if (browser.getType() != null) {%>
                         <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                         <%}%>
