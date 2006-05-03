@@ -1,7 +1,7 @@
 Required for next release:
 
   FEATURES:
-    - choice of multiple remote browsers & multiple remote machines
+    - ability to choose which remote machines to run on and which of their browsers to run on
     - protect secretKey file from web access
     - queuing needs work
     - keep original names & place in temporary uniquely named subdirectories
