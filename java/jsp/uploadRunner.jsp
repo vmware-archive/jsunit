@@ -70,9 +70,8 @@
                         <td colspan="3">
                             You can upload a Test Page and ask the server to run it using the <i>upload runner</i>
                             service.
-                            Select your Test Page and any referenced .js files below; choose a specific browser and/or
-                            skin if
-                            desired.
+                            Select your Test Page and any referenced .js files below; choose specific browsers and a
+                            skin if desired.
                             <br/>
                             <br/>
                         </td>
@@ -124,7 +123,7 @@
                                 <jsp:param name="multipleBrowsersAllowed" value="true"/>
                             </jsp:include>
                         </td>
-                        <td width="100">&nbsp;</td>                        
+                        <td width="100">&nbsp;</td>
                         <td valign="top">
                             <%if (server.getConfiguration().useCaptcha()) {%>
                             <jsp:include page="captcha.jsp"/>

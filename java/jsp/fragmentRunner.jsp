@@ -37,7 +37,7 @@
                             service. You may enter any kind of JavaScript - statements or Test Functions. For example,
                             you could enter "var myVar = 3; assertEquals(myVar, 3);" or "function testSimple()
                             {assertTrue(true);}".
-                            Type in your test code fragments below; choose a specific browser and/or skin if desired.
+                            Type in your test code fragments below; choose specific browsers and a skin if desired.
                             <br/>
                             <br/>
                         </td>
