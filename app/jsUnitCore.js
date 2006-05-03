@@ -228,7 +228,7 @@ function assertObjectEquals() {
                 break;
             default: //Object | Array
                 var i;
-                if (isEqual = (var1.length === var2.length))
+                if ((isEqual = ( var1.length === var2.length)))
                     for (i in var1)
                         assertObjectEquals(msg + ' found nested ' + type + '@' + i + '\n', var1[i], var2[i]);
         }
@@ -236,7 +236,7 @@ function assertObjectEquals() {
     }
 }
 
-assertArrayEquals = assertObjectEquals;
+var assertArrayEquals = assertObjectEquals;
 
 function assertEvaluatesToTrue() {
     _validateArguments(1, arguments);
