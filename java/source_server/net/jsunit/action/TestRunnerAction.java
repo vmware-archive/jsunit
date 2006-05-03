@@ -45,8 +45,7 @@ public class TestRunnerAction
                 }
                 manager.runTests();
             }
-            long millis = System.currentTimeMillis() - startTime;
-            runner.logStatus("Done running tests (" + (millis / 1000d) + ") seconds)");
+            runner.logStatus("Done running tests (" + ((System.currentTimeMillis() - startTime) / 1000d) + ") seconds)");
         } else
             runner.logStatus("Security violation from IP address " + remoteIpAddress);
         return skin != null ? TRANSFORM : SUCCESS;

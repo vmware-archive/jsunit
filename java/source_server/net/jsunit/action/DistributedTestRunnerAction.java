@@ -42,21 +42,23 @@ public class DistributedTestRunnerAction
     public String execute() throws Exception {
         if (securityViolation == null) {
             long startTime = System.currentTimeMillis();
-            String message = new RequestReceivedMessage(remoteHost, remoteIpAddress, overrideURL).generateMessage();
-            server.logStatus(message);
+            server.logStatus(new RequestReceivedMessage(remoteHost, remoteIpAddress, overrideURL).generateMessage());
             //noinspection SynchronizeOnNonFinalField
             synchronized (server) {
-                manager = DistributedTestRunManager.forMultipleRemoteMachines(
-                        hitter, server.getConfiguration(), server.getConfiguration().getRemoteMachineURLs(), overrideURL
-                );
-                manager.runTests();
+                runTests();
             }
             server.finishedTestRun();
-            long millis = System.currentTimeMillis() - startTime;
-            server.logStatus("Done running aggregate tests ( " + (millis / 1000d) + " seconds)");
+            server.logStatus("Done running aggregate tests ( " + ((System.currentTimeMillis() - startTime) / 1000d) + " seconds)");
         } else
             server.logStatus("Security violation from IP address " + remoteIpAddress);
         return skin != null ? TRANSFORM : SUCCESS;
+    }
+
+    private void runTests() {
+        manager = DistributedTestRunManager.forMultipleRemoteMachines(
+                hitter, server.getConfiguration(), server.getConfiguration().getRemoteMachineURLs(), overrideURL
+        );
+        manager.runTests();
     }
 
     public XmlRenderable getXmlRenderable() {
