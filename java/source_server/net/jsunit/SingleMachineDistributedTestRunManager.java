@@ -15,7 +15,7 @@ public class SingleMachineDistributedTestRunManager extends DistributedTestRunMa
         this.remoteMachineURL = remoteMachineURL;
     }
 
-    protected List<URL> remoteMachineURLs() {
+    public List<URL> remoteMachineURLs() {
         return Arrays.asList(new URL[]{remoteMachineURL});
     }
 

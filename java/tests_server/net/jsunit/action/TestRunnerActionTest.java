@@ -4,11 +4,13 @@ import junit.framework.TestCase;
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
 import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
+import java.util.Arrays;
 
 public class TestRunnerActionTest extends TestCase {
 
@@ -80,14 +82,14 @@ public class TestRunnerActionTest extends TestCase {
         assertEquals("Received request to run tests from 12.34.56.78 on URL 'http://www.example.com'", mockRunner.logMessages.get(0));
     }
 
-    public void testSelectBrowsers() throws Exception {
-        action.setBrowserId(new String[] {"1"});
+    public void testLimitBrowsers() throws Exception {
+        action.setSelectedBrowsers(Arrays.asList(new Browser[] {new Browser("mybrowser2.exe", 1)}));
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         assertEquals(1, mockRunner.launchSpecs.size());
         assertEquals("mybrowser2.exe", mockRunner.launchSpecs.get(0).getBrowser().getStartCommand());
 
         createAction();
-        action.setBrowserId(new String[] {"0", "1"});
+        action.setSelectedBrowsers(Arrays.asList(new Browser[] {new Browser("mybrowser1.exe", 0), new Browser("mybrowser2.exe", 1)}));
         assertEquals(TestRunnerAction.SUCCESS, action.execute());
         assertEquals(2, mockRunner.launchSpecs.size());
         assertEquals("mybrowser1.exe", mockRunner.launchSpecs.get(0).getBrowser().getStartCommand());
@@ -96,19 +98,8 @@ public class TestRunnerActionTest extends TestCase {
     }
 
     public void testSelectBadBrowserId() throws Exception {
-        action.setBrowserId(new String[] {"1", "34"});
-        action.execute();
-        assertEquals(TestRunnerAction.ERROR, action.execute());
-        assertTrue(mockRunner.launchSpecs.isEmpty());
-        assertEquals("<error>Invalid browser ID: 34</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
-    }
-
-    public void testLimitToBrowserWithNonIntegerId() throws Exception {
-        action.setBrowserId(new String[] {"foo"});
-        action.execute();
-        assertEquals(TestRunnerAction.ERROR, action.execute());
-        assertTrue(mockRunner.launchSpecs.isEmpty());
-        assertEquals("<error>Invalid browser ID: foo</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
+        action.setInvalidBrowserId("foobar");
+        assertEquals("<error>Invalid browser ID: foobar</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
     }
 
     public void testSkin() throws Exception {

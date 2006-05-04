@@ -83,4 +83,10 @@ public class BrowserTest extends TestCase {
         );
     }
 
+    public void testCompareTo() throws Exception {
+        Browser browser0 = new Browser("browser0.exe", 0);
+        Browser browser1 = new Browser("browser1.exe", 1);
+        assertTrue(browser0.compareTo(browser1) < 0);
+    }
+
 }

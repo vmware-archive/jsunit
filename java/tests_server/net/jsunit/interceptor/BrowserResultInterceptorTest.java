@@ -11,6 +11,7 @@ import net.jsunit.model.BrowserResultWriter;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class BrowserResultInterceptorTest extends TestCase {
@@ -58,6 +59,10 @@ public class BrowserResultInterceptorTest extends TestCase {
 
         public Browser getBrowserById(int id) {
             return browser;
+        }
+
+        public List<Browser> getAllBrowsers() {
+            return null;
         }
     }
 

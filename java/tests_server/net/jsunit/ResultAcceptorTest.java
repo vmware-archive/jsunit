@@ -11,6 +11,7 @@ import net.jsunit.model.BrowserSource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
 
 public class ResultAcceptorTest extends TestCase {
 
@@ -59,7 +60,11 @@ public class ResultAcceptorTest extends TestCase {
             public Browser getBrowserById(int id) {
                 if (id == browser.getId())
                     return browser;
-                fail("shouldn't be asking");
+                fail("shouldn't be asking for browser with ID " + id);
+                return null;
+            }
+
+            public List<Browser> getAllBrowsers() {
                 return null;
             }
         }));

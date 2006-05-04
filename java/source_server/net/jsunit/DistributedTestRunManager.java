@@ -63,7 +63,7 @@ public abstract class DistributedTestRunManager {
         }
     }
 
-    protected abstract List<URL> remoteMachineURLs();
+    public abstract List<URL> remoteMachineURLs();
 
     private void runTestsOnRemoteMachine(URL baseURL) {
         List<TestRunResult> results = new ArrayList<TestRunResult>();

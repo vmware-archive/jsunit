@@ -6,16 +6,19 @@ import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.results.Skin;
 
+import java.net.URL;
+import java.util.List;
+
 public class DistributedTestRunnerAction
-        implements
-        RequestSourceAware,
+        implements RequestSourceAware,
         SkinAware,
         TestPageURLAware,
         Action,
         XmlProducer,
         RemoteRunnerHitterAware,
         JsUnitAggregateServerAware,
-        CaptchaAware {
+        CaptchaAware,
+        RemoteMachineURLSelectionAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -30,6 +33,8 @@ public class DistributedTestRunnerAction
     private String captchaKey;
     private String attemptedCaptchaAnswer;
     private SecurityViolation securityViolation;
+    private List<URL> selectedRemoteMachineURLs;
+    private String invalidUrlId;
 
     public void setAggregateServer(JsUnitAggregateServer server) {
         this.server = server;
@@ -56,7 +61,7 @@ public class DistributedTestRunnerAction
 
     private void runTests() {
         manager = DistributedTestRunManager.forMultipleRemoteMachines(
-                hitter, server.getConfiguration(), server.getConfiguration().getRemoteMachineURLs(), overrideURL
+                hitter, getServerConfiguration(), selectedRemoteMachineURLs, overrideURL
         );
         manager.runTests();
     }
@@ -64,6 +69,8 @@ public class DistributedTestRunnerAction
     public XmlRenderable getXmlRenderable() {
         if (securityViolation != null)
             return new SimpleXmlRenderable(securityViolation.asXml());
+        if (invalidUrlId != null)
+            return new ErrorXmlRenderable("Invalid URL ID: " + invalidUrlId);
         return manager.getDistributedTestRunResult();
     }
 
@@ -112,7 +119,7 @@ public class DistributedTestRunnerAction
     }
 
     public boolean isProtectedByCaptcha() {
-        return server.getConfiguration().useCaptcha();
+        return getServerConfiguration().useCaptcha();
     }
 
     public String getCaptchaKey() {
@@ -128,7 +135,7 @@ public class DistributedTestRunnerAction
     }
 
     public String getSecretKey() {
-        return server.getConfiguration().getSecretKey();
+        return getServerConfiguration().getSecretKey();
     }
 
     public void setSecurityViolation(SecurityViolation violation) {
@@ -139,4 +146,23 @@ public class DistributedTestRunnerAction
         this.attemptedCaptchaAnswer = attemptedCaptchaAnswer;
     }
 
+    public void setRemoteMachineURLs(List<URL> remoteMachineURLs) {
+        this.selectedRemoteMachineURLs = remoteMachineURLs;
+    }
+
+    public void setSelectedRemoteMachineURLs(List<URL> urls) {
+        this.selectedRemoteMachineURLs = urls;
+    }
+
+    public void setInvalidRemoteMachineURLId(String invalidId) {
+        this.invalidUrlId = invalidId;
+    }
+
+    public URL getRemoteMachineURLById(int id) {
+        return getServerConfiguration().getRemoteMachineURLById(id);
+    }
+
+    public List<URL> getAllRemoteMachineURLs() {
+        return getServerConfiguration().getAllRemoteMachineURLs();
+    }
 }

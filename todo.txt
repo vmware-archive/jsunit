@@ -4,6 +4,7 @@ Required for next release:
     - ability to choose which remote machines to run on and which of their browsers to run on
     - protect secretKey file from web access
     - queuing needs work
+    - thread to update agg server's remote config cache
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
     - uploaded test suites

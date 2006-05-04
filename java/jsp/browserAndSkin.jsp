@@ -56,7 +56,7 @@
                             %>
                             <tr>
                                 <td valign="top" nowrap align="left">
-                                    <input type="checkbox" name="browserId" value="<%=browser.getId()%>" checked>
+                                    <input type="checkbox" name="urlId_browserId" value="<%=browser.getId()%>" checked>
                                     <%if (browser.getType() != null) {%>
                                     <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                                     <%}%>

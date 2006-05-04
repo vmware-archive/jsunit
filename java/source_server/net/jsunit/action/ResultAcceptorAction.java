@@ -1,8 +1,11 @@
 package net.jsunit.action;
 
 import net.jsunit.XmlRenderable;
+import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserResult;
+
+import java.util.List;
 
 public class ResultAcceptorAction extends JsUnitBrowserTestRunnerAction implements BrowserResultAware, RequestSourceAware {
 
@@ -28,7 +31,15 @@ public class ResultAcceptorAction extends JsUnitBrowserTestRunnerAction implemen
     }
 
     public Browser getBrowserById(int id) {
-        return runner.getConfiguration().getBrowserById(id);
+        return configuration().getBrowserById(id);
+    }
+
+    public List<Browser> getAllBrowsers() {
+        return configuration().getAllBrowsers();
+    }
+
+    private Configuration configuration() {
+        return runner.getConfiguration();
     }
 
     public void setRequestIPAddress(String ipAddress) {

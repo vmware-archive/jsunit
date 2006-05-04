@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 import java.util.List;
 
-public class Browser implements XmlRenderable {
+public class Browser implements XmlRenderable, Comparable<Browser> {
 
     public static final String DEFAULT_SYSTEM_BROWSER = "default";
 
@@ -116,5 +116,9 @@ public class Browser implements XmlRenderable {
         String fullFileName = element.getChild(FULL_FILE_NAME).getTextTrim();
         int id = Integer.parseInt(element.getChild(ID).getTextTrim());
         return new Browser(fullFileName, id);
+    }
+
+    public int compareTo(Browser other) {
+        return new Integer(getId()).compareTo(new Integer(other.getId()));
     }
 }

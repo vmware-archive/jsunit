@@ -4,13 +4,14 @@ import net.jsunit.PlatformType;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
+import net.jsunit.model.RemoteMachineURLSource;
 import org.jdom.Element;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class Configuration implements BrowserSource {
+public class Configuration implements BrowserSource, RemoteMachineURLSource {
 
     private List<Browser> browsers;
     private boolean closeBrowsersAfterTestRuns;
@@ -153,6 +154,10 @@ public class Configuration implements BrowserSource {
         return remoteMachineURLs;
     }
 
+    public List<URL> getAllRemoteMachineURLs() {
+        return getRemoteMachineURLs();
+    }
+
     public void setRemoteMachineURLs(List<URL> remoteMachineURLs) {
         this.remoteMachineURLs = remoteMachineURLs;
     }
@@ -186,6 +191,10 @@ public class Configuration implements BrowserSource {
             if (browser.hasId(id))
                 return browser;
         return null;
+    }
+
+    public List<Browser> getAllBrowsers() {
+        return browsers;
     }
 
     public URL getRemoteMachineURLById(int id) {

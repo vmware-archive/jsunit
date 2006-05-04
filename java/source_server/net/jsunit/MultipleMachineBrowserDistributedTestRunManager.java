@@ -14,7 +14,7 @@ public class MultipleMachineBrowserDistributedTestRunManager extends Distributed
         this.remoteMachineURLs = remoteMachineURLs;
     }
 
-    protected List<URL> remoteMachineURLs() {
+    public List<URL> remoteMachineURLs() {
         return remoteMachineURLs;
     }
 

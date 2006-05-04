@@ -1,5 +1,7 @@
 package net.jsunit.model;
 
+import java.util.List;
+
 public class DummyBrowserSource implements BrowserSource {
 
     private String fileName;
@@ -12,5 +14,9 @@ public class DummyBrowserSource implements BrowserSource {
 
     public Browser getBrowserById(int requestedId) {
         return requestedId == id ? new Browser(fileName, id) : null;
+    }
+
+    public List<Browser> getAllBrowsers() {
+        return null;
     }
 }

@@ -26,7 +26,7 @@ public class SingleBrowserDistributedTestRunManager extends DistributedTestRunMa
         }
     }
 
-    protected List<URL> remoteMachineURLs() {
+    public List<URL> remoteMachineURLs() {
         return Arrays.asList(new URL[]{remoteMachineURL});
     }
 
