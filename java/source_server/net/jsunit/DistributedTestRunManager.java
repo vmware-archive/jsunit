@@ -1,8 +1,8 @@
 package net.jsunit;
 
+import net.jsunit.captcha.CaptchaSpec;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.*;
-import net.jsunit.captcha.CaptchaSpec;
 import org.jdom.Document;
 
 import java.io.IOException;
@@ -25,11 +25,6 @@ public abstract class DistributedTestRunManager {
     public static DistributedTestRunManager forSingleRemoteBrowser(
             RemoteServerHitter serverHitter, Configuration localConfiguration, URL remoteMachineURL, String overrideURL, Browser remoteBrowser) {
         return new SingleBrowserDistributedTestRunManager(serverHitter, localConfiguration, remoteMachineURL, overrideURL, remoteBrowser);
-    }
-
-    public static DistributedTestRunManager forSingleRemoteMachine(
-            RemoteServerHitter serverHitter, Configuration localConfiguration, URL remoteMachineURL, String overrideURL) {
-        return new SingleMachineDistributedTestRunManager(serverHitter, localConfiguration, remoteMachineURL, overrideURL);
     }
 
     public static DistributedTestRunManager forMultipleRemoteMachines(
