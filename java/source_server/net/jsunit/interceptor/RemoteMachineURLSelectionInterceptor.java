@@ -11,7 +11,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RemoteMachineURLSelectionInterceptor implements Interceptor {
+public class RemoteMachineUrlSelectionInterceptor implements Interceptor {
 
     public void destroy() {
     }

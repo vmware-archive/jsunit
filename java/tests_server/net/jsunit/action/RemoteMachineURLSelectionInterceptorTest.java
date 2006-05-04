@@ -5,7 +5,7 @@ import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.DummyHttpRequest;
 import net.jsunit.interceptor.MockActionInvocation;
-import net.jsunit.interceptor.RemoteMachineURLSelectionInterceptor;
+import net.jsunit.interceptor.RemoteMachineUrlSelectionInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import java.net.MalformedURLException;
@@ -17,14 +17,14 @@ import java.util.Map;
 
 public class RemoteMachineURLSelectionInterceptorTest extends TestCase {
 
-    private RemoteMachineURLSelectionInterceptor interceptor;
+    private RemoteMachineUrlSelectionInterceptor interceptor;
 
     private MockAction action;
     private MockActionInvocation invocation;
 
     protected void setUp() throws Exception {
         super.setUp();
-        interceptor = new RemoteMachineURLSelectionInterceptor();
+        interceptor = new RemoteMachineUrlSelectionInterceptor();
         action = new MockAction();
         invocation = new MockActionInvocation(action);
     }
