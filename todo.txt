@@ -5,6 +5,7 @@ Required for next release:
     - protect secretKey file from web access
     - bug where some aggregate requests do not show a response from all aggregatees
     - queuing needs work
+    - group 3rd party jars and add licenses
     - thread to update agg server's remote config cache
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
