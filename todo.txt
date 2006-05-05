@@ -1,8 +1,9 @@
 Required for next release:
 
   FEATURES:
-    - ability to choose which remote machines to run on and which of their browsers to run on
+    - make all logging go through some status logger interface
     - protect secretKey file from web access
+    - bug where some aggregate requests do not show a response from all aggregatees
     - queuing needs work
     - thread to update agg server's remote config cache
     - keep original names & place in temporary uniquely named subdirectories

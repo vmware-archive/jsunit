@@ -13,6 +13,7 @@ import net.jsunit.interceptor.RemoteRunnerHitterInterceptorTest;
 import net.jsunit.interceptor.VersionGrabberInterceptorTest;
 import net.jsunit.model.*;
 import net.jsunit.results.SkinTest;
+import net.jsunit.server.RemoteRunSpecificationBuilderTest;
 
 public class PureUnitTestSuite {
 
@@ -35,6 +36,8 @@ public class PureUnitTestSuite {
         result.addTestSuite(ReferencedJsFileTest.class);
         result.addTestSuite(RemoteConfigurationTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
+        result.addTestSuite(RemoteRunSpecificationBuilderTest.class);
+        result.addTestSuite(RemoteRunSpecificationTest.class);
         result.addTestSuite(ResultAcceptorActionTest.class);
         result.addTestSuite(ResultBuilderTest.class);
         result.addTestSuite(ResultDisplayerActionTest.class);

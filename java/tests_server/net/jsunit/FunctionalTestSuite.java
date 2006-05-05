@@ -9,6 +9,7 @@ public class FunctionalTestSuite {
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
         result.addTestSuite(AcceptorFunctionalTest.class);
+        result.addTestSuite(AggregateServerFunctionalTest.class);
         result.addTestSuite(BrowserResultBuilderTest.class);
         result.addTestSuite(ClientFunctionalTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);

@@ -28,7 +28,7 @@
             <interceptor name="security" class="net.jsunit.interceptor.SecurityInterceptor"/>
             <interceptor name="localhostOnly" class="net.jsunit.interceptor.LocalhostOnlyInterceptor"/>
             <interceptor name="browserSelection" class="net.jsunit.interceptor.BrowserSelectionInterceptor"/>
-            <interceptor name="remoteUrlSelection" class="net.jsunit.interceptor.RemoteMachineUrlSelectionInterceptor"/>
+            <interceptor name="remoteRunSpecificationSelection" class="net.jsunit.interceptor.RemoteRunSpecificationSelectionInterceptor"/>
 
             <interceptor-stack name="standardStack">
                 <interceptor-ref name="servlet-config"/>
@@ -72,7 +72,7 @@
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
             <interceptor-ref name="runnerStack"/>
             <interceptor-ref name="remoteRunnerHitter"/>
-            <interceptor-ref name="remoteUrlSelection"/>            
+            <interceptor-ref name="remoteRunSpecificationSelection"/>            
         </action>
 
         <action name="displayer" class="net.jsunit.action.ResultDisplayerAction">

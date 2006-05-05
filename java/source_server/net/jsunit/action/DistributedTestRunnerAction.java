@@ -4,9 +4,9 @@ import com.opensymphony.xwork.Action;
 import net.jsunit.*;
 import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.results.Skin;
 
-import java.net.URL;
 import java.util.List;
 
 public class DistributedTestRunnerAction
@@ -18,7 +18,7 @@ public class DistributedTestRunnerAction
         RemoteRunnerHitterAware,
         JsUnitAggregateServerAware,
         CaptchaAware,
-        RemoteMachineURLSelectionAware {
+        RemoteRunSpecificationAware {
 
     public static final String TRANSFORM = "transform";
 
@@ -33,8 +33,8 @@ public class DistributedTestRunnerAction
     private String captchaKey;
     private String attemptedCaptchaAnswer;
     private SecurityViolation securityViolation;
-    private List<URL> selectedRemoteMachineURLs;
-    private String invalidUrlId;
+    private List<RemoteRunSpecification> remoteRunSpecs;
+    private InvalidRemoteMachineUrlBrowserCombination invalidRemoteUrlBrowserCombo;
 
     public void setAggregateServer(JsUnitAggregateServer server) {
         this.server = server;
@@ -60,17 +60,15 @@ public class DistributedTestRunnerAction
     }
 
     private void runTests() {
-        manager = DistributedTestRunManager.forMultipleRemoteMachines(
-                hitter, getServerConfiguration(), selectedRemoteMachineURLs, overrideURL
-        );
+        manager = new DistributedTestRunManager(hitter, getServerConfiguration(), overrideURL, remoteRunSpecs);
         manager.runTests();
     }
 
     public XmlRenderable getXmlRenderable() {
         if (securityViolation != null)
             return new SimpleXmlRenderable(securityViolation.asXml());
-        if (invalidUrlId != null)
-            return new ErrorXmlRenderable("Invalid URL ID: " + invalidUrlId);
+        if (invalidRemoteUrlBrowserCombo != null)
+            return new ErrorXmlRenderable("Invalid Remote Machine ID/Browser ID: " + invalidRemoteUrlBrowserCombo.getDisplayString());
         return manager.getDistributedTestRunResult();
     }
 
@@ -146,23 +144,20 @@ public class DistributedTestRunnerAction
         this.attemptedCaptchaAnswer = attemptedCaptchaAnswer;
     }
 
-    public void setRemoteMachineURLs(List<URL> remoteMachineURLs) {
-        this.selectedRemoteMachineURLs = remoteMachineURLs;
+    public void setRemoteRunSpecifications(List<RemoteRunSpecification> remoteRunSpecs) {
+        this.remoteRunSpecs = remoteRunSpecs;
     }
 
-    public void setSelectedRemoteMachineURLs(List<URL> urls) {
-        this.selectedRemoteMachineURLs = urls;
+    public RemoteConfiguration getRemoteMachineConfigurationById(int id) {
+        return server.getRemoteMachineConfigurationById(id);
     }
 
-    public void setInvalidRemoteMachineURLId(String invalidId) {
-        this.invalidUrlId = invalidId;
+    public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
+        return server.getAllRemoteMachineConfigurations();
     }
 
-    public URL getRemoteMachineURLById(int id) {
-        return getServerConfiguration().getRemoteMachineURLById(id);
+    public void setInvalidRemoteMachineUrlBrowserCombination(InvalidRemoteMachineUrlBrowserCombination combination) {
+        this.invalidRemoteUrlBrowserCombo = combination;
     }
 
-    public List<URL> getAllRemoteMachineURLs() {
-        return getServerConfiguration().getAllRemoteMachineURLs();
-    }
 }

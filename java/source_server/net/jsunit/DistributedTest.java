@@ -10,10 +10,12 @@ import net.jsunit.model.Browser;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
+import net.jsunit.server.RemoteRunSpecificationBuilder;
 import org.mortbay.util.MultiException;
 
 import java.net.BindException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class DistributedTest extends TestCase {
 
@@ -46,10 +48,13 @@ public class DistributedTest extends TestCase {
         RemoteMachineServerHitter serverHitter = new RemoteMachineServerHitter();
         Configuration aggregateConfiguration = new Configuration(aggregateSource);
         Configuration localConfiguration = new Configuration(localServerSource);
+        List<RemoteRunSpecification> specs = new ArrayList<RemoteRunSpecification>();
+        RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
         if (remoteBrowser != null)
-            manager = DistributedTestRunManager.forSingleRemoteBrowser(serverHitter, localConfiguration, aggregateConfiguration.getRemoteMachineURLs().get(0), overrideURL, remoteBrowser);
+            specs.add(builder.forSingleRemoteBrowser(aggregateConfiguration.getRemoteMachineURLs().get(0), remoteBrowser));
         else
-            manager = DistributedTestRunManager.forMultipleRemoteMachines(serverHitter, localConfiguration, aggregateConfiguration.getRemoteMachineURLs(), overrideURL);
+            specs.addAll(builder.forAllBrowsersFromRemoteURLs(aggregateConfiguration.getRemoteMachineURLs()));
+        manager = new DistributedTestRunManager(serverHitter, localConfiguration,  overrideURL, specs);
         ensureTemporaryStandardServerIsCreated(localServerSource);
         startServerIfNecessary();
     }

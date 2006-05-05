@@ -3,8 +3,9 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.DistributedTestRunManager;
 import net.jsunit.JsUnitAggregateServer;
-import net.jsunit.MultipleMachineBrowserDistributedTestRunManager;
 import net.jsunit.SuccessfulRemoteServerHitter;
+import net.jsunit.RemoteRunSpecification;
+import net.jsunit.model.Browser;
 import net.jsunit.captcha.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
@@ -16,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class DistributedTestRunnerActionTest extends TestCase {
 
@@ -29,20 +31,20 @@ public class DistributedTestRunnerActionTest extends TestCase {
     }
 
     public void testSimple() throws Exception {
-        action.setSelectedRemoteMachineURLs(urls("http://www.example.com"));
+        action.setRemoteRunSpecifications(someRemoteRunSpecs());
         assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
         assertTrue(action.getTestRunManager().getDistributedTestRunResult().wasSuccessful());
         assertNull(action.getTestRunManager().getOverrideURL());
     }
 
     public void testSimpleWithSkin() throws Exception {
-        action.setSelectedRemoteMachineURLs(urls("http://www.example.com"));        
+        action.setRemoteRunSpecifications(someRemoteRunSpecs());
         action.setSkin(new Skin(3, new File("aSkin.xsl")));
         assertEquals(DistributedTestRunnerAction.TRANSFORM, action.execute());
     }
 
     public void testOverrideURL() throws Exception {
-        action.setSelectedRemoteMachineURLs(urls("http://www.example.com"));
+        action.setRemoteRunSpecifications(someRemoteRunSpecs());
         String overrideURL = "http://overrideurl.com:1234?foo=bar&bar=fo";
         action.setUrl(overrideURL);
         assertEquals(DistributedTestRunnerAction.SUCCESS, action.execute());
@@ -58,12 +60,19 @@ public class DistributedTestRunnerActionTest extends TestCase {
     }
 
     public void testLimitToSpecificRemoteMachinesAndBrowsers() throws Exception {
-        List<URL> urls = urls("http://www.example.com", "http://www.example.net", "http://www.example.org");
-        action.setSelectedRemoteMachineURLs(urls);
+        action.setRemoteRunSpecifications(someRemoteRunSpecs());
         action.execute();
         DistributedTestRunManager testRunManager = action.getTestRunManager();
-        assertTrue(testRunManager instanceof MultipleMachineBrowserDistributedTestRunManager);
-        assertEquals(3, testRunManager.remoteMachineURLs().size());
+        assertEquals(2, testRunManager.getRemoteRunSpecs().size());
+    }
+
+    private List<RemoteRunSpecification> someRemoteRunSpecs() throws MalformedURLException {
+        RemoteRunSpecification spec0 = new RemoteRunSpecification(new URL("http://www.example.com"));
+        spec0.addBrowser(new Browser("browser0.exe", 0));
+        spec0.addBrowser(new Browser("browser1.exe", 1));
+        RemoteRunSpecification spec1 = new RemoteRunSpecification(new URL("http://www.example.net"));
+        spec1.addBrowser(new Browser("browser0.exe", 0));
+        return Arrays.asList(new RemoteRunSpecification[] {spec0, spec1});
     }
 
     private List<URL> urls(String... urls) throws MalformedURLException {
@@ -75,9 +84,9 @@ public class DistributedTestRunnerActionTest extends TestCase {
     }
 
     public void testInvalidURLId() throws Exception {
-        action.setInvalidRemoteMachineURLId("foobar");
+        action.setInvalidRemoteMachineUrlBrowserCombination(new InvalidRemoteMachineUrlBrowserCombination("bad URL ID", "bad browser ID"));
         assertEquals(
-                "<error>Invalid URL ID: foobar</error>",
+                "<error>Invalid Remote Machine ID/Browser ID: bad URL ID, bad browser ID</error>",
                 XmlUtility.asString(action.getXmlRenderable().asXml())
         );
     }

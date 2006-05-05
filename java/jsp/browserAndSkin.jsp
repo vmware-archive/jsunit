@@ -43,7 +43,8 @@
             <table>
                 <%
                     List<RemoteConfiguration> remoteConfigurations = ((JsUnitAggregateServer) server).getCachedRemoteConfigurations();
-                    for (RemoteConfiguration remoteConfiguration : remoteConfigurations) {%>
+                    for (int i = 0; i <remoteConfigurations.size(); i++) {
+                        RemoteConfiguration remoteConfiguration = remoteConfigurations.get(i);%>
                 <tr>
                     <td>
                         <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
@@ -56,7 +57,7 @@
                             %>
                             <tr>
                                 <td valign="top" nowrap align="left">
-                                    <input type="checkbox" name="urlId_browserId" value="<%=browser.getId()%>" checked>
+                                    <input type="checkbox" name="urlId_browserId" value="<%=i%>_<%=browser.getId()%>" checked>
                                     <%if (browser.getType() != null) {%>
                                     <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                                     <%}%>

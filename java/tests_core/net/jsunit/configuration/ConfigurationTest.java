@@ -190,11 +190,11 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         assertEquals(
                 "http://localhost:8081/jsunit",
-                configuration.getRemoteMachineURLById(0).toString()
+                configuration.getRemoteMachineConfigurationById(0).toString()
         );
         assertEquals(
                 "http://127.0.0.1:8082/jsunit",
-                configuration.getRemoteMachineURLById(1).toString()
+                configuration.getRemoteMachineConfigurationById(1).toString()
         );
     }
 

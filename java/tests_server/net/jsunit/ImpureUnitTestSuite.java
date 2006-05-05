@@ -5,7 +5,7 @@ import junit.framework.TestSuite;
 import net.jsunit.action.DistributedTestRunnerActionTest;
 import net.jsunit.action.TestRunnerActionSimultaneousRunBlockingTest;
 import net.jsunit.action.TestRunnerActionTest;
-import net.jsunit.action.RemoteMachineURLSelectionInterceptorTest;
+import net.jsunit.action.RemoteRunSpecificationSelectionInterceptorTest;
 import net.jsunit.captcha.CaptchaSpecTest;
 import net.jsunit.configuration.ConfigurationSourceResolutionTest;
 import net.jsunit.configuration.ConfigurationTest;
@@ -41,7 +41,7 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(RemoteConfigurationFetcherTest.class);
         result.addTestSuite(RemoteConfigurationSourceTest.class);
         result.addTestSuite(RemoteMachineRunnerHitterTest.class);
-        result.addTestSuite(RemoteMachineURLSelectionInterceptorTest.class);
+        result.addTestSuite(RemoteRunSpecificationSelectionInterceptorTest.class);
         result.addTestSuite(RemoteTestRunClientTest.class);
         result.addTestSuite(RequestSourceInterceptorTest.class);
         result.addTestSuite(ResultAcceptorTest.class);

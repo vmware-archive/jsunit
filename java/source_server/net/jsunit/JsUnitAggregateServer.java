@@ -3,12 +3,13 @@ package net.jsunit;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.configuration.ServerType;
+import net.jsunit.model.RemoteMachineConfigurationSource;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JsUnitAggregateServer extends AbstractJsUnitServer {
+public class JsUnitAggregateServer extends AbstractJsUnitServer implements RemoteMachineConfigurationSource {
 
     private RemoteServerHitter hitter;
     private ArrayList<RemoteConfiguration> cachedRemoteConfigurations;
@@ -62,4 +63,11 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer {
         return cachedRemoteConfigurations;
     }
 
+    public RemoteConfiguration getRemoteMachineConfigurationById(int id) {
+        return getAllRemoteMachineConfigurations().get(id);
+    }
+
+    public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
+        return getCachedRemoteConfigurations();
+    }
 }
