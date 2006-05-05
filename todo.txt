@@ -1,4 +1,4 @@
-Required for next release:
+Required for release:
 
   FEATURES:
     - make all logging go through some status logger interface

@@ -11,7 +11,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UploadRunnerPageFunctionalTest extends FunctionalTestCase {
+public class UploadRunnerPageFunctionalTest extends StandardServerFunctionalTestCase {
 
     private List<File> createdFiles = new ArrayList<File>();
 

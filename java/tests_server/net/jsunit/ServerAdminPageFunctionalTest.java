@@ -1,6 +1,6 @@
 package net.jsunit;
 
-public class ServerAdminPageFunctionalTest extends FunctionalTestCase {
+public class ServerAdminPageFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();

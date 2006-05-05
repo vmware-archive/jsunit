@@ -6,7 +6,7 @@ import org.jdom.Document;
 
 import java.net.URLEncoder;
 
-public class RunnerFunctionalTest extends FunctionalTestCase {
+public class RunnerFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected ConfigurationSource createConfigurationSource() {
         return new FunctionalTestConfigurationSource(port) {

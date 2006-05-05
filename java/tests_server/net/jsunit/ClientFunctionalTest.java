@@ -7,7 +7,7 @@ import net.jsunit.model.TestRunResult;
 
 import java.io.File;
 
-public class ClientFunctionalTest extends FunctionalTestCase {
+public class ClientFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected ConfigurationSource createConfigurationSource() {
         return new FunctionalTestConfigurationSource(port) {

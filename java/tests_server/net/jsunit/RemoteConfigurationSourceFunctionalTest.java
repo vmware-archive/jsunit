@@ -4,7 +4,7 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.utility.XmlUtility;
 
-public class RemoteConfigurationSourceFunctionalTest extends FunctionalTestCase {
+public class RemoteConfigurationSourceFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testSimple() throws Exception {
         String remoteMachineURL = "http://localhost:" + port + "/jsunit";

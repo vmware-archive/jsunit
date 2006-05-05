@@ -6,7 +6,7 @@ import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 import org.jdom.Element;
 
-public class DisplayerFunctionalTest extends FunctionalTestCase {
+public class DisplayerFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected boolean needsRealResultRepository() {
         return true;
@@ -40,12 +40,12 @@ public class DisplayerFunctionalTest extends FunctionalTestCase {
 
     public void testValid() throws Exception {
         Browser browser = new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0);
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
+        standardServer().launchBrowserTestRun(new BrowserLaunchSpecification(browser));
         BrowserResult browserResult = new BrowserResult();
         String id = String.valueOf(System.currentTimeMillis());
         browserResult.setId(id);
         browserResult.setBrowser(browser);
-        server.accept(browserResult);
+        standardServer().accept(browserResult);
         webTester.beginAt("displayer?id=" + id + "&browserId=0");
         assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
     }

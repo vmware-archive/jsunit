@@ -5,7 +5,7 @@ import net.jsunit.model.BrowserResult;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
-public class LogDisplayerPageFunctionalTest extends FunctionalTestCase {
+public class LogDisplayerPageFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected boolean needsRealResultRepository() {
         return true;
@@ -23,12 +23,12 @@ public class LogDisplayerPageFunctionalTest extends FunctionalTestCase {
 
     public void testDisplayerForm() throws Exception {
         Browser browser = new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0);
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
+        standardServer().launchBrowserTestRun(new BrowserLaunchSpecification(browser));
         BrowserResult browserResult = new BrowserResult();
         String id = String.valueOf(System.currentTimeMillis());
         browserResult.setId(id);
         browserResult.setBrowser(browser);
-        server.accept(browserResult);
+        standardServer().accept(browserResult);
         webTester.setFormElement("id", id);
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.setFormElement("browserId", "0");

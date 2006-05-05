@@ -4,8 +4,6 @@ import com.meterware.httpunit.HttpUnitOptions;
 import junit.framework.TestCase;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.ConfigurationSource;
-import net.jsunit.logging.BrowserResultRepository;
-import net.jsunit.logging.FileBrowserResultRepository;
 import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.model.ResultType;
 import net.sourceforge.jwebunit.WebTester;
@@ -14,7 +12,6 @@ import org.jdom.Element;
 import org.jdom.JDOMException;
 import org.jdom.input.SAXBuilder;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -27,7 +24,7 @@ public abstract class FunctionalTestCase extends TestCase {
     }
 
     protected WebTester webTester;
-    protected JsUnitStandardServer server;
+    protected JsUnitServer server;
     protected int port;
     protected Configuration configuration;
 
@@ -35,13 +32,13 @@ public abstract class FunctionalTestCase extends TestCase {
         super.setUp();
         port = new TestPortManager().newPort();
         configuration = new Configuration(createConfigurationSource());
-        server = new JsUnitStandardServer(configuration, createResultRepository(), true);
-        if (shouldMockOutProcessStarter())
-            server.setProcessStarter(new MockProcessStarter());
+        server = createServer();
         server.start();
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl(baseURL());
     }
+
+    protected abstract JsUnitServer createServer();
 
     protected ConfigurationSource createConfigurationSource() {
         return new FunctionalTestConfigurationSource(port);
@@ -49,20 +46,6 @@ public abstract class FunctionalTestCase extends TestCase {
 
     protected String baseURL() {
         return "http://localhost:" + webTesterPort() + "/jsunit";
-    }
-
-    private BrowserResultRepository createResultRepository() {
-        return needsRealResultRepository() ?
-                new FileBrowserResultRepository(new File("logs")) :
-                new MockBrowserResultRepository();
-    }
-
-    protected boolean needsRealResultRepository() {
-        return false;
-    }
-
-    protected boolean shouldMockOutProcessStarter() {
-        return true;
     }
 
     protected int webTesterPort() {

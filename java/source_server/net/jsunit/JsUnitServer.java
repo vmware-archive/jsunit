@@ -22,4 +22,9 @@ public interface JsUnitServer extends XmlRenderable {
 
     List<StatusMessage> getStatusMessages();
 
+    void start() throws Exception;
+
+    void dispose();
+
+    void logStatus(String status);
 }

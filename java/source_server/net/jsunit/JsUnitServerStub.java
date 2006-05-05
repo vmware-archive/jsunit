@@ -37,6 +37,15 @@ public class JsUnitServerStub implements JsUnitServer {
         return null;
     }
 
+    public void start() throws Exception {
+    }
+
+    public void dispose() {
+    }
+
+    public void logStatus(String status) {
+    }
+
     public String getSecretKey() {
         return null;
     }

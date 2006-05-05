@@ -1,6 +1,6 @@
 package net.jsunit;
 
-public class ServerDefaultPageFunctionalTest extends FunctionalTestCase {
+public class ServerDefaultPageFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testLandingPage() throws Exception {
         webTester.beginAt("/");

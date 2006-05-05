@@ -2,7 +2,7 @@ package net.jsunit;
 
 import net.jsunit.model.ResultType;
 
-public class UrlRunnerPageFunctionalTest extends FunctionalTestCase {
+public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected boolean shouldMockOutProcessStarter() {
         return false;

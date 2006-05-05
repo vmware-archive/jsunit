@@ -1,6 +1,6 @@
 package net.jsunit;
 
-public class ServerStatusFunctionalTest extends FunctionalTestCase {
+public class ServerStatusFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testSimple() throws Exception {
         server.logStatus("message 1");

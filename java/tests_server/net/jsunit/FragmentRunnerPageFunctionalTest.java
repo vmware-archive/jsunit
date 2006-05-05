@@ -2,7 +2,7 @@ package net.jsunit;
 
 import net.jsunit.model.ResultType;
 
-public class FragmentRunnerPageFunctionalTest extends FunctionalTestCase {
+public class FragmentRunnerPageFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected boolean shouldMockOutProcessStarter() {
         return false;

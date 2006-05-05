@@ -4,7 +4,7 @@ import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.captcha.AesCipher;
 import net.jsunit.model.ResultType;
 
-public class CaptchaFunctionalTest extends FunctionalTestCase {
+public class CaptchaFunctionalTest extends StandardServerFunctionalTestCase {
 
     protected boolean shouldMockOutProcessStarter() {
         return false;

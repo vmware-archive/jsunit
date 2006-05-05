@@ -6,11 +6,11 @@ import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
-public class AcceptorFunctionalTest extends FunctionalTestCase {
+public class AcceptorFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testSubmission() throws Exception {
         Browser browser = new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0);
-        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
+        standardServer().launchBrowserTestRun(new BrowserLaunchSpecification(browser));
 
         StringBuffer buffer = new StringBuffer();
         addParameter(buffer, BrowserResultWriter.ID, "ID_foo", true);
