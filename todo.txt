@@ -6,6 +6,7 @@ Required for next release:
     - bug where some aggregate requests do not show a response from all aggregatees
     - queuing needs work
     - group 3rd party jars and add licenses
+    - think through distribution (not jsps, etc)
     - thread to update agg server's remote config cache
     - keep original names & place in temporary uniquely named subdirectories
     - remove all files with an around interceptor
