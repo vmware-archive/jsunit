@@ -36,8 +36,8 @@
     <td width="60%" colspan="2" valign="top" height="160">
         <textarea id="fragment" name="fragment" style="width:97%;height:97%" rows="10"></textarea>
     </td>
-    <td width="1%" rowspan="4">&nbsp;</td>
-    <td width="33%" rowspan="4" valign="top">
+    <td width="1%" rowspan="5">&nbsp;</td>
+    <td width="33%" rowspan="5" valign="top">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
 
@@ -112,24 +112,14 @@
 
             <div class="rb1bot"><div></div></div></div>
     </td>
-    <td width="1%" rowspan="4">&nbsp;</td>
+    <td width="1%" rowspan="5">&nbsp;</td>
 </tr>
 <tr>
     <td width="5%" height="1">&nbsp;</td>
-    <td width="60%" valign="top" colspan="2" height="1">
+    <td width="25%" valign="top" height="1">
         <input type="submit" class="button" value="Run test fragment" onclick="return verifyFragmentNotBlank()">
     </td>
-</tr>
-<tr>
-    <td width="5% " valign="top">
-        <b>Browsers:</b>
-    </td>
-    <td width="25%" valign="top">
-        <jsp:include page="browsers.jsp">
-            <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
-        </jsp:include>
-    </td>
-    <td width="35%" valign="top" rowspan="2">
+    <td width="35%" valign="top" rowspan="4">
         <%if (server.getConfiguration().useCaptcha()) {%>
         <jsp:include page="captcha.jsp"/>
         <%}%>
@@ -137,11 +127,25 @@
 </tr>
 <tr>
     <td width="5%" valign="top">
+        <b>Browsers:</b>
+    </td>
+    <td width="25%" valign="top">
+        <jsp:include page="browsers.jsp">
+            <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
+            <jsp:param name="multipleBrowsersAllowed" value="true"/>
+        </jsp:include>
+    </td>
+</tr>
+<tr>
+    <td width="5%" valign="top">
         <b>Skin:</b>
     </td>
-    <td width="25%" colspan="1">
+    <td width="25%" colspan="1" valign="top">
         <jsp:include page="skin.jsp"/>
     </td>
+</tr>
+<tr>
+    <td colspan="2">&nbsp;</td>
 </tr>
 </table>
 </td>

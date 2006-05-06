@@ -11,7 +11,6 @@
 <%if (!server.isAggregateServer()) {%>
 <table>
     <%
-
         List<Browser> browsers = server.getConfiguration().getBrowsers();
         for (int i = 0; i < browsers.size(); i++) {
             Browser browser = browsers.get(i);

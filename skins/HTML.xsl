@@ -19,7 +19,9 @@
         <h4>JsUnit Access denied</h4>
         <xsl:value-of select="."/>
         <xsl:if test="@resetRequired='true'">
-            Please click <a href="/" target="_top">here</a> to start over.
+            Please click
+            <a href="/" target="_top">here</a>
+            to start over.
         </xsl:if>
     </xsl:template>
 
@@ -98,7 +100,7 @@
                                     <font size="-2">
                                         <a>
                                             <xsl:attribute name="href">
-                                                <xsl:text>javascript:toggleVisibility("</xsl:text>
+                                                <xsl:text>javascript:toggleBlockVisibility("</xsl:text>
                                                 <xsl:value-of
                                                         select="concat(../properties/property[@name='hostname']/@value, '_', browser/id)"/>
                                                 <xsl:text>","</xsl:text>
@@ -192,16 +194,16 @@
             </xsl:attribute>
             <xsl:value-of select="@type"/>
         </font>
-        <xsl:if test="@type='FAILURE'">
-            <pre>
-                <xsl:value-of select="failure"/>
-            </pre>
-        </xsl:if>
-        <xsl:if test="@type='ERROR'">
-            <pre>
-                <xsl:value-of select="error"/>
-            </pre>
-        </xsl:if>
+        <pre>
+            <font size="+0">
+                <xsl:if test="@type='FAILURE'">
+                    <xsl:value-of select="failure"/>
+                </xsl:if>
+                <xsl:if test="@type='ERROR'">
+                    <xsl:value-of select="error"/>
+                </xsl:if>
+            </font>
+        </pre>
     </xsl:template>
 
     <xsl:template match="browser">

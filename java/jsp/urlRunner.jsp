@@ -57,7 +57,9 @@
                             <b>Browsers:</b>
                         </td>
                         <td width="25%" valign="top">
-                            <jsp:include page="browsers.jsp"/>
+                            <jsp:include page="browsers.jsp">
+                                <jsp:param name="multipleBrowsersAllowed" value="true"/>
+                            </jsp:include>
                         </td>
                         <td width="35%" valign="top" rowspan="2">
                             <%if (server.getConfiguration().useCaptcha()) {%>
