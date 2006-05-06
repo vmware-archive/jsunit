@@ -19,16 +19,15 @@
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body>
-<jsp:include page="header.jsp"/>
-
+<body bgcolor="#e4ecec">
 <form action="/jsunit/runner" method="post" target="resultsFrame">
-    <table cellpadding="0" cellspacing="0" width="100%">
+    <jsp:include page="header.jsp"/>
+    <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">
         <jsp:include page="tabRow.jsp">
             <jsp:param name="selectedPage" value="fragmentRunner"/>
         </jsp:include>
         <tr>
-            <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
+            <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;">
                 <table>
                     <tr>
                         <td colspan="3">
@@ -47,10 +46,10 @@
                             <b>Fragment:</b>
                         </td>
                         <td width="10%">
-                            <textarea id="fragment" name="fragment" width="100%" cols="75" rows="10"></textarea>
+                            <textarea id="fragment" name="fragment" width="100%" cols="75" rows="8"></textarea>
                         </td>
                         <td width="80%" valign="top">
-                            <input type="submit" value="Run" onclick="return verifyFragmentNotBlank()">
+                            <input type="submit" class="button" value="Run fragment" onclick="return verifyFragmentNotBlank()">
                         </td>
                     </tr>
                 </table>
@@ -74,10 +73,9 @@
         </tr>
     </table>
 </form>
-<br>
-Server output:
-<br>
-<iframe name="resultsFrame" width="100%" height="250"></iframe>
+
+<b>Test results:</b>
+<iframe name="resultsFrame" width="100%" height="250" src="/jsunit/app/emptyPage.html"></iframe>
 
 </body>
 </html>

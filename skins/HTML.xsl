@@ -9,7 +9,7 @@
                 <link rel="stylesheet" type="text/css" href="/jsunit/css/jsUnitStyle.css"/>
                 <script language="javascript" src="/jsunit/app/server/jsUnitServerUtilities.js"></script>
             </head>
-            <body>
+            <body bgcolor="#FFFFFF">
                 <xsl:apply-templates/>
             </body>
         </html>

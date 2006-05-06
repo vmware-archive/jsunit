@@ -10,7 +10,7 @@
     JsUnitServer server = ServerRegistry.getServer();
     PlatformType platformType = PlatformType.resolve();
 %>
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#DDDDDD">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#e4ecec">
 <tr>
 <td>&nbsp;</td>
 <td>
@@ -18,7 +18,7 @@
 </td>
 <td>&nbsp;</td>
 <td nowrap align="center">
-<table cellpadding="0" cellspacing="0">
+<table cellpadding="0" cellspacing="2">
 <tr>
     <td>
         <%if (!server.isAggregateServer()) {%>
@@ -97,23 +97,36 @@
                         <div class="rb0top"><div></div></div>
 
                         <div class="rb0content" style="width:200;" align="center">
-                            <table>
+                            <table cellpadding="0" cellspacing="0">
                                 <tr>
-                                    <td width="1">
-                                        <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
+                                    <td width="1" rowspan="2">
+                                        <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
                                     </td>
                                     <td align="left">
+                                        <%if (!StringUtility.isEmpty(remoteConfiguration.getDescription())) {%>
                                         <%=remoteConfiguration.getDescription()%> -
+                                        <%}%>
                                         <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><%=remoteConfiguration.getRemoteURL().getHost()%></a>
-                                        <br>
-                                        <%=remoteConfiguration.getOsString()%>
-                                        <%
-                                            for (Browser browser : remoteConfiguration.getBrowsers()) {
-                                                if (browser.getType() != null) {
-                                        %>
-                                        <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
-                                        <%}%>
-                                        <%}%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <table cellpadding="1" cellspacing="0">
+                                            <tr>
+                                                <td>
+                                                    Browsers:
+                                                </td>
+                                                <td>
+                                                    <%
+                                                        for (Browser browser : remoteConfiguration.getBrowsers()) {
+                                                            if (browser.getType() != null) {
+                                                    %>
+                                                    <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                                                    <%}%>
+                                                    <%}%>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
                             </table>
@@ -133,10 +146,20 @@
 </table>
 </td>
 <td>&nbsp;</td>
-<td nowrap align="center">
-    <table cellpadding="0" cellspacing="0">
+<td nowrap align="center" valign="top">
+    <table cellpadding="0" cellspacing="2" height="100%">
         <tr>
-            <td>
+            <td nowrap align="center" valign="top">
+                [ <a href="http://www.jsunit.net/">jsunit.net</a>
+                | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
+                | <a href="http://group.jsunit.net/">group.jsunit.net</a> ]
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+        </tr>
+        <tr>
+            <td valign="bottom">
                 <div class="rb2roundbox">
                     <div class="rb2top"><div></div></div>
 
@@ -153,19 +176,16 @@
     </table>
 </td>
 <td>&nbsp;</td>
+<%if (false) {%>
 <td nowrap align="right" valign="middle">
-    <b><a href="http://www.jsunit.net/">JsUnit home</a></b><br>
-    <b><a href="http://blog.jsunit.net/">JsUnit blog</a></b><br>
-    <b><a href="http://group.jsunit.net/">JsUnit group</a></b><br>
-    <%if (false) {%>
     <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
         version</a></div>
     <br>
     <a href="http://www.pivotalsf.com/" target="top">
         <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal" title="Powered by Pivotal">
     </a>
-    <%}%>
 </td>
 <td>&nbsp;</td>
+<%}%>
 </tr>
 </table>

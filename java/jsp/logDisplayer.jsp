@@ -11,16 +11,15 @@
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body>
-<jsp:include page="header.jsp"/>
-<form action="/jsunit/displayer">
-
-    <table cellpadding="0" cellspacing="0">
+<body bgcolor="#e4ecec">
+<form action="/jsunit/displayer" target="resultsFrame">
+    <jsp:include page="header.jsp"/>
+    <table cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
         <jsp:include page="tabRow.jsp">
             <jsp:param name="selectedPage" value="logDisplayer"/>
         </jsp:include>
         <tr>
-            <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
+            <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;">
                 <table>
                     <tr>
                         <td colspan="3">
@@ -38,7 +37,7 @@
                             <input type="text" name="id" size="60"/>
                         </td>
                         <td width="80%">
-                            <input type="submit" value="Show log">
+                            <input class="button" type="submit" value="Show log">
                         </td>
                     </tr>
                     <jsp:include page="browserAndSkin.jsp">
@@ -49,9 +48,8 @@
         </tr>
     </table>
 </form>
-<br>
-Server output:
-<br>
-<iframe name="resultsFrame" width="100%" height="250"></iframe>
+<b>Test run log:</b>
+<iframe name="resultsFrame" width="100%" height="250" src="/jsunit/app/emptyPage.html"></iframe>
+
 </body>
 </html>

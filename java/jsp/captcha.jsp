@@ -1,6 +1,5 @@
 <%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
-<%@ page import="net.jsunit.captcha.CaptchaGenerator" %>
 <%@ page import="net.jsunit.captcha.CaptchaSpec" %>
 <%@ page import="java.net.URLEncoder" %>
 <%
@@ -15,7 +14,7 @@
 <table>
     <tr>
         <td colspan="3" width="200" height="50">
-            <img src="/jsunit/captchaImage?captchaKey=<%=URLEncoder.encode(key, "UTF-8")%>">
+            <img src="/jsunit/captchaImage?captchaKey=<%=URLEncoder.encode(key, "UTF-8")%>" title="CAPTCHA image" alt="CAPTCHA image">
         </td>
         <td rowspan="2" valign="top" width="400">
             <div class="rb1roundbox" id="whatIsCaptchaDiv" style="display:none">
@@ -40,11 +39,22 @@
             <input type="text" size="7" name="attemptedCaptchaAnswer" autocomplete="off">
         </td>
         <td nowrap align="left" valign="middle" width="66">
-            <font size="-2">
-                <a href="javascript:toggleVisibility('whatIsCaptchaDiv', 'whatIsCaptchaLinkDiv', 'what\'s this?')">
-                    <div id="whatIsCaptchaLinkDiv" style="text-decoration:underline;">what's this?</div>
-                </a>
-            </font>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td>
+                        <a href="javascript:toggleVisibility('whatIsCaptchaDiv', 'whatIsCaptchaLinkDiv', 'what\'s this?')">
+                            <img src="/jsunit/images/question_mark.gif" alt="what's this?" title="what's this?" border="0">
+                        </a
+                    </td>
+                    <td>
+                        <font size="-2">
+                            <a href="javascript:toggleVisibility('whatIsCaptchaDiv', 'whatIsCaptchaLinkDiv', 'what\'s this?')">
+                                <div id="whatIsCaptchaLinkDiv" style="text-decoration:underline;">what's this?</div>
+                            </a>
+                        </font>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
 </table>

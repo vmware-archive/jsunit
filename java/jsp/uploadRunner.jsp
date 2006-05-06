@@ -56,15 +56,15 @@
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body>
-<jsp:include page="header.jsp"/>
+<body bgcolor="#e4ecec">
 <form action="/jsunit/runner" method="post" target="resultsFrame" enctype="multipart/form-data">
-    <table cellpadding="0" cellspacing="0" width="100%">
+    <jsp:include page="header.jsp"/>
+    <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">
         <jsp:include page="tabRow.jsp">
             <jsp:param name="selectedPage" value="uploadRunner"/>
         </jsp:include>
         <tr>
-            <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;">
+            <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;">
                 <table>
                     <tr>
                         <td colspan="3">
@@ -131,12 +131,13 @@
                         </td>
                     </tr>
                 </table>
-            </td></tr></table>
+            </td>
+        </tr>
+    </table>
 </form>
-<br>
-Server output:
-<br>
-<iframe name="resultsFrame" width="100%" height="250" border="0"></iframe>
+
+<b>Test results:</b>
+<iframe name="resultsFrame" width="100%" height="250" src="/jsunit/app/emptyPage.html"></iframe>
 
 </body>
 </html>

@@ -15,7 +15,7 @@ public class CaptchaGenerator {
     public CaptchaGenerator() {
         Properties properties = new Properties();
         properties.put(Constants.SIMPLE_CAPTCHA_BOX, "true");
-        properties.put(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTC, "129,0,0");
+        properties.put(Constants.SIMPLE_CAPTCHA_TEXTPRODUCER_FONTC, "0,0,0");
         properties.put(Constants.SIMPLE_CAPTCHA_BOX_C, "255,255,255");
         properties.put("cap.background.c.from", "255,255,255");
         properties.put("cap.background.c.to", "255,255,255");

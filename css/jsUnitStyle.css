@@ -4,7 +4,19 @@ body {
     font-family: Trebuchet MS, Verdana, Arial, Sans-serif;
     color: #000;
     font-size: 0.8em;
-    background-color: #FFF;
+}
+
+.button {
+    color: #000000;
+    font-family: 'trebuchet ms', helvetica, sans-serif;
+    font-size: 100%;
+    font-weight: bold;
+    background-color: #dddddd;
+    border: 1px solid;
+    border-top-color: #696;
+    border-left-color: #696;
+    border-right-color: #363;
+    border-bottom-color: #363;
 }
 
 table {
@@ -60,6 +72,7 @@ h4 {
     height: 26px;
     background: #FFFFFF;
     border-style: solid;
+    border-color: #000000;
     border-bottom-width: 1px;
     border-top-width: 1px;
     border-left-width: 1px;
@@ -69,9 +82,9 @@ h4 {
 .selectedTab {
     font-family: Verdana, Arial, Helvetica, sans-serif;
     height: 26px;
-    background: #DDDDDD;
     font-weight: bold;
     border-style: solid;
+    border-color: #000000;
     border-bottom-width: 0px;
     border-top-width: 1px;
     border-left-width: 1px;
@@ -80,8 +93,9 @@ h4 {
 
 .tabHeaderSeparator {
     height: 26px;
-    background: #FFFFFF;
+    background: #e4ecec;
     border-style: solid;
+    border-color: #000000;
     border-bottom-width: 1px;
     border-top-width: 0px;
     border-left-width: 0px;
@@ -116,7 +130,6 @@ h4 {
 
 .rb0content {
     margin: 0 7px;
-    background-color: #FFFFFF
 }
 
 .rb0roundbox {
@@ -152,7 +165,6 @@ h4 {
 
 .rb1content {
     margin: 0 7px;
-    color: #FFFFFF;
 }
 
 .rb1roundbox {
@@ -161,7 +173,7 @@ h4 {
 }
 
 .rb1content a {
-    color: #FFFFFF;
+    color: #0000AA;
     text-decoration: underline;
 }
 
@@ -193,7 +205,6 @@ h4 {
 
 .rb2content {
     margin: 0 7px;
-    color: #FFFFFF;
 }
 
 .rb2roundbox {
@@ -202,6 +213,6 @@ h4 {
 }
 
 .rb2content a {
-    color: #FFFFFF;
+    color: #0000AA;
     text-decoration: underline;
 }

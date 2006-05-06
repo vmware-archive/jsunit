@@ -23,7 +23,7 @@
                 %>
                 <tr>
                     <td valign="top" nowrap>
-                        <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" name="browserId" value="<%=browser.getId()%>" <%if (multipleBrowsersAllowed || i == 0) {%> checked<%}%>
+                        <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" name="browserId" value="<%=browser.getId()%>" <%if (multipleBrowsersAllowed || i == 0) {%> checked<%}%>>
                                 <%if (browser.getType() != null) {%>
                         <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                         <%}%>
@@ -47,7 +47,7 @@
                         RemoteConfiguration remoteConfiguration = remoteConfigurations.get(i);%>
                 <tr>
                     <td>
-                        <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getPlatformType().getDisplayName()%>">
+                        <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
                     </td>
                     <td width="*">
                         <table width="*">
