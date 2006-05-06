@@ -40,7 +40,7 @@
                             <input class="button" type="submit" value="Show log">
                         </td>
                     </tr>
-                    <jsp:include page="browserAndSkin.jsp">
+                    <jsp:include page="browsers.jsp">
                         <jsp:param name="multipleBrowsersAllowed" value="false"/>
                     </jsp:include>
                 </table>

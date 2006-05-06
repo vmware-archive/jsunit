@@ -37,7 +37,7 @@
     <%}%>
 
     <td class="tabHeaderSeparator">&nbsp;</td>
-    <%if (!server.isAggregateServer()) {%>
+    <%if (false) {%>
     <%if (selectedPage.equals("logDisplayer")) {%>
     <td class="selectedTab">
         &nbsp;&nbsp;LogDisplayer&nbsp;&nbsp;

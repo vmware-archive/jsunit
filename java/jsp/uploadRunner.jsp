@@ -118,16 +118,24 @@
                 </table>
                 <table>
                     <tr>
-                        <td valign="top">
-                            <jsp:include page="browserAndSkin.jsp">
-                                <jsp:param name="multipleBrowsersAllowed" value="true"/>
-                            </jsp:include>
+                        <td width="5% " valign="top">
+                            <b>Browsers:</b>
                         </td>
-                        <td width="100">&nbsp;</td>
-                        <td valign="top">
+                        <td width="25%" valign="top">
+                            <jsp:include page="browsers.jsp"/>
+                        </td>
+                        <td width="35%" valign="top" rowspan="2">
                             <%if (server.getConfiguration().useCaptcha()) {%>
                             <jsp:include page="captcha.jsp"/>
                             <%}%>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="5%" valign="top">
+                            <b>Skin:</b>
+                        </td>
+                        <td width="25%" colspan="1">
+                            <jsp:include page="skin.jsp"/>
                         </td>
                     </tr>
                 </table>

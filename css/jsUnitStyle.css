@@ -24,7 +24,7 @@ table {
 }
 
 a:link, a:visited {
-    color: #0000AA;
+    color: #00F;
     text-decoration: underline;
 }
 
@@ -213,6 +213,46 @@ h4 {
 }
 
 .rb2content a {
+    color: #0000AA;
+    text-decoration: underline;
+}
+
+.rb3roundbox {
+    background: url( /jsunit/images/nt3.gif ) repeat;
+}
+
+.rb3top div {
+    background: url( /jsunit/images/tl3.gif ) no-repeat top left;
+}
+
+.rb3top {
+    background: url( /jsunit/images/tr3.gif ) no-repeat top right;
+}
+
+.rb3bot div {
+    background: url( /jsunit/images/bl3.gif ) no-repeat bottom left;
+}
+
+.rb3bot {
+    background: url( /jsunit/images/br3.gif ) no-repeat bottom right;
+}
+
+.rb3top div, .rb3top, .rb3bot div, .rb3bot {
+    width: 100%;
+    height: 7px;
+    font-size: 0px;
+}
+
+.rb3content {
+    margin: 0 7px;
+}
+
+.rb3roundbox {
+    width: 100%;
+    margin: 0px auto;
+}
+
+.rb3content a {
     color: #0000AA;
     text-decoration: underline;
 }

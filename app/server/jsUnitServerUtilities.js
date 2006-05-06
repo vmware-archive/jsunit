@@ -1,7 +1,7 @@
 function toggleVisibility(divId, linkDivId, linkText) {
     var theDiv = document.getElementById(divId);
     var theLinkDiv = document.getElementById(linkDivId);
-    var isVisible = theDiv.style.display == "block";
+    var isVisible = theDiv.style.visibility == "visible";
     theLinkDiv.innerHTML = isVisible ? linkText :"hide";
-    theDiv.style.display = isVisible ? "none" : "block";
+    theDiv.style.visibility = isVisible ? "hidden" : "visible";
 }
