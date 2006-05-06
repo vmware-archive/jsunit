@@ -58,6 +58,8 @@ public class DistributedTestRunManager {
             logger.info("Requesting run on remote machine " + spec.getDisplayString());
             Document responseDocument = hitter.hitURL(fullURL);
             logger.info("Received response from remote machine URL " + baseURLString);
+            if (responseDocument == null)
+                throw new IOException("null response received from remote machine URL " + baseURLString);
             addResultsTo(responseDocument, results);
         } catch (IOException e) {
             if (localConfiguration.shouldIgnoreUnresponsiveRemoteMachines())
