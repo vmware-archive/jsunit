@@ -4,6 +4,7 @@ import net.jsunit.PlatformType;
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.SystemUtility;
 import org.jdom.Element;
+import org.jdom.Document;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -186,4 +187,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         return browserResults;
     }
 
+    public Document asXmlDocument() {
+        return new Document(asXml());
+    }
 }

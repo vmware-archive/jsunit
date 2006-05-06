@@ -2,6 +2,7 @@ package net.jsunit.model;
 
 import net.jsunit.XmlRenderable;
 import org.jdom.Element;
+import org.jdom.Document;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +33,10 @@ public class DistributedTestRunResult extends AbstractResult implements XmlRende
 
     public List<TestRunResult> getTestRunResults() {
         return testRunResults;
+    }
+
+    public Document asXmlDocument() {
+        return new Document(asXml());
     }
 
 }

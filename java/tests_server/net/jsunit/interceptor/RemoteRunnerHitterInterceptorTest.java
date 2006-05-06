@@ -9,7 +9,7 @@ import net.jsunit.action.RemoteRunnerHitterAware;
 public class RemoteRunnerHitterInterceptorTest extends TestCase {
 
     public void testSimple() throws Exception {
-        RemoteRunnerHitterInterceptor interceptor = new RemoteRunnerHitterInterceptor();
+        RemoteServerHitterInterceptor interceptor = new RemoteServerHitterInterceptor();
         MockAction action = new MockAction();
         MockActionInvocation invocation = new MockActionInvocation(action);
         interceptor.intercept(invocation);

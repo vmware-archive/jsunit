@@ -5,6 +5,7 @@ import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
 import net.jsunit.utility.FileUtility;
 import org.jdom.Element;
+import org.jdom.Document;
 
 import java.io.File;
 import java.net.URL;
@@ -64,6 +65,10 @@ public class Configuration implements BrowserSource {
         for (ConfigurationProperty property : getRequiredAndOptionalConfigurationProperties(serverType))
             property.addXmlTo(configurationElement, this);
         return configurationElement;
+    }
+
+    public Document asXmlDocument(ServerType type) {
+        return new Document(asXml(type));
     }
 
     private void addSystemElementsTo(Element element) {
@@ -233,4 +238,5 @@ public class Configuration implements BrowserSource {
     public String getSecretKey() {
         return secretKey;
     }
+
 }

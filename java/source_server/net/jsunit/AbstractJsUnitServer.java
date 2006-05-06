@@ -124,8 +124,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
         ConfigurationProvider provider = new ConfigurationProviderWithRunner(runnerActionName());
 
-        ConfigurationManager.clearConfigurationProviders();
-        ConfigurationManager.addConfigurationProvider(provider);
+        ConfigurationManager.destroyConfiguration();
+        ConfigurationManager.getConfigurationProviders().set(0, provider);
+//        ConfigurationManager.addConfigurationProvider(provider);
 
         if (Monitor.activeCount() == 0)
             Monitor.monitor();

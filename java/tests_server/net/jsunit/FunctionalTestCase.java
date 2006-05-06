@@ -40,9 +40,7 @@ public abstract class FunctionalTestCase extends TestCase {
 
     protected abstract JsUnitServer createServer();
 
-    protected ConfigurationSource createConfigurationSource() {
-        return new FunctionalTestConfigurationSource(port);
-    }
+    protected abstract ConfigurationSource createConfigurationSource();
 
     protected String baseURL() {
         return "http://localhost:" + webTesterPort() + "/jsunit";

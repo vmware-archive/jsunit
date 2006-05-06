@@ -2,6 +2,7 @@ package net.jsunit;
 
 import net.jsunit.logging.BrowserResultRepository;
 import net.jsunit.logging.FileBrowserResultRepository;
+import net.jsunit.configuration.ConfigurationSource;
 
 import java.io.File;
 
@@ -32,4 +33,9 @@ public abstract class StandardServerFunctionalTestCase extends FunctionalTestCas
     protected JsUnitStandardServer standardServer() {
         return (JsUnitStandardServer) server;
     }
+
+    protected ConfigurationSource createConfigurationSource() {
+        return new FunctionalTestConfigurationSource(port);
+    }
+
 }

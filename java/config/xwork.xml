@@ -24,7 +24,7 @@
             <interceptor name="browserResult" class="net.jsunit.interceptor.BrowserResultInterceptor"/>
             <interceptor name="versionGrabber" class="net.jsunit.interceptor.VersionGrabberInterceptor"/>
             <interceptor name="aggregateServer" class="net.jsunit.interceptor.AggregateServerInterceptor"/>
-            <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteRunnerHitterInterceptor"/>
+            <interceptor name="remoteRunnerHitter" class="net.jsunit.interceptor.RemoteServerHitterInterceptor"/>
             <interceptor name="security" class="net.jsunit.interceptor.SecurityInterceptor"/>
             <interceptor name="localhostOnly" class="net.jsunit.interceptor.LocalhostOnlyInterceptor"/>
             <interceptor name="browserSelection" class="net.jsunit.interceptor.BrowserSelectionInterceptor"/>

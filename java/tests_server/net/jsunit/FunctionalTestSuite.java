@@ -9,7 +9,7 @@ public class FunctionalTestSuite {
     public static TestSuite suite() {
         TestSuite result = new TestSuite();
         result.addTestSuite(AcceptorFunctionalTest.class);
-//        result.addTestSuite(AggregateServerFunctionalTest.class);
+        result.addTestSuite(RunnerServiceAggregateServerFunctionalTest.class);
         result.addTestSuite(BrowserResultBuilderTest.class);
         result.addTestSuite(ClientFunctionalTest.class);
         result.addTestSuite(DisplayerFunctionalTest.class);
@@ -17,6 +17,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(InvalidRemoteMachinesDistributedTestTest.class);
         result.addTestSuite(FailedToLaunchBrowserStandaloneTestTest.class);
         result.addTestSuite(FailingDistributedTestTest.class);
+        result.addTestSuite(FragmentRunnerPageAggregateServerFunctionalTest.class);
         result.addTestSuite(FragmentRunnerPageFunctionalTest.class);
         result.addTestSuite(LogDisplayerPageFunctionalTest.class);
         result.addTestSuite(OverrideURLDistributedTestTest.class);

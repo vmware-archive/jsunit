@@ -5,11 +5,11 @@ import net.jsunit.configuration.ConfigurationSource;
 public class FunctionalTestAggregateConfigurationSource implements ConfigurationSource {
 
     private int port;
-    private int remotePort;
+    public static final String REMOTE_SERVER_URL_1 = "http://server1.mycompany.com:1234/jsunit";
+    public static final String REMOTE_SERVER_URL_2 = "http://server2.mycompany.com:5678/jsunit";
 
-    public FunctionalTestAggregateConfigurationSource(int port, int remotePort) {
+    public FunctionalTestAggregateConfigurationSource(int port) {
         this.port = port;
-        this.remotePort = remotePort;
     }
 
     public String resourceBase() {
@@ -69,7 +69,7 @@ public class FunctionalTestAggregateConfigurationSource implements Configuration
     }
 
     public String remoteMachineURLs() {
-        return "http://localhost:" + remotePort;
+        return REMOTE_SERVER_URL_1 + "," + REMOTE_SERVER_URL_2;
     }
 
 }

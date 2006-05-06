@@ -8,7 +8,11 @@ import net.jsunit.configuration.ConfigurationSource;
 public class SerialDistributedTestTest extends TestCase {
     public void testTwoTestsInSerial() throws Throwable {
         final int port = new TestPortManager().newPort();
-        ConfigurationSource aggregateSource = new FunctionalTestAggregateConfigurationSource(port, port);
+        ConfigurationSource aggregateSource = new FunctionalTestConfigurationSource(port) {
+            public String remoteMachineURLs() {
+                return "http://localhost:" + port;
+            }
+        };
         ConfigurationSource localServerSource = new FunctionalTestConfigurationSource(port) {
             public String browserFileNames() {
                 return "";

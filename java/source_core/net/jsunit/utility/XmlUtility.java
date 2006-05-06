@@ -18,6 +18,10 @@ public class XmlUtility {
         return new XMLOutputter(Format.getPrettyFormat()).outputString(element);
     }
 
+    public static String asPrettyString(Document document) {
+        return new XMLOutputter(Format.getPrettyFormat()).outputString(document.getRootElement());
+    }
+
     public static String asString(Document document) {
         return new XMLOutputter().outputString(document);
     }
