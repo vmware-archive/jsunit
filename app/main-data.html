@@ -82,103 +82,106 @@
 </table>
 
 <form name="testRunnerForm" action="">
-    <script type="text/javascript" language="javascript">
-        if (!jsUnitGetParm('testpage')) {
-            document.write("<p>Enter the filename of the Test Page to be run:</p>");
-        } else {
-            document.write("<br>");
-        };
-    </script>
+<script type="text/javascript" language="javascript">
+    if (!jsUnitGetParm('testpage')) {
+        document.write("<p>Enter the filename of the Test Page to be run:</p>");
+    } else {
+        document.write("<br>");
+    };
+</script>
 
-    <table cellpadding="0" cellspacing="0" border="0" summary="Form for entering test case location">
-        <tr>
-            <td align="center" valign="middle">
-                <script language="JavaScript" type="text/javascript">
+<table cellpadding="0" cellspacing="0" border="0" summary="Form for entering test case location">
+    <tr>
+        <td align="center" valign="middle">
+            <script language="JavaScript" type="text/javascript">
+                if (!jsUnitGetParm('testpage'))
                     document.write(top.getDocumentProtocol());
-                </script>
-            </td>
+            </script>
+        </td>
 
-            <td nowrap align="center" valign="bottom">
-                &nbsp;
-                <script language="JavaScript" type="text/javascript">
-                    var specifiedTestPage = jsUnitGetParm('testpage');
-                    if (specifiedTestPage) {
-                        var html = '<input type="hidden" name="testFileName" value="';
-                        var valueString = '';
-                        if ((top.getDocumentProtocol() == 'http://' || top.getDocumentProtocol() == 'https://') && jsUnitGetParm('testpage').indexOf('/') == 0)
-                            valueString += top.location.host;
-                        valueString += specifiedTestPage;
-                        var testParms = top.jsUnitConstructTestParms();
-                        if (testParms != '') {
-                            valueString += '?';
-                            valueString += testParms;
-                        }
-                        html += valueString;
-                        html += '">';
-                        html += valueString;
-                        document.write(html);
-                    } else {
-                        if (top.getDocumentProtocol() == 'file:///' && top.browserSupportsReadingFullPathFromFileField())
-                            document.write('<input type="file" name="testFileName" size="60">');
-                        else
-                            document.write('<input type="text" name="testFileName" size="60">');
+        <td nowrap align="center" valign="bottom">
+            &nbsp;
+            <script language="JavaScript" type="text/javascript">
+                var specifiedTestPage = jsUnitGetParm('testpage');
+                var needsUploadField = top.getDocumentProtocol() == 'file:///' && top.browserSupportsReadingFullPathFromFileField();
+                if (specifiedTestPage) {
+                    var html = '<input type="hidden" name="testFileName" value="';
+                    var valueString = '';
+                    if ((top.getDocumentProtocol() == 'http://' || top.getDocumentProtocol() == 'https://') && jsUnitGetParm('testpage').indexOf('/') == 0)
+                        valueString += top.location.host;
+                    valueString += specifiedTestPage;
+                    var testParms = top.jsUnitConstructTestParms();
+                    if (testParms != '') {
+                        valueString += '?';
+                        valueString += testParms;
                     }
-                </script>
-                <input type="button" name="runButton" value="Run" onclick="kickOffTests()">
-                <input type="button" name="stopButton" value="Stop" onclick="stopTests()" disabled>
-            </td>
-        </tr>
-    </table>
-    <br>
-    <hr>
+                    html += valueString;
+                    html += '">';
+                    html += valueString;
+                    document.write(html);
+                } else {
+                    if (needsUploadField)
+                        document.writeln('<input type="file" name="testFileName" size="60">');
+                    else
+                        document.writeln('<input type="text" name="testFileName" size="60">');
+                }
+                var buttonClass = needsUploadField ? "" : "button";
+                document.writeln('<input type="button" name="runButton" value="Run" onclick="kickOffTests()" class="' + buttonClass + '">');
+                document.writeln('<input type="button" name="stopButton" value="Stop" onclick="stopTests()" class="' + buttonClass + '">');
+            </script>
+        </td>
+    </tr>
+</table>
+<br>
+<hr>
 
-    <table cellpadding="0" cellspacing="0" border="0" summary="Choose Trace Level">
-        <tr>
-            <td nowrap>Trace level:</td>
+<table cellpadding="0" cellspacing="0" border="0" summary="Choose Trace Level">
+    <tr>
+        <td nowrap>Trace level:</td>
 
-            <td><select name="traceLevel">
-                <option value="0" selected>
-                    no tracing
-                </option>
+        <td><select name="traceLevel">
+            <option value="0" selected>
+                no tracing
+            </option>
 
-                <option value="1">
-                    warning (lowest)
-                </option>
+            <option value="1">
+                warning (lowest)
+            </option>
 
-                <option value="2">
-                    info
-                </option>
+            <option value="2">
+                info
+            </option>
 
-                <option value="3">
-                    debug (highest)
-                </option>
-            </select></td>
+            <option value="3">
+                debug (highest)
+            </option>
+        </select></td>
 
-            <td>&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;</td>
 
-            <td><input type="checkbox" name="closeTraceWindowOnNewRun" checked></td>
-            <td nowrap>Close old trace window on new run</td>
+        <td><input type="checkbox" name="closeTraceWindowOnNewRun" checked></td>
+        <td nowrap>Close old trace window on new run</td>
 
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-            <td nowrap>Page load timeout:</td>
-            <td>&nbsp;
-                <script language="javascript" type="text/javascript">
-                    document.write('<input type="text" size="2" name="timeout" value="' + top.jsUnitTestManager.TESTPAGE_WAIT_SEC + '">');
-                </script>
-            </td>
+        <td nowrap>Page load timeout:</td>
+        <td>&nbsp;
+            <script language="javascript" type="text/javascript">
+                document.write('<input type="text" size="2" name="timeout" value="' + top.jsUnitTestManager.TESTPAGE_WAIT_SEC + '">');
+            </script>
+        </td>
 
-            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 
-            <td nowrap>Setup page timeout:</td>
-            <td>&nbsp;
-                <script language="javascript" type="text/javascript">
-                    document.write('<input type="text" size="2" name="setUpPageTimeout" value="' + top.jsUnitTestManager.SETUPPAGE_TIMEOUT + '">');
-                </script>
-            </td>
-        </tr>
-    </table>
-    <hr>
+        <td nowrap>Setup page timeout:</td>
+        <td>&nbsp;
+            <script language="javascript" type="text/javascript">
+                document.write('<input type="text" size="2" name="setUpPageTimeout" value="' + top.jsUnitTestManager.SETUPPAGE_TIMEOUT + '">');
+            </script>
+        </td>
+    </tr>
+</table>
+<hr>
 </form>
 </body>
 </html>
