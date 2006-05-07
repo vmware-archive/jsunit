@@ -26,9 +26,7 @@
                 </tr>
                 <tr>
                     <td align="right" valign="middle">
-                        <a href="javascript:toggleVisibility('whatIsCaptchaDiv', 'whatIsCaptchaLinkDiv', 'what\'s this?')">
-                            <img src="/jsunit/images/question_mark.gif" alt="what's this?" title="what's this?" border="0">
-                        </a>
+                        <a href="javascript:toggleVisibility('whatIsCaptchaDiv', 'whatIsCaptchaLinkDiv', 'what\'s this?')"><img src="/jsunit/images/question_mark.gif" alt="what's this?" title="what's this?" border="0"></a>
                     </td>
                     <td></td>
                     <td align="left" valign="middle">
