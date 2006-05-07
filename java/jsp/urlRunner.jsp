@@ -57,7 +57,7 @@
                                             <td>
                                                 If you have JsUnit Test Pages hosted on an internet-visible web server
                                                 (perhaps on a JsUnit server of your own), you can ask this server to run
-                                                them using the <i>URLRunner service</i>.
+                                                them using the <i>URL runner</i> service.
                                                 Enter the full JsUnit TestRunner URL for your Test Pages, choose which
                                                 browsers you want to run your Test Page on and which skin you want your
                                                 results displayed in, and press "Run".
@@ -70,9 +70,10 @@
                                                 <br>
                                                 The URL runner service is useful for proving to a wide audience that
                                                 your JavaScript code passes all of its tests. This is especially
-                                                valuable if you produce a party library that other developers use and
+                                                valuable if you produce a JavaScript library that other developers use
+                                                and
                                                 want confidence in. You can provide a link on your site to the URLRunner
-                                                service, passing in your URL (using the query string parameter "url"),
+                                                page, passing in your URL (using the query string parameter "url"),
                                                 and users can try running your tests against all the browsers/OSs that
                                                 they are interested in supporting.
                                             </td>
