@@ -42,7 +42,7 @@
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body bgcolor="#e4ecec">
+<body bgcolor="#eeeeee">
 <form action="/jsunit/runner" method="post" target="resultsFrame">
 <jsp:include page="header.jsp"/>
 <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">

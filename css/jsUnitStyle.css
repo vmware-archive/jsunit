@@ -24,7 +24,7 @@ table {
 }
 
 a:link, a:visited {
-    color: #00F;
+    color: #0000AA;
     text-decoration: underline;
 }
 
@@ -93,7 +93,7 @@ h4 {
 
 .tabHeaderSeparator {
     height: 26px;
-    background: #e4ecec;
+    background: #eeeeee;
     border-style: solid;
     border-color: #000000;
     border-bottom-width: 1px;

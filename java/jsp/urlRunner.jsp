@@ -47,7 +47,7 @@
     </script>
 </head>
 
-<body bgcolor="#e4ecec">
+<body bgcolor="#eeeeee">
 <form action="/jsunit/runner" method="get" target="resultsFrame">
     <jsp:include page="header.jsp"/>
     <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">
