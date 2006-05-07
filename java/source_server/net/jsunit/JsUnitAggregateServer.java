@@ -95,7 +95,9 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+                server.logStatus("Refreshing remote configurations for aggregate server");
                 server.fetchRemoteConfigurations();
+                server.logStatus("Done refreshing remote configurations for aggregate server");
             }
         }
     }
