@@ -48,9 +48,11 @@
                 <div class="rb1top"><div></div></div>
 
                 <div class="rb1content">
-                    JsUnit uses a device called a CAPTCHA to prohibit anonymous programmatic access to public services.
-                    Enter the text you see in the box.<br>
-                    <font size="-2">CAPTCHAs expire after &frac12; hour. Tired of the CAPTCHA?
+                    <font size="-2">
+                        JsUnit uses a device called a CAPTCHA to prohibit anonymous programmatic access to public
+                        services.
+                        Enter the text you see in the box.
+                        CAPTCHAs expire after &frac12; hour. Tired of the CAPTCHA?
                         <b><a href="#">Sign up</a></b> for a JsUnit account!</font>
                 </div>
 
