@@ -64,11 +64,11 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     }
 
     public RemoteConfiguration getRemoteMachineConfigurationById(int id) {
-        return getAllRemoteMachineConfigurations().get(id);
+        return cachedRemoteConfigurations.get(id);
     }
 
     public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
-        return getCachedRemoteConfigurations();
+        return cachedRemoteConfigurations;
     }
 
 }
