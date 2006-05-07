@@ -50,5 +50,15 @@
     <td class="tabHeaderSeparator">&nbsp;</td>
     <%}%>
 
+    <td class="tabHeaderSeparator">&nbsp;</td>
+    <%if (selectedPage.equals("help")) {%>
+    <td class="selectedTab" nowrap>
+        &nbsp;&nbsp;<img src="/jsunit/images/question_mark.gif" alt="Help/About" title="Help/About">&nbsp;  Help/About&nbsp;&nbsp;
+    </td>
+    <%} else {%>
+    <td class="unselectedTab" nowrap>
+        &nbsp;&nbsp;<img border="0" src="/jsunit/images/question_mark.gif" alt="Help">&nbsp;<a href="helpPage">Help/About</a>&nbsp;&nbsp;
+    </td>
+    <%}%>
     <td class="tabHeaderSeparator" width="99%">&nbsp;</td>
 </tr>

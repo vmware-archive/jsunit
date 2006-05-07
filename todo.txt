@@ -4,7 +4,7 @@ Required for release:
     - make all logging go through some status logger interface
     - protect secretKey file from web access
     - bug where some aggregate requests do not show a response from all aggregatees
-    - queuing needs work
+    - queuing needs work - linkedlist, queue
     - group 3rd party jars and add licenses
     - think through distribution (not jsps, etc)
     - keep original names & place in temporary uniquely named subdirectories

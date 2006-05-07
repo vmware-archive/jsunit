@@ -95,18 +95,18 @@ public abstract class FunctionalTestCase extends TestCase {
     }
 
     protected void assertOnLogDisplayerPage() {
-        webTester.assertTitleEquals("JsUnit Server - LogDisplayer");
+        webTester.assertTitleEquals("LogDisplayer - JsUnit");
     }
 
     protected void assertOnUrlRunnerPage() {
-        webTester.assertTitleEquals("JsUnit Server - URLRunner");
+        webTester.assertTitleEquals("URLRunner - JsUnit");
     }
 
     protected void assertOnUploadRunnerPage() {
-        webTester.assertTitleEquals("JsUnit Server - UploadRunner");
+        webTester.assertTitleEquals("UploadRunner - JsUnit");
     }
 
     protected void assertOnFragmentRunnerPage() {
-        webTester.assertTitleEquals("JsUnit Server - FragmentRunner");
+        webTester.assertTitleEquals("FragmentRunner - JsUnit");
     }
 }

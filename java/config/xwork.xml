@@ -148,6 +148,12 @@
             <interceptor-ref name="server"/>
         </action>
 
+        <action name="helpPage" class="net.jsunit.action.PageAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/help.jsp</param>
+            </result>
+        </action>
+
     </package>
 
 </xwork>

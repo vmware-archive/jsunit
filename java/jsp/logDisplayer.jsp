@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>JsUnit Server - LogDisplayer</title>
+    <title>LogDisplayer - JsUnit</title>
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">

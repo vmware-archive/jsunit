@@ -19,6 +19,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(FailingDistributedTestTest.class);
         result.addTestSuite(FragmentRunnerPageAggregateServerFunctionalTest.class);
         result.addTestSuite(FragmentRunnerPageFunctionalTest.class);
+        result.addTestSuite(HelpPageFunctionalTest.class);
 //        result.addTestSuite(LogDisplayerPageFunctionalTest.class);
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);

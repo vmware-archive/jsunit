@@ -51,7 +51,7 @@
                             <table>
                                 <tr>
                                     <td>
-                                        <i>Available browsers:</i>
+                                        Browsers:
                                     </td>
                                     <td>
                                         <%for (Browser browser : server.getConfiguration().getBrowsers()) {%>
@@ -157,24 +157,28 @@
 <td nowrap align="center" valign="top">
     <table cellpadding="0" cellspacing="2" height="100%">
         <tr>
-            <td nowrap align="center" valign="top">
-                [ <a href="http://www.jsunit.net/">jsunit.net</a>
-                | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
-                | <a href="http://group.jsunit.net/">group.jsunit.net</a> ]
-            </td>
-        </tr>
-        <tr>
-            <td></td>
-        </tr>
-        <tr>
             <td valign="bottom">
                 <div class="rb2roundbox">
                     <div class="rb2top"><div></div></div>
 
                     <div class="rb2content" align="center">
-                        <b><a href="#">Sign up</a></b> for a JsUnit account<br>
-                        to get programmatic access to the<br>
+                        <b><a href="#">Sign up</a></b> for a JsUnit account to get programmatic<br> access to the
                         fragment and upload runner services.
+                    </div>
+
+                    <div class="rb2bot"><div></div></div>
+                </div>
+                <br>
+
+                <div class="rb2roundbox">
+                    <div class="rb2top"><div></div></div>
+
+                    <div class="rb2content" align="center">
+                        <a href="http://www.jsunit.net/">jsunit.net</a>
+                        | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
+                        | <a href="http://group.jsunit.net/">group.jsunit.net</a><br>
+
+                        <b>Need help?</b> Email <a href="mailto:support@jsunit.net">support@jsunit.net</a>
                     </div>
 
                     <div class="rb2bot"><div></div></div>

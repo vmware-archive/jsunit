@@ -8,7 +8,7 @@ public class ServerAdminPageFunctionalTest extends StandardServerFunctionalTestC
     }
 
     public void testInitialConditiions() throws Exception {
-        webTester.assertTitleEquals("JsUnit Server Administration");
+        webTester.assertTitleEquals("Server Administration - JsUnit");
         webTester.assertLinkPresentWithText(new FunctionalTestConfigurationSource(port).url());
     }
 

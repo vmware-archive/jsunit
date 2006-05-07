@@ -134,11 +134,12 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
     protected List<String> servletNames() {
         return Arrays.asList(new String[]{
+                "configurationPage",
                 "fragmentRunnerPage",
+                "helpPage",
+                "logDisplayerPage",
                 "uploadRunnerPage",
                 "urlRunnerPage",
-                "logDisplayerPage",
-                "configurationPage",
 
                 "acceptor",
                 "admin",

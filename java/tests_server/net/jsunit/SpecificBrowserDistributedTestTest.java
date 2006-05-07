@@ -22,7 +22,9 @@ public class SpecificBrowserDistributedTestTest extends EndToEndTestCase {
         return new StubConfigurationSource() {
 
             public String browserFileNames() {
-                return "invalid1.exe," + Browser.DEFAULT_SYSTEM_BROWSER + ",invalid2.exe";
+                return "aaaaa" + Browser.DEFAULT_SYSTEM_BROWSER + "," +
+                        Browser.DEFAULT_SYSTEM_BROWSER + "," +
+                        "zzzzz" + Browser.DEFAULT_SYSTEM_BROWSER;
             }
 
             public String url() {
