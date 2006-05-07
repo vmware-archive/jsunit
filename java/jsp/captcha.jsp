@@ -44,7 +44,7 @@
             </table>
         </td>
         <td valign="top">
-            <div class="rb1roundbox" id="whatIsCaptchaDiv" style="visibility:hidden;vertical-align:top;width:100">
+            <div class="rb1roundbox" id="whatIsCaptchaDiv" style="z-index:2;visibility:hidden;vertical-align:top;margin:1px;">
                 <div class="rb1top"><div></div></div>
 
                 <div class="rb1content">
