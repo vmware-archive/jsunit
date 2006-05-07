@@ -7,8 +7,6 @@ import net.jsunit.captcha.AesCipher;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 
-import java.io.ByteArrayInputStream;
-
 public class CaptchaActionTest extends TestCase {
     public static final String SECRET_KEY = "1234567890123456";
 
@@ -31,8 +29,6 @@ public class CaptchaActionTest extends TestCase {
     public void testValid() throws Exception {
         action.setCaptchaKey(new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theAnswer"));
         assertEquals(Action.SUCCESS, action.execute());
-        ByteArrayInputStream imageStream = (ByteArrayInputStream) action.getImageStream();
-        assertTrue(imageStream.toString().length() > 0);
     }
 
     public void testOutdated() throws Exception {
