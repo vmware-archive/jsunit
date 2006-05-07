@@ -70,4 +70,5 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
         return getCachedRemoteConfigurations();
     }
+
 }

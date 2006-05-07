@@ -37,6 +37,7 @@ public enum ConfigurationProperty {
             String browserFileNamesString = source.browserFileNames();
             try {
                 List<String> browserFileNames = StringUtility.listFromCommaDelimitedString(browserFileNamesString);
+                Collections.sort(browserFileNames);
                 Set<String> alreadyAddedBrowserFileNames = new HashSet<String>();
                 int id = 0;
                 List<Browser> browsers = new ArrayList<Browser>();
@@ -146,6 +147,7 @@ public enum ConfigurationProperty {
         public void configure(Configuration configuration, ConfigurationSource source) throws ConfigurationException {
             String remoteMachineURLs = source.remoteMachineURLs();
             List<String> strings = StringUtility.listFromCommaDelimitedString(remoteMachineURLs);
+            Collections.sort(strings);
             List<URL> result = new ArrayList<URL>(strings.size());
             Set<String> alreadyAddedURLStrings = new HashSet<String>();
             for (String string : strings)

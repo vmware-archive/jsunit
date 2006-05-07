@@ -25,8 +25,8 @@ public class ConfigurationTest extends TestCase {
         assertTrue(configuration.shouldCloseBrowsersAfterTestRuns());
         assertEquals(76, configuration.getTimeoutSeconds());
         List<URL> expectedRemoteMachineURLs = new ArrayList<URL>();
-        expectedRemoteMachineURLs.add(new URL("http://localhost:8081/jsunit"));
         expectedRemoteMachineURLs.add(new URL("http://127.0.0.1:8082/jsunit"));
+        expectedRemoteMachineURLs.add(new URL("http://localhost:8081/jsunit"));
         assertEquals(expectedRemoteMachineURLs, configuration.getRemoteMachineURLs());
         assertTrue(configuration.shouldIgnoreUnresponsiveRemoteMachines());
 
@@ -168,8 +168,8 @@ public class ConfigurationTest extends TestCase {
                         "<logsDirectory>" + logsDirectory.getAbsolutePath() + "</logsDirectory>" +
                         "<port>1234</port>" +
                         "<remoteMachineURLs>" +
-                        "<remoteMachineURL id=\"0\">http://localhost:8081/jsunit</remoteMachineURL>" +
-                        "<remoteMachineURL id=\"1\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
+                        "<remoteMachineURL id=\"0\">http://127.0.0.1:8082/jsunit</remoteMachineURL>" +
+                        "<remoteMachineURL id=\"1\">http://localhost:8081/jsunit</remoteMachineURL>" +
                         "</remoteMachineURLs>" +
                         "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                         "<url>http://www.example.com:1234/</url>" +
@@ -212,7 +212,7 @@ public class ConfigurationTest extends TestCase {
         assertEquals("1234", arguments[index++]);
 
         assertEquals("-remoteMachineURLs", arguments[index++]);
-        assertEquals("http://localhost:8081/jsunit,http://127.0.0.1:8082/jsunit", arguments[index++]);
+        assertEquals("http://127.0.0.1:8082/jsunit,http://localhost:8081/jsunit", arguments[index++]);
 
         assertEquals("-resourceBase", arguments[index++]);
         assertEquals(new File("resource/base").getAbsolutePath(), arguments[index++]);
@@ -238,8 +238,8 @@ public class ConfigurationTest extends TestCase {
         List<URL> remoteMachineURLs = configuration.getRemoteMachineURLs();
         assertEquals(4, remoteMachineURLs.size());
         assertEquals("http://machine1:8080/jsunit", remoteMachineURLs.get(0).toString());
-        assertEquals("http://machine2:9090/jsunit", remoteMachineURLs.get(1).toString());
-        assertEquals("http://machine1:8081/jsunit", remoteMachineURLs.get(2).toString());
+        assertEquals("http://machine1:8081/jsunit", remoteMachineURLs.get(1).toString());
+        assertEquals("http://machine2:9090/jsunit", remoteMachineURLs.get(2).toString());
         assertEquals("http://machine3:9090/jsunit", remoteMachineURLs.get(3).toString());
     }
 
@@ -250,6 +250,31 @@ public class ConfigurationTest extends TestCase {
         assertTrue(configuration1.equalsForServerType(configuration1, ServerType.STANDARD));
         assertTrue(configuration1.equalsForServerType(configuration2, ServerType.STANDARD));
         assertFalse(configuration1.equalsForServerType(configuration3, ServerType.STANDARD));
+    }
+
+    public void testBrowserOrdering() throws Exception {
+        Configuration configuration = new Configuration(new DummyConfigurationSource() {
+            public String browserFileNames() {
+                return "browserC.exe,browserA.exe,browserB.exe";
+            }
+        });
+        List<Browser> browsers = configuration.getBrowsers();
+        assertEquals(new Browser("browserA.exe", 0), browsers.get(0));
+        assertEquals(new Browser("browserB.exe", 1), browsers.get(1));
+        assertEquals(new Browser("browserC.exe", 2), browsers.get(2));
+    }
+
+    public void testRemoteServerOrdering() throws Exception {
+        Configuration configuration = new Configuration(new DummyConfigurationSource() {
+            public String remoteMachineURLs() {
+                return "http://www.exampleC.com,http://www.exampleA.com,http://www.exampleB.com";
+            }
+
+        });
+        List<URL> remoteMachineURLs = configuration.getRemoteMachineURLs();
+        assertEquals("http://www.exampleA.com/jsunit", remoteMachineURLs.get(0).toString());
+        assertEquals("http://www.exampleB.com/jsunit", remoteMachineURLs.get(1).toString());
+        assertEquals("http://www.exampleC.com/jsunit", remoteMachineURLs.get(2).toString());
     }
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
