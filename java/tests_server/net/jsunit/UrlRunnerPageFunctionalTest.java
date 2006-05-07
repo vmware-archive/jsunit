@@ -15,6 +15,7 @@ public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCas
 
     public void testInitialConditions() throws Exception {
         assertOnUrlRunnerPage();
+        webTester.assertFormElementEquals("url", "");
     }
 
     public void testRunnerForParticularBrowser() throws Exception {
@@ -28,11 +29,6 @@ public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCas
                 "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
                 1
         );
-    }
-
-    private void setUpURLRunnerSubmission() {
-        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
-        webTester.selectOption("skinId", "None (raw XML)");
     }
 
     public void testRunnerForAllBrowsers() throws Exception {
@@ -66,6 +62,16 @@ public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCas
 //        webTester.assertTitleEquals("JsUnit Test Results");
 //        webTester.assertTextPresent("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
 //        webTester.assertTextPresent(ResultType.SUCCESS.name());
+    }
+
+    public void testPassingInUrl() throws Exception {
+        webTester.beginAt("/urlRunnerPage?url=foobar");
+        webTester.assertFormElementEquals("url", "foobar");
+    }
+
+    private void setUpURLRunnerSubmission() {
+        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+        webTester.selectOption("skinId", "None (raw XML)");
     }
 
 }

@@ -33,11 +33,11 @@
     <td width="5%" valign="top">
         <b>Fragment:</b>
     </td>
-    <td width="60%" colspan="2" valign="top" height="160">
+    <td width="45%" valign="top" height="160">
         <textarea id="fragment" name="fragment" style="width:97%;height:97%" rows="10"></textarea>
     </td>
     <td width="1%" rowspan="5">&nbsp;</td>
-    <td width="33%" rowspan="5" valign="top">
+    <td width="48%" rowspan="5" valign="top">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
 
@@ -49,7 +49,7 @@
                                 <div class="rb3top"><div></div></div>
 
                                 <div class="rb3content">
-                                    <img src="/jsunit/images/question_mark.gif" alt="What is the FragmentRunner?" title="What is the FragmentRunner?" border="0">
+                                    <img src="/jsunit/images/question_mark.gif" alt="What is the FragmentRunner service?" title="What is the FragmentRunner service?" border="0">
                                     <b>What is the FragmentRunner service?</b>
                                 </div>
 
@@ -99,8 +99,9 @@
                                 </tr>
                             </table>
                             <br>
-                            Enter a fragment in the text area, choose which browsers you want to run your fragment on
+                            Enter a fragment in the text area, choose which browsers you want to run your Test Page on
                             and which skin you want your results displayed in, and press "Run test fragment".
+                            <br>
                             <br>
                             The fragment runner service is useful for experimenting with bits and pieces of JavaScript,
                             but once you start creating real JsUnit Test Pages, you will probably find that using the
@@ -116,20 +117,15 @@
 </tr>
 <tr>
     <td width="5%" height="1">&nbsp;</td>
-    <td width="25%" valign="top" height="1">
+    <td width="45%" valign="top">
         <input type="submit" class="button" value="Run test fragment" onclick="return verifyFragmentNotBlank()">
-    </td>
-    <td width="35%" valign="top" rowspan="4">
-        <%if (server.getConfiguration().useCaptcha()) {%>
-        <jsp:include page="captcha.jsp"/>
-        <%}%>
     </td>
 </tr>
 <tr>
     <td width="5%" valign="top">
         <b>Browsers:</b>
     </td>
-    <td width="25%" valign="top">
+    <td width="45%" valign="top">
         <jsp:include page="browsers.jsp">
             <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
             <jsp:param name="multipleBrowsersAllowed" value="true"/>
@@ -140,13 +136,20 @@
     <td width="5%" valign="top">
         <b>Skin:</b>
     </td>
-    <td width="25%" colspan="1" valign="top">
+    <td width="45%" valign="top">
         <jsp:include page="skin.jsp"/>
     </td>
 </tr>
+<%if (server.getConfiguration().useCaptcha()) {%>
 <tr>
-    <td colspan="2">&nbsp;</td>
+    <td width="5%" nowrap valign="top">
+        <b>Enter text:</b>
+    </td>
+    <td width="45%" valign="top">
+        <jsp:include page="captcha.jsp"/>
+    </td>
 </tr>
+<%}%>
 </table>
 </td>
 </tr>

@@ -70,14 +70,14 @@
     <td nowrap width="5%" valign="top">
         <b>Test Page:</b>
     </td>
-    <td width="30%" valign="top">
+    <td width="22%" valign="top">
         <input type="file" name="testPageFile" size="50">
     </td>
-    <td width="30%" valign="top">
+    <td width="23%" valign="top">
         <input type="submit" value="Run">
     </td>
     <td width="1%" rowspan="50">&nbsp;</td>
-    <td width="33%" rowspan="50" valign="top">
+    <td width="48%" rowspan="50" valign="top">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
 
@@ -89,7 +89,7 @@
                                 <div class="rb3top"><div></div></div>
 
                                 <div class="rb3content">
-                                    <img src="/jsunit/images/question_mark.gif" alt="What is the UploadRunner?" title="What is the FragmentRunner?" border="0">
+                                    <img src="/jsunit/images/question_mark.gif" alt="What is the UploadRunner service?" title="What is the UploadRunner service?" border="0">
                                     <b>What is the UploadRunner service?</b>
                                 </div>
 
@@ -103,9 +103,12 @@
                             browsers you want to run your Test Page on and which skin you want your results displayed
                             in, and press "Run".
                             <br>
+                            <br>
                             The upload runner service is useful for manually running your Test Pages, but it's a pain
-                            to have to browse to your Test Page and its .js files. The next step is to automate your
-                            runs using JsUnit automated web services and the JsUnit client. <a href="#">Learn more.</a>
+                            to have to browse to your Test Page and its .js files. If you use the upload runner service
+                            frequently,
+                            you'll probably be interested in JsUnit's automated web services and the JsUnit client.
+                            <a href="#">Learn more.</a>
                         </td>
                     </tr>
                 </table>
@@ -125,8 +128,8 @@
 %>
 <tr id="defaultReferencedJsFileField<%=i%>">
     <td width="5%">.js file</td>
-    <td width="20%" align="left"><input type="file" name="referencedJsFiles"></td>
-    <td width="40%">
+    <td width="22%" align="left"><input type="file" name="referencedJsFiles"></td>
+    <td width="23%">
         <a href="javascript:removeReferencedJsFile('defaultReferencedJsFileField<%=i%>')">[remove]</a>
     </td>
 </tr>
@@ -136,8 +139,8 @@
 
 %>
 <tr id="addReferencedJsFileRow">
-    <td>&nbsp;</td>
-    <td colspan="2">
+    <td width="5%">&nbsp;</td>
+    <td width="45%" colspan="2" valign="top">
         <a href="javascript:addReferencedJsFile()" id="addReferencedJsFile">
             add referenced .js file
         </a>
@@ -148,28 +151,28 @@
     <td width="5%" valign="top">
         <b>Browsers:</b>
     </td>
-    <td width="25%" valign="top">
+    <td width="45%" valign="top" colspan="2">
         <jsp:include page="browsers.jsp">
             <jsp:param name="multipleBrowsersAllowed" value="true"/>
         </jsp:include>
-    </td>
-    <td width="35%" valign="top" rowspan="2">
-        <%if (server.getConfiguration().useCaptcha()) {%>
-        <jsp:include page="captcha.jsp"/>
-        <%}%>
     </td>
 </tr>
 <tr>
     <td width="5%" valign="top">
         <b>Skin:</b>
     </td>
-    <td width="25%" valign="top">
+    <td width="45%" valign="top" colspan="2">
         <jsp:include page="skin.jsp"/>
     </td>
 </tr>
+<%if (server.getConfiguration().useCaptcha()) {%>
 <tr>
-    <td colspan="3">&nbsp;</td>
+    <td width="5%" nowrap valign="top"><b>Enter text:</b></td>
+    <td width="45%" valign="top" colspan="2">
+        <jsp:include page="captcha.jsp"/>
+    </td>
 </tr>
+<%}%>
 </table>
 </td>
 </tr>
