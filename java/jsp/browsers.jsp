@@ -17,7 +17,7 @@
                 RemoteConfiguration remoteConfiguration = remoteConfigurations.get(i);
         %>
         <td>
-            <table style="border-color:#000000;border:1px;border-style:solid" cellpadding="1" cellspacing="0">
+            <table style="background-color:#EEEEEE;" cellpadding="1" cellspacing="0">
                 <tr>
                     <td>
                         <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
@@ -30,11 +30,21 @@
                             %>
                             <tr>
                                 <td valign="top" nowrap align="left">
-                                    <input type="checkbox" id="urlId_browserId" name="urlId_browserId" value="<%=i%>_<%=browser.getId()%>">
-                                    <%if (browser.getType() != null) {%>
-                                    <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
-                                    <%}%>
-                                    <font size="-2"><%=browser.getDisplayName()%></font>
+                                    <table cellpadding="0" cellspacing="2">
+                                        <tr>
+                                            <td valign="middle">
+                                                <input type="checkbox" id="urlId_browserId" name="urlId_browserId" value="<%=i%>_<%=browser.getId()%>">
+                                            </td>
+                                            <td valign="middle">
+                                                <%if (browser.getType() != null) {%>
+                                                <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                                                <%}%>
+                                            </td>
+                                            <td valign="middle">
+                                                <font size="-2"><%=browser.getDisplayName()%></font>
+                                            </td>
+                                        </tr>
+                                    </table>
                                 </td>
                             </tr>
                             <%}%>
@@ -55,11 +65,21 @@
     %>
     <tr>
         <td valign="top" nowrap>
-            <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" id="browserId" name="browserId" value="<%=browser.getId()%>" <%if (!multipleBrowsersAllowed &&  i == 0) {%> checked<%}%>>
-            <%if (browser.getType() != null) {%>
-            <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
-            <%}%>
-            <%=browser.getDisplayName()%>
+            <table cellpadding="0" cellspacing="0">
+                <tr>
+                    <td valign="middle">
+                        <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" id="browserId" name="browserId" value="<%=browser.getId()%>" <%if (!multipleBrowsersAllowed &&  i == 0) {%> checked<%}%>>
+                    </td>
+                    <td valign="middle">
+                        <%if (browser.getType() != null) {%>
+                        <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
+                        <%}%>
+                    </td>
+                    <td nowrap valign="middle">
+                        <font size="-2"><%=browser.getDisplayName()%></font>
+                    </td>
+                </tr>
+            </table>
         </td>
     </tr>
     <%}%>
