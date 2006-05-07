@@ -100,7 +100,7 @@
                             <table cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td width="1" rowspan="2">
-                                        <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
+                                        <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><img border="0" src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>"></a>
                                     </td>
                                     <td align="left">
                                         <%if (!StringUtility.isEmpty(remoteConfiguration.getDescription())) {%>
