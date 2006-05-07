@@ -67,7 +67,7 @@
             <div class="rb1content">
                 <table width="100%">
                     <tr>
-                        <td colspan="3" align="center">
+                        <td colspan="5" align="center">
                             <div class="rb3roundbox">
                                 <div class="rb3top"><div></div></div>
 
@@ -80,7 +80,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="5">
                             You can ask this JsUnit Server to run JsUnit on fragments of code using
                             the <i>fragment runner</i> service.
                             You may enter any kind of JavaScript - standalone statements and
@@ -88,7 +88,8 @@
                         </td>
                     </tr>
                     <tr>
-                        <td width="40%" nowrap>
+                        <td width="10%" align="center"></td>
+                        <td width="35%" nowrap>
                             <div class="rb3roundbox">
                                 <div class="rb3top"><div></div></div>
 
@@ -103,8 +104,8 @@
 
                                 <div class="rb3bot"><div></div></div></div>
                         </td>
-                        <td width="20%" align="center">or</td>
-                        <td width="40%" nowrap>
+                        <td width="10%" align="center">or</td>
+                        <td width="35%" nowrap>
                             <div class="rb3roundbox">
                                 <div class="rb3top"><div></div></div>
 
@@ -119,9 +120,10 @@
 
                                 <div class="rb3bot"><div></div></div></div>
                         </td>
+                        <td width="10%" align="center"></td>
                     </tr>
                     <tr>
-                        <td colspan="3">
+                        <td colspan="5">
                             Enter a fragment in the text area, choose which browsers you want to run your Test Page on
                             and which skin you want your results displayed in, and press "Run test fragment".
                             <br>
