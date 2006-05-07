@@ -17,8 +17,10 @@ public class ServerDefaultPageFunctionalTest extends StandardServerFunctionalTes
         assertOnUploadRunnerPage();
         webTester.clickLinkWithText("URLRunner");
         assertOnUrlRunnerPage();
+/*
         webTester.clickLinkWithText("LogDisplayer");
         assertOnLogDisplayerPage();
+*/
     }
 
     public void testAbsoluteSlash() throws Exception {
