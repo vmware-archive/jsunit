@@ -52,6 +52,35 @@
             rowParentNode.insertBefore(rowNode, addReferencedJsFileRowNode);
         }
 
+        function verifyRequiredFieldsEntered() {
+            if (document.getElementById("testPageFile").value == "") {
+                alert("Please choose a Test Page.")
+                document.getElementById("testPageFile").focus();
+                return false;
+            }
+            if (!atLeastOneBrowserIsChecked()) {
+                alert("Please choose 1 or more browsrs.")
+                return false;
+            }
+        <%if (server.getConfiguration().useCaptcha()) {%>
+            if (document.getElementById("attemptedCaptchaAnswer").value == "") {
+                alert("Please enter the CAPTCHA text.");
+                document.getElementById("attemptedCaptchaAnswer").focus();
+                return false;
+            }
+        <%}%>
+            return true;
+        }
+
+        function atLeastOneBrowserIsChecked() {
+            var browserCheckboxes = document.forms[0]["<%=server.isAggregateServer() ? "urlId_browserId" : "browserId"%>"];
+            for (var i = 0; i < browserCheckboxes.length; i++) {
+                var browserCheckbox = browserCheckboxes[i];
+                if (browserCheckbox.checked)
+                    return true;
+            }
+            return false;
+        }
     </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
@@ -71,10 +100,10 @@
         <b>Test Page:</b>
     </td>
     <td width="22%" valign="top">
-        <input type="file" name="testPageFile" size="50">
+        <input type="file" name="testPageFile" id="testPageFile" size="50">
     </td>
     <td width="23%" valign="top">
-        <input type="submit" value="Run">
+        <input type="submit" value="Run" onclick="return verifyRequiredFieldsEntered()">
     </td>
     <td width="1%" rowspan="50">&nbsp;</td>
     <td width="48%" rowspan="50" valign="top">
@@ -108,10 +137,11 @@
                             to have to browse to your Test Page and its .js files. If you use the upload runner service
                             frequently,
                             you'll probably be interested in JsUnit's automated web services and the JsUnit client.
-                            <a href="#">Learn more.</a>
+                            <a href="#">Learn more</a>.
                             <br>
                             <br>
-                            Uploaded Test Pages are not permanently stored on our servers.
+                            <font size="-2">Note: uploaded Test Pages are not permanently stored on our servers.
+                                <a href="#">Learn more</a>.</font>
                         </td>
                     </tr>
                 </table>

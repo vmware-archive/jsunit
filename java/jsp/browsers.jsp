@@ -17,7 +17,7 @@
                 RemoteConfiguration remoteConfiguration = remoteConfigurations.get(i);
         %>
         <td>
-            <table style="border-color:#000000;border:1px;border-style:solid" cellpadding="0" cellspacing="0">
+            <table style="border-color:#000000;border:1px;border-style:solid" cellpadding="1" cellspacing="0">
                 <tr>
                     <td>
                         <img src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
@@ -30,7 +30,7 @@
                             %>
                             <tr>
                                 <td valign="top" nowrap align="left">
-                                    <input type="checkbox" name="urlId_browserId" value="<%=i%>_<%=browser.getId()%>" checked>
+                                    <input type="checkbox" id="urlId_browserId" name="urlId_browserId" value="<%=i%>_<%=browser.getId()%>">
                                     <%if (browser.getType() != null) {%>
                                     <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                                     <%}%>
@@ -55,7 +55,7 @@
     %>
     <tr>
         <td valign="top" nowrap>
-            <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" name="browserId" value="<%=browser.getId()%>" <%if (multipleBrowsersAllowed || i == 0) {%> checked<%}%>>
+            <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" id="browserId" name="browserId" value="<%=browser.getId()%>" <%if (!multipleBrowsersAllowed &&  i == 0) {%> checked<%}%>>
             <%if (browser.getType() != null) {%>
             <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
             <%}%>

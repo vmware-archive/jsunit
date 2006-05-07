@@ -21,7 +21,7 @@
             <table cellpadding="0" cellspacing="0">
                 <tr>
                     <td colspan="3">
-                        <input type="text" size="10" name="attemptedCaptchaAnswer" autocomplete="off">
+                        <input type="text" size="10" id="attemptedCaptchaAnswer" name="attemptedCaptchaAnswer" autocomplete="off">
                     </td>
                 </tr>
                 <tr>

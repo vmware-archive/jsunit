@@ -13,6 +13,38 @@
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
+
+    <script type="text/javascript">
+        function verifyRequiredFieldsEntered() {
+            if (document.getElementById("url").value == "") {
+                alert("Please choose a Test Page URL.")
+                document.getElementById("url").focus();
+                return false;
+            }
+            if (!atLeastOneBrowserIsChecked()) {
+                alert("Please choose 1 or more browsrs.")
+                return false;
+            }
+        <%if (server.getConfiguration().useCaptcha()) {%>
+            if (document.getElementById("attemptedCaptchaAnswer").value == "") {
+                alert("Please enter the CAPTCHA text.");
+                document.getElementById("attemptedCaptchaAnswer").focus();
+                return false;
+            }
+        <%}%>
+            return true;
+        }
+
+        function atLeastOneBrowserIsChecked() {
+            var browserCheckboxes = document.forms[0]["<%=server.isAggregateServer() ? "urlId_browserId" : "browserId"%>"];
+            for (var i = 0; i < browserCheckboxes.length; i++) {
+                var browserCheckbox = browserCheckboxes[i];
+                if (browserCheckbox.checked)
+                    return true;
+            }
+            return false;
+        }
+    </script>
 </head>
 
 <body bgcolor="#e4ecec">
@@ -30,8 +62,8 @@
                             <b>URL:</b>
                         </td>
                         <td width="45%">
-                            <input type="text" name="url" size="60" value="<%=url%>">&nbsp;
-                            <input type="submit" class="button" value="Run">
+                            <input type="text" name="url" id="url" size="60" value="<%=url%>">&nbsp;
+                            <input type="submit" class="button" value="Run" onclick="return verifyRequiredFieldsEntered()">
                         </td>
                         <td width="1%" rowspan="50">&nbsp;</td>
                         <td width="48%" rowspan="50" valign="top">

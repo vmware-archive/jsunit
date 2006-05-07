@@ -9,11 +9,34 @@
     <script type="text/javascript" src="app/jsUnitCore.js"></script>
     <script type="text/javascript" src="app/server/jsUnitVersionCheck.js"></script>
     <script type="text/javascript">
-        function verifyFragmentNotBlank() {
-            var isBlank = document.getElementById("fragment").value == "";
-            if (isBlank)
+        function verifyRequiredFieldsEntered() {
+            if (document.getElementById("fragment").value == "") {
                 alert("Please enter a fragment.")
-            return !isBlank;
+                document.getElementById("fragment").focus();
+                return false;
+            }
+            if (!atLeastOneBrowserIsChecked()) {
+                alert("Please choose 1 or more browsrs.")
+                return false;
+            }
+        <%if (server.getConfiguration().useCaptcha()) {%>
+            if (document.getElementById("attemptedCaptchaAnswer").value == "") {
+                alert("Please enter the CAPTCHA text.");
+                document.getElementById("attemptedCaptchaAnswer").focus();
+                return false;
+            }
+        <%}%>
+            return true;
+        }
+
+        function atLeastOneBrowserIsChecked() {
+            var browserCheckboxes = document.forms[0]["<%=server.isAggregateServer() ? "urlId_browserId" : "browserId"%>"];
+            for (var i = 0; i < browserCheckboxes.length; i++) {
+                var browserCheckbox = browserCheckboxes[i];
+                if (browserCheckbox.checked)
+                    return true;
+            }
+            return false;
         }
     </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
@@ -118,7 +141,7 @@
 <tr>
     <td width="5%" height="1">&nbsp;</td>
     <td width="45%" valign="top">
-        <input type="submit" class="button" value="Run test fragment" onclick="return verifyFragmentNotBlank()">
+        <input type="submit" class="button" value="Run test fragment" onclick="return verifyRequiredFieldsEntered()">
     </td>
 </tr>
 <tr>
@@ -127,7 +150,6 @@
     </td>
     <td width="45%" valign="top">
         <jsp:include page="browsers.jsp">
-            <jsp:param name="goOnClick" value="return verifyFragmentNotBlank()"/>
             <jsp:param name="multipleBrowsersAllowed" value="true"/>
         </jsp:include>
     </td>
