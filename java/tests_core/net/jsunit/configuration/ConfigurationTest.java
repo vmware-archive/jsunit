@@ -186,18 +186,6 @@ public class ConfigurationTest extends TestCase {
         assertNull(configuration.getBrowserById(900));
     }
 
-    public void testGetRemoteMachineURLById() throws Exception {
-        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-        assertEquals(
-                "http://localhost:8081/jsunit",
-                configuration.getRemoteMachineConfigurationById(0).toString()
-        );
-        assertEquals(
-                "http://127.0.0.1:8082/jsunit",
-                configuration.getRemoteMachineConfigurationById(1).toString()
-        );
-    }
-
     public void testAsArgumentsArray() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         String[] arguments = configuration.asArgumentsArray();
