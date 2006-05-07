@@ -80,7 +80,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     }
 
     static class RemoteConfigurationCacheUpdater extends Thread {
-        private static final long ONE_MINUTE_MILLIS = 1000 * 60;
+        private static final long THREE_MINUTE_MILLIS = 1000 * 60 * 3;
 
         private JsUnitAggregateServer server;
 
@@ -91,7 +91,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         public void run() {
             while (server.isAlive()) {
                 try {
-                    Thread.sleep(ONE_MINUTE_MILLIS);
+                    Thread.sleep(THREE_MINUTE_MILLIS);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
