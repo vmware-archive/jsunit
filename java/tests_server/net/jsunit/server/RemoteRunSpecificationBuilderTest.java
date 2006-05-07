@@ -1,17 +1,18 @@
 package net.jsunit.server;
 
 import junit.framework.TestCase;
-import net.jsunit.model.Browser;
-import net.jsunit.RemoteRunSpecification;
 import net.jsunit.InvalidRemoteMachineBrowserCombinationException;
+import net.jsunit.RemoteRunSpecification;
 import net.jsunit.action.InvalidRemoteMachineUrlBrowserCombination;
-import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.configuration.DummyConfigurationSource;
+import net.jsunit.configuration.RemoteConfiguration;
+import net.jsunit.model.Browser;
+import net.jsunit.model.RemoteServerConfigurationSource;
 
-import java.net.URL;
 import java.net.MalformedURLException;
-import java.util.List;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class RemoteRunSpecificationBuilderTest extends TestCase {
     private RemoteRunSpecificationBuilder builder;
@@ -66,7 +67,10 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
     }
 
     public void testIdStringPairs() throws Exception {
-        List<RemoteRunSpecification> specs = builder.fromIdStringPairs(new String[]{"0_0", "1_0", "1_2"}, someRemoteConfigs());
+        List<RemoteRunSpecification> specs = builder.fromIdStringPairs(
+                new String[]{"0_0", "1_0", "1_2"},
+                new DummyRemoteServerConfigurationSource(someRemoteConfigs())
+        );
         assertEquals(2, specs.size());
         RemoteRunSpecification spec0 = specs.get(0);
         assertEquals("http://www.example.com", spec0.getRemoteMachineBaseURL().toString());
@@ -84,7 +88,10 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
 
     public void testInvalidIdStringPairs() throws Exception {
         try {
-            builder.fromIdStringPairs(new String[]{"0_0", "1_0", "1_4"}, someRemoteConfigs());
+            builder.fromIdStringPairs(
+                    new String[]{"0_0", "1_0", "1_4"},
+                    new DummyRemoteServerConfigurationSource(someRemoteConfigs())
+            );
             fail();
         } catch (InvalidRemoteMachineBrowserCombinationException e) {
             InvalidRemoteMachineUrlBrowserCombination combo = e.createInvalidRemoteRunSpecification();
@@ -92,7 +99,10 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
         }
 
         try {
-            builder.fromIdStringPairs(new String[]{"0_0", "3_2", "1_0"}, someRemoteConfigs());
+            builder.fromIdStringPairs(
+                    new String[]{"0_0", "3_2", "1_0"},
+                    new DummyRemoteServerConfigurationSource(someRemoteConfigs())
+            );
             fail();
         } catch (InvalidRemoteMachineBrowserCombinationException e) {
             InvalidRemoteMachineUrlBrowserCombination combo = e.createInvalidRemoteRunSpecification();
@@ -100,7 +110,10 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
         }
 
         try {
-            builder.fromIdStringPairs(new String[]{"0_0", "foobar_2", "1_0"}, someRemoteConfigs());
+            builder.fromIdStringPairs(
+                    new String[]{"0_0", "foobar_2", "1_0"},
+                    new DummyRemoteServerConfigurationSource(someRemoteConfigs())
+            );
             fail();
         } catch (InvalidRemoteMachineBrowserCombinationException e) {
             InvalidRemoteMachineUrlBrowserCombination combo = e.createInvalidRemoteRunSpecification();
@@ -108,7 +121,10 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
         }
 
         try {
-            builder.fromIdStringPairs(new String[]{"0_0", "5_foobar", "1_0"}, someRemoteConfigs());
+            builder.fromIdStringPairs(
+                    new String[]{"0_0", "5_foobar", "1_0"},
+                    new DummyRemoteServerConfigurationSource(someRemoteConfigs())
+            );
             fail();
         } catch (InvalidRemoteMachineBrowserCombinationException e) {
             InvalidRemoteMachineUrlBrowserCombination combo = e.createInvalidRemoteRunSpecification();
@@ -118,7 +134,10 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
 
     public void testMalformedStringIdPairs() throws Exception {
         try {
-            builder.fromIdStringPairs(new String[]{"foobar", "1_0", "1_4"}, someRemoteConfigs());
+            builder.fromIdStringPairs(
+                    new String[]{"foobar", "1_0", "1_4"},
+                    new DummyRemoteServerConfigurationSource(someRemoteConfigs())
+            );
             fail();
         } catch (InvalidRemoteMachineBrowserCombinationException e) {
             InvalidRemoteMachineUrlBrowserCombination combo = e.createInvalidRemoteRunSpecification();
@@ -144,6 +163,22 @@ public class RemoteRunSpecificationBuilderTest extends TestCase {
             }
         }));
         return remoteConfigs;
+    }
+
+    static class DummyRemoteServerConfigurationSource implements RemoteServerConfigurationSource {
+        private List<RemoteConfiguration> list;
+
+        public DummyRemoteServerConfigurationSource(List<RemoteConfiguration> list) {
+            this.list = list;
+        }
+
+        public RemoteConfiguration getRemoteMachineConfigurationById(int id) {
+            return list.get(id);
+        }
+
+        public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
+            return list;
+        }
     }
 
 }

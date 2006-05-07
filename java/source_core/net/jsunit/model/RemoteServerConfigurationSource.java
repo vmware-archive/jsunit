@@ -4,7 +4,7 @@ import net.jsunit.configuration.RemoteConfiguration;
 
 import java.util.List;
 
-public interface RemoteMachineConfigurationSource {
+public interface RemoteServerConfigurationSource {
 
     public RemoteConfiguration getRemoteMachineConfigurationById(int id);
 

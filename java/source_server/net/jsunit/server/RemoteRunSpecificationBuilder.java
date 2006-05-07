@@ -4,6 +4,7 @@ import net.jsunit.InvalidRemoteMachineBrowserCombinationException;
 import net.jsunit.RemoteRunSpecification;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.model.Browser;
+import net.jsunit.model.RemoteServerConfigurationSource;
 
 import java.net.URL;
 import java.util.*;
@@ -23,7 +24,7 @@ public class RemoteRunSpecificationBuilder {
         return result;
     }
 
-    public List<RemoteRunSpecification> fromIdStringPairs(String[] pairs, List<RemoteConfiguration> allRemoteConfigurations)
+    public List<RemoteRunSpecification> fromIdStringPairs(String[] pairs, RemoteServerConfigurationSource source)
             throws InvalidRemoteMachineBrowserCombinationException {
         RemoteRunSpecificationMerger merger = new RemoteRunSpecificationMerger();
         for (String pair : pairs) {
@@ -38,7 +39,7 @@ public class RemoteRunSpecificationBuilder {
             }
             RemoteConfiguration configuration;
             try {
-                configuration = allRemoteConfigurations.get(urlId);
+                configuration = source.getRemoteMachineConfigurationById(urlId);
             } catch (Exception e) {
                 throw new InvalidRemoteMachineBrowserCombinationException(ids[0], ids[1]);
             }

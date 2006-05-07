@@ -28,7 +28,7 @@ public class RemoteRunSpecificationSelectionInterceptor implements Interceptor {
         RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
         if (requestedUrlBrowserCombinations != null && requestedUrlBrowserCombinations.length > 0) {
             try {
-                result = builder.fromIdStringPairs(requestedUrlBrowserCombinations, allRemoteConfigurations);
+                result = builder.fromIdStringPairs(requestedUrlBrowserCombinations, aware);
             } catch (InvalidRemoteMachineBrowserCombinationException e) {
                 aware.setInvalidRemoteMachineUrlBrowserCombination(e.createInvalidRemoteRunSpecification());
                 return Action.ERROR;

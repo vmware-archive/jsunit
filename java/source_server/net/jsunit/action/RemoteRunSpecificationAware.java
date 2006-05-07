@@ -1,11 +1,11 @@
 package net.jsunit.action;
 
 import net.jsunit.RemoteRunSpecification;
-import net.jsunit.model.RemoteMachineConfigurationSource;
+import net.jsunit.model.RemoteServerConfigurationSource;
 
 import java.util.List;
 
-public interface RemoteRunSpecificationAware extends RemoteMachineConfigurationSource {
+public interface RemoteRunSpecificationAware extends RemoteServerConfigurationSource {
 
     public void setRemoteRunSpecifications(List<RemoteRunSpecification> specs);
 
