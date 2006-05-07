@@ -44,7 +44,7 @@
             <div class="rb1content">
                 <table width="100%">
                     <tr>
-                        <td align="center">
+                        <td colspan="3" align="center">
                             <div class="rb3roundbox">
                                 <div class="rb3top"><div></div></div>
 
@@ -57,48 +57,48 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="3">
                             You can ask this JsUnit Server to run JsUnit on fragments of code using
                             the <i>fragment runner</i> service.
                             You may enter any kind of JavaScript - standalone statements and
                             assertions or real Test Functions. For example, you could enter:
-                            <br>
-                            <table align="center">
-                                <tr>
-                                    <td nowrap>
-                                        <div class="rb3roundbox">
-                                            <div class="rb3top"><div></div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="40%" nowrap>
+                            <div class="rb3roundbox">
+                                <div class="rb3top"><div></div></div>
 
-                                            <div class="rb3content">
-                                                <font size="-2">
-                                                    var myVar = 3;<br>
-                                                    assertEquals(3, myVar);<br>
-                                                    assertNotNull(myVar);<br>
-                                                    assertEquals(6, myVar * 2);
-                                                </font>
-                                            </div>
+                                <div class="rb3content">
+                                    <font size="-2">
+                                        var myVar = 3;<br>
+                                        assertEquals(3, myVar);<br>
+                                        assertNotNull(myVar);<br>
+                                        assertEquals(6, myVar * 2);
+                                    </font>
+                                </div>
 
-                                            <div class="rb3bot"><div></div></div></div>
-                                    </td>
-                                    <td>&nbsp;&nbsp;<b>or:</b>&nbsp;&nbsp;</td>
-                                    <td nowrap>
-                                        <div class="rb3roundbox">
-                                            <div class="rb3top"><div></div></div>
+                                <div class="rb3bot"><div></div></div></div>
+                        </td>
+                        <td width="20%" align="center">or</td>
+                        <td width="40%" nowrap>
+                            <div class="rb3roundbox">
+                                <div class="rb3top"><div></div></div>
 
-                                            <div class="rb3content">
-                                                <font size="-2">
-                                                    function testSimple() {<br>
-                                                    &nbsp;&nbsp;&nbsp;assertTrue(true);<br>
-                                                    &nbsp;&nbsp;&nbsp;assertFalse(false);<br>
-                                                    }
-                                                </font>
-                                            </div>
+                                <div class="rb3content">
+                                    <font size="-2">
+                                        function testSimple() {<br>
+                                        &nbsp;&nbsp;&nbsp;assertTrue(true);<br>
+                                        &nbsp;&nbsp;&nbsp;assertFalse(false);<br>
+                                        }
+                                    </font>
+                                </div>
 
-                                            <div class="rb3bot"><div></div></div></div>
-                                    </td>
-                                </tr>
-                            </table>
-                            <br>
+                                <div class="rb3bot"><div></div></div></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
                             Enter a fragment in the text area, choose which browsers you want to run your Test Page on
                             and which skin you want your results displayed in, and press "Run test fragment".
                             <br>

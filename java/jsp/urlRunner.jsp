@@ -29,17 +29,17 @@
                         <td width="5%">
                             <b>URL:</b>
                         </td>
-                        <td width="40%">
+                        <td width="45%">
                             <input type="text" name="url" size="60" value="<%=url%>">&nbsp;
                             <input type="submit" class="button" value="Run">
                         </td>
-                        <td width="1%" rowspan="4">&nbsp;</td>
-                        <td width="53%" rowspan="4" valign="top">
+                        <td width="1%" rowspan="50">&nbsp;</td>
+                        <td width="48%" rowspan="50" valign="top">
                             <div class="rb1roundbox">
                                 <div class="rb1top"><div></div></div>
 
                                 <div class="rb1content">
-                                    <table width="100%">
+                                    <table>
                                         <tr>
                                             <td align="center">
                                                 <div class="rb3roundbox">
@@ -56,15 +56,16 @@
                                         <tr>
                                             <td>
                                                 If you have JsUnit Test Pages hosted on an internet-visible web server
-                                                (perhaps on
-                                                a JsUnit server of your own), you can ask this server to run them using
-                                                the <i>URLRunner service</i>.
+                                                (perhaps on a JsUnit server of your own), you can ask this server to run
+                                                them using the <i>URLRunner service</i>.
                                                 Enter the full JsUnit TestRunner URL for your Test Pages, choose which
                                                 browsers you want to run your Test Page on and which skin you want your
-                                                results displayed
-                                                in, and press "Run".
+                                                results displayed in, and press "Run".
                                                 For example, you can run the JsUnit self-tests by entering
-                                                <i>jsunit.net/runner/testRunner.html?testPage=jsunit.net/runner/tests/jsUnitTestSuite.html</i>
+                                                <font size="-2">
+                                                    http://www.jsunit.net/runner/testRunner.html? testPage=
+                                                    http://www.jsunit.net/runner/tests/jsUnitTestSuite.html.
+                                                </font>
                                                 <br>
                                                 <br>
                                                 The URL runner service is useful for proving to a wide audience that
@@ -81,13 +82,13 @@
 
                                 <div class="rb1bot"><div></div></div></div>
                         </td>
-                        <td width="1%" rowspan="4">&nbsp;</td>
+                        <td width="1%" rowspan="50">&nbsp;</td>
                     </tr>
                     <tr>
                         <td width="5%" valign="top">
                             <b>Browsers:</b>
                         </td>
-                        <td width="40%" valign="top">
+                        <td width="45%" valign="top">
                             <jsp:include page="browsers.jsp">
                                 <jsp:param name="multipleBrowsersAllowed" value="true"/>
                             </jsp:include>
@@ -97,14 +98,14 @@
                         <td width="5%" valign="top">
                             <b>Skin:</b>
                         </td>
-                        <td width="40%" valign="top">
+                        <td width="45%" valign="top">
                             <jsp:include page="skin.jsp"/>
                         </td>
                     </tr>
                     <%if (server.getConfiguration().useCaptcha()) {%>
                     <tr>
                         <td nowrap width="5%" valign="top"><b>Enter text:</b></td>
-                        <td width="40%" valign="top">
+                        <td width="45%" valign="top">
                             <jsp:include page="captcha.jsp"/>
                         </td>
                     </tr>
