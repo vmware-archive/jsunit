@@ -14,7 +14,15 @@
 <tr>
 <td>&nbsp;</td>
 <td>
-    <a href="http://www.jsunit.net"><img src="images/logo_jsunit.gif" title="JsUnit" alt="JsUnit" border="0"/></a>
+    <div class="rb0roundbox">
+        <div class="rb0top"><div></div></div>
+
+        <div class="rb0content" align="center">
+            <a href="http://www.jsunit.net"><img src="images/logo_jsunit.gif" title="JsUnit" alt="JsUnit" border="0"/></a>
+        </div>
+
+        <div class="rb0bot"><div></div></div>
+    </div>
 </td>
 <td>&nbsp;</td>
 <td nowrap align="center">
