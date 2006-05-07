@@ -109,6 +109,9 @@
                             frequently,
                             you'll probably be interested in JsUnit's automated web services and the JsUnit client.
                             <a href="#">Learn more.</a>
+                            <br>
+                            <br>
+                            Uploaded Test Pages are not permanently stored on our servers.
                         </td>
                     </tr>
                 </table>
