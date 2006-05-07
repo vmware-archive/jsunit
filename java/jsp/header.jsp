@@ -25,7 +25,7 @@
         <div class="rb0roundbox">
             <div class="rb0top"><div></div></div>
 
-            <div class="rb0content" style="width:200;" align="center">
+            <div class="rb0content" align="center">
                 <table cellpadding="0" cellspacing="0">
                     <tr>
                         <td>
@@ -96,7 +96,7 @@
                     <div class="rb0roundbox">
                         <div class="rb0top"><div></div></div>
 
-                        <div class="rb0content" style="width:200;" align="center">
+                        <div class="rb0content" align="center">
                             <table cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td width="1" rowspan="2">
