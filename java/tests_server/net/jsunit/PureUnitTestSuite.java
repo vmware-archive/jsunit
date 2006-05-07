@@ -3,7 +3,6 @@ package net.jsunit;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import net.jsunit.action.*;
-import net.jsunit.captcha.CaptchaGeneratorTest;
 import net.jsunit.captcha.SecurityViolationTest;
 import net.jsunit.client.TestRunClientTest;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
@@ -21,11 +20,10 @@ public class PureUnitTestSuite {
         TestSuite result = new TestSuite();
         result.addTestSuite(AdminActionTest.class);
         result.addTestSuite(ArgumentsConfigurationSourceTest.class);
-        result.addTestSuite(CaptchaActionTest.class);
-        result.addTestSuite(CaptchaGeneratorTest.class);
         result.addTestSuite(HeterogenousBrowserGroupTest.class);
         result.addTestSuite(BrowserLaunchSpecificationTest.class);
         result.addTestSuite(BrowserResultLogWriterTest.class);
+        result.addTestSuite(BrowserResultTest.class);
         result.addTestSuite(BrowserTest.class);
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
         result.addTestSuite(ErrorXmlRenderableTest.class);
@@ -34,6 +32,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(PlatformTypeTest.class);
         result.addTestSuite(ReferencedJsFileTest.class);
+        result.addTestSuite(RemoteConfigurationSourceTest.class);
         result.addTestSuite(RemoteConfigurationTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);
         result.addTestSuite(RemoteRunSpecificationBuilderTest.class);
@@ -46,8 +45,10 @@ public class PureUnitTestSuite {
         result.addTestSuite(SkinTest.class);
         result.addTestSuite(StatusMessageTest.class);
         result.addTestSuite(TestCaseResultTest.class);
+        result.addTestSuite(TestPageTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(TestRunClientTest.class);
+        result.addTestSuite(TestRunResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);
         return result;
     }

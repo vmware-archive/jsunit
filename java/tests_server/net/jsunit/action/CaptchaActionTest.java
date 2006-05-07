@@ -3,9 +3,9 @@ package net.jsunit.action;
 import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.JsUnitServerStub;
+import net.jsunit.captcha.AesCipher;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
-import net.jsunit.captcha.AesCipher;
 
 import java.io.ByteArrayInputStream;
 
@@ -28,7 +28,7 @@ public class CaptchaActionTest extends TestCase {
         });
     }
 
-    public void testSimple() throws Exception {
+    public void testValid() throws Exception {
         action.setCaptchaKey(new AesCipher(SECRET_KEY).encrypt(System.currentTimeMillis() + "_theAnswer"));
         assertEquals(Action.SUCCESS, action.execute());
         ByteArrayInputStream imageStream = (ByteArrayInputStream) action.getImageStream();
