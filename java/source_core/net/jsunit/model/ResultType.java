@@ -1,6 +1,11 @@
 package net.jsunit.model;
 
 public enum ResultType {
+    SECURITY_VIOLATION {
+        public String getDisplayString() {
+            return "security violation";
+        }
+    },
     UNRESPONSIVE {
         public String getDisplayString() {
             return "unresponsive";

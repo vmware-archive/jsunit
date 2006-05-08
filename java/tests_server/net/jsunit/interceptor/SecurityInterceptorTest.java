@@ -4,7 +4,7 @@ import com.opensymphony.xwork.Action;
 import junit.framework.TestCase;
 import net.jsunit.action.CaptchaAware;
 import net.jsunit.captcha.AesCipher;
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 
 public class SecurityInterceptorTest extends TestCase {
     private SecurityInterceptor interceptor;

@@ -4,7 +4,7 @@ import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.interceptor.Interceptor;
 import net.jsunit.action.CaptchaAware;
 import net.jsunit.captcha.CaptchaSpec;
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 
 public class SecurityInterceptor implements Interceptor {
 

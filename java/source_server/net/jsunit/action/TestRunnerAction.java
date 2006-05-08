@@ -3,7 +3,7 @@ package net.jsunit.action;
 import net.jsunit.SkinSource;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
 import net.jsunit.results.Skin;

@@ -1,6 +1,6 @@
 package net.jsunit.action;
 
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 
 public interface CaptchaAware {
     boolean isProtectedByCaptcha();

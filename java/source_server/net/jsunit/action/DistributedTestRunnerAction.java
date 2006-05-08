@@ -2,7 +2,7 @@ package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.*;
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.results.Skin;

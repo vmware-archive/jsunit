@@ -6,7 +6,7 @@ import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.SuccessfulRemoteServerHitter;
 import net.jsunit.RemoteRunSpecification;
 import net.jsunit.model.Browser;
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.results.Skin;

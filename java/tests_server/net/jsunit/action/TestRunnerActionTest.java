@@ -3,7 +3,7 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
-import net.jsunit.captcha.SecurityViolation;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
 import net.jsunit.results.Skin;

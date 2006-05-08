@@ -1,5 +1,7 @@
 package net.jsunit.captcha;
 
+import net.jsunit.model.SecurityViolation;
+
 public enum CaptchaValidity {
     VALID(null),
     INVALID(SecurityViolation.FAILED_CAPTCHA),

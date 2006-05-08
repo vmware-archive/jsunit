@@ -42,4 +42,11 @@ public class TestRunClient {
         return builder.build(document);
     }
 
+    public void addParameter(String key, String value) throws MalformedURLException {
+        String string = serviceURL.toString();
+        StringBuffer buffer = new StringBuffer(string);
+        buffer.append(string.indexOf("?") == -1 ? "?" : "&");
+        buffer.append(key).append("=").append(value);
+        serviceURL = new URL(buffer.toString());
+    }
 }
