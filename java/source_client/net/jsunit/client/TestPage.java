@@ -38,7 +38,7 @@ public class TestPage {
                 HTMLScriptElement scriptElement = (HTMLScriptElement) scriptElements.item(i);
                 String filePath = scriptElement.getSrc();
                 if (isValidReferencedJsPath(filePath))
-                    result.add(new File(filePath));
+                    result.add(new File(testPageFile.getParentFile(), filePath));
             }
             return result;
         } catch (Exception e) {

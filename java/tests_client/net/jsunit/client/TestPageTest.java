@@ -3,6 +3,7 @@ package net.jsunit.client;
 import junit.framework.TestCase;
 
 import java.io.File;
+import java.util.List;
 
 public class TestPageTest extends TestCase {
     public static final String TEST_PAGE_FILENAME = "myPage.html";
@@ -31,6 +32,9 @@ public class TestPageTest extends TestCase {
     public void testSimple() throws Exception {
         TestPage page = new TestPage(testPageFile);
         assertEquals(testPageFile, page.getTestPageFile());
-        assertEquals(2, page.getReferencedJsFiles().size());
+        List<File> referencedJsFiles = page.getReferencedJsFiles();
+        assertEquals(2, referencedJsFiles.size());
+        for (File file : referencedJsFiles)
+            assertTrue(file.exists());
     }
 }
