@@ -1,5 +1,6 @@
 <%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
+<%@ page import="net.jsunit.utility.SystemUtility" %>
 <%JsUnitServer server = ServerRegistry.getServer();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -23,14 +24,15 @@
                 <tr>
                     <td colspan="3">
                         <p>
-                            This is a JsUnit <%=server.isAggregateServer() ? "aggregate" : ""%> server. To learn more
+                            This is a
+                            <b>JsUnit <%=SystemUtility.jsUnitVersion()%><%=server.isAggregateServer() ? " aggregate" : ""%>
+                                server</b>. To learn more
                             about JsUnit tests, see <a href="http://www.jsunit.net">www.jsunit.net</a>.
                         </p>
 
                         <p>
                             A JsUnit server provides the service of running your JsUnit Test Pages on a variety of
-                            browsers
-                            running on a variety of machines/operating systems.
+                            browsers running on a variety of machines/operating systems.
                         </p>
                     </td>
                 </tr>
