@@ -3,8 +3,8 @@ package net.jsunit.interceptor;
 import com.opensymphony.webwork.dispatcher.multipart.MultiPartRequestWrapper;
 import com.opensymphony.xwork.Action;
 import net.jsunit.model.ReferencedJsFile;
-import net.jsunit.uploaded.UploadedTestPageFactory;
 import net.jsunit.uploaded.UploadedTestPage;
+import net.jsunit.uploaded.UploadedTestPageFactory;
 import net.jsunit.utility.FileUtility;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,23 +17,12 @@ public class UploadedTestPageInterceptor extends AbstractUploadInterceptor {
         if (request instanceof MultiPartRequestWrapper) {
             MultiPartRequestWrapper wrapper = (MultiPartRequestWrapper) request;
             File[] uploadedTestPages = wrapper.getFiles("testPageFile");
-            if (uploadedTestPages != null && uploadedTestPages.length > 0) {
+            if (uploadedTestPages != null && uploadedTestPages.length == 1) {
                 File uploadedTestPageFile = uploadedTestPages[0];
-                String contents = FileUtility.read(uploadedTestPageFile);
                 File[] uploadedReferencedJsFiles = wrapper.getFiles("referencedJsFiles");
                 String[] uploadedReferencedJsFileNames = wrapper.getFileNames("referencedJsFiles");
-                ReferencedJsFile[] referencedJsFiles;
-                if (uploadedReferencedJsFiles != null) {
-                    referencedJsFiles = new ReferencedJsFile[uploadedReferencedJsFiles.length];
-                    for (int index = 0; index < uploadedReferencedJsFiles.length; index++)
-                        referencedJsFiles[index] = new ReferencedJsFile(
-                                uploadedReferencedJsFileNames[index],
-                                FileUtility.read(uploadedReferencedJsFiles[index]),
-                                index
-                        );
-                } else
-                    referencedJsFiles = new ReferencedJsFile[]{};
-                UploadedTestPage page = new UploadedTestPageFactory().fromUploaded(contents, referencedJsFiles);
+                UploadedTestPage page = createUploadedTestPageFrom(
+                        uploadedTestPageFile, uploadedReferencedJsFiles, uploadedReferencedJsFileNames);
                 page.write();
                 uploadedTestPageFile.delete();
                 if (uploadedReferencedJsFiles != null)
@@ -42,6 +31,23 @@ public class UploadedTestPageInterceptor extends AbstractUploadInterceptor {
                 setUrlOfTestPageOn(targetAction, page);
             }
         }
+    }
+
+    private UploadedTestPage createUploadedTestPageFrom(
+            File uploadedTestPageFile, File[] uploadedReferencedJsFiles, String[] uploadedReferencedJsFileNames) {
+        String contents = FileUtility.read(uploadedTestPageFile);
+        ReferencedJsFile[] referencedJsFiles;
+        if (uploadedReferencedJsFiles != null) {
+            referencedJsFiles = new ReferencedJsFile[uploadedReferencedJsFiles.length];
+            for (int index = 0; index < uploadedReferencedJsFiles.length; index++)
+                referencedJsFiles[index] = new ReferencedJsFile(
+                        uploadedReferencedJsFileNames[index],
+                        FileUtility.read(uploadedReferencedJsFiles[index]),
+                        index
+                );
+        } else
+            referencedJsFiles = new ReferencedJsFile[]{};
+        return new UploadedTestPageFactory().fromUploaded(contents, referencedJsFiles);
     }
 
 }
