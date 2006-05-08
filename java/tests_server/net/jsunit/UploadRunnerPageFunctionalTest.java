@@ -3,8 +3,8 @@ package net.jsunit;
 import com.meterware.httpunit.UploadFileSpec;
 import com.meterware.httpunit.WebForm;
 import net.jsunit.model.ResultType;
-import net.jsunit.model.TestPage;
-import net.jsunit.uploaded.TestPageFactory;
+import net.jsunit.uploaded.UploadedTestPage;
+import net.jsunit.uploaded.UploadedTestPageFactory;
 import net.jsunit.utility.FileUtility;
 
 import java.io.File;
@@ -96,7 +96,7 @@ public class UploadRunnerPageFunctionalTest extends StandardServerFunctionalTest
 
     private File saveTestPageLocally(String fragment) {
         File testPageFile = new File("scratch", "testTestPage_" + System.currentTimeMillis() + ".html");
-        TestPage page = new TestPageFactory().fromFragment(fragment);
+        UploadedTestPage page = new UploadedTestPageFactory().fromFragment(fragment);
         FileUtility.write(testPageFile, page.getHtml());
         createdFiles.add(testPageFile);
         return testPageFile;

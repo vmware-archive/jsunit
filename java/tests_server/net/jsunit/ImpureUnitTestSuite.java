@@ -13,7 +13,8 @@ import net.jsunit.interceptor.*;
 import net.jsunit.model.FailedToLaunchBrowserResultTest;
 import net.jsunit.model.TestRunResultBuilderTest;
 import net.jsunit.model.TimedOutBrowerResultTest;
-import net.jsunit.uploaded.TestPageFactoryTest;
+import net.jsunit.uploaded.UploadedTestPageFactoryTest;
+import net.jsunit.client.TestPageTest;
 
 public class ImpureUnitTestSuite {
 
@@ -47,7 +48,8 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(ResultAcceptorTest.class);
         result.addTestSuite(SecurityInterceptorTest.class);
         result.addTestSuite(SkinInterceptorTest.class);
-        result.addTestSuite(TestPageFactoryTest.class);
+        result.addTestSuite(UploadedTestPageFactoryTest.class);
+        result.addTestSuite(TestPageTest.class);
         result.addTestSuite(TestRunnerActionSimultaneousRunBlockingTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);
         result.addTestSuite(TestRunResultBuilderTest.class);

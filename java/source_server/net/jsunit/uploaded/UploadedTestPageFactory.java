@@ -1,8 +1,7 @@
 package net.jsunit.uploaded;
 
-import net.jsunit.results.XsltTransformer;
-import net.jsunit.model.TestPage;
 import net.jsunit.model.ReferencedJsFile;
+import net.jsunit.results.XsltTransformer;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -11,22 +10,21 @@ import org.w3c.dom.html.HTMLScriptElement;
 import org.xml.sax.InputSource;
 
 import javax.xml.transform.*;
-import javax.xml.transform.Result;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestPageFactory {
+public class UploadedTestPageFactory {
 
-    public TestPage fromFragment(String fragment) {
-        return new TestPage(generateTestPageHTMLFromFragment(fragment), true);
+    public UploadedTestPage fromFragment(String fragment) {
+        return new UploadedTestPage(generateTestPageHTMLFromFragment(fragment), true);
     }
 
-    public TestPage fromUploaded(String html, ReferencedJsFile... referencedJsFiles) {
+    public UploadedTestPage fromUploaded(String html, ReferencedJsFile... referencedJsFiles) {
         html = modifyJsIncludesToPointToReferencedJsFiles(html, Arrays.asList(referencedJsFiles));
-        return new TestPage(html, false, referencedJsFiles);
+        return new UploadedTestPage(html, false, referencedJsFiles);
     }
 
     private String generateTestPageHTMLFromFragment(String testFragment) {

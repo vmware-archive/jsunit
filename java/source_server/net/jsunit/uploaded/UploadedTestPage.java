@@ -1,18 +1,19 @@
-package net.jsunit.model;
+package net.jsunit.uploaded;
 
 import net.jsunit.utility.FileUtility;
+import net.jsunit.model.ReferencedJsFile;
 
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestPage {
+public class UploadedTestPage {
     private String html;
     private boolean isGenerated;
     private List<ReferencedJsFile> referencedJsFiles;
     private long id;
 
-    public TestPage(String html, boolean isGenerated, ReferencedJsFile... referencedJsFiles) {
+    public UploadedTestPage(String html, boolean isGenerated, ReferencedJsFile... referencedJsFiles) {
         this.html = html;
         this.isGenerated = isGenerated;
         this.id = System.currentTimeMillis();

@@ -3,7 +3,7 @@ package net.jsunit.interceptor;
 import com.opensymphony.xwork.Action;
 import net.jsunit.action.TestPageURLAware;
 import net.jsunit.configuration.Configuration;
-import net.jsunit.model.TestPage;
+import net.jsunit.uploaded.UploadedTestPage;
 import net.jsunit.utility.SystemUtility;
 
 import java.io.UnsupportedEncodingException;
@@ -13,7 +13,7 @@ import java.net.URLEncoder;
 
 public abstract class AbstractUploadInterceptor extends JsUnitInterceptor {
 
-    protected void setUrlOfTestPageOn(Action targetAction, TestPage uploadedTestPage) throws MalformedURLException, UnsupportedEncodingException {
+    protected void setUrlOfTestPageOn(Action targetAction, UploadedTestPage uploadedTestPage) throws MalformedURLException, UnsupportedEncodingException {
         TestPageURLAware aware = (TestPageURLAware) targetAction;
         Configuration configuration = aware.getServerConfiguration();
 

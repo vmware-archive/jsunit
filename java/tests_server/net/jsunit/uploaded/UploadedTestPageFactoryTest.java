@@ -2,33 +2,32 @@ package net.jsunit.uploaded;
 
 import junit.framework.TestCase;
 import net.jsunit.utility.StringUtility;
-import net.jsunit.model.TestPage;
 import net.jsunit.model.ReferencedJsFile;
 
-public class TestPageFactoryTest extends TestCase {
+public class UploadedTestPageFactoryTest extends TestCase {
 
-    private TestPageFactory factory;
+    private UploadedTestPageFactory factory;
 
     protected void setUp() throws Exception {
         super.setUp();
-        factory = new TestPageFactory();
+        factory = new UploadedTestPageFactory();
     }
 
     public void testFromFragmentWithNoEnclosingFunction() throws Exception {
         String source = "assertEquals(1, 1);";
-        TestPage page = factory.fromFragment(source);
+        UploadedTestPage page = factory.fromFragment(source);
         assertPageContains(page, "function testSomething() {" + source + "}");
     }
 
     public void testFromFragmentWithEnclosingFunction() throws Exception {
         String source = "function testMyLogic() {\nvar foo=7;\nassertEquals(7, foo);\n}";
-        TestPage page = factory.fromFragment(source);
+        UploadedTestPage page = factory.fromFragment(source);
         assertPageContains(page, source);
     }
 
     public void testUploaded() throws Exception {
         String source = "<HTML>some text</HTML>";
-        TestPage page = factory.fromUploaded(source);
+        UploadedTestPage page = factory.fromUploaded(source);
         assertEquals(source, page.getHtml().trim());
     }
 
@@ -53,7 +52,7 @@ public class TestPageFactoryTest extends TestCase {
         assertTrue(html.indexOf(referencedFile2.getFileName()) > -1);
     }
 
-    private void assertPageContains(TestPage page, String text) {
+    private void assertPageContains(UploadedTestPage page, String text) {
         String collapsedHtml = StringUtility.stripWhiteSpace(page.getHtml());
         String collapsedText = StringUtility.stripWhiteSpace(text);
         assertTrue(collapsedHtml.indexOf(collapsedText) != -1);

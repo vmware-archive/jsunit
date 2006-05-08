@@ -32,11 +32,14 @@ public class TestRunClient {
         this.hitter = hitter;
     }
 
-    public Result send(File testPage) throws IOException {
+    public Result send(File testPageFile) throws IOException {
+        TestPage testPage = new TestPage(testPageFile);
         Map<String, List<File>> map = new HashMap<String, List<File>>();
-        map.put("testPageFile", Arrays.asList(testPage));
+        map.put("testPageFile", Arrays.asList(testPage.getTestPageFile()));
+        map.put("referencedJsFiles", testPage.getReferencedJsFiles());
         Document document = hitter.postToURL(serviceURL, map);
         ResultBuilder builder = new ResultBuilder();
         return builder.build(document);
     }
+
 }

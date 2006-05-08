@@ -63,7 +63,7 @@
     <option name="GENERATE_NO_WARNINGS" value="false" />
     <option name="DEPRECATION" value="true" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
-    <option name="MAXIMUM_HEAP_SIZE" value="128" />
+    <option name="MAXIMUM_HEAP_SIZE" value="200" />
   </component>
   <component name="JavadocGenerationManager">
     <option name="OUTPUT_DIRECTORY" />
@@ -226,6 +226,8 @@
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-httpclient-3.0.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-fileupload.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/commons-codec-1.3.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml-0.8.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/xercesImpl-2.6.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
@@ -241,14 +243,12 @@
     <library name="thirdparty_web">
       <CLASSES>
         <root url="jar://$PROJECT_DIR$/../java/lib/oscore.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml-0.8.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/org.mortbay.jetty.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/jasper-runtime.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/jasper-compiler.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/javax.servlet.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/ognl.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/start.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xercesImpl-2.6.2.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/webwork-2.2-beta-4.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/stop.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/lib/rife-continuations.jar!/" />

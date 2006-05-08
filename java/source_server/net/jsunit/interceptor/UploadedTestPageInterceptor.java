@@ -3,8 +3,8 @@ package net.jsunit.interceptor;
 import com.opensymphony.webwork.dispatcher.multipart.MultiPartRequestWrapper;
 import com.opensymphony.xwork.Action;
 import net.jsunit.model.ReferencedJsFile;
-import net.jsunit.model.TestPage;
-import net.jsunit.uploaded.TestPageFactory;
+import net.jsunit.uploaded.UploadedTestPageFactory;
+import net.jsunit.uploaded.UploadedTestPage;
 import net.jsunit.utility.FileUtility;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,7 +33,7 @@ public class UploadedTestPageInterceptor extends AbstractUploadInterceptor {
                         );
                 } else
                     referencedJsFiles = new ReferencedJsFile[]{};
-                TestPage page = new TestPageFactory().fromUploaded(contents, referencedJsFiles);
+                UploadedTestPage page = new UploadedTestPageFactory().fromUploaded(contents, referencedJsFiles);
                 page.write();
                 uploadedTestPageFile.delete();
                 if (uploadedReferencedJsFiles != null)

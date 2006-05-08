@@ -6,7 +6,8 @@ public class FileUtility {
 
     public static void delete(File file) {
         if (file.exists())
-            file.delete();
+            if (!file.delete())
+                throw new RuntimeException("Couldn't delete file: " + file.getAbsolutePath());
     }
 
     public static void write(File file, String contents) {
@@ -41,5 +42,16 @@ public class FileUtility {
             }
         }
         return buffer.toString();
+    }
+
+    public static void deleteDirectoryAndContents(String directoryName) {
+        File directory = new File(directoryName);
+        for (File file : directory.listFiles()) {
+            if (file.isDirectory())
+                deleteDirectoryAndContents(file.getAbsolutePath());
+            else
+                FileUtility.delete(file);
+        }
+        FileUtility.delete(directory);
     }
 }
