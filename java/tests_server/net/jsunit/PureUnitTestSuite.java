@@ -4,7 +4,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import net.jsunit.action.*;
 import net.jsunit.captcha.SecurityViolationTest;
-import net.jsunit.client.TestRunClientTest;
 import net.jsunit.configuration.ArgumentsConfigurationSourceTest;
 import net.jsunit.configuration.RemoteConfigurationTest;
 import net.jsunit.interceptor.BrowserTestRunnerInterceptorTest;
@@ -48,7 +47,6 @@ public class PureUnitTestSuite {
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(UploadedTestPageTest.class);
         result.addTestSuite(TestPageResultTest.class);
-        result.addTestSuite(TestRunClientTest.class);
         result.addTestSuite(TestRunResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);
         return result;
