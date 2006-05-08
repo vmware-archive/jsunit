@@ -26,7 +26,7 @@ public class CaptchaSpec {
     }
 
     private void parseEncryptedKey() {
-        String decryptedKey = null;
+        String decryptedKey;
         try {
             decryptedKey = cipher.decrypt(encryptedKey);
             String[] strings = decryptedKey.split("_");
