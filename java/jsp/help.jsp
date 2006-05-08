@@ -22,9 +22,16 @@
             <table>
                 <tr>
                     <td colspan="3">
-                        This is a JsUnit <%=server.isAggregateServer() ? "aggregate" : ""%> server.  It provides services for running JsUnit tests.  To learn more about
-                        JsUnit tests, see <a href="http://www.jsunit.net">www.jsunit.net</a>.<br>
-                        <br>
+                        <p>
+                            This is a JsUnit <%=server.isAggregateServer() ? "aggregate" : ""%> server. To learn more
+                            about JsUnit tests, see <a href="http://www.jsunit.net">www.jsunit.net</a>.
+                        </p>
+
+                        <p>
+                            A JsUnit server provides the service of running your JsUnit Test Pages on a variety of
+                            browsers
+                            running on a variety of machines/operating systems.
+                        </p>
                     </td>
                 </tr>
             </table>
