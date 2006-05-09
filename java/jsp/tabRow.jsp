@@ -56,7 +56,7 @@
     </td>
     <%} else {%>
     <td class="unselectedTab" nowrap>
-        &nbsp;&nbsp;<img border="0" src="/jsunit/images/question_mark.gif" alt="Help">&nbsp;<a href="helpPage">Help/About</a>&nbsp;&nbsp;
+        &nbsp;&nbsp;<img border="0" src="/jsunit/images/question_mark.gif" alt="Help/About" title="Help/About">&nbsp;<a href="helpPage">Help/About</a>&nbsp;&nbsp;
     </td>
     <%}%>
     <td class="tabHeaderSeparator" width="80%">&nbsp;</td>
