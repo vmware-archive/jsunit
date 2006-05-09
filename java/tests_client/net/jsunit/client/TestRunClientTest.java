@@ -30,8 +30,9 @@ public class TestRunClientTest extends TestCase {
     }
 
     public void testBadServiceURL() throws Exception {
+        TestRunClient client = new TestRunClient("not a url");
         try {
-            new TestRunClient("not a url");
+            client.send(new File("foo"));
             fail();
         } catch (RuntimeException e) {
         }

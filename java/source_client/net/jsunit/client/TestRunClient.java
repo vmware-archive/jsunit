@@ -4,31 +4,28 @@ import net.jsunit.RemoteMachineServerHitter;
 import net.jsunit.RemoteServerHitter;
 import net.jsunit.model.Result;
 import net.jsunit.model.ResultBuilder;
+import net.jsunit.utility.JsUnitURL;
 import org.jdom.Document;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class TestRunClient {
-    private URL serviceURL;
+    private JsUnitURL serviceURL;
     private RemoteServerHitter hitter;
+    private String username;
+    private String password;
 
     public TestRunClient(String serviceURL) {
         this(serviceURL, new RemoteMachineServerHitter());
     }
 
     public TestRunClient(String serviceURL, RemoteServerHitter hitter) {
-        try {
-            this.serviceURL = new URL(serviceURL);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        }
+        this.serviceURL = new JsUnitURL(serviceURL);
         this.hitter = hitter;
     }
 
@@ -37,16 +34,20 @@ public class TestRunClient {
         Map<String, List<File>> map = new HashMap<String, List<File>>();
         map.put("testPageFile", Arrays.asList(testPage.getTestPageFile()));
         map.put("referencedJsFiles", testPage.getReferencedJsFiles());
-        Document document = hitter.postToURL(serviceURL, map);
+        Document document = hitter.postToURL(serviceURL.asJavaURL(), map);
         ResultBuilder builder = new ResultBuilder();
         return builder.build(document);
     }
 
-    public void addParameter(String key, String value) throws MalformedURLException {
-        String string = serviceURL.toString();
-        StringBuffer buffer = new StringBuffer(string);
-        buffer.append(string.indexOf("?") == -1 ? "?" : "&");
-        buffer.append(key).append("=").append(value);
-        serviceURL = new URL(buffer.toString());
+    public void setUsername(String username) {
+        appendToServiceURL("username", username);
+    }
+
+    public void setPassword(String password) {
+        appendToServiceURL("password", password);
+    }
+
+    private void appendToServiceURL(String key, String value) {
+        serviceURL.addParameter(key, value);
     }
 }

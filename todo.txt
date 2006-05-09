@@ -1,41 +1,27 @@
-Required for release:
+Required for 2.2 release:
 
   FEATURES:
     - make all logging go through some status logger interface
-    - protect secretKey file from web access
     - bug where some aggregate requests do not show a response from all aggregatees
     - queuing needs work - linkedlist, queue
     - group 3rd party jars and add licenses
-    - think through distribution (not jsps, etc)
-    - keep original names & place in temporary uniquely named subdirectories
-    - remove all files with an around interceptor
-    - uploaded test suites
     - Send traces back to client (IN PROGRESS - ehanson)
-    - finish Text.xsl
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
-    - jslint service
     - stack traces for failures
-    - notion of non-test fragment runs
     - make DT not need 2 configurations
 
   BUGS:
     - Mozilla 1.7.12 issues
     - Some tests don't run in Konqueror; there's a hang in the onload test
     - SourceForge bugs
+    - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?
 
-Backlog for future releases:
-
+Future releases:
   FEATURES:
     - individual testFunction= parameter to testRunner.html that makes it run only that test function
     - EXTERNALLY_SHUT_DOWN browser result type
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
-    - admin.jsp console to change and save configuration (password protected?)
-    - remoteMachineURL ids - ability to pass a remoteMachineURL id to the distributedrunner servlet
     - warning (i.e. a failure of some kind) when no tests found
 
   REFACTORINGS:
     - better ashcroft compliance
-    - change to use webwork taglib for jsps; remove all java scriptlets
-
-  BUGS:
-    - IE7beta issues - query strings not possible for file:/// protocol - is it a bug in IE7?

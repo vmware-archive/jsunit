@@ -1,8 +1,7 @@
 package net.jsunit;
 
-import net.jsunit.client.TestRunClient;
 import net.jsunit.client.DummyTestPageWriter;
-import net.jsunit.configuration.ConfigurationSource;
+import net.jsunit.client.TestRunClient;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.TestRunResult;
 
@@ -11,14 +10,6 @@ import java.io.File;
 public class ClientFunctionalTest extends StandardServerFunctionalTestCase {
     private String directory;
     private DummyTestPageWriter writer;
-
-    protected ConfigurationSource createConfigurationSource() {
-        return new FunctionalTestConfigurationSource(port) {
-            public String runnerReferrerRestrict() {
-                return null;
-            }
-        };
-    }
 
     protected boolean shouldMockOutProcessStarter() {
         return false;
