@@ -103,12 +103,20 @@
             &nbsp;
             <script language="JavaScript" type="text/javascript">
                 var specifiedTestPage = jsUnitGetParm('testpage');
-                var needsUploadField = top.getDocumentProtocol() == 'file:///' && top.browserSupportsReadingFullPathFromFileField();
+                var isFileProtocol = top.getDocumentProtocol() == 'file:///';
+                var needsUploadField = isFileProtocol && top.browserSupportsReadingFullPathFromFileField() && !specifiedTestPage ;
                 if (specifiedTestPage) {
                     var html = '<input type="hidden" name="testFileName" value="';
                     var valueString = '';
-                    if ((top.getDocumentProtocol() == 'http://' || top.getDocumentProtocol() == 'https://') && jsUnitGetParm('testpage').indexOf('/') == 0)
-                        valueString += top.location.host;
+                    if (!isFileProtocol) {
+                        var topLocation = top.location;
+                        if (specifiedTestPage.indexOf('/') == 0)
+                            valueString += topLocation.host;
+                        else if (specifiedTestPage.indexOf('./') == 0) {
+                            valueString += topLocation.href.substr(0, topLocation.href.indexOf("testRunner.html"));
+                            specifiedTestPage = specifiedTestPage.substr(2, specifiedTestPage.length);
+                        }
+                    }
                     valueString += specifiedTestPage;
                     var testParms = top.jsUnitConstructTestParms();
                     if (testParms != '') {
@@ -125,7 +133,7 @@
                     else
                         document.writeln('<input type="text" name="testFileName" size="60">');
                 }
-                var buttonClass = needsUploadField && !specifiedTestPage ? "" : "button";
+                var buttonClass = needsUploadField ? "" : "button";
                 document.writeln('<input type="button" name="runButton" value="Run" onclick="kickOffTests()" class="' + buttonClass + '">');
                 document.writeln('<input type="button" name="stopButton" value="Stop" onclick="stopTests()" class="' + buttonClass + '">');
             </script>
