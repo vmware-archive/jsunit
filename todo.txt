@@ -21,6 +21,3 @@ Future releases:
     - EXTERNALLY_SHUT_DOWN browser result type
     - make setUpPageStatus='complete' better (at least a function you can just call when you are done setting up the page)
     - warning (i.e. a failure of some kind) when no tests found
-
-  REFACTORINGS:
-    - better ashcroft compliance
