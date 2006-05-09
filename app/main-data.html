@@ -125,7 +125,7 @@
                     else
                         document.writeln('<input type="text" name="testFileName" size="60">');
                 }
-                var buttonClass = needsUploadField ? "" : "button";
+                var buttonClass = needsUploadField && !specifiedTestPage ? "" : "button";
                 document.writeln('<input type="button" name="runButton" value="Run" onclick="kickOffTests()" class="' + buttonClass + '">');
                 document.writeln('<input type="button" name="stopButton" value="Stop" onclick="stopTests()" class="' + buttonClass + '">');
             </script>
