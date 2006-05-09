@@ -2,7 +2,6 @@ Required for 2.2 release:
 
   FEATURES:
     - make all logging go through some status logger interface
-    - bug where some aggregate requests do not show a response from all aggregatees
     - queuing needs work - linkedlist, queue
     - group 3rd party jars and add licenses
     - Send traces back to client (IN PROGRESS - ehanson)
