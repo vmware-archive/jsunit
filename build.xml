@@ -84,6 +84,7 @@
     <property name="source_core" location="java/source_core"/>
     <property name="source_client" location="java/source_client"/>
     <property name="source_server" location="java/source_server"/>
+    <property name="source_axis" location="java/source_axis"/>
     <property name="tests_core" location="java/tests_core"/>
     <property name="tests_client" location="java/tests_client"/>
     <property name="tests_server" location="java/tests_server"/>
@@ -96,6 +97,7 @@
     <path id="classpath">
         <fileset dir="${lib}">
             <include name="*.jar"/>
+            <include name="*/*.jar"/>
         </fileset>
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>
@@ -135,6 +137,14 @@
             </classpath>
         </javac>
         <javac srcdir="${source_server}" destdir="${bin}" debug="true">
+            <classpath>
+                <fileset dir="${lib}">
+                    <include name="*.jar"/>
+                </fileset>
+                <path location="${bin}"/>
+            </classpath>
+        </javac>
+        <javac srcdir="${source_axis}" destdir="${bin}" debug="true">
             <classpath>
                 <fileset dir="${lib}">
                     <include name="*.jar"/>
@@ -229,6 +239,17 @@
                 </class>
             </expose>
         </obfuscate>
+    </target>
+
+    <target name="generate_wsdl" depends="_create_jar">
+        <java classname="org.apache.axis.wsdl.Java2WSDL">
+            <classpath refid="classpath"/>
+            <arg value="-o"/> <arg value="wsdl/TestRunService.wsdl"/>
+            <arg value="-l"/> <arg value="http://www.jsunit.net/services/TestRunService"/>
+            <arg value="-n"/> <arg value="urn:WebServices"/>
+            <!--<arg value="-p"/> <arg value="net.jsunit.axis"/> <arg value="urn:WebServices"/>-->
+            <arg value="net.jsunit.axis.TestRunService"/>
+        </java>
     </target>
 
     <target name="_create_tar" description="Create a tar of the entire project except the SVN directories">

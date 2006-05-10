@@ -195,6 +195,7 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/axis.iml" filepath="$PROJECT_DIR$/axis.iml" />
       <module fileurl="file://$PROJECT_DIR$/browser.iml" filepath="$PROJECT_DIR$/browser.iml" />
       <module fileurl="file://$PROJECT_DIR$/client.iml" filepath="$PROJECT_DIR$/client.iml" />
       <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
@@ -265,6 +266,21 @@
         <root url="jar://$PROJECT_DIR$/../java/testlib/nekohtml-0.8.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/js-1.5R4.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/../java/testlib/httpunit-1.5.4.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES />
+    </library>
+    <library name="thirdparty_axis">
+      <CLASSES>
+        <root url="file://$PROJECT_DIR$/classes_client" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/log4j-1.2.8.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/commons-logging-1.0.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/axis.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/wsdl4j-1.5.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/axis-ant.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/commons-discovery-0.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/saaj.jar!/" />
+        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/jaxrpc.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
