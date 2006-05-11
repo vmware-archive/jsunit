@@ -4,6 +4,7 @@ import net.jsunit.client.TestRunClient;
 import net.jsunit.model.BrowserResult;
 import net.jsunit.model.DummyTestPageWriter;
 import net.jsunit.model.TestRunResult;
+import net.jsunit.model.DistributedTestRunResult;
 
 import java.io.File;
 
@@ -30,15 +31,9 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
     public void testSimple() throws Exception {
         File file = new File(directory, "a test page.html");
         TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
-        try {
-            TestRunResult testRunResult = (TestRunResult) client.send(file);
-            assertTrue(testRunResult.wasSuccessful());
-            assertEquals(2, testRunResult.getBrowserResults().size());
-            BrowserResult browserResult = testRunResult.getBrowserResults().get(0);
-            assertEquals(2, browserResult.getTestCaseResults().size());
-        } catch (NullPointerException e) {
-
-        }
+        DistributedTestRunResult distributedTestRunResult = (DistributedTestRunResult) client.send(file);
+        assertTrue(distributedTestRunResult.wasSuccessful());
+        assertEquals(2, distributedTestRunResult.getTestRunResults().size());
     }
 
 }

@@ -4,10 +4,14 @@ import junit.framework.TestCase;
 import net.jsunit.client.TestRunClient;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
+import net.jsunit.configuration.ServerType;
 import net.jsunit.model.*;
 import net.jsunit.utility.XmlUtility;
+import org.jdom.Document;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class TestRunServiceClientTest extends TestCase {
     private DummyTestPageWriter writer;
@@ -27,8 +31,17 @@ public class TestRunServiceClientTest extends TestCase {
             public String port() {
                 return String.valueOf(port);
             }
+
+            public String remoteMachineURLs() {
+                return "http://localhost:1,http://localhost:2,http://localhost:3";
+            }
         };
-        server = new JsUnitAggregateServer(new Configuration(source));
+        mockHitter = new MockRemoteServerHitter();
+        Document remoteConfigurationDocument = new Configuration(new DummyConfigurationSource()).asXmlDocument(ServerType.STANDARD);
+        mockHitter.urlToDocument.put("http://localhost:1/jsunit/config", remoteConfigurationDocument);
+        mockHitter.urlToDocument.put("http://localhost:2/jsunit/config", remoteConfigurationDocument);
+        mockHitter.urlToDocument.put("http://localhost:3/jsunit/config", remoteConfigurationDocument);
+        server = new JsUnitAggregateServer(new Configuration(source), mockHitter);
         server.start();
     }
 
@@ -48,32 +61,30 @@ public class TestRunServiceClientTest extends TestCase {
     }
 
     public void testSimple() throws Exception {
+        mockHitter.urlsPassed.clear();
         TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
         File page = new File(directory, TEST_PAGE_FILE_NAME);
-        try {
-            Result result = client.send(page);
-        } catch (NullPointerException exception) {
-            //TODO
-        }
-//        assertEquals(XmlUtility.asString(dummyResult().asXml()), XmlUtility.asString(result.asXml()));
-
-/*
-        assertEquals(1, mockHitter.urlsPassed.size());
-        assertEquals("http://server.jsunit.net/runner", mockHitter.urlsPassed.get(0));
-        assertEquals(1, mockHitter.fieldsToValuesMapsPosted.size());
-
-        List<File> testPageFiles = mockHitter.fieldsToValuesMapsPosted.get(0).get("testPageFile");
-        assertEquals(1, testPageFiles.size());
-        assertEquals(TEST_PAGE_FILE_NAME, testPageFiles.get(0).getName());
-
-        List<File> referencedJsFiles = mockHitter.fieldsToValuesMapsPosted.get(0).get("referencedJsFiles");
-        assertEquals(2, referencedJsFiles.size());
-        assertEquals("file1.js", referencedJsFiles.get(0).getName());
-        assertEquals("file2.js", referencedJsFiles.get(1).getName());
-*/
+        Result result = client.send(page);
+        assertEquals(3, mockHitter.urlsPassed.size());
+        assertTrue(mockHitter.urlsPassed.contains("http://localhost:1/jsunit/runner?url=" + testURL()));
+        assertTrue(mockHitter.urlsPassed.contains("http://localhost:2/jsunit/runner?url=" + testURL()));
+        assertTrue(mockHitter.urlsPassed.contains("http://localhost:2/jsunit/runner?url=" + testURL()));
+//        assertEquals(XmlUtility.asString(dummyDistributedTestRunResult().asXml()), XmlUtility.asString(result.asXml()));
     }
 
-    private TestRunResult dummyResult() {
+    private String testURL() throws UnsupportedEncodingException {
+        return URLEncoder.encode("http://www.example.com:1234/jsunit/runner?autoRun=true&submitResults=true", "UTF-8");
+    }
+
+    private DistributedTestRunResult dummyDistributedTestRunResult() {
+        DistributedTestRunResult result = new DistributedTestRunResult();
+        result.addTestRunResult(dummyTestRunResult());
+        result.addTestRunResult(dummyTestRunResult());
+        result.addTestRunResult(dummyTestRunResult());
+        return result;
+    }
+
+    private TestRunResult dummyTestRunResult() {
         TestRunResult result = new TestRunResult();
         result.addBrowserResult(successfulBrowserResult());
         result.addBrowserResult(errorBrowserResult());

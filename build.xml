@@ -199,6 +199,7 @@
             <nsexclude namespace="https://server.jsunit.net/model"/>
         </axis-wsdl2java>
         <delete file="${genfiles_server}/net/jsunit/services/TestRunService.java"/>        
+        <delete file="${genfiles_server}/net/jsunit/services/TestRunServiceSoapBindingImpl.java"/>
     </target>
 
     <target name="_generate_client_java_from_wsdl">

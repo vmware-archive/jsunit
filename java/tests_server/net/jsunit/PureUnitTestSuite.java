@@ -15,6 +15,7 @@ import net.jsunit.server.RemoteRunSpecificationBuilderTest;
 import net.jsunit.uploaded.UploadedTestPageTest;
 import net.jsunit.uploaded.UploadedReferencedJsFileTest;
 import net.jsunit.utility.JsUnitURLTest;
+import net.jsunit.services.TestRunServiceSoapBindingImplTest;
 
 public class PureUnitTestSuite {
 
@@ -48,6 +49,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(SkinTest.class);
         result.addTestSuite(StatusMessageTest.class);
         result.addTestSuite(TestCaseResultTest.class);
+        result.addTestSuite(TestRunServiceSoapBindingImplTest.class);
         result.addTestSuite(UploadedTestPageTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(TestRunResultTest.class);

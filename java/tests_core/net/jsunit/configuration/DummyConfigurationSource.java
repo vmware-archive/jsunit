@@ -8,7 +8,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
     public static final String REMOTE_URL_3 = "http://his.machine.com:7070/jsunit";
     public static final String BROWSER_FILE_NAME = "mybrowser.exe";
     private boolean needs3rdRemoteMachineURL;
-    public static final String PORT = "123456789";
+    public static final String PORT = "1234";
 
     public String resourceBase() {
         return ".";

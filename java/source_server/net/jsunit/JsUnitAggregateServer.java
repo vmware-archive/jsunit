@@ -33,6 +33,10 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         this.hitter = hitter;
     }
 
+    public RemoteServerHitter getHitter() {
+        return hitter;
+    }
+
     public static void main(String args[]) {
         try {
             JsUnitAggregateServer server = new JsUnitAggregateServer(Configuration.resolve(args));
@@ -73,7 +77,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
             if (retrievedRemoteConfiguration != null)
                 result.add(retrievedRemoteConfiguration);
         }
-        cachedRemoteConfigurations = result;
+        setCachedRemoteConfigurations(result);
     }
 
     public List<RemoteConfiguration> getCachedRemoteConfigurations() {
@@ -86,6 +90,10 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
 
     public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
         return cachedRemoteConfigurations;
+    }
+
+    public synchronized void setCachedRemoteConfigurations(List<RemoteConfiguration> cachedRemoteConfigurations) {
+        this.cachedRemoteConfigurations = cachedRemoteConfigurations;
     }
 
     protected void setUpHttpServer() throws Exception {
