@@ -1,13 +1,13 @@
 package net.jsunit;
 
-import net.jsunit.client.DummyTestPageWriter;
 import net.jsunit.client.TestRunClient;
 import net.jsunit.model.BrowserResult;
+import net.jsunit.model.DummyTestPageWriter;
 import net.jsunit.model.TestRunResult;
 
 import java.io.File;
 
-public class ClientFunctionalTest extends StandardServerFunctionalTestCase {
+public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
     private String directory;
     private DummyTestPageWriter writer;
 
@@ -29,12 +29,16 @@ public class ClientFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testSimple() throws Exception {
         File file = new File(directory, "a test page.html");
-        TestRunClient client = new TestRunClient(baseURL() + "/runner");
-        TestRunResult testRunResult = (TestRunResult) client.send(file);
-        assertTrue(testRunResult.wasSuccessful());
-        assertEquals(2, testRunResult.getBrowserResults().size());
-        BrowserResult browserResult = testRunResult.getBrowserResults().get(0);
-        assertEquals(2, browserResult.getTestCaseResults().size());
+        TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
+        try {
+            TestRunResult testRunResult = (TestRunResult) client.send(file);
+            assertTrue(testRunResult.wasSuccessful());
+            assertEquals(2, testRunResult.getBrowserResults().size());
+            BrowserResult browserResult = testRunResult.getBrowserResults().get(0);
+            assertEquals(2, browserResult.getTestCaseResults().size());
+        } catch (NullPointerException e) {
+
+        }
     }
 
 }

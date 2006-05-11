@@ -2,7 +2,7 @@ package net.jsunit.uploaded;
 
 import junit.framework.TestCase;
 import net.jsunit.utility.StringUtility;
-import net.jsunit.model.ReferencedJsFile;
+import net.jsunit.uploaded.UploadedReferencedJsFile;
 
 public class UploadedTestPageFactoryTest extends TestCase {
 
@@ -43,8 +43,8 @@ public class UploadedTestPageFactoryTest extends TestCase {
                 "<script language=\"javascript\" src=\"/my/own/file1.js\"></script>" +
                 "<script language=\"javascript\" src=\"/my/own/file2.js\"></script>" +
                 "</head><body></body></html>";
-        ReferencedJsFile referencedFile1 = new ReferencedJsFile("file1.js", "var foo = 1;", 0);
-        ReferencedJsFile referencedFile2 = new ReferencedJsFile("file2.js", "var bar = 2;", 1);
+        UploadedReferencedJsFile referencedFile1 = new UploadedReferencedJsFile("file1.js", "var foo = 1;", 0);
+        UploadedReferencedJsFile referencedFile2 = new UploadedReferencedJsFile("file2.js", "var bar = 2;", 1);
         String html = factory.fromUploaded(source, referencedFile1, referencedFile2).getHtml();
         assertEquals(-1, html.indexOf("my/own/file1.js"));
         assertEquals(-1, html.indexOf("my/own/file2.js"));

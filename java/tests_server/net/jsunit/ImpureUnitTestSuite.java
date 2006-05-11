@@ -5,8 +5,7 @@ import junit.framework.TestSuite;
 import net.jsunit.action.*;
 import net.jsunit.captcha.CaptchaGeneratorTest;
 import net.jsunit.captcha.CaptchaSpecTest;
-import net.jsunit.client.TestPageTest;
-import net.jsunit.client.TestRunClientTest;
+import net.jsunit.model.TestPageTest;
 import net.jsunit.configuration.ConfigurationSourceResolutionTest;
 import net.jsunit.configuration.ConfigurationTest;
 import net.jsunit.configuration.EnvironmentVariablesConfigurationSourceTest;
@@ -50,7 +49,6 @@ public class ImpureUnitTestSuite {
         result.addTestSuite(SecurityInterceptorTest.class);
         result.addTestSuite(SkinInterceptorTest.class);
         result.addTestSuite(UploadedTestPageFactoryTest.class);
-        result.addTestSuite(TestRunClientTest.class);
         result.addTestSuite(TestPageTest.class);
         result.addTestSuite(TestRunnerActionSimultaneousRunBlockingTest.class);
         result.addTestSuite(TestRunNotifierServerTest.class);

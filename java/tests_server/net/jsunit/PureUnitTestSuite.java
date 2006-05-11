@@ -13,6 +13,7 @@ import net.jsunit.model.*;
 import net.jsunit.results.SkinTest;
 import net.jsunit.server.RemoteRunSpecificationBuilderTest;
 import net.jsunit.uploaded.UploadedTestPageTest;
+import net.jsunit.uploaded.UploadedReferencedJsFileTest;
 import net.jsunit.utility.JsUnitURLTest;
 
 public class PureUnitTestSuite {
@@ -33,7 +34,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(PageActionTest.class);
         result.addTestSuite(PlatformTypeTest.class);
-        result.addTestSuite(ReferencedJsFileTest.class);
+        result.addTestSuite(UploadedReferencedJsFileTest.class);
         result.addTestSuite(RemoteConfigurationSourceTest.class);
         result.addTestSuite(RemoteConfigurationTest.class);
         result.addTestSuite(RemoteRunnerHitterInterceptorTest.class);

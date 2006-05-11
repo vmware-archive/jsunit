@@ -9,6 +9,15 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.mortbay.jetty.servlet.ServletHttpContext;
+import org.mortbay.http.SocketListener;
+import org.mortbay.http.handler.ResourceHandler;
+import org.apache.axis.transport.http.AxisServlet;
+import org.apache.axis.transport.http.AdminServlet;
+import org.apache.axis.transport.http.AxisHTTPSessionListener;
+import org.apache.axis.monitor.SOAPMonitorService;
+import org.apache.axis.components.logger.LogFactory;
+
 public class JsUnitAggregateServer extends AbstractJsUnitServer implements RemoteServerConfigurationSource {
 
     private RemoteServerHitter hitter;
@@ -77,6 +86,23 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
 
     public List<RemoteConfiguration> getAllRemoteMachineConfigurations() {
         return cachedRemoteConfigurations;
+    }
+
+    protected void setUpHttpServer() throws Exception {
+        super.setUpHttpServer();
+        ServletHttpContext axisContext = new ServletHttpContext();
+        axisContext.setContextPath("axis");
+        axisContext.setResourceBase(configuration.getResourceBase().toString());
+        axisContext.addServlet("AxisAdmin", "/admin", AdminServlet.class.getName());
+        axisContext.addServlet("Axis", "/services/*", AxisServlet.class.getName());
+        axisContext.setMimeMapping("wsdl", "text/xml");
+        axisContext.setMimeMapping("xsd", "text/xml");
+        axisContext.addWelcomeFile("services.html");
+
+        ResourceHandler resourceHandler = new ResourceHandler();
+        resourceHandler.setDirAllowed(false);
+        axisContext.addHandler(resourceHandler);
+        server.addContext(axisContext);
     }
 
     static class RemoteConfigurationCacheUpdater extends Thread {

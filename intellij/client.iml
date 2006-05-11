@@ -5,6 +5,9 @@
     <output url="file://$MODULE_DIR$/classes_client" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes_client_test" />
+    <content url="file://$MODULE_DIR$/../java/genfiles_client">
+      <sourceFolder url="file://$MODULE_DIR$/../java/genfiles_client" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../java/source_client">
       <sourceFolder url="file://$MODULE_DIR$/../java/source_client" isTestSource="false" />
     </content>
@@ -16,6 +19,7 @@
     <orderEntry type="library" name="thirdparty" level="project" />
     <orderEntry type="library" name="thirdparty_test" level="project" />
     <orderEntry type="module" module-name="core" />
+    <orderEntry type="library" name="thirdparty_axis" level="project" />
     <orderEntryProperties />
   </component>
 </module>

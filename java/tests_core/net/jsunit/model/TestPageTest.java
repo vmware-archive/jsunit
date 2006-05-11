@@ -1,9 +1,9 @@
-package net.jsunit.client;
+package net.jsunit.model;
 
+import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import java.io.File;
-import java.util.List;
 
 public class TestPageTest extends TestCase {
     public static final String TEST_PAGE_FILENAME = "myPage.html";
@@ -31,10 +31,13 @@ public class TestPageTest extends TestCase {
 
     public void testSimple() throws Exception {
         TestPage page = new TestPage(testPageFile);
-        assertEquals(testPageFile, page.getTestPageFile());
-        List<File> referencedJsFiles = page.getReferencedJsFiles();
-        assertEquals(2, referencedJsFiles.size());
-        for (File file : referencedJsFiles)
-            assertTrue(file.exists());
+        assertEquals(TEST_PAGE_FILENAME, page.getFileName());
+        Assert.assertEquals(DummyTestPageWriter.TEST_PAGE_CONTENTS, page.getContents());
+        ReferencedJsFile[] referencedJsFiles = page.getReferencedJsFiles();
+        assertEquals(2, referencedJsFiles.length);
+        assertEquals("file1.js", referencedJsFiles[0].getFileName());
+        assertEquals("file2.js", referencedJsFiles[1].getFileName());
+        assertEquals(DummyTestPageWriter.REFERENCED_JS_FILE_1_CONTENTS, referencedJsFiles[0].getContents());
+        assertEquals(DummyTestPageWriter.REFERENCED_JS_FILE_2_CONTENTS, referencedJsFiles[1].getContents());
     }
 }

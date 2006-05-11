@@ -1,53 +1,40 @@
 package net.jsunit.client;
 
-import net.jsunit.RemoteMachineServerHitter;
-import net.jsunit.RemoteServerHitter;
 import net.jsunit.model.Result;
 import net.jsunit.model.ResultBuilder;
+import net.jsunit.model.ServiceResult;
+import net.jsunit.model.TestPage;
 import net.jsunit.utility.JsUnitURL;
-import org.jdom.Document;
+import net.jsunit.utility.XmlUtility;
+import net.jsunit.services.TestRunService;
+import net.jsunit.services.TestRunServiceServiceLocator;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class TestRunClient {
     private JsUnitURL serviceURL;
-    private RemoteServerHitter hitter;
     private String username;
     private String password;
 
     public TestRunClient(String serviceURL) {
-        this(serviceURL, new RemoteMachineServerHitter());
-    }
-
-    public TestRunClient(String serviceURL, RemoteServerHitter hitter) {
         this.serviceURL = new JsUnitURL(serviceURL);
-        this.hitter = hitter;
     }
 
-    public Result send(File testPageFile) throws IOException {
+    public Result send(File testPageFile) throws Exception {
         TestPage testPage = new TestPage(testPageFile);
-        Map<String, List<File>> map = new HashMap<String, List<File>>();
-        map.put("testPageFile", Arrays.asList(testPage.getTestPageFile()));
-        map.put("referencedJsFiles", testPage.getReferencedJsFiles());
-        Document document = hitter.postToURL(serviceURL.asJavaURL(), map);
+        TestRunServiceServiceLocator locator = new TestRunServiceServiceLocator();
+        TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
+        ServiceResult serviceResult = service.runTests(testPage);
         ResultBuilder builder = new ResultBuilder();
-        return builder.build(document);
+        return builder.build(XmlUtility.asXmlDocument(serviceResult.getXml()));
     }
 
     public void setUsername(String username) {
-        appendToServiceURL("username", username);
+        this.username = username;
     }
 
     public void setPassword(String password) {
-        appendToServiceURL("password", password);
+        this.password = password;
     }
 
-    private void appendToServiceURL(String key, String value) {
-        serviceURL.addParameter(key, value);
-    }
 }

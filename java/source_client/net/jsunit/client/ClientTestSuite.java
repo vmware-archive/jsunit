@@ -7,7 +7,6 @@ import junit.framework.TestSuite;
 import net.jsunit.model.Result;
 
 import java.io.File;
-import java.io.IOException;
 
 public class ClientTestSuite {
 
@@ -21,10 +20,15 @@ public class ClientTestSuite {
             public void run(TestResult jUnitResult) {
                 TestRunClient testRunClient = new TestRunClient(serviceURL);
                 try {
-                    Result remoteResult = testRunClient.send(testPage);
+                    Result remoteResult = null;
+                    try {
+                        remoteResult = testRunClient.send(testPage);
+                    } catch (Exception e) {
+                        jUnitResult.addError(this, e);
+                    }
                     if (!remoteResult.wasSuccessful())
                         jUnitResult.addFailure(this, new AssertionFailedError(remoteResult.displayString()));
-                } catch (IOException e) {
+                } catch (Exception e) {
                     jUnitResult.addError(this, e);
                 }
             }

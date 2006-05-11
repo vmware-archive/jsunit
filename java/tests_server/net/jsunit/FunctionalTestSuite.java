@@ -31,6 +31,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(SerialDistributedTestTest.class);
         result.addTestSuite(SpecificBrowserDistributedTestTest.class);
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
+        result.addTestSuite(TestRunServiceClientTest.class);
         result.addTestSuite(TestRunCountFunctionalTest.class);
         result.addTestSuite(TimedOutBrowserStandaloneTestTest.class);
         result.addTestSuite(TwoValidLocalhostsDistributedTestTest.class);

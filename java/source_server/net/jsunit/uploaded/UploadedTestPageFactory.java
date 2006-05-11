@@ -1,6 +1,5 @@
 package net.jsunit.uploaded;
 
-import net.jsunit.model.ReferencedJsFile;
 import net.jsunit.results.XsltTransformer;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
@@ -22,7 +21,7 @@ public class UploadedTestPageFactory {
         return new UploadedTestPage(generateTestPageHTMLFromFragment(fragment), true);
     }
 
-    public UploadedTestPage fromUploaded(String html, ReferencedJsFile... referencedJsFiles) {
+    public UploadedTestPage fromUploaded(String html, UploadedReferencedJsFile... referencedJsFiles) {
         html = modifyJsIncludesToPointToReferencedJsFiles(html, Arrays.asList(referencedJsFiles));
         return new UploadedTestPage(html, false, referencedJsFiles);
     }
@@ -43,7 +42,7 @@ public class UploadedTestPageFactory {
         }
     }
 
-    private String modifyJsIncludesToPointToReferencedJsFiles(String rawHTML, List<ReferencedJsFile> referencedJsFiles) {
+    private String modifyJsIncludesToPointToReferencedJsFiles(String rawHTML, List<UploadedReferencedJsFile> referencedJsFiles) {
         DOMParser parser = new DOMParser();
         try {
             parser.parse(new InputSource(new StringReader(rawHTML)));
@@ -59,13 +58,13 @@ public class UploadedTestPageFactory {
         return asString(document);
     }
 
-    private void replaceSourceAttributeOn(HTMLScriptElement scriptElement, List<ReferencedJsFile> referencedJsFiles) {
+    private void replaceSourceAttributeOn(HTMLScriptElement scriptElement, List<UploadedReferencedJsFile> referencedJsFiles) {
         String source = scriptElement.getSrc();
         if (source != null) {
             if (source.endsWith("jsUnitCore.js"))
                 scriptElement.setSrc("../app/jsUnitCore.js");
             else {
-                for (ReferencedJsFile referencedJsFile : referencedJsFiles) {
+                for (UploadedReferencedJsFile referencedJsFile : referencedJsFiles) {
                     if (source.endsWith(referencedJsFile.getOriginalFileName())) {
                         scriptElement.setSrc(referencedJsFile.getFileName());
                         return;

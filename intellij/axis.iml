@@ -4,9 +4,13 @@
   <component name="NewModuleRootManager">
     <output url="file://$MODULE_DIR$/classes_axis" />
     <exclude-output />
-    <content url="file://$MODULE_DIR$/../java/source_axis">
-      <sourceFolder url="file://$MODULE_DIR$/../java/source_axis" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/../java/genfiles_axis">
+      <sourceFolder url="file://$MODULE_DIR$/../java/genfiles_axis" isTestSource="false" />
     </content>
+    <content url="file://$MODULE_DIR$/../java/source_services">
+      <sourceFolder url="file://$MODULE_DIR$/../java/source_services" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../wsdl" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="thirdparty_axis" level="project" />
@@ -14,9 +18,7 @@
     <orderEntry type="library" name="thirdparty_test" level="project" />
     <orderEntry type="library" name="thirdparty_web" level="project" />
     <orderEntry type="library" name="thirdparty_web_test" level="project" />
-    <orderEntry type="module" module-name="server" />
     <orderEntry type="module" module-name="core" />
-    <orderEntry type="module" module-name="client" />
     <orderEntryProperties />
   </component>
 </module>

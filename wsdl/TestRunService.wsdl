@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="https://server.jsunit.net/services" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="https://server.jsunit.net/services" xmlns:intf="https://server.jsunit.net/services" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:tns2="https://server.jsunit.net/model" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema targetNamespace="https://server.jsunit.net/model" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="https://server.jsunit.net/services"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ReferencedJsFile">
+    <sequence>
+     <element name="contents" nillable="true" type="xsd:string"/>
+     <element name="fileName" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="TestPage">
+    <sequence>
+     <element name="contents" nillable="true" type="xsd:string"/>
+     <element name="fileName" nillable="true" type="xsd:string"/>
+     <element name="referencedJsFiles" nillable="true" type="impl:ArrayOf_tns2_ReferencedJsFile"/>
+    </sequence>
+   </complexType>
+   <complexType name="ServiceResult">
+    <sequence>
+     <element name="xml" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+  <schema targetNamespace="https://server.jsunit.net/services" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="https://server.jsunit.net/model"/>
+   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+   <complexType name="ArrayOf_tns2_ReferencedJsFile">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:ReferencedJsFile[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="runTestsRequest">
+
+      <wsdl:part name="in0" type="tns2:TestPage"/>
+
+   </wsdl:message>
+
+   <wsdl:message name="runTestsResponse">
+
+      <wsdl:part name="runTestsReturn" type="tns2:ServiceResult"/>
+
+   </wsdl:message>
+
+   <wsdl:portType name="TestRunService">
+
+      <wsdl:operation name="runTests" parameterOrder="in0">
+
+         <wsdl:input message="impl:runTestsRequest" name="runTestsRequest"/>
+
+         <wsdl:output message="impl:runTestsResponse" name="runTestsResponse"/>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="TestRunServiceSoapBinding" type="impl:TestRunService">
+
+      <wsdlsoap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="runTests">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="runTestsRequest">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://server.jsunit.net/services" use="encoded"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="runTestsResponse">
+
+            <wsdlsoap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="https://server.jsunit.net/services" use="encoded"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="TestRunServiceService">
+
+      <wsdl:port binding="impl:TestRunServiceSoapBinding" name="TestRunService">
+
+         <wsdlsoap:address location="https://server.jsunit.net/services/TestRunService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

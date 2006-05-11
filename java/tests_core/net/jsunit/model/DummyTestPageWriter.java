@@ -1,4 +1,4 @@
-package net.jsunit.client;
+package net.jsunit.model;
 
 import net.jsunit.utility.FileUtility;
 

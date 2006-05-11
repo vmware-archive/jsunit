@@ -2,7 +2,7 @@ package net.jsunit.interceptor;
 
 import com.opensymphony.webwork.dispatcher.multipart.MultiPartRequestWrapper;
 import com.opensymphony.xwork.Action;
-import net.jsunit.model.ReferencedJsFile;
+import net.jsunit.uploaded.UploadedReferencedJsFile;
 import net.jsunit.uploaded.UploadedTestPage;
 import net.jsunit.uploaded.UploadedTestPageFactory;
 import net.jsunit.utility.FileUtility;
@@ -36,17 +36,17 @@ public class UploadedTestPageInterceptor extends AbstractUploadInterceptor {
     private UploadedTestPage createUploadedTestPageFrom(
             File uploadedTestPageFile, File[] uploadedReferencedJsFiles, String[] uploadedReferencedJsFileNames) {
         String contents = FileUtility.read(uploadedTestPageFile);
-        ReferencedJsFile[] referencedJsFiles;
+        UploadedReferencedJsFile[] referencedJsFiles;
         if (uploadedReferencedJsFiles != null) {
-            referencedJsFiles = new ReferencedJsFile[uploadedReferencedJsFiles.length];
+            referencedJsFiles = new UploadedReferencedJsFile[uploadedReferencedJsFiles.length];
             for (int index = 0; index < uploadedReferencedJsFiles.length; index++)
-                referencedJsFiles[index] = new ReferencedJsFile(
+                referencedJsFiles[index] = new UploadedReferencedJsFile(
                         uploadedReferencedJsFileNames[index],
                         FileUtility.read(uploadedReferencedJsFiles[index]),
                         index
                 );
         } else
-            referencedJsFiles = new ReferencedJsFile[]{};
+            referencedJsFiles = new UploadedReferencedJsFile[]{};
         return new UploadedTestPageFactory().fromUploaded(contents, referencedJsFiles);
     }
 

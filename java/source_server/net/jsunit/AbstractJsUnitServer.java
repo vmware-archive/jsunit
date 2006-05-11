@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
-    private HttpServer server;
+    protected HttpServer server;
     private Logger logger = Logger.getLogger("net.jsunit");
     protected Configuration configuration;
     private final ServerType serverType;
@@ -93,7 +93,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         return serverType.getDisplayName();
     }
 
-    private void setUpHttpServer() throws Exception {
+    protected void setUpHttpServer() throws Exception {
         FileResource.setCheckAliases(false);
         server = new HttpServer();
         SocketListener listener = new SocketListener();
@@ -126,7 +126,6 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
         ConfigurationManager.destroyConfiguration();
         ConfigurationManager.getConfigurationProviders().set(0, provider);
-//        ConfigurationManager.addConfigurationProvider(provider);
 
         if (Monitor.activeCount() == 0)
             Monitor.monitor();

@@ -1,7 +1,6 @@
 package net.jsunit.uploaded;
 
 import net.jsunit.utility.FileUtility;
-import net.jsunit.model.ReferencedJsFile;
 
 import java.io.File;
 import java.util.Arrays;
@@ -10,10 +9,10 @@ import java.util.List;
 public class UploadedTestPage {
     private String html;
     private boolean isGenerated;
-    private List<ReferencedJsFile> referencedJsFiles;
+    private List<UploadedReferencedJsFile> referencedJsFiles;
     private long id;
 
-    public UploadedTestPage(String html, boolean isGenerated, ReferencedJsFile... referencedJsFiles) {
+    public UploadedTestPage(String html, boolean isGenerated, UploadedReferencedJsFile... referencedJsFiles) {
         this.html = html;
         this.isGenerated = isGenerated;
         this.id = System.currentTimeMillis();
@@ -35,7 +34,7 @@ public class UploadedTestPage {
 
     public void write() {
         FileUtility.write(getFile(), html);
-        for (ReferencedJsFile jsFile : referencedJsFiles) {
+        for (UploadedReferencedJsFile jsFile : referencedJsFiles) {
             jsFile.write();
         }
     }

@@ -7,6 +7,9 @@
     <output-test url="file://$MODULE_DIR$/classes_server_test" />
     <content url="file://$MODULE_DIR$/../bin" />
     <content url="file://$MODULE_DIR$/../java/config" />
+    <content url="file://$MODULE_DIR$/../java/genfiles_server">
+      <sourceFolder url="file://$MODULE_DIR$/../java/genfiles_server" isTestSource="false" />
+    </content>
     <content url="file://$MODULE_DIR$/../java/jsp" />
     <content url="file://$MODULE_DIR$/../java/source_server">
       <sourceFolder url="file://$MODULE_DIR$/../java/source_server" isTestSource="false" />
@@ -17,6 +20,7 @@
     <content url="file://$MODULE_DIR$/../scratch" />
     <content url="file://$MODULE_DIR$/../skins" />
     <content url="file://$MODULE_DIR$/../uploaded" />
+    <content url="file://$MODULE_DIR$/../wsdl" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="thirdparty" level="project" />
@@ -34,6 +38,7 @@
     <orderEntry type="library" name="thirdparty_web" level="project" />
     <orderEntry type="library" name="thirdparty_web_test" level="project" />
     <orderEntry type="module" module-name="client" />
+    <orderEntry type="library" name="thirdparty_axis" level="project" />
     <orderEntryProperties />
   </component>
 </module>
