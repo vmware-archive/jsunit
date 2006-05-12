@@ -55,12 +55,12 @@ public class BrowserTest extends TestCase {
 
     public void testBrowserType() throws Exception {
         Browser browser = new Browser("/some/path/to/opera.exe", 2);
-        assertEquals(BrowserType.OPERA, browser.getType());
+        assertEquals(BrowserType.OPERA, browser._getType());
     }
 
     public void testUnknownBrowserType() throws Exception {
         Browser browser = new Browser("/some/path/to/something/unknown.sh", 2);
-        assertEquals(BrowserType.UNKNOWN, browser.getType());
+        assertEquals(BrowserType.UNKNOWN, browser._getType());
     }
 
     public void testConflictsWith() throws Exception {

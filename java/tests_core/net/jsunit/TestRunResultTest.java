@@ -6,14 +6,12 @@ import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 
-import java.net.URL;
-
 public class TestRunResultTest extends TestCase {
     private TestRunResult testRunResult;
 
     protected void setUp() throws Exception {
         super.setUp();
-        testRunResult = new TestRunResult(new URL("http://www.example.com"));
+        testRunResult = new TestRunResult("http://www.example.com");
     }
 
     public void testSuccess() throws Exception {
@@ -49,7 +47,7 @@ public class TestRunResultTest extends TestCase {
         testRunResult.setOsName("my cool os");
         testRunResult.setIpAddress("127.0.0.1");
         testRunResult.setHostname("machine.example.com");
-        testRunResult.setURL(new URL("http://www.example.com"));
+        testRunResult.setUrl("http://www.example.com");
         assertEquals(
                 "<testRunResult type=\"ERROR\" url=\"http://www.example.com\">" +
                         "<platform>" +
@@ -72,7 +70,7 @@ public class TestRunResultTest extends TestCase {
     public void testUnresponsive() throws Exception {
         testRunResult.setUnresponsive();
         assertTrue(testRunResult.wasUnresponsive());
-        assertEquals(ResultType.UNRESPONSIVE, testRunResult.getResultType());
+        assertEquals(ResultType.UNRESPONSIVE, testRunResult._getResultType());
         assertEquals(
                 "<testRunResult type=\"UNRESPONSIVE\" url=\"http://www.example.com\" />",
                 XmlUtility.asString(testRunResult.asXml())
@@ -89,7 +87,7 @@ public class TestRunResultTest extends TestCase {
         result.setHostname("myhost");
         result.setIpAddress("123.45.67.8");
         result.setOsName("Red Hat Linux");
-        result.setURL(new URL("http://www.example.com:9070"));
+        result.setUrl("http://www.example.com:9070");
 
         assertEquals(
                 "http://www.example.com:9070 (IP address: 123.45.67.8, host name: myhost, OS: Red Hat Linux)",
@@ -99,7 +97,7 @@ public class TestRunResultTest extends TestCase {
 
     public void testGetDisplayStringWithUnknownRemoteMachiineInformation() throws Exception {
         TestRunResult result = new TestRunResult();
-        result.setURL(new URL("http://www.example.com:9070"));
+        result.setUrl("http://www.example.com:9070");
 
         assertEquals(
                 "http://www.example.com:9070 (IP address: unknown, host name: unknown, OS: unknown)",

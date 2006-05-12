@@ -44,7 +44,7 @@ public class TimeoutCheckerTest extends TestCase {
         mockRunner.timeoutSeconds = 0;
         while (mockRunner.acceptedResult == null)
             Thread.sleep(10);
-        assertEquals(ResultType.TIMED_OUT, mockRunner.acceptedResult.getResultType());
+        assertEquals(ResultType.TIMED_OUT, mockRunner.acceptedResult._getResultType());
     }
 
     public void testNotTimeOut() throws InterruptedException {

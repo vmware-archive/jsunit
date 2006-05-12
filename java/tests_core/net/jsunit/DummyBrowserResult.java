@@ -28,7 +28,7 @@ public class DummyBrowserResult extends BrowserResult {
         return errorCount;
     }
 
-    public ResultType getResultType() {
+    public ResultType _getResultType() {
         if (getErrorCount() > 0)
             return ResultType.ERROR;
         if (getFailureCount() > 0)

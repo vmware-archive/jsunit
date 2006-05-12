@@ -69,7 +69,7 @@ public class BrowserResultWriter {
 
     private void addTestCasesElementTo(Element element) {
         Element testCasesElement = new Element(TEST_CASE_RESULTS);
-        for (TestCaseResult result : browserResult.getTestCaseResults()) {
+        for (TestCaseResult result : browserResult._getTestCaseResults()) {
             new TestCaseResultWriter(result).addXmlTo(testCasesElement);
         }
         element.addContent(testCasesElement);
@@ -77,7 +77,7 @@ public class BrowserResultWriter {
 
     public String writeProblems() {
         StringBuffer buffer = new StringBuffer();
-        for (TestCaseResult result : browserResult.getTestCaseResults()) {
+        for (TestCaseResult result : browserResult._getTestCaseResults()) {
             if (!result.wasSuccessful()) {
                 if (buffer.length() > 0)
                     buffer.append("\n");
@@ -90,7 +90,7 @@ public class BrowserResultWriter {
 
     public Element writeXml() {
         Element root = new Element(BROWSER_RESULT);
-        root.setAttribute("type", browserResult.getResultType().name());
+        root.setAttribute("type", browserResult._getResultType().name());
         Browser browser = browserResult.getBrowser();
         if (browser != null)
             root.addContent(browser.asXml());

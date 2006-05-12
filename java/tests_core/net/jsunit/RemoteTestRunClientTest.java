@@ -42,7 +42,7 @@ public class RemoteTestRunClientTest extends TestCase {
         result.setRemoteAddress("http://123.45.67.89");
         result.setTime(123.45);
         result.setUserAgent("my browser version 5.6");
-        result.setTestCaseStrings(new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
+        result._setTestCaseStrings(new String[]{"file:///dummy/path/dummyPage.html:testFoo|1.3|S||"});
         client.messageReceived("browserTestRunFinished");
         client.messageReceived("3");
         String xml = XmlUtility.asString(result.asXmlDocument());

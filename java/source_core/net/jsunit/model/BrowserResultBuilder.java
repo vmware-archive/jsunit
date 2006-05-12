@@ -35,7 +35,7 @@ public class BrowserResultBuilder {
     public BrowserResult build(Element root) {
         BrowserResult result = new BrowserResult();
         ResultType type = ResultType.valueOf(root.getAttribute("type").getValue());
-        result.setResultType(type);
+        result._setResultType(type);
         updateWithBrowser(result, root.getChild(Browser.BROWSER));
         updateWithHeaders(result, root);
         updateWithProperties(root.getChild(BrowserResultWriter.PROPERTIES), result);

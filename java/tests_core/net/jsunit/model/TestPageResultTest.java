@@ -17,22 +17,22 @@ public class TestPageResultTest extends TestCase {
         List<TestCaseResult> expected = new ArrayList<TestCaseResult>();
         expected.add(testCase1);
         expected.add(testCase2);
-        assertEquals(expected, result.getTestCaseResults());
+        assertEquals(expected, result._getTestCaseResults());
     }
 
     public void testResultType() {
         TestPageResult result = new TestPageResult("mypage.html");
         TestCaseResult success = new TestCaseResult();
         result.addTestCaseResult(success);
-        assertEquals(ResultType.SUCCESS, result.getResultType());
+        assertEquals(ResultType.SUCCESS, result._getResultType());
         TestCaseResult failure = new TestCaseResult();
         failure.setFailure("not right");
         result.addTestCaseResult(failure);
-        assertEquals(ResultType.FAILURE, result.getResultType());
+        assertEquals(ResultType.FAILURE, result._getResultType());
         TestCaseResult error = new TestCaseResult();
         error.setError("disaster");
         result.addTestCaseResult(error);
-        assertEquals(ResultType.ERROR, result.getResultType());
+        assertEquals(ResultType.ERROR, result._getResultType());
     }
 
     public void testAsErrorString() throws Exception {

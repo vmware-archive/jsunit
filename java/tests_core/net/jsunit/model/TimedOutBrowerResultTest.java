@@ -20,13 +20,13 @@ public class TimedOutBrowerResultTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         browserResult = new BrowserResult();
-        browserResult.setResultType(ResultType.TIMED_OUT);
+        browserResult._setResultType(ResultType.TIMED_OUT);
         browserResult.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
     }
 
     public void testSimple() {
         assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", browserResult.getBrowser().getStartCommand());
-        assertEquals(ResultType.TIMED_OUT, browserResult.getResultType());
+        assertEquals(ResultType.TIMED_OUT, browserResult._getResultType());
     }
 
     public void testCompleted() {
@@ -44,7 +44,7 @@ public class TimedOutBrowerResultTest extends TestCase {
         BrowserResult reconstitutedResult = builder.build(xml);
         assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getStartCommand());
         assertTrue(reconstitutedResult.timedOut());
-        assertEquals(ResultType.TIMED_OUT, reconstitutedResult.getResultType());
+        assertEquals(ResultType.TIMED_OUT, reconstitutedResult._getResultType());
 
     }
 

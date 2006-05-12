@@ -127,7 +127,7 @@
                                                 <td>
                                                     <%
                                                         for (Browser browser : remoteConfiguration.getBrowsers()) {
-                                                            if (browser.getType() != null) {
+                                                            if (browser._getType() != null) {
                                                     %>
                                                     <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                                                     <%}%>

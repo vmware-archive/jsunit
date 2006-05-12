@@ -131,11 +131,11 @@ public class DistributedTest extends TestCase {
     }
 
     public ResultType getResultType() {
-        return getResult().getResultType();
+        return getResult()._getResultType();
     }
 
     public List<TestRunResult> getTestRunResults() {
-        return getResult().getTestRunResults();
+        return getResult()._getTestRunResults();
     }
 
     public void setOverrideURL(String overrideURL) {

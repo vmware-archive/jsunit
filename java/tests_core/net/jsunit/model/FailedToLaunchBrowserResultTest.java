@@ -28,9 +28,9 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
     public void setUp() throws Exception {
         super.setUp();
         result = new BrowserResult();
-        result.setResultType(ResultType.FAILED_TO_LAUNCH);
+        result._setResultType(ResultType.FAILED_TO_LAUNCH);
         result.setBrowser(new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 3));
-        result.setServerSideException(exception);
+        result._setServerSideException(exception);
     }
 
     public void testSimple() {
@@ -38,8 +38,8 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
         assertEquals(0d, result.getTime());
         assertEquals(ResultType.FAILED_TO_LAUNCH.getDisplayString(), result.getDisplayString());
         assertEquals(0, result.getTestCount());
-        assertEquals(ResultType.FAILED_TO_LAUNCH, result.getResultType());
-        assertEquals(0, result.getTestPageResults().size());
+        assertEquals(ResultType.FAILED_TO_LAUNCH, result._getResultType());
+        assertEquals(0, result._getTestPageResults().size());
         assertEquals(StringUtility.stackTraceAsString(exception), result.getServerSideExceptionStackTrace());
     }
 
@@ -58,7 +58,7 @@ public class FailedToLaunchBrowserResultTest extends TestCase {
         BrowserResult reconstitutedResult = builder.build(xml);
         assertEquals("c:\\Program Files\\Internet Explorer\\iexplore.exe", reconstitutedResult.getBrowser().getStartCommand());
         assertTrue(reconstitutedResult.failedToLaunch());
-        assertEquals(ResultType.FAILED_TO_LAUNCH, reconstitutedResult.getResultType());
+        assertEquals(ResultType.FAILED_TO_LAUNCH, reconstitutedResult._getResultType());
         //TODO: somehow they're not quite equal
         //assertEquals(Utility.stackTraceAsString(exception), reconstitutedResult.getServerSideExceptionStackTrace());
     }

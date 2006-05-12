@@ -10,7 +10,7 @@ public interface Result extends XmlRenderable {
 
     public int getTestCount();
 
-    public ResultType getResultType();
+    public ResultType _getResultType();
 
     public boolean wasSuccessful();
 

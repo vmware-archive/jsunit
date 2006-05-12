@@ -1,6 +1,5 @@
 package net.jsunit.model;
 
-import java.net.URL;
 import java.util.List;
 
 public class BrowserResultTest extends BrowserResultTestCase {
@@ -22,7 +21,7 @@ public class BrowserResultTest extends BrowserResultTestCase {
 
     public void testResultType() {
         assertFalse(result.wasSuccessful());
-        assertEquals(ResultType.ERROR, result.getResultType());
+        assertEquals(ResultType.ERROR, result._getResultType());
     }
 
     public void testDisplayString() {
@@ -31,34 +30,34 @@ public class BrowserResultTest extends BrowserResultTestCase {
 
     public void testFailure() {
         BrowserResult result = createBrowserResult();
-        result.setTestCaseStrings(new String[]{
+        result._setTestCaseStrings(new String[]{
                 "page.html:testFoo|1.3|S||",
                 "page.html:testBar|1.3|F|Test Failure Message|"
         });
         assertFalse(result.wasSuccessful());
-        assertEquals(ResultType.FAILURE, result.getResultType());
+        assertEquals(ResultType.FAILURE, result._getResultType());
         assertEquals("The test run had 0 error(s) and 1 failure(s).", result.displayString());
     }
 
     public void testSuccess() {
         BrowserResult result = createBrowserResult();
-        result.setTestCaseStrings(new String[]{
+        result._setTestCaseStrings(new String[]{
                 "page.html:testFoo|1.3|S||",
                 "page.html:testBar|1.3|S||"
         });
         assertTrue(result.wasSuccessful());
-        assertEquals(ResultType.SUCCESS, result.getResultType());
+        assertEquals(ResultType.SUCCESS, result._getResultType());
     }
 
     public void testGetTestPageResults() {
-        List<TestPageResult> testPageResults = result.getTestPageResults();
+        List<TestPageResult> testPageResults = result._getTestPageResults();
         assertEquals(2, testPageResults.size());
         TestPageResult result1 = testPageResults.get(0);
         assertEquals("page1.html", result1.getTestPageName());
-        assertEquals(2, result1.getTestCaseResults().size());
+        assertEquals(2, result1._getTestCaseResults().size());
         TestPageResult result2 = testPageResults.get(1);
         assertEquals("page2.html", result2.getTestPageName());
-        assertEquals(1, result2.getTestCaseResults().size());
+        assertEquals(1, result2._getTestCaseResults().size());
     }
 
     public void testCompleted() {
@@ -123,8 +122,8 @@ public class BrowserResultTest extends BrowserResultTestCase {
 
     public void testLogUrl() throws Exception {
         BrowserResult result = createBrowserResult();
-        URL logUrl = result.getLogUrl(new URL("http://mac.jsunit.net/jsunit"));
-        assertEquals("http://mac.jsunit.net/jsunit/displayer?id=12345&browserId=7", logUrl.toString());
+        String logUrl = result.getLogUrl("http://mac.jsunit.net/jsunit");
+        assertEquals("http://mac.jsunit.net/jsunit/displayer?id=12345&browserId=7", logUrl);
     }
 
 }

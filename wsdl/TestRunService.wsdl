@@ -19,10 +19,91 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="referencedJsFiles" nillable="true" type="impl:ArrayOf_tns2_ReferencedJsFile"/>
     </sequence>
    </complexType>
-   <complexType name="ServiceResult">
+   <complexType abstract="true" name="AbstractResult">
     <sequence>
-     <element name="xml" nillable="true" type="xsd:string"/>
+     <element name="errorCount" type="xsd:int"/>
+     <element name="failureCount" type="xsd:int"/>
+     <element name="testCount" type="xsd:int"/>
     </sequence>
+   </complexType>
+   <complexType name="Browser">
+    <sequence>
+     <element name="default" type="xsd:boolean"/>
+     <element name="displayName" nillable="true" type="xsd:string"/>
+     <element name="fullFileName" nillable="true" type="xsd:string"/>
+     <element name="id" type="xsd:int"/>
+     <element name="killCommand" nillable="true" type="xsd:string"/>
+     <element name="logoPath" nillable="true" type="xsd:string"/>
+     <element name="startCommand" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+   <complexType name="TestCaseResult">
+    <complexContent>
+     <extension base="tns2:AbstractResult">
+      <sequence>
+       <element name="error" nillable="true" type="xsd:string"/>
+       <element name="failure" nillable="true" type="xsd:string"/>
+       <element name="fullyQualifiedName" nillable="true" type="xsd:string"/>
+       <element name="name" nillable="true" type="xsd:string"/>
+       <element name="testPageName" nillable="true" type="xsd:string"/>
+       <element name="time" type="xsd:double"/>
+       <element name="timeTaken" type="xsd:double"/>
+       <element name="xmlFragment" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="TestPageResult">
+    <complexContent>
+     <extension base="tns2:AbstractResult">
+      <sequence>
+       <element name="testCaseResults" nillable="true" type="impl:ArrayOf_tns2_TestCaseResult"/>
+       <element name="testPageName" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="BrowserResult">
+    <complexContent>
+     <extension base="tns2:AbstractResult">
+      <sequence>
+       <element name="baseURL" nillable="true" type="xsd:string"/>
+       <element name="browser" nillable="true" type="tns2:Browser"/>
+       <element name="browserDisplayString" nillable="true" type="xsd:string"/>
+       <element name="displayString" nillable="true" type="xsd:string"/>
+       <element name="id" nillable="true" type="xsd:string"/>
+       <element name="jsUnitVersion" nillable="true" type="xsd:string"/>
+       <element name="remoteAddress" nillable="true" type="xsd:string"/>
+       <element name="serverSideExceptionStackTrace" nillable="true" type="xsd:string"/>
+       <element name="testPageResults" nillable="true" type="impl:ArrayOf_tns2_TestPageResult"/>
+       <element name="time" type="xsd:double"/>
+       <element name="userAgent" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="TestRunResult">
+    <complexContent>
+     <extension base="tns2:AbstractResult">
+      <sequence>
+       <element name="browserResults" nillable="true" type="impl:ArrayOf_tns2_BrowserResult"/>
+       <element name="displayString" nillable="true" type="xsd:string"/>
+       <element name="hostname" nillable="true" type="xsd:string"/>
+       <element name="ipAddress" nillable="true" type="xsd:string"/>
+       <element name="osName" nillable="true" type="xsd:string"/>
+       <element name="url" nillable="true" type="xsd:string"/>
+      </sequence>
+     </extension>
+    </complexContent>
+   </complexType>
+   <complexType name="DistributedTestRunResult">
+    <complexContent>
+     <extension base="tns2:AbstractResult">
+      <sequence>
+       <element name="testRunResults" nillable="true" type="impl:ArrayOf_tns2_TestRunResult"/>
+      </sequence>
+     </extension>
+    </complexContent>
    </complexType>
   </schema>
   <schema targetNamespace="https://server.jsunit.net/services" xmlns="http://www.w3.org/2001/XMLSchema">
@@ -32,6 +113,34 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexContent>
      <restriction base="soapenc:Array">
       <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:ReferencedJsFile[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_TestCaseResult">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:TestCaseResult[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_TestPageResult">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:TestPageResult[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_BrowserResult">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:BrowserResult[]"/>
+     </restriction>
+    </complexContent>
+   </complexType>
+   <complexType name="ArrayOf_tns2_TestRunResult">
+    <complexContent>
+     <restriction base="soapenc:Array">
+      <attribute ref="soapenc:arrayType" wsdl:arrayType="tns2:TestRunResult[]"/>
      </restriction>
     </complexContent>
    </complexType>
@@ -46,7 +155,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    <wsdl:message name="runTestsResponse">
 
-      <wsdl:part name="runTestsReturn" type="tns2:ServiceResult"/>
+      <wsdl:part name="runTestsReturn" type="tns2:DistributedTestRunResult"/>
 
    </wsdl:message>
 

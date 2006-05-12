@@ -1,13 +1,10 @@
 package net.jsunit.client;
 
 import net.jsunit.model.Result;
-import net.jsunit.model.ResultBuilder;
-import net.jsunit.model.ServiceResult;
 import net.jsunit.model.TestPage;
-import net.jsunit.utility.JsUnitURL;
-import net.jsunit.utility.XmlUtility;
 import net.jsunit.services.TestRunService;
 import net.jsunit.services.TestRunServiceServiceLocator;
+import net.jsunit.utility.JsUnitURL;
 
 import java.io.File;
 
@@ -24,9 +21,7 @@ public class TestRunClient {
         TestPage testPage = new TestPage(testPageFile);
         TestRunServiceServiceLocator locator = new TestRunServiceServiceLocator();
         TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
-        ServiceResult serviceResult = service.runTests(testPage);
-        ResultBuilder builder = new ResultBuilder();
-        return builder.build(XmlUtility.asXmlDocument(serviceResult.getXml()));
+        return service.runTests(testPage);
     }
 
     public void setUsername(String username) {

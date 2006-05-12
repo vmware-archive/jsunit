@@ -50,7 +50,7 @@ public class TimeoutChecker extends Thread {
 
     private BrowserResult createTimedOutBrowserResult() {
         BrowserResult result = createRawBrowserResult();
-        result.setResultType(ResultType.TIMED_OUT);
+        result._setResultType(ResultType.TIMED_OUT);
         return result;
     }
 

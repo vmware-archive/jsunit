@@ -36,7 +36,7 @@
                                                 <input type="checkbox" id="urlId_browserId" name="urlId_browserId" value="<%=i%>_<%=browser.getId()%>">
                                             </td>
                                             <td valign="middle">
-                                                <%if (browser.getType() != null) {%>
+                                                <%if (browser._getType() != null) {%>
                                                 <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                                                 <%}%>
                                             </td>
@@ -71,7 +71,7 @@
                         <input type="<%=multipleBrowsersAllowed ? "checkbox" : "radio"%>" id="browserId" name="browserId" value="<%=browser.getId()%>" <%if (!multipleBrowsersAllowed &&  i == 0) {%> checked<%}%>>
                     </td>
                     <td valign="middle">
-                        <%if (browser.getType() != null) {%>
+                        <%if (browser._getType() != null) {%>
                         <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
                         <%}%>
                     </td>

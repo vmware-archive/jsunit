@@ -147,9 +147,9 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     private void handleCrashWhileLaunching(Throwable throwable, Browser browser) {
         logStatus(failedToLaunchStatusMessage(browser, throwable));
         BrowserResult failedToLaunchBrowserResult = new BrowserResult();
-        failedToLaunchBrowserResult.setResultType(ResultType.FAILED_TO_LAUNCH);
+        failedToLaunchBrowserResult._setResultType(ResultType.FAILED_TO_LAUNCH);
         failedToLaunchBrowserResult.setBrowser(browser);
-        failedToLaunchBrowserResult.setServerSideException(throwable);
+        failedToLaunchBrowserResult._setServerSideException(throwable);
         accept(failedToLaunchBrowserResult);
     }
 

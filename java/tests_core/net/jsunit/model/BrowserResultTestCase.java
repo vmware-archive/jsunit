@@ -36,7 +36,7 @@ public abstract class BrowserResultTestCase extends TestCase {
         super.setUp();
         browser = new Browser("c:\\Program Files\\Internet Explorer\\iexplore.exe", 7);
         result = createBrowserResult();
-        result.setTestCaseStrings(new String[]{
+        result._setTestCaseStrings(new String[]{
                 "page1.html:testFoo|1.3|S||",
                 "page1.html:testFoo|1.3|E|Test Error Message|",
                 "page2.html:testFoo|1.3|F|Test Failure Message|"}
@@ -62,8 +62,8 @@ public abstract class BrowserResultTestCase extends TestCase {
         assertEquals("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)", aResult.getUserAgent());
         assertEquals("123.45.67.8", aResult.getRemoteAddress());
         assertEquals(4.3d, aResult.getTime(), 0.001d);
-        assertEquals(3, aResult.getTestCaseResults().size());
-        for (TestCaseResult testCaseResult : aResult.getTestCaseResults()) {
+        assertEquals(3, aResult._getTestCaseResults().size());
+        for (TestCaseResult testCaseResult : aResult._getTestCaseResults()) {
             assertNotNull(testCaseResult);
         }
     }

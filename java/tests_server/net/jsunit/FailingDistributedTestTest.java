@@ -44,8 +44,8 @@ public class FailingDistributedTestTest extends EndToEndTestCase {
         assertFalse(testResult.wasSuccessful());
         assertEquals(1, test.getTestRunResults().size());
         TestRunResult testRunResult = test.getTestRunResults().get(0);
-        assertEquals(1, testRunResult.getBrowserResults().size());
-        BrowserResult browserResult = testRunResult.getBrowserResults().get(0);
+        assertEquals(1, testRunResult._getBrowserResults().size());
+        BrowserResult browserResult = testRunResult._getBrowserResults().get(0);
         assertEquals(Browser.DEFAULT_SYSTEM_BROWSER, browserResult.getBrowser().getStartCommand());
         assertEquals(0, browserResult.getBrowser().getId());
     }

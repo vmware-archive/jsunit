@@ -70,7 +70,7 @@ public class DistributedTestRunManager {
             }
         }
         for (TestRunResult result : results) {
-            result.setURL(baseURL);
+            result.setUrl(baseURL.toString());
             //noinspection SynchronizeOnNonFinalField
             synchronized (distributedTestRunResult) {
                 distributedTestRunResult.addTestRunResult(result);
@@ -87,7 +87,7 @@ public class DistributedTestRunManager {
     private void addResultsTo(Document responseDocument, List<TestRunResult> results) {
         if (isMultipleTestRunResultsResult(responseDocument)) {
             DistributedTestRunResult multiple = new DistributedTestRunResultBuilder().build(responseDocument);
-            results.addAll(multiple.getTestRunResults());
+            results.addAll(multiple._getTestRunResults());
         } else {
             TestRunResult single = new TestRunResultBuilder().build(responseDocument);
             results.add(single);

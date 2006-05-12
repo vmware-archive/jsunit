@@ -57,12 +57,12 @@ public class DistributedTestRunManagerTest extends TestCase {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertFalse(result.wasSuccessful());
-        List<TestRunResult> testRunResults = result.getTestRunResults();
+        List<TestRunResult> testRunResults = result._getTestRunResults();
         assertEquals(2, testRunResults.size());
-        assertEquals(ResultType.UNRESPONSIVE, testRunResults.get(0).getResultType());
+        assertEquals(ResultType.UNRESPONSIVE, testRunResults.get(0)._getResultType());
         assertEquals(DummyConfigurationSource.REMOTE_URL_1, testRunResults.get(0).getUrl().toString());
         assertEquals(DummyConfigurationSource.REMOTE_URL_2, testRunResults.get(1).getUrl().toString());
-        assertEquals(ResultType.UNRESPONSIVE, testRunResults.get(1).getResultType());
+        assertEquals(ResultType.UNRESPONSIVE, testRunResults.get(1)._getResultType());
     }
 
     public void testRemoteURLBlowsUpButIgnored() throws MalformedURLException {
@@ -79,7 +79,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
         assertTrue(result.wasSuccessful());
-        assertEquals(0, result.getTestRunResults().size());
+        assertEquals(0, result._getTestRunResults().size());
     }
 
     public void testOverrideURL() throws Exception {
@@ -159,7 +159,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         );
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();
-        List<TestRunResult> results = result.getTestRunResults();
+        List<TestRunResult> results = result._getTestRunResults();
         assertEquals(4, results.size());
         Collections.sort(results, new Comparator<TestRunResult>() {
             public int compare(TestRunResult o1, TestRunResult o2) {
@@ -223,7 +223,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         BrowserResult browserResult2 = new BrowserResult();
         browserResult2.setId("2");
         browserResult2.setBrowser(new Browser("mybrowser.exe", 0));
-        browserResult2.setResultType(ResultType.FAILED_TO_LAUNCH);
+        browserResult2._setResultType(ResultType.FAILED_TO_LAUNCH);
         result.addBrowserResult(browserResult2);
 
         return result;
@@ -244,7 +244,7 @@ public class DistributedTestRunManagerTest extends TestCase {
         BrowserResult browserResult2 = new BrowserResult();
         browserResult1.setId("b");
         browserResult2.setBrowser(new Browser("mybrowser.exe", 0));
-        browserResult2.setResultType(ResultType.FAILED_TO_LAUNCH);
+        browserResult2._setResultType(ResultType.FAILED_TO_LAUNCH);
         result.addBrowserResult(browserResult2);
 
         return result;

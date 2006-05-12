@@ -7,8 +7,6 @@ import net.jsunit.model.ResultType;
 import net.jsunit.model.TestRunResult;
 import net.jsunit.utility.XmlUtility;
 
-import java.net.URL;
-
 public class DistributedTestRunResultTest extends TestCase {
 
     public void testSimple() throws Exception {
@@ -19,7 +17,7 @@ public class DistributedTestRunResultTest extends TestCase {
         result1.addBrowserResult(successResult());
         distributedResult.addTestRunResult(result1);
 
-        assertEquals(ResultType.SUCCESS, distributedResult.getResultType());
+        assertEquals(ResultType.SUCCESS, distributedResult._getResultType());
         assertTrue(distributedResult.wasSuccessful());
 
         TestRunResult result2 = new TestRunResult();
@@ -27,7 +25,7 @@ public class DistributedTestRunResultTest extends TestCase {
         result2.addBrowserResult(errorResult());
         distributedResult.addTestRunResult(result2);
 
-        assertEquals(ResultType.ERROR, distributedResult.getResultType());
+        assertEquals(ResultType.ERROR, distributedResult._getResultType());
         assertFalse(distributedResult.wasSuccessful());
         assertEquals(1, distributedResult.getFailureCount());
         assertEquals(1, distributedResult.getErrorCount());
@@ -41,15 +39,15 @@ public class DistributedTestRunResultTest extends TestCase {
         result1.addBrowserResult(successResult());
         distributedResult.addTestRunResult(result1);
 
-        TestRunResult result2 = new TestRunResult(new URL("http://my.domain.com:8201"));
+        TestRunResult result2 = new TestRunResult("http://my.domain.com:8201");
         result2.setUnresponsive();
         distributedResult.addTestRunResult(result2);
 
-        TestRunResult result3 = new TestRunResult(new URL("http://my.domain.com:8201"));
+        TestRunResult result3 = new TestRunResult("http://my.domain.com:8201");
         result3.setUnresponsive();
         distributedResult.addTestRunResult(result3);
 
-        assertEquals(ResultType.UNRESPONSIVE, distributedResult.getResultType());
+        assertEquals(ResultType.UNRESPONSIVE, distributedResult._getResultType());
     }
 
     public void testAsXml() throws Exception {
@@ -65,7 +63,7 @@ public class DistributedTestRunResultTest extends TestCase {
         result2.addBrowserResult(errorResult());
         distributedResult.addTestRunResult(result2);
 
-        TestRunResult result3 = new TestRunResult(new URL("http://my.domain.com:4732"));
+        TestRunResult result3 = new TestRunResult("http://my.domain.com:4732");
         result3.setUnresponsive();
         distributedResult.addTestRunResult(result3);
 

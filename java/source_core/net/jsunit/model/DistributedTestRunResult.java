@@ -7,6 +7,7 @@ import org.jdom.Document;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Arrays;
 
 public class DistributedTestRunResult extends AbstractResult implements XmlRenderable {
 
@@ -25,14 +26,22 @@ public class DistributedTestRunResult extends AbstractResult implements XmlRende
 
     public Element asXml() {
         Element root = new Element(NAME);
-        root.setAttribute("type", getResultType().name());
+        root.setAttribute("type", _getResultType().name());
         for (TestRunResult testRunResult : testRunResults)
             root.addContent(testRunResult.asXml());
         return root;
     }
 
-    public List<TestRunResult> getTestRunResults() {
+    public List<TestRunResult> _getTestRunResults() {
         return testRunResults;
+    }
+
+    public TestRunResult[] getTestRunResults() {
+        return testRunResults.toArray(new TestRunResult[testRunResults.size()]);
+    }
+
+    public void setTestRunResults(TestRunResult[] results) {
+        testRunResults = Arrays.asList(results);
     }
 
     public Document asXmlDocument() {

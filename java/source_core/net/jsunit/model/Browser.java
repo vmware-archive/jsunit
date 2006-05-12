@@ -20,6 +20,9 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
     public static final String FULL_FILE_NAME = "fullFileName";
     public static final String ID = "id";
 
+    public Browser() {
+    }
+
     public Browser(String fullFileName, int id) {
         this.fullFileName = fullFileName;
         this.id = id;
@@ -79,7 +82,7 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
         return displayName;
     }
 
-    public BrowserType getType() {
+    public BrowserType _getType() {
         return type;
     }
 
@@ -88,11 +91,11 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
     }
 
     public boolean conflictsWith(Browser another) {
-        return getType().conflictsWith(another.getType());
+        return type.conflictsWith(another._getType());
     }
 
     public String getLogoPath() {
-        return getType().getLogoPath();
+        return type.getLogoPath();
     }
 
     public Element asXml() {

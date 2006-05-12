@@ -113,7 +113,7 @@ public class TestCaseResult extends AbstractResult {
     }
 
     public String toString() {
-        return getFullyQualifiedName() + ": " + getResultType().getDisplayString();
+        return getFullyQualifiedName() + ": " + _getResultType().getDisplayString();
     }
 
     public int getErrorCount() {
@@ -136,7 +136,7 @@ public class TestCaseResult extends AbstractResult {
         return !hadError() && !hadFailure();
     }
 
-    public ResultType getResultType() {
+    public ResultType _getResultType() {
         if (hadError())
             return ResultType.ERROR;
         if (hadFailure())

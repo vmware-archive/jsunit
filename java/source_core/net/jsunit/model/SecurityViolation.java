@@ -38,7 +38,7 @@ public enum SecurityViolation implements Result {
         return 0;
     }
 
-    public ResultType getResultType() {
+    public ResultType _getResultType() {
         return ResultType.SECURITY_VIOLATION;
     }
 

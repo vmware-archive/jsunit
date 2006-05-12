@@ -3,30 +3,34 @@ package net.jsunit.model;
 import net.jsunit.PlatformType;
 import net.jsunit.XmlRenderable;
 import net.jsunit.utility.SystemUtility;
-import org.jdom.Element;
 import org.jdom.Document;
+import org.jdom.Element;
 
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
+import java.net.URL;
 
 public class TestRunResult extends AbstractResult implements XmlRenderable, Comparable<TestRunResult> {
 
     public static final String NAME = "testRunResult";
 
     private List<BrowserResult> browserResults = new ArrayList<BrowserResult>();
-    private URL url;
+    private String url;
     private String osName;
     private String ipAddress;
     private String hostname;
     private boolean unresponsive = false;
 
     public TestRunResult() {
-        this(null);
     }
 
-    public TestRunResult(URL url) {
+    public TestRunResult(String url) {
         this.url = url;
+    }
+
+    public TestRunResult(URL baseURL) {
+        this(baseURL.toString());
     }
 
     public void addBrowserResult(BrowserResult browserResult) {
@@ -35,9 +39,9 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
 
     public Element asXml() {
         Element root = new Element(NAME);
-        root.setAttribute("type", getResultType().name());
+        root.setAttribute("type", _getResultType().name());
         if (url != null)
-            root.setAttribute("url", url.toString());
+            root.setAttribute("url", url);
         if (hasPlatformType())
             addPlatformType(root);
         if (hasProperties()) {
@@ -91,15 +95,15 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         return unresponsive;
     }
 
-    public URL getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public ResultType getResultType() {
+    public ResultType _getResultType() {
         if (unresponsive)
             return ResultType.UNRESPONSIVE;
         else
-            return super.getResultType();
+            return super._getResultType();
     }
 
     public void setOsName(String osName) {
@@ -114,7 +118,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         this.hostname = hostname;
     }
 
-    public void setURL(URL url) {
+    public void setUrl(String url) {
         this.url = url;
     }
 
@@ -133,7 +137,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     public int compareTo(TestRunResult other) {
         if (url == null | other.getUrl() == null)
             return 0;
-        return url.toString().compareTo(other.getUrl().toString());
+        return url.compareTo(other.getUrl());
     }
 
     public void initializeProperties() {
@@ -154,7 +158,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
                 buffer.append("\n");
                 buffer.append("The full result log is at ");
                 BrowserResult childBrowserResult = (BrowserResult) child;
-                buffer.append(childBrowserResult.getLogUrl(url).toString());
+                buffer.append(childBrowserResult.getLogUrl(url));
             }
         }
     }
@@ -163,7 +167,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         boolean hasURL = url != null;
         StringBuffer buffer = new StringBuffer();
         if (hasURL)
-            buffer.append(url.toString());
+            buffer.append(url);
         else
             buffer.append("localhost");
         buffer.append(" (IP address: ");
@@ -183,8 +187,16 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         return buffer.toString();
     }
 
-    public List<BrowserResult> getBrowserResults() {
+    public List<BrowserResult> _getBrowserResults() {
         return browserResults;
+    }
+
+    public BrowserResult[] getBrowserResults() {
+        return browserResults.toArray(new BrowserResult[browserResults.size()]);
+    }
+
+    public void setBrowserResults(BrowserResult[] results) {
+        browserResults = Arrays.asList(results);
     }
 
     public Document asXmlDocument() {

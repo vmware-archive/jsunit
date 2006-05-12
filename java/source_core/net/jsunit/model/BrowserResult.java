@@ -9,6 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Arrays;
 
 public class BrowserResult extends AbstractResult implements XmlRenderable {
 
@@ -76,14 +77,14 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         this.time = time;
     }
 
-    public List<TestCaseResult> getTestCaseResults() {
+    public List<TestCaseResult> _getTestCaseResults() {
         List<TestCaseResult> result = new ArrayList<TestCaseResult>();
-        for (TestPageResult pageResult : getTestPageResults())
-            result.addAll(pageResult.getTestCaseResults());
+        for (TestPageResult pageResult : _getTestPageResults())
+            result.addAll(pageResult._getTestCaseResults());
         return result;
     }
 
-    public void setTestCaseStrings(String[] testCaseResultStrings) {
+    public void _setTestCaseStrings(String[] testCaseResultStrings) {
         buildTestCaseResults(testCaseResultStrings);
     }
 
@@ -127,9 +128,9 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return null;
     }
 
-    public ResultType getResultType() {
+    public ResultType _getResultType() {
         if (resultType == null)
-            return super.getResultType();
+            return super._getResultType();
         return resultType;
     }
 
@@ -137,27 +138,35 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         return new Document(asXml());
     }
 
-    public List<TestPageResult> getTestPageResults() {
+    public List<TestPageResult> _getTestPageResults() {
         return testPageResults;
     }
 
+    public TestPageResult[] getTestPageResults() {
+        return testPageResults.toArray(new TestPageResult[testPageResults.size()]);
+    }
+
+    public void setTestPageResults(TestPageResult[] results) {
+        testPageResults = Arrays.asList(results);
+    }
+
     public String getDisplayString() {
-        return getResultType().getDisplayString();
+        return _getResultType().getDisplayString();
     }
 
     public boolean completedTestRun() {
-        return getResultType().completedTestRun();
+        return _getResultType().completedTestRun();
     }
 
     public boolean timedOut() {
-        return getResultType().timedOut();
+        return _getResultType().timedOut();
     }
 
     public boolean failedToLaunch() {
-        return getResultType().failedToLaunch();
+        return _getResultType().failedToLaunch();
     }
 
-    public void setServerSideException(Throwable throwable) {
+    public void _setServerSideException(Throwable throwable) {
         serverSideExceptionStackTrace = StringUtility.stackTraceAsString(throwable);
     }
 
@@ -194,14 +203,15 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         buffer.append("\n");
     }
 
-    public void setResultType(ResultType type) {
+    public void _setResultType(ResultType type) {
         this.resultType = type;
     }
 
-    public URL getLogUrl(URL baseURL) {
+    public String getLogUrl(String baseURLString) {
         String path = "/jsunit/displayer?id=" + getId() + "&browserId=" + getBrowser().getId();
         try {
-            return new URL(baseURL.getProtocol(), baseURL.getHost(), baseURL.getPort(), path);
+            URL baseURL = new URL(baseURLString);
+            return new URL(baseURL.getProtocol(), baseURL.getHost(), baseURL.getPort(), path).toString();
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }

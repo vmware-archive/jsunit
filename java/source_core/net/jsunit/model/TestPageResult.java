@@ -7,8 +7,11 @@ import java.util.List;
 
 public class TestPageResult extends AbstractResult {
 
-    private final String testPageName;
+    private String testPageName;
     private List<TestCaseResult> testCaseResults = new ArrayList<TestCaseResult>();
+
+    public TestPageResult() {
+    }
 
     public TestPageResult(String testPageName) {
         this.testPageName = testPageName;
@@ -22,8 +25,16 @@ public class TestPageResult extends AbstractResult {
         return testPageName;
     }
 
-    public List<TestCaseResult> getTestCaseResults() {
+    public void setTestPageName(String name) {
+        this.testPageName = name;
+    }
+
+    public List<TestCaseResult> _getTestCaseResults() {
         return testCaseResults;
+    }
+
+    public TestCaseResult[] getTestCaseResults() {
+        return testCaseResults.toArray(new TestCaseResult[testCaseResults.size()]);
     }
 
     protected List<? extends Result> getChildren() {

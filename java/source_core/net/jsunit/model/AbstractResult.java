@@ -4,10 +4,10 @@ import java.util.List;
 
 public abstract class AbstractResult implements Result {
 
-    public ResultType getResultType() {
+    public ResultType _getResultType() {
         ResultType worstResultType = ResultType.SUCCESS;
         for (Result childResult : getChildren()) {
-            ResultType childResultType = childResult.getResultType();
+            ResultType childResultType = childResult._getResultType();
             if (childResultType.isWorseThan(worstResultType))
                 worstResultType = childResultType;
         }
@@ -36,7 +36,7 @@ public abstract class AbstractResult implements Result {
     }
 
     public boolean wasSuccessful() {
-        return getResultType() == ResultType.SUCCESS;
+        return _getResultType() == ResultType.SUCCESS;
     }
 
     protected abstract List<? extends Result> getChildren();

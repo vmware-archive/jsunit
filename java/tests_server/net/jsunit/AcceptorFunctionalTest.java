@@ -28,7 +28,7 @@ public class AcceptorFunctionalTest extends StandardServerFunctionalTestCase {
         result.setUserAgent("Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
         result.setTime(4.3);
         result.setJsUnitVersion("12.5");
-        result.setTestCaseStrings(new String[]{"/dummy/path/dummyPage.html:testFoo|1.3|S||"});
+        result._setTestCaseStrings(new String[]{"/dummy/path/dummyPage.html:testFoo|1.3|S||"});
         result.setRemoteAddress("127.0.0.1");
         result.setBrowser(browser);
 

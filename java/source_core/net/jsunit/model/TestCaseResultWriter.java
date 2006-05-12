@@ -24,7 +24,7 @@ public class TestCaseResultWriter {
 
     public Element writeXml() {
         Element testCaseElement = new Element(TEST_CASE);
-        testCaseElement.setAttribute("type", result.getResultType().name());
+        testCaseElement.setAttribute("type", result._getResultType().name());
         try {
             testCaseElement.setAttribute(NAME, result.getFullyQualifiedName().replace('\u0000', ' '));
         } catch (Exception ex) {

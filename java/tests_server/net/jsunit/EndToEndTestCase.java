@@ -23,7 +23,7 @@ public abstract class EndToEndTestCase extends TestCase {
 
     protected void assertFailure(StandaloneTest test, ResultType error) {
         assertFalse(test.run().wasSuccessful());
-        assertEquals(error, test.getServer().lastResult().getResultType());
+        assertEquals(error, test.getServer().lastResult()._getResultType());
     }
 
     protected void assertFailure(DistributedTest test) {

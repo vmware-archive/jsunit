@@ -1,9 +1,7 @@
 package net.jsunit;
 
 import net.jsunit.client.TestRunClient;
-import net.jsunit.model.BrowserResult;
 import net.jsunit.model.DummyTestPageWriter;
-import net.jsunit.model.TestRunResult;
 import net.jsunit.model.DistributedTestRunResult;
 
 import java.io.File;
@@ -33,7 +31,7 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
         TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
         DistributedTestRunResult distributedTestRunResult = (DistributedTestRunResult) client.send(file);
         assertTrue(distributedTestRunResult.wasSuccessful());
-        assertEquals(2, distributedTestRunResult.getTestRunResults().size());
+        assertEquals(2, distributedTestRunResult._getTestRunResults().size());
     }
 
 }

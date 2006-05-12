@@ -1,16 +1,16 @@
 package net.jsunit.services;
 
 import junit.framework.TestCase;
-import net.jsunit.model.*;
-import net.jsunit.utility.XmlUtility;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.MockRemoteServerHitter;
-import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.Configuration;
+import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.RemoteConfiguration;
+import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.model.TestPage;
 
-import java.util.Arrays;
 import java.net.URL;
+import java.util.Arrays;
 
 public class TestRunServiceSoapBindingImplTest extends TestCase {
     private TestRunServiceSoapBindingImpl binding;
@@ -36,11 +36,8 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
     public void testSimple() throws Exception {
         TestPage mockPage = new TestPage();
         mockPage.setContents("<html></html>");
-        ServiceResult serviceResult = binding.runTests(mockPage);
-        String xml = serviceResult.getXml();
-        ResultBuilder builder = new ResultBuilder();
-        DistributedTestRunResult result = (DistributedTestRunResult) builder.build(XmlUtility.asXmlDocument(xml));
-        assertTrue(result.wasSuccessful());
-        assertEquals(2, result.getTestRunResults().size());
+        DistributedTestRunResult result = binding.runTests(mockPage);
+        assertFalse(result.wasSuccessful());
+        assertEquals(2, result._getTestRunResults().size());
     }
 }

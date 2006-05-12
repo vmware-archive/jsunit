@@ -102,7 +102,7 @@ public class ResultAcceptorTest extends TestCase {
         launchBrowserTestRun();
         submit();
         BrowserResult result = server.lastResult();
-        assertEquals(3, result.getTestCaseResults().size());
+        assertEquals(3, result._getTestCaseResults().size());
     }
 
     private void launchBrowserTestRun() {
