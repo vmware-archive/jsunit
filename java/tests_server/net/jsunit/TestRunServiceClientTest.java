@@ -77,25 +77,4 @@ public class TestRunServiceClientTest extends TestCase {
         fail();
     }
 
-    private TestRunResult dummyTestRunResult() {
-        TestRunResult result = new TestRunResult();
-        result.addBrowserResult(successfulBrowserResult());
-        result.addBrowserResult(errorBrowserResult());
-        return result;
-    }
-
-    private BrowserResult successfulBrowserResult() {
-        BrowserResult browserResult = new BrowserResult();
-        TestCaseResult testCaseResult = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testBar|1.3|S||");
-        browserResult.addTestCaseResult(testCaseResult);
-        return browserResult;
-    }
-
-    private BrowserResult errorBrowserResult() {
-        BrowserResult browserResult = new BrowserResult();
-        TestCaseResult testCaseResult = TestCaseResult.fromString("file:///dummy/path/dummyPage.html:testFoo|1.3|E|Test Error Message|");
-        browserResult.addTestCaseResult(testCaseResult);
-        return browserResult;
-    }
-
 }
