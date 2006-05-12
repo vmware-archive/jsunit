@@ -5,8 +5,8 @@ import net.jsunit.client.TestRunClient;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.model.*;
-import net.jsunit.utility.XmlUtility;
+import net.jsunit.model.DummyTestPageWriter;
+import net.jsunit.model.Result;
 import org.jdom.Document;
 
 import java.io.File;
