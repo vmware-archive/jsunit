@@ -122,6 +122,6 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
     }
 
     public int compareTo(Browser other) {
-        return new Integer(getId()).compareTo(new Integer(other.getId()));
+        return new Integer(getId()).compareTo(other.getId());
     }
 }

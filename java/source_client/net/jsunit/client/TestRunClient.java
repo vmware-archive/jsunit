@@ -1,6 +1,6 @@
 package net.jsunit.client;
 
-import net.jsunit.model.Result;
+import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestPage;
 import net.jsunit.services.TestRunService;
 import net.jsunit.services.TestRunServiceServiceLocator;
@@ -17,7 +17,7 @@ public class TestRunClient {
         this.serviceURL = new JsUnitURL(serviceURL);
     }
 
-    public Result send(File testPageFile) throws Exception {
+    public DistributedTestRunResult send(File testPageFile) throws Exception {
         TestPage testPage = new TestPage(testPageFile);
         TestRunServiceServiceLocator locator = new TestRunServiceServiceLocator();
         TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
