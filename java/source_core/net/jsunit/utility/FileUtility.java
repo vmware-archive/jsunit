@@ -54,4 +54,8 @@ public class FileUtility {
         }
         FileUtility.delete(directory);
     }
+
+    public static boolean doesFileExist(String path) {
+        return new File(path).exists();
+    }
 }

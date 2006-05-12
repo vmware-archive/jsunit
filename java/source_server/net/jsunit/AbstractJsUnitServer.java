@@ -8,18 +8,21 @@ import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.results.Skin;
+import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
 import org.apache.jasper.servlet.JspServlet;
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
+import org.mortbay.http.SslListener;
 import org.mortbay.http.handler.ForwardHandler;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 import org.mortbay.util.FileResource;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -96,15 +99,26 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     protected void setUpHttpServer() throws Exception {
         FileResource.setCheckAliases(false);
         server = new HttpServer();
-        SocketListener listener = new SocketListener();
-        listener.setPort(configuration.getPort());
-        server.addListener(listener);
+        setUpSocketListener();
+        addRootContext();
+        addJsUnitContext();
+        setUpConfigurationProvider();
+        setUpMonitor();
+    }
 
-        ServletHttpContext rootContext = new ServletHttpContext();
-        rootContext.setContextPath("/");
-        rootContext.addHandler(new ForwardHandler("/jsunit"));
-        server.addContext(rootContext);
+    private void setUpMonitor() {
+        if (Monitor.activeCount() == 0)
+            Monitor.monitor();
+    }
 
+    private void setUpConfigurationProvider() {
+        ConfigurationProvider provider = new ConfigurationProviderWithRunner(runnerActionName());
+
+        ConfigurationManager.destroyConfiguration();
+        ConfigurationManager.getConfigurationProviders().set(0, provider);
+    }
+
+    private void addJsUnitContext() throws Exception {
         ServletHttpContext jsunitContext = new ServletHttpContext();
         jsunitContext.setContextPath("jsunit");
         jsunitContext.setResourceBase(configuration.getResourceBase().toString());
@@ -121,14 +135,28 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         for (String servletName : servletNames())
             addWebworkServlet(jsunitContext, servletName);
         server.addContext(jsunitContext);
+    }
 
-        ConfigurationProvider provider = new ConfigurationProviderWithRunner(runnerActionName());
+    private void addRootContext() {
+        ServletHttpContext rootContext = new ServletHttpContext();
+        rootContext.setContextPath("/");
+        rootContext.addHandler(new ForwardHandler("/jsunit"));
+        server.addContext(rootContext);
+    }
 
-        ConfigurationManager.destroyConfiguration();
-        ConfigurationManager.getConfigurationProviders().set(0, provider);
-
-        if (Monitor.activeCount() == 0)
-            Monitor.monitor();
+    private void setUpSocketListener() {
+        SocketListener listener = null;
+        if (FileUtility.doesFileExist("java" + File.separator + "config" + File.separator + "keystore")) {
+            SslListener sslListener = new SslListener();
+            sslListener.setKeystore("java/config/keystore");
+            sslListener.setPassword(null);
+            sslListener.setKeyPassword(null);
+            listener = sslListener;
+        } else {
+            listener = new SocketListener();
+        }
+        listener.setPort(configuration.getPort());
+        server.addListener(listener);
     }
 
     protected List<String> servletNames() {
