@@ -55,7 +55,7 @@ public class DistributedTestRunnerAction
             server.finishedTestRun();
             server.logStatus("Done running aggregate tests ( " + ((System.currentTimeMillis() - startTime) / 1000d) + " seconds)");
         } else
-            server.logStatus("Security violation from IP address " + remoteIpAddress);
+            server.logStatus("Security violation from IP address " + remoteIpAddress + ": key=" + captchaKey + ", answer=" + attemptedCaptchaAnswer);            
         return skin != null ? TRANSFORM : SUCCESS;
     }
 

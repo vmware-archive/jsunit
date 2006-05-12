@@ -3,9 +3,9 @@ package net.jsunit.action;
 import net.jsunit.SkinSource;
 import net.jsunit.TestRunManager;
 import net.jsunit.XmlRenderable;
-import net.jsunit.model.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.model.Browser;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.results.Skin;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class TestRunnerAction
 
     public String execute() throws Exception {
         if (hasSecurityViolation())
-            runner.logStatus("Security violation from IP address " + remoteIpAddress);
+            runner.logStatus("Security violation from IP address " + remoteIpAddress + ": key=" + captchaKey + ", answer=" + attemptedCaptchaAnswer);
         else {
             long startTime = System.currentTimeMillis();
             runner.logStatus(requestReceivedMessage());
