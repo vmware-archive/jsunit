@@ -30,7 +30,7 @@ public class TestRunnerAction
 
     public String execute() throws Exception {
         if (hasSecurityViolation())
-            runner.logStatus("Security violation from IP address " + remoteIpAddress + ": key=" + captchaKey + ", answer=" + attemptedCaptchaAnswer);
+            runner.logStatus(new SecurityViolationMessage(remoteIpAddress, securityViolation, captchaKey, attemptedCaptchaAnswer).generateMessage());
         else {
             long startTime = System.currentTimeMillis();
             runner.logStatus(requestReceivedMessage());

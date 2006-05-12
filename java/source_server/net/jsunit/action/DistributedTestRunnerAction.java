@@ -2,9 +2,9 @@ package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.*;
-import net.jsunit.model.SecurityViolation;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.results.Skin;
 
 import java.util.List;
@@ -55,7 +55,7 @@ public class DistributedTestRunnerAction
             server.finishedTestRun();
             server.logStatus("Done running aggregate tests ( " + ((System.currentTimeMillis() - startTime) / 1000d) + " seconds)");
         } else
-            server.logStatus("Security violation from IP address " + remoteIpAddress + ": key=" + captchaKey + ", answer=" + attemptedCaptchaAnswer);            
+            server.logStatus(new SecurityViolationMessage(remoteIpAddress, securityViolation, captchaKey, attemptedCaptchaAnswer).generateMessage());
         return skin != null ? TRANSFORM : SUCCESS;
     }
 
