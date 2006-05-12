@@ -35,6 +35,7 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
 
     public void testSimple() throws Exception {
         TestPage mockPage = new TestPage();
+        mockPage.setContents("<html></html>");
         ServiceResult serviceResult = binding.runTests(mockPage);
         String xml = serviceResult.getXml();
         ResultBuilder builder = new ResultBuilder();

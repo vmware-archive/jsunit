@@ -1,6 +1,7 @@
 package net.jsunit.uploaded;
 
 import net.jsunit.utility.FileUtility;
+import net.jsunit.model.ReferencedJsFile;
 
 import java.io.File;
 
@@ -31,4 +32,7 @@ public class UploadedReferencedJsFile {
         return originalFileName;
     }
 
+    public static UploadedReferencedJsFile fromReferencedJsFile(ReferencedJsFile referencedJsFile, int index) {
+        return new UploadedReferencedJsFile(referencedJsFile.getFileName(), referencedJsFile.getContents(), index);
+    }
 }

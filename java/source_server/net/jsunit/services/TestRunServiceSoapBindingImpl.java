@@ -4,6 +4,8 @@ import net.jsunit.DistributedTestRunManager;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.ServerRegistry;
 import net.jsunit.RemoteRunSpecification;
+import net.jsunit.uploaded.UploadedTestPage;
+import net.jsunit.uploaded.UploadedTestPageFactory;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.ServiceResult;
 import net.jsunit.model.TestPage;
@@ -19,11 +21,13 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
     private JsUnitAggregateServer server;
 
     public ServiceResult runTests(TestPage testPage) throws RemoteException {
+        UploadedTestPage uploadedTestPage = new UploadedTestPageFactory().fromTestPage(testPage);
+        uploadedTestPage.write();
         RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
         List<RemoteRunSpecification> specs =
                 builder.forAllBrowsersFromRemoteConfigurations(server.getAllRemoteMachineConfigurations());
         DistributedTestRunManager manager = new DistributedTestRunManager(
-                server.getHitter(), server.getConfiguration(), null, specs
+                server.getHitter(), server.getConfiguration(), uploadedTestPage.getURL(server.getConfiguration()), specs
         );
         manager.runTests();
         DistributedTestRunResult result = manager.getDistributedTestRunResult();

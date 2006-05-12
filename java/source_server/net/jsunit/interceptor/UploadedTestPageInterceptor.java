@@ -24,13 +24,17 @@ public class UploadedTestPageInterceptor extends AbstractUploadInterceptor {
                 UploadedTestPage page = createUploadedTestPageFrom(
                         uploadedTestPageFile, uploadedReferencedJsFiles, uploadedReferencedJsFileNames);
                 page.write();
-                uploadedTestPageFile.delete();
-                if (uploadedReferencedJsFiles != null)
-                    for (File file : uploadedReferencedJsFiles)
-                        file.delete();
+                deleteUploadedFilesWrittenByAppServer(uploadedTestPageFile, uploadedReferencedJsFiles);
                 setUrlOfTestPageOn(targetAction, page);
             }
         }
+    }
+
+    private void deleteUploadedFilesWrittenByAppServer(File uploadedTestPageFile, File[] uploadedReferencedJsFiles) {
+        uploadedTestPageFile.delete();
+        if (uploadedReferencedJsFiles != null)
+            for (File file : uploadedReferencedJsFiles)
+                file.delete();
     }
 
     private UploadedTestPage createUploadedTestPageFrom(

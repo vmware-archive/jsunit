@@ -10,8 +10,6 @@ import net.jsunit.utility.XmlUtility;
 import org.jdom.Document;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 public class TestRunServiceClientTest extends TestCase {
     private DummyTestPageWriter writer;
@@ -66,22 +64,17 @@ public class TestRunServiceClientTest extends TestCase {
         File page = new File(directory, TEST_PAGE_FILE_NAME);
         Result result = client.send(page);
         assertEquals(3, mockHitter.urlsPassed.size());
-        assertTrue(mockHitter.urlsPassed.contains("http://localhost:1/jsunit/runner?url=" + testURL()));
-        assertTrue(mockHitter.urlsPassed.contains("http://localhost:2/jsunit/runner?url=" + testURL()));
-        assertTrue(mockHitter.urlsPassed.contains("http://localhost:2/jsunit/runner?url=" + testURL()));
-//        assertEquals(XmlUtility.asString(dummyDistributedTestRunResult().asXml()), XmlUtility.asString(result.asXml()));
+        assertMockHitterWasPassedAUrlStartingWith("http://localhost:1/jsunit/runner?url=");
+        assertMockHitterWasPassedAUrlStartingWith("http://localhost:2/jsunit/runner?url=");
+        assertMockHitterWasPassedAUrlStartingWith("http://localhost:2/jsunit/runner?url=");
     }
 
-    private String testURL() throws UnsupportedEncodingException {
-        return URLEncoder.encode("http://www.example.com:1234/jsunit/runner?autoRun=true&submitResults=true", "UTF-8");
-    }
-
-    private DistributedTestRunResult dummyDistributedTestRunResult() {
-        DistributedTestRunResult result = new DistributedTestRunResult();
-        result.addTestRunResult(dummyTestRunResult());
-        result.addTestRunResult(dummyTestRunResult());
-        result.addTestRunResult(dummyTestRunResult());
-        return result;
+    private void assertMockHitterWasPassedAUrlStartingWith(String url) {
+        for (String string : mockHitter.urlsPassed) {
+            if (string.startsWith(url))
+                return;
+        }
+        fail();
     }
 
     private TestRunResult dummyTestRunResult() {

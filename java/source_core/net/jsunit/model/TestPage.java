@@ -75,4 +75,16 @@ public class TestPage {
         return !StringUtility.isEmpty(filePath) && !filePath.toLowerCase().endsWith("jsunitcore.js");
     }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public void setReferencedJsFiles(ReferencedJsFile[] referencedJsFiles) {
+        this.referencedJsFiles = referencedJsFiles;
+    }
+
 }

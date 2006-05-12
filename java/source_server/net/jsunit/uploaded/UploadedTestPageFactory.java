@@ -1,6 +1,7 @@
 package net.jsunit.uploaded;
 
 import net.jsunit.results.XsltTransformer;
+import net.jsunit.model.TestPage;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -24,6 +25,13 @@ public class UploadedTestPageFactory {
     public UploadedTestPage fromUploaded(String html, UploadedReferencedJsFile... referencedJsFiles) {
         html = modifyJsIncludesToPointToReferencedJsFiles(html, Arrays.asList(referencedJsFiles));
         return new UploadedTestPage(html, false, referencedJsFiles);
+    }
+
+    public UploadedTestPage fromTestPage(TestPage testPage) {
+        UploadedTestPage uploadedTestPage = UploadedTestPage.fromTestPage(testPage);
+        String modifiedHtml = modifyJsIncludesToPointToReferencedJsFiles(uploadedTestPage.getHtml(), uploadedTestPage.getReferencedJsFiles());
+        uploadedTestPage.setHtml(modifiedHtml);
+        return uploadedTestPage;
     }
 
     private String generateTestPageHTMLFromFragment(String testFragment) {

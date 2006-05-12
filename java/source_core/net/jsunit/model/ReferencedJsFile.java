@@ -24,4 +24,12 @@ public class ReferencedJsFile {
     public String getContents() {
         return contents;
     }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
 }
