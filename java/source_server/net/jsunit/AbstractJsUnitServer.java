@@ -136,7 +136,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     private void setUpSocketListener() {
-        SocketListener listener = null;
+        SocketListener listener;
         if (FileUtility.doesFileExist("java" + File.separator + "config" + File.separator + "keystore")) {
             SslListener sslListener = new SslListener();
             sslListener.setKeystore("java/config/keystore");
