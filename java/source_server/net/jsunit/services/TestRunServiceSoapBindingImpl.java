@@ -49,4 +49,13 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
 
     public void destroy() {
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 }

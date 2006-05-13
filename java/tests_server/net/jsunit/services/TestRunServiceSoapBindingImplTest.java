@@ -9,7 +9,12 @@ import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestPage;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import javax.xml.rpc.handler.MessageContext;
+import javax.xml.rpc.server.ServletEndpointContext;
 import java.net.URL;
+import java.security.Principal;
 import java.util.Arrays;
 
 public class TestRunServiceSoapBindingImplTest extends TestCase {
@@ -39,5 +44,43 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
         DistributedTestRunResult result = binding.runTests(mockPage);
         assertFalse(result.wasSuccessful());
         assertEquals(2, result._getTestRunResults().size());
+    }
+
+    public void testUsernamePassword() throws Exception {
+        binding.init(createServletEndpointContext("a username", "a password"));
+        assertEquals("a username", binding.getUsername());
+        assertEquals("a password", binding.getPassword());
+    }
+
+    private ServletEndpointContext createServletEndpointContext(final String username, final String password) {
+        return new ServletEndpointContext() {
+            public MessageContext getMessageContext() {
+                return new org.apache.axis.MessageContext(null) {
+                    public String getPassword() {
+                        return password;
+                    }
+
+                    public String getUsername() {
+                        return username;
+                    }
+                };
+            }
+
+            public Principal getUserPrincipal() {
+                return null;
+            }
+
+            public HttpSession getHttpSession() {
+                return null;
+            }
+
+            public ServletContext getServletContext() {
+                return null;
+            }
+
+            public boolean isUserInRole(String s) {
+                return false;
+            }
+        };
     }
 }
