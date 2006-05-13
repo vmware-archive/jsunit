@@ -9,14 +9,18 @@ import net.jsunit.model.TestPage;
 import net.jsunit.server.RemoteRunSpecificationBuilder;
 import net.jsunit.uploaded.UploadedTestPage;
 import net.jsunit.uploaded.UploadedTestPageFactory;
+import org.apache.axis.MessageContext;
 
 import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.server.ServiceLifecycle;
+import javax.xml.rpc.server.ServletEndpointContext;
 import java.rmi.RemoteException;
 import java.util.List;
 
 public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLifecycle {
     private JsUnitAggregateServer server;
+    private String username;
+    private String password;
 
     public DistributedTestRunResult runTests(TestPage testPage) throws RemoteException {
         UploadedTestPage uploadedTestPage = new UploadedTestPageFactory().fromTestPage(testPage);
@@ -32,6 +36,9 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
     }
 
     public void init(Object context) throws ServiceException {
+        MessageContext messageContext = (MessageContext) ((ServletEndpointContext) context).getMessageContext();
+        username = messageContext.getUsername();
+        password = messageContext.getPassword();
         //TODO: somehow inject the aggregate server - keep it in the context maybe?
         setAggregateServer((JsUnitAggregateServer) ServerRegistry.getServer());
     }

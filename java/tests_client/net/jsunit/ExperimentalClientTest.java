@@ -26,7 +26,7 @@ public class ExperimentalClientTest extends TestCase {
 
     public void testSimple() throws Exception {
         File testPage = new File(directory, "foobar.html");
-        TestRunClient client = new TestRunClient("http://server.jsunit.net/axis/services/TestRunService");
+        TestRunClient client = new TestRunClient("http://services.jsunit.net/axis/services/TestRunService");
 //        TestRunClient client = new TestRunClient("http://localhost:8090/axis/services/TestRunService");
         client.setUsername("username");
         client.setPassword("password");

@@ -5,6 +5,7 @@ import net.jsunit.model.TestPage;
 import net.jsunit.services.TestRunService;
 import net.jsunit.services.TestRunServiceServiceLocator;
 import net.jsunit.utility.JsUnitURL;
+import org.apache.axis.client.Stub;
 
 import java.io.File;
 
@@ -21,8 +22,8 @@ public class TestRunClient {
         TestPage testPage = new TestPage(testPageFile);
         TestRunServiceServiceLocator locator = new TestRunServiceServiceLocator();
         TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
-//        ((Stub) service).setHeader(new SOAPHeaderElement("username", username));
-//        ((Stub) service).setHeader(new SOAPHeaderElement("password", password));
+        ((Stub) service).setUsername(username);
+        ((Stub) service).setPassword(password);
         return service.runTests(testPage);
     }
 
