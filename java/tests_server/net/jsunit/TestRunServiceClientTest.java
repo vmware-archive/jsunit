@@ -7,6 +7,8 @@ import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.model.DummyTestPageWriter;
 import net.jsunit.model.Result;
+import net.jsunit.services.User;
+import net.jsunit.services.UserRepository;
 import org.jdom.Document;
 
 import java.io.File;
@@ -40,6 +42,11 @@ public class TestRunServiceClientTest extends TestCase {
         mockHitter.urlToDocument.put("http://localhost:2/jsunit/config", remoteConfigurationDocument);
         mockHitter.urlToDocument.put("http://localhost:3/jsunit/config", remoteConfigurationDocument);
         server = new JsUnitAggregateServer(new Configuration(source), mockHitter);
+        server.setUserRepository(new UserRepository() {
+            public User findUser(String username, String password) {
+                return new User();
+            }
+        });
         server.start();
     }
 
