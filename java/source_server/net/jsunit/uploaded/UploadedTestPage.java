@@ -39,9 +39,11 @@ public class UploadedTestPage {
     }
 
     public void write() {
-        FileUtility.write(getFile(), html);
-        for (UploadedReferencedJsFile jsFile : referencedJsFiles)
-            jsFile.write();
+        if (html != null) {
+            FileUtility.write(getFile(), html);
+            for (UploadedReferencedJsFile jsFile : referencedJsFiles)
+                jsFile.write();
+        }
     }
 
     public File getFile() {
@@ -60,7 +62,7 @@ public class UploadedTestPage {
         ReferencedJsFile[] referencedJsFiles = testPage.getReferencedJsFiles();
         UploadedReferencedJsFile[] uploadedReferencedJsFiles;
         if (referencedJsFiles == null)
-            uploadedReferencedJsFiles = new UploadedReferencedJsFile[] {};
+            uploadedReferencedJsFiles = new UploadedReferencedJsFile[]{};
         else
             uploadedReferencedJsFiles = new UploadedReferencedJsFile[referencedJsFiles == null ? 0 : referencedJsFiles.length];
         for (int i = 0; i < uploadedReferencedJsFiles.length; i++) {

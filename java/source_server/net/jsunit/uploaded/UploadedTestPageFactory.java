@@ -1,7 +1,7 @@
 package net.jsunit.uploaded;
 
-import net.jsunit.results.XsltTransformer;
 import net.jsunit.model.TestPage;
+import net.jsunit.results.XsltTransformer;
 import org.cyberneko.html.parsers.DOMParser;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -51,6 +51,8 @@ public class UploadedTestPageFactory {
     }
 
     private String modifyJsIncludesToPointToReferencedJsFiles(String rawHTML, List<UploadedReferencedJsFile> referencedJsFiles) {
+        if (rawHTML == null)
+            return null;
         DOMParser parser = new DOMParser();
         try {
             parser.parse(new InputSource(new StringReader(rawHTML)));

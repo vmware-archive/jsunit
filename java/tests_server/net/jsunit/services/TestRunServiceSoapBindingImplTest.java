@@ -1,6 +1,7 @@
 package net.jsunit.services;
 
 import junit.framework.TestCase;
+import net.jsunit.AuthenticationException;
 import net.jsunit.JsUnitAggregateServer;
 import net.jsunit.MockRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
@@ -20,6 +21,7 @@ import java.util.Arrays;
 public class TestRunServiceSoapBindingImplTest extends TestCase {
     private TestRunServiceSoapBindingImpl binding;
     private MockRemoteServerHitter hitter;
+    private JsUnitAggregateServer aggregateServer;
 
     protected void setUp() throws Exception {
         super.setUp();
@@ -30,26 +32,35 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
                 return "http://localhost:1,http://localhost:2";
             }
         });
-        JsUnitAggregateServer aggregateServer = new JsUnitAggregateServer(aggregateServerConfiguration, hitter);
+        aggregateServer = new JsUnitAggregateServer(aggregateServerConfiguration, hitter);
         aggregateServer.setCachedRemoteConfigurations(Arrays.asList(new RemoteConfiguration[]{
                 new RemoteConfiguration(new URL("http://localhost:1/jsunit"), new DummyConfigurationSource()),
                 new RemoteConfiguration(new URL("http://localhost:2/jsunit"), new DummyConfigurationSource()),
         }));
-        binding.setAggregateServer(aggregateServer);
+        aggregateServer.setUserRepository(new MockUserRepository());
+    }
+
+    public void testInit() throws Exception {
+        binding.init(createServletEndpointContext("validUsername", "validPassword"));
+        assertEquals("validUsername", binding.getUsername());
+        assertEquals("validPassword", binding.getPassword());
+        assertEquals(aggregateServer, binding.getServer());
     }
 
     public void testSimple() throws Exception {
-        TestPage mockPage = new TestPage();
-        mockPage.setContents("<html></html>");
-        DistributedTestRunResult result = binding.runTests(mockPage);
+        binding.init(createServletEndpointContext("validUsername", "validPassword"));
+        DistributedTestRunResult result = binding.runTests(new TestPage());
         assertFalse(result.wasSuccessful());
         assertEquals(2, result._getTestRunResults().size());
     }
 
-    public void testUsernamePassword() throws Exception {
-        binding.init(createServletEndpointContext("a username", "a password"));
-        assertEquals("a username", binding.getUsername());
-        assertEquals("a password", binding.getPassword());
+    public void testInvalidUsernamePassword() throws Exception {
+        binding.init(createServletEndpointContext("invalidUsername", "invalidPassword"));
+        try {
+            binding.runTests(new TestPage());
+            fail();
+        } catch (AuthenticationException e) {
+        }
     }
 
     private ServletEndpointContext createServletEndpointContext(final String username, final String password) {
@@ -83,4 +94,5 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
             }
         };
     }
+
 }

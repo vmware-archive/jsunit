@@ -4,25 +4,23 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.model.RemoteServerConfigurationSource;
+import net.jsunit.services.User;
+import net.jsunit.services.UserRepository;
+import org.apache.axis.transport.http.AdminServlet;
+import org.apache.axis.transport.http.AxisServlet;
+import org.mortbay.http.handler.ResourceHandler;
+import org.mortbay.jetty.servlet.ServletHttpContext;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.mortbay.jetty.servlet.ServletHttpContext;
-import org.mortbay.http.SocketListener;
-import org.mortbay.http.handler.ResourceHandler;
-import org.apache.axis.transport.http.AxisServlet;
-import org.apache.axis.transport.http.AdminServlet;
-import org.apache.axis.transport.http.AxisHTTPSessionListener;
-import org.apache.axis.monitor.SOAPMonitorService;
-import org.apache.axis.components.logger.LogFactory;
 
 public class JsUnitAggregateServer extends AbstractJsUnitServer implements RemoteServerConfigurationSource {
 
     private RemoteServerHitter hitter;
     private List<RemoteConfiguration> cachedRemoteConfigurations;
     private JsUnitAggregateServer.RemoteConfigurationCacheUpdater updater;
+    private UserRepository userRepository;
 
     public JsUnitAggregateServer(Configuration configuration) {
         this(configuration, new RemoteMachineServerHitter());
@@ -111,6 +109,14 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         resourceHandler.setDirAllowed(false);
         axisContext.addHandler(resourceHandler);
         server.addContext(axisContext);
+    }
+
+    public User authenticateUser(String username, String password) {
+        return userRepository.findUser(username, password);
+    }
+
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     static class RemoteConfigurationCacheUpdater extends Thread {

@@ -2,7 +2,9 @@ package net.jsunit;
 
 import net.jsunit.client.TestRunClient;
 import net.jsunit.model.*;
+import net.jsunit.services.MockUserRepository;
 import net.jsunit.utility.XmlUtility;
+import org.apache.axis.AxisFault;
 import org.jdom.Document;
 
 import java.io.File;
@@ -23,6 +25,7 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
                         testRunResult0().asXmlDocument() : testRunResult1().asXmlDocument();
             }
         });
+        aggregateServer().setUserRepository(new MockUserRepository());
     }
 
     public void tearDown() throws Exception {
@@ -33,13 +36,26 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
     public void testSimple() throws Exception {
         File file = new File(directory, "a test page.html");
         TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
-        client.setUsername("username");
-        client.setPassword("password");
+        client.setUsername(MockUserRepository.VALID_USERNAME);
+        client.setPassword(MockUserRepository.VALID_PASSWORD);
         DistributedTestRunResult distributedTestRunResult = client.send(file);
         assertFalse(distributedTestRunResult.wasSuccessful());
         assertEquals(2, distributedTestRunResult._getTestRunResults().size());
         assertEquals(XmlUtility.asPrettyString(expectedDistributedTestRunResult().asXml()), XmlUtility.asPrettyString(distributedTestRunResult.asXml()));
         System.out.println(XmlUtility.asPrettyString(expectedDistributedTestRunResult().asXml()));
+    }
+
+    public void testInvalidAuthentication() throws Exception {
+        File file = new File(directory, "a test page.html");
+        TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
+        client.setUsername("bad username");
+        client.setPassword("bad password");
+        try {
+            client.send(file);
+            fail();
+        } catch (AxisFault fault) {
+            assertTrue(fault.getFaultString().indexOf(AuthenticationException.class.getName()) != -1);
+        }
     }
 
     private DistributedTestRunResult expectedDistributedTestRunResult() {

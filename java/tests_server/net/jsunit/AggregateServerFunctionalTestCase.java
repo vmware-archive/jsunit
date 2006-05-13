@@ -60,4 +60,8 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         return new FunctionalTestAggregateConfigurationSource(port);
     }
 
+    protected JsUnitAggregateServer aggregateServer() {
+        return (JsUnitAggregateServer) server;
+    }
+
 }
