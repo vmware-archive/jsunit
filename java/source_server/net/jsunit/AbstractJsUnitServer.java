@@ -37,6 +37,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     protected int testRunCount = 0;
     private SkinSource skinSource = new DefaultSkinSource();
     private final List<StatusMessage> statusMessages = new ArrayList<StatusMessage>();
+    public static final String PROPERTY_SSL_PASSWORD = "jsunitsslpassword";
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
         this.configuration = configuration;
@@ -140,8 +141,8 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         if (FileUtility.doesFileExist("java" + File.separator + "config" + File.separator + "keystore")) {
             SslListener sslListener = new SslListener();
             sslListener.setKeystore("java/config/keystore");
-            sslListener.setPassword(null);
-            sslListener.setKeyPassword(null);
+            sslListener.setPassword(System.getProperty(PROPERTY_SSL_PASSWORD));
+            sslListener.setKeyPassword(System.getProperty(PROPERTY_SSL_PASSWORD));
             listener = sslListener;
         } else {
             listener = new SocketListener();
