@@ -3,13 +3,10 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.BrowserLaunchSpecification;
 import net.jsunit.MockBrowserTestRunner;
-import net.jsunit.model.SecurityViolation;
 import net.jsunit.model.Browser;
 import net.jsunit.model.ResultType;
-import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
 
-import java.io.File;
 import java.util.Arrays;
 
 public class TestRunnerActionTest extends TestCase {
@@ -100,23 +97,6 @@ public class TestRunnerActionTest extends TestCase {
     public void testSelectBadBrowserId() throws Exception {
         action.setInvalidBrowserId("foobar");
         assertEquals("<error>Invalid browser ID: foobar</error>", XmlUtility.asString(action.getXmlRenderable().asXml()));
-    }
-
-    public void testSkin() throws Exception {
-        assertNull(action.getSkin());
-        Skin skinFile = new Skin(2, new File("foo.xsl"));
-        action.setSkin(skinFile);
-        assertEquals(skinFile, action.getSkin());
-        action.setBrowserTestRunner(mockRunner);
-        assertEquals(ResultDisplayerAction.TRANSFORM, action.execute());
-    }
-
-    public void testSecurityFailure() throws Exception {
-        action.setSecurityViolation(SecurityViolation.FAILED_CAPTCHA);
-        assertEquals(
-                XmlUtility.asString(SecurityViolation.FAILED_CAPTCHA.asXml()),
-                XmlUtility.asString(action.getXmlRenderable().asXml())
-        );
     }
 
 }

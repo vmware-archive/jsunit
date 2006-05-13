@@ -96,8 +96,6 @@
 <tr>
     <td>
         <table width="100%">
-            <%if (!server.isAggregateServer()) {%>
-            <%} else {%>
             <tr>
                 <%for (RemoteConfiguration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
                 <td>
@@ -108,13 +106,13 @@
                             <table cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td width="1" rowspan="2">
-                                        <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><img border="0" src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>"></a>
+                                        <img border="0" src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
                                     </td>
                                     <td align="left">
                                         <%if (!StringUtility.isEmpty(remoteConfiguration.getDescription())) {%>
                                         <%=remoteConfiguration.getDescription()%> -
                                         <%}%>
-                                        <a href="<%=remoteConfiguration.getRemoteURL().toString()%>"><%=remoteConfiguration.getRemoteURL().getHost()%></a>
+                                        <%=remoteConfiguration.getRemoteURL().getHost()%>
                                     </td>
                                 </tr>
                                 <tr>
@@ -147,7 +145,6 @@
                 <td width="2">&nbsp;</td>
                 <%}%>
             </tr>
-            <%}%>
         </table>
     </td>
 </tr>

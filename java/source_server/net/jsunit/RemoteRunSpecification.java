@@ -35,16 +35,6 @@ public class RemoteRunSpecification {
             buffer.append("?url=").append(URLEncoder.encode(localConfiguration.getTestURL().toString(), "UTF-8"));
             hasFirstParameter = true;
         }
-        if (localConfiguration.useCaptcha()) {
-            CaptchaSpec spec = CaptchaSpec.create(localConfiguration.getSecretKey());
-            if (hasFirstParameter)
-                buffer.append("&");
-            else
-                buffer.append("?");
-            buffer.append("captchaKey=").append(URLEncoder.encode(spec.getEncryptedKey(), "UTF-8"));
-            buffer.append("&attemptedCaptchaAnswer=").append(URLEncoder.encode(spec.getAnswer(), "UTF-8"));
-            hasFirstParameter = true;
-        }
         appendBrowserParametersToURL(buffer, hasFirstParameter);
         return new URL(buffer.toString());
     }

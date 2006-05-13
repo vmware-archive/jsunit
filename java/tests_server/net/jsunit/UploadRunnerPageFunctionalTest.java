@@ -2,26 +2,27 @@ package net.jsunit;
 
 import com.meterware.httpunit.UploadFileSpec;
 import com.meterware.httpunit.WebForm;
-import net.jsunit.model.ResultType;
+import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.model.DistributedTestRunResultBuilder;
+import net.jsunit.model.TestRunResult;
 import net.jsunit.uploaded.UploadedTestPage;
 import net.jsunit.uploaded.UploadedTestPageFactory;
 import net.jsunit.utility.FileUtility;
+import org.jdom.Document;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UploadRunnerPageFunctionalTest extends StandardServerFunctionalTestCase {
+public class UploadRunnerPageFunctionalTest extends AggregateServerFunctionalTestCase {
 
     private List<File> createdFiles = new ArrayList<File>();
-
-    protected boolean shouldMockOutProcessStarter() {
-        return false;
-    }
 
     public void setUp() throws Exception {
         super.setUp();
         webTester.beginAt("/uploadRunnerPage?referencedJsFileFieldCount=2");
+        mockHitter.urlsPassed.clear();
     }
 
     public void testInitialConditions() throws Exception {
@@ -29,35 +30,44 @@ public class UploadRunnerPageFunctionalTest extends StandardServerFunctionalTest
     }
 
     public void testUploadSuccessfulPageSingleBrowser() throws Exception {
+        mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
+            public Document get(URL url) {
+                return new TestRunResult().asXmlDocument();
+            }
+        });
         File file = saveTestPageLocally("assertTrue(true);");
         WebForm form = webTester.getDialog().getForm();
         form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
-        webTester.setFormElement("browserId", "0");
+        webTester.setFormElement("urlId_browserId", "0_0");
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
-        assertRunResult(
-                responseXmlDocument(),
-                ResultType.SUCCESS,
-                null,
-                1
-        );
+        assertEquals(1, mockHitter.urlsPassed.size());
+        DistributedTestRunResult result = new DistributedTestRunResultBuilder().build(responseXmlDocument());
+        assertEquals(1, result._getTestRunResults().size());
     }
 
-    public void testUploadFailingPageBothBrowsers() throws Exception {
+    public void testUploadFailingPage() throws Exception {
+        mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
+            public Document get(URL url) {
+                return new DummyFailedTestRunResult().asXmlDocument();
+            }
+        });
         File file = saveTestPageLocally("assertTrue(false);");
         WebForm form = webTester.getDialog().getForm();
         form.setParameter("testPageFile", new UploadFileSpec[]{new UploadFileSpec(file)});
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
-        assertRunResult(
-                responseXmlDocument(),
-                ResultType.FAILURE,
-                null,
-                2
-        );
+        DistributedTestRunResult result = new DistributedTestRunResultBuilder().build(responseXmlDocument());
+        assertEquals(2, result._getTestRunResults().size());
+        assertFalse(result.wasSuccessful());
     }
 
     public void testUploadWithReferencedJsFiles() throws Exception {
+        mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
+            public Document get(URL url) {
+                return new TestRunResult().asXmlDocument();
+            }
+        });
         File referencedJsFile1 = new File("scratch", "testReferencedJs1" + System.currentTimeMillis() + ".js");
         File referencedJsFile2 = new File("scratch", "testReferencedJs2" + System.currentTimeMillis() + ".js");
         FileUtility.write(referencedJsFile1, "function trueFunction() {return true;}");
@@ -86,12 +96,9 @@ public class UploadRunnerPageFunctionalTest extends StandardServerFunctionalTest
         webTester.selectOption("skinId", "None (raw XML)");
 
         webTester.submit();
-        assertRunResult(
-                responseXmlDocument(),
-                ResultType.SUCCESS,
-                null,
-                2
-        );
+        DistributedTestRunResult result = new DistributedTestRunResultBuilder().build(responseXmlDocument());
+        assertTrue(result.wasSuccessful());
+        assertEquals(2, result._getTestRunResults().size());
     }
 
     private File saveTestPageLocally(String fragment) {

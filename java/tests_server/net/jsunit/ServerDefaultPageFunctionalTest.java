@@ -1,14 +1,10 @@
 package net.jsunit;
 
-public class ServerDefaultPageFunctionalTest extends StandardServerFunctionalTestCase {
+public class ServerDefaultPageFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void testLandingPage() throws Exception {
         webTester.beginAt("/");
         assertOnFragmentRunnerPage();
-
-        webTester.assertTextPresent(FunctionalTestConfigurationSource.OS_STRING);
-        webTester.assertTextPresent(FunctionalTestConfigurationSource.HOSTNAME);
-        webTester.assertTextPresent(FunctionalTestConfigurationSource.IP_ADDRESS);
     }
 
     public void testLinks() throws Exception {

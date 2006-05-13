@@ -1,17 +1,17 @@
 package net.jsunit;
 
-import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.captcha.AesCipher;
-import net.jsunit.model.ResultType;
+import net.jsunit.model.TestRunResult;
+import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.model.DistributedTestRunResultBuilder;
+import org.jdom.Document;
 
-public class CaptchaFunctionalTest extends StandardServerFunctionalTestCase {
+import java.net.URL;
 
-    protected boolean shouldMockOutProcessStarter() {
-        return false;
-    }
+public class CaptchaFunctionalTest extends AggregateServerFunctionalTestCase {
 
-    protected ConfigurationSource createConfigurationSource() {
-        return new FunctionalTestConfigurationSource(port) {
+    protected FunctionalTestAggregateConfigurationSource createConfigurationSource() {
+        return new FunctionalTestAggregateConfigurationSource(port) {
             public String useCaptcha() {
                 return String.valueOf(true);
             }
@@ -21,6 +21,11 @@ public class CaptchaFunctionalTest extends StandardServerFunctionalTestCase {
     public void setUp() throws Exception {
         super.setUp();
         webTester.beginAt("/fragmentRunnerPage");
+        mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
+            public Document get(URL url) {
+                return new TestRunResult().asXmlDocument();
+            }
+        });
     }
 
     public void testHitToRunnerNotAllowed() throws Exception {
@@ -39,7 +44,10 @@ public class CaptchaFunctionalTest extends StandardServerFunctionalTestCase {
         webTester.selectOption("skinId", "None (raw XML)");
         webTester.submit();
         webTester.gotoFrame("resultsFrame");
-        assertRunResult(responseXmlDocument(), ResultType.SUCCESS, null, 2);
+        Document document = responseXmlDocument();
+        DistributedTestRunResult result = new DistributedTestRunResultBuilder().build(document);
+        assertEquals(2, result._getTestRunResults().size());
+        assertTrue(result.wasSuccessful());
     }
 
     private void assertOnAccessDeniedPage() {

@@ -123,7 +123,6 @@ public class ConfigurationTest extends TestCase {
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
                 "<url>http://www.example.com:1234/</url>" +
-                "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                 "</configuration>";
         assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD)));
     }
@@ -148,7 +147,6 @@ public class ConfigurationTest extends TestCase {
                 "<resourceBase>" + resourceBase.getAbsolutePath() + "</resourceBase>" +
                 "<timeoutSeconds>76</timeoutSeconds>" +
                 "<url>http://www.example.com:1234/</url>" +
-                "<useCaptcha>" + FullValidForBothConfigurationSource.USE_CAPTCHA + "</useCaptcha>" +
                 "</configuration>";
         assertEquals(expectedXML, XmlUtility.asString(configuration.asXml(ServerType.STANDARD_TEMPORARY)));
     }

@@ -3,21 +3,20 @@ package net.jsunit.action;
 import junit.framework.TestCase;
 import net.jsunit.DistributedTestRunManager;
 import net.jsunit.JsUnitAggregateServer;
-import net.jsunit.SuccessfulRemoteServerHitter;
 import net.jsunit.RemoteRunSpecification;
-import net.jsunit.model.Browser;
-import net.jsunit.model.SecurityViolation;
+import net.jsunit.SuccessfulRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
+import net.jsunit.model.Browser;
+import net.jsunit.model.SecurityViolation;
 import net.jsunit.results.Skin;
 import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public class DistributedTestRunnerActionTest extends TestCase {
 
@@ -75,20 +74,21 @@ public class DistributedTestRunnerActionTest extends TestCase {
         return Arrays.asList(new RemoteRunSpecification[] {spec0, spec1});
     }
 
-    private List<URL> urls(String... urls) throws MalformedURLException {
-        List<URL> result = new ArrayList<URL>();
-        for (String url : urls) {
-            result.add(new URL(url));
-        }
-        return result;
-    }
-
     public void testInvalidURLId() throws Exception {
         action.setInvalidRemoteMachineUrlBrowserCombination(new InvalidRemoteMachineUrlBrowserCombination("bad URL ID", "bad browser ID"));
         assertEquals(
                 "<error>Invalid Remote Machine ID/Browser ID: bad URL ID, bad browser ID</error>",
                 XmlUtility.asString(action.getXmlRenderable().asXml())
         );
+    }
+
+    public void testSkin() throws Exception {
+        assertNull(action.getSkin());
+        Skin skinFile = new Skin(2, new File("foo.xsl"));
+        action.setSkin(skinFile);
+        action.setRemoteRunSpecifications(Arrays.asList(new RemoteRunSpecification[] {}));
+        assertEquals(skinFile, action.getSkin());
+        assertEquals(ResultDisplayerAction.TRANSFORM, action.execute());
     }
 
 }

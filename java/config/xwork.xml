@@ -39,14 +39,6 @@
                 <interceptor-ref name="params"/>
             </interceptor-stack>
 
-            <interceptor-stack name="runnerStack">
-                <interceptor-ref name="standardStack"/>
-                <interceptor-ref name="requestSource"/>
-                <interceptor-ref name="security"/>
-                <interceptor-ref name="skin"/>
-                <interceptor-ref name="fragment"/>
-                <interceptor-ref name="upload"/>
-            </interceptor-stack>
         </interceptors>
 
         <action name="acceptor" class="net.jsunit.action.ResultAcceptorAction">
@@ -62,8 +54,8 @@
         <action name="browserTestRunner" class="net.jsunit.action.TestRunnerAction">
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
-            <result name="transform" type="jsUnitTransformedTestRunResult"/>
-            <interceptor-ref name="runnerStack"/>
+            <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="requestSource"/>
             <interceptor-ref name="browserSelection"/>
         </action>
 
@@ -71,7 +63,12 @@
             <result name="success" type="jsUnitXml"/>
             <result name="error" type="jsUnitXml"/>
             <result name="transform" type="jsUnitTransformedTestRunResult"/>
-            <interceptor-ref name="runnerStack"/>
+            <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="requestSource"/>
+            <interceptor-ref name="security"/>
+            <interceptor-ref name="skin"/>
+            <interceptor-ref name="fragment"/>
+            <interceptor-ref name="upload"/>
             <interceptor-ref name="remoteRunnerHitter"/>
             <interceptor-ref name="remoteRunSpecificationSelection"/>
         </action>

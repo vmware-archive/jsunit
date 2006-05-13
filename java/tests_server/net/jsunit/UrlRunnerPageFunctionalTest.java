@@ -1,16 +1,24 @@
 package net.jsunit;
 
-import net.jsunit.model.ResultType;
+import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.model.DistributedTestRunResultBuilder;
+import net.jsunit.model.TestRunResult;
+import org.jdom.Document;
 
-public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCase {
+import java.net.URL;
+import java.net.URLEncoder;
 
-    protected boolean shouldMockOutProcessStarter() {
-        return false;
-    }
+public class UrlRunnerPageFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
         webTester.beginAt("/urlRunnerPage");
+        mockHitter.urlsPassed.clear();
+        mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
+            public Document get(URL url) {
+                return new TestRunResult().asXmlDocument();
+            }
+        });
     }
 
     public void testInitialConditions() throws Exception {
@@ -20,43 +28,33 @@ public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCas
 
     public void testRunnerForParticularBrowser() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.checkCheckbox("browserId", "0");
-        webTester.uncheckCheckbox("browserId", "1");
+        webTester.checkCheckbox("urlId_browserId", "0_0");
         webTester.submit();
-        assertRunResult(
-                responseXmlDocument(),
-                ResultType.SUCCESS,
-                "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
-                1
-        );
+        DistributedTestRunResult result = new DistributedTestRunResultBuilder().build(responseXmlDocument());
+        assertTrue(result.wasSuccessful());
+        assertEquals(1, result._getTestRunResults().size());
+        assertTrue(mockHitter.urlsPassed.get(0).indexOf(URLEncoder.encode(url(), "UTF-8")) != -1);
     }
 
     public void testRunnerForAllBrowsers() throws Exception {
         setUpURLRunnerSubmission();
         webTester.submit();
-        assertRunResult(
-                responseXmlDocument(),
-                ResultType.SUCCESS,
-                "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html",
-                2
-        );
+        assertEquals(2, mockHitter.urlsPassed.size());
+        assertTrue(mockHitter.urlsPassed.get(0).indexOf(URLEncoder.encode(url(), "UTF-8")) != -1);
+        assertTrue(mockHitter.urlsPassed.get(1).indexOf(URLEncoder.encode(url(), "UTF-8")) != -1);
     }
 
     public void testRunnerWithHTMLSkin() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.checkCheckbox("browserId", "0");
         webTester.selectOption("skinId", "HTML");
         webTester.submit();
         webTester.gotoFrame("resultsFrame");
         webTester.assertTitleEquals("JsUnit Test Results");
-        webTester.assertTextPresent("http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
-        webTester.assertTextPresent(ResultType.SUCCESS.name());
     }
 
     public void testRunnerWithTextSkin() throws Exception {
         setUpURLRunnerSubmission();
-        webTester.checkCheckbox("browserId", "1");
-        webTester.selectOption("skinId", "Text");
+        webTester.checkCheckbox("urlId_browserId", "0_1");
         webTester.submit();
         webTester.gotoFrame("resultsFrame");
 //        webTester.assertTitleEquals("JsUnit Test Results");
@@ -70,8 +68,12 @@ public class UrlRunnerPageFunctionalTest extends StandardServerFunctionalTestCas
     }
 
     private void setUpURLRunnerSubmission() {
-        webTester.setFormElement("url", "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html");
+        webTester.setFormElement("url", url());
         webTester.selectOption("skinId", "None (raw XML)");
+    }
+
+    private String url() {
+        return "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html";
     }
 
 }

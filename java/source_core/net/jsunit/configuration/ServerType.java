@@ -23,8 +23,7 @@ public enum ServerType {
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.BROWSER_FILE_NAMES,
                     ConfigurationProperty.DESCRIPTION,
-                    ConfigurationProperty.URL,
-                    ConfigurationProperty.USE_CAPTCHA
+                    ConfigurationProperty.URL
             })
     ),
     STANDARD_TEMPORARY(

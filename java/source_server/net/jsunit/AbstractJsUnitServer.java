@@ -11,7 +11,6 @@ import net.jsunit.results.Skin;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
-import org.apache.jasper.servlet.JspServlet;
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
@@ -24,7 +23,6 @@ import org.mortbay.util.FileResource;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
@@ -100,7 +98,6 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         FileResource.setCheckAliases(false);
         server = new HttpServer();
         setUpSocketListener();
-        addRootContext();
         addJsUnitContext();
         setUpConfigurationProvider();
         setUpMonitor();
@@ -120,11 +117,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
 
     private void addJsUnitContext() throws Exception {
         ServletHttpContext jsunitContext = new ServletHttpContext();
-        jsunitContext.setContextPath("jsunit");
-        jsunitContext.setResourceBase(configuration.getResourceBase().toString());
-        jsunitContext.addWelcomeFile("java/jsp/fragmentRunner.jsp");
-        jsunitContext.addServlet("JSP", "*.jsp", JspServlet.class.getName());
-        jsunitContext.setInitParameter("scratchdir", "scratch");
+        setUpJsUnitContext(jsunitContext);
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);
@@ -137,11 +130,9 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         server.addContext(jsunitContext);
     }
 
-    private void addRootContext() {
-        ServletHttpContext rootContext = new ServletHttpContext();
-        rootContext.setContextPath("/");
-        rootContext.addHandler(new ForwardHandler("/jsunit"));
-        server.addContext(rootContext);
+    protected void setUpJsUnitContext(ServletHttpContext jsunitContext) throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        jsunitContext.setContextPath("jsunit");
+        jsunitContext.setResourceBase(configuration.getResourceBase().toString());
     }
 
     private void setUpSocketListener() {
@@ -160,24 +151,14 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     protected List<String> servletNames() {
-        return Arrays.asList(new String[]{
-                "configurationPage",
-                "fragmentRunnerPage",
-                "helpPage",
-                "logDisplayerPage",
-                "uploadRunnerPage",
-                "urlRunnerPage",
-
-                "acceptor",
-                "admin",
-                "captchaImage",
-                "config",
-                "displayer",
-                "latestversion",
-                "runner",
-                "serverstatus",
-                "testruncount"
-        });
+        List<String> result = new ArrayList<String>();
+        result.add("acceptor");
+        result.add("config");
+        result.add("displayer");
+        result.add("runner");
+        result.add("serverstatus");
+        result.add("testruncount");
+        return result;
     }
 
     protected abstract String runnerActionName();

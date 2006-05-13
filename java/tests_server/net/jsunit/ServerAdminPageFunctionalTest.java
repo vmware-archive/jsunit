@@ -1,6 +1,6 @@
 package net.jsunit;
 
-public class ServerAdminPageFunctionalTest extends StandardServerFunctionalTestCase {
+public class ServerAdminPageFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
@@ -9,7 +9,6 @@ public class ServerAdminPageFunctionalTest extends StandardServerFunctionalTestC
 
     public void testInitialConditiions() throws Exception {
         webTester.assertTitleEquals("Server Administration - JsUnit");
-        webTester.assertLinkPresentWithText(new FunctionalTestConfigurationSource(port).url());
     }
 
 }

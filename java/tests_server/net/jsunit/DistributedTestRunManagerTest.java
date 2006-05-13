@@ -172,28 +172,6 @@ public class DistributedTestRunManagerTest extends TestCase {
         assertEquals(DummyConfigurationSource.REMOTE_URL_2, results.get(3).getUrl().toString());
     }
 
-    public void testUseCaptcha() throws Exception {
-        DummyConfigurationSource source = new DummyConfigurationSource() {
-            public String useCaptcha() {
-                return String.valueOf(true);
-            }
-        };
-        configuration = new Configuration(source) {
-            public String getSecretKey() {
-                return SECRET_KEY;
-            }
-        };
-        MockRemoteServerHitter hitter = new MockRemoteServerHitter();
-        DistributedTestRunManager manager = new DistributedTestRunManager(
-                hitter, configuration, null,
-                fullRunSpecsFor("http://www.example.com")
-        );
-        manager.runTests();
-        String urlHit = hitter.urlsPassed.get(0);
-        assertTrue(urlHit.indexOf("captchaKey") != -1);
-        assertTrue(urlHit.indexOf("attemptedCaptchaAnswer") != -1);
-    }
-
     private MockRemoteServerHitter createMockHitter(String url1, String url2) throws MalformedURLException {
         MockRemoteServerHitter hitter = new MockRemoteServerHitter();
         hitter.urlToDocument.put(url1, new Document(createResult1().asXml()));
