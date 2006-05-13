@@ -1,6 +1,7 @@
 package net.jsunit.services;
 
 public class MockUserRepository implements UserRepository {
+
     public static final String VALID_USERNAME = "validUsername";
     public static final String VALID_PASSWORD = "validPassword";
 

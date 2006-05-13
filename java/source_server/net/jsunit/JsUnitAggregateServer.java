@@ -4,26 +4,26 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.model.RemoteServerConfigurationSource;
+import net.jsunit.services.DefaultUserRepository;
 import net.jsunit.services.User;
 import net.jsunit.services.UserRepository;
 import org.apache.axis.transport.http.AdminServlet;
 import org.apache.axis.transport.http.AxisServlet;
 import org.apache.jasper.servlet.JspServlet;
-import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.http.handler.ForwardHandler;
+import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 public class JsUnitAggregateServer extends AbstractJsUnitServer implements RemoteServerConfigurationSource {
 
     private RemoteServerHitter hitter;
     private List<RemoteConfiguration> cachedRemoteConfigurations;
     private JsUnitAggregateServer.RemoteConfigurationCacheUpdater updater;
-    private UserRepository userRepository;
+    private UserRepository userRepository = new DefaultUserRepository();
 
     public JsUnitAggregateServer(Configuration configuration) {
         this(configuration, new RemoteMachineServerHitter());
