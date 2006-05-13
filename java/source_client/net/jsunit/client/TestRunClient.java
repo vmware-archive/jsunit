@@ -21,6 +21,8 @@ public class TestRunClient {
         TestPage testPage = new TestPage(testPageFile);
         TestRunServiceServiceLocator locator = new TestRunServiceServiceLocator();
         TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
+//        ((Stub) service).setHeader(new SOAPHeaderElement("username", username));
+//        ((Stub) service).setHeader(new SOAPHeaderElement("password", password));
         return service.runTests(testPage);
     }
 

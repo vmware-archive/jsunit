@@ -28,7 +28,7 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         return new JsUnitAggregateServer(configuration, mockHitter);
     }
 
-    private void createMockHitter() {
+    protected void createMockHitter() {
         mockHitter = new MockRemoteServerHitter();
         mockHitter.urlToDocument.put(
                 FunctionalTestAggregateConfigurationSource.REMOTE_SERVER_URL_1 + "/config",

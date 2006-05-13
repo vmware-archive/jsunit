@@ -24,8 +24,12 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
     }
 
     public Browser(String fullFileName, int id) {
-        this.fullFileName = fullFileName;
         this.id = id;
+        setFullFileName(fullFileName);
+    }
+
+    public void setFullFileName(String fullFileName) {
+        this.fullFileName = fullFileName;
         List<String> list = StringUtility.listFromSemiColonDelimitedString(fullFileName);
         this.startCommand = list.size() >= 1 ? list.get(0) : null;
         this.killCommand = list.size() >= 2 ? list.get(1) : null;
@@ -48,6 +52,10 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public boolean hasId(int anId) {

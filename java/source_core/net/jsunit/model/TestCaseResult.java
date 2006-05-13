@@ -47,6 +47,10 @@ public class TestCaseResult extends AbstractResult {
         return time;
     }
 
+    public void setTime(double time) {
+        this.time = time;
+    }
+
     public void setTimeTaken(double time) {
         this.time = time;
     }

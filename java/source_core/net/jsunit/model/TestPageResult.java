@@ -3,6 +3,7 @@ package net.jsunit.model;
 import org.jdom.Element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class TestPageResult extends AbstractResult {
@@ -35,6 +36,10 @@ public class TestPageResult extends AbstractResult {
 
     public TestCaseResult[] getTestCaseResults() {
         return testCaseResults.toArray(new TestCaseResult[testCaseResults.size()]);
+    }
+
+    public void setTestCaseResults(TestCaseResult[] results) {
+        testCaseResults = Arrays.asList(results);
     }
 
     protected List<? extends Result> getChildren() {
