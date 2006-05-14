@@ -17,6 +17,7 @@ public class ClientTestSuite extends ActiveTestSuite {
     private List<RemoteTestRunTest> tests = new ArrayList<RemoteTestRunTest>();
 
     public ClientTestSuite(String serviceURL, File testPage) {
+        super("JsUnit client suite");
         this.testPage = testPage;
         client = new TestRunClient(serviceURL);
     }
@@ -44,9 +45,14 @@ public class ClientTestSuite extends ActiveTestSuite {
     public void addBrowser(PlatformType platformType, BrowserType browserType) {
         BrowserSpecification spec = new BrowserSpecification(platformType, browserType);
         RemoteTestRunTest jUnitTest = new RemoteTestRunTest(spec);
-        client.addBrowserSpec(spec);
         addTest(jUnitTest);
-        tests.add(jUnitTest);
+        client.addBrowserSpec(spec);
+    }
+
+    private void addTest(RemoteTestRunTest test) {
+        super.addTest(test);
+        tests.add(test);
+        setName("JsUnit client suite (" + tests.size() + " browsers)");
     }
 
 }
