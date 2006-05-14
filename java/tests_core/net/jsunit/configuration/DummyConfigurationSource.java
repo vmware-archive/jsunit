@@ -1,12 +1,14 @@
 package net.jsunit.configuration;
 
+import net.jsunit.PlatformType;
+
 public class DummyConfigurationSource implements ConfigurationSource {
 
     public static final String DUMMY_URL = "http://www.example.com:1234/jsunit/runner?autoRun=true&submitResults=true";
     public static final String REMOTE_URL_1 = "http://my.machine.com:8080/jsunit";
     public static final String REMOTE_URL_2 = "http://your.machine.com:9090/jsunit";
     public static final String REMOTE_URL_3 = "http://his.machine.com:7070/jsunit";
-    public static final String BROWSER_FILE_NAME = "mybrowser.exe";
+    public static final String BROWSER_FILE_NAME = "iexplore.exe";
     private boolean needs3rdRemoteMachineURL;
     public static final String PORT = "1234";
 
@@ -35,7 +37,7 @@ public class DummyConfigurationSource implements ConfigurationSource {
     }
 
     public String osString() {
-        return "";
+        return PlatformType.WINDOWS.getDisplayName();
     }
 
     public String ipAddress() {

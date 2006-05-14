@@ -1,6 +1,7 @@
 package net.jsunit.model;
 
 import net.jsunit.PlatformType;
+import net.jsunit.configuration.RemoteConfiguration;
 
 public class BrowserSpecification {
     private PlatformType platformType;
@@ -27,6 +28,14 @@ public class BrowserSpecification {
         return browserResult.hasBrowserType(browserType);
     }
 
+    public boolean matches(RemoteConfiguration remoteConfiguration) {
+        return remoteConfiguration.hasPlatformType(platformType);
+    }
+
+    public boolean matches(Browser browser) {
+        return browser._getType() == browserType;
+    }
+
     public String getBrowserType() {
         return browserType.name();
     }
@@ -50,4 +59,5 @@ public class BrowserSpecification {
     public void setVersion(String version) {
         this.version = version;
     }
+
 }

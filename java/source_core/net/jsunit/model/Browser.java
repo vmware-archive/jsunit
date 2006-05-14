@@ -132,4 +132,8 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
     public int compareTo(Browser other) {
         return new Integer(getId()).compareTo(other.getId());
     }
+
+    public String toString() {
+        return getFullFileName() + " (" + id + ")";
+    }
 }

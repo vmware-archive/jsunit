@@ -72,6 +72,7 @@
         <parameter name="typeMappingVersion" value="1.2"/>
         <operation name="runTests" qname="operNS:runTests" xmlns:operNS="https://server.jsunit.net/services" returnQName="runTestsReturn" returnType="rtns:DistributedTestRunResult" xmlns:rtns="https://server.jsunit.net/model" soapAction="" >
           <parameter qname="in0" type="tns:TestPage" xmlns:tns="https://server.jsunit.net/model"/>
+          <parameter qname="in1" type="tns:ArrayOf_tns2_BrowserSpecification" xmlns:tns="https://server.jsunit.net/services"/>
         </operation>
         <parameter name="allowedMethods" value="runTests"/>
 
@@ -147,6 +148,13 @@
         />
         <arrayMapping
           xmlns:ns="https://server.jsunit.net/services"
+          qname="ns:ArrayOf_tns2_BrowserSpecification"
+          type="java:net.jsunit.model.BrowserSpecification[]"
+          innerType="cmp-ns:BrowserSpecification" xmlns:cmp-ns="https://server.jsunit.net/model"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        />
+        <arrayMapping
+          xmlns:ns="https://server.jsunit.net/services"
           qname="ns:ArrayOf_tns2_TestPageResult"
           type="java:net.jsunit.model.TestPageResult[]"
           innerType="cmp-ns:TestPageResult" xmlns:cmp-ns="https://server.jsunit.net/model"
@@ -182,6 +190,14 @@
           innerType="cmp-ns:BrowserResult" xmlns:cmp-ns="https://server.jsunit.net/model"
           encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
         />
-    </service>    
+        <typeMapping
+          xmlns:ns="https://server.jsunit.net/model"
+          qname="ns:BrowserSpecification"
+          type="java:net.jsunit.model.BrowserSpecification"
+          serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+          deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+          encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"
+        />
+    </service>
 
 </deployment>

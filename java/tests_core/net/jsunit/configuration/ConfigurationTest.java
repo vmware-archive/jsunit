@@ -2,7 +2,10 @@ package net.jsunit.configuration;
 
 import junit.framework.TestCase;
 import net.jsunit.StubConfigurationSource;
+import net.jsunit.PlatformType;
 import net.jsunit.model.Browser;
+import net.jsunit.model.BrowserType;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
@@ -15,8 +18,8 @@ public class ConfigurationTest extends TestCase {
     public void testFull() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
         List<Browser> expectedBrowsers = new ArrayList<Browser>();
-        expectedBrowsers.add(new Browser("browser1.exe", 0));
-        expectedBrowsers.add(new Browser("browser2.exe", 1));
+        expectedBrowsers.add(new Browser("iexplore.exe", 0));
+        expectedBrowsers.add(new Browser("opera.exe", 1));
         assertEquals(expectedBrowsers, configuration.getBrowsers());
         assertEquals(new File("logs" + File.separator + "directory"), configuration.getLogsDirectory());
         assertEquals(1234, configuration.getPort());
@@ -113,8 +116,8 @@ public class ConfigurationTest extends TestCase {
                 "<ipAddress>" + FullValidForBothConfigurationSource.IP_ADDRESS + "</ipAddress>" +
                 "<hostname>" + FullValidForBothConfigurationSource.HOSTNAME + "</hostname>" +
                 "<browserFileNames>" +
-                "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
-                "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
+                "<browserFileName id=\"0\">iexplore.exe</browserFileName>" +
+                "<browserFileName id=\"1\">opera.exe</browserFileName>" +
                 "</browserFileNames>" +
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
                 "<description>This is the best server ever</description>" +
@@ -137,8 +140,8 @@ public class ConfigurationTest extends TestCase {
                 "<ipAddress>" + FullValidForBothConfigurationSource.IP_ADDRESS + "</ipAddress>" +
                 "<hostname>" + FullValidForBothConfigurationSource.HOSTNAME + "</hostname>" +
                 "<browserFileNames>" +
-                "<browserFileName id=\"0\">browser1.exe</browserFileName>" +
-                "<browserFileName id=\"1\">browser2.exe</browserFileName>" +
+                "<browserFileName id=\"0\">iexplore.exe</browserFileName>" +
+                "<browserFileName id=\"1\">opera.exe</browserFileName>" +
                 "</browserFileNames>" +
                 "<closeBrowsersAfterTestRuns>true</closeBrowsersAfterTestRuns>" +
                 "<description>This is the best server ever</description>" +
@@ -179,8 +182,8 @@ public class ConfigurationTest extends TestCase {
 
     public void testGetBrowserById() throws Exception {
         Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
-        assertEquals(new Browser("browser1.exe", 0), configuration.getBrowserById(0));
-        assertEquals(new Browser("browser2.exe", 1), configuration.getBrowserById(1));
+        assertEquals(new Browser("iexplore.exe", 0), configuration.getBrowserById(0));
+        assertEquals(new Browser("opera.exe", 1), configuration.getBrowserById(1));
         assertNull(configuration.getBrowserById(900));
     }
 
@@ -192,7 +195,7 @@ public class ConfigurationTest extends TestCase {
         int index = 0;
 
         assertEquals("-browserFileNames", arguments[index++]);
-        assertEquals("browser1.exe,browser2.exe", arguments[index++]);
+        assertEquals("iexplore.exe,opera.exe", arguments[index++]);
 
         assertEquals("-closeBrowsersAfterTestRuns", arguments[index++]);
         assertEquals("true", arguments[index++]);
@@ -229,9 +232,9 @@ public class ConfigurationTest extends TestCase {
         Configuration configuration = new Configuration(new DuplicatesConfigurationSource());
         List<Browser> browsers = configuration.getBrowsers();
         assertEquals(3, browsers.size());
-        assertEquals(new Browser("browser1.exe", 0), browsers.get(0));
-        assertEquals(new Browser("browser2.exe", 1), browsers.get(1));
-        assertEquals(new Browser("browser3.exe", 2), browsers.get(2));
+        assertEquals(new Browser("xbrowser.exe", 2), browsers.get(2));
+        assertEquals(new Browser("iexplore.exe", 0), browsers.get(0));
+        assertEquals(new Browser("opera.exe", 1), browsers.get(1));
 
         List<URL> remoteMachineURLs = configuration.getRemoteMachineURLs();
         assertEquals(4, remoteMachineURLs.size());
@@ -275,6 +278,19 @@ public class ConfigurationTest extends TestCase {
         assertEquals("http://www.exampleC.com/jsunit", remoteMachineURLs.get(2).toString());
     }
 
+    public void testHasPlatformType() throws Exception {
+        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
+        assertTrue(configuration.hasPlatformType(PlatformType.WINDOWS));
+        assertFalse(configuration.hasPlatformType(PlatformType.LINUX));
+    }
+
+    public void testGetBrowserOfTypeAndVersion() throws Exception {
+        Configuration configuration = new Configuration(new FullValidForBothConfigurationSource());
+        assertEquals(new Browser("iexplore.exe", 0), configuration.getBrowserMatching(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER)));
+        assertEquals(new Browser("opera.exe", 1), configuration.getBrowserMatching(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.OPERA)));
+        assertNull(configuration.getBrowserMatching(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.FIREFOX)));
+    }
+
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
         public static final String IP_ADDRESS = "123.45.67.890";
         public static final String HOSTNAME = "server.jsunit.net";
@@ -293,7 +309,7 @@ public class ConfigurationTest extends TestCase {
         }
 
         public String browserFileNames() {
-            return "browser1.exe,browser2.exe";
+            return "iexplore.exe,opera.exe";
         }
 
         public String url() {
@@ -349,7 +365,7 @@ public class ConfigurationTest extends TestCase {
 
     static class DuplicatesConfigurationSource extends StubConfigurationSource {
         public String browserFileNames() {
-            return "browser1.exe,browser2.exe,browser1.exe,browser1.exe,browser3.exe";
+            return "iexplore.exe,opera.exe,iexplore.exe,iexplore.exe,xbrowser.exe";
         }
 
         public String remoteMachineURLs() {

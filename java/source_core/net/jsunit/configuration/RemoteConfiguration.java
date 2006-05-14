@@ -13,4 +13,5 @@ public class RemoteConfiguration extends Configuration {
     public URL getRemoteURL() {
         return remoteURL;
     }
+
 }

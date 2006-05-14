@@ -47,7 +47,7 @@ public class JsUnitStandardServerTest extends TestCase {
         server.launchBrowserTestRun(new BrowserLaunchSpecification(new Browser(DummyConfigurationSource.BROWSER_FILE_NAME, 0)));
         assertTrue(listener.browserTestRunStartedCalled);
         assertEquals(2, starter.commandPassed.length);
-        assertEquals("mybrowser.exe", starter.commandPassed[0]);
+        assertEquals("iexplore.exe", starter.commandPassed[0]);
         assertEquals(DummyConfigurationSource.DUMMY_URL + "&browserId=0", starter.commandPassed[1]);
         assertFalse(listener.testRunFinishedCalled);
         server.accept(new DummyBrowserResult(true, 0, 0));
@@ -66,8 +66,8 @@ public class JsUnitStandardServerTest extends TestCase {
         assertTrue(listener.browserTestRunFinishedCalled);
         assertTrue(listener.result.failedToLaunch());
         assertFalse(server.isWaitingForBrowser(browser));
-        assertEquals(new Browser("mybrowser.exe", 0), listener.browser);
-        assertEquals("mybrowser.exe", listener.result.getBrowser().getStartCommand());
+        assertEquals(new Browser("iexplore.exe", 0), listener.browser);
+        assertEquals("iexplore.exe", listener.result.getBrowser().getStartCommand());
         assertSame(listener.result, server.lastResult());
 
         server.setProcessStarter(new MockProcessStarter());

@@ -7,6 +7,8 @@ import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.model.DummyTestPageWriter;
 import net.jsunit.model.Result;
+import net.jsunit.model.BrowserSpecification;
+import net.jsunit.model.BrowserType;
 import net.jsunit.services.User;
 import net.jsunit.services.UserRepository;
 import org.jdom.Document;
@@ -37,10 +39,37 @@ public class TestRunServiceClientTest extends TestCase {
             }
         };
         mockHitter = new MockRemoteServerHitter();
-        Document remoteConfigurationDocument = new Configuration(new DummyConfigurationSource()).asXmlDocument(ServerType.STANDARD);
-        mockHitter.urlToDocument.put("http://localhost:1/jsunit/config", remoteConfigurationDocument);
-        mockHitter.urlToDocument.put("http://localhost:2/jsunit/config", remoteConfigurationDocument);
-        mockHitter.urlToDocument.put("http://localhost:3/jsunit/config", remoteConfigurationDocument);
+
+        Configuration configuration1 = new Configuration(new DummyConfigurationSource() {
+            public String osString() {
+                return PlatformType.WINDOWS.getDisplayName();
+            }
+
+            public String browserFileNames() {
+                return "iexplore.exe";
+            }
+        });
+        Configuration configuration2 = new Configuration(new DummyConfigurationSource() {
+            public String osString() {
+                return PlatformType.LINUX.getDisplayName();
+            }
+
+            public String browserFileNames() {
+                return "firefox.exe";
+            }
+        });
+        Configuration configuration3 = new Configuration(new DummyConfigurationSource() {
+            public String osString() {
+                return PlatformType.MACINTOSH.getDisplayName();
+            }
+
+            public String browserFileNames() {
+                return "opera.exe";
+            }
+        });
+        mockHitter.urlToDocument.put("http://localhost:1/jsunit/config", configuration1.asXmlDocument(ServerType.STANDARD));
+        mockHitter.urlToDocument.put("http://localhost:2/jsunit/config", configuration2.asXmlDocument(ServerType.STANDARD));
+        mockHitter.urlToDocument.put("http://localhost:3/jsunit/config", configuration3.asXmlDocument(ServerType.STANDARD));
         server = new JsUnitAggregateServer(new Configuration(source), mockHitter);
         server.setUserRepository(new UserRepository() {
             public User findUser(String username, String password) {
@@ -68,6 +97,9 @@ public class TestRunServiceClientTest extends TestCase {
     public void testSimple() throws Exception {
         mockHitter.urlsPassed.clear();
         TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
+        client.addBrowserSpec(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER));
+        client.addBrowserSpec(new BrowserSpecification(PlatformType.LINUX, BrowserType.FIREFOX));
+        client.addBrowserSpec(new BrowserSpecification(PlatformType.MACINTOSH, BrowserType.OPERA));
         File page = new File(directory, TEST_PAGE_FILE_NAME);
         Result result = client.send(page);
         assertEquals(3, mockHitter.urlsPassed.size());

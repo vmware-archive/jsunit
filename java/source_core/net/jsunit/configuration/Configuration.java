@@ -3,6 +3,7 @@ package net.jsunit.configuration;
 import net.jsunit.PlatformType;
 import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.utility.FileUtility;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -229,6 +230,18 @@ public class Configuration implements BrowserSource {
 
     public String getSecretKey() {
         return secretKey;
+    }
+
+    public boolean hasPlatformType(PlatformType platformType) {
+        return platformType == getPlatformType();
+    }
+
+    public Browser getBrowserMatching(BrowserSpecification spec) {
+        for (Browser browser : browsers) {
+            if (spec.matches(browser))
+                return browser;
+        }
+        return null;
     }
 
 }

@@ -40,18 +40,26 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         );
     }
 
-    private Configuration remoteServer1Configuration() {
+    protected Configuration remoteServer1Configuration() {
         return new Configuration(new StubConfigurationSource() {
+            public String osString() {
+                return "Windows XP";
+            }
+
             public String browserFileNames() {
-                return "browser0.exe,browser1.exe";
+                return "iexplore.exe,opera.exe";
             }
         });
     }
 
-    private Configuration remoteServer2Configuration() {
+    protected Configuration remoteServer2Configuration() {
         return new Configuration(new StubConfigurationSource() {
+            public String osString() {
+                return "Red Hat Linux SE 4";
+            }
+
             public String browserFileNames() {
-                return "browser2.exe,browser3.exe";
+                return "firefox.exe,xbrowser.exe";
             }
         });
     }

@@ -4,7 +4,7 @@ import com.opensymphony.webwork.ServletActionContext;
 import com.opensymphony.xwork.Action;
 import com.opensymphony.xwork.ActionInvocation;
 import com.opensymphony.xwork.interceptor.Interceptor;
-import net.jsunit.InvalidRemoteMachineBrowserCombinationException;
+import net.jsunit.InvalidBrowserSpecificationException;
 import net.jsunit.RemoteRunSpecification;
 import net.jsunit.action.RemoteRunSpecificationAware;
 import net.jsunit.configuration.RemoteConfiguration;
@@ -28,8 +28,8 @@ public class RemoteRunSpecificationSelectionInterceptor implements Interceptor {
         RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
         if (requestedUrlBrowserCombinations != null && requestedUrlBrowserCombinations.length > 0) {
             try {
-                result = builder.fromIdStringPairs(requestedUrlBrowserCombinations, aware);
-            } catch (InvalidRemoteMachineBrowserCombinationException e) {
+                result = builder.forIdStringPairs(requestedUrlBrowserCombinations, aware);
+            } catch (InvalidBrowserSpecificationException e) {
                 aware.setInvalidRemoteMachineUrlBrowserCombination(e.createInvalidRemoteRunSpecification());
                 return Action.ERROR;
             }

@@ -1,13 +1,12 @@
 package net.jsunit.services;
 
 import junit.framework.TestCase;
-import net.jsunit.AuthenticationException;
-import net.jsunit.JsUnitAggregateServer;
-import net.jsunit.MockRemoteServerHitter;
+import net.jsunit.*;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.model.BrowserSpecification;
+import net.jsunit.model.BrowserType;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestPage;
 
@@ -18,26 +17,45 @@ import javax.xml.rpc.server.ServletEndpointContext;
 import java.net.URL;
 import java.security.Principal;
 import java.util.Arrays;
+import java.rmi.RemoteException;
 
 public class TestRunServiceSoapBindingImplTest extends TestCase {
     private TestRunServiceSoapBindingImpl binding;
-    private MockRemoteServerHitter hitter;
     private JsUnitAggregateServer aggregateServer;
+    private MockRemoteServerHitter hitter;
 
     protected void setUp() throws Exception {
         super.setUp();
         binding = new TestRunServiceSoapBindingImpl();
-        hitter = new MockRemoteServerHitter();
         Configuration aggregateServerConfiguration = new Configuration(new DummyConfigurationSource() {
             public String remoteMachineURLs() {
                 return "http://localhost:1,http://localhost:2";
             }
         });
+        hitter = new MockRemoteServerHitter();
         aggregateServer = new JsUnitAggregateServer(aggregateServerConfiguration, hitter);
         aggregateServer.setCachedRemoteConfigurations(Arrays.asList(new RemoteConfiguration[]{
-                new RemoteConfiguration(new URL("http://localhost:1/jsunit"), new DummyConfigurationSource()),
-                new RemoteConfiguration(new URL("http://localhost:2/jsunit"), new DummyConfigurationSource()),
+                new RemoteConfiguration(new URL("http://localhost:1/jsunit"), new DummyConfigurationSource() {
+                    public String osString() {
+                        return PlatformType.WINDOWS.getDisplayName();
+                    }
+
+                    public String browserFileNames() {
+                        return "iexplore.exe,netscape6.exe";
+                    }
+
+                }),
+                new RemoteConfiguration(new URL("http://localhost:2/jsunit"), new DummyConfigurationSource() {
+                    public String osString() {
+                        return PlatformType.LINUX.getDisplayName();
+                    }
+
+                    public String browserFileNames() {
+                        return "opera9";
+                    }
+                })
         }));
+
         aggregateServer.setUserRepository(new MockUserRepository());
     }
 
@@ -48,11 +66,31 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
         assertEquals(aggregateServer, binding.getServer());
     }
 
-    public void testSimple() throws Exception {
+    public void testRunTests() throws Exception {
         binding.init(createServletEndpointContext("validUsername", "validPassword"));
-        DistributedTestRunResult result = binding.runTests(new TestPage(), new BrowserSpecification[]{});
-        assertFalse(result.wasSuccessful());
-        assertEquals(2, result._getTestRunResults().size());
+        BrowserSpecification[] browserSpecs = new BrowserSpecification[]{
+                new BrowserSpecification(PlatformType.LINUX, BrowserType.OPERA),
+                new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER),
+                new BrowserSpecification(PlatformType.WINDOWS, BrowserType.NETSCAPE)
+        };
+        DistributedTestRunResult distributedResult = binding.runTests(new TestPage(), browserSpecs);
+        assertFalse(distributedResult.wasSuccessful());
+        assertEquals(2, distributedResult._getTestRunResults().size());
+        assertEquals(2, hitter.urlsPassed.size());
+    }
+
+    public void testRunTestsWithInvalidBrowserSpecification() throws Exception {
+        binding.init(createServletEndpointContext("validUsername", "validPassword"));
+        BrowserSpecification[] browserSpecs = new BrowserSpecification[]{
+                new BrowserSpecification(PlatformType.LINUX, BrowserType.NETSCAPE),
+                new BrowserSpecification(PlatformType.WINDOWS, BrowserType.FIREFOX)
+        };
+        try {
+            binding.runTests(new TestPage(), browserSpecs);
+            fail();
+        } catch (RemoteException e) {
+            assertTrue(e.getCause() instanceof InvalidBrowserSpecificationException);
+        }
     }
 
     public void testInvalidUsernamePassword() throws Exception {

@@ -1,9 +1,10 @@
 package net.jsunit.server;
 
-import net.jsunit.InvalidRemoteMachineBrowserCombinationException;
+import net.jsunit.InvalidBrowserSpecificationException;
 import net.jsunit.RemoteRunSpecification;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.model.Browser;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.RemoteServerConfigurationSource;
 
 import java.net.URL;
@@ -24,8 +25,8 @@ public class RemoteRunSpecificationBuilder {
         return result;
     }
 
-    public List<RemoteRunSpecification> fromIdStringPairs(String[] pairs, RemoteServerConfigurationSource source)
-            throws InvalidRemoteMachineBrowserCombinationException {
+    public List<RemoteRunSpecification> forIdStringPairs(String[] pairs, RemoteServerConfigurationSource source)
+            throws InvalidBrowserSpecificationException {
         RemoteRunSpecificationMerger merger = new RemoteRunSpecificationMerger();
         for (String pair : pairs) {
             String[] ids = pair.split("_");
@@ -41,21 +42,21 @@ public class RemoteRunSpecificationBuilder {
             try {
                 configuration = source.getRemoteMachineConfigurationById(urlId);
             } catch (Exception e) {
-                throw new InvalidRemoteMachineBrowserCombinationException(ids[0], ids[1]);
+                throw new InvalidBrowserSpecificationException(ids[0], ids[1]);
             }
             Browser browser = configuration.getBrowserById(browserId);
             if (browser == null)
-                throw new InvalidRemoteMachineBrowserCombinationException(ids[0], ids[1]);
+                throw new InvalidBrowserSpecificationException(ids[0], ids[1]);
             merger.add(configuration.getRemoteURL(), browser);
         }
         return merger.getResult();
     }
 
-    private List<RemoteRunSpecification> throwInvalidRemoteMachineBrowserCombinationException(String[] ids, String pair) throws InvalidRemoteMachineBrowserCombinationException {
+    private List<RemoteRunSpecification> throwInvalidRemoteMachineBrowserCombinationException(String[] ids, String pair) throws InvalidBrowserSpecificationException {
         if (ids.length == 2)
-            throw new InvalidRemoteMachineBrowserCombinationException(ids[0], ids[1]);
+            throw new InvalidBrowserSpecificationException(ids[0], ids[1]);
         else
-            throw new InvalidRemoteMachineBrowserCombinationException(pair);
+            throw new InvalidBrowserSpecificationException(pair);
     }
 
     public List<RemoteRunSpecification> forAllBrowsersFromRemoteURLs(List<URL> remoteMachineURLs) {
@@ -67,6 +68,28 @@ public class RemoteRunSpecificationBuilder {
 
     public List<RemoteRunSpecification> forAllBrowsersFromRemoteURLs(URL... remoteMachineURLs) {
         return forAllBrowsersFromRemoteURLs(Arrays.asList(remoteMachineURLs));
+    }
+
+    public List<RemoteRunSpecification> forBrowserSpecifications(List<BrowserSpecification> browserSpecs, List<RemoteConfiguration> allRemoteMachineConfigurations) throws InvalidBrowserSpecificationException {
+        RemoteRunSpecificationMerger merger = new RemoteRunSpecificationMerger();
+        for (BrowserSpecification specification : browserSpecs) {
+            RemoteConfiguration remoteConfiguration = findRemoteConfigurationFor_in(specification, allRemoteMachineConfigurations);
+            if (remoteConfiguration == null)
+                throw new InvalidBrowserSpecificationException(specification.getBrowserType(), specification.getBrowserType());
+            Browser browser = remoteConfiguration.getBrowserMatching(specification);
+            if (browser == null)
+                throw new InvalidBrowserSpecificationException(specification.getBrowserType(), specification.getBrowserType());
+            merger.add(remoteConfiguration.getRemoteURL(), browser);
+        }
+        return merger.getResult();
+    }
+    
+    private RemoteConfiguration findRemoteConfigurationFor_in(BrowserSpecification specification, List<RemoteConfiguration> remoteConfigurations) {
+        for (RemoteConfiguration remoteConfiguration : remoteConfigurations) {
+            if (specification.matches(remoteConfiguration))
+                return remoteConfiguration;
+        }
+        return null;
     }
 
     static class RemoteRunSpecificationMerger {

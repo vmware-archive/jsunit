@@ -14,6 +14,7 @@ import javax.xml.rpc.server.ServiceLifecycle;
 import javax.xml.rpc.server.ServletEndpointContext;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Arrays;
 
 public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLifecycle {
     private JsUnitAggregateServer server;
@@ -27,8 +28,12 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
         UploadedTestPage uploadedTestPage = new UploadedTestPageFactory().fromTestPage(testPage);
         uploadedTestPage.write();
         RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
-        List<RemoteRunSpecification> specs =
-                builder.forAllBrowsersFromRemoteConfigurations(server.getAllRemoteMachineConfigurations());
+        List<RemoteRunSpecification> specs = null;
+        try {
+            specs = builder.forBrowserSpecifications(Arrays.asList(browserSpecs), server.getAllRemoteMachineConfigurations());
+        } catch (InvalidBrowserSpecificationException e) {
+            throw new RemoteException("Invalid browser specification", e);
+        }
         DistributedTestRunManager manager = new DistributedTestRunManager(
                 server.getHitter(), server.getConfiguration(), uploadedTestPage.getURL(server.getConfiguration()), specs
         );
