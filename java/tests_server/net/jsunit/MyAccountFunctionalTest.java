@@ -1,6 +1,6 @@
 package net.jsunit;
 
-public class CreateAccountFunctionalTest extends AggregateServerFunctionalTestCase {
+public class MyAccountFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();

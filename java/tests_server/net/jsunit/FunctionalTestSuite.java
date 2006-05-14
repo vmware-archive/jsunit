@@ -28,7 +28,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(ServerDefaultPageFunctionalTest.class);
         result.addTestSuite(ServerStatusFunctionalTest.class);
         result.addTestSuite(SerialDistributedTestTest.class);
-        result.addTestSuite(CreateAccountFunctionalTest.class);
+        result.addTestSuite(MyAccountFunctionalTest.class);
         result.addTestSuite(SpecificBrowserDistributedTestTest.class);
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
         result.addTestSuite(TestRunServiceClientTest.class);

@@ -166,14 +166,14 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     protected List<String> servletNames() {
         List<String> names = super.servletNames();
         names.add("adminpage");
-        names.add("createaccountpage");
+        names.add("captchaimage");
         names.add("fragmentrunnerpage");
         names.add("helppage");
+        names.add("latestversion");
         names.add("logdisplayerpage");
+        names.add("myaccountpage");
         names.add("uploadrunnerpage");
         names.add("urlrunnerpage");
-        names.add("captchaimage");
-        names.add("latestversion");
         return names;
     }
 

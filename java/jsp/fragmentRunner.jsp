@@ -83,8 +83,8 @@
                         <td colspan="5">
                             You can ask this JsUnit Server to run JsUnit on fragments of code using
                             the <i>fragment runner</i> service.
-                            You may enter any kind of JavaScript - standalone statements and
-                            assertions or real Test Functions. For example, you could enter:
+                            You may enter any kind of JavaScript - a sequence of standalone statements/ assertions or
+                            real Test Functions. For example, you could enter:
                         </td>
                     </tr>
                     <tr>

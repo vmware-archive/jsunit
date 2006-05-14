@@ -151,9 +151,9 @@
             </result>
         </action>
 
-        <action name="createaccountpage" class="net.jsunit.action.PageAction">
+        <action name="myaccountpage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
-                <param name="location">java/jsp/createAccount.jsp</param>
+                <param name="location">java/jsp/myAccount.jsp</param>
             </result>
         </action>
 

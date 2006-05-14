@@ -19,7 +19,7 @@
         <jsp:param name="selectedPage" value="help"/>
     </jsp:include>
     <tr>
-        <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;">
+        <td colspan="16" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;">
             <table>
                 <tr>
                     <td colspan="3">
