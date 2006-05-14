@@ -104,7 +104,7 @@
             <interceptor-ref name="server"/>
         </action>
 
-        <action name="admin" class="net.jsunit.action.AdminAction">
+        <action name="adminPage" class="net.jsunit.action.AdminAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/admin.jsp</param>
             </result>

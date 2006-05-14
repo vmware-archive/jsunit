@@ -136,6 +136,10 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         this.userRepository = userRepository;
     }
 
+    public PlatformType getPlatformType() {
+        return PlatformType.resolve();
+    }
+
     static class RemoteConfigurationCacheUpdater extends Thread {
         private static final long THREE_MINUTE_MILLIS = 1000 * 60 * 3;
 
@@ -161,7 +165,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
 
     protected List<String> servletNames() {
         List<String> names = super.servletNames();
-        names.add("admin");
+        names.add("adminPage");
         names.add("configurationPage");
         names.add("fragmentRunnerPage");
         names.add("helpPage");

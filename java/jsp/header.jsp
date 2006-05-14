@@ -1,5 +1,4 @@
 <%@ page import="net.jsunit.JsUnitAggregateServer" %>
-<%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.PlatformType" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.configuration.RemoteConfiguration" %>
@@ -7,8 +6,8 @@
 <%@ page import="net.jsunit.utility.StringUtility" %>
 <%@ page import="net.jsunit.utility.SystemUtility" %>
 <%
-    JsUnitServer server = ServerRegistry.getServer();
-    PlatformType platformType = PlatformType.resolve();
+    JsUnitAggregateServer server = ServerRegistry.getAggregateServer();
+    PlatformType platformType = server.getPlatformType();
 %>
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
 <tr>

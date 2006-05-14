@@ -1,12 +1,9 @@
 <%@ page import="net.jsunit.JsUnitAggregateServer" %>
-<%@ page import="net.jsunit.JsUnitServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.configuration.RemoteConfiguration" %>
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="java.util.List" %>
-<%
-    JsUnitServer server = ServerRegistry.getServer();
-%>
+<%JsUnitAggregateServer server = ServerRegistry.getAggregateServer();%>
 <table cellpadding="0" cellspacing="2">
     <tr>
         <%

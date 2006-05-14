@@ -12,4 +12,8 @@ public class ServerRegistry {
         return server;
     }
 
+    public static JsUnitAggregateServer getAggregateServer() {
+        return (JsUnitAggregateServer) server;
+    }
+
 }

@@ -1,9 +1,9 @@
-<%@ page import="net.jsunit.JsUnitServer" %>
+<%@ page import="net.jsunit.JsUnitAggregateServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.captcha.CaptchaSpec" %>
 <%@ page import="java.net.URLEncoder" %>
 <%
-    JsUnitServer server = ServerRegistry.getServer();
+    JsUnitAggregateServer server = ServerRegistry.getAggregateServer();
     CaptchaSpec captchaSpec = CaptchaSpec.create(server.getConfiguration().getSecretKey());
     String key = captchaSpec.getEncryptedKey();
 %>

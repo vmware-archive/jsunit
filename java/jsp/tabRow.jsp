@@ -1,6 +1,3 @@
-<%@ page import="net.jsunit.JsUnitServer" %>
-<%@ page import="net.jsunit.ServerRegistry" %>
-<%JsUnitServer server = ServerRegistry.getServer();%>
 <%String selectedPage = request.getParameter("selectedPage");%>
 <tr>
     <td class="tabHeaderSeparator">&nbsp;</td>

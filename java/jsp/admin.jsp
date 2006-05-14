@@ -1,10 +1,7 @@
-<%@ page import="net.jsunit.JsUnitServer" %>
+<%@ page import="net.jsunit.JsUnitAggregateServer" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
-<%@ page import="net.jsunit.configuration.Configuration" %>
-<%@ page import="net.jsunit.configuration.ConfigurationProperty" %>
 <%@ page import="java.text.SimpleDateFormat" %>
-<%JsUnitServer server = ServerRegistry.getServer();%>
-<%Configuration configuration = server.getConfiguration();%>
+<%JsUnitAggregateServer server = ServerRegistry.getAggregateServer();%>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,7 +24,7 @@
         }
 
         function updateTestRunCountDiv(testRunCount) {
-            var newHTML = "<font size='-2'>Test Run Count: " + testRunCount + "</font>";
+            var newHTML = "Test Run Count: " + testRunCount;
             document.getElementById("testRunCountDiv").innerHTML = newHTML;
         }
 
@@ -41,71 +38,39 @@
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
-<body onload="pageLoaded()">
+<body onload="pageLoaded()" bgcolor="#eeeeee">
 <jsp:include page="header.jsp"/>
+<table width="100%">
+    <tr>
+        <td valign="top" width="100%" nowrap>
+            <h4>
+                Server Status
+            </h4>
+            Up since <%=new SimpleDateFormat().format(server.getStartDate())%> - <div id="testRunCountDiv"></div>
+        </td>
+    </tr>
+    <tr>
+        <td>&nbsp;</td>
+    </tr>
+    <tr>
+        <td>
+            <div style="width:50;height:10;overflow:scroll;border-style:groove" id="serverStatusDiv">&nbsp;</div>
+        </td>
+    </tr>
+</table>
 <br>
 <table cellpadding="1" cellspacing="1" border="0" width="100%">
     <tr>
-        <td valign="top" width="50%">
+        <td valign="top" width="100%">
             <h4>
-                Server configuration (<a href="/jsunit/config">/config</a>)
+                Server configuration
             </h4>
-            <table border="0">
-                <tr>
-                    <th valign="top" nowrap align="right">Server type:</th>
-                    <td width="10">&nbsp;</td>
-                    <td><%=server.serverType().getDisplayName()%></td>
-                </tr>
-                <%
-                    for (ConfigurationProperty property : configuration.getRequiredAndOptionalConfigurationProperties(server.serverType())) {
-                %>
-                <tr>
-                    <th valign="top" nowrap align="right"><%=property.getDisplayName()%>:</th>
-                    <td width="10">&nbsp;</td>
-                    <td valign="top">
-                        <%
-                            for (String valueString : property.getValueStrings(configuration)) {
-                        %><div><%
-                        if (valueString != null) {
-                            if (property.isURL()) {
-                    %><a href="<%=valueString%>"><%=valueString%></a><%
-                    } else {
-                    %><%=valueString%><%
-                            }
-                        }
-                    %></div><%
-                        }
-                    %>
-                    </td></tr>
-                <%
-                    }
-                %>
-            </table>
+            <jsp:include page="configuration.jsp"/>
         </td>
     </tr>
 </table>
 <br>
 
-<table>
-    <tr>
-        <td>
-            <td valign="top" width="100%" height="200" nowrap>
-                <h4>
-                    Server Status
-                </h4>
-                <h4>
-                    Up since <%=new SimpleDateFormat().format(server.getStartDate())%><br>
-
-                    <div id="testRunCountDiv"></div>
-                    Server log:
-                </h4>
-
-                <div style="width:90%;height:90%;overflow:scroll" id="serverStatusDiv"></div>
-            </td>
-
-        </td>
-    </tr>
-</table>
 
 </body>
 </html>
