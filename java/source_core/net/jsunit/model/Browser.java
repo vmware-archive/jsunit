@@ -99,11 +99,11 @@ public class Browser implements XmlRenderable, Comparable<Browser> {
     }
 
     public boolean conflictsWith(Browser another) {
-        return type.conflictsWith(another._getType());
+        return _getType().conflictsWith(another._getType());
     }
 
     public String getLogoPath() {
-        return type.getLogoPath();
+        return _getType().getLogoPath();
     }
 
     public Element asXml() {

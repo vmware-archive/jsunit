@@ -1,15 +1,13 @@
 package net.jsunit.model;
 
+import net.jsunit.PlatformType;
 import net.jsunit.XmlRenderable;
-import org.jdom.Element;
 import org.jdom.Document;
+import org.jdom.Element;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Arrays;
+import java.util.*;
 
-public class DistributedTestRunResult extends AbstractResult implements XmlRenderable {
+public class DistributedTestRunResult extends AbstractResult implements XmlRenderable, Iterable<TestRunResult> {
 
     public static final String NAME = "distributedTestRunResult";
 
@@ -46,6 +44,18 @@ public class DistributedTestRunResult extends AbstractResult implements XmlRende
 
     public Document asXmlDocument() {
         return new Document(asXml());
+    }
+
+    public Iterator<TestRunResult> iterator() {
+        return _getTestRunResults().iterator();
+    }
+
+    public BrowserResult findBrowserResultMatching(PlatformType platformType, BrowserType browserType) {
+        for (TestRunResult testRunResult : this) {
+            if (testRunResult.hasPlatformType(platformType))
+                return testRunResult.findBrowserResultMatching(browserType);
+        }
+        return null;
     }
 
 }

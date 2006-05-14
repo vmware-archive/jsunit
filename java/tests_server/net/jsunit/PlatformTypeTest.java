@@ -14,7 +14,7 @@ public class PlatformTypeTest extends TestCase {
     public void testAsXml() throws Exception {
         assertEquals(
                 "<platform>" +
-                        "<name>Macintosh</name>" +
+                        "<name>Mac</name>" +
                         "<logoPath>/jsunit/images/logo_mac.gif</logoPath>" +
                         "</platform>",
                 XmlUtility.asString(PlatformType.MACINTOSH.asXml())

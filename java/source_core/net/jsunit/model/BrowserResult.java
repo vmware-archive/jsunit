@@ -8,8 +8,8 @@ import org.jdom.Element;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public class BrowserResult extends AbstractResult implements XmlRenderable {
 
@@ -217,4 +217,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
         }
     }
 
+    public boolean hasBrowserType(BrowserType browserType) {
+        return getBrowser()._getType() == browserType;
+    }
 }

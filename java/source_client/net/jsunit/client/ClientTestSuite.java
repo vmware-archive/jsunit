@@ -1,37 +1,49 @@
 package net.jsunit.client;
 
 import junit.extensions.ActiveTestSuite;
-import junit.framework.Test;
 import junit.framework.TestResult;
-import junit.framework.TestSuite;
+import net.jsunit.PlatformType;
+import net.jsunit.model.BrowserType;
+import net.jsunit.model.DistributedTestRunResult;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientTestSuite extends ActiveTestSuite {
+    private TestRunClient client;
+    private File testPage;
+    private List<RemoteTestRunTest> tests = new ArrayList<RemoteTestRunTest>();
 
-    public static TestSuite forTestPageAndRunnerServiceUrl(final File testPage, final String serviceURL) {
-        TestSuite suite = new ClientTestSuite();
-        TestRunClient testRunClient = new TestRunClient(serviceURL);
-        suite.addTest(new RemoteTestRun());
-        return suite;
+    public ClientTestSuite(String serviceURL, File testPage) {
+        this.testPage = testPage;
+        client = new TestRunClient(serviceURL);
     }
 
-    static class RemoteTestRun implements Test {
-        public int countTestCases() {
-            return 1;
-        }
+    public void run(TestResult testResult) {
+        sendRequest();
+        super.run(testResult);
+    }
 
-        public void run(TestResult jUnitResult) {
-/*
-            try {
-                Result remoteResult = testRunClient.send(testPage);
-                if (!remoteResult.wasSuccessful())
-                    jUnitResult.addFailure(this, new AssertionFailedError(remoteResult.displayString()));
-            } catch (Exception e) {
-                jUnitResult.addError(this, e);
+    private void sendRequest() {
+        new Thread() {
+            public void run() {
+                try {
+                    DistributedTestRunResult distributedResult = client.send(testPage);
+                    for (RemoteTestRunTest test : tests)
+                        test.notifyResult(distributedResult);
+                } catch (Exception e) {
+                    for (RemoteTestRunTest test : tests)
+                        test.notifyError(e);
+                }
             }
-*/
-        }
+        }.start();
+    }
+
+    public void addBrowser(PlatformType platformType, BrowserType browserType) {
+        RemoteTestRunTest jUnitTest = new RemoteTestRunTest(platformType, browserType);
+        addTest(jUnitTest);
+        tests.add(jUnitTest);
     }
 
 }

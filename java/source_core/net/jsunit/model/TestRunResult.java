@@ -6,12 +6,13 @@ import net.jsunit.utility.SystemUtility;
 import org.jdom.Document;
 import org.jdom.Element;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
-public class TestRunResult extends AbstractResult implements XmlRenderable, Comparable<TestRunResult> {
+public class TestRunResult extends AbstractResult implements XmlRenderable, Comparable<TestRunResult>, Iterable<BrowserResult> {
 
     public static final String NAME = "testRunResult";
 
@@ -135,7 +136,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     }
 
     public int compareTo(TestRunResult other) {
-        if (url == null | other.getUrl() == null)
+        if (url == null || other.getUrl() == null)
             return 0;
         return url.compareTo(other.getUrl());
     }
@@ -201,5 +202,20 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
 
     public Document asXmlDocument() {
         return new Document(asXml());
+    }
+
+    public boolean hasPlatformType(PlatformType platformType) {
+        return getOsName() != null && getOsName().indexOf(platformType.getDisplayName()) != -1;
+    }
+
+    public Iterator<BrowserResult> iterator() {
+        return _getBrowserResults().iterator();
+    }
+
+    public BrowserResult findBrowserResultMatching(BrowserType browserType) {
+        for (BrowserResult browserResult : this)
+            if (browserResult.hasBrowserType(browserType))
+                return browserResult;
+        return null;
     }
 }

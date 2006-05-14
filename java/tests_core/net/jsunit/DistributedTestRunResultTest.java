@@ -1,10 +1,7 @@
 package net.jsunit;
 
 import junit.framework.TestCase;
-import net.jsunit.model.BrowserResult;
-import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.ResultType;
-import net.jsunit.model.TestRunResult;
+import net.jsunit.model.*;
 import net.jsunit.utility.XmlUtility;
 
 public class DistributedTestRunResultTest extends TestCase {
@@ -77,16 +74,73 @@ public class DistributedTestRunResultTest extends TestCase {
         );
     }
 
+    public void testFindBrowserResultMatching() throws Exception {
+        DistributedTestRunResult distributedResult = new DistributedTestRunResult();
+
+        TestRunResult result1 = new TestRunResult();
+        result1.setOsName("Windows XP - Intel PIII");
+        result1.addBrowserResult(successResult());
+        distributedResult.addTestRunResult(result1);
+
+        TestRunResult result2 = new TestRunResult();
+        result2.setOsName("Mac OS X - PPC");
+        result2.addBrowserResult(failureResult());
+        result2.addBrowserResult(errorResult());
+        distributedResult.addTestRunResult(result2);
+
+        assertEquals("1", distributedResult.findBrowserResultMatching(PlatformType.WINDOWS, BrowserType.FIREFOX).getId());
+        assertEquals("2", distributedResult.findBrowserResultMatching(PlatformType.MACINTOSH, BrowserType.KONQUEROR).getId());
+        assertEquals("3", distributedResult.findBrowserResultMatching(PlatformType.MACINTOSH, BrowserType.INTERNET_EXPLORER).getId());
+        assertNull(distributedResult.findBrowserResultMatching(PlatformType.LINUX, BrowserType.KONQUEROR));
+        assertNull(distributedResult.findBrowserResultMatching(PlatformType.WINDOWS, BrowserType.NETSCAPE));
+    }
+
     private BrowserResult successResult() {
-        return new BrowserResult();
+        return new BrowserResult() {
+            public Browser getBrowser() {
+                return new Browser() {
+                    public BrowserType _getType() {
+                        return BrowserType.FIREFOX;
+                    }
+                };
+            }
+
+            public String getId() {
+                return "1";
+            }
+        };
     }
 
     private BrowserResult failureResult() {
-        return new DummyBrowserResult(false, 1, 0);
+        return new DummyBrowserResult(false, 1, 0) {
+            public Browser getBrowser() {
+                return new Browser() {
+                    public BrowserType _getType() {
+                        return BrowserType.KONQUEROR;
+                    }
+                };
+            }
+
+            public String getId() {
+                return "2";
+            }
+        };
     }
 
     private BrowserResult errorResult() {
-        return new DummyBrowserResult(false, 0, 1);
+        return new DummyBrowserResult(false, 0, 1) {
+            public Browser getBrowser() {
+                return new Browser() {
+                    public BrowserType _getType() {
+                        return BrowserType.INTERNET_EXPLORER;
+                    }
+                };
+            }
+
+            public String getId() {
+                return "3";
+            }
+        };
     }
 
 }

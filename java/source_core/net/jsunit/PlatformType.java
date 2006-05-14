@@ -11,7 +11,7 @@ public enum PlatformType implements XmlRenderable {
         }
 
     },
-    MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh", "/jsunit/images/logo_mac.gif", "Macintosh") {
+    MACINTOSH(new String[]{"bin/mac/start-firefox.sh"}, "bin/mac/stop-firefox.sh", "/jsunit/images/logo_mac.gif", "Mac") {
         public boolean matchesSystem(String osName) {
             return osName != null && osName.toLowerCase().indexOf("mac") != -1;
         }
