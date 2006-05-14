@@ -13,18 +13,22 @@ import javax.xml.rpc.ServiceException;
 import javax.xml.rpc.server.ServiceLifecycle;
 import javax.xml.rpc.server.ServletEndpointContext;
 import java.rmi.RemoteException;
-import java.util.List;
 import java.util.Arrays;
+import java.util.List;
 
 public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLifecycle {
     private JsUnitAggregateServer server;
     private String username;
     private String password;
+    private String ipAddress;
 
     public DistributedTestRunResult runTests(TestPage testPage, BrowserSpecification[] browserSpecs) throws RemoteException {
+        server.logStatus("Received SOAP request from " + ipAddress);
         User user = server.authenticateUser(username, password);
-        if (user == null)
+        if (user == null) {
+            server.logStatus("Invalid username/password attempt: " + username + "/" + password);
             throw new AuthenticationException();
+        }
         UploadedTestPage uploadedTestPage = new UploadedTestPageFactory().fromTestPage(testPage);
         uploadedTestPage.write();
         RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
@@ -45,6 +49,7 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
         MessageContext messageContext = (MessageContext) ((ServletEndpointContext) context).getMessageContext();
         username = messageContext.getUsername();
         password = messageContext.getPassword();
+        ipAddress = (String) messageContext.getProperty("remoteaddr");
         //TODO: somehow inject the aggregate server - keep it in the context maybe?
         setAggregateServer((JsUnitAggregateServer) ServerRegistry.getServer());
     }
