@@ -32,7 +32,7 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
         UploadedTestPage uploadedTestPage = new UploadedTestPageFactory().fromTestPage(testPage);
         uploadedTestPage.write();
         RemoteRunSpecificationBuilder builder = new RemoteRunSpecificationBuilder();
-        List<RemoteRunSpecification> specs = null;
+        List<RemoteRunSpecification> specs;
         try {
             specs = builder.forBrowserSpecifications(Arrays.asList(browserSpecs), server.getAllRemoteMachineConfigurations());
         } catch (InvalidBrowserSpecificationException e) {
