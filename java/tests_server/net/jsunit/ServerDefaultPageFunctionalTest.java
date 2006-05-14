@@ -12,10 +12,10 @@ public class ServerDefaultPageFunctionalTest extends AggregateServerFunctionalTe
         webTester.clickLinkWithText("UploadRunner");
         assertOnUploadRunnerPage();
         webTester.clickLinkWithText("URLRunner");
-        assertOnUrlRunnerPage();
+        assertOnurlrunnerpage();
 /*
         webTester.clickLinkWithText("LogDisplayer");
-        assertOnLogDisplayerPage();
+        assertOnlogdisplayerpage();
 */
     }
 

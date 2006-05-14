@@ -11,7 +11,7 @@ public class FragmentRunnerPageFunctionalTest extends AggregateServerFunctionalT
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/fragmentRunnerPage");
+        webTester.beginAt("/fragmentrunnerpage");
         mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
             public Document get(URL url) {
                 return new TestRunResult().asXmlDocument();

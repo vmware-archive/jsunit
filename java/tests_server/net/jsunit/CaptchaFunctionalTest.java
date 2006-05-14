@@ -1,9 +1,9 @@
 package net.jsunit;
 
 import net.jsunit.captcha.AesCipher;
-import net.jsunit.model.TestRunResult;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.DistributedTestRunResultBuilder;
+import net.jsunit.model.TestRunResult;
 import org.jdom.Document;
 
 import java.net.URL;
@@ -20,7 +20,7 @@ public class CaptchaFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/fragmentRunnerPage");
+        webTester.beginAt("/fragmentrunnerpage");
         mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
             public Document get(URL url) {
                 return new TestRunResult().asXmlDocument();

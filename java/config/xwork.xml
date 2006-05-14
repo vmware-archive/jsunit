@@ -104,38 +104,38 @@
             <interceptor-ref name="server"/>
         </action>
 
-        <action name="adminPage" class="net.jsunit.action.AdminAction">
+        <action name="adminpage" class="net.jsunit.action.AdminAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/admin.jsp</param>
             </result>
             <interceptor-ref name="server"/>
         </action>
 
-        <action name="fragmentRunnerPage" class="net.jsunit.action.PageAction">
+        <action name="fragmentrunnerpage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/fragmentRunner.jsp</param>
             </result>
         </action>
 
-        <action name="uploadRunnerPage" class="net.jsunit.action.PageAction">
+        <action name="uploadrunnerpage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/uploadRunner.jsp</param>
             </result>
         </action>
 
-        <action name="urlRunnerPage" class="net.jsunit.action.PageAction">
+        <action name="urlrunnerpage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/urlRunner.jsp</param>
             </result>
         </action>
 
-        <action name="logDisplayerPage" class="net.jsunit.action.PageAction">
+        <action name="logdisplayerpage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/logDisplayer.jsp</param>
             </result>
         </action>
 
-        <action name="captchaImage" class="net.jsunit.action.CaptchaImageAction">
+        <action name="captchaimage" class="net.jsunit.action.CaptchaImageAction">
             <result name="success" type="stream">
                 <param name="contentType">image/jpeg</param>
                 <param name="inputName">imageStream</param>
@@ -145,7 +145,7 @@
             <interceptor-ref name="server"/>
         </action>
 
-        <action name="helpPage" class="net.jsunit.action.PageAction">
+        <action name="helppage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/help.jsp</param>
             </result>

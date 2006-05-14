@@ -21,7 +21,7 @@ public class UploadRunnerPageFunctionalTest extends AggregateServerFunctionalTes
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/uploadRunnerPage?referencedJsFileFieldCount=2");
+        webTester.beginAt("/uploadrunnerpage?referencedJsFileFieldCount=2");
         mockHitter.urlsPassed.clear();
     }
 

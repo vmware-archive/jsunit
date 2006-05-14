@@ -94,11 +94,11 @@ public abstract class FunctionalTestCase extends TestCase {
         return null;
     }
 
-    protected void assertOnLogDisplayerPage() {
+    protected void assertOnlogdisplayerpage() {
         webTester.assertTitleEquals("LogDisplayer - JsUnit");
     }
 
-    protected void assertOnUrlRunnerPage() {
+    protected void assertOnurlrunnerpage() {
         webTester.assertTitleEquals("URLRunner - JsUnit");
     }
 

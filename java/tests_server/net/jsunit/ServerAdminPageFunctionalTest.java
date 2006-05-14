@@ -4,7 +4,7 @@ public class ServerAdminPageFunctionalTest extends AggregateServerFunctionalTest
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("adminPage");
+        webTester.beginAt("adminpage");
     }
 
     public void testInitialConditiions() throws Exception {

@@ -7,7 +7,7 @@
     </td>
     <%} else {%>
     <td class="unselectedTab" nowrap>
-        &nbsp;&nbsp;<img src="/jsunit/images/fragment.gif" alt="FragmentRunner" title="FragmentRunner">&nbsp;<a href="fragmentRunnerPage">FragmentRunner</a>&nbsp;&nbsp;
+        &nbsp;&nbsp;<img src="/jsunit/images/fragment.gif" alt="FragmentRunner" title="FragmentRunner">&nbsp;<a href="fragmentrunnerpage">FragmentRunner</a>&nbsp;&nbsp;
     </td>
     <%}%>
 
@@ -18,7 +18,7 @@
     </td>
     <%} else {%>
     <td class="unselectedTab" nowrap>
-        &nbsp;&nbsp;<img src="/jsunit/images/upload.gif" alt="UploadRunner" title="UploadRunner">&nbsp;<a href="uploadRunnerPage">UploadRunner</a>&nbsp;&nbsp;
+        &nbsp;&nbsp;<img src="/jsunit/images/upload.gif" alt="UploadRunner" title="UploadRunner">&nbsp;<a href="uploadrunnerpage">UploadRunner</a>&nbsp;&nbsp;
     </td>
     <%}%>
 
@@ -29,7 +29,7 @@
     </td>
     <%} else {%>
     <td class="unselectedTab" nowrap>
-        &nbsp;&nbsp;<img src="/jsunit/images/url.gif" alt="URLRunner" title="URLRunner">&nbsp;<a href="urlRunnerPage">URLRunner</a>&nbsp;&nbsp;
+        &nbsp;&nbsp;<img src="/jsunit/images/url.gif" alt="URLRunner" title="URLRunner">&nbsp;<a href="urlrunnerpage">URLRunner</a>&nbsp;&nbsp;
     </td>
     <%}%>
 
@@ -41,7 +41,7 @@
     </td>
     <%} else {%>
     <td class="unselectedTab">
-        &nbsp;&nbsp;<a href="logDisplayerPage">LogDisplayer</a>&nbsp;&nbsp;
+        &nbsp;&nbsp;<a href="logdisplayerpage">LogDisplayer</a>&nbsp;&nbsp;
     </td>
     <%}%>
     <td class="tabHeaderSeparator">&nbsp;</td>
@@ -53,7 +53,7 @@
     </td>
     <%} else {%>
     <td class="unselectedTab" nowrap>
-        &nbsp;&nbsp;<img border="0" src="/jsunit/images/question_mark.gif" alt="Help/About" title="Help/About">&nbsp;<a href="helpPage">Help/About</a>&nbsp;&nbsp;
+        &nbsp;&nbsp;<img border="0" src="/jsunit/images/question_mark.gif" alt="Help/About" title="Help/About">&nbsp;<a href="helppage">Help/About</a>&nbsp;&nbsp;
     </td>
     <%}%>
     <td class="tabHeaderSeparator" width="80%">&nbsp;</td>

@@ -12,7 +12,7 @@ public class UrlRunnerPageFunctionalTest extends AggregateServerFunctionalTestCa
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/urlRunnerPage");
+        webTester.beginAt("/urlrunnerpage");
         mockHitter.urlsPassed.clear();
         mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
             public Document get(URL url) {
@@ -22,7 +22,7 @@ public class UrlRunnerPageFunctionalTest extends AggregateServerFunctionalTestCa
     }
 
     public void testInitialConditions() throws Exception {
-        assertOnUrlRunnerPage();
+        assertOnurlrunnerpage();
         webTester.assertFormElementEquals("url", "");
     }
 
@@ -63,7 +63,7 @@ public class UrlRunnerPageFunctionalTest extends AggregateServerFunctionalTestCa
     }
 
     public void testPassingInUrl() throws Exception {
-        webTester.beginAt("/urlRunnerPage?url=foobar");
+        webTester.beginAt("/urlrunnerpage?url=foobar");
         webTester.assertFormElementEquals("url", "foobar");
     }
 

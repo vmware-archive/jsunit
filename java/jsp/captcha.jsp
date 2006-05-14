@@ -14,7 +14,7 @@
 <table cellpadding="0" cellspacing="0">
     <tr>
         <td valign="top" colspan="3">
-            <img width="200" src="/jsunit/captchaImage?captchaKey=<%=URLEncoder.encode(key, "UTF-8")%>" title="CAPTCHA image" alt="CAPTCHA image">
+            <img width="200" src="/jsunit/captchaimage?captchaKey=<%=URLEncoder.encode(key, "UTF-8")%>" title="CAPTCHA image" alt="CAPTCHA image">
         </td>
         <td>&nbsp;</td>
         <td nowrap valign="top">

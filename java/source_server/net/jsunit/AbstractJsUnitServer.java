@@ -124,7 +124,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         resourceHandler.setDirAllowed(false);
         jsunitContext.addHandler(resourceHandler);
 
-        jsunitContext.addHandler(new ForwardHandler("fragmentRunnerPage"));
+        jsunitContext.addHandler(new ForwardHandler("fragmentrunnerpage"));
 
         for (String servletName : servletNames())
             addWebworkServlet(jsunitContext, servletName);

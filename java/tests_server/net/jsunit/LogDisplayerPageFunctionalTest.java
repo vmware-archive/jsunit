@@ -13,11 +13,11 @@ public class LogDisplayerPageFunctionalTest extends StandardServerFunctionalTest
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/logDisplayerPage");
+        webTester.beginAt("/logdisplayerpage");
     }
 
     public void testInitialConditions() throws Exception {
-        assertOnLogDisplayerPage();
+        assertOnlogdisplayerpage();
         webTester.assertRadioOptionSelected("browserId", "0");
     }
 

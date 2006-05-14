@@ -130,7 +130,7 @@
                             <br>
                             The fragment runner service is useful for experimenting with bits and pieces of JavaScript,
                             but once you start creating real JsUnit Test Pages, you will probably find that using the
-                            <a href="/jsunit/uploadRunnerPage">upload runner</a> service is more powerful.
+                            <a href="/jsunit/uploadrunnerpage">upload runner</a> service is more powerful.
                         </td>
                     </tr>
                 </table>
