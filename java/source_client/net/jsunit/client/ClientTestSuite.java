@@ -1,5 +1,6 @@
 package net.jsunit.client;
 
+import junit.extensions.ActiveTestSuite;
 import junit.framework.AssertionFailedError;
 import junit.framework.Test;
 import junit.framework.TestResult;
@@ -8,10 +9,10 @@ import net.jsunit.model.Result;
 
 import java.io.File;
 
-public class ClientTestSuite {
+public class ClientTestSuite extends ActiveTestSuite {
 
     public static TestSuite forTestPageAndRunnerServiceUrl(final File testPage, final String serviceURL) {
-        TestSuite suite = new TestSuite();
+        TestSuite suite = new ClientTestSuite();
         suite.addTest(new Test() {
             public int countTestCases() {
                 return 1;
@@ -20,12 +21,7 @@ public class ClientTestSuite {
             public void run(TestResult jUnitResult) {
                 TestRunClient testRunClient = new TestRunClient(serviceURL);
                 try {
-                    Result remoteResult = null;
-                    try {
-                        remoteResult = testRunClient.send(testPage);
-                    } catch (Exception e) {
-                        jUnitResult.addError(this, e);
-                    }
+                    Result remoteResult = testRunClient.send(testPage);
                     if (!remoteResult.wasSuccessful())
                         jUnitResult.addFailure(this, new AssertionFailedError(remoteResult.displayString()));
                 } catch (Exception e) {

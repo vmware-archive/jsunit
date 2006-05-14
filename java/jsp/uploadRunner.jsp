@@ -73,7 +73,7 @@
         }
 
         function atLeastOneBrowserIsChecked() {
-            var browserCheckboxes = document.forms[0]["<%=server.isAggregateServer() ? "urlId_browserId" : "browserId"%>"];
+            var browserCheckboxes = document.forms[0]["urlId_browserId"];
             for (var i = 0; i < browserCheckboxes.length; i++) {
                 var browserCheckbox = browserCheckboxes[i];
                 if (browserCheckbox.checked)

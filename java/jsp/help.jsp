@@ -25,9 +25,8 @@
                     <td colspan="3">
                         <p>
                             This is a
-                            <b>JsUnit <%=SystemUtility.jsUnitVersion()%><%=server.isAggregateServer() ? " aggregate" : ""%>
-                                server</b>. To learn more
-                            about JsUnit tests, see <a href="http://www.jsunit.net">www.jsunit.net</a>.
+                            <b>JsUnit <%=SystemUtility.jsUnitVersion()%> aggregate server</b>. To learn more
+                            about JsUnit, see <a href="http://www.jsunit.net">www.jsunit.net</a>.
                         </p>
 
                         <p>
