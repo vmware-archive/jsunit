@@ -22,7 +22,7 @@ public class UrlRunnerPageFunctionalTest extends AggregateServerFunctionalTestCa
     }
 
     public void testInitialConditions() throws Exception {
-        assertOnurlrunnerpage();
+        assertOnUrlRunnerPage();
         webTester.assertFormElementEquals("url", "");
     }
 

@@ -4,7 +4,6 @@
 <%@ page import="net.jsunit.configuration.RemoteConfiguration" %>
 <%@ page import="net.jsunit.model.Browser" %>
 <%@ page import="net.jsunit.utility.StringUtility" %>
-<%@ page import="net.jsunit.utility.SystemUtility" %>
 <%
     JsUnitAggregateServer server = ServerRegistry.getAggregateServer();
     PlatformType platformType = server.getPlatformType();
@@ -28,35 +27,44 @@
     <table cellpadding="0" cellspacing="2">
         <tr>
             <td>
-                <div class="rb2roundbox">
-                    <div class="rb2top"><div></div></div>
+                <div class="rb0roundbox" width="34">
+                    <div class="rb0top"><div></div></div>
 
-                    <div class="rb2content" align="center">
+                    <div class="rb0content" align="center">
                         <table cellpadding="0" cellspacing="0">
                             <tr>
-                                <td>
+                                <td align="center">
                                     <b>
                                         <%if (!StringUtility.isEmpty(server.getConfiguration().getDescription())) {%>
                                         <%=server.getConfiguration().getDescription()%> -
                                         <%}%>
-                                        JsUnit <%=SystemUtility.jsUnitVersion()%> Aggregate Server
+                                        JsUnit Online Services
                                     </b>
-                                    (<%=((JsUnitAggregateServer) server).getCachedRemoteConfigurations().size()%> remote
-                                    servers)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    The JsUnit Online Services are tools that allow you to run your JsUnit tests on
+                                    a variety<br>
+                                    of browsers running on multiple operating systems. The services are available in a
+                                    manual<br>
+                                    form on these pages or in a programmatic form as web services. <a href="helppage">Learn
+                                    more</a>.
                                 </td>
                             </tr>
                         </table>
                     </div>
 
-                    <div class="rb2bot"><div></div></div>
+                    <div class="rb0bot"><div></div></div>
                 </div>
             </td>
         </tr>
+        <%if (false) {%>
         <tr>
             <td>
                 <table width="100%">
                     <tr>
-                        <%for (RemoteConfiguration remoteConfiguration : ((JsUnitAggregateServer) server).getCachedRemoteConfigurations()) {%>
+                        <%for (RemoteConfiguration remoteConfiguration : server.getCachedRemoteConfigurations()) {%>
                         <td>
                             <div class="rb0roundbox">
                                 <div class="rb0top"><div></div></div>
@@ -104,6 +112,7 @@
                 </table>
             </td>
         </tr>
+        <%}%>
     </table>
 </td>
 <td>&nbsp;</td>
@@ -111,30 +120,29 @@
     <table cellpadding="0" cellspacing="2" height="100%">
         <tr>
             <td valign="bottom">
-                <div class="rb2roundbox">
-                    <div class="rb2top"><div></div></div>
+                <div class="rb0roundbox">
+                    <div class="rb0top"><div></div></div>
 
-                    <div class="rb2content" align="center">
-                        <b><a href="#">Sign up</a></b> for a JsUnit account to get programmatic<br> access to the
-                        fragment and upload runner services.
+                    <div class="rb0content" align="center">
+                        <table>
+                            <tr>
+                                <td>
+                                    These are the <b>manual</b> services.
+                                    <b><a href="createaccountpage">Sign up</a></b> for a JsUnit account<br>
+                                    to get access to JsUnit web services using SOAP.
+                                    <br>
+
+                                    <b>Need help?</b> Email <a href="mailto:support@jsunit.net">support@jsunit.net</a>
+                                    <br>
+                                    <a href="http://www.jsunit.net/">jsunit.net</a>
+                                    | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
+                                    | <a href="http://group.jsunit.net/">group.jsunit.net</a><br>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
 
-                    <div class="rb2bot"><div></div></div>
-                </div>
-                <br>
-
-                <div class="rb2roundbox">
-                    <div class="rb2top"><div></div></div>
-
-                    <div class="rb2content" align="center">
-                        <a href="http://www.jsunit.net/">jsunit.net</a>
-                        | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
-                        | <a href="http://group.jsunit.net/">group.jsunit.net</a><br>
-
-                        <b>Need help?</b> Email <a href="mailto:support@jsunit.net">support@jsunit.net</a>
-                    </div>
-
-                    <div class="rb2bot"><div></div></div>
+                    <div class="rb0bot"><div></div></div>
                 </div>
             </td>
         </tr>

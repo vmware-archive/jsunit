@@ -72,4 +72,24 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         return (JsUnitAggregateServer) server;
     }
 
+
+    protected void assertOnLogDisplayerPage() {
+        webTester.assertTitleEquals("LogDisplayer - JsUnit");
+    }
+
+    protected void assertOnUrlRunnerPage() {
+        webTester.assertTitleEquals("URLRunner - JsUnit");
+    }
+
+    protected void assertOnUploadRunnerPage() {
+        webTester.assertTitleEquals("UploadRunner - JsUnit");
+    }
+
+    protected void assertOnFragmentRunnerPage() {
+        webTester.assertTitleEquals("FragmentRunner - JsUnit");
+    }
+
+    protected void assertOnSignUpPage() {
+        webTester.assertTitleEquals("Create account - JsUnit");
+    }
 }

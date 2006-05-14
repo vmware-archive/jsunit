@@ -51,7 +51,7 @@
                         services.
                         Enter the text you see in the box.
                         CAPTCHAs expire after &frac12; hour. Tired of the CAPTCHA?
-                        <b><a href="#">Sign up</a></b> for a JsUnit account!</font>
+                        <b><a href="createaccountpage">Sign up</a></b> for a JsUnit account!</font>
                 </div>
 
                 <div class="rb1bot"><div></div></div>

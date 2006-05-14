@@ -20,7 +20,6 @@ public class FunctionalTestSuite {
         result.addTestSuite(FragmentRunnerPageAggregateServerFunctionalTest.class);
         result.addTestSuite(FragmentRunnerPageFunctionalTest.class);
         result.addTestSuite(HelpPageFunctionalTest.class);
-//        result.addTestSuite(LogDisplayerPageFunctionalTest.class);
         result.addTestSuite(OverrideURLDistributedTestTest.class);
         result.addTestSuite(RemoteConfigurationSourceFunctionalTest.class);
         result.addTestSuite(RunnerFunctionalTest.class);
@@ -29,6 +28,7 @@ public class FunctionalTestSuite {
         result.addTestSuite(ServerDefaultPageFunctionalTest.class);
         result.addTestSuite(ServerStatusFunctionalTest.class);
         result.addTestSuite(SerialDistributedTestTest.class);
+        result.addTestSuite(CreateAccountFunctionalTest.class);
         result.addTestSuite(SpecificBrowserDistributedTestTest.class);
         result.addTestSuite(SuccessfulStandaloneTestTest.class);
         result.addTestSuite(TestRunServiceClientTest.class);

@@ -151,6 +151,12 @@
             </result>
         </action>
 
+        <action name="createaccountpage" class="net.jsunit.action.PageAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/createAccount.jsp</param>
+            </result>
+        </action>
+
     </package>
 
 </xwork>
