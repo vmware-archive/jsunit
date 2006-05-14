@@ -69,10 +69,7 @@
                                                 <img border="0" src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
                                             </td>
                                             <td align="left">
-                                                <%if (!StringUtility.isEmpty(remoteConfiguration.getDescription())) {%>
-                                                <%=remoteConfiguration.getDescription()%> -
-                                                <%}%>
-                                                <%=remoteConfiguration.getRemoteURL().getHost()%>
+                                                <%=remoteConfiguration.getOsString()%>
                                             </td>
                                         </tr>
                                         <tr>

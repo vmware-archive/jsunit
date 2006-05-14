@@ -16,9 +16,9 @@ public class SystemUtility {
 
     public static String osString() {
         StringBuffer result = new StringBuffer();
-        result.append(osArchitecture());
-        result.append(" - ");
         result.append(osName());
+        result.append(" - ");
+        result.append(osArchitecture());
         return result.toString();
     }
 
