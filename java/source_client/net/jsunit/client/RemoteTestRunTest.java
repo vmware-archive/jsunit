@@ -1,25 +1,18 @@
 package net.jsunit.client;
 
 import junit.framework.TestCase;
-import net.jsunit.PlatformType;
 import net.jsunit.model.BrowserResult;
-import net.jsunit.model.BrowserType;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.DistributedTestRunResult;
 
 class RemoteTestRunTest extends TestCase {
     private boolean done;
-    private PlatformType platformType;
-    private BrowserType browserType;
     private Exception error;
+    private BrowserSpecification browserSpec;
 
-    public RemoteTestRunTest(PlatformType platformType, BrowserType browserType) {
-        super(platformType.getDisplayName() + "/" + browserType.getDisplayName());
-        this.platformType = platformType;
-        this.browserType = browserType;
-    }
-
-    public int countTestCases() {
-        return 1;
+    public RemoteTestRunTest(BrowserSpecification browserSpec) {
+        super(browserSpec.displayString());
+        this.browserSpec = browserSpec;
     }
 
     protected void runTest() throws Throwable {
@@ -30,7 +23,7 @@ class RemoteTestRunTest extends TestCase {
     }
 
     public void notifyResult(DistributedTestRunResult distributedResult) {
-        BrowserResult browserResult = distributedResult.findBrowserResultMatching(platformType, browserType);
+        BrowserResult browserResult = distributedResult.findBrowserResultMatching(browserSpec);
         if (browserResult == null)
             error = new NoSuchPlatformBrowserException();
         else if (!browserResult.wasSuccessful()) {

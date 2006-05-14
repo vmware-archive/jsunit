@@ -3,6 +3,7 @@ package net.jsunit.client;
 import junit.extensions.ActiveTestSuite;
 import junit.framework.TestResult;
 import net.jsunit.PlatformType;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.BrowserType;
 import net.jsunit.model.DistributedTestRunResult;
 
@@ -41,7 +42,9 @@ public class ClientTestSuite extends ActiveTestSuite {
     }
 
     public void addBrowser(PlatformType platformType, BrowserType browserType) {
-        RemoteTestRunTest jUnitTest = new RemoteTestRunTest(platformType, browserType);
+        BrowserSpecification spec = new BrowserSpecification(platformType, browserType);
+        RemoteTestRunTest jUnitTest = new RemoteTestRunTest(spec);
+        client.addBrowserSpec(spec);
         addTest(jUnitTest);
         tests.add(jUnitTest);
     }

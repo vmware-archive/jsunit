@@ -1,6 +1,7 @@
 package net.jsunit.services;
 
 import net.jsunit.*;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestPage;
 import net.jsunit.server.RemoteRunSpecificationBuilder;
@@ -19,7 +20,7 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
     private String username;
     private String password;
 
-    public DistributedTestRunResult runTests(TestPage testPage) throws RemoteException {
+    public DistributedTestRunResult runTests(TestPage testPage, BrowserSpecification[] browserSpecs) throws RemoteException {
         User user = server.authenticateUser(username, password);
         if (user == null)
             throw new AuthenticationException();

@@ -1,6 +1,5 @@
 package net.jsunit.model;
 
-import net.jsunit.PlatformType;
 import net.jsunit.XmlRenderable;
 import org.jdom.Document;
 import org.jdom.Element;
@@ -50,10 +49,10 @@ public class DistributedTestRunResult extends AbstractResult implements XmlRende
         return _getTestRunResults().iterator();
     }
 
-    public BrowserResult findBrowserResultMatching(PlatformType platformType, BrowserType browserType) {
+    public BrowserResult findBrowserResultMatching(BrowserSpecification spec) {
         for (TestRunResult testRunResult : this) {
-            if (testRunResult.hasPlatformType(platformType))
-                return testRunResult.findBrowserResultMatching(browserType);
+            if (spec.matches(testRunResult))
+                return testRunResult.findBrowserResultMatching(spec);
         }
         return null;
     }

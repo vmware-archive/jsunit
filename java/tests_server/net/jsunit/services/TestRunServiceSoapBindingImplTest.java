@@ -7,6 +7,7 @@ import net.jsunit.MockRemoteServerHitter;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.RemoteConfiguration;
+import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestPage;
 
@@ -49,7 +50,7 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
 
     public void testSimple() throws Exception {
         binding.init(createServletEndpointContext("validUsername", "validPassword"));
-        DistributedTestRunResult result = binding.runTests(new TestPage());
+        DistributedTestRunResult result = binding.runTests(new TestPage(), new BrowserSpecification[]{});
         assertFalse(result.wasSuccessful());
         assertEquals(2, result._getTestRunResults().size());
     }
@@ -57,7 +58,7 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
     public void testInvalidUsernamePassword() throws Exception {
         binding.init(createServletEndpointContext("invalidUsername", "invalidPassword"));
         try {
-            binding.runTests(new TestPage());
+            binding.runTests(new TestPage(), new BrowserSpecification[]{});
             fail();
         } catch (AuthenticationException e) {
         }

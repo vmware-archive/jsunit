@@ -88,11 +88,11 @@ public class DistributedTestRunResultTest extends TestCase {
         result2.addBrowserResult(errorResult());
         distributedResult.addTestRunResult(result2);
 
-        assertEquals("1", distributedResult.findBrowserResultMatching(PlatformType.WINDOWS, BrowserType.FIREFOX).getId());
-        assertEquals("2", distributedResult.findBrowserResultMatching(PlatformType.MACINTOSH, BrowserType.KONQUEROR).getId());
-        assertEquals("3", distributedResult.findBrowserResultMatching(PlatformType.MACINTOSH, BrowserType.INTERNET_EXPLORER).getId());
-        assertNull(distributedResult.findBrowserResultMatching(PlatformType.LINUX, BrowserType.KONQUEROR));
-        assertNull(distributedResult.findBrowserResultMatching(PlatformType.WINDOWS, BrowserType.NETSCAPE));
+        assertEquals("1", distributedResult.findBrowserResultMatching(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.FIREFOX)).getId());
+        assertEquals("2", distributedResult.findBrowserResultMatching(new BrowserSpecification(PlatformType.MACINTOSH, BrowserType.KONQUEROR)).getId());
+        assertEquals("3", distributedResult.findBrowserResultMatching(new BrowserSpecification(PlatformType.MACINTOSH, BrowserType.INTERNET_EXPLORER)).getId());
+        assertNull(distributedResult.findBrowserResultMatching(new BrowserSpecification(PlatformType.LINUX, BrowserType.KONQUEROR)));
+        assertNull(distributedResult.findBrowserResultMatching(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.NETSCAPE)));
     }
 
     private BrowserResult successResult() {

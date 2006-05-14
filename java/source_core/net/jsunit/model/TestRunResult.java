@@ -212,9 +212,9 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         return _getBrowserResults().iterator();
     }
 
-    public BrowserResult findBrowserResultMatching(BrowserType browserType) {
+    public BrowserResult findBrowserResultMatching(BrowserSpecification spec) {
         for (BrowserResult browserResult : this)
-            if (browserResult.hasBrowserType(browserType))
+            if (spec.matches(browserResult))
                 return browserResult;
         return null;
     }
