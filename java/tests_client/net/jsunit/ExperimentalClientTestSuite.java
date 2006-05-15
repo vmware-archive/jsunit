@@ -8,7 +8,7 @@ import net.jsunit.model.BrowserType;
 import java.io.File;
 
 public class ExperimentalClientTestSuite {
-    public static final int COUNT = 1;
+    public static final int COUNT = 1000;
 
     public static Test suite() {
         TestSuite result = new TestSuite();
@@ -19,7 +19,7 @@ public class ExperimentalClientTestSuite {
 
     public static Test subSuite() {
         File testPage = new File("tests" + File.separator + "jsUnitAssertionTests.html");
-        String serviceURL = "http://services.jsunit.net/axis/services/TestRunService";
+        String serviceURL = "http://services.jsunit.net/services/TestRunService";
         ClientTestSuite suite = new ClientTestSuite(serviceURL, "username", "password", testPage);
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.FIREFOX);
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER);
