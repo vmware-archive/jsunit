@@ -14,11 +14,15 @@
     <jsp:param name="selectedPage" value="myAccount"/>
 </jsp:include>
 <tr>
-<td colspan="16" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;" align="left">
-<table width="100%" align="left" border="0">
+<td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;" align="left">
+<table width="100%" align="left">
 <tr>
-    <td colspan="2">
-        <h4>Create a JsUnit account</h4>
+    <td width="24%" colspan="2" nowrap>
+        <b>Create a JsUnit account</b>
+    </td>
+    <td width="1%">&nbsp;</td>
+    <td width="25%" colspan="2" nowrap>
+        <b>Aleady have a JsUnit account? Sign in.</b>
     </td>
     <td width="1%" rowspan="20">&nbsp;</td>
     <td width="48%" rowspan="20" valign="top">
@@ -70,58 +74,80 @@
 
 </tr>
 <tr>
-    <td width="15%" align="right" valign="middle">
+    <td align="right" valign="middle" nowrap>
         <b>First name:</b>
     </td>
     <td>
-        <input type="text" name="user.firstName">
+        <input type="text" name="user.firstName" tabindex="1">
     </td>
-</tr>
-<tr>
-    <td align="right" valign="middle">
-        <b>Last name:</b>
-    </td>
-    <td>
-        <input type="text" name="user.lastName">
-    </td>
-</tr>
-<tr>
-    <td align="right" valign="middle">
+    <td>&nbsp;</td>
+    <td nowrap align="right">
         <b>Email address:</b>
     </td>
     <td>
-        <input type="text" name="user.emailAddress">
+        <input type="text" name="username" tabindex="101">
     </td>
 </tr>
 <tr>
-    <td align="right" valign="middle">
+    <td align="right" valign="middle" nowrap>
+        <b>Last name:</b>
+    </td>
+    <td>
+        <input type="text" name="user.lastName" tabindex="2">
+    </td>
+    <td>&nbsp;</td>
+    <td align="right" nowrap>
         <b>Password:</b>
     </td>
     <td>
-        <input type="text" name="password1">
+        <input type="password" name="username" tabindex="102">
     </td>
 </tr>
 <tr>
-    <td align="right" valign="middle">
+    <td align="right" valign="middle" nowrap>
+        <b>Email address:</b>
+    </td>
+    <td>
+        <input type="text" name="user.emailAddress" tabindex="3">
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+    <td>
+        <input type="submit" value="Sign in" class="button" tabindex="103">
+    </td>
+</tr>
+<tr>
+    <td align="right" valign="middle" nowrap>
+        <b>Password:</b>
+    </td>
+    <td>
+        <input type="password" name="password1" tabindex="4">
+    </td>
+    <td colspan="3">&nbsp;</td>
+</tr>
+<tr>
+    <td align="right" valign="middle" nowrap>
         <b>Confirm password:</b>
     </td>
     <td>
-        <input type="text" name="password2">
+        <input type="password" name="password2" tabindex="5">
     </td>
+    <td colspan="3">&nbsp;</td>
 </tr>
 <tr>
-    <td colspan="2"></td>
+    <td colspan="5"></td>
 </tr>
 <tr>
     <td>
         &nbsp;
     </td>
     <td>
-        <input type="submit" value="Create account" class="button">
+        <input type="submit" value="Create account" class="button" tabindex="6">
     </td>
+    <td colspan="3">&nbsp;</td>
 </tr>
 <tr>
-    <td colspan="2"></td>
+    <td colspan="6"></td>
 </tr>
 </table>
 </td>
