@@ -69,7 +69,7 @@
                 <table>
                     <tr>
                         <td colspan="2">
-                            <b>Create a JsUnit account:</b>
+                            <b>Don't have a JsUnit account? Create one:</b>
                         </td>
                     </tr>
                     <tr>
