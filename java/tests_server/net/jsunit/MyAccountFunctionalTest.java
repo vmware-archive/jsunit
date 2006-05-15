@@ -4,7 +4,7 @@ public class MyAccountFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void setUp() throws Exception {
         super.setUp();
-        webTester.beginAt("/createaccountpage");
+        webTester.beginAt("/myaccountpage");
     }
 
     public void testInitialConditions() throws Exception {

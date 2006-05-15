@@ -9,10 +9,12 @@ public class ServerDefaultPageFunctionalTest extends AggregateServerFunctionalTe
 
     public void testLinks() throws Exception {
         webTester.beginAt("/");
-        webTester.clickLinkWithText("UploadRunner");
+        webTester.clickLinkWithText("Upload Runner");
         assertOnUploadRunnerPage();
-        webTester.clickLinkWithText("URLRunner");
+        webTester.clickLinkWithText("URL Runner");
         assertOnUrlRunnerPage();
+        webTester.clickLinkWithText("Fragment Runner");
+        assertOnFragmentRunnerPage();
         webTester.clickLinkWithText("Sign up");
         assertOnSignUpPage();
 /*

@@ -47,12 +47,16 @@
                                 <li>
                                     <b>access to the JsUnit services as web services over SOAP</b>. Using the
                                     TestRunService (<a href="/services/TestRunService?wsdl">see WSDL</a>), you can run
-                                    your tests programmatically.  A <b>Java client</b> is available that wraps your run in a
-                                    JUnit test suite.  A <b>Ruby client</b> is in development.
+                                    your tests programmatically. A <b>Java client</b> is available that wraps your run
+                                    in a
+                                    JUnit test suite. A <b>Ruby client</b> is in development.
                                 </li>
                                 <li>
                                     <b>unlimited access to the JsUnit manual services</b> with any number of browsers
                                     and no need to enter the CAPTCHA text.
+                                </li>
+                                <li>
+                                    An increased
                                 </li>
                             </ul>
                         </td>

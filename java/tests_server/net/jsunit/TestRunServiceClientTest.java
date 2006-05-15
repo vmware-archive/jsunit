@@ -5,13 +5,12 @@ import net.jsunit.client.TestRunClient;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.model.DummyTestPageWriter;
-import net.jsunit.model.Result;
 import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.BrowserType;
+import net.jsunit.model.DummyTestPageWriter;
+import net.jsunit.model.Result;
 import net.jsunit.services.User;
 import net.jsunit.services.UserRepository;
-import org.jdom.Document;
 
 import java.io.File;
 
@@ -96,7 +95,7 @@ public class TestRunServiceClientTest extends TestCase {
 
     public void testSimple() throws Exception {
         mockHitter.urlsPassed.clear();
-        TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
+        TestRunClient client = new TestRunClient("http://localhost:" + port + "/services/TestRunService");
         client.addBrowserSpec(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.LINUX, BrowserType.FIREFOX));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.MACINTOSH, BrowserType.OPERA));
