@@ -4,6 +4,7 @@ import net.jsunit.*;
 import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.DistributedTestRunResult;
 import net.jsunit.model.TestPage;
+import net.jsunit.model.User;
 import net.jsunit.server.RemoteRunSpecificationBuilder;
 import net.jsunit.uploaded.UploadedTestPage;
 import net.jsunit.uploaded.UploadedTestPageFactory;

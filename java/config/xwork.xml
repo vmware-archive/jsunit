@@ -28,6 +28,7 @@
             <interceptor name="security" class="net.jsunit.interceptor.SecurityInterceptor"/>
             <interceptor name="localhostOnly" class="net.jsunit.interceptor.LocalhostOnlyInterceptor"/>
             <interceptor name="browserSelection" class="net.jsunit.interceptor.BrowserSelectionInterceptor"/>
+            <interceptor name="userRepository" class="net.jsunit.interceptor.UserRepositoryInterceptor"/>
             <interceptor name="remoteRunSpecificationSelection"
                          class="net.jsunit.interceptor.RemoteRunSpecificationSelectionInterceptor"/>
 
@@ -155,6 +156,17 @@
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/myAccount.jsp</param>
             </result>
+        </action>
+
+        <action name="processcreateaccount" class="net.jsunit.action.ProcessCreateAccountAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/accountCreated.jsp</param>
+            </result>
+            <result name="input" type="dispatcher">
+                <param name="location">java/jsp/myAccount.jsp</param>
+            </result>
+            <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="userRepository"/>
         </action>
 
     </package>

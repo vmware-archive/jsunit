@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Create account - JsUnit</title>
+    <title>My account - JsUnit</title>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
 
@@ -50,7 +50,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="submit" value="Sign in" class="button">
+                            <input type="submit" value="Sign in" name="signIn" class="button">
                         </td>
                     </tr>
                 </table>
@@ -118,7 +118,7 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="submit" value="Create account" class="button">
+                            <input type="submit" value="Create account" name="createAccount" class="button">
                         </td>
                     </tr>
                     <tr>
@@ -155,14 +155,14 @@
                         A JsUnit account gives you the following benefits:
                         <ul>
                             <li>
-                                <b>access to the JsUnit services as web services over SOAP</b>. Using the
+                                <b>Access to the JsUnit services as web services over SOAP</b>. Using the
                                 TestRunService (<a href="/services/TestRunService?wsdl">see WSDL</a>), you can run
                                 your tests programmatically. A <b>Java client</b> is available that wraps your run
                                 in a
                                 JUnit test suite. A <b>Ruby client</b> is in development.
                             </li>
                             <li>
-                                <b>unlimited access to the JsUnit manual services</b> with any number of browsers
+                                <b>Unlimited access to the JsUnit manual services</b> with any number of browsers
                                 and no need to enter the CAPTCHA text.
                             </li>
                             <li>

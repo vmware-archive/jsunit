@@ -35,6 +35,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(PageActionTest.class);
         result.addTestSuite(PlatformTypeTest.class);
+        result.addTestSuite(ProcessCreateAccountActionTest.class);
         result.addTestSuite(UploadedReferencedJsFileTest.class);
         result.addTestSuite(RemoteConfigurationSourceTest.class);
         result.addTestSuite(RemoteConfigurationTest.class);
@@ -51,6 +52,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(TestCaseResultTest.class);
         result.addTestSuite(TestRunServiceSoapBindingImplTest.class);
         result.addTestSuite(UploadedTestPageTest.class);
+        result.addTestSuite(UserTest.class);
         result.addTestSuite(TestPageResultTest.class);
         result.addTestSuite(TestRunResultTest.class);
         result.addTestSuite(VersionGrabberInterceptorTest.class);

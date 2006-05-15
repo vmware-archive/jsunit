@@ -89,7 +89,7 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         webTester.assertTitleEquals("FragmentRunner - JsUnit");
     }
 
-    protected void assertOnSignUpPage() {
-        webTester.assertTitleEquals("Create account - JsUnit");
+    protected void assertOnMyAccountPage() {
+        webTester.assertTitleEquals("My account - JsUnit");
     }
 }

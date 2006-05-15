@@ -16,7 +16,7 @@ public class ServerDefaultPageFunctionalTest extends AggregateServerFunctionalTe
         webTester.clickLinkWithText("Fragment Runner");
         assertOnFragmentRunnerPage();
         webTester.clickLinkWithText("Sign up");
-        assertOnSignUpPage();
+        assertOnMyAccountPage();
 /*
         webTester.clickLinkWithText("LogDisplayer");
         assertOnLogDisplayerPage();

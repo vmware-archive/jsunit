@@ -8,7 +8,7 @@ import net.jsunit.model.BrowserType;
 import java.io.File;
 
 public class ExperimentalClientTestSuite {
-    public static final int COUNT = 1000;
+    public static final int COUNT = 1;
 
     public static Test suite() {
         TestSuite result = new TestSuite();

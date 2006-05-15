@@ -5,12 +5,8 @@ import net.jsunit.client.TestRunClient;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.ServerType;
-import net.jsunit.model.BrowserSpecification;
-import net.jsunit.model.BrowserType;
-import net.jsunit.model.DummyTestPageWriter;
-import net.jsunit.model.Result;
-import net.jsunit.services.User;
-import net.jsunit.services.UserRepository;
+import net.jsunit.model.*;
+import net.jsunit.services.MockUserRepository;
 
 import java.io.File;
 
@@ -70,8 +66,8 @@ public class TestRunServiceClientTest extends TestCase {
         mockHitter.urlToDocument.put("http://localhost:2/jsunit/config", configuration2.asXmlDocument(ServerType.STANDARD));
         mockHitter.urlToDocument.put("http://localhost:3/jsunit/config", configuration3.asXmlDocument(ServerType.STANDARD));
         server = new JsUnitAggregateServer(new Configuration(source), mockHitter);
-        server.setUserRepository(new UserRepository() {
-            public User findUser(String username, String password) {
+        server.setUserRepository(new MockUserRepository() {
+            public User find(String username, String password) {
                 return new User();
             }
         });

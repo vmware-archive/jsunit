@@ -4,9 +4,9 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.model.RemoteServerConfigurationSource;
-import net.jsunit.services.DefaultUserRepository;
-import net.jsunit.services.User;
-import net.jsunit.services.UserRepository;
+import net.jsunit.model.UserRepository;
+import net.jsunit.model.DefaultUserRepository;
+import net.jsunit.model.User;
 import net.jsunit.utility.FileUtility;
 import org.apache.axis.transport.http.AdminServlet;
 import org.apache.axis.transport.http.AxisServlet;
@@ -136,7 +136,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     }
 
     public User authenticateUser(String username, String password) {
-        return userRepository.findUser(username, password);
+        return userRepository.find(username, password);
     }
 
     public void setUserRepository(UserRepository userRepository) {
@@ -179,6 +179,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         names.add("latestversion");
         names.add("logdisplayerpage");
         names.add("myaccountpage");
+        names.add("processcreateaccount");
         names.add("uploadrunnerpage");
         names.add("urlrunnerpage");
         return names;
