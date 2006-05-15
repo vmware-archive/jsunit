@@ -1,16 +1,22 @@
 <%@ page import="net.jsunit.JsUnitAggregateServer" %>
-<%@ page import="net.jsunit.PlatformType" %>
 <%@ page import="net.jsunit.ServerRegistry" %>
-<%@ page import="net.jsunit.configuration.RemoteConfiguration" %>
-<%@ page import="net.jsunit.model.Browser" %>
 <%
     JsUnitAggregateServer server = ServerRegistry.getAggregateServer();
-    PlatformType platformType = server.getPlatformType();
 %>
-<table width="100%" cellpadding="0" cellspacing="0" border="0">
+<script type="text/javascript">
+    function showSignInDiv() {
+        var marketingDiv = document.getElementById("marketingDiv");
+        marketingDiv.style.visibility = "hidden";
+        marketingDiv.style.position = "absolute";
+        var signInDiv = document.getElementById("signInDiv");
+        signInDiv.style.visibility = "visible";
+        signInDiv.style.position = "";
+    }
+</script>
+<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
-<td>&nbsp;</td>
-<td>
+<td width="1%"></td>
+<td width="10%">
     <div class="rb0roundbox">
         <div class="rb0top"><div></div></div>
 
@@ -21,11 +27,11 @@
         <div class="rb0bot"><div></div></div>
     </div>
 </td>
-<td>&nbsp;</td>
-<td nowrap align="center">
+<td width="1%"></td>
+<td nowrap align="center" width="50%" valign="top">
     <table cellpadding="0" cellspacing="2">
         <tr>
-            <td>
+            <td valign="top">
                 <div class="rb0roundbox" width="34">
                     <div class="rb0top"><div></div></div>
 
@@ -55,115 +61,94 @@
                 </div>
             </td>
         </tr>
-        <%if (false) {%>
-        <tr>
-            <td>
-                <table width="100%">
-                    <tr>
-                        <%for (RemoteConfiguration remoteConfiguration : server.getCachedRemoteConfigurations()) {%>
-                        <td>
-                            <div class="rb0roundbox">
-                                <div class="rb0top"><div></div></div>
+    </table>
+</td>
+<td width="1%"></td>
+<td nowrap align="center" valign="top" width="30%">
+    <form action="/jsunit/processsignin" method="post">
+        <table cellpadding="0" cellspacing="2" height="100%">
+            <tr>
+                <td>
+                    <div id="marketingDiv" style="visibility:visible;position:relative">
+                        <div class="rb0roundbox">
+                            <div class="rb0top"><div></div></div>
 
-                                <div class="rb0content" align="center">
-                                    <table cellpadding="0" cellspacing="0">
-                                        <tr>
-                                            <td width="1" rowspan="2">
-                                                <img border="0" src="<%=remoteConfiguration.getPlatformType().getLogoPath()%>" alt="<%=remoteConfiguration.getPlatformType().getDisplayName()%>" title="<%=remoteConfiguration.getOsString()%>">
-                                            </td>
-                                            <td align="left">
-                                                <%=remoteConfiguration.getOsString()%>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td align="center">
-                                                <table cellpadding="1" cellspacing="0">
-                                                    <tr>
-                                                        <td>
-                                                            Browsers:
-                                                        </td>
-                                                        <td>
-                                                            <%
-                                                                for (Browser browser : remoteConfiguration.getBrowsers()) {
-                                                                    if (browser._getType() != null) {
-                                                            %>
-                                                            <img src="<%=browser.getLogoPath()%>" alt="<%=browser.getDisplayName()%>" title="<%=browser.getDisplayName()%>">
-                                                            <%}%>
-                                                            <%}%>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-
-                                </div>
-
-                                <div class="rb0bot"><div></div></div>
+                            <div class="rb0content" align="center">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            You are not signed in.
+                                            [<a href="/jsunit/myaccountpage" onclick="showSignInDiv(); return false;">Sign
+                                            in</a>]
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                        </td>
-                        <td width="2">&nbsp;</td>
-                        <%}%>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <%}%>
-    </table>
-</td>
-<td>&nbsp;</td>
-<td nowrap align="center" valign="top">
-    <table cellpadding="0" cellspacing="2" height="100%">
-        <tr>
-            <td valign="bottom">
-                <div class="rb0roundbox">
-                    <div class="rb0top"><div></div></div>
 
-                    <div class="rb0content" align="center">
-                        <table>
-                            <tr>
-                                <td>
-                                    You are not signed in. [<a href="/jsunit/myaccountpage">Sign in</a>]
-                                </td>
-                            </tr>
-                        </table>
+                            <div class="rb0bot"><div></div></div>
+                        </div>
+
+                        <div class="rb0roundbox">
+                            <div class="rb0top"><div></div></div>
+
+                            <div class="rb0content" align="center">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            These are the <b>manual</b> services.
+                                            <b><a href="myaccountpage">Sign up</a></b> for a JsUnit account<br>
+                                            to get access to JsUnit web services using SOAP.
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                            <div class="rb0bot"><div></div></div>
+                        </div>
                     </div>
 
-                    <div class="rb0bot"><div></div></div>
-                </div>
+                    <div id="signInDiv" style="visibility:hidden;position:absolute">
+                        <div class="rb0roundbox">
+                            <div class="rb0top"><div></div></div>
 
-                <div class="rb0roundbox">
-                    <div class="rb0top"><div></div></div>
+                            <div class="rb0content">
+                                <table>
+                                    <tr>
+                                        <td nowrap align="right">
+                                            Email address:
+                                        </td>
+                                        <td>
+                                            <input type="text" name="username">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td align="right" nowrap>
+                                            Password:
+                                        </td>
+                                        <td>
+                                            <input type="password" name="username">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td>
+                                            <input type="submit" value="Sign in" class="button">
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
 
-                    <div class="rb0content" align="center">
-                        <table>
-                            <tr>
-                                <td>
-                                    These are the <b>manual</b> services.
-                                    <b><a href="myaccountpage">Sign up</a></b> for a JsUnit account<br>
-                                    to get access to JsUnit web services using SOAP.
-                                </td>
-                            </tr>
-                        </table>
+                            <div class="rb0bot"><div></div></div></div>
                     </div>
-
-                    <div class="rb0bot"><div></div></div>
-                </div>
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+</td>
+<td width="1%"></td>
+</tr>
+</table>
 </td>
 <td>&nbsp;</td>
-<%if (false) {%>
-<td nowrap align="right" valign="middle">
-    <div id="versionCheckDiv"><a href="javascript:checkForLatestVersion('latestversion')">Check for newer
-        version</a></div>
-    <br>
-    <a href="http://www.pivotalsf.com/" target="top">
-        <img border="0" src="images/pivotal.gif" alt="Powered By Pivotal" title="Powered by Pivotal">
-    </a>
-</td>
-<td>&nbsp;</td>
-<%}%>
 </tr>
 </table>
