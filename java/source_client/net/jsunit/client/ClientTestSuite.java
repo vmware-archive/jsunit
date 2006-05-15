@@ -6,6 +6,7 @@ import net.jsunit.PlatformType;
 import net.jsunit.model.BrowserSpecification;
 import net.jsunit.model.BrowserType;
 import net.jsunit.model.DistributedTestRunResult;
+import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -36,6 +37,8 @@ public class ClientTestSuite extends ActiveTestSuite {
                     DistributedTestRunResult distributedResult = client.send(testPage);
                     for (RemoteTestRunTest test : tests)
                         test.notifyResult(distributedResult);
+                    if (!distributedResult.wasSuccessful())
+                        System.err.println(XmlUtility.asPrettyString(distributedResult.asXmlDocument()));
                 } catch (Exception e) {
                     for (RemoteTestRunTest test : tests)
                         test.notifyError(e);
