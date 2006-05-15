@@ -127,16 +127,25 @@
                         <table>
                             <tr>
                                 <td>
+                                    You are not signed in. [<a href="/jsunit/myaccountpage">Sign in</a>]
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="rb0bot"><div></div></div>
+                </div>
+
+                <div class="rb0roundbox">
+                    <div class="rb0top"><div></div></div>
+
+                    <div class="rb0content" align="center">
+                        <table>
+                            <tr>
+                                <td>
                                     These are the <b>manual</b> services.
                                     <b><a href="myaccountpage">Sign up</a></b> for a JsUnit account<br>
                                     to get access to JsUnit web services using SOAP.
-                                    <br>
-                                    <b>Need help?</b> Email <a href="mailto:support@jsunit.net">support@jsunit.net</a>
-                                    or visit:<br>
-                                    [ <a href="http://www.jsunit.net/">jsunit.net</a>
-                                    | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
-                                    | <a href="http://group.jsunit.net/">group.jsunit.net</a>
-                                    | <a href="http://wiki.jsunit.net/">wiki.jsunit.net</a> ]
                                 </td>
                             </tr>
                         </table>

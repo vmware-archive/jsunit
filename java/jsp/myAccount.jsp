@@ -21,11 +21,11 @@
 </tr>
 <tr>
     <td width="24%" colspan="2" nowrap>
-        <b>Create a JsUnit account</b>
+        <b>Create a JsUnit account:</b>
     </td>
     <td width="1%">&nbsp;</td>
     <td width="25%" colspan="2" nowrap>
-        <b>Aleady have a JsUnit account? Sign in.</b>
+        <b>Aleady have a JsUnit account? Sign in:</b>
     </td>
     <td width="1%" rowspan="20">&nbsp;</td>
     <td width="48%" rowspan="20" valign="top">
