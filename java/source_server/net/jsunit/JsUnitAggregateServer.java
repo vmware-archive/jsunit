@@ -114,9 +114,9 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         super.setUpHttpServer();
         addRootContext();
         ServletHttpContext axisContext = new ServletHttpContext();
-        axisContext.setContextPath("axis");
+        axisContext.setContextPath("/");
         axisContext.setResourceBase(configuration.getResourceBase().toString());
-        axisContext.addServlet("AxisAdmin", "/admin", AdminServlet.class.getName());
+        axisContext.addServlet("AxisAdmin", "/axisadmin", AdminServlet.class.getName());
         axisContext.addServlet("Axis", "/services/*", AxisServlet.class.getName());
         axisContext.setMimeMapping("wsdl", "text/xml");
         axisContext.setMimeMapping("xsd", "text/xml");

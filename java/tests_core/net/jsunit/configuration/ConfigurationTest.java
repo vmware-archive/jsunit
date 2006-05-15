@@ -293,7 +293,7 @@ public class ConfigurationTest extends TestCase {
 
     static class FullValidForBothConfigurationSource implements ConfigurationSource {
         public static final String IP_ADDRESS = "123.45.67.890";
-        public static final String HOSTNAME = "server.jsunit.net";
+        public static final String HOSTNAME = "services.jsunit.net";
         public static final String USE_CAPTCHA = "true";
 
         public String resourceBase() {

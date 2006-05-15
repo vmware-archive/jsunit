@@ -172,16 +172,16 @@
 
     <target name="_generate_wsdl">
         <axis-java2wsdl
-                namespace="https://server.jsunit.net/services"
+                namespace="https://services.jsunit.net/services"
                 classname="net.jsunit.services.TestRunService"
                 output="wsdl/TestRunService.wsdl"
-                location="https://server.jsunit.net/services/TestRunService">
+                location="https://services.jsunit.net/services/TestRunService">
             <classpath>
                 <path location="${bin}"/>
             </classpath>
             <classpath refid="lib_classpath"/>
-            <mapping package="net.jsunit.model" namespace="https://server.jsunit.net/model"/>
-            <mapping package="net.jsunit.services" namespace="https://server.jsunit.net/services"/>
+            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
+            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
         </axis-java2wsdl>
     </target>
 
@@ -194,9 +194,9 @@
                 <path location="${bin}"/>
             </classpath>
             <classpath refid="lib_classpath"/>
-            <mapping package="net.jsunit.services" namespace="https://server.jsunit.net/services"/>
-            <mapping package="net.jsunit.model" namespace="https://server.jsunit.net/model"/>
-            <nsexclude namespace="https://server.jsunit.net/model"/>
+            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
+            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
+            <nsexclude namespace="https://services.jsunit.net/model"/>
         </axis-wsdl2java>
         <delete file="${genfiles_server}/net/jsunit/services/TestRunService.java"/>        
         <delete file="${genfiles_server}/net/jsunit/services/TestRunServiceSoapBindingImpl.java"/>
@@ -210,9 +210,9 @@
                 <path location="${bin}"/>
             </classpath>
             <classpath refid="lib_classpath"/>
-            <mapping package="net.jsunit.services" namespace="https://server.jsunit.net/services"/>
-            <mapping package="net.jsunit.model" namespace="https://server.jsunit.net/model"/>
-            <nsexclude namespace="https://server.jsunit.net/model"/>
+            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
+            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
+            <nsexclude namespace="https://services.jsunit.net/model"/>
         </axis-wsdl2java>
         <delete file="${genfiles_client}/net/jsunit/services/TestRunService.java"/>
     </target>

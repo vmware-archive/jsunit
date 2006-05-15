@@ -19,8 +19,8 @@ public class ExperimentalClientTestSuite {
 
     public static Test subSuite() {
         File testPage = new File("tests" + File.separator + "jsUnitAssertionTests.html");
-        String serviceURL = "http://services.jsunit.net/axis/services/TestRunService";
-        ClientTestSuite suite = new ClientTestSuite(serviceURL, testPage);
+        String serviceURL = "http://services.jsunit.net/services/TestRunService";
+        ClientTestSuite suite = new ClientTestSuite(serviceURL, "username", "password", testPage);
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.FIREFOX);
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER);
 //        suite.addBrowser(PlatformType.WINDOWS, BrowserType.OPERA);

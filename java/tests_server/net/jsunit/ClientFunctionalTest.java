@@ -36,7 +36,7 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void testSimple() throws Exception {
         File file = new File(directory, "a test page.html");
-        TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
+        TestRunClient client = new TestRunClient("http://localhost:" + port + "/services/TestRunService");
         client.addBrowserSpec(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.OPERA));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.LINUX, BrowserType.FIREFOX));
@@ -51,7 +51,7 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void testInvalidAuthentication() throws Exception {
         File file = new File(directory, "a test page.html");
-        TestRunClient client = new TestRunClient("http://localhost:" + port + "/axis/services/TestRunService");
+        TestRunClient client = new TestRunClient("http://localhost:" + port + "/services/TestRunService");
         client.setUsername("bad username");
         client.setPassword("bad password");
         try {

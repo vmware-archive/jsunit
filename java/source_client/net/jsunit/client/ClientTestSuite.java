@@ -16,10 +16,12 @@ public class ClientTestSuite extends ActiveTestSuite {
     private File testPage;
     private List<RemoteTestRunTest> tests = new ArrayList<RemoteTestRunTest>();
 
-    public ClientTestSuite(String serviceURL, File testPage) {
+    public ClientTestSuite(String serviceURL, String username, String password, File testPage) {
         super("JsUnit client suite");
         this.testPage = testPage;
         client = new TestRunClient(serviceURL);
+        client.setUsername(username);
+        client.setPassword(password);
     }
 
     public void run(TestResult testResult) {

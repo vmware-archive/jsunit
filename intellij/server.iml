@@ -18,6 +18,7 @@
       <sourceFolder url="file://$MODULE_DIR$/../java/tests_server" isTestSource="true" />
     </content>
     <content url="file://$MODULE_DIR$/../scratch" />
+    <content url="file://$MODULE_DIR$/../services" />
     <content url="file://$MODULE_DIR$/../skins" />
     <content url="file://$MODULE_DIR$/../uploaded" />
     <content url="file://$MODULE_DIR$/../wsdl" />

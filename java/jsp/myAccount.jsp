@@ -46,9 +46,9 @@
                             <ul>
                                 <li>
                                     <b>access to the JsUnit services as web services over SOAP</b>. Using the
-                                    TestRunService at
-                                    <a href="http://69.181.237.145/axis/services/TestRunService?wsdl">http://services.jsunit.net/services/TestRunService</a>,
-                                    you can run your tests programmatically on the same browsers available here.
+                                    TestRunService (<a href="/services/TestRunService?wsdl">see WSDL</a>), you can run
+                                    your tests programmatically.  A <b>Java client</b> is available that wraps your run in a
+                                    JUnit test suite.  A <b>Ruby client</b> is in development.
                                 </li>
                                 <li>
                                     <b>unlimited access to the JsUnit manual services</b> with any number of browsers
