@@ -205,7 +205,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     }
 
     public boolean hasPlatformType(PlatformType platformType) {
-        return getOsName() != null && getOsName().indexOf(platformType.getDisplayName()) != -1;
+        return getOsName() != null && getOsName().toLowerCase().indexOf(platformType.getDisplayName().toLowerCase()) != -1;
     }
 
     public Iterator<BrowserResult> iterator() {

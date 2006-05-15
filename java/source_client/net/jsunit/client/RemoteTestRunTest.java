@@ -25,7 +25,7 @@ class RemoteTestRunTest extends TestCase {
     public void notifyResult(DistributedTestRunResult distributedResult) {
         BrowserResult browserResult = distributedResult.findBrowserResultMatching(browserSpec);
         if (browserResult == null)
-            error = new NoSuchPlatformBrowserException();
+            error = new NoSuchPlatformBrowserException(browserSpec);
         else if (!browserResult.wasSuccessful()) {
             StringBuffer buffer = new StringBuffer();
             browserResult.addErrorStringTo(buffer);
