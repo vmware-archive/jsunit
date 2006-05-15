@@ -7,13 +7,17 @@ import net.jsunit.model.RemoteServerConfigurationSource;
 import net.jsunit.services.DefaultUserRepository;
 import net.jsunit.services.User;
 import net.jsunit.services.UserRepository;
+import net.jsunit.utility.FileUtility;
 import org.apache.axis.transport.http.AdminServlet;
 import org.apache.axis.transport.http.AxisServlet;
 import org.apache.jasper.servlet.JspServlet;
+import org.mortbay.http.SocketListener;
+import org.mortbay.http.SslListener;
 import org.mortbay.http.handler.ForwardHandler;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -178,6 +182,17 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         names.add("uploadrunnerpage");
         names.add("urlrunnerpage");
         return names;
+    }
+
+    protected SocketListener createSocketListener() {
+        if (FileUtility.doesFileExist("java" + File.separator + "config" + File.separator + "keystore")) {
+            SslListener sslListener = new SslListener();
+            sslListener.setKeystore("java/config/keystore");
+            sslListener.setPassword(System.getProperty(PROPERTY_SSL_PASSWORD));
+            sslListener.setKeyPassword(System.getProperty(PROPERTY_SSL_PASSWORD));
+            return sslListener;
+        } else
+            return super.createSocketListener();
     }
 
 }

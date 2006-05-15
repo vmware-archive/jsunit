@@ -8,20 +8,17 @@ import net.jsunit.configuration.ConfigurationException;
 import net.jsunit.configuration.ConfigurationProperty;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.results.Skin;
-import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.XmlUtility;
 import net.jsunit.version.VersionChecker;
 import org.jdom.Element;
 import org.mortbay.http.HttpServer;
 import org.mortbay.http.SocketListener;
-import org.mortbay.http.SslListener;
 import org.mortbay.http.handler.ForwardHandler;
 import org.mortbay.http.handler.ResourceHandler;
 import org.mortbay.jetty.servlet.ServletHttpContext;
 import org.mortbay.start.Monitor;
 import org.mortbay.util.FileResource;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -141,18 +138,13 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     }
 
     private void setUpSocketListener() {
-        SocketListener listener;
-        if (FileUtility.doesFileExist("java" + File.separator + "config" + File.separator + "keystore")) {
-            SslListener sslListener = new SslListener();
-            sslListener.setKeystore("java/config/keystore");
-            sslListener.setPassword(System.getProperty(PROPERTY_SSL_PASSWORD));
-            sslListener.setKeyPassword(System.getProperty(PROPERTY_SSL_PASSWORD));
-            listener = sslListener;
-        } else {
-            listener = new SocketListener();
-        }
+        SocketListener listener = createSocketListener();
         listener.setPort(configuration.getPort());
         server.addListener(listener);
+    }
+
+    protected SocketListener createSocketListener() {
+        return new SocketListener();
     }
 
     protected List<String> servletNames() {
