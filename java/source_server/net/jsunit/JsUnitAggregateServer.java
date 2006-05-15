@@ -72,6 +72,10 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
 
     protected synchronized void preStart() {
         fetchRemoteConfigurations();
+    }
+
+    protected void postStart() {
+        super.postStart();
         updater = new RemoteConfigurationCacheUpdater(this);
         updater.start();
     }

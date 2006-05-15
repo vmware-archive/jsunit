@@ -71,11 +71,15 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         logStatus(startingServerStatusMessage());
         server.start();
         startDate = new Date();
-        if (serverType.shouldPerformUpToDateCheck())
-            performUpToDateCheck();
+        postStart();
     }
 
     protected void preStart() {
+    }
+
+    protected void postStart() {
+        if (serverType.shouldPerformUpToDateCheck())
+            performUpToDateCheck();
     }
 
     private void performUpToDateCheck() {
