@@ -62,6 +62,10 @@
                 alert("Please choose 1 or more browsrs.")
                 return false;
             }
+            if (tooManyBrowsersAreChecked()) {
+                alert("If you do not have a JsUnit account, you may only select at most 3 browsers per test run.\nWant more? Sign up for a JsUnit account.");
+                return false;
+            }
         <%if (server.getConfiguration().useCaptcha()) {%>
             if (document.getElementById("attemptedCaptchaAnswer").value == "") {
                 alert("Please enter the CAPTCHA text.");
@@ -72,15 +76,6 @@
             return true;
         }
 
-        function atLeastOneBrowserIsChecked() {
-            var browserCheckboxes = document.forms[0]["urlId_browserId"];
-            for (var i = 0; i < browserCheckboxes.length; i++) {
-                var browserCheckbox = browserCheckboxes[i];
-                if (browserCheckbox.checked)
-                    return true;
-            }
-            return false;
-        }
     </script>
     <link rel="stylesheet" type="text/css" href="./css/jsUnitStyle.css">
 </head>
@@ -140,8 +135,8 @@
                             <a href="#">Learn more</a>.
                             <br>
                             <br>
-                            <font size="-2">Note: uploaded Test Pages are not permanently stored on our servers.
-                                <a href="#">Learn more</a>.</font>
+                            Note: uploaded Test Pages are not permanently stored on our servers, and are sent over HTTPS
+                            for security reasons. <a href="#">Learn more</a>.
                         </td>
                     </tr>
                 </table>
