@@ -56,7 +56,7 @@
                                     and no need to enter the CAPTCHA text.
                                 </li>
                                 <li>
-                                    An increased upper limit on test run times (various levels are available)
+                                    An <b>increased upper limit on test run times</b> (various levels are available)
                                 </li>
                             </ul>
                         </td>
