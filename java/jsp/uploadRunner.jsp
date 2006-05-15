@@ -103,7 +103,7 @@
     <td width="23%" valign="top">
         <input type="submit" value="Run" onclick="return verifyRequiredFieldsEntered()">
     </td>
-    <td width="1%" rowspan="50">&nbsp;</td>
+    <td width="1%" rowspan="50"></td>
     <td width="48%" rowspan="50" valign="top">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
@@ -147,7 +147,7 @@
 
             <div class="rb1bot"><div></div></div></div>
     </td>
-    <td width="1%" rowspan="50">&nbsp;</td>
+    <td width="1%" rowspan="50"></td>
 </tr>
 <%
 
@@ -170,14 +170,22 @@
 
 %>
 <tr id="addReferencedJsFileRow">
-    <td width="5%">&nbsp;</td>
+    <td width="5%"></td>
     <td width="45%" colspan="2" valign="top">
         <a href="javascript:addReferencedJsFile()" id="addReferencedJsFile">
             add referenced .js file
         </a>
     </td>
 </tr>
-
+<tr>
+    <td width="5%"></td>
+    <td colspan="2">
+        <font size="-2">
+            Because you are not signed in, you may only upload Test Pages, and not Test Suites. Want to upload Test
+            Suites? <a href="/jsunit/myaccountpage">Sign up</a> for a JsUnit account.
+        </font>
+    </td>
+</tr>
 <tr>
     <td width="5%" valign="top">
         <b>Browsers:</b>

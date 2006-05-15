@@ -51,5 +51,7 @@
     </tr>
 
 </table>
-<font size="-2">Since you are not signed in, you may select at most 3 browsers per test run.<br>Want more?
-    <a href="/jsunit/myaccountpage">Sign up</a> for a JsUnit account!</font>
+<font size="-2">
+    Because you are not signed in, you may select at most 3 browsers per test run. Want more?
+    <a href="/jsunit/myaccountpage">Sign up</a> for a JsUnit account.
+</font>

@@ -118,7 +118,7 @@
 <%}%>
 
 <td class="tabHeaderSeparator" width="70%" align="center">
-    [ <a href="http://www.jsunit.net/">jsunit.net</a>
+    [ <a href="http://www.jsunit.net/">www.jsunit.net</a>
     | <a href="http://blog.jsunit.net/">blog.jsunit.net</a>
     | <a href="http://group.jsunit.net/">group.jsunit.net</a>
     | <a href="http://wiki.jsunit.net/">wiki.jsunit.net</a> ]

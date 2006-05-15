@@ -23,11 +23,11 @@
     <td width="24%" colspan="2" nowrap>
         <b>Create a JsUnit account:</b>
     </td>
-    <td width="1%">&nbsp;</td>
+    <td width="1%"></td>
     <td width="25%" colspan="2" nowrap>
         <b>Aleady have a JsUnit account? Sign in:</b>
     </td>
-    <td width="1%" rowspan="20">&nbsp;</td>
+    <td width="1%" rowspan="20"></td>
     <td width="48%" rowspan="20" valign="top">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
@@ -65,6 +65,9 @@
                                 <li>
                                     An <b>increased upper limit on test run times</b> (various levels are available)
                                 </li>
+                                <li>
+                                    The ability to run test <b>suites</b> on the manual upload runner
+                                </li>
                             </ul>
                         </td>
                     </tr>
@@ -73,7 +76,7 @@
 
             <div class="rb1bot"><div></div></div></div>
     </td>
-    <td width="1%" rowspan="20">&nbsp;</td>
+    <td width="1%" rowspan="20"></td>
 
 </tr>
 <tr>
@@ -83,7 +86,7 @@
     <td>
         <input type="text" name="user.firstName" tabindex="1">
     </td>
-    <td>&nbsp;</td>
+    <td></td>
     <td nowrap align="right">
         <b>Email address:</b>
     </td>
@@ -98,7 +101,7 @@
     <td>
         <input type="text" name="user.lastName" tabindex="2">
     </td>
-    <td>&nbsp;</td>
+    <td></td>
     <td align="right" nowrap>
         <b>Password:</b>
     </td>
@@ -113,8 +116,8 @@
     <td>
         <input type="text" name="user.emailAddress" tabindex="3">
     </td>
-    <td>&nbsp;</td>
-    <td>&nbsp;</td>
+    <td></td>
+    <td></td>
     <td>
         <input type="submit" value="Sign in" class="button" tabindex="103">
     </td>
@@ -126,7 +129,7 @@
     <td>
         <input type="password" name="password1" tabindex="4">
     </td>
-    <td colspan="3">&nbsp;</td>
+    <td colspan="3"></td>
 </tr>
 <tr>
     <td align="right" valign="middle" nowrap>
@@ -135,19 +138,17 @@
     <td>
         <input type="password" name="password2" tabindex="5">
     </td>
-    <td colspan="3">&nbsp;</td>
+    <td colspan="3"></td>
 </tr>
 <tr>
     <td colspan="5"></td>
 </tr>
 <tr>
-    <td>
-        &nbsp;
-    </td>
+    <td></td>
     <td>
         <input type="submit" value="Create account" class="button" tabindex="6">
     </td>
-    <td colspan="3">&nbsp;</td>
+    <td colspan="3"></td>
 </tr>
 <tr>
     <td colspan="6"></td>

@@ -63,7 +63,7 @@
                         <input type="text" name="url" id="url" size="60" value="<%=url%>">&nbsp;
                         <input type="submit" class="button" value="Run" onclick="return verifyRequiredFieldsEntered()">
                     </td>
-                    <td width="1%" rowspan="50">&nbsp;</td>
+                    <td width="1%" rowspan="50"></td>
                     <td width="48%" rowspan="50" valign="top">
                         <div class="rb1roundbox">
                             <div class="rb1top"><div></div></div>
@@ -113,7 +113,7 @@
 
                             <div class="rb1bot"><div></div></div></div>
                     </td>
-                    <td width="1%" rowspan="50">&nbsp;</td>
+                    <td width="1%" rowspan="50"></td>
                 </tr>
                 <tr>
                     <td width="5%" valign="top">

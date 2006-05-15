@@ -120,7 +120,6 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         axisContext.addServlet("Axis", "/services/*", AxisServlet.class.getName());
         axisContext.setMimeMapping("wsdl", "text/xml");
         axisContext.setMimeMapping("xsd", "text/xml");
-        axisContext.addWelcomeFile("services.html");
 
         ResourceHandler resourceHandler = new ResourceHandler();
         resourceHandler.setDirAllowed(false);

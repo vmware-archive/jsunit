@@ -54,7 +54,7 @@
     <td width="45%" valign="top" height="160">
         <textarea id="fragment" name="fragment" style="width:97%;height:97%" rows="10"></textarea>
     </td>
-    <td width="1%" rowspan="5">&nbsp;</td>
+    <td width="1%" rowspan="5"></td>
     <td width="48%" rowspan="5" valign="top">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
@@ -133,10 +133,10 @@
 
             <div class="rb1bot"><div></div></div></div>
     </td>
-    <td width="1%" rowspan="5">&nbsp;</td>
+    <td width="1%" rowspan="5"></td>
 </tr>
 <tr>
-    <td width="5%" height="1">&nbsp;</td>
+    <td width="5%" height="1"></td>
     <td width="45%" valign="top">
         <input type="submit" class="button" value="Run test fragment" onclick="return verifyRequiredFieldsEntered()">
     </td>
