@@ -3,7 +3,6 @@
 <%@ page import="net.jsunit.ServerRegistry" %>
 <%@ page import="net.jsunit.configuration.RemoteConfiguration" %>
 <%@ page import="net.jsunit.model.Browser" %>
-<%@ page import="net.jsunit.utility.StringUtility" %>
 <%
     JsUnitAggregateServer server = ServerRegistry.getAggregateServer();
     PlatformType platformType = server.getPlatformType();
@@ -35,9 +34,6 @@
                             <tr>
                                 <td align="center">
                                     <b>
-                                        <%if (!StringUtility.isEmpty(server.getConfiguration().getDescription())) {%>
-                                        <%=server.getConfiguration().getDescription()%> -
-                                        <%}%>
                                         JsUnit Online Services
                                     </b>
                                 </td>
