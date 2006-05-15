@@ -17,6 +17,9 @@
 <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;" align="left">
 <table width="100%" align="left">
 <tr>
+    <td colspan="*"></td>
+</tr>
+<tr>
     <td width="24%" colspan="2" nowrap>
         <b>Create a JsUnit account</b>
     </td>
