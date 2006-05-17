@@ -1,6 +1,7 @@
 package net.jsunit;
 
 import junit.framework.TestSuite;
+import net.jsunit.interceptor.FragmentInterceptorTest;
 
 public class AggregateServerFunctionalTestSuite {
 
@@ -9,6 +10,7 @@ public class AggregateServerFunctionalTestSuite {
         result.addTestSuite(RunnerServiceAggregateServerFunctionalTest.class);
         result.addTestSuite(ClientFunctionalTest.class);
         result.addTestSuite(FragmentRunnerPageAggregateServerFunctionalTest.class);
+        result.addTestSuite(FragmentInterceptorTest.class);
         result.addTestSuite(FragmentRunnerPageFunctionalTest.class);
         result.addTestSuite(HelpPageFunctionalTest.class);
         result.addTestSuite(CaptchaFunctionalTest.class);
