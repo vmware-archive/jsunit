@@ -158,9 +158,16 @@
             </result>
         </action>
 
-        <action name="processcreateaccount" class="net.jsunit.action.ProcessCreateAccountAction">
+        <action name="accountcreatedpage" class="net.jsunit.action.PageAction">
             <result name="success" type="dispatcher">
                 <param name="location">java/jsp/accountCreated.jsp</param>
+            </result>
+        </action>
+
+        <action name="processcreateaccount" class="net.jsunit.action.ProcessCreateAccountAction">
+            <result name="success" type="redirect">
+                <param name="location">accountcreatedpage</param>
+                <param name="parse">false</param>
             </result>
             <result name="input" type="dispatcher">
                 <param name="location">java/jsp/myAccount.jsp</param>
