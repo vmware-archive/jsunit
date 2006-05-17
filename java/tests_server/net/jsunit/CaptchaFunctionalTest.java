@@ -10,22 +10,20 @@ import java.net.URL;
 
 public class CaptchaFunctionalTest extends AggregateServerFunctionalTestCase {
 
-    protected FunctionalTestAggregateConfigurationSource createConfigurationSource() {
-        return new FunctionalTestAggregateConfigurationSource(port) {
-            public String useCaptcha() {
-                return String.valueOf(true);
-            }
-        };
-    }
-
     public void setUp() throws Exception {
         super.setUp();
+        server.getConfiguration().setUseCaptcha(true);        
         webTester.beginAt("/fragmentrunnerpage");
         mockHitter.setDocumentRetrievalStrategy(new DocumentRetrievalStrategy() {
             public Document get(URL url) {
                 return new TestRunResult().asXmlDocument();
             }
         });
+    }
+
+    public void tearDown() throws Exception {
+        server.getConfiguration().setUseCaptcha(false);
+        super.tearDown();
     }
 
     public void testHitToRunnerNotAllowed() throws Exception {

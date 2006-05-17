@@ -37,18 +37,20 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
     public static final String PROPERTY_SSL_PASSWORD = "jsunitsslpassword";
 
     protected AbstractJsUnitServer(Configuration configuration, ServerType type) {
-        this.configuration = configuration;
         this.serverType = type;
-        ensureConfigurationIsValid();
-        ServerRegistry.registerServer(this);
+        setConfiguration(configuration);
+        registerServerInstance();
     }
 
-    protected void ensureConfigurationIsValid() {
-        if (!configuration.isValidFor(serverType)) {
-            ConfigurationProperty property = serverType.getPropertiesInvalidFor(configuration).get(0);
-            throw new ConfigurationException(property, property.getValueString(configuration));
+    private void setConfiguration(Configuration configuration) {
+        this.configuration = configuration;
+        if (!this.configuration.isValidFor(serverType)) {
+            ConfigurationProperty property = serverType.getPropertiesInvalidFor(this.configuration).get(0);
+            throw new ConfigurationException(property, property.getValueString(this.configuration));
         }
     }
+
+    protected abstract void registerServerInstance();
 
     public boolean isAggregateServer() {
         return serverType.isAggregate();

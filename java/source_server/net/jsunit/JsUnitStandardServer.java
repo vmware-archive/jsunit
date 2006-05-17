@@ -28,10 +28,9 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         this(configuration, new FileBrowserResultRepository(configuration.getLogsDirectory()), temporary);
     }
 
-    public JsUnitStandardServer(Configuration configuration, BrowserResultRepository browserResultRepository, boolean temporary) {
+    public JsUnitStandardServer(Configuration configuration, BrowserResultRepository repository, boolean temporary) {
         super(configuration, temporary ? ServerType.STANDARD_TEMPORARY : ServerType.STANDARD);
-        this.browserResultRepository = browserResultRepository;
-        addTestRunListener(new BrowserResultLogWriter(browserResultRepository));
+        setResultRepository(repository);
     }
 
     public static void main(String args[]) {
@@ -203,4 +202,14 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
     public BrowserResult lastResult() {
         return lastResult;
     }
+
+    protected void registerServerInstance() {
+        ServerRegistry.registerStandardServer(this);
+    }
+
+    public void setResultRepository(BrowserResultRepository repository) {
+        this.browserResultRepository = repository;
+        addTestRunListener(new BrowserResultLogWriter(browserResultRepository));
+    }
+
 }

@@ -1,6 +1,5 @@
 package net.jsunit;
 
-import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.ResultType;
 import org.jdom.Document;
 
@@ -8,30 +7,22 @@ import java.net.URLEncoder;
 
 public class RunnerFunctionalTest extends StandardServerFunctionalTestCase {
 
-    protected ConfigurationSource createConfigurationSource() {
-        return new FunctionalTestConfigurationSource(port) {
-            public String runnerReferrerRestrict() {
-                return null;
-            }
-        };
-    }
-
     public void testSimple() throws Exception {
         webTester.beginAt("runner");
         Document result = responseXmlDocument();
         assertRunResult(
                 result,
                 ResultType.SUCCESS,
-                "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html", 2);
+                "http://localhost:" + port() + "/jsunit/tests/jsUnitUtilityTests.html", 2);
     }
 
     public void testOverrideUrl() throws Exception {
-        webTester.beginAt("runner?url=" + URLEncoder.encode("http://127.0.0.1:" + port + "/jsunit/testRunner.html?testPage=http://127.0.0.1:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true", "UTF-8"));
+        webTester.beginAt("runner?url=" + URLEncoder.encode("http://127.0.0.1:" + port() + "/jsunit/testRunner.html?testPage=http://127.0.0.1:" + port() + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true", "UTF-8"));
         Document result = responseXmlDocument();
         assertRunResult(
                 result,
                 ResultType.SUCCESS,
-                "http://127.0.0.1:" + port + "/jsunit/tests/jsUnitUtilityTests.html", 2);
+                "http://127.0.0.1:" + port() + "/jsunit/tests/jsUnitUtilityTests.html", 2);
     }
 
     public void testSpecifyBrowser() throws Exception {
@@ -40,7 +31,7 @@ public class RunnerFunctionalTest extends StandardServerFunctionalTestCase {
         assertRunResult(
                 result,
                 ResultType.SUCCESS,
-                "http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html", 1);
+                "http://localhost:" + port() + "/jsunit/tests/jsUnitUtilityTests.html", 1);
     }
 
     public void testSpecifyInvalidBrowser() throws Exception {

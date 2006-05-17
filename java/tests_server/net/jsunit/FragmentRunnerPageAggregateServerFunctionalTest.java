@@ -19,7 +19,7 @@ public class FragmentRunnerPageAggregateServerFunctionalTest extends AggregateSe
         webTester.checkCheckbox("urlId_browserId", "0_1");
         webTester.checkCheckbox("urlId_browserId", "1_0");
         webTester.checkCheckbox("urlId_browserId", "1_1");
-        webTester.submit();
+        webTester.submit("runTest");
         String hitToServer1 = urlFor_in(FunctionalTestAggregateConfigurationSource.REMOTE_SERVER_URL_1, last2UrlsPassedToMockHitter());
         String hitToServer2 = urlFor_in(FunctionalTestAggregateConfigurationSource.REMOTE_SERVER_URL_2, last2UrlsPassedToMockHitter());
         assertTrue(hitToServer1, hitToServer1.indexOf("browserId=0") != -1);

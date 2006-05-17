@@ -5,6 +5,7 @@ import net.jsunit.model.Browser;
 import net.jsunit.model.BrowserSource;
 import net.jsunit.model.BrowserSpecification;
 import net.jsunit.utility.FileUtility;
+import net.jsunit.utility.StringUtility;
 import org.jdom.Document;
 import org.jdom.Element;
 
@@ -48,8 +49,6 @@ public class Configuration implements BrowserSource {
         osString = source.osString();
         ipAddress = source.ipAddress();
         hostname = source.hostname();
-        if (useCaptcha)
-            loadSecretKey();
     }
 
     private void loadSecretKey() {
@@ -104,7 +103,7 @@ public class Configuration implements BrowserSource {
     }
 
     public String toString() {
-        return getDescription() == null ? super.toString() : getDescription();
+        return StringUtility.isEmpty(getDescription()) ? super.toString() : getDescription();
     }
 
     public List<Browser> getBrowsers() {
@@ -226,6 +225,8 @@ public class Configuration implements BrowserSource {
 
     public void setUseCaptcha(boolean useCaptcha) {
         this.useCaptcha = useCaptcha;
+        if (useCaptcha)
+            loadSecretKey();        
     }
 
     public String getSecretKey() {

@@ -2,14 +2,14 @@ package net.jsunit.interceptor;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.action.UserRepositoryAware;
-import net.jsunit.model.UserRepository;
-import net.jsunit.model.DefaultUserRepository;
+import net.jsunit.repository.UserRepository;
+import net.jsunit.repository.InMemoryUserRepository;
 
 public class UserRepositoryInterceptor extends JsUnitInterceptor {
 
     public static UserRepositoryFactory factory = new UserRepositoryFactory() {
         public UserRepository create() {
-            return new DefaultUserRepository();
+            return new InMemoryUserRepository();
         }
     };
 

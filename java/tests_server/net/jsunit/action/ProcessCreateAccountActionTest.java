@@ -1,7 +1,7 @@
 package net.jsunit.action;
 
 import junit.framework.TestCase;
-import net.jsunit.services.MockUserRepository;
+import net.jsunit.repository.MockUserRepository;
 import net.jsunit.model.User;
 
 public class ProcessCreateAccountActionTest extends TestCase {

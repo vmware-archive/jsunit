@@ -2,7 +2,7 @@ package net.jsunit.action;
 
 import com.opensymphony.xwork.Action;
 import net.jsunit.model.User;
-import net.jsunit.model.UserRepository;
+import net.jsunit.repository.UserRepository;
 
 public class ProcessCreateAccountAction implements Action, UserRepositoryAware {
 

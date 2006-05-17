@@ -169,6 +169,17 @@
             <interceptor-ref name="userRepository"/>
         </action>
 
+        <action name="processsignin" class="net.jsunit.action.ProcessSignInAction">
+            <result name="success" type="dispatcher">
+                <param name="location">java/jsp/fragmentRunner.jsp</param>
+            </result>
+            <result name="input" type="dispatcher">
+                <param name="location">java/jsp/myAccount.jsp</param>
+            </result>
+            <interceptor-ref name="standardStack"/>
+            <interceptor-ref name="userRepository"/>
+        </action>
+
     </package>
 
 </xwork>

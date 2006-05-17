@@ -38,7 +38,6 @@
 </head>
 
 <body bgcolor="#eeeeee">
-<form action="/jsunit/runner" method="post" target="resultsFrame">
 <jsp:include page="header.jsp"/>
 <table cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF">
 <jsp:include page="tabRow.jsp">
@@ -46,6 +45,7 @@
 </jsp:include>
 <tr>
 <td colspan="13" style="border-style: solid;border-bottom-width:1px;border-top-width:0px;border-left-width:1px;border-right-width:1px;border-color:#000000;">
+<form action="/jsunit/runner" name="fragmentRunnerForm" method="post" target="resultsFrame">
 <table width="100%">
 <tr>
     <td width="5%" valign="top">
@@ -138,7 +138,7 @@
 <tr>
     <td width="5%" height="1"></td>
     <td width="45%" valign="top">
-        <input type="submit" class="button" value="Run test fragment" onclick="return verifyRequiredFieldsEntered()">
+        <input type="submit" name="runTest" class="button" value="Run test fragment" onclick="return verifyRequiredFieldsEntered()">
     </td>
 </tr>
 <tr>
@@ -170,10 +170,10 @@
 </tr>
 <%}%>
 </table>
+</form>
 </td>
 </tr>
 </table>
-</form>
 
 <b>Test results:</b>
 <iframe name="resultsFrame" width="100%" height="250" src="/jsunit/app/emptyPage.html"></iframe>

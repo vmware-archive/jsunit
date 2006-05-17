@@ -40,12 +40,12 @@ public class DisplayerFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testValid() throws Exception {
         Browser browser = new Browser(Browser.DEFAULT_SYSTEM_BROWSER, 0);
-        standardServer().launchBrowserTestRun(new BrowserLaunchSpecification(browser));
+        server.launchBrowserTestRun(new BrowserLaunchSpecification(browser));
         BrowserResult browserResult = new BrowserResult();
         String id = String.valueOf(System.currentTimeMillis());
         browserResult.setId(id);
         browserResult.setBrowser(browser);
-        standardServer().accept(browserResult);
+        server.accept(browserResult);
         webTester.beginAt("displayer?id=" + id + "&browserId=0");
         assertEquals(XmlUtility.asString(new Document(browserResult.asXml())), webTester.getDialog().getResponseText());
     }

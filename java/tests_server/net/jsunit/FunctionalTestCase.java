@@ -2,8 +2,6 @@ package net.jsunit;
 
 import com.meterware.httpunit.HttpUnitOptions;
 import junit.framework.TestCase;
-import net.jsunit.configuration.Configuration;
-import net.jsunit.configuration.ConfigurationSource;
 import net.jsunit.model.BrowserResultWriter;
 import net.jsunit.model.ResultType;
 import net.sourceforge.jwebunit.WebTester;
@@ -24,37 +22,17 @@ public abstract class FunctionalTestCase extends TestCase {
     }
 
     protected WebTester webTester;
-    protected JsUnitServer server;
-    protected int port;
-    protected Configuration configuration;
 
-    public void setUp() throws Exception {
-        super.setUp();
-        port = new TestPortManager().newPort();
-        configuration = new Configuration(createConfigurationSource());
-        server = createServer();
-        server.start();
+    protected void createWebTester() {
         webTester = new WebTester();
         webTester.getTestContext().setBaseUrl(baseURL());
     }
 
-    protected abstract JsUnitServer createServer();
-
-    protected abstract ConfigurationSource createConfigurationSource();
-
     protected String baseURL() {
-        return "http://localhost:" + webTesterPort() + "/jsunit";
+        return "http://localhost:" + port() + "/jsunit";
     }
 
-    protected int webTesterPort() {
-        return port;
-    }
-
-    public void tearDown() throws Exception {
-        if (server != null)
-            server.dispose();
-        super.tearDown();
-    }
+    protected abstract int port();
 
     protected Document responseXmlDocument() throws JDOMException, IOException {
         String responseXml = webTester.getDialog().getResponseText();

@@ -4,9 +4,10 @@ import net.jsunit.configuration.ConfigurationSource;
 
 public class FunctionalTestAggregateConfigurationSource implements ConfigurationSource {
 
-    private int port;
     public static final String REMOTE_SERVER_URL_1 = "http://server1.mycompany.com:1234/jsunit";
     public static final String REMOTE_SERVER_URL_2 = "http://server2.mycompany.com:5678/jsunit";
+
+    private int port;
 
     public FunctionalTestAggregateConfigurationSource(int port) {
         this.port = port;

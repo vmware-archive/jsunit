@@ -16,6 +16,7 @@ import net.jsunit.uploaded.UploadedTestPageTest;
 import net.jsunit.uploaded.UploadedReferencedJsFileTest;
 import net.jsunit.utility.JsUnitURLTest;
 import net.jsunit.services.TestRunServiceSoapBindingImplTest;
+import net.jsunit.repository.InMemoryUserRepositoryTest;
 
 public class PureUnitTestSuite {
 
@@ -31,6 +32,7 @@ public class PureUnitTestSuite {
         result.addTestSuite(BrowserTestRunnerInterceptorTest.class);
         result.addTestSuite(ErrorXmlRenderableTest.class);
         result.addTestSuite(DistributedTestRunResultTest.class);
+        result.addTestSuite(InMemoryUserRepositoryTest.class);
         result.addTestSuite(JsUnitURLTest.class);
         result.addTestSuite(LatestVersionActionTest.class);
         result.addTestSuite(PageActionTest.class);

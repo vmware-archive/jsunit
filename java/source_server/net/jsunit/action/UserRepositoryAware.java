@@ -1,6 +1,6 @@
 package net.jsunit.action;
 
-import net.jsunit.model.UserRepository;
+import net.jsunit.repository.UserRepository;
 
 public interface UserRepositoryAware {
 

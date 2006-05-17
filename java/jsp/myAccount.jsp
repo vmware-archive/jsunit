@@ -20,7 +20,7 @@
 </tr>
 <tr>
 <td width="24%" colspan="2" nowrap valign="top">
-    <form action="/jsunit/processsignin" method="post">
+    <form action="/jsunit/processsignin" method="post" name="signInForm">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
 
@@ -36,7 +36,7 @@
                             Email address:
                         </td>
                         <td>
-                            <input type="text" name="username">
+                            <input type="text" name="emailAddress">
                         </td>
                     </tr>
                     <tr>
@@ -44,7 +44,7 @@
                             Password:
                         </td>
                         <td>
-                            <input type="password" name="username">
+                            <input type="password" name="password">
                         </td>
                     </tr>
                     <tr>
@@ -61,7 +61,7 @@
 </td>
 <td width="1%"></td>
 <td width="24%" valign="top">
-    <form action="/jsunit/processcreateaccount" method="post">
+    <form action="/jsunit/processcreateaccount" method="post" name="createAccountForm">
         <div class="rb1roundbox">
             <div class="rb1top"><div></div></div>
 

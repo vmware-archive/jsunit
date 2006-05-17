@@ -6,16 +6,40 @@ import net.jsunit.interceptor.RemoteServerHitterInterceptor;
 
 public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCase {
 
+    protected static JsUnitAggregateServer server;
     protected MockRemoteServerHitter mockHitter;
 
     public void setUp() throws Exception {
-        createMockHitter();
+        super.setUp();
+        mockHitter = createMockHitter();
+        if (server == null)
+            createAndStartServer();
+        else {
+            server.setHitter(mockHitter);
+            ServerRegistry.registerAggregateServer(server);
+        }
         RemoteServerHitterInterceptor.factory = new RemoteServerHitterInterceptor.RemoteServerHitterFactory() {
             public RemoteServerHitter create() {
                 return mockHitter;
             }
         };
-        super.setUp();
+        createWebTester();
+    }
+
+    private void createAndStartServer() throws Exception {
+        if (server == null) {
+            Configuration configuration = new Configuration(
+                    new FunctionalTestAggregateConfigurationSource(new TestPortManager().newPort())
+            );
+            server = new JsUnitAggregateServer(configuration, mockHitter);
+            server.start();
+            Runtime.getRuntime().addShutdownHook(new Thread() {
+                public void run() {
+                    if (server != null)
+                        server.dispose();
+                }
+            });
+        }
     }
 
     public void tearDown() throws Exception {
@@ -23,13 +47,8 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         super.tearDown();
     }
 
-    protected JsUnitServer createServer() {
-        Configuration configuration = new Configuration(createConfigurationSource());
-        return new JsUnitAggregateServer(configuration, mockHitter);
-    }
-
-    protected void createMockHitter() {
-        mockHitter = new MockRemoteServerHitter();
+    protected MockRemoteServerHitter createMockHitter() {
+        MockRemoteServerHitter mockHitter = new MockRemoteServerHitter();
         mockHitter.urlToDocument.put(
                 FunctionalTestAggregateConfigurationSource.REMOTE_SERVER_URL_1 + "/config",
                 remoteServer1Configuration().asXmlDocument(ServerType.STANDARD)
@@ -38,6 +57,7 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
                 FunctionalTestAggregateConfigurationSource.REMOTE_SERVER_URL_2 + "/config",
                 remoteServer2Configuration().asXmlDocument(ServerType.STANDARD)
         );
+        return mockHitter;
     }
 
     protected Configuration remoteServer1Configuration() {
@@ -64,15 +84,6 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
         });
     }
 
-    protected FunctionalTestAggregateConfigurationSource createConfigurationSource() {
-        return new FunctionalTestAggregateConfigurationSource(port);
-    }
-
-    protected JsUnitAggregateServer aggregateServer() {
-        return (JsUnitAggregateServer) server;
-    }
-
-
     protected void assertOnLogDisplayerPage() {
         webTester.assertTitleEquals("LogDisplayer - JsUnit");
     }
@@ -92,4 +103,9 @@ public abstract class AggregateServerFunctionalTestCase extends FunctionalTestCa
     protected void assertOnMyAccountPage() {
         webTester.assertTitleEquals("My account - JsUnit");
     }
+
+    protected int port() {
+        return server.getConfiguration().getPort();
+    }
+
 }

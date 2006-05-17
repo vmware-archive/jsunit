@@ -2,6 +2,7 @@ package net.jsunit.services;
 
 import junit.framework.TestCase;
 import net.jsunit.*;
+import net.jsunit.repository.MockUserRepository;
 import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.DummyConfigurationSource;
 import net.jsunit.configuration.RemoteConfiguration;
@@ -67,7 +68,7 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
     }
 
     public void testRunTests() throws Exception {
-        binding.init(createServletEndpointContext("validUsername", "validPassword"));
+        binding.init(createServletEndpointContext(MockUserRepository.VALID_EMAIL_ADDRESS, MockUserRepository.VALID_PASSWORD));
         BrowserSpecification[] browserSpecs = new BrowserSpecification[]{
                 new BrowserSpecification(PlatformType.LINUX, BrowserType.OPERA),
                 new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER),
@@ -80,7 +81,7 @@ public class TestRunServiceSoapBindingImplTest extends TestCase {
     }
 
     public void testRunTestsWithInvalidBrowserSpecification() throws Exception {
-        binding.init(createServletEndpointContext("validUsername", "validPassword"));
+        binding.init(createServletEndpointContext(MockUserRepository.VALID_EMAIL_ADDRESS, MockUserRepository.VALID_PASSWORD));
         BrowserSpecification[] browserSpecs = new BrowserSpecification[]{
                 new BrowserSpecification(PlatformType.LINUX, BrowserType.NETSCAPE),
                 new BrowserSpecification(PlatformType.WINDOWS, BrowserType.FIREFOX)

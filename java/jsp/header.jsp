@@ -65,53 +65,54 @@
 </td>
 <td width="1%"></td>
 <td nowrap align="center" valign="top" width="30%">
-    <form action="/jsunit/processsignin" method="post">
-        <table cellpadding="0" cellspacing="2" height="100%">
-            <tr>
-                <td>
-                    <div id="marketingDiv" style="visibility:visible;position:relative">
-                        <div class="rb0roundbox">
-                            <div class="rb0top"><div></div></div>
+    <table cellpadding="0" cellspacing="2" height="100%">
+        <tr>
+            <td>
+                <div id="marketingDiv" style="visibility:visible;position:relative">
+                    <div class="rb0roundbox">
+                        <div class="rb0top"><div></div></div>
 
-                            <div class="rb0content" align="center">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            You are not signed in.
-                                            [<a href="/jsunit/myaccountpage" onclick="showSignInDiv(); return false;">Sign
-                                            in</a>]
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="rb0bot"><div></div></div>
+                        <div class="rb0content" align="center">
+                            <table>
+                                <tr>
+                                    <td>
+                                        You are not signed in.
+                                        [<a href="/jsunit/myaccountpage">Sign in</a>]
+                                    </td>
+                                </tr>
+                            </table>
                         </div>
 
-                        <div class="rb0roundbox">
-                            <div class="rb0top"><div></div></div>
-
-                            <div class="rb0content" align="center">
-                                <table>
-                                    <tr>
-                                        <td>
-                                            These are the <b>manual</b> services.
-                                            <b><a href="myaccountpage">Sign up</a></b> for a JsUnit account<br>
-                                            to get access to JsUnit web services using SOAP.
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-
-                            <div class="rb0bot"><div></div></div>
-                        </div>
+                        <div class="rb0bot"><div></div></div>
                     </div>
 
-                    <div id="signInDiv" style="visibility:hidden;position:absolute">
-                        <div class="rb0roundbox">
-                            <div class="rb0top"><div></div></div>
+                    <div class="rb0roundbox">
+                        <div class="rb0top"><div></div></div>
 
-                            <div class="rb0content">
+                        <div class="rb0content" align="center">
+                            <table>
+                                <tr>
+                                    <td>
+                                        These are the <b>manual</b> services.
+                                        <b><a href="myaccountpage">Sign up</a></b> for a JsUnit account<br>
+                                        to get access to JsUnit web services using SOAP.
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="rb0bot"><div></div></div>
+                    </div>
+                </div>
+
+<%--
+                <div id="signInDiv" style="visibility:hidden;position:absolute">
+                    <div class="rb0roundbox">
+                        <div class="rb0top"><div></div></div>
+
+                        <div class="rb0content">
+                            <form action="/jsunit/processsignin" method="post">
+
                                 <table>
                                     <tr>
                                         <td nowrap align="right">
@@ -132,18 +133,20 @@
                                     <tr>
                                         <td></td>
                                         <td>
-                                            <input type="submit" value="Sign in" class="button">
+                                            <input type="submit" name="signIn" value="Sign in" class="button">
                                         </td>
                                     </tr>
                                 </table>
-                            </div>
+                            </form>
 
-                            <div class="rb0bot"><div></div></div></div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </form>
+                        </div>
+
+                        <div class="rb0bot"><div></div></div></div>
+                </div>
+--%>
+            </td>
+        </tr>
+    </table>
 </td>
 <td width="1%"></td>
 </tr>

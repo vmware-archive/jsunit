@@ -2,9 +2,8 @@ package net.jsunit;
 
 import net.jsunit.client.TestRunClient;
 import net.jsunit.model.*;
-import net.jsunit.services.MockUserRepository;
+import net.jsunit.repository.MockUserRepository;
 import net.jsunit.utility.XmlUtility;
-import net.jsunit.configuration.Configuration;
 import org.apache.axis.AxisFault;
 import org.jdom.Document;
 
@@ -26,7 +25,7 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
                         testRunResult0().asXmlDocument() : testRunResult1().asXmlDocument();
             }
         });
-        aggregateServer().setUserRepository(new MockUserRepository());
+        server.setUserRepository(new MockUserRepository());
     }
 
     public void tearDown() throws Exception {
@@ -36,11 +35,11 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void testSimple() throws Exception {
         File file = new File(directory, "a test page.html");
-        TestRunClient client = new TestRunClient("http://localhost:" + port + "/services/TestRunService");
+        TestRunClient client = new TestRunClient("http://localhost:" + port() + "/services/TestRunService");
         client.addBrowserSpec(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.WINDOWS, BrowserType.OPERA));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.LINUX, BrowserType.FIREFOX));
-        client.setUsername(MockUserRepository.VALID_USERNAME);
+        client.setUsername(MockUserRepository.VALID_EMAIL_ADDRESS);
         client.setPassword(MockUserRepository.VALID_PASSWORD);
         DistributedTestRunResult distributedTestRunResult = client.send(file);
         assertFalse(distributedTestRunResult.wasSuccessful());
@@ -51,7 +50,7 @@ public class ClientFunctionalTest extends AggregateServerFunctionalTestCase {
 
     public void testInvalidAuthentication() throws Exception {
         File file = new File(directory, "a test page.html");
-        TestRunClient client = new TestRunClient("http://localhost:" + port + "/services/TestRunService");
+        TestRunClient client = new TestRunClient("http://localhost:" + port() + "/services/TestRunService");
         client.setUsername("bad username");
         client.setPassword("bad password");
         try {

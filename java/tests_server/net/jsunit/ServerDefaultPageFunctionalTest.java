@@ -24,7 +24,7 @@ public class ServerDefaultPageFunctionalTest extends AggregateServerFunctionalTe
     }
 
     public void testAbsoluteSlash() throws Exception {
-        webTester.getTestContext().setBaseUrl("http://localhost:" + port + "/");
+        webTester.getTestContext().setBaseUrl("http://localhost:" + port() + "/");
         webTester.beginAt("/");
         assertOnFragmentRunnerPage();
     }

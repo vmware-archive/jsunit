@@ -4,9 +4,8 @@ import net.jsunit.configuration.Configuration;
 import net.jsunit.configuration.RemoteConfiguration;
 import net.jsunit.configuration.ServerType;
 import net.jsunit.model.RemoteServerConfigurationSource;
-import net.jsunit.model.UserRepository;
-import net.jsunit.model.DefaultUserRepository;
-import net.jsunit.model.User;
+import net.jsunit.repository.InMemoryUserRepository;
+import net.jsunit.repository.UserRepository;
 import net.jsunit.utility.FileUtility;
 import org.apache.axis.transport.http.AdminServlet;
 import org.apache.axis.transport.http.AxisServlet;
@@ -27,7 +26,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     private RemoteServerHitter hitter;
     private List<RemoteConfiguration> cachedRemoteConfigurations;
     private JsUnitAggregateServer.RemoteConfigurationCacheUpdater updater;
-    private UserRepository userRepository = new DefaultUserRepository();
+    private UserRepository userRepository = new InMemoryUserRepository();
 
     public JsUnitAggregateServer(Configuration configuration) {
         this(configuration, new RemoteMachineServerHitter());
@@ -42,6 +41,10 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
 
     public JsUnitAggregateServer(Configuration configuration, RemoteServerHitter hitter) {
         super(configuration, ServerType.AGGREGATE);
+        setHitter(hitter);
+    }
+
+    public void setHitter(RemoteServerHitter hitter) {
         this.hitter = hitter;
     }
 
@@ -135,12 +138,12 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         server.addContext(axisContext);
     }
 
-    public User authenticateUser(String username, String password) {
-        return userRepository.find(username, password);
-    }
-
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public UserRepository getUserRepository() {
+        return userRepository;
     }
 
     public PlatformType getPlatformType() {
@@ -180,6 +183,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         names.add("logdisplayerpage");
         names.add("myaccountpage");
         names.add("processcreateaccount");
+        names.add("processsignin");
         names.add("uploadrunnerpage");
         names.add("urlrunnerpage");
         return names;
@@ -196,4 +200,7 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
             return super.createSocketListener();
     }
 
+    protected void registerServerInstance() {
+        ServerRegistry.registerAggregateServer(this);
+    }
 }

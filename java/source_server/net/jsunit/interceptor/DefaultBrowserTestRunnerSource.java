@@ -6,7 +6,7 @@ import net.jsunit.ServerRegistry;
 public class DefaultBrowserTestRunnerSource implements BrowserTestRunnerSource {
 
     public BrowserTestRunner getRunner() {
-        return (BrowserTestRunner) ServerRegistry.getServer();
+        return (BrowserTestRunner) ServerRegistry.getStandardServer();
     }
 
 }

@@ -3,12 +3,13 @@ package net.jsunit;
 public class TestRunCountFunctionalTest extends StandardServerFunctionalTestCase {
 
     public void testSimple() throws Exception {
-        standardServer().finishTestRun();
-        standardServer().finishTestRun();
-        standardServer().finishTestRun();
+        long initialCount = server.getTestRunCount();
+        server.finishTestRun();
+        server.finishTestRun();
+        server.finishTestRun();
         webTester.beginAt("testruncount");
         String responseText = webTester.getDialog().getResponseText();
-        assertEquals("3", responseText);
+        assertEquals(String.valueOf(initialCount + 3), responseText);
     }
 
 }

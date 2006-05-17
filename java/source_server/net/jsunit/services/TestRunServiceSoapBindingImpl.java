@@ -24,8 +24,8 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
     private String ipAddress;
 
     public DistributedTestRunResult runTests(TestPage testPage, BrowserSpecification[] browserSpecs) throws RemoteException {
-        server.logStatus("Received SOAP request from " + ipAddress);
-        User user = server.authenticateUser(username, password);
+        server.logStatus("Received SOAP request from " + ipAddress + " with username " + username + " and password " + password);
+        User user = server.getUserRepository().find(username, password);
         if (user == null) {
             server.logStatus("Invalid username/password attempt: " + username + "/" + password);
             throw new AuthenticationException();
@@ -52,7 +52,7 @@ public class TestRunServiceSoapBindingImpl implements TestRunService, ServiceLif
         password = messageContext.getPassword();
         ipAddress = (String) messageContext.getProperty("remoteaddr");
         //TODO: somehow inject the aggregate server - keep it in the context maybe?
-        setAggregateServer((JsUnitAggregateServer) ServerRegistry.getServer());
+        setAggregateServer(ServerRegistry.getAggregateServer());
     }
 
     public void setAggregateServer(JsUnitAggregateServer aggregateServer) {

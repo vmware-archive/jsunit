@@ -73,7 +73,7 @@ public class UrlRunnerPageFunctionalTest extends AggregateServerFunctionalTestCa
     }
 
     private String url() {
-        return "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html";
+        return "http://localhost:" + port() + "/jsunit/testRunner.html?testPage=http://localhost:" + port() + "/jsunit/tests/jsUnitUtilityTests.html";
     }
 
 }

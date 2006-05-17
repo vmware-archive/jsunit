@@ -11,7 +11,7 @@ public enum ServerType {
     STANDARD(
             "Standard",
             false,
-            true,
+            false,
             false,
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.CLOSE_BROWSERS_AFTER_TEST_RUNS,
@@ -37,7 +37,7 @@ public enum ServerType {
     AGGREGATE(
             "Aggregate",
             true,
-            true,
+            false,
             false,
             Arrays.asList(new ConfigurationProperty[]{
                     ConfigurationProperty.LOGS_DIRECTORY,
