@@ -30,5 +30,5 @@ function atLeastOneBrowserIsChecked() {
 }
 
 function tooManyBrowsersAreChecked() {
-    return checkedBrowserCount() > 3;
+    return checkedBrowserCount() > 2;
 }

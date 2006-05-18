@@ -23,14 +23,17 @@
                         <p><b>Account created</b></p>
 
                         <p>
-                            Thank you for creating a JsUnit account. We are currently in the process of gauging interest
-                            in JsUnit services so that we can scale the services to an appropriate level. During this
-                            process, we are not yet ready to expose privileged JsUnit services to account holders. Once
-                            the process is over, we will send you an email and your account will be activated.
+                            Thank you for creating a JsUnit account. We are currently in the process of gauging the
+                            initial interest in the JsUnit Online Services so that we can scale the services to an
+                            appropriate level. During this process, we are not yet ready to expose privileged JsUnit
+                            services to account holders. Once the process is over, we will send you an email and your
+                            account will be activated.
                         </p>
+
                         <p>
-                            Thanks again for your interest in JsUnit Online Services.
+                            Thank you again for your interest in JsUnit Online Services.
                         </p>
+
                         <p>
                             - The JsUnit team
                         </p>

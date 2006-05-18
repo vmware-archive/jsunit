@@ -212,4 +212,15 @@ public class JsUnitStandardServer extends AbstractJsUnitServer implements Browse
         addTestRunListener(new BrowserResultLogWriter(browserResultRepository));
     }
 
+    protected List<String> servletNames() {
+        List<String> result = new ArrayList<String>();
+        result.add("acceptor");
+        result.add("config");
+        result.add("displayer");
+        result.add("runner");
+        result.add("serverstatus");
+        result.add("testruncount");
+        return result;
+    }
+
 }

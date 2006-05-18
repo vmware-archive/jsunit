@@ -174,10 +174,11 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
     }
 
     protected List<String> servletNames() {
-        List<String> names = super.servletNames();
+        List<String> names = new ArrayList<String>();
         names.add("accountcreatedpage");
         names.add("adminpage");
         names.add("captchaimage");
+        names.add("config");
         names.add("fragmentrunnerpage");
         names.add("helppage");
         names.add("latestversion");
@@ -185,6 +186,9 @@ public class JsUnitAggregateServer extends AbstractJsUnitServer implements Remot
         names.add("myaccountpage");
         names.add("processcreateaccount");
         names.add("processsignin");
+        names.add("runner");
+        names.add("serverstatus");
+        names.add("testruncount");
         names.add("uploadrunnerpage");
         names.add("urlrunnerpage");
         return names;

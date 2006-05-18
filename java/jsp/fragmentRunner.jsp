@@ -20,7 +20,7 @@
                 return false;
             }
             if (tooManyBrowsersAreChecked()) {
-                alert("If you do not have a JsUnit account, you may only select at most 3 browsers per test run.\nWant more? Sign up for a JsUnit account.");
+                alert("If you do not have a JsUnit account, you may only select at most 2 browsers per test run.\nWant more? Sign up for a JsUnit account.");
                 return false;
             }
         <%if (server.getConfiguration().useCaptcha()) {%>

@@ -63,7 +63,7 @@
                 return false;
             }
             if (tooManyBrowsersAreChecked()) {
-                alert("If you do not have a JsUnit account, you may only select at most 3 browsers per test run.\nWant more? Sign up for a JsUnit account.");
+                alert("If you do not have a JsUnit account, you may only select at most 2 browsers per test run.\nWant more? Sign up for a JsUnit account.");
                 return false;
             }
         <%if (server.getConfiguration().useCaptcha()) {%>
@@ -128,7 +128,8 @@
                             You can ask this JsUnit Server to run JsUnit on your Test Pages using the <i>upload
                             runner</i> service. Select your Test Page and associated .js files (if any), choose which
                             browsers you want to run your Test Page on and which skin you want your results displayed
-                            in, and press "Run".
+                            in, and press "Run". Note that you do <b>not</b> need to upload your referenced
+                            jsUnitCore.js.
                             <br>
                             <br>
                             The upload runner service is useful for manually running your Test Pages, but it's a pain

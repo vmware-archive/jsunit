@@ -149,16 +149,7 @@ public abstract class AbstractJsUnitServer implements JsUnitServer, SkinSource {
         return new SocketListener();
     }
 
-    protected List<String> servletNames() {
-        List<String> result = new ArrayList<String>();
-        result.add("acceptor");
-        result.add("config");
-        result.add("displayer");
-        result.add("runner");
-        result.add("serverstatus");
-        result.add("testruncount");
-        return result;
-    }
+    protected abstract List<String> servletNames();
 
     protected abstract String runnerActionName();
 
