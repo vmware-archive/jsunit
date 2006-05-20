@@ -2,22 +2,6 @@
 <project version="4" relativePaths="true">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
-    <buildFile url="file://$PROJECT_DIR$/../build.xml">
-      <additionalClassPath>
-        <entry path="file://$PROJECT_DIR$/../java/lib/junit.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/axis-ant.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/axis.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/wsdl4j-1.5.1.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/jaxrpc.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/commons-logging-1.0.4.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/commons-discovery-0.2.jar" />
-        <entry path="file://$PROJECT_DIR$/../java/lib/axis_1.4/saaj.jar" />
-      </additionalClassPath>
-      <antReference projectDefault="true" />
-      <customJdkName value="" />
-      <maximumHeapSize value="512" />
-      <properties />
-    </buildFile>
   </component>
   <component name="Build editor project-level loader" dont-ask="false" />
   <component name="CodeStyleSettingsManager">
@@ -203,10 +187,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/browser.iml" filepath="$PROJECT_DIR$/browser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/client.iml" filepath="$PROJECT_DIR$/client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" filepath="$PROJECT_DIR$/intellij_plugin/intellij_plugin.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server.iml" filepath="$PROJECT_DIR$/server.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />

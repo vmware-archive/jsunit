@@ -5,15 +5,7 @@
     <output url="file://$MODULE_DIR$/classes_browser" />
     <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes_browser_test" />
-    <content url="file://$MODULE_DIR$/..">
-      <excludeFolder url="file://$MODULE_DIR$/../bin" />
-      <excludeFolder url="file://$MODULE_DIR$/../java" />
-      <excludeFolder url="file://$MODULE_DIR$/../scratch" />
-      <excludeFolder url="file://$MODULE_DIR$/../services" />
-      <excludeFolder url="file://$MODULE_DIR$/../skins" />
-      <excludeFolder url="file://$MODULE_DIR$/../uploaded" />
-      <excludeFolder url="file://$MODULE_DIR$/../wsdl" />
-    </content>
+    <content url="file://$MODULE_DIR$/.." />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntryProperties />
