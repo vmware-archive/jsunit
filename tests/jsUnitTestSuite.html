@@ -19,13 +19,6 @@
             return result;
         }
 
-        function serverSuite() {
-            var result = new top.jsUnitTestSuite();
-            result.addTestPage("tests/server/jsUnitVersionCheckTests.html");
-            result.addTestPage("tests/server/jsUnitServerAjaxTests.html");
-            return result;
-        }
-
         function librariesSuite() {
             var result = new top.jsUnitTestSuite();
             result.addTestPage("tests/jsUnitMockTimeoutTest.html");
@@ -35,7 +28,6 @@
         function suite() {
             var newsuite = new top.jsUnitTestSuite();
             newsuite.addTestSuite(coreSuite());
-            newsuite.addTestSuite(serverSuite());
             newsuite.addTestSuite(librariesSuite());
             return newsuite;
         }
