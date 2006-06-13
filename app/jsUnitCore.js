@@ -302,7 +302,7 @@ function assertContains() {
 function standardizeHTML(html) {
     var translator = document.createElement("DIV");
     translator.innerHTML = html;
-    return translator.innerHTML;
+    return trim(translator.innerHTML);
 }
 
 function isLoaded() {
@@ -424,10 +424,11 @@ function trim(str) {
     var startingIndex = 0;
     var endingIndex = str.length - 1;
 
-    while (str.substring(startingIndex, startingIndex + 1) == ' ')
+    var singleWhitespaceRegex = /\s/;
+    while (str.substring(startingIndex, startingIndex + 1).match(singleWhitespaceRegex))
         startingIndex++;
 
-    while (str.substring(endingIndex, endingIndex + 1) == ' ')
+    while (str.substring(endingIndex, endingIndex + 1).match(singleWhitespaceRegex))
         endingIndex--;
 
     if (endingIndex < startingIndex)

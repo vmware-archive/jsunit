@@ -15,6 +15,7 @@
             assertEquals("string", trim("string"));
             assertEquals("str  ing", trim("str  ing"));
             assertEquals("string", trim(" string   "));
+            assertEquals("string", trim("\r\n string \r\n"));
         }
 
         function testIsBlank() {
