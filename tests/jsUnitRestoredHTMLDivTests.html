@@ -24,7 +24,7 @@
         function assertJsUnitjsUnitRestoredHTMLDivContainsOriginalHTML() {
             var theDiv = document.getElementById("jsUnitRestoredHTML");
             assertHTMLEquals(
-                    '<b>foo</b><input type="text" name="bar" value="12345">',
+                    '<b>foo</b><input name="bar" type="text" value="12345">',
                     theDiv.innerHTML);
         }
 
@@ -38,7 +38,7 @@
 
 <div id="jsUnitRestoredHTML">
 
-    <b>foo</b><input type="text" name="bar" value="12345">
+    <b>foo</b><input name="bar" type="text" value="12345">
 
     
     </div>
