@@ -6,7 +6,6 @@
     <title>JsUnit main-data.html</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
     <script language="JavaScript" type="text/javascript" src="jsUnitCore.js"></script>
-    <script language="JavaScript" type="text/javascript" src="server/jsUnitVersionCheck.js"></script>
     <script language="JavaScript" type="text/javascript">
 
         function pageLoaded() {
@@ -66,7 +65,7 @@
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <script language="javascript">document.write(JSUNIT_VERSION);</script> TestRunner</h4>
+            <h4>JsUnit <script language="javascript" type="text/javascript">document.write(JSUNIT_VERSION);</script> TestRunner</h4>
             Running on
             <script language="javascript" type="text/javascript">document.write(navigator.userAgent);</script>
         </th>

@@ -8,6 +8,7 @@ For 2.2 release:
     - stack traces for failures
     - make DT not need 2 configurations
     - make junitreport keep working with log results
+    - make all JS pass JSLint
 
   BUGS:
     - Mozilla 1.7.12 issues
