@@ -547,8 +547,8 @@ jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
     this._windowForAllProblemMessages = window.open('', '', 'width=600, height=350,status=no,resizable=yes,scrollbars=yes');
     var resDoc = this._windowForAllProblemMessages.document;
     resDoc.write('<html><head><link rel="stylesheet" href="../css/jsUnitStyle.css"><title>Tests with problems - JsUnit<\/title><head><body>');
-    resDoc.write('<p class="jsUnitSubHeading">Tests with problems (' + this.problemsListField.length + ' total) - JsUnit<\/p>');
-    resDoc.write('<p class="jsUnitSubSubHeading">Running on ' + navigator.userAgent + '</p>');
+    resDoc.write('<p>Tests with problems (' + this.problemsListField.length + ' total) - JsUnit<\/p>');
+    resDoc.write('<p>Running on ' + navigator.userAgent + '</p>');
     for (var i = 0; i < this.problemsListField.length; i++)
     {
         resDoc.write('<p class="jsUnitDefault">');

@@ -9,7 +9,8 @@ For 2.2 release:
     - make junitreport keep working with log results
     - make all JS pass JSLint
     - show the file entry field except when autoRun is true
-    - stack traces on failures
+    - need stack traces on failures
+    - pressing stop makes viewing errors/failures no longer work
 
   BUGS:
     - Mozilla 1.7.12 issues

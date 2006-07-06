@@ -56,16 +56,24 @@
 </head>
 
 <body onload="pageLoaded();">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" summary="jsUnit Information" bgcolor="#DDDDDD">
+<table width="100%" cellpadding="3" cellspacing="3" border="0" bgcolor="#EEEEEE">
     <tr>
-        <td width="1">
-            <a href="http://www.jsunit.net" target="_blank">
-                <img src="../images/logo_jsunit.gif" alt="JsUnit" border="0"/>
-            </a>
+        <td width="10%">
+            <div class="rb0roundbox">
+                <div class="rb0top"><div></div></div>
+
+                <div class="rb0content" align="center">
+                    <a href="http://www.jsunit.net" target="_blank">
+                        <img src="../images/logo_jsunit.jpg" title="JsUnit" alt="JsUnit" border="0"/>
+                    </a>
+                </div>
+
+                <div class="rb0bot"><div></div></div>
+            </div>
         </td>
         <td width="50">&nbsp;</td>
         <th nowrap align="left">
-            <h4>JsUnit <script language="javascript" type="text/javascript">document.write(JSUNIT_VERSION);</script> TestRunner</h4>
+            <h2>JsUnit <script language="javascript" type="text/javascript">document.write(JSUNIT_VERSION);</script> TestRunner</h2>
             Running on
             <script language="javascript" type="text/javascript">document.write(navigator.userAgent);</script>
         </th>
@@ -74,7 +82,7 @@
             <b><a href="http://www.jsunit.net/" target="_blank">www.jsunit.net</a></b>&nbsp;&nbsp;<br>
             <br>
             <a href="http://www.pivotalsf.com/" target="top">
-                <img border="0" src="../images/pivotal.gif" alt="Powered By Pivotal">
+                <img border="0" src="../images/pivotal.gif" alt="Powered By Pivotal" title="Powered By Pivotal">
             </a>
         </td>
     </tr>
@@ -83,7 +91,7 @@
 <form name="testRunnerForm" action="">
 <script type="text/javascript" language="javascript">
     if (!jsUnitGetParm('testpage')) {
-        document.write("<p>Enter the filename of the Test Page to be run:</p>");
+        document.write("<h4>Enter the location of the Test Page/Test Suite Page to be run:</h4>");
     } else {
         document.write("<br>");
     };
@@ -140,9 +148,9 @@
     </tr>
 </table>
 <br>
-<hr>
 
-<table cellpadding="0" cellspacing="0" border="0" summary="Choose Trace Level">
+<div style="width:100%; background-color:#EEEEEE; margin-top:2px; margin-bottom:2px; margin-left:0px">
+<table cellpadding="0" border="0">
     <tr>
         <td nowrap>Trace level:</td>
 
@@ -188,7 +196,7 @@
         </td>
     </tr>
 </table>
-<hr>
+</div>
 </form>
 </body>
 </html>

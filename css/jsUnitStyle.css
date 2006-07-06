@@ -54,9 +54,9 @@ h3 {
 }
 
 h4 {
-    font-weight: bold;
     color: #039;
     font-family: Trebuchet MS, Verdana, Arial, Helvetica, sans-serif;
+    font-size: 1em;
 }
 
 .jsUnitTestResultSuccess {
@@ -67,59 +67,24 @@ h4 {
     color: #F00;
 }
 
-.unselectedTab {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    height: 26px;
-    background: #FFFFFF;
-    border-style: solid;
-    border-color: #000000;
-    border-bottom-width: 1px;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
-}
-
-.selectedTab {
-    font-family: Verdana, Arial, Helvetica, sans-serif;
-    height: 26px;
-    font-weight: bold;
-    border-style: solid;
-    border-color: #000000;
-    border-bottom-width: 0px;
-    border-top-width: 1px;
-    border-left-width: 1px;
-    border-right-width: 1px;
-}
-
-.tabHeaderSeparator {
-    height: 26px;
-    background: #eeeeee;
-    border-style: solid;
-    border-color: #000000;
-    border-bottom-width: 1px;
-    border-top-width: 0px;
-    border-left-width: 0px;
-    border-right-width: 0px;
-}
-
 .rb0roundbox {
-    background: url( /jsunit/images/nt0.gif ) repeat;
+    background: url( ../images/nt0.gif ) repeat;
 }
 
 .rb0top div {
-    background: url( /jsunit/images/tl0.gif ) no-repeat top left;
+    background: url( ../images/tl0.gif ) no-repeat top left;
 }
 
 .rb0top {
-    background: url( /jsunit/images/tr0.gif ) no-repeat top right;
+    background: url( ../images/tr0.gif ) no-repeat top right;
 }
 
 .rb0bot div {
-    background: url( /jsunit/images/bl0.gif ) no-repeat bottom left;
+    background: url( ../images/bl0.gif ) no-repeat bottom left;
 }
 
 .rb0bot {
-    background: url( /jsunit/images/br0.gif ) no-repeat bottom right;
+    background: url( ../images/br0.gif ) no-repeat bottom right;
 }
 
 .rb0top div, .rb0top, .rb0bot div, .rb0bot {
@@ -135,124 +100,4 @@ h4 {
 .rb0roundbox {
     width: 100%;
     margin: 4px auto;
-}
-
-.rb1roundbox {
-    background: url( /jsunit/images/nt1.gif ) repeat;
-}
-
-.rb1top div {
-    background: url( /jsunit/images/tl1.gif ) no-repeat top left;
-}
-
-.rb1top {
-    background: url( /jsunit/images/tr1.gif ) no-repeat top right;
-}
-
-.rb1bot div {
-    background: url( /jsunit/images/bl1.gif ) no-repeat bottom left;
-}
-
-.rb1bot {
-    background: url( /jsunit/images/br1.gif ) no-repeat bottom right;
-}
-
-.rb1top div, .rb1top, .rb1bot div, .rb1bot {
-    width: 100%;
-    height: 7px;
-    font-size: 0px;
-}
-
-.rb1content {
-    margin: 0 7px;
-}
-
-.rb1roundbox {
-    width: 100%;
-    margin: 0px auto;
-}
-
-.rb1content a {
-    color: #0000AA;
-    text-decoration: underline;
-}
-
-.rb2roundbox {
-    background: url( /jsunit/images/nt2.gif ) repeat;
-}
-
-.rb2top div {
-    background: url( /jsunit/images/tl2.gif ) no-repeat top left;
-}
-
-.rb2top {
-    background: url( /jsunit/images/tr2.gif ) no-repeat top right;
-}
-
-.rb2bot div {
-    background: url( /jsunit/images/bl2.gif ) no-repeat bottom left;
-}
-
-.rb2bot {
-    background: url( /jsunit/images/br2.gif ) no-repeat bottom right;
-}
-
-.rb2top div, .rb2top, .rb2bot div, .rb2bot {
-    width: 100%;
-    height: 7px;
-    font-size: 0px;
-}
-
-.rb2content {
-    margin: 0 5px;
-}
-
-.rb2roundbox {
-    width: 100%;
-    margin: 0px auto;
-}
-
-.rb2content a {
-    color: #0000AA;
-    text-decoration: underline;
-}
-
-.rb3roundbox {
-    background: url( /jsunit/images/nt3.gif ) repeat;
-}
-
-.rb3top div {
-    background: url( /jsunit/images/tl3.gif ) no-repeat top left;
-}
-
-.rb3top {
-    background: url( /jsunit/images/tr3.gif ) no-repeat top right;
-}
-
-.rb3bot div {
-    background: url( /jsunit/images/bl3.gif ) no-repeat bottom left;
-}
-
-.rb3bot {
-    background: url( /jsunit/images/br3.gif ) no-repeat bottom right;
-}
-
-.rb3top div, .rb3top, .rb3bot div, .rb3bot {
-    width: 100%;
-    height: 7px;
-    font-size: 0px;
-}
-
-.rb3content {
-    margin: 0 7px;
-}
-
-.rb3roundbox {
-    width: 100%;
-    margin: 0px auto;
-}
-
-.rb3content a {
-    color: #0000AA;
-    text-decoration: underline;
 }
