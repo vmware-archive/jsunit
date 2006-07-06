@@ -9,7 +9,9 @@ For 2.2 release:
     - make DT not need 2 configurations
     - make junitreport keep working with log results
     - make all JS pass JSLint
-
+    - show the file entry field except when autoRun is true
+    - stack traces on failures
+    
   BUGS:
     - Mozilla 1.7.12 issues
     - Some tests don't run in Konqueror; there's a hang in the onload test
