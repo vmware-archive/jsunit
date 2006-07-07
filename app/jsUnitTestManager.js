@@ -1,4 +1,4 @@
-function jsUnitTestManager() {
+function JsUnitTestManager() {
     this._windowForAllProblemMessages = null;
 
     this.container = top.frames.testContainer;
@@ -41,18 +41,18 @@ function jsUnitTestManager() {
 }
 
 // seconds to wait for each test page to load
-jsUnitTestManager.TESTPAGE_WAIT_SEC = 120;
-jsUnitTestManager.TIMEOUT_LENGTH = 20;
+JsUnitTestManager.TESTPAGE_WAIT_SEC = 120;
+JsUnitTestManager.TIMEOUT_LENGTH = 20;
 
 // seconds to wait for setUpPage to complete
-jsUnitTestManager.SETUPPAGE_TIMEOUT = 120;
+JsUnitTestManager.SETUPPAGE_TIMEOUT = 120;
 
 // milliseconds to wait between polls on setUpPages
-jsUnitTestManager.SETUPPAGE_INTERVAL = 100;
+JsUnitTestManager.SETUPPAGE_INTERVAL = 100;
 
-jsUnitTestManager.RESTORED_HTML_DIV_ID = "jsUnitRestoredHTML";
+JsUnitTestManager.RESTORED_HTML_DIV_ID = "jsUnitRestoredHTML";
 
-jsUnitTestManager.prototype.setup = function () {
+JsUnitTestManager.prototype.setup = function () {
     this.totalCount = 0;
     this.errorCount = 0;
     this.failureCount = 0;
@@ -62,7 +62,7 @@ jsUnitTestManager.prototype.setup = function () {
     push(this._suiteStack, initialSuite);
 }
 
-jsUnitTestManager.prototype.start = function () {
+JsUnitTestManager.prototype.start = function () {
     this._baseURL = this.resolveUserEnteredTestFileName();
     var firstQuery = this._baseURL.indexOf("?");
     if (firstQuery >= 0) {
@@ -79,15 +79,14 @@ jsUnitTestManager.prototype.start = function () {
 
     this._timeRunStarted = new Date();
     this.initialize();
-    setTimeout('top.testManager._nextPage();', jsUnitTestManager.TIMEOUT_LENGTH);
+    setTimeout('top.testManager._nextPage();', JsUnitTestManager.TIMEOUT_LENGTH);
 }
 
-jsUnitTestManager.prototype.getBaseURL = function () {
+JsUnitTestManager.prototype.getBaseURL = function () {
     return this._baseURL;
 }
 
-jsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
-    //this.containerTestFrame.setTracer(top.tracer);
+JsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
     this._testFileName = pageName;
     if (this.isTestPageSuite())
         this._handleNewSuite();
@@ -100,7 +99,7 @@ jsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
     }
 }
 
-jsUnitTestManager.prototype._handleNewSuite = function () {
+JsUnitTestManager.prototype._handleNewSuite = function () {
     var allegedSuite = this.containerTestFrame.suite();
     if (allegedSuite.isjsUnitTestSuite) {
         var newSuite = allegedSuite.clone();
@@ -114,7 +113,7 @@ jsUnitTestManager.prototype._handleNewSuite = function () {
     }
 }
 
-jsUnitTestManager.prototype._runTest = function () {
+JsUnitTestManager.prototype._runTest = function () {
     if (this._testIndex + 1 > this._numberOfTestsInPage)
     {
         // execute tearDownPage *synchronously*
@@ -137,7 +136,7 @@ jsUnitTestManager.prototype._runTest = function () {
                 this.containerTestFrame.startTime = new Date();
                 this.containerTestFrame.setUpPage();
                 // try test again later
-                setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
+                setTimeout('top.testManager._runTest()', JsUnitTestManager.SETUPPAGE_INTERVAL);
                 return;
             }
 
@@ -152,7 +151,7 @@ jsUnitTestManager.prototype._runTest = function () {
                     this.containerTestFrame.startTime = (new Date());
                 }
                 // try test again later
-                setTimeout('top.testManager._runTest()', jsUnitTestManager.SETUPPAGE_INTERVAL);
+                setTimeout('top.testManager._runTest()', JsUnitTestManager.SETUPPAGE_INTERVAL);
                 return;
             }
         }
@@ -164,10 +163,10 @@ jsUnitTestManager.prototype._runTest = function () {
     this.totalCount++;
     this.updateProgressIndicators();
     this._testIndex++;
-    setTimeout('if (top.testManager) top.testManager._runTest()', jsUnitTestManager.TIMEOUT_LENGTH);
+    setTimeout('if (top.testManager) top.testManager._runTest()', JsUnitTestManager.TIMEOUT_LENGTH);
 }
 
-jsUnitTestManager.prototype._done = function () {
+JsUnitTestManager.prototype._done = function () {
     var secondsSinceRunBegan = (new Date() - this._timeRunStarted) / 1000;
     this.setStatus('Done (' + secondsSinceRunBegan + ' seconds)');
     this._cleanUp();
@@ -177,7 +176,7 @@ jsUnitTestManager.prototype._done = function () {
     }
 }
 
-jsUnitTestManager.prototype._nextPage = function () {
+JsUnitTestManager.prototype._nextPage = function () {
     this._restoredHTML = null;
     if (this._currentSuite().hasMorePages()) {
         this.loadPage(this._currentSuite().nextPage());
@@ -191,7 +190,7 @@ jsUnitTestManager.prototype._nextPage = function () {
     }
 }
 
-jsUnitTestManager.prototype._currentSuite = function () {
+JsUnitTestManager.prototype._currentSuite = function () {
     var suite = null;
 
     if (this._suiteStack && this._suiteStack.length > 0)
@@ -200,7 +199,7 @@ jsUnitTestManager.prototype._currentSuite = function () {
     return suite;
 }
 
-jsUnitTestManager.prototype.calculateProgressBarProportion = function () {
+JsUnitTestManager.prototype.calculateProgressBarProportion = function () {
     if (this.totalCount == 0)
         return 0;
     var currentDivisor = 1;
@@ -215,19 +214,19 @@ jsUnitTestManager.prototype.calculateProgressBarProportion = function () {
     return result;
 }
 
-jsUnitTestManager.prototype._cleanUp = function () {
+JsUnitTestManager.prototype._cleanUp = function () {
     this.containerController.setTestPage('./app/emptyPage.html');
     this.finalize();
     top.tracer.finalize();
 }
 
-jsUnitTestManager.prototype.abort = function () {
+JsUnitTestManager.prototype.abort = function () {
     this.setStatus('Aborted');
     this._cleanUp();
 }
 
-jsUnitTestManager.prototype.getTimeout = function () {
-    var result = jsUnitTestManager.TESTPAGE_WAIT_SEC;
+JsUnitTestManager.prototype.getTimeout = function () {
+    var result = JsUnitTestManager.TESTPAGE_WAIT_SEC;
     try {
         result = eval(this.timeout.value);
     }
@@ -236,8 +235,8 @@ jsUnitTestManager.prototype.getTimeout = function () {
     return result;
 }
 
-jsUnitTestManager.prototype.getsetUpPageTimeout = function () {
-    var result = jsUnitTestManager.SETUPPAGE_TIMEOUT;
+JsUnitTestManager.prototype.getsetUpPageTimeout = function () {
+    var result = JsUnitTestManager.SETUPPAGE_TIMEOUT;
     try {
         result = eval(this.setUpPageTimeout.value);
     }
@@ -246,7 +245,7 @@ jsUnitTestManager.prototype.getsetUpPageTimeout = function () {
     return result;
 }
 
-jsUnitTestManager.prototype.isTestPageSuite = function () {
+JsUnitTestManager.prototype.isTestPageSuite = function () {
     var result = false;
     if (typeof(this.containerTestFrame.suite) == 'function')
     {
@@ -255,7 +254,7 @@ jsUnitTestManager.prototype.isTestPageSuite = function () {
     return result;
 }
 
-jsUnitTestManager.prototype.getTestFunctionNames = function () {
+JsUnitTestManager.prototype.getTestFunctionNames = function () {
     var testFrame = this.containerTestFrame;
     var testFunctionNames = new Array();
     var i;
@@ -284,7 +283,7 @@ jsUnitTestManager.prototype.getTestFunctionNames = function () {
     return testFunctionNames;
 }
 
-jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) {
+JsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) {
     var result;
     var remainingScriptToInspect = aScript.text;
     var currentIndex = this._indexOfTestFunctionIn(remainingScriptToInspect);
@@ -300,11 +299,11 @@ jsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScr
     return result;
 }
 
-jsUnitTestManager.prototype._indexOfTestFunctionIn = function (string) {
+JsUnitTestManager.prototype._indexOfTestFunctionIn = function (string) {
     return string.indexOf('function test');
 }
 
-jsUnitTestManager.prototype.loadPage = function (testFileName) {
+JsUnitTestManager.prototype.loadPage = function (testFileName) {
     this._testFileName = testFileName;
     this._loadAttemptStartTime = new Date();
     this.setStatus('Opening Test Page "' + this._testFileName + '"');
@@ -312,7 +311,7 @@ jsUnitTestManager.prototype.loadPage = function (testFileName) {
     this._callBackWhenPageIsLoaded();
 }
 
-jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
+JsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
     if ((new Date() - this._loadAttemptStartTime) / 1000 > this.getTimeout()) {
         this.fatalError('Reading Test Page ' + this._testFileName + ' timed out.\nMake sure that the file exists and is a Test Page.');
         if (this.userConfirm('Retry Test Run?')) {
@@ -324,13 +323,13 @@ jsUnitTestManager.prototype._callBackWhenPageIsLoaded = function () {
         }
     }
     if (!this._isTestFrameLoaded()) {
-        setTimeout('if (top.testManager) top.testManager._callBackWhenPageIsLoaded();', jsUnitTestManager.TIMEOUT_LENGTH);
+        setTimeout('if (top.testManager) top.testManager._callBackWhenPageIsLoaded();', JsUnitTestManager.TIMEOUT_LENGTH);
         return;
     }
     this.doneLoadingPage(this._testFileName);
 }
 
-jsUnitTestManager.prototype._isTestFrameLoaded = function () {
+JsUnitTestManager.prototype._isTestFrameLoaded = function () {
     try {
         return this.containerController.isPageLoaded();
     }
@@ -339,14 +338,14 @@ jsUnitTestManager.prototype._isTestFrameLoaded = function () {
     return false;
 }
 
-jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
+JsUnitTestManager.prototype.executeTestFunction = function (functionName) {
     this._testFunctionName = functionName;
     this.setStatus('Running test "' + this._testFunctionName + '"');
     var excep = null;
     var timeBefore = new Date();
     try {
         if (this._restoredHTML)
-            top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML = this._restoredHTML;
+            top.testContainer.testFrame.document.getElementById(JsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML = this._restoredHTML;
         if (this.containerTestFrame.setUp !== JSUNIT_UNDEFINED_VALUE)
             this.containerTestFrame.setUp();
         this.containerTestFrame[this._testFunctionName]();
@@ -384,7 +383,7 @@ jsUnitTestManager.prototype.executeTestFunction = function (functionName) {
             serializedTestCaseString);
 }
 
-jsUnitTestManager.prototype._currentTestFunctionNameWithTestPageName = function(useFullyQualifiedTestPageName) {
+JsUnitTestManager.prototype._currentTestFunctionNameWithTestPageName = function(useFullyQualifiedTestPageName) {
     var testURL = this.containerTestFrame.location.href;
     var testQuery = testURL.indexOf("?");
     if (testQuery >= 0) {
@@ -397,7 +396,7 @@ jsUnitTestManager.prototype._currentTestFunctionNameWithTestPageName = function(
     return testURL + ':' + this._testFunctionName;
 }
 
-jsUnitTestManager.prototype._addOption = function(listField, problemValue, problemMessage) {
+JsUnitTestManager.prototype._addOption = function(listField, problemValue, problemMessage) {
     if (typeof(listField.ownerDocument) != 'undefined'
             && typeof(listField.ownerDocument.createElement) != 'undefined') {
         // DOM Level 2 HTML method.
@@ -428,7 +427,7 @@ jsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
     }
 }
 
-jsUnitTestManager.prototype._handleTestException = function (excep) {
+JsUnitTestManager.prototype._handleTestException = function (excep) {
     var problemMessage = this._currentTestFunctionNameWithTestPageName(false) + ' ';
     var errOption;
     if (typeof(excep.isJsUnitException) == 'undefined' || !excep.isJsUnitException) {
@@ -445,7 +444,7 @@ jsUnitTestManager.prototype._handleTestException = function (excep) {
             problemMessage);
 }
 
-jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
+JsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
     var result = null;
     if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException) {
         result = '';
@@ -470,7 +469,7 @@ jsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
     return result;
 }
 
-jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
+JsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
     try {
         var content;
         if (content = this.uiFrames[layerName].document.getElementById('content'))
@@ -491,31 +490,31 @@ jsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
     }
 }
 
-jsUnitTestManager.prototype.setStatus = function (str) {
+JsUnitTestManager.prototype.setStatus = function (str) {
     this._setTextOnLayer('mainStatus', '<b>Status:<\/b> ' + str);
 }
 
-jsUnitTestManager.prototype._setErrors = function (n) {
+JsUnitTestManager.prototype._setErrors = function (n) {
     this._setTextOnLayer('mainCountsErrors', '<b>Errors: <\/b>' + n);
 }
 
-jsUnitTestManager.prototype._setFailures = function (n) {
+JsUnitTestManager.prototype._setFailures = function (n) {
     this._setTextOnLayer('mainCountsFailures', '<b>Failures:<\/b> ' + n);
 }
 
-jsUnitTestManager.prototype._setTotal = function (n) {
+JsUnitTestManager.prototype._setTotal = function (n) {
     this._setTextOnLayer('mainCountsRuns', '<b>Runs:<\/b> ' + n);
 }
 
-jsUnitTestManager.prototype._setProgressBarImage = function (imgName) {
+JsUnitTestManager.prototype._setProgressBarImage = function (imgName) {
     this.progressBar.src = imgName;
 }
 
-jsUnitTestManager.prototype._setProgressBarWidth = function (w) {
+JsUnitTestManager.prototype._setProgressBarWidth = function (w) {
     this.progressBar.width = w;
 }
 
-jsUnitTestManager.prototype.updateProgressIndicators = function () {
+JsUnitTestManager.prototype.updateProgressIndicators = function () {
     this._setTotal(this.totalCount);
     this._setErrors(this.errorCount);
     this._setFailures(this.failureCount);
@@ -527,13 +526,13 @@ jsUnitTestManager.prototype.updateProgressIndicators = function () {
         this._setProgressBarImage('../images/green.gif');
 }
 
-jsUnitTestManager.prototype.showMessageForSelectedProblemTest = function () {
+JsUnitTestManager.prototype.showMessageForSelectedProblemTest = function () {
     var problemTestIndex = this.problemsListField.selectedIndex;
     if (problemTestIndex != -1)
         this.fatalError(this.problemsListField[problemTestIndex].value);
 }
 
-jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
+JsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
     if (this.problemsListField.length == 0)
         return;
 
@@ -563,14 +562,14 @@ jsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
     resDoc.close();
 }
 
-jsUnitTestManager.prototype._makeHTMLSafe = function (string) {
+JsUnitTestManager.prototype._makeHTMLSafe = function (string) {
     string = string.replace(/&/g, '&amp;');
     string = string.replace(/</g, '&lt;');
     string = string.replace(/>/g, '&gt;');
     return string;
 }
 
-jsUnitTestManager.prototype._clearProblemsList = function () {
+JsUnitTestManager.prototype._clearProblemsList = function () {
     var listField = this.problemsListField;
     var initialLength = listField.options.length;
 
@@ -578,7 +577,7 @@ jsUnitTestManager.prototype._clearProblemsList = function () {
         listField.remove(0);
 }
 
-jsUnitTestManager.prototype.initialize = function () {
+JsUnitTestManager.prototype.initialize = function () {
     this.setStatus('Initializing...');
     this._setRunButtonEnabled(false);
     this._clearProblemsList();
@@ -586,16 +585,16 @@ jsUnitTestManager.prototype.initialize = function () {
     this.setStatus('Done initializing');
 }
 
-jsUnitTestManager.prototype.finalize = function () {
+JsUnitTestManager.prototype.finalize = function () {
     this._setRunButtonEnabled(true);
 }
 
-jsUnitTestManager.prototype._setRunButtonEnabled = function (b) {
+JsUnitTestManager.prototype._setRunButtonEnabled = function (b) {
     this.runButton.disabled = !b;
     this.stopButton.disabled = b;
 }
 
-jsUnitTestManager.prototype.getTestFileName = function () {
+JsUnitTestManager.prototype.getTestFileName = function () {
     var rawEnteredFileName = this.testFileName.value;
     var result = rawEnteredFileName;
 
@@ -605,11 +604,11 @@ jsUnitTestManager.prototype.getTestFileName = function () {
     return result;
 }
 
-jsUnitTestManager.prototype.getTestFunctionName = function () {
+JsUnitTestManager.prototype.getTestFunctionName = function () {
     return this._testFunctionName;
 }
 
-jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText) {
+JsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText) {
     var userEnteredTestFileName = top.testManager.getTestFileName();
 
     // only test for file:// since Opera uses a different format
@@ -619,19 +618,19 @@ jsUnitTestManager.prototype.resolveUserEnteredTestFileName = function (rawText) 
     return getTestFileProtocol() + this.getTestFileName();
 }
 
-jsUnitTestManager.prototype.storeRestoredHTML = function () {
-    if (document.getElementById && top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID))
-        this._restoredHTML = top.testContainer.testFrame.document.getElementById(jsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML;
+JsUnitTestManager.prototype.storeRestoredHTML = function () {
+    if (document.getElementById && top.testContainer.testFrame.document.getElementById(JsUnitTestManager.RESTORED_HTML_DIV_ID))
+        this._restoredHTML = top.testContainer.testFrame.document.getElementById(JsUnitTestManager.RESTORED_HTML_DIV_ID).innerHTML;
 }
 
-jsUnitTestManager.prototype.fatalError = function(aMessage) {
+JsUnitTestManager.prototype.fatalError = function(aMessage) {
     if (top.shouldSubmitResults())
         this.setStatus(aMessage);
     else
         alert(aMessage);
 }
 
-jsUnitTestManager.prototype.userConfirm = function(aMessage) {
+JsUnitTestManager.prototype.userConfirm = function(aMessage) {
     if (top.shouldSubmitResults())
         return false;
     else

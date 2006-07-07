@@ -36,7 +36,7 @@
         }
         return parameterHash;
     }
-            
+
     function jsUnitConstructTestParms() {
         var p;
         var parms = '';
@@ -144,7 +144,7 @@
                 testFrameHeight = jsUnitGetParm('showtestframe');
             testRunnerFrameset.rows = '*,0,' + testFrameHeight;
         }
-        testManager = new jsUnitTestManager();
+        testManager = new JsUnitTestManager();
         tracer = new JsUnitTracer(testManager);
 
         if (shouldKickOffTestsAutomatically()) {
