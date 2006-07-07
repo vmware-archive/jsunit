@@ -8,7 +8,6 @@ For 2.2 release:
     - stack traces for failures
     - make junitreport keep working with log results
     - make all JS pass JSLint
-    - show the file entry field except when autoRun is true
     - need stack traces on failures
     - pressing stop makes viewing errors/failures no longer work
 

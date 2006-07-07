@@ -19,21 +19,12 @@
         }
 
         function loadComplete() {
-            top.xbDEBUG.dump('main-loader.html:loadComplete(): loadStatus = ' + loadStatus + ' href=' + buffer().document.location.href);
             if (loadStatus == 'loading') {
                 loadStatus = 'complete';
                 callback();
                 callback = function () {
                 };
             }
-        }
-
-        if (top.xbDEBUG.on) {
-            var scopeName = 'main_loader_' + (new Date()).getTime();
-            top[scopeName] = window;
-            top.xbDebugTraceFunction(scopeName, 'buffer');
-            top.xbDebugTraceFunction(scopeName, 'load');
-            top.xbDebugTraceFunction(scopeName, 'loadComplete');
         }
 
     </script>

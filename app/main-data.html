@@ -109,37 +109,33 @@
         <td nowrap align="center" valign="bottom">
             &nbsp;
             <script language="JavaScript" type="text/javascript">
-                var specifiedTestPage = jsUnitGetParm('testpage');
+                var testPageParameter = jsUnitGetParm('testpage');
                 var isFileProtocol = top.getDocumentProtocol() == 'file:///';
-                var needsUploadField = isFileProtocol && top.browserSupportsReadingFullPathFromFileField() && !specifiedTestPage ;
-                if (specifiedTestPage) {
-                    var html = '<input type="hidden" name="testFileName" value="';
-                    var valueString = '';
+                var testPageString = "";
+                if (testPageParameter) {
                     if (!isFileProtocol) {
                         var topLocation = top.location;
-                        if (specifiedTestPage.indexOf('/') == 0)
-                            valueString += topLocation.host;
-                        else if (specifiedTestPage.indexOf('./') == 0) {
-                            valueString += topLocation.href.substr(0, topLocation.href.indexOf("testRunner.html"));
-                            specifiedTestPage = specifiedTestPage.substr(2, specifiedTestPage.length);
+                        if (testPageParameter.indexOf('/') == 0)
+                            testPageString += topLocation.host;
+                        else if (testPageParameter.indexOf('./') == 0) {
+                            testPageString += topLocation.href.substr(0, topLocation.href.indexOf("testRunner.html"));
+                            testPageParameter = testPageParameter.substr(2, testPageParameter.length);
                         }
                     }
-                    valueString += specifiedTestPage;
+                    testPageString += testPageParameter;
                     var testParms = top.jsUnitConstructTestParms();
                     if (testParms != '') {
-                        valueString += '?';
-                        valueString += testParms;
+                        testPageString += '?';
+                        testPageString += testParms;
                     }
-                    html += valueString;
-                    html += '">';
-                    html += valueString;
-                    document.writeln(html);
-                } else {
-                    if (needsUploadField)
-                        document.writeln('<input type="file" name="testFileName" size="60">');
-                    else
-                        document.writeln('<input type="text" name="testFileName" size="60">');
                 }
+
+                var needsUploadField = isFileProtocol && top.browserSupportsReadingFullPathFromFileField() && testPageString.length == 0;
+                if (needsUploadField)
+                    document.writeln('<input type="file" name="testFileName" size="60" value="'+testPageString+'">');
+                else
+                    document.writeln('<input type="text" name="testFileName" size="60" value="'+testPageString+'">');
+
                 var buttonClass = needsUploadField ? "" : "button";
                 document.writeln('<input type="button" name="runButton" value="Run" onclick="kickOffTests()" class="' + buttonClass + '">');
                 document.writeln('<input type="button" name="stopButton" value="Stop" onclick="stopTests()" class="' + buttonClass + '">');

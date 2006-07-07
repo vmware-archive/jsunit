@@ -30,8 +30,3 @@ jsUnitTestSuite.prototype.clone = function () {
     clone.testPages = this.testPages;
     return clone;
 }
-
-if (xbDEBUG.on) {
-    xbDebugTraceObject('window', 'jsUnitTestSuite');
-}
-

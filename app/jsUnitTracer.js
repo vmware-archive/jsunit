@@ -74,10 +74,6 @@ JsUnitTracer.prototype._getTraceWindow = function() {
     return this._traceWindow;
 }
 
-if (xbDEBUG.on) {
-    xbDebugTraceObject('window', 'JsUnitTracer');
-}
-
 function JsUnitTraceLevel(levelNumber, color) {
     this._levelNumber = levelNumber;
     this._color = color;

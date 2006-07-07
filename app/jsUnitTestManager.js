@@ -699,9 +699,3 @@ function pop(anArray) {
         anArray.length--;
     }
 }
-
-if (xbDEBUG.on) {
-    xbDebugTraceObject('window', 'jsUnitTestManager');
-    xbDebugTraceFunction('window', 'getTestFileProtocol');
-    xbDebugTraceFunction('window', 'getDocumentProtocol');
-}

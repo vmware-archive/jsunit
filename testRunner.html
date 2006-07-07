@@ -4,7 +4,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JsUnit Test Runner</title>
-<script language="JavaScript" type="text/javascript" src="app/xbDebug.js"></script>
 <script language="JavaScript" type="text/javascript" src="app/jsUnitCore.js"></script>
 <script language="JavaScript" type="text/javascript">
     var DEFAULT_TEST_FRAME_HEIGHT = 250;
@@ -37,7 +36,7 @@
         }
         return parameterHash;
     }
-
+            
     function jsUnitConstructTestParms() {
         var p;
         var parms = '';
@@ -70,8 +69,6 @@
 
     var jsUnitParmHash = jsUnitParseParms(document.location.search);
 
-    // set to true to turn debugging code on, false to turn it off.
-    xbDEBUG.on = jsUnitGetParm('debug') ? true : false;
 </script>
 
 <script language="JavaScript" type="text/javascript" src="app/jsUnitTestManager.js"></script>
@@ -82,7 +79,6 @@
     var testManager;
     var utility;
     var tracer;
-
 
     if (!Array.prototype.push) {
         Array.prototype.push = function (anObject) {
@@ -150,6 +146,7 @@
         }
         testManager = new jsUnitTestManager();
         tracer = new JsUnitTracer(testManager);
+
         if (shouldKickOffTestsAutomatically()) {
             window.mainFrame.mainData.kickOffTests();
         }
