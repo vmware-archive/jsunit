@@ -2,6 +2,7 @@
 <module version="4" relativePaths="true" type="JAVA_MODULE">
   <component name="ModuleRootManager" />
   <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes_intellij_test" />
     <content url="file://$MODULE_DIR$" />
     <content url="file://$MODULE_DIR$/../java/bin" />
