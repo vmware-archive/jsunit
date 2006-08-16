@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4" relativePaths="true" type="JAVA_MODULE">
+  <component name="ModuleRootManager" />
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/classes_aggregate" />
+    <exclude-output />
+    <output-test url="file://$MODULE_DIR$/classes_aggregate_test" />
+    <content url="file://$MODULE_DIR$/../java/source_aggregate">
+      <sourceFolder url="file://$MODULE_DIR$/../java/source_aggregate" isTestSource="false" />
+    </content>
+    <content url="file://$MODULE_DIR$/../java/tests_aggregate">
+      <sourceFolder url="file://$MODULE_DIR$/../java/tests_aggregate" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="server" />
+    <orderEntryProperties />
+  </component>
+</module>
+

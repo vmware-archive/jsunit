@@ -1,0 +1,17 @@
+<browserResult id="1143568553467" time="0.381">
+    <properties>
+        <property name="browserFileName" value="default"/>
+        <property name="browserId" value="1"/>
+        <property name="jsUnitVersion" value="2.2"/>
+        <property name="userAgent"
+                  value="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20060321 Firefox/2.0a1"/>
+        <property name="remoteAddress" value="127.0.0.1"/>
+        <property name="url" value="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html"/>
+    </properties>
+    <testCases>
+        <testCase name="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html:testTrueTypeOf" time="0.0"/>
+        <testCase name="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html:testPushAndPop" time="0.0"/>
+        <testCase name="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html:testIsBlank" time="0.0"/>
+        <testCase name="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html:testTrim" time="0.0"/>
+    </testCases>
+</browserResult>

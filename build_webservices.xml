@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="JsUnit Online Services" default="webservices_run" basedir=".">
+
+    <!--
+     The following are the properties used to configure a test run against the JsUnit Online Services.
+     See the documentation at http://www.jsunit.net for more information.
+     -->
+
+    <property
+            name="emailAddress"
+            value="user@example.com"
+            description="emailAddress is your JsUnit Online Services email address'"
+            />
+
+    <property
+            name="password"
+            value="my_password"
+            description="password is your JsUnit Online Services password'"
+            />
+
+    <property
+            name="testPagePath"
+            location="c:\\jsunit\\tests\\jsUnitTestSuite.html"
+            description="testPagePath is the location of your Test Page (or Test Suite Page)"
+            />
+
+    <property
+            name="jsUnitPath"
+            location="c:\\jsunit"
+            description="jsUnitPath is the location of your JsUnit installation (e.g. c:\\jsunit)"
+            />
+
+    <property
+            name="browsers"
+            value="windows;internet explorer,macintosh;safari"
+            description="browsers is a comma-delimited list of platform;browser combinations (e.g. windows;internet explorer,macintosh;safari).  Valid platforms are windows, linux, and macintosh.  Valid browsers are firefox, konqueror, internet explorer, mozilla, netscape, opera, safari"
+            />
+
+    <property name="bin" location="java/bin"/>
+    <property name="lib" location="java/lib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+            <include name="*/*.jar"/>
+        </fileset>
+        <fileset dir="${bin}">
+            <include name="jsunit.jar"/>
+        </fileset>
+    </path>
+
+    <target name="webservices_run" description="Runs tests using the JsUnit Online Services">
+        <junit showoutput="true" haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <classpath refid="classpath"/>
+            <sysproperty key="jsunit.webservices.emailAddress" value="${emailAddress}"/>
+            <sysproperty key="jsunit.webservices.password" value="${password}"/>
+            <sysproperty key="jsunit.webservices.jsUnitPath" value="${jsUnitPath}"/>
+            <sysproperty key="jsunit.webservices.testPagePath" value="${testPagePath}"/>
+            <sysproperty key="jsunit.webservices.browsers" value="${browsers}"/>
+            <test name="net.jsunit.client.CommandLineClientTestSuite"/>
+        </junit>
+    </target>
+
+</project>

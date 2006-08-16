@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project name="JsUnit Compilation" default="create_distribution" basedir=".">
+
+    <!--
+     This build file is used by developers of JsUnit.  It is not packaged with the JsUnit binary distribution.
+     -->
+
+    <property name="source_core" location="java/source_core"/>
+    <property name="source_client" location="java/source_client"/>
+    <property name="source_server" location="java/source_server"/>
+    <property name="source_aggregate" location="java/source_aggregate"/>
+    <property name="source_services" location="java/source_services"/>
+    <property name="tests_core" location="java/tests_core"/>
+    <property name="tests_client" location="java/tests_client"/>
+    <property name="tests_server" location="java/tests_server"/>
+    <property name="tests_aggregate" location="java/tests_aggregate"/>
+    <property name="genfiles_client" location="java/genfiles_client"/>
+
+    <property name="bin" location="java/bin"/>
+    <property name="lib" location="java/lib"/>
+    <property name="testlib" location="java/testlib"/>
+
+    <path id="classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+            <include name="*/*.jar"/>
+        </fileset>
+        <fileset dir="${bin}">
+            <include name="jsunit.jar"/>
+        </fileset>
+    </path>
+
+    <taskdef resource="axis-tasks.properties" classpathref="classpath"/>
+
+    <target name="run_unit_tests" depends="clean,run_core_tests,run_server_tests,run_aggregate_tests,run_client_tests"/>
+
+    <path id="self_tests_classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+            <include name="*/*.jar"/>
+        </fileset>
+        <fileset dir="${testlib}">
+            <include name="*.jar"/>
+        </fileset>
+    </path>
+
+    <path id="lib_classpath">
+        <fileset dir="${lib}">
+            <include name="*.jar"/>
+            <include name="*/*.jar"/>
+        </fileset>
+    </path>
+
+    <target name="run_core_tests" depends="compile_core_tests">
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
+            <formatter type="plain" usefile="false"/>
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+            <test name="net.jsunit.CoreUnitTestSuite"/>
+        </junit>
+        <fail if="junit_test_failed"/>
+    </target>
+
+    <target name="run_server_tests" depends="compile_server_tests">
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
+            <formatter type="plain" usefile="false"/>
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+            <test name="net.jsunit.ServerUnitTestSuite"/>
+        </junit>
+        <fail if="junit_test_failed"/>
+    </target>
+
+    <target name="run_aggregate_tests" depends="compile_aggregate_tests">
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
+            <formatter type="plain" usefile="false"/>
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+            <test name="net.jsunit.AggregateServerUnitTestSuite"/>
+        </junit>
+        <fail if="junit_test_failed"/>
+    </target>
+
+    <target name="run_client_tests" depends="compile_client_tests">
+        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
+               failureproperty="junit_test_failed">
+            <formatter type="plain" usefile="false"/>
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+            <test name="net.jsunit.ClientUnitTestSuite"/>
+        </junit>
+        <fail if="junit_test_failed"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${bin}/net"/>
+        <delete dir="${genfiles_client}/net"/>
+    </target>
+
+    <target name="compile_source" depends="clean,compile_source_server,compile_source_aggregate,compile_source_client"/>
+
+    <target name="compile_tests" depends="compile_core_tests,compile_server_tests,compile_aggregate_tests"/>
+
+    <target name="compile_source_server" depends="compile_source_core">
+        <javac srcdir="${source_server}" destdir="${bin}" debug="true">
+            <classpath refid="lib_classpath"/>
+            <classpath>
+                <path location="${bin}"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile_source_aggregate" depends="compile_source_server">
+        <javac srcdir="${source_aggregate}" destdir="${bin}" debug="true">
+            <classpath refid="lib_classpath"/>
+            <classpath>
+                <path location="${bin}"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile_source_services" depends="compile_source_core">
+        <javac srcdir="${source_client}" destdir="${bin}" debug="true">
+            <classpath refid="lib_classpath"/>
+            <classpath>
+                <path location="${bin}"/>
+            </classpath>
+            <include name="net/jsunit/services/TestRunService.java"/>
+        </javac>
+    </target>
+
+    <target name="compile_source_client"
+            depends="compile_source_services,generate_wsdl,generate_client_java_from_wsdl">
+        <javac srcdir="${genfiles_client}" destdir="${bin}" debug="true">
+            <classpath refid="lib_classpath"/>
+        </javac>
+        <javac srcdir="${source_client}" destdir="${bin}" debug="true">
+            <classpath refid="lib_classpath"/>
+            <classpath>
+                <path location="${bin}"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="compile_source_core">
+        <javac srcdir="${source_core}" destdir="${bin}" debug="true">
+            <classpath refid="lib_classpath"/>
+        </javac>
+    </target>
+
+    <target name="generate_wsdl">
+        <axis-java2wsdl
+                namespace="https://services.jsunit.net/services"
+                classname="net.jsunit.services.TestRunService"
+                output="TestRunService.wsdl"
+                location="https://services.jsunit.net/services/TestRunService">
+            <classpath>
+                <path location="${bin}"/>
+            </classpath>
+            <classpath refid="lib_classpath"/>
+            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
+            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
+        </axis-java2wsdl>
+    </target>
+
+    <target name="generate_client_java_from_wsdl">
+        <axis-wsdl2java output="${genfiles_client}" url="TestRunService.wsdl">
+            <classpath>
+                <path location="${bin}"/>
+            </classpath>
+            <classpath refid="lib_classpath"/>
+            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
+            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
+            <nsexclude namespace="https://services.jsunit.net/model"/>
+        </axis-wsdl2java>
+        <delete file="${genfiles_client}/net/jsunit/services/TestRunService.java"/>
+    </target>
+
+    <target name="compile_core_tests" depends="compile_source_core">
+        <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+        </javac>
+    </target>
+
+    <target name="compile_server_tests" depends="compile_source_server">
+        <javac srcdir="${tests_server}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+        </javac>
+    </target>
+
+    <target name="compile_aggregate_tests" depends="compile_source_aggregate">
+        <javac srcdir="${tests_server}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+        </javac>
+        <javac srcdir="${tests_aggregate}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+        </javac>
+    </target>
+
+    <target name="compile_client_tests" depends="compile_source_client">
+        <javac srcdir="${tests_client}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}"/>
+        </javac>
+    </target>
+
+    <target name="create_src_jar">
+        <jar jarfile="./java/jsunit-src.jar">
+            <fileset dir="${source_core}"/>
+            <fileset dir="${source_client}"/>
+            <fileset dir="${source_server}"/>
+            <fileset dir="${tests_core}"/>
+            <fileset dir="${tests_client}"/>
+            <fileset dir="${tests_server}"/>
+        </jar>
+    </target>
+
+    <target name="generateJsUnitPropertiesSample" description="Generates the jsunit.properties.sample file">
+        <xslt in="build.xml" out="jsunit.properties.sample" destdir="."
+              style="tools/buildDotXmlToJsUnitDotProperties.xsl"></xslt>
+    </target>
+
+    <target name="transformResultXmlUsingSkin">
+        <xslt in="tools/sample_xml/distributedResult.xml" out="result.html" destdir="."
+              style="skins/HTML.xsl"></xslt>
+    </target>
+
+    <target name="make_jar" depends="compile_source">
+        <jar jarfile="${bin}/jsunit.jar" basedir="${bin}" includes="net/**"/>
+        <delete dir="${bin}/net"/>
+    </target>
+
+    <target name="make_all_jar" depends="compile_source,compile_tests">
+        <jar jarfile="${bin}/jsunit_all.jar" basedir="${bin}" includes="net/**"/>
+        <delete dir="${bin}/net"/>
+    </target>
+
+    <target name="create_distribution" depends="clean,make_jar,create_zip"
+            description="Creates the JsUnit distribution"/>
+
+    <target name="create_zip" description="Create a zip of the project">
+        <zip destfile="jsunit.zip">
+            <zipfileset dir="." filemode="755">
+                <include name="bin/unix/*.sh"/>
+                <include name="bin/mac/*.sh"/>
+            </zipfileset>
+            <zipfileset dir=".">
+                <include name="**"/>
+                <exclude name="bin/unix/*.sh"/>
+                <exclude name="bin/mac/*.sh"/>
+                <exclude name="**/.svn"/>
+                <exclude name="**/*.java"/>
+                <exclude name="uploaded/**"/>
+                <exclude name="TEST-*.xml"/>
+                <exclude name="**/*.class"/>
+                <exclude name="logs/**"/>
+            </zipfileset>
+        </zip>
+    </target>
+
+</project>

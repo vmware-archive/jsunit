@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4" relativePaths="true" type="JAVA_MODULE">
+  <component name="ModuleRootManager" />
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <exclude-output />
+    <output-test url="file://$MODULE_DIR$/classes_intellij_test" />
+    <content url="file://$MODULE_DIR$" />
+    <content url="file://$MODULE_DIR$/../java/bin" />
+    <content url="file://$MODULE_DIR$/../java/tests_intellij">
+      <sourceFolder url="file://$MODULE_DIR$/../java/tests_intellij" isTestSource="true" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="aggregate" />
+    <orderEntry type="module" module-name="browser" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="server" />
+    <orderEntry type="module" module-name="services_client" />
+    <orderEntryProperties />
+  </component>
+</module>
+
