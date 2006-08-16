@@ -2,28 +2,28 @@
 <project version="4" relativePaths="true">
   <component name="AntConfiguration">
     <defaultAnt bundledAnt="true" />
-    <buildFile url="file://$PROJECT_DIR$/../build.xml">
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/../build_aggregate.xml">
+    <buildFile url="file://$PROJECT_DIR$/build_aggregate.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/../build_compile.xml">
+    <buildFile url="file://$PROJECT_DIR$/build_compile.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
       <maximumHeapSize value="128" />
       <properties />
     </buildFile>
-    <buildFile url="file://$PROJECT_DIR$/../build_webservices.xml">
+    <buildFile url="file://$PROJECT_DIR$/build_webservices.xml">
       <additionalClassPath />
       <antReference projectDefault="true" />
       <customJdkName value="" />
@@ -31,7 +31,6 @@
       <properties />
     </buildFile>
   </component>
-  <component name="Build editor project-level loader" dont-ask="false" />
   <component name="BuildJarProjectSettings">
     <option name="BUILD_JARS_ON_MAKE" value="false" />
   </component>
@@ -70,7 +69,6 @@
       <entry name="?*.jpg" />
     </wildcardResourcePatterns>
   </component>
-  <component name="DataSourceManager" />
   <component name="DataSourceManagerImpl" />
   <component name="DependenciesAnalyzeManager">
     <option name="myForwardDirection" value="false" />
@@ -290,12 +288,12 @@
   </component>
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/aggregate.iml" filepath="$PROJECT_DIR$/aggregate.iml" />
-      <module fileurl="file://$PROJECT_DIR$/browser.iml" filepath="$PROJECT_DIR$/browser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/core.iml" filepath="$PROJECT_DIR$/core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/server.iml" filepath="$PROJECT_DIR$/server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/services_client.iml" filepath="$PROJECT_DIR$/services_client.iml" />
-      <module fileurl="file://$PROJECT_DIR$/union.iml" filepath="$PROJECT_DIR$/union.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij/aggregate.iml" filepath="$PROJECT_DIR$/intellij/aggregate.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij/browser.iml" filepath="$PROJECT_DIR$/intellij/browser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij/core.iml" filepath="$PROJECT_DIR$/intellij/core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij/server.iml" filepath="$PROJECT_DIR$/intellij/server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij/services_client.iml" filepath="$PROJECT_DIR$/intellij/services_client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/intellij/union.iml" filepath="$PROJECT_DIR$/intellij/union.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
@@ -308,60 +306,55 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
   </component>
   <component name="StarteamVcsAdapter" />
-  <component name="TDDConfig">
-    <option name="idleMsBeforeTimerPause" value="300000" />
-    <option name="masterSuiteConfigurationName" value="Suite" />
-    <option name="rollingActivityCycleTimelineSampleSize" value="40" />
-  </component>
   <component name="VssVcs" />
   <component name="libraryTable">
     <library name="lib_core">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../java/lib/jdom_1.0/jdom.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/junit_4.1/junit.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/jdom_1.0/jdom.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/junit_4.1/junit.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="lib_server">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../java/lib/jetty_5.1.11/org.mortbay.jetty.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/javax/javax.servlet.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/webwork_2.2.2/oscore.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/jetty_5.1.11/start.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xwork_1.2/ognl.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/jetty_5.1.11/stop.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/webwork_2.2.2/rife-continuations.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xwork_1.2/xwork-1.2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/webwork_2.2.2/webwork-2.2.2.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/commons_httpclient_3.0.1/commons-httpclient-3.0.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/commons_logging_1.1/commons-logging-1.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml_0.9.5/nekohtml.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xerces_2.8.0/xercesImpl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/jetty_5.1.11/org.mortbay.jetty.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/javax/javax.servlet.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/webwork_2.2.2/oscore.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/jetty_5.1.11/start.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/xwork_1.2/ognl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/jetty_5.1.11/stop.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/webwork_2.2.2/rife-continuations.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/xwork_1.2/xwork-1.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/webwork_2.2.2/webwork-2.2.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/commons_httpclient_3.0.1/commons-httpclient-3.0.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/commons_logging_1.1/commons-logging-1.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/nekohtml_0.9.5/nekohtml.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/xerces_2.8.0/xercesImpl.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="lib_server_test">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../java/testlib/httpunit-1.5.4.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/testlib/jwebunit-1.2.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/testlib/httpunit-1.5.4.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/testlib/jwebunit-1.2.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
     </library>
     <library name="lib_services_client">
       <CLASSES>
-        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/wsdl4j-1.5.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/log4j-1.2.8.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/jaxrpc.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/axis.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/axis-ant.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/axis_1.4/saaj.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/commons_logging_1.1/commons-logging-1.1.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/commons_discovery_0.2/commons-discovery.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/xerces_2.8.0/xercesImpl.jar!/" />
-        <root url="jar://$PROJECT_DIR$/../java/lib/nekohtml_0.9.5/nekohtml.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/axis_1.4/wsdl4j-1.5.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/axis_1.4/log4j-1.2.8.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/axis_1.4/jaxrpc.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/axis_1.4/axis.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/axis_1.4/axis-ant.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/axis_1.4/saaj.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/commons_logging_1.1/commons-logging-1.1.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/commons_discovery_0.2/commons-discovery.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/xerces_2.8.0/xercesImpl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/nekohtml_0.9.5/nekohtml.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />
