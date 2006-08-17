@@ -1,8 +1,6 @@
 For 2.2 release:
   FEATURES:
-    - make all logging go through some status logger interface
     - queuing needs work - linkedlist, queue
-    - group 3rd party jars and add licenses
     - Send traces to server
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
     - stack traces for failures
