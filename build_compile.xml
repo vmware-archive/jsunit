@@ -287,7 +287,7 @@
                 <exclude name="build_compile.xml"/>
                 <exclude name="JsUnit.ipr"/>
                 <exclude name="JsUnit.iws"/>
-                <exclude name="todo"/>
+                <exclude name="todo.txt"/>
                 <exclude name="changelog.txt"/>
             </zipfileset>
         </zip>
