@@ -268,11 +268,11 @@
 
     <target name="create_zip" description="Create a zip of the project">
         <zip destfile="jsunit.zip">
-            <zipfileset dir="." filemode="755">
+            <zipfileset dir="." filemode="755" prefix="jsunit">
                 <include name="bin/unix/*.sh"/>
                 <include name="bin/mac/*.sh"/>
             </zipfileset>
-            <zipfileset dir=".">
+            <zipfileset dir="." prefix="jsunit">
                 <include name="**"/>
                 <exclude name="bin/unix/*.sh"/>
                 <exclude name="bin/mac/*.sh"/>
