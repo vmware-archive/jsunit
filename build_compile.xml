@@ -97,13 +97,33 @@
     </target>
 
     <target name="clean">
+        <delete file="jsunit.zip"/>
+        <delete dir="${bin}/jsunit.jar"/>
+        <delete dir="${bin}/jsunit_tests.jar"/>
         <delete dir="${bin}/net"/>
         <delete dir="${genfiles_client}/net"/>
     </target>
 
     <target name="compile_source" depends="clean,compile_source_server,compile_source_aggregate,compile_source_client"/>
 
-    <target name="compile_tests" depends="compile_core_tests,compile_server_tests,compile_aggregate_tests"/>
+    <target name="compile_tests_against_jar">
+        <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}/jsunit.jar"/>
+        </javac>
+        <javac srcdir="${tests_server}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}/jsunit.jar"/>
+        </javac>
+        <javac srcdir="${tests_aggregate}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}/jsunit.jar"/>
+        </javac>
+        <javac srcdir="${tests_client}" destdir="${bin}" debug="true">
+            <classpath refid="self_tests_classpath"/>
+            <classpath path="${bin}/jsunit.jar"/>
+        </javac>
+    </target>
 
     <target name="compile_source_server" depends="compile_source_core">
         <javac srcdir="${source_server}" destdir="${bin}" debug="true">
@@ -134,7 +154,7 @@
     </target>
 
     <target name="compile_source_client"
-            depends="compile_source_services,generate_wsdl,generate_client_java_from_wsdl">
+            depends="compile_source_services,generate_client_java_from_wsdl">
         <javac srcdir="${genfiles_client}" destdir="${bin}" debug="true">
             <classpath refid="lib_classpath"/>
         </javac>
@@ -167,7 +187,7 @@
         </axis-java2wsdl>
     </target>
 
-    <target name="generate_client_java_from_wsdl">
+    <target name="generate_client_java_from_wsdl" depends="generate_wsdl">
         <axis-wsdl2java output="${genfiles_client}" url="TestRunService.wsdl">
             <classpath>
                 <path location="${bin}"/>
@@ -178,6 +198,7 @@
             <nsexclude namespace="https://services.jsunit.net/model"/>
         </axis-wsdl2java>
         <delete file="${genfiles_client}/net/jsunit/services/TestRunService.java"/>
+        <delete file="TestRunService.wsdl"/>
     </target>
 
     <target name="compile_core_tests" depends="compile_source_core">
@@ -237,8 +258,8 @@
         <delete dir="${bin}/net"/>
     </target>
 
-    <target name="make_all_jar" depends="compile_source,compile_tests">
-        <jar jarfile="${bin}/jsunit_all.jar" basedir="${bin}" includes="net/**"/>
+    <target name="make_tests_jar" depends="make_jar,compile_tests_against_jar">
+        <jar jarfile="${bin}/jsunit_tests.jar" basedir="${bin}" includes="net/**"/>
         <delete dir="${bin}/net"/>
     </target>
 
@@ -261,6 +282,13 @@
                 <exclude name="TEST-*.xml"/>
                 <exclude name="**/*.class"/>
                 <exclude name="logs/**"/>
+                <exclude name="intellij"/>
+                <exclude name="tools"/>
+                <exclude name="build_compile.xml"/>
+                <exclude name="JsUnit.ipr"/>
+                <exclude name="JsUnit.iws"/>
+                <exclude name="todo"/>
+                <exclude name="changelog.txt"/>
             </zipfileset>
         </zip>
     </target>
