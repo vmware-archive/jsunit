@@ -78,7 +78,7 @@
 
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
-    <property name="loggingPropertiesFile" location="WEB-INF/classes/logging.properties"/>
+    <property name="loggingPropertiesFile" location="logging.properties"/>
 
     <path id="classpath">
         <fileset dir="${lib}">
