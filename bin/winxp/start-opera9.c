@@ -13,7 +13,7 @@
 
 #include <stdlib.h>
 
-char *opera_profile = "/Application Data/Opera/Opera 9 Beta/profile/";
+char *opera_profile = "/Application Data/Opera/Opera/profile/";
 
 main(int argc, char *argv[]) {
   int pid;
@@ -60,7 +60,7 @@ main(int argc, char *argv[]) {
   /* start a detached opera */
   if ((pid = fork()) == 0 ) {
     execl(
-      "c:/program files/Opera 9 Beta/opera.exe",
+      "c:/program files/opera/opera.exe",
       "opera",
       argv[1],
       (char *) 0
