@@ -25,18 +25,17 @@ public class TestPageTest extends TestCase {
 
     protected void tearDown() throws Exception {
         writer.removeFiles();
-        System.clearProperty(HTMLSourceInspector.PROPERTY_REFERENCED_JS_FILE_RESOLVER);
         super.tearDown();
     }
 
     public void testInitialConditions() throws Exception {
-        page = new TestPage(testPageFile);
+        page = new TestPage(testPageFile, new DefaultReferencedJsFileResolver());
         assertTrue(testPageFile.exists());
         assertFalse(page.isSuite());
     }
 
     public void testSimple() throws Exception {
-        page = new TestPage(testPageFile);
+        page = new TestPage(testPageFile, new DefaultReferencedJsFileResolver());
         assertEquals(TEST_PAGE_FILENAME, page.getFileName());
         Assert.assertEquals(writer.generateTestPageContents(), page.getContents());
         ReferencedJsFile[] referencedJsFiles = page.getReferencedJsFiles();
@@ -48,14 +47,13 @@ public class TestPageTest extends TestCase {
     }
     
     public void testCustomReferencedJsFileResolver() {
-        System.setProperty(HTMLSourceInspector.PROPERTY_REFERENCED_JS_FILE_RESOLVER, MockJsFileResolver.class.getName());
-        MockJsFileResolver.scriptElementsPassed = null;
-        page = new TestPage(testPageFile);
-        assertEquals(4, MockJsFileResolver.scriptElementsPassed.size());
+        MockJsFileResolver mockResolver = new MockJsFileResolver();
+        page = new TestPage(testPageFile, mockResolver);
+        assertEquals(4, mockResolver.scriptElementsPassed.size());
     }
 
     static class MockJsFileResolver implements ReferencedJsFileResolver {
-        private static List<HTMLScriptElement> scriptElementsPassed;
+        private List<HTMLScriptElement> scriptElementsPassed;
 
         public List<String> resolve(List<HTMLScriptElement> scriptElements) {
             scriptElementsPassed = scriptElements;

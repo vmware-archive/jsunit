@@ -19,16 +19,19 @@ public class TestPage {
     private ReferencedJsFile[] referencedJsFiles;
     private String directory;
     private HTMLSourceInspector htmlSourceInspector;
+    private ReferencedJsFileResolver resolver;
 
     public TestPage() {
     }
 
-    public TestPage(File testPageFile) {
-        if (!testPageFile.exists())
+    public TestPage(File testPageFile, ReferencedJsFileResolver resolver) {
+        if (!testPageFile.exists()) {
             throw new RuntimeException("Test Page does not exist: " + testPageFile.getAbsolutePath());
+        }
+        this.resolver = resolver;
         this.fileName = testPageFile.getName();
         this.contents = FileUtility.read(testPageFile);
-        htmlSourceInspector = new HTMLSourceInspector(contents);
+        htmlSourceInspector = new HTMLSourceInspector(contents, resolver);
         directory = testPageFile.getParent();
         resolveDependencies();
     }
@@ -53,17 +56,13 @@ public class TestPage {
                     File file = new File(jsUnitDirectory.getAbsolutePath(), noQuotes);
                     if (!file.exists())
                         file = new File(directory, noQuotes);
-                    testPages.add(new TestPage(file));
+                    testPages.add(new TestPage(file, resolver));
                 }
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         return testPages.toArray(new TestPage[testPages.size()]);
-    }
-
-    private List<String> scripts() {
-        return htmlSourceInspector.scripts();
     }
 
     public boolean isSuite() {

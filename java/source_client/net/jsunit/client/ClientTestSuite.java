@@ -2,10 +2,7 @@ package net.jsunit.client;
 
 import junit.extensions.ActiveTestSuite;
 import junit.framework.TestResult;
-import net.jsunit.model.BrowserSpecification;
-import net.jsunit.model.BrowserType;
-import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.PlatformType;
+import net.jsunit.model.*;
 import net.jsunit.utility.XmlUtility;
 
 import java.io.File;
@@ -18,15 +15,15 @@ public class ClientTestSuite extends ActiveTestSuite {
     private File testPage;
     private List<RemoteTestRunTest> tests = new ArrayList<RemoteTestRunTest>();
 
-    public ClientTestSuite(String emailAddress, String password, File jsUnitDirectory, File testPage) {
-        this("http://services.jsunit.net/jsunit/services/TestRunService", emailAddress, password, jsUnitDirectory, testPage);
+    public ClientTestSuite(String emailAddress, String password, File jsUnitDirectory, File testPage, ReferencedJsFileResolver resolver) {
+        this("http://services.jsunit.net/jsunit/services/TestRunService", emailAddress, password, jsUnitDirectory, testPage, resolver);
     }
 
-    public ClientTestSuite(String serviceURL, String emailAddress, String password, File jsUnitDirectory, File testPage) {
+    public ClientTestSuite(String serviceURL, String emailAddress, String password, File jsUnitDirectory, File testPage, ReferencedJsFileResolver resolver) {
         super("JsUnit client suite");
         this.jsUnitDirectory = jsUnitDirectory;
         this.testPage = testPage;
-        client = new TestRunServiceClient(serviceURL, emailAddress, password);
+        client = new TestRunServiceClient(serviceURL, emailAddress, password, resolver);
     }
 
     public void run(TestResult testResult) {

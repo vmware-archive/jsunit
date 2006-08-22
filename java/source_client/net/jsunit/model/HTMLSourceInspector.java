@@ -16,24 +16,11 @@ public class HTMLSourceInspector {
     private String html;
     private List<HTMLScriptElement>  cachedScriptElements;
     private ReferencedJsFileResolver referencedJsFileResolver;
-    public static final String PROPERTY_REFERENCED_JS_FILE_RESOLVER = "net.jsunit.webservices.referencedJsFileResolver";
 
-    public HTMLSourceInspector(String html) {
+    public HTMLSourceInspector(String html, ReferencedJsFileResolver resolver) {
         this.html = html;
-        this.referencedJsFileResolver = createReferencedJsFileResolver();
+        this.referencedJsFileResolver = resolver;
         cachedScriptElements = scriptElements();
-    }
-
-    private ReferencedJsFileResolver createReferencedJsFileResolver() {
-        String resolverClassName = DefaultReferencedJsFileResolver.class.getName();
-        String specifiedClassName = System.getProperty(PROPERTY_REFERENCED_JS_FILE_RESOLVER);
-        if (specifiedClassName != null)
-            resolverClassName = specifiedClassName;
-        try {
-            return (ReferencedJsFileResolver) Class.forName(resolverClassName).newInstance();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public List<String> scripts() {

@@ -9,18 +9,17 @@ public class TestSuitePageTest extends TestCase {
 
     public static final String TEST_SUITE_PAGE_FILENAME = "mySuite.html";
 
-    private String directory;
     private DummyTestSuitePageWriter writer;
     private File testSuitePageFile;
     private TestPage page;
 
     protected void setUp() throws Exception {
         super.setUp();
-        directory = String.valueOf(System.currentTimeMillis());
+        String directory = String.valueOf(System.currentTimeMillis());
         writer = new DummyTestSuitePageWriter(directory, TEST_SUITE_PAGE_FILENAME);
         writer.writeFiles();
         testSuitePageFile = new File(directory, TEST_SUITE_PAGE_FILENAME);
-        page = new TestPage(testSuitePageFile);
+        page = new TestPage(testSuitePageFile, new DefaultReferencedJsFileResolver());
     }
 
     protected void tearDown() throws Exception {

@@ -1,8 +1,6 @@
 package net.jsunit.client;
 
-import net.jsunit.model.BrowserSpecification;
-import net.jsunit.model.DistributedTestRunResult;
-import net.jsunit.model.TestPage;
+import net.jsunit.model.*;
 import net.jsunit.services.TestRunService;
 import net.jsunit.services.TestRunServiceServiceLocator;
 import net.jsunit.utility.JsUnitURL;
@@ -19,20 +17,22 @@ public class TestRunServiceClient {
     private String username;
     private String password;
     private TestRunServiceServiceLocator locator;
+    private ReferencedJsFileResolver resolver;
 
-    public TestRunServiceClient(String serviceURL, String username, String password) {
-        this(serviceURL, new TestRunServiceServiceLocator(), username, password);
+    public TestRunServiceClient(String serviceURL, String username, String password, ReferencedJsFileResolver resolver) {
+        this(serviceURL, new TestRunServiceServiceLocator(), username, password, resolver);
     }
 
-    public TestRunServiceClient(String serviceURL, TestRunServiceServiceLocator locator, String username, String password) {
+    public TestRunServiceClient(String serviceURL, TestRunServiceServiceLocator locator, String username, String password, ReferencedJsFileResolver resolver) {
         this.locator = locator;
+        this.resolver = resolver;
         this.serviceURL = new JsUnitURL(serviceURL);
         this.password = password;
         this.username = username;
     }
 
     public DistributedTestRunResult send(File jsUnitDirectory, File testPageFile) throws Exception {
-        TestPage[] testPages = new TestPage(testPageFile).asTestPages(jsUnitDirectory);
+        TestPage[] testPages = new TestPage(testPageFile, resolver).asTestPages(jsUnitDirectory);
         TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
         ((Stub) service).setUsername(username);
         ((Stub) service).setPassword(password);
