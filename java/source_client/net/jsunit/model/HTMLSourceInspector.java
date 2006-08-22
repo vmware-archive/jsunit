@@ -14,17 +14,31 @@ import java.util.regex.Pattern;
 
 public class HTMLSourceInspector {
     private String html;
-    private NodeList cachedScriptElements;
+    private List<HTMLScriptElement>  cachedScriptElements;
+    private ReferencedJsFileResolver referencedJsFileResolver;
+    public static final String PROPERTY_REFERENCED_JS_FILE_RESOLVER = "net.jsunit.webservices.referencedJsFileResolver";
 
     public HTMLSourceInspector(String html) {
         this.html = html;
+        this.referencedJsFileResolver = createReferencedJsFileResolver();
         cachedScriptElements = scriptElements();
+    }
+
+    private ReferencedJsFileResolver createReferencedJsFileResolver() {
+        String resolverClassName = DefaultReferencedJsFileResolver.class.getName();
+        String specifiedClassName = System.getProperty(PROPERTY_REFERENCED_JS_FILE_RESOLVER);
+        if (specifiedClassName != null)
+            resolverClassName = specifiedClassName;
+        try {
+            return (ReferencedJsFileResolver) Class.forName(resolverClassName).newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<String> scripts() {
         List<String> result = new ArrayList<String>();
-        for (int i = 0; i < cachedScriptElements.getLength(); i++) {
-            HTMLScriptElement scriptElement = (HTMLScriptElement) cachedScriptElements.item(i);
+        for (HTMLScriptElement scriptElement : cachedScriptElements) {
             if (StringUtility.isEmpty(scriptElement.getSrc()))
                 result.add(scriptElement.getText());
         }
@@ -32,26 +46,19 @@ public class HTMLSourceInspector {
     }
 
     public List<String> findReferenceJsFilePaths() {
-        List<String> result = new ArrayList<String>();
-        for (int i = 0; i < cachedScriptElements.getLength(); i++) {
-            HTMLScriptElement scriptElement = (HTMLScriptElement) cachedScriptElements.item(i);
-            String filePath = scriptElement.getSrc();
-            if (isNonEmptyNonJsUnitReferencedJsFile(filePath))
-                result.add(filePath);
-        }
-        return result;
+        return referencedJsFileResolver.resolve(cachedScriptElements);
     }
 
-    private boolean isNonEmptyNonJsUnitReferencedJsFile(String filePath) {
-        return !StringUtility.isEmpty(filePath) && !filePath.toLowerCase().endsWith("jsunitcore.js");
-    }
-
-    private NodeList scriptElements() {
+    private List<HTMLScriptElement> scriptElements() {
         org.cyberneko.html.parsers.DOMParser parser = new org.cyberneko.html.parsers.DOMParser();
         try {
             parser.parse(new InputSource(new StringReader(html)));
             Document document = parser.getDocument();
-            return document.getElementsByTagName("script");
+            NodeList nodeList = document.getElementsByTagName("script");
+            List<HTMLScriptElement> result = new ArrayList<HTMLScriptElement>();
+            for (int i = 0; i < nodeList.getLength(); i++)
+                  result.add((HTMLScriptElement) nodeList.item(i));
+            return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -59,6 +59,8 @@
             <sysproperty key="jsunit.webservices.jsUnitPath" value="${jsUnitPath}"/>
             <sysproperty key="jsunit.webservices.testPagePath" value="${testPagePath}"/>
             <sysproperty key="jsunit.webservices.browsers" value="${browsers}"/>
+            <sysproperty key="jsunit.webservices.referencedJsFileResolver"
+                         value="net.jsunit.model.DefaultReferencedJsFileResolver"/>
             <test name="net.jsunit.client.CommandLineClientTestSuite"/>
         </junit>
     </target>
