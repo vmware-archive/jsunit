@@ -19,7 +19,7 @@ public class InvalidBrowserSpecificationException extends Exception {
         return new InvalidRemoteMachineUrlBrowserCombination(platformString, browserString);
     }
 
-    public String getDisplayString() {
+    public String getAttemptedPlatformBrowserString() {
         return platformString + "/" + browserString;
     }
 }
