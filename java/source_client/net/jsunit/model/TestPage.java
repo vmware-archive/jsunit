@@ -19,19 +19,21 @@ public class TestPage {
     private ReferencedJsFile[] referencedJsFiles;
     private String directory;
     private HTMLSourceInspector htmlSourceInspector;
-    private ReferencedJsFileResolver resolver;
+    private ReferencedJsFileResolver jsFileResolver;
+    private ReferencedTestPageResolver referencedTestPageResolver;
 
     public TestPage() {
     }
 
-    public TestPage(File testPageFile, ReferencedJsFileResolver resolver) {
+    public TestPage(File testPageFile, ReferencedJsFileResolver jsFileResolver, ReferencedTestPageResolver referencedTestPageResolver) {
         if (!testPageFile.exists()) {
             throw new RuntimeException("Test Page does not exist: " + testPageFile.getAbsolutePath());
         }
-        this.resolver = resolver;
+        this.jsFileResolver = jsFileResolver;
+        this.referencedTestPageResolver = referencedTestPageResolver;
         this.fileName = testPageFile.getName();
         this.contents = FileUtility.read(testPageFile);
-        htmlSourceInspector = new HTMLSourceInspector(contents, resolver);
+        htmlSourceInspector = new HTMLSourceInspector(contents, jsFileResolver);
         directory = testPageFile.getParent();
         resolveDependencies();
     }
@@ -53,10 +55,10 @@ public class TestPage {
                 if (matcher.find()) {
                     String match = matcher.group(1);
                     String noQuotes = StringUtility.stripQuotes(match.trim());
-                    File file = new File(jsUnitDirectory.getAbsolutePath(), noQuotes);
+                    File file = referencedTestPageResolver.resolve(jsUnitDirectory, noQuotes);
                     if (!file.exists())
                         file = new File(directory, noQuotes);
-                    testPages.add(new TestPage(file, resolver));
+                    testPages.add(new TestPage(file, jsFileResolver, referencedTestPageResolver));
                 }
             }
         } catch (IOException e) {

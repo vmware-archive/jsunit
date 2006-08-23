@@ -19,7 +19,7 @@ public class TestSuitePageTest extends TestCase {
         writer = new DummyTestSuitePageWriter(directory, TEST_SUITE_PAGE_FILENAME);
         writer.writeFiles();
         testSuitePageFile = new File(directory, TEST_SUITE_PAGE_FILENAME);
-        page = new TestPage(testSuitePageFile, new DefaultReferencedJsFileResolver());
+        page = new TestPage(testSuitePageFile, new DefaultReferencedJsFileResolver(), new DefaultReferencedTestPageResolver());
     }
 
     protected void tearDown() throws Exception {

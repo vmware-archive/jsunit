@@ -5,6 +5,7 @@ import junit.framework.TestSuite;
 import net.jsunit.model.PlatformType;
 import net.jsunit.model.BrowserType;
 import net.jsunit.model.DefaultReferencedJsFileResolver;
+import net.jsunit.model.DefaultReferencedTestPageResolver;
 import net.jsunit.utility.FileUtility;
 
 import java.io.File;
@@ -22,7 +23,15 @@ public class SelfTestsClientIntegrationTest {
     public static Test subSuite() {
         File testPage = new File(FileUtility.jsUnitPath(), "tests" + File.separator + "jsUnitTestSuite.html");
         String serviceURL = "http://services.jsunit.net/jsunit/services/TestRunService";
-        ClientTestSuite suite = new ClientTestSuite(serviceURL, "admin@jsunit.net", "mins022802", FileUtility.jsUnitPath(), testPage, new DefaultReferencedJsFileResolver());
+        ClientTestSuite suite = new ClientTestSuite(
+                serviceURL,
+                "admin@jsunit.net",
+                "mins022802",
+                FileUtility.jsUnitPath(),
+                testPage,
+                new DefaultReferencedJsFileResolver(),
+                new DefaultReferencedTestPageResolver()
+        );
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.INTERNET_EXPLORER);
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.FIREFOX);
         suite.addBrowser(PlatformType.WINDOWS, BrowserType.OPERA);

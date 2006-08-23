@@ -5,8 +5,8 @@ import junit.framework.TestCase;
 import org.w3c.dom.html.HTMLScriptElement;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 
 public class TestPageTest extends TestCase {
     public static final String TEST_PAGE_FILENAME = "myPage.html";
@@ -29,13 +29,13 @@ public class TestPageTest extends TestCase {
     }
 
     public void testInitialConditions() throws Exception {
-        page = new TestPage(testPageFile, new DefaultReferencedJsFileResolver());
+        page = new TestPage(testPageFile, new DefaultReferencedJsFileResolver(), new DefaultReferencedTestPageResolver());
         assertTrue(testPageFile.exists());
         assertFalse(page.isSuite());
     }
 
     public void testSimple() throws Exception {
-        page = new TestPage(testPageFile, new DefaultReferencedJsFileResolver());
+        page = new TestPage(testPageFile, new DefaultReferencedJsFileResolver(), new DefaultReferencedTestPageResolver());
         assertEquals(TEST_PAGE_FILENAME, page.getFileName());
         Assert.assertEquals(writer.generateTestPageContents(), page.getContents());
         ReferencedJsFile[] referencedJsFiles = page.getReferencedJsFiles();
@@ -48,8 +48,9 @@ public class TestPageTest extends TestCase {
     
     public void testCustomReferencedJsFileResolver() {
         MockJsFileResolver mockResolver = new MockJsFileResolver();
-        page = new TestPage(testPageFile, mockResolver);
+        page = new TestPage(testPageFile, mockResolver, new DefaultReferencedTestPageResolver());
         assertEquals(4, mockResolver.scriptElementsPassed.size());
+        assertEquals(2, page.getReferencedJsFiles().length);
     }
 
     static class MockJsFileResolver implements ReferencedJsFileResolver {
@@ -57,7 +58,10 @@ public class TestPageTest extends TestCase {
 
         public List<String> resolve(List<HTMLScriptElement> scriptElements) {
             scriptElementsPassed = scriptElements;
-            return new ArrayList<String>();
+            return Arrays.asList(new String[] {
+                "http://www.example.com/foo.js",
+                "http://www.example.com/bar.js",
+            });
         }
     }
 }

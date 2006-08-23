@@ -15,15 +15,15 @@ public class ClientTestSuite extends ActiveTestSuite {
     private File testPage;
     private List<RemoteTestRunTest> tests = new ArrayList<RemoteTestRunTest>();
 
-    public ClientTestSuite(String emailAddress, String password, File jsUnitDirectory, File testPage, ReferencedJsFileResolver resolver) {
-        this("http://services.jsunit.net/jsunit/services/TestRunService", emailAddress, password, jsUnitDirectory, testPage, resolver);
+    public ClientTestSuite(String emailAddress, String password, File jsUnitDirectory, File testPage, ReferencedJsFileResolver jsFileResolver, ReferencedTestPageResolver referencedTestPageResolver) {
+        this("http://services.jsunit.net/jsunit/services/TestRunService", emailAddress, password, jsUnitDirectory, testPage, jsFileResolver, referencedTestPageResolver);
     }
 
-    public ClientTestSuite(String serviceURL, String emailAddress, String password, File jsUnitDirectory, File testPage, ReferencedJsFileResolver resolver) {
+    public ClientTestSuite(String serviceURL, String emailAddress, String password, File jsUnitDirectory, File testPage, ReferencedJsFileResolver jsFileResolver, ReferencedTestPageResolver referencedTestPageResolver) {
         super("JsUnit client suite");
         this.jsUnitDirectory = jsUnitDirectory;
         this.testPage = testPage;
-        client = new TestRunServiceClient(serviceURL, emailAddress, password, resolver);
+        client = new TestRunServiceClient(serviceURL, emailAddress, password, jsFileResolver, referencedTestPageResolver);
     }
 
     public void run(TestResult testResult) {

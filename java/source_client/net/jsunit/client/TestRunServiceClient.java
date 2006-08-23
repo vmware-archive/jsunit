@@ -17,22 +17,24 @@ public class TestRunServiceClient {
     private String username;
     private String password;
     private TestRunServiceServiceLocator locator;
-    private ReferencedJsFileResolver resolver;
+    private ReferencedJsFileResolver jsFileResolver;
+    private ReferencedTestPageResolver referencedTestPageResolver;
 
-    public TestRunServiceClient(String serviceURL, String username, String password, ReferencedJsFileResolver resolver) {
-        this(serviceURL, new TestRunServiceServiceLocator(), username, password, resolver);
+    public TestRunServiceClient(String serviceURL, String username, String password, ReferencedJsFileResolver jsFileResolver, ReferencedTestPageResolver referencedTestPageResolver) {
+        this(serviceURL, new TestRunServiceServiceLocator(), username, password, jsFileResolver, referencedTestPageResolver);
     }
 
-    public TestRunServiceClient(String serviceURL, TestRunServiceServiceLocator locator, String username, String password, ReferencedJsFileResolver resolver) {
+    public TestRunServiceClient(String serviceURL, TestRunServiceServiceLocator locator, String username, String password, ReferencedJsFileResolver jsFileResolver, ReferencedTestPageResolver referencedTestPageResolver) {
         this.locator = locator;
-        this.resolver = resolver;
+        this.jsFileResolver = jsFileResolver;
+        this.referencedTestPageResolver = referencedTestPageResolver;
         this.serviceURL = new JsUnitURL(serviceURL);
         this.password = password;
         this.username = username;
     }
 
     public DistributedTestRunResult send(File jsUnitDirectory, File testPageFile) throws Exception {
-        TestPage[] testPages = new TestPage(testPageFile, resolver).asTestPages(jsUnitDirectory);
+        TestPage[] testPages = new TestPage(testPageFile, jsFileResolver, referencedTestPageResolver).asTestPages(jsUnitDirectory);
         TestRunService service = locator.getTestRunService(serviceURL.asJavaURL());
         ((Stub) service).setUsername(username);
         ((Stub) service).setPassword(password);

@@ -28,7 +28,14 @@ public class TestRunServiceClientTest extends TestCase {
     public void testSimple() throws Exception {
         MockTestRunService mockService = new MockTestRunService();
         MockTestRunServiceServiceLocator mockLocator = new MockTestRunServiceServiceLocator(mockService);
-        TestRunServiceClient client = new TestRunServiceClient("http://www.example.com/jsUnitService", mockLocator, "a username", "a password", new DefaultReferencedJsFileResolver());
+        TestRunServiceClient client = new TestRunServiceClient(
+                "http://www.example.com/jsUnitService",
+                mockLocator,
+                "a username",
+                "a password",
+                new DefaultReferencedJsFileResolver(),
+                new DefaultReferencedTestPageResolver()
+        );
         client.addBrowserSpec(new BrowserSpecification(PlatformType.MACINTOSH, BrowserType.FIREFOX));
         client.addBrowserSpec(new BrowserSpecification(PlatformType.LINUX, BrowserType.OPERA));
         client.send(FileUtility.jsUnitPath(), new File(directory, TEST_SUITE_FILE_NAME));
@@ -38,7 +45,14 @@ public class TestRunServiceClientTest extends TestCase {
     }
 
     public void testBadServiceURL() throws Exception {
-        TestRunServiceClient client = new TestRunServiceClient("not a url", new TestRunServiceServiceLocator(), "username", "password", new DefaultReferencedJsFileResolver());
+        TestRunServiceClient client = new TestRunServiceClient(
+                "not a url",
+                new TestRunServiceServiceLocator(),
+                "username",
+                "password",
+                new DefaultReferencedJsFileResolver(),
+                new DefaultReferencedTestPageResolver()
+        );
         try {
             client.send(FileUtility.jsUnitPath(), new File("foo"));
             fail();

@@ -61,6 +61,8 @@
             <sysproperty key="jsunit.webservices.browsers" value="${browsers}"/>
             <sysproperty key="jsunit.webservices.referencedJsFileResolver"
                          value="net.jsunit.model.DefaultReferencedJsFileResolver"/>
+            <sysproperty key="net.jsunit.webservices.referencedTestPageResolver"
+                         value="net.jsunit.model.DefaultReferencedTestPageResolver"/>
             <test name="net.jsunit.client.CommandLineClientTestSuite"/>
         </junit>
     </target>

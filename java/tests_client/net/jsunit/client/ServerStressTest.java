@@ -3,6 +3,7 @@ package net.jsunit.client;
 import junit.framework.TestCase;
 import net.jsunit.model.Result;
 import net.jsunit.model.DefaultReferencedJsFileResolver;
+import net.jsunit.model.DefaultReferencedTestPageResolver;
 import net.jsunit.utility.FileUtility;
 import net.jsunit.utility.XmlUtility;
 
@@ -38,7 +39,11 @@ public class ServerStressTest extends TestCase {
 
         public void run() {
             TestRunServiceClient client = new TestRunServiceClient(
-                    "http://services.jsunit.net/services/TestRunService", "admin@jsunit.net", "king olaf the hairy", new DefaultReferencedJsFileResolver()
+                    "http://services.jsunit.net/services/TestRunService",
+                    "admin@jsunit.net",
+                    "king olaf the hairy",
+                    new DefaultReferencedJsFileResolver(),
+                    new DefaultReferencedTestPageResolver()
             );
             long startTime = System.currentTimeMillis();
             int count = 50;
