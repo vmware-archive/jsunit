@@ -57,7 +57,7 @@ public class TestPage {
                     String noQuotes = StringUtility.stripQuotes(match.trim());
                     File file = referencedTestPageResolver.resolve(jsUnitDirectory, noQuotes);
                     if (!file.exists())
-                        file = new File(directory, noQuotes);
+                        file = referencedTestPageResolver.resolve(jsUnitDirectory, noQuotes);
                     testPages.add(new TestPage(file, jsFileResolver, referencedTestPageResolver));
                 }
             }
