@@ -17,7 +17,7 @@ public class TestPage {
     private String fileName;
     private String contents;
     private ReferencedJsFile[] referencedJsFiles;
-    private String directory;
+    private File directory;
     private HTMLSourceInspector htmlSourceInspector;
     private ReferencedJsFileResolver jsFileResolver;
     private ReferencedTestPageResolver referencedTestPageResolver;
@@ -34,7 +34,7 @@ public class TestPage {
         this.fileName = testPageFile.getName();
         this.contents = FileUtility.read(testPageFile);
         htmlSourceInspector = new HTMLSourceInspector(contents, jsFileResolver);
-        directory = testPageFile.getParent();
+        directory = testPageFile.getParentFile();
         resolveDependencies();
     }
 
@@ -57,7 +57,9 @@ public class TestPage {
                     String noQuotes = StringUtility.stripQuotes(match.trim());
                     File file = referencedTestPageResolver.resolve(jsUnitDirectory, noQuotes);
                     if (!file.exists())
-                        file = referencedTestPageResolver.resolve(jsUnitDirectory, noQuotes);
+                        file = referencedTestPageResolver.resolve(directory, noQuotes);
+                    if (!file.exists())
+                        throw new RuntimeException("Cannot find file " + noQuotes);
                     testPages.add(new TestPage(file, jsFileResolver, referencedTestPageResolver));
                 }
             }
