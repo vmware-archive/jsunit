@@ -58,12 +58,13 @@
 
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
-    <property name="loggingPropertiesFile" location="WEB-INF/classes/logging.properties"/>
+    <property name="loggingPropertiesFile" location="logging.properties"/>
 
     <path id="classpath">
         <fileset dir="${lib}">
             <include name="*.jar"/>
             <include name="*/*.jar"/>
+            <exclude name="axis_1.4/*.jar"/>
         </fileset>
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>
