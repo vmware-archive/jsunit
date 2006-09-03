@@ -233,13 +233,11 @@
     </target>
 
     <target name="create_src_jar">
-        <jar jarfile="./java/jsunit-src.jar">
+        <jar jarfile="./java/jsunit-source.jar">
             <fileset dir="${source_core}"/>
             <fileset dir="${source_client}"/>
+            <fileset dir="${genfiles_client}"/>
             <fileset dir="${source_server}"/>
-            <fileset dir="${tests_core}"/>
-            <fileset dir="${tests_client}"/>
-            <fileset dir="${tests_server}"/>
         </jar>
     </target>
 
