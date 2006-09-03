@@ -267,7 +267,7 @@
             description="Creates the JsUnit distribution"/>
 
     <target name="create_zip" description="Create a zip of the project">
-        <zip destfile="jsunit.zip">
+        <zip destfile="jsunit.zip" filesonly="true">
             <zipfileset dir="." filemode="755" prefix="jsunit">
                 <include name="bin/unix/*.sh"/>
                 <include name="bin/mac/*.sh"/>
@@ -279,11 +279,13 @@
                 <exclude name="**/.svn"/>
                 <exclude name="**/*.java"/>
                 <exclude name="uploaded/**"/>
+                <exclude name="java/testlib/**"/>
+                <exclude name="java/bin/jsunit_tests.jar"/>
                 <exclude name="TEST-*.xml"/>
                 <exclude name="**/*.class"/>
                 <exclude name="logs/**"/>
-                <exclude name="intellij"/>
-                <exclude name="tools"/>
+                <exclude name="intellij/**"/>
+                <exclude name="tools/**"/>
                 <exclude name="build_compile.xml"/>
                 <exclude name="JsUnit.ipr"/>
                 <exclude name="JsUnit.iws"/>
