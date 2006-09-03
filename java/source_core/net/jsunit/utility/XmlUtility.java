@@ -55,12 +55,12 @@ public class XmlUtility {
         return null;
     }
 
-    public static String srcAttribute(Node scriptElement) {
+    public static Node srcAttribute(Node scriptElement) {
         NamedNodeMap attributes = scriptElement.getAttributes();
         for (int i =0 ; i<attributes.getLength(); i++) {
             Node attribute = attributes.item(i);
             if (attribute.getNodeName().equalsIgnoreCase("SRC"))
-                return attribute.getNodeValue();
+                return attribute;
         }
         return null;
     }

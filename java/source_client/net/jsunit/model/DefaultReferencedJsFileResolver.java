@@ -12,9 +12,9 @@ public class DefaultReferencedJsFileResolver implements ReferencedJsFileResolver
     public List<String> resolve(List<Node> scriptElements) {
         List<String> result = new ArrayList<String>();
         for (Node scriptElement : scriptElements) {
-            String src = XmlUtility.srcAttribute(scriptElement);
-            if (isNonEmptyNonJsUnitReferencedJsFile(src))
-                result.add(src);
+            Node src = XmlUtility.srcAttribute(scriptElement);
+            if (src != null && isNonEmptyNonJsUnitReferencedJsFile(src.getNodeValue()))
+                result.add(src.getNodeValue());
         }
         return result;
     }

@@ -26,7 +26,7 @@ public class HTMLSourceInspector {
     public List<String> scripts() {
         List<String> result = new ArrayList<String>();
         for (Node scriptElement : cachedScriptElements) {
-            String src = XmlUtility.srcAttribute(scriptElement);
+            Node src = XmlUtility.srcAttribute(scriptElement);
             if (src == null)
                 result.add(scriptElement.getTextContent());            
         }
