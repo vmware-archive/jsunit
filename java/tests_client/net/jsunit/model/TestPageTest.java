@@ -2,7 +2,7 @@ package net.jsunit.model;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.w3c.dom.html.HTMLScriptElement;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.util.Arrays;
@@ -54,9 +54,9 @@ public class TestPageTest extends TestCase {
     }
 
     static class MockJsFileResolver implements ReferencedJsFileResolver {
-        private List<HTMLScriptElement> scriptElementsPassed;
+        private List<Node> scriptElementsPassed;
 
-        public List<String> resolve(List<HTMLScriptElement> scriptElements) {
+        public List<String> resolve(List<Node> scriptElements) {
             scriptElementsPassed = scriptElements;
             return Arrays.asList(new String[] {
                 "http://www.example.com/foo.js",

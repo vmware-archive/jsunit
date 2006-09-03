@@ -1,19 +1,20 @@
 package net.jsunit.model;
 
 import net.jsunit.utility.StringUtility;
-import org.w3c.dom.html.HTMLScriptElement;
+import net.jsunit.utility.XmlUtility;
+import org.w3c.dom.Node;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class DefaultReferencedJsFileResolver implements ReferencedJsFileResolver {
 
-    public List<String> resolve(List<HTMLScriptElement> scriptElements) {
+    public List<String> resolve(List<Node> scriptElements) {
         List<String> result = new ArrayList<String>();
-        for (HTMLScriptElement scriptElement : scriptElements) {
-            String filePath = scriptElement.getSrc();
-            if (isNonEmptyNonJsUnitReferencedJsFile(filePath))
-                result.add(filePath);
+        for (Node scriptElement : scriptElements) {
+            String src = XmlUtility.srcAttribute(scriptElement);
+            if (isNonEmptyNonJsUnitReferencedJsFile(src))
+                result.add(src);
         }
         return result;
     }

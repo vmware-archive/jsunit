@@ -6,6 +6,7 @@ import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
 import org.w3c.dom.Node;
+import org.w3c.dom.NamedNodeMap;
 
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
@@ -48,10 +49,18 @@ public class XmlUtility {
             Transformer transformer = factory.newTransformer();
             transformer.transform(source, result);
             return stringWriter.getBuffer().toString();
-        } catch (TransformerConfigurationException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-        } catch (TransformerException e) {
-            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static String srcAttribute(Node scriptElement) {
+        NamedNodeMap attributes = scriptElement.getAttributes();
+        for (int i =0 ; i<attributes.getLength(); i++) {
+            Node attribute = attributes.item(i);
+            if (attribute.getNodeName().equalsIgnoreCase("SRC"))
+                return attribute.getNodeValue();
         }
         return null;
     }

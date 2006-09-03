@@ -1,10 +1,9 @@
 package net.jsunit.model;
 
-import net.jsunit.utility.StringUtility;
+import net.jsunit.utility.XmlUtility;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
 import org.w3c.dom.Node;
-import org.w3c.dom.html.HTMLScriptElement;
+import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
 import java.io.StringReader;
@@ -15,7 +14,7 @@ import java.util.regex.Pattern;
 
 public class HTMLSourceInspector {
     private String html;
-    private List<HTMLScriptElement> cachedScriptElements;
+    private List<Node> cachedScriptElements;
     private ReferencedJsFileResolver referencedJsFileResolver;
 
     public HTMLSourceInspector(String html, ReferencedJsFileResolver resolver) {
@@ -26,9 +25,10 @@ public class HTMLSourceInspector {
 
     public List<String> scripts() {
         List<String> result = new ArrayList<String>();
-        for (HTMLScriptElement scriptElement : cachedScriptElements) {
-            if (StringUtility.isEmpty(scriptElement.getSrc()))
-                result.add(scriptElement.getText());
+        for (Node scriptElement : cachedScriptElements) {
+            String src = XmlUtility.srcAttribute(scriptElement);
+            if (src == null)
+                result.add(scriptElement.getTextContent());            
         }
         return result;
     }
@@ -37,17 +37,16 @@ public class HTMLSourceInspector {
         return referencedJsFileResolver.resolve(cachedScriptElements);
     }
 
-    private List<HTMLScriptElement> scriptElements() {
+    private List<Node> scriptElements() {
         org.cyberneko.html.parsers.DOMParser parser = new org.cyberneko.html.parsers.DOMParser();
         try {
             parser.parse(new InputSource(new StringReader(html)));
             Document document = parser.getDocument();
-            NodeList nodeList = document.getElementsByTagName("script");
-            List<HTMLScriptElement> result = new ArrayList<HTMLScriptElement>();
+            NodeList nodeList = document.getElementsByTagName("SCRIPT");
+            List<Node> result = new ArrayList<Node>();
             for (int i = 0; i < nodeList.getLength(); i++) {
                 Node node = nodeList.item(i);
-                if (node instanceof HTMLScriptElement)
-                    result.add((HTMLScriptElement) node);
+                result.add(node);
             }
             return result;
         } catch (Exception e) {
