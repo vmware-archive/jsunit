@@ -45,7 +45,7 @@ public class JsUnitServerConfigurationProvider extends XmlConfigurationProvider 
     private ActionConfig acceptorActionConfig() {
         ActionConfig result = newActionConfig();
         result.setClassName(ResultAcceptorAction.class.getName());
-        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class.getName()));
+        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class));
         Map<String, String> headerParamsMap = new HashMap<String, String>();
         headerParamsMap.put("status", "403");
         result.addResultConfig(new ResultConfig(LocalhostOnlyInterceptor.DENIED_NOT_LOCALHOST, HttpHeaderResult.class.getName(), headerParamsMap));
@@ -58,8 +58,8 @@ public class JsUnitServerConfigurationProvider extends XmlConfigurationProvider 
     private ActionConfig runnerActionConfig() {
         ActionConfig result = newActionConfig();
         result.setClassName(TestRunnerAction.class.getName());
-        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class.getName()));
-        result.addResultConfig(new ResultConfig("error", XmlResult.class.getName()));
+        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class));
+        result.addResultConfig(new ResultConfig("error", XmlResult.class));
         result.addInterceptor(new InterceptorMapping("browserTestRunner", new BrowserTestRunnerInterceptor()));
         result.addInterceptor(new InterceptorMapping("params", new ParametersInterceptor()));
         result.addInterceptor(new InterceptorMapping("requestSource", new RequestSourceInterceptor()));
@@ -70,8 +70,8 @@ public class JsUnitServerConfigurationProvider extends XmlConfigurationProvider 
     private ActionConfig displayerActionConfig() {
         ActionConfig result = newActionConfig();
         result.setClassName(ResultDisplayerAction.class.getName());
-        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class.getName()));
-        result.addResultConfig(new ResultConfig("error", XmlResult.class.getName()));
+        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class));
+        result.addResultConfig(new ResultConfig("error", XmlResult.class));
         result.addInterceptor(new InterceptorMapping("browserTestRunner", new BrowserTestRunnerInterceptor()));
         result.addInterceptor(new InterceptorMapping("params", new ParametersInterceptor()));
         return result;
@@ -80,7 +80,7 @@ public class JsUnitServerConfigurationProvider extends XmlConfigurationProvider 
     private ActionConfig configActionConfig() {
         ActionConfig result = newActionConfig();
         result.setClassName(ConfigurationAction.class.getName());
-        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class.getName()));
+        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class));
         result.addInterceptor(new InterceptorMapping("server", new ServerInterceptor()));
         return result;
     }

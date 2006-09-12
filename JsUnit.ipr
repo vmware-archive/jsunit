@@ -322,15 +322,15 @@
         <root url="jar://$PROJECT_DIR$/java/lib/javax/javax.servlet.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/webwork_2.2.2/oscore.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/jetty_5.1.11/start.jar!/" />
-        <root url="jar://$PROJECT_DIR$/java/lib/xwork_1.2/ognl.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/jetty_5.1.11/stop.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/webwork_2.2.2/rife-continuations.jar!/" />
-        <root url="jar://$PROJECT_DIR$/java/lib/xwork_1.2/xwork-1.2.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/webwork_2.2.2/webwork-2.2.2.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/commons_httpclient_3.0.1/commons-httpclient-3.0.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/commons_logging_1.1/commons-logging-1.1.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/nekohtml_0.9.5/nekohtml.jar!/" />
         <root url="jar://$PROJECT_DIR$/java/lib/xerces_2.8.0/xercesImpl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/xwork_1.1/ognl.jar!/" />
+        <root url="jar://$PROJECT_DIR$/java/lib/xwork_1.1/xwork-1.1.jar!/" />
       </CLASSES>
       <JAVADOC />
       <SOURCES />

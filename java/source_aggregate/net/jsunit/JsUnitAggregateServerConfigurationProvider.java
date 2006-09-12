@@ -44,8 +44,8 @@ public class JsUnitAggregateServerConfigurationProvider implements Configuration
     private ActionConfig runnerActionConfig() {
         ActionConfig result = newActionConfig();
         result.setClassName(DistributedTestRunnerAction.class.getName());
-        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class.getName()));
-        result.addResultConfig(new ResultConfig("error", XmlResult.class.getName()));
+        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class));
+        result.addResultConfig(new ResultConfig("error", XmlResult.class));
         result.addInterceptor(new InterceptorMapping("aggregateServer", new AggregateServerInterceptor()));
         result.addInterceptor(new InterceptorMapping("params", new ParametersInterceptor()));
         result.addInterceptor(new InterceptorMapping("requestSource", new RequestSourceInterceptor()));
@@ -62,7 +62,7 @@ public class JsUnitAggregateServerConfigurationProvider implements Configuration
     private ActionConfig configActionConfig() {
         ActionConfig result = newActionConfig();
         result.setClassName(AggregateConfigurationAction.class.getName());
-        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class.getName()));
+        result.addResultConfig(new ResultConfig(Action.SUCCESS, XmlResult.class));
         result.addInterceptor(new InterceptorMapping("aggregateServer", new AggregateServerInterceptor()));
         return result;
     }
