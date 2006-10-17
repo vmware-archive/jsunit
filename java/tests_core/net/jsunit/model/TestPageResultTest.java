@@ -48,7 +48,7 @@ public class TestPageResultTest extends TestCase {
         pageResult.addErrorStringTo(buffer);
 
         StringBuffer expected = new StringBuffer();
-        expected.append("file:///dummy/path/dummyPage.html\n");
+        expected.append("      file:///dummy/path/dummyPage.html\n");
         error.addErrorStringTo(expected);
         expected.append("\n");
         failure.addErrorStringTo(expected);

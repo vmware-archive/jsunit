@@ -5,12 +5,19 @@ public enum ResultType {
         public String getDisplayString() {
             return "security violation";
         }
+
+        public boolean contactedServer() {
+            return false;
+        }
     },
     UNRESPONSIVE {
         public String getDisplayString() {
             return "unresponsive";
         }
 
+        public boolean contactedServer() {
+            return false;
+        }
     },
     FAILED_TO_LAUNCH {
         public String getDisplayString() {
@@ -49,7 +56,7 @@ public enum ResultType {
     public abstract String getDisplayString();
 
     public final boolean completedTestRun() {
-        return !timedOut() && !failedToLaunch();
+        return !timedOut() && !failedToLaunch() && contactedServer();
     }
 
     public boolean timedOut() {
@@ -64,4 +71,7 @@ public enum ResultType {
         return ordinal() < other.ordinal();
     }
 
+    public boolean contactedServer() {
+        return true;
+    }
 }

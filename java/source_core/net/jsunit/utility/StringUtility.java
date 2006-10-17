@@ -2,10 +2,7 @@ package net.jsunit.utility;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class StringUtility {
 
@@ -70,5 +67,25 @@ public class StringUtility {
 
     public static String makeUnixFilenameSafe(String string) {
         return string.replaceAll("\\s", "_").replaceAll("\\\\", "__").replaceAll("/", "__");
+    }
+
+    public static String indent(int initialIndent, int subsequentIndents, String string) {
+        boolean initial = true;
+        StringBuffer buffer = new StringBuffer();
+        String delimiter = "\n";
+
+        for (StringTokenizer stringTokenizer = new StringTokenizer(string, delimiter, true); stringTokenizer.hasMoreTokens();) {
+            String token = stringTokenizer.nextToken();
+            if (!token.equals(delimiter)) {
+                int indent = initial ? initialIndent : subsequentIndents;
+                for (int i = 0; i < indent; i++) {
+                    buffer.append(' ');
+                }
+                initial = false;
+            }
+            buffer.append(token);
+        }
+
+        return buffer.toString();
     }
 }

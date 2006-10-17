@@ -12,6 +12,7 @@ public class CoreUnitTestSuite {
 
     public static Test suite() {
         TestSuite result = new TestSuite("Core unit tests");
+        result.addTestSuite(AbstractResultTest.class);
         result.addTestSuite(ClientServerConnectionTest.class);
         result.addTestSuite(ConfigurationTest.class);
         result.addTestSuite(RemoteConfigurationTest.class);

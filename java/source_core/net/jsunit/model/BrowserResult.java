@@ -199,8 +199,17 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     }
 
     protected void addMyErrorStringTo(StringBuffer buffer) {
+        buffer.append("    ");
         buffer.append(getBrowserDisplayString());
-        buffer.append("\n");
+        buffer.append(" (");
+        buffer.append(getUserAgent());
+        buffer.append(")\n");
+
+        if (resultType != null && !resultType.completedTestRun()) {
+            buffer.append("      Tests were not run: ");
+            buffer.append(resultType.getDisplayString());
+            buffer.append("\n");
+        }
     }
 
     public void _setResultType(ResultType type) {

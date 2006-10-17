@@ -147,6 +147,7 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
     }
 
     protected void addMyErrorStringTo(StringBuffer buffer) {
+        buffer.append("  ");
         buffer.append(getDisplayString());
         buffer.append("\n");
     }
@@ -155,8 +156,10 @@ public class TestRunResult extends AbstractResult implements XmlRenderable, Comp
         if (!child.wasSuccessful()) {
             child.addErrorStringTo(buffer);
             if (url != null) {
-                buffer.append("\n");
-                buffer.append("The result log is at ");
+                if (!buffer.toString().endsWith("\n")) {
+                    buffer.append("\n");
+                }
+                buffer.append("      The result log is at ");
                 BrowserResult childBrowserResult = (BrowserResult) child;
                 buffer.append(childBrowserResult.getLogUrl(url));
             }

@@ -39,8 +39,10 @@ public class RunnerAggregateServerFunctionalTest extends AggregateServerFunction
         TestRunResult result1 = results.get(1);
         assertTrue(result0.wasSuccessful());
         assertEquals(1, result0._getBrowserResults().size());
+        assertEquals(FunctionalTestConfigurationSource.REMOTE_SERVER_URL_1, result0.getUrl());
         assertFalse(result1.wasSuccessful());
         assertEquals(2, result1._getBrowserResults().size());
+        assertEquals(FunctionalTestConfigurationSource.REMOTE_SERVER_URL_2, result1.getUrl());
     }
 
 }

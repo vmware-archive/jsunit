@@ -2,6 +2,7 @@ package net.jsunit.model;
 
 import org.jdom.Document;
 import org.jdom.Element;
+import org.jdom.Attribute;
 
 import java.util.List;
 
@@ -10,10 +11,18 @@ public class TestRunResultBuilder {
 
     public TestRunResult build(Document document) {
         TestRunResult result = new TestRunResult();
-        Element propertiesElement = document.getRootElement().getChild("properties");
+        Element root = document.getRootElement();
+
+        Attribute urlAttribute = root.getAttribute("url");
+        if (urlAttribute != null) {
+            result.setUrl(urlAttribute.getValue());
+        }
+        
+        Element propertiesElement = root.getChild("properties");
         if (propertiesElement != null)
             updateWithProperties(result, propertiesElement.getChildren());
         updateWithBrowserResults(document, result);
+
         return result;
     }
 

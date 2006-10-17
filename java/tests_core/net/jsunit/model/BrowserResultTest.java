@@ -108,8 +108,11 @@ public class BrowserResultTest extends BrowserResultTestCase {
         result.addErrorStringTo(buffer);
 
         StringBuffer expected = new StringBuffer();
+        expected.append("    ");
         expected.append(result.getBrowserDisplayString());
-        expected.append("\n");
+        expected.append(" (");
+        expected.append(result.getUserAgent());
+        expected.append(")\n");
         TestPageResult page1 = new TestPageResult("file:///dummy/path/dummyPage1.html");
         page1.addTestCaseResult(error1);
         page1.addTestCaseResult(failure1);

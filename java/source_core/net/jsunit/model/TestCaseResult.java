@@ -1,5 +1,6 @@
 package net.jsunit.model;
 
+import net.jsunit.utility.StringUtility;
 import org.jdom.Element;
 
 import java.io.UnsupportedEncodingException;
@@ -150,7 +151,7 @@ public class TestCaseResult extends AbstractResult {
 
     protected void addMyErrorStringTo(StringBuffer buffer) {
         if (!wasSuccessful())
-            buffer.append(getProblemSummary(false));
+            buffer.append(StringUtility.indent(8, 10, getProblemSummary(false)));
     }
 
     public Element asXml() {

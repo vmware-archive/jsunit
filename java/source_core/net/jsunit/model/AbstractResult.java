@@ -42,13 +42,19 @@ public abstract class AbstractResult implements Result {
     protected abstract List<? extends Result> getChildren();
 
     public String displayString() {
-        StringBuffer buffer = new StringBuffer();
-        buffer.append("The test run had ");
-        buffer.append(getErrorCount());
-        buffer.append(" error(s) and ");
-        buffer.append(getFailureCount());
-        buffer.append(" failure(s).");
-        return buffer.toString();
+        ResultType resultType = _getResultType();
+
+        if (resultType.completedTestRun()) {
+            StringBuffer buffer = new StringBuffer();
+            buffer.append("The test run had ");
+            buffer.append(getErrorCount());
+            buffer.append(" error(s) and ");
+            buffer.append(getFailureCount());
+            buffer.append(" failure(s).");
+            return buffer.toString();
+        } else {
+            return "JsUnit test execution failed. Reason: " + resultType.getDisplayString();
+        }
     }
 
     public final void addErrorStringTo(StringBuffer buffer) {

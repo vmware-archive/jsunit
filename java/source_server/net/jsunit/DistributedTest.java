@@ -106,8 +106,7 @@ public class DistributedTest extends TestCase {
         if (!result.wasSuccessful()) {
             StringBuffer buffer = new StringBuffer();
             result.addErrorStringTo(buffer);
-            System.err.println(buffer.toString());
-            fail(result.displayString());
+            fail(result.displayString() + "\n" + buffer.toString() + "\n");
         }
     }
 

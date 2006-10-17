@@ -75,7 +75,9 @@ public class DistributedTestRunManager {
             }
         }
         for (TestRunResult result : results) {
-            result.setUrl(baseURL.toString());
+            if (result.getUrl() == null) {
+                result.setUrl(baseURL.toString());
+            }
             //noinspection SynchronizeOnNonFinalField
             synchronized (distributedTestRunResult) {
                 distributedTestRunResult.addTestRunResult(result);
