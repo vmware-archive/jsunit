@@ -18,9 +18,37 @@ public class DistributedTestSuiteBuilder {
     private RemoteServerHitter hitter;
     private ServerConfiguration localConfiguration;
     private int browserCount;
+    private Role role = Role.SERVER;
+
+    public enum Role {
+        CLIENT {
+            public WebServerFactory getServerFactory() {
+                return new WebServerFactory() {
+                    public WebServer create(ServerConfiguration configuration) {
+                        return new SimpleWebServer(configuration);
+                    }
+                };
+            }},
+
+        SERVER {
+            public WebServerFactory getServerFactory() {
+                return new WebServerFactory() {
+                    public WebServer create(ServerConfiguration configuration) {
+                        return new JsUnitServer(configuration);
+                    }
+                };
+            }};
+
+        public abstract WebServerFactory getServerFactory();
+    }
 
     public DistributedTestSuiteBuilder(ConfigurationSource localSource) {
         this(localSource, new RemoteMachineServerHitter());
+    }
+
+    public DistributedTestSuiteBuilder(ConfigurationSource localSource, Role role) {
+        this(localSource, new RemoteMachineServerHitter());
+        this.role = role;
     }
 
     public DistributedTestSuiteBuilder(ConfigurationSource localSource, RemoteServerHitter hitter) {
@@ -85,7 +113,8 @@ public class DistributedTestSuiteBuilder {
                     public String remoteMachineURLs() {
                         return remoteMachineURL.toString();
                     }
-                }
+                },
+                role.getServerFactory()
         );
     }
 

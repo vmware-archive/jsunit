@@ -21,23 +21,33 @@ import java.util.List;
 public class DistributedTest extends TestCase {
 
     protected DistributedTestRunManager manager;
-    private static JsUnitServer temporaryServer;
+    private static WebServer temporaryServer;
     private static Object blocker = new Object();
     private static int serverCount = 0;
     private ConfigurationSource source;
     private Browser remoteBrowser;
     private String overrideURL;
+    private WebServerFactory serverFactory;
 
     public DistributedTest(ConfigurationSource source) {
+        this(source, new WebServerFactory() {
+            public WebServer create(ServerConfiguration configuration) {
+                return new JsUnitServer(configuration);
+            }
+        });
+    }
+
+    public DistributedTest(ConfigurationSource source, WebServerFactory serverFactory) {
         super(source.remoteMachineURLs().replace('.', '_'));
         this.source = source;
+        this.serverFactory = serverFactory;
     }
 
     private void ensureTemporaryServerIsCreated() {
         //noinspection SynchronizeOnNonFinalField
         synchronized (blocker) {
             if (temporaryServer == null) {
-                temporaryServer = new JsUnitServer(new ServerConfiguration(source));
+                temporaryServer = serverFactory.create(new ServerConfiguration(source));
             }
         }
     }
@@ -114,7 +124,7 @@ public class DistributedTest extends TestCase {
         return manager;
     }
 
-    public JsUnitServer getTemporaryServer() {
+    public WebServer getTemporaryServer() {
         return temporaryServer;
     }
 

@@ -18,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner {
+public class JsUnitServer extends AbstractJsUnitServer implements BrowserTestRunner, WebServer {
     private static JsUnitServer instance;
 
     private List<TestRunListener> browserTestRunListeners = new ArrayList<TestRunListener>();
