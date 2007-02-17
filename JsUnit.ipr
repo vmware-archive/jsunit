@@ -37,8 +37,6 @@
   <component name="CodeStyleProjectProfileManger">
     <option name="PROJECT_PROFILE" />
     <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
-    <scopes />
-    <profiles />
   </component>
   <component name="CodeStyleSettingsManager">
     <option name="PER_PROJECT_SETTINGS">
@@ -103,7 +101,7 @@
     <option name="USE_PROJECT_LEVEL_SETTINGS" value="false" />
     <scopes />
     <profiles>
-      <profile version="1.0">
+      <profile version="1.0" is_locked="false">
         <option name="myName" value="Project Default" />
         <option name="myLocal" value="false" />
         <used_levels>
@@ -292,12 +290,16 @@
       <module fileurl="file://$PROJECT_DIR$/intellij/browser.iml" filepath="$PROJECT_DIR$/intellij/browser.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij/core.iml" filepath="$PROJECT_DIR$/intellij/core.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij/server.iml" filepath="$PROJECT_DIR$/intellij/server.iml" />
-      <module fileurl="file://$PROJECT_DIR$/intellij/services_client.iml" filepath="$PROJECT_DIR$/intellij/services_client.iml" />
       <module fileurl="file://$PROJECT_DIR$/intellij/union.iml" filepath="$PROJECT_DIR$/intellij/union.iml" />
     </modules>
   </component>
   <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" />
   <component name="ProjectRunConfigurationManager" />
+  <component name="RAILS_PROJECT_VIEW_PANE" />
+  <component name="RUBY_DOC_SETTINGS">
+    <RUBY_DOC NAME="DEFAULTS" VALUE="TRUE" />
+    <RUBY_DOC NAME="NUMBER" VALUE="0" />
+  </component>
   <component name="RmicSettings">
     <option name="IS_EANABLED" value="false" />
     <option name="DEBUGGING_INFO" value="true" />
@@ -307,6 +309,13 @@
   </component>
   <component name="StarteamVcsAdapter" />
   <component name="VssVcs" />
+  <component name="com.intellij.jsf.UserDefinedFacesConfigs">
+    <option name="USER_DEFINED_CONFIGS">
+      <value>
+        <list size="0" />
+      </value>
+    </option>
+  </component>
   <component name="libraryTable">
     <library name="lib_core">
       <CLASSES>
