@@ -84,7 +84,6 @@
         <fileset dir="${lib}">
             <include name="*.jar"/>
             <include name="*/*.jar"/>
-            <exclude name="axis_1.4/*.jar"/>
         </fileset>
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>

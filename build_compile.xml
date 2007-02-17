@@ -7,15 +7,12 @@
      -->
 
     <property name="source_core" location="java/source_core"/>
-    <property name="source_client" location="java/source_client"/>
     <property name="source_server" location="java/source_server"/>
     <property name="source_aggregate" location="java/source_aggregate"/>
     <property name="source_services" location="java/source_services"/>
     <property name="tests_core" location="java/tests_core"/>
-    <property name="tests_client" location="java/tests_client"/>
     <property name="tests_server" location="java/tests_server"/>
     <property name="tests_aggregate" location="java/tests_aggregate"/>
-    <property name="genfiles_client" location="java/genfiles_client"/>
 
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
@@ -31,9 +28,7 @@
         </fileset>
     </path>
 
-    <taskdef resource="axis-tasks.properties" classpathref="classpath"/>
-
-    <target name="run_unit_tests" depends="clean,run_core_tests,run_server_tests,run_aggregate_tests,run_client_tests"/>
+    <target name="run_unit_tests" depends="clean,run_core_tests,run_server_tests,run_aggregate_tests"/>
 
     <path id="self_tests_classpath">
         <fileset dir="${lib}">
@@ -85,26 +80,14 @@
         <fail if="junit_test_failed"/>
     </target>
 
-    <target name="run_client_tests" depends="compile_client_tests">
-        <junit fork="yes" haltonfailure="false" forkmode="once" showoutput="yes" printsummary="withOutAndErr"
-               failureproperty="junit_test_failed">
-            <formatter type="plain" usefile="false"/>
-            <classpath refid="self_tests_classpath"/>
-            <classpath path="${bin}"/>
-            <test name="net.jsunit.ClientUnitTestSuite"/>
-        </junit>
-        <fail if="junit_test_failed"/>
-    </target>
-
     <target name="clean">
         <delete file="jsunit.zip"/>
         <delete dir="${bin}/jsunit.jar"/>
         <delete dir="${bin}/jsunit_tests.jar"/>
         <delete dir="${bin}/net"/>
-        <delete dir="${genfiles_client}/net"/>
     </target>
 
-    <target name="compile_source" depends="clean,compile_source_server,compile_source_aggregate,compile_source_client"/>
+    <target name="compile_source" depends="clean,compile_source_server,compile_source_aggregate"/>
 
     <target name="compile_tests_against_jar">
         <javac srcdir="${tests_core}" destdir="${bin}" debug="true">
@@ -116,10 +99,6 @@
             <classpath path="${bin}/jsunit.jar"/>
         </javac>
         <javac srcdir="${tests_aggregate}" destdir="${bin}" debug="true">
-            <classpath refid="self_tests_classpath"/>
-            <classpath path="${bin}/jsunit.jar"/>
-        </javac>
-        <javac srcdir="${tests_client}" destdir="${bin}" debug="true">
             <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}/jsunit.jar"/>
         </javac>
@@ -143,62 +122,10 @@
         </javac>
     </target>
 
-    <target name="compile_source_services" depends="compile_source_core">
-        <javac srcdir="${source_client}" destdir="${bin}" debug="true">
-            <classpath refid="lib_classpath"/>
-            <classpath>
-                <path location="${bin}"/>
-            </classpath>
-            <include name="net/jsunit/services/TestRunService.java"/>
-        </javac>
-    </target>
-
-    <target name="compile_source_client"
-            depends="compile_source_services,generate_client_java_from_wsdl">
-        <javac srcdir="${genfiles_client}" destdir="${bin}" debug="true">
-            <classpath refid="lib_classpath"/>
-        </javac>
-        <javac srcdir="${source_client}" destdir="${bin}" debug="true">
-            <classpath refid="lib_classpath"/>
-            <classpath>
-                <path location="${bin}"/>
-            </classpath>
-        </javac>
-    </target>
-
     <target name="compile_source_core">
         <javac srcdir="${source_core}" destdir="${bin}" debug="true">
             <classpath refid="lib_classpath"/>
         </javac>
-    </target>
-
-    <target name="generate_wsdl">
-        <axis-java2wsdl
-                namespace="https://services.jsunit.net/services"
-                classname="net.jsunit.services.TestRunService"
-                output="TestRunService.wsdl"
-                location="https://services.jsunit.net/services/TestRunService">
-            <classpath>
-                <path location="${bin}"/>
-            </classpath>
-            <classpath refid="lib_classpath"/>
-            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
-            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
-        </axis-java2wsdl>
-    </target>
-
-    <target name="generate_client_java_from_wsdl" depends="generate_wsdl">
-        <axis-wsdl2java output="${genfiles_client}" url="TestRunService.wsdl">
-            <classpath>
-                <path location="${bin}"/>
-            </classpath>
-            <classpath refid="lib_classpath"/>
-            <mapping package="net.jsunit.services" namespace="https://services.jsunit.net/services"/>
-            <mapping package="net.jsunit.model" namespace="https://services.jsunit.net/model"/>
-            <nsexclude namespace="https://services.jsunit.net/model"/>
-        </axis-wsdl2java>
-        <delete file="${genfiles_client}/net/jsunit/services/TestRunService.java"/>
-        <delete file="TestRunService.wsdl"/>
     </target>
 
     <target name="compile_core_tests" depends="compile_source_core">
@@ -220,14 +147,7 @@
             <classpath path="${bin}"/>
         </javac>
         <javac srcdir="${tests_aggregate}" destdir="${bin}" debug="true">
-            <classpath refid="self_tests_classpath"/>
-            <classpath path="${bin}"/>
-        </javac>
-    </target>
-
-    <target name="compile_client_tests" depends="compile_source_client">
-        <javac srcdir="${tests_client}" destdir="${bin}" debug="true">
-            <classpath refid="self_tests_classpath"/>
+            <classpath refid="self_tests_classpath"=/>
             <classpath path="${bin}"/>
         </javac>
     </target>
@@ -235,8 +155,6 @@
     <target name="create_src_jar">
         <jar jarfile="./java/jsunit-source.jar">
             <fileset dir="${source_core}"/>
-            <fileset dir="${source_client}"/>
-            <fileset dir="${genfiles_client}"/>
             <fileset dir="${source_server}"/>
         </jar>
     </target>
