@@ -147,7 +147,7 @@
             <classpath path="${bin}"/>
         </javac>
         <javac srcdir="${tests_aggregate}" destdir="${bin}" debug="true">
-            <classpath refid="self_tests_classpath"=/>
+            <classpath refid="self_tests_classpath"/>
             <classpath path="${bin}"/>
         </javac>
     </target>
