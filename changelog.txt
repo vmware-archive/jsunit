@@ -14,8 +14,8 @@ ASSERTION FUNCTIONS
 CLIENT-SIDE
 - changed expected/actual values display strings to use angle brackets, rather than square brackets
 - HTML in result output is now correctly escaped
-- page load timeout changed to 120 seconds by default
-- setup page timeout change to 120 seconds by default
+- page load timeout changed to 10 seconds by default
+- setup page timeout change to 10 seconds by default
 - cache-buster for testpage retrieval & results submission
 - jsUnitRestoredHTMLDiv
 - turn off tracing, alerts, confirms when submitting

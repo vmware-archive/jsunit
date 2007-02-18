@@ -41,11 +41,13 @@ function JsUnitTestManager() {
 }
 
 // seconds to wait for each test page to load
-JsUnitTestManager.TESTPAGE_WAIT_SEC = 120;
+JsUnitTestManager.TESTPAGE_WAIT_SEC = 10;
+
+// milliseoncds between test runs
 JsUnitTestManager.TIMEOUT_LENGTH = 20;
 
 // seconds to wait for setUpPage to complete
-JsUnitTestManager.SETUPPAGE_TIMEOUT = 120;
+JsUnitTestManager.SETUPPAGE_TIMEOUT = 10;
 
 // milliseconds to wait between polls on setUpPages
 JsUnitTestManager.SETUPPAGE_INTERVAL = 100;
@@ -475,7 +477,7 @@ JsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
         if (content = this.uiFrames[layerName].document.getElementById('content'))
             content.innerHTML = str;
         else
-            throw 'No content div found.';
+            throw new Error("No content div found.");
     }
     catch (e) {
         var html = '';
