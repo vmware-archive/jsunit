@@ -1,10 +1,10 @@
 For 2.2 release:
   FEATURES:
+    - make junitreport keep working with log results
     - queuing needs work - linkedlist, queue
     - Send traces to server
     - surround tracing with pre tags (maybe CDATA if the trace is XML?)
     - stack traces for failures
-    - make junitreport keep working with log results
     - make all JS pass JSLint
     - need stack traces on failures
     - pressing stop makes viewing errors/failures no longer work
