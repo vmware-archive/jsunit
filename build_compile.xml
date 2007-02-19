@@ -177,7 +177,7 @@
     <target name="create_distribution" depends="clean,make_jar,create_zip"
             description="Creates the JsUnit distribution"/>
 
-    <target name="create_zip" description="Create a zip of the project">
+    <target name="create_zip">
         <zip destfile="jsunit.zip" filesonly="true">
             <zipfileset dir="." filemode="755" prefix="jsunit">
                 <include name="bin/unix/*.sh"/>
