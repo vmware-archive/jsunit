@@ -164,11 +164,6 @@
               style="tools/buildDotXmlToJsUnitDotProperties.xsl"></xslt>
     </target>
 
-    <target name="transformResultXmlUsingSkin">
-        <xslt in="tools/sample_xml/distributedResult.xml" out="result.html" destdir="."
-              style="skins/HTML.xsl"></xslt>
-    </target>
-
     <target name="make_jar" depends="compile_source">
         <jar jarfile="${bin}/jsunit.jar" basedir="${bin}" includes="net/**"/>
         <delete dir="${bin}/net"/>
