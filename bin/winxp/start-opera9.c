@@ -8,7 +8,7 @@
  *    in the opera profile folder, where "clean" means that under
  *    [Sate], Run=0. This prevents a dialog on browser startup.
  *
- *  author: dws@pivotalsf.com
+ *  author: dws@pivotallabs.com
  */
 
 #include <stdlib.h>
