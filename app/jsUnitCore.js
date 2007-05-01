@@ -2,6 +2,19 @@ var JSUNIT_UNDEFINED_VALUE;
 var JSUNIT_VERSION = 2.2;
 var isTestPageLoaded = false;
 
+var DOUBLE_EQUALITY_PREDICATE = function(var1, var2) {return var1 == var2;};
+var TRIPLE_EQUALITY_PREDICATE = function(var1, var2) {return var1 === var2;};
+var TO_STRING_EQUALITY_PREDICATE = function(var1, var2) {return var1.toString() === var2.toString();};
+
+var PRIMITIVE_EQUALITY_PREDICATES = {
+    'String':   DOUBLE_EQUALITY_PREDICATE,
+    'Number':   DOUBLE_EQUALITY_PREDICATE,
+    'Boolean':  DOUBLE_EQUALITY_PREDICATE,
+    'Date':     TRIPLE_EQUALITY_PREDICATE,
+    'RegExp':   TO_STRING_EQUALITY_PREDICATE,
+    'Function': TO_STRING_EQUALITY_PREDICATE
+}
+
 //hack for NS62 bug
 function jsUnitFixTop() {
     var tempTop = top;
@@ -33,7 +46,9 @@ function _trueTypeOf(something) {
     try {
         switch (result) {
             case 'string':
+                break;
             case 'boolean':
+                break;
             case 'number':
                 break;
             case 'object':
@@ -207,33 +222,26 @@ function assertObjectEquals() {
     _validateArguments(2, arguments);
     var var1 = nonCommentArg(1, 2, arguments);
     var var2 = nonCommentArg(2, 2, arguments);
-    var type;
-    var msg = commentArg(2, arguments)?commentArg(2, arguments):'';
-    var isSame = (var1 === var2);
-    //shortpath for references to same object
-    var isEqual = ( (type = _trueTypeOf(var1)) == _trueTypeOf(var2) );
-    if (isEqual && !isSame) {
-        switch (type) {
-            case 'String':
-            case 'Number':
-                isEqual = (var1 == var2);
-                break;
-            case 'Boolean':
-            case 'Date':
-                isEqual = isSame;
-                break;
-            case 'RegExp':
-            case 'Function':
-                isEqual = (var1.toString() === var2.toString());
-                break;
-            default: //Object | Array
-                var i;
-                if ((isEqual = ( var1.length === var2.length)))
-                    for (i in var1)
-                        assertObjectEquals(msg + ' found nested ' + type + '@' + i + '\n', var1[i], var2[i]);
+    var failureMessage = commentArg(2, arguments) ? commentArg(2, arguments) : '';
+    if (var1 === var2)
+        return;
+
+    var isEqual = false;
+
+    var typeOfVar1 = _trueTypeOf(var1);
+    var typeOfVar2 = _trueTypeOf(var2);
+
+    if (typeOfVar1 == typeOfVar2) {
+        var equalityPredicate = PRIMITIVE_EQUALITY_PREDICATES[typeOfVar1];
+        if (equalityPredicate) {
+            isEqual = equalityPredicate(var1, var2);
+        } else if (var1.length === var2.length) {
+            for (var i in var1)
+                assertObjectEquals(failureMessage + ' found nested ' + typeOfVar1 + '@' + i + '\n', var1[i], var2[i]);
+            isEqual = true;
         }
-        _assert(msg, isEqual, 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
     }
+    _assert(failureMessage, isEqual, 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
 }
 
 var assertArrayEquals = assertObjectEquals;

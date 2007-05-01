@@ -168,27 +168,26 @@ function testAssertArrayEquals() {
     }
 }
 
-function testAssertObjectEquals()
-{
+function testAssertObjectEquals_hash() {
     var failure;
-    var o1 = {foo:'bar'};
-    var o2 = {foo:'bar'};
-    assertObjectEquals('Single object', o1, o1);
-    assertObjectEquals('Same objects', o1, o2);
-    var o3 = {foo:'foo'};
-    var o4 = {foo:'foo',
+    var hash1 = {foo:'bar'};
+    var hash2 = {foo:'bar'};
+    assertObjectEquals('Single object', hash1, hash1);
+    assertObjectEquals('Same objects', hash1, hash2);
+    var hash3 = {foo:'foo'};
+    var hash4 = {foo:'foo',
         bar: function () {
             this.foo = 'bar';
             delete this.bar
         }};
-    var o5 = {foo:'foo',
+    var hash5 = {foo:'foo',
         bar: function () {
             this.foo = 'foo';
             delete this.bar
         }};
     try
     {
-        assertObjectEquals(o1, o3);
+        assertObjectEquals(hash1, hash3);
         fail(failure = 'Simple differing objects found to be the same');
     }
     catch (e)
@@ -199,7 +198,7 @@ function testAssertObjectEquals()
     }
     try
     {
-        assertObjectEquals(o4, o5);
+        assertObjectEquals(hash4, hash5);
         fail(failure = 'Objects with different methods found to be the same');
     }
     catch (e)
@@ -209,8 +208,9 @@ function testAssertObjectEquals()
             fail(e.jsUnitMessage);
     }
 
-    o4.bar();
-    assertObjectEquals('Different objects, made to be the same', o1, o4);
+    hash4.bar();
+    assertObjectEquals('Different objects, made to be the same', hash1, hash4);
+
     try
     {
         assertObjectEquals({ts:new Date()}, {ts:new Date()});
@@ -226,6 +226,9 @@ function testAssertObjectEquals()
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
+}
+function testAssertObjectEquals_date() {
+    var failure;
     try
     {
         assertObjectEquals(new Date(), new Date());
@@ -239,9 +242,12 @@ function testAssertObjectEquals()
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
+}
+function testAssertObjectEquals_regularExpression() {
     assertObjectEquals(/a/, new RegExp('a'));
     assertObjectEquals(/a/i, new RegExp('a', 'i'));
 
+    var failure;
     try
     {
         assertObjectEquals(/a/i, new RegExp('a', 'g'));
@@ -266,15 +272,36 @@ function testAssertObjectEquals()
     }
 }
 
-function testAssertObjectEqualsOnStrings() {
+function testAssertObjectEquals_strings() {
     var s1 = 'string1';
     var s2 = 'string1';
     var newS1 = new String('string1');
     assertObjectEquals('Same Strings', s1, s2);
     assertObjectEquals('Same Strings 1 with new', s1, newS1);
+
+    var failure;
+    try {
+        failure = "Different Strings, different length";
+        assertObjectEquals(failure, "foo", "fooXXX");
+        fail(failure);
+    } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
+    
+    try {
+        failure = "Different Strings, same length";
+        assertObjectEquals(failure, "foo", "bar");
+        fail(failure);
+    } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
 }
 
-function testAssertObjectEqualsOnNumbers() {
+function testAssertObjectEquals_numbers() {
     var failure;
     var n1 = 1;
     var n2 = 1;
@@ -305,7 +332,18 @@ function testAssertObjectEqualsOnNumbers() {
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
+}
 
+function testAssertObjectEquals_differentTypes() {
+    var failure;
+    try {
+        assertObjectEquals(1, "foo");
+        fail(failure = "different types");
+    } catch (e) {
+        assertJsUnitException("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+    }
 }
 
 function testAssertEvaluatesToTrue() {
