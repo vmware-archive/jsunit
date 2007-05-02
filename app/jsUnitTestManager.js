@@ -413,10 +413,17 @@ JsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
     }
     else {
         // new Option() is DOM 0
-        errOption = new Option(problemMessage, problemValue);
+
+        var errOption = new Option(problemMessage, problemValue);
+
         if (typeof(listField.add) != 'undefined') {
             // DOM 2 HTML
-            listField.add(errOption, null);
+            try {
+                listField.add(errOption, null);
+            } catch(err) {
+                listField.add(errOption); // IE 5.5
+            }
+
         }
         else if (typeof(listField.options.add) != 'undefined') {
             // DOM 0
