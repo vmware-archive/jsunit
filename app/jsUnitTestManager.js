@@ -104,7 +104,7 @@ JsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
 JsUnitTestManager.prototype._handleNewSuite = function () {
     var allegedSuite = this.containerTestFrame.suite();
     if (allegedSuite.isjsUnitTestSuite) {
-        var newSuite = allegedSuite.clone();
+ 		var newSuite = this._cloneTestSuite(allegedSuite);
         if (newSuite.containsTestPages())
             push(this._suiteStack, newSuite);
         this._nextPage();
@@ -113,6 +113,15 @@ JsUnitTestManager.prototype._handleNewSuite = function () {
         this.fatalError('Invalid test suite in file ' + this._testFileName);
         this.abort();
     }
+}
+
+/**
+* This function handles cloning of a jsUnitTestSuite object.  This was added to replace the clone method of the jsUnitTestSuite class due to an IE bug in cross frame scripting. (See also jsunit bug 1522271)
+**/
+JsUnitTestManager.prototype._cloneTestSuite = function(suite) {
+	var clone = new jsUnitTestSuite();
+	clone.testPages = suite.testPages.concat(new Array(0));
+	return clone;
 }
 
 JsUnitTestManager.prototype._runTest = function () {
