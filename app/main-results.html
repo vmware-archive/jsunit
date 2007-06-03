@@ -22,7 +22,8 @@
     function submitUrlFromTestRunnerLocation() {
         var result = "http://";
         var webserver = top.getWebserver();
-        if (webserver == null) // running over file:///
+        var runningOverFileProtocol = webserver == null;
+        if (runningOverFileProtocol)
             webserver = DEFAULT_SUBMIT_WEBSERVER;
         result += webserver;
         result += "/jsunit/acceptor";
