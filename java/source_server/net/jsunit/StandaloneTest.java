@@ -34,7 +34,7 @@ public class StandaloneTest extends TestCase {
         for (final Browser browser : configuration.getBrowsers())
             suite.addTest(new StandaloneTest(new DelegatingConfigurationSource(originalSource) {
                 public String browserFileNames() {
-                    return browser.getDisplayName();
+                    return browser.getFullFileName();
                 }
             }));
         return suite;
