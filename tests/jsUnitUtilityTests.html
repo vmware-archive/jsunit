@@ -1,12 +1,11 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
     <title>JsUnit Utility Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
-    <script language="JavaScript" type="text/javascript" src="../app/jsUnitCore.js"></script>
-    <script language="JavaScript" type="text/javascript">
+    <script type="text/javascript" src="../app/jsUnitCore.js"></script>
+    <script type="text/javascript">
         function testTrim() {
             assertEquals(null, trim(null));
             assertEquals(null, trim(JSUNIT_UNDEFINED_VALUE));
@@ -81,7 +80,7 @@
 
             var o = {foo: 'bar'};
             assertEquals('Object', _trueTypeOf(o));
-            var o = new FooBarThingy();
+            o = new FooBarThingy();
             assertEquals('FooBarThingy', _trueTypeOf(o));
             assertEquals('String', _trueTypeOf(o.foo));
             assertEquals('String', _trueTypeOf(o.bar()));
