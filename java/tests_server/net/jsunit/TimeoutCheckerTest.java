@@ -39,10 +39,15 @@ public class TimeoutCheckerTest extends TestCase {
     }
 
     public void testTimeOut() throws InterruptedException {
+        long start = System.currentTimeMillis();
         mockRunner.waitingForBrowser = true;
         mockRunner.timeoutSeconds = 0;
-        while (mockRunner.acceptedResult == null)
+        while (mockRunner.acceptedResult == null) {
+            if (System.currentTimeMillis() - start > 1000) {
+                fail("Timed out waiting for mockRunner...");
+            }
             Thread.sleep(10);
+        }
         assertEquals(ResultType.TIMED_OUT, mockRunner.acceptedResult._getResultType());
     }
 

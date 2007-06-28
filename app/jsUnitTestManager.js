@@ -1,4 +1,6 @@
 function JsUnitTestManager() {
+    this.log = [];
+    
     this._windowForAllProblemMessages = null;
 
     this.container = top.frames.testContainer;
@@ -510,6 +512,7 @@ JsUnitTestManager.prototype._setTextOnLayer = function (layerName, str) {
 
 JsUnitTestManager.prototype.setStatus = function (str) {
     this._setTextOnLayer('mainStatus', '<b>Status:<\/b> ' + str);
+    this.log.push(str);
 }
 
 JsUnitTestManager.prototype._setErrors = function (n) {
@@ -554,28 +557,52 @@ JsUnitTestManager.prototype.showMessagesForAllProblemTests = function () {
     if (this.problemsListField.length == 0)
         return;
 
+    this.tryToCloseWindow(this._windowForAllProblemMessages);
+
+    var body = '<p>Tests with problems (' + this.problemsListField.length + ' total) - JsUnit<\/p>'
+        + '<p>Running on ' + navigator.userAgent + '</p>';
+
+    for (var i = 0; i < this.problemsListField.length; i++) {
+        body += '<p class="jsUnitDefault">';
+        body += '<b>' + (i + 1) + '. ';
+        body += this.problemsListField[i].text;
+        body += '<\/b><\/p><p><pre>';
+        body += this._makeHTMLSafe(this.problemsListField[i].value);
+        body += '<\/pre><\/p>';
+    }
+
+    this._windowForAllProblemMessages = this.createWindow("Tests with problems", body);
+}
+
+JsUnitTestManager.prototype.showLog = function() {
+    this.tryToCloseWindow(this.logWindow);
+
+    var body = "<pre>";
+
+    for (var i = 0; i < this.log.length; i++) {
+        body += this.log[i];
+        body += "\n";
+    }
+
+    body += "</pre>";
+
+    this.logwindow = this.createWindow("Log", body);
+}
+
+JsUnitTestManager.prototype.tryToCloseWindow = function(w) {
     try {
-        if (this._windowForAllProblemMessages && !this._windowForAllProblemMessages.closed)
-            this._windowForAllProblemMessages.close();
+        if (w && !w.closed) w.close();
+    } catch(e) {
     }
-    catch(e) {
-    }
+}
 
-    this._windowForAllProblemMessages = window.open('', '', 'width=600, height=350,status=no,resizable=yes,scrollbars=yes');
-    var resDoc = this._windowForAllProblemMessages.document;
-    resDoc.write('<html><head><link rel="stylesheet" href="../css/jsUnitStyle.css"><title>Tests with problems - JsUnit<\/title><head><body>');
-    resDoc.write('<p>Tests with problems (' + this.problemsListField.length + ' total) - JsUnit<\/p>');
-    resDoc.write('<p>Running on ' + navigator.userAgent + '</p>');
-    for (var i = 0; i < this.problemsListField.length; i++)
-    {
-        resDoc.write('<p class="jsUnitDefault">');
-        resDoc.write('<b>' + (i + 1) + '. ');
-        resDoc.write(this.problemsListField[i].text);
-        resDoc.write('<\/b><\/p><p><pre>');
-        resDoc.write(this._makeHTMLSafe(this.problemsListField[i].value));
-        resDoc.write('<\/pre><\/p>');
-    }
-
+JsUnitTestManager.prototype.createWindow = function(title, body) {
+    var w = window.open('', '', 'width=600, height=350,status=no,resizable=yes,scrollbars=yes');
+    var resDoc = w.document;
+    resDoc.write('<html><head><link rel="stylesheet" href="../css/jsUnitStyle.css"><title>');
+    resDoc.write(title);
+    resDoc.write(' - JsUnit<\/title><head><body>');
+    resDoc.write(body);
     resDoc.write('<\/body><\/html>');
     resDoc.close();
 }
