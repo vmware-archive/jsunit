@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Test loading a local HTML Document</title>
+    <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
+    <script type="text/javascript" src="../app/jsUnitCore.js"></script>
+    <script type="text/javascript" src="../app/jsUnitTestManager.js"></script>
+    <script type="text/javascript">
+        function testExtractTestFunctionNamesFromSimpleScripts() {
+            var manager = new JsUnitTestManager();
+
+            var script = {text:
+                "function testFoo() {\n"
+                + "}\n"
+            };
+
+            assertEquals("testFoo",
+                manager._extractTestFunctionNamesFromScript(script).join(","));
+
+            script = {text:
+                "function testFoo() {\n" +
+                "  foo;\n" +
+                "}\n" +
+                "function testBar() {\n" +
+                "  bar;\n" +
+                "}\n"
+            };
+            
+            assertEquals("testFoo,testBar",
+                manager._extractTestFunctionNamesFromScript(script).join(","));
+        }
+
+        // This will not pass unless changes are made to JsUnit.
+        function SUPPRESS_testExtractTestFunctionNamesFromSlightlyOddScripts() {
+            var manager = new JsUnitTestManager();
+
+            var script = {text:
+                "function testFoo () {\n" +
+                "  foo;\n" +
+                "}\n" +
+                " function   testBar() {\n" +
+                "  bar;\n" +
+                "}\n"
+            };
+
+            assertEquals("testFoo,testBar",
+                manager._extractTestFunctionNamesFromScript(script).join(","));
+        }
+
+        // This will not pass unless changes are made to JsUnit.
+        function SUPPRESS_testExtractTestFunctionNamesFromScriptsWithComments() {
+            var manager = new JsUnitTestManager();
+
+            var script = {text:
+                "// my comment\n" +
+                "function testFoo() {\n" +
+                "  foo;\n" +
+                "}\n" +
+                "/*function testBar() {\n" +
+                "  bar;\n" +
+                "}*/\n" +
+                "/*\n" +
+                "function testBaz() {\n" +
+                "  bar;\n" +
+                "}\n" +
+                "*/\n" +
+                "function testFez() {\n" +
+                "  foo;\n" +
+                "}\n"
+            };
+
+            assertEquals("testFoo,testFez",
+                manager._extractTestFunctionNamesFromScript(script).join(","));
+        }
+    </script>
+</head>
+
+<body>
+<h1>JsUnit test suite tests</h1>
+</body>
+</html>

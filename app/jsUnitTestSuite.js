@@ -2,6 +2,14 @@ function jsUnitTestSuite() {
     this.isjsUnitTestSuite = true;
     this.testPages = Array();
     this.pageIndex = 0;
+
+    for (var i = 0; i < arguments.length; i++) {
+        if (arguments[i].testPages) {
+            this.addTestSuite(arguments[i]);
+        } else {
+            this.addTestPage(arguments[i]);
+        }
+    }
 }
 
 jsUnitTestSuite.prototype.addTestPage = function (pageName) {

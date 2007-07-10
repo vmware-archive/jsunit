@@ -10,12 +10,14 @@
         function coreSuite() {
             var result = new top.jsUnitTestSuite();
             result.addTestPage("tests/jsUnitAssertionTests.html");
-            result.addTestPage("tests/jsUnitSetUpTearDownTests.html");
-            result.addTestPage("tests/jsUnitRestoredHTMLDivTests.html");
             result.addTestPage("tests/jsUnitFrameworkUtilityTests.html");
             result.addTestPage("tests/jsUnitOnLoadTests.html");
-            result.addTestPage("tests/jsUnitUtilityTests.html");
+            result.addTestPage("tests/jsUnitRestoredHTMLDivTests.html");
+            result.addTestPage("tests/jsUnitSetUpTearDownTests.html");
+            result.addTestPage("tests/jsUnitTestManagerTests.html");
             result.addTestPage("tests/jsUnitTestSetUpPages.html");
+            result.addTestPage("tests/jsUnitTestSuiteTests.html");
+            result.addTestPage("tests/jsUnitUtilityTests.html");
             return result;
         }
 

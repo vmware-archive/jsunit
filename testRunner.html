@@ -107,6 +107,18 @@
         return jsUnitGetParm('submitresults');
     }
 
+    function shouldSuppressDialogs() {
+        return shouldSubmitResults() || jsUnitGetParm('suppressdialogs');
+    }
+
+    function getPageLoadTimeout() {
+        return jsUnitGetParm('pageloadtimeout') || JsUnitTestManager.TESTPAGE_WAIT_SEC;
+    }
+
+    function getSetupPageTimeout() {
+        return jsUnitGetParm('setuppagetimeout') || JsUnitTestManager.SETUPPAGE_TIMEOUT;
+    }
+
     function getResultId() {
         if (jsUnitGetParm('resultid'))
             return jsUnitGetParm('resultid');

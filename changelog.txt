@@ -23,6 +23,11 @@ CLIENT-SIDE
 - Speed-up of Firefox/Mozilla (thanks to Chris Wesseling)
 - jsUnitMockTimeout.js (thanks to Pivotal, especially Nathan Wilmes)
 - new "Stop" button for stopping test runs
+- new "Show log" button for showing a log of the test run
+- new "suppressDialogs" URL parameter for suppressing dialogs in interactive mode
+- new "setupPageTimeout" and "pageLoadTimeout" URL parameters for setting timeouts
+- jsUnitTestSuite constructor now takes a list of test pages and/or suites as an alternative to calling addTestPage() and addTestSuite():
+    new jsUnitTestSuite("/path/to/page1.html", subsuite, "/path/to/page2.html");
 
 SERVER
 - start-browser scripts in bin

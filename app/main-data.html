@@ -181,7 +181,7 @@
         <td nowrap>Page load timeout:</td>
         <td>&nbsp;
             <script language="javascript" type="text/javascript">
-                document.write('<input type="text" size="2" name="timeout" value="' + top.JsUnitTestManager.TESTPAGE_WAIT_SEC + '">');
+                document.write('<input type="text" size="2" name="timeout" value="' + top.getPageLoadTimeout() + '">');
             </script>
         </td>
 
@@ -190,7 +190,7 @@
         <td nowrap>Setup page timeout:</td>
         <td>&nbsp;
             <script language="javascript" type="text/javascript">
-                document.write('<input type="text" size="2" name="setUpPageTimeout" value="' + top.JsUnitTestManager.SETUPPAGE_TIMEOUT + '">');
+                document.write('<input type="text" size="2" name="setUpPageTimeout" value="' + top.getSetupPageTimeout() + '">');
             </script>
         </td>
     </tr>

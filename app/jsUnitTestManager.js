@@ -669,14 +669,14 @@ JsUnitTestManager.prototype.storeRestoredHTML = function () {
 }
 
 JsUnitTestManager.prototype.fatalError = function(aMessage) {
-    if (top.shouldSubmitResults())
+    if (top.shouldSuppressDialogs())
         this.setStatus(aMessage);
     else
         alert(aMessage);
 }
 
 JsUnitTestManager.prototype.userConfirm = function(aMessage) {
-    if (top.shouldSubmitResults())
+    if (top.shouldSuppressDialogs())
         return false;
     else
         return confirm(aMessage);
