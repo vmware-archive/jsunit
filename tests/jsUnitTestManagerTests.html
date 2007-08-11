@@ -11,7 +11,7 @@
             var manager = new JsUnitTestManager();
 
             var script = {text:
-                "function testFoo() {\n"
+                "function te" + "stFoo() {\n"
                 + "}\n"
             };
 
@@ -19,10 +19,10 @@
                 manager._extractTestFunctionNamesFromScript(script).join(","));
 
             script = {text:
-                "function testFoo() {\n" +
+                "function te" + "stFoo() {\n" +
                 "  foo;\n" +
                 "}\n" +
-                "function testBar() {\n" +
+                "function te" + "stBar() {\n" +
                 "  bar;\n" +
                 "}\n"
             };
@@ -36,10 +36,10 @@
             var manager = new JsUnitTestManager();
 
             var script = {text:
-                "function testFoo () {\n" +
+                "function te" + "stFoo () {\n" +
                 "  foo;\n" +
                 "}\n" +
-                " function   testBar() {\n" +
+                " function   te" + "stBar() {\n" +
                 "  bar;\n" +
                 "}\n"
             };
@@ -54,18 +54,18 @@
 
             var script = {text:
                 "// my comment\n" +
-                "function testFoo() {\n" +
+                "function te" + "stFoo() {\n" +
                 "  foo;\n" +
                 "}\n" +
-                "/*function testBar() {\n" +
+                "/*function te" + "stBar() {\n" +
                 "  bar;\n" +
                 "}*/\n" +
                 "/*\n" +
-                "function testBaz() {\n" +
+                "function te" + "stBaz() {\n" +
                 "  bar;\n" +
                 "}\n" +
                 "*/\n" +
-                "function testFez() {\n" +
+                "function te" + "stFez() {\n" +
                 "  foo;\n" +
                 "}\n"
             };
