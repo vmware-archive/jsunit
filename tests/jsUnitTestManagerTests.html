@@ -7,76 +7,74 @@
     <script type="text/javascript" src="../app/jsUnitCore.js"></script>
     <script type="text/javascript" src="../app/jsUnitTestManager.js"></script>
     <script type="text/javascript">
-        function testExtractTestFunctionNamesFromSimpleScripts() {
+        function testGetTestFunctionNamesUsingPlainTextSearch() {
+            var scriptWithTests = "function te" + "stFoo() {} function te" + "stBar() {}";
+            var scriptWithNoTests = "function baz() {}";
+
+            var frameWithTests = { document: { scripts: [ { text: scriptWithTests } ] } }
+            var frameWithNoTests = { document: { scripts: [ { text: scriptWithNoTests } ] } }
+
             var manager = new JsUnitTestManager();
 
-            var script = {text:
-                "function te" + "stFoo() {\n"
-                + "}\n"
-            };
+            assertNull(manager.getTestFunctionNamesUsingPlainTextSearch(frameWithNoTests));
 
-            assertEquals("testFoo",
-                manager._extractTestFunctionNamesFromScript(script).join(","));
-
-            script = {text:
-                "function te" + "stFoo() {\n" +
-                "  foo;\n" +
-                "}\n" +
-                "function te" + "stBar() {\n" +
-                "  bar;\n" +
-                "}\n"
-            };
-            
-            assertEquals("testFoo,testBar",
-                manager._extractTestFunctionNamesFromScript(script).join(","));
+            assertEqualsIgnoringOrder(
+                ["testBar", "testFoo"],
+                manager.getTestFunctionNamesUsingPlainTextSearch(frameWithTests));
         }
 
-        // This will not pass unless changes are made to JsUnit.
-        function SUPPRESS_testExtractTestFunctionNamesFromSlightlyOddScripts() {
+        function testGetTestFunctionNamesFromFrameProperties() {
+            var frameWithNoTests = { foo: function() {}, n: 10 };
+            var frameWithTests = { testFoo: function() { }, testBar: 10 };
             var manager = new JsUnitTestManager();
 
-            var script = {text:
-                "function te" + "stFoo () {\n" +
-                "  foo;\n" +
-                "}\n" +
-                " function   te" + "stBar() {\n" +
-                "  bar;\n" +
-                "}\n"
-            };
-
-            assertEquals("testFoo,testBar",
-                manager._extractTestFunctionNamesFromScript(script).join(","));
+            assertNull(manager.getTestFunctionNamesFromFrameProperties(frameWithNoTests));
+            assertEqualsIgnoringOrder(
+                ["testFoo"],
+                manager.getTestFunctionNamesFromFrameProperties(frameWithTests));
         }
 
-        // This will not pass unless changes are made to JsUnit.
-        function SUPPRESS_testExtractTestFunctionNamesFromScriptsWithComments() {
+        function testIsTestFunction() {
+            assertFalse("Test methods must start with 'test'",
+                new JsUnitTestManager().isTestFunction("foo", {foo: function() {}}));
+
+            assertFalse("Test methods must be functions",
+                new JsUnitTestManager().isTestFunction("testFoo", {testFoo: 10}));
+
+            assertTrue(new JsUnitTestManager().isTestFunction("testFoo", {testFoo: function() {}}));
+        }
+
+        function testGetFunctionNamesFromRuntimeObject() {
             var manager = new JsUnitTestManager();
 
-            var script = {text:
-                "// my comment\n" +
-                "function te" + "stFoo() {\n" +
-                "  foo;\n" +
-                "}\n" +
-                "/*function te" + "stBar() {\n" +
-                "  bar;\n" +
-                "}*/\n" +
-                "/*\n" +
-                "function te" + "stBaz() {\n" +
-                "  bar;\n" +
-                "}\n" +
-                "*/\n" +
-                "function te" + "stFez() {\n" +
-                "  foo;\n" +
-                "}\n"
+            var frameWithNoTests = {
+                RuntimeObject: function() {
+                    return { foo: function() {}, n: 10 };
+                }
             };
 
-            assertEquals("testFoo,testFez",
-                manager._extractTestFunctionNamesFromScript(script).join(","));
+            assertNull(manager.getTestFunctionNamesFromRuntimeObject(frameWithNoTests));
+
+            var frameWithTests = {
+                RuntimeObject: function() {
+                    return { testFoo: function() { }, testBar: 10 };
+                }
+            };
+
+            assertEqualsIgnoringOrder(
+                ["testFoo"],
+                manager.getTestFunctionNamesFromRuntimeObject(frameWithTests));
         }
+
+        /*
+        function testThisMethodShouldNotBeConsideredAtTest() {
+            fail("This method is commented-out and should therefore not be considered a test.");
+        }
+        */
     </script>
 </head>
 
 <body>
-<h1>JsUnit test suite tests</h1>
+    <h1>JsUnit test suite tests</h1>    
 </body>
 </html>

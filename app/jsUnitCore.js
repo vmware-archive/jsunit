@@ -168,11 +168,15 @@ function assertFalse() {
     _assert(commentArg(1, arguments), booleanValue === false, 'Call to assertFalse(boolean) with true');
 }
 
+function _checkEquals(var1, var2) {
+    return var1 === var2;
+}
+
 function assertEquals() {
     _validateArguments(2, arguments);
     var var1 = nonCommentArg(1, 2, arguments);
     var var2 = nonCommentArg(2, 2, arguments);
-    _assert(commentArg(2, arguments), var1 === var2, 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
+    _assert(commentArg(2, arguments), _checkEquals(var1, var2), 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
 }
 
 function assertNotEquals() {
@@ -188,10 +192,14 @@ function assertNull() {
     _assert(commentArg(1, arguments), aVar === null, 'Expected ' + _displayStringForValue(null) + ' but was ' + _displayStringForValue(aVar));
 }
 
+function _checkNotNull(aVar) {
+    return aVar !== null;
+}
+
 function assertNotNull() {
     _validateArguments(1, arguments);
     var aVar = nonCommentArg(1, 1, arguments);
-    _assert(commentArg(1, arguments), aVar !== null, 'Expected not to be ' + _displayStringForValue(null));
+    _assert(commentArg(1, arguments), _checkNotNull(aVar), 'Expected not to be ' + _displayStringForValue(null));
 }
 
 function assertUndefined() {
@@ -200,10 +208,14 @@ function assertUndefined() {
     _assert(commentArg(1, arguments), aVar === top.JSUNIT_UNDEFINED_VALUE, 'Expected ' + _displayStringForValue(top.JSUNIT_UNDEFINED_VALUE) + ' but was ' + _displayStringForValue(aVar));
 }
 
+function _checkNotUndefined(aVar) {
+    return aVar !== top.JSUNIT_UNDEFINED_VALUE;
+}
+
 function assertNotUndefined() {
     _validateArguments(1, arguments);
     var aVar = nonCommentArg(1, 1, arguments);
-    _assert(commentArg(1, arguments), aVar !== top.JSUNIT_UNDEFINED_VALUE, 'Expected not to be ' + _displayStringForValue(top.JSUNIT_UNDEFINED_VALUE));
+    _assert(commentArg(1, arguments), _checkNotUndefined(aVar), 'Expected not to be ' + _displayStringForValue(top.JSUNIT_UNDEFINED_VALUE));
 }
 
 function assertNaN() {
@@ -305,6 +317,38 @@ function assertContains() {
             "Expected '" + container + "' to contain '" + contained + "'",
             container.indexOf(contained) != -1
             );
+}
+
+function assertEqualsIgnoringOrder() {
+    _validateArguments(2, arguments);
+    var var1 = nonCommentArg(1, 2, arguments);
+    var var2 = nonCommentArg(2, 2, arguments);
+
+    var notEqualsMessage = "Expected arrays " + _displayStringForValue(var1) + " and " + _displayStringForValue(var2) + " to be equal (ignoring order)";
+    var notArraysMessage = "Expected arguments " + _displayStringForValue(var1) + " and " + _displayStringForValue(var2) + " to be arrays";
+
+    _assert(commentArg(2, arguments), _checkNotNull(var1), notEqualsMessage);
+    _assert(commentArg(2, arguments), _checkNotNull(var2), notEqualsMessage);
+
+    _assert(commentArg(2, arguments), _checkNotUndefined(var1.length), notArraysMessage);
+    _assert(commentArg(2, arguments), _checkNotUndefined(var1.join), notArraysMessage);
+    _assert(commentArg(2, arguments), _checkNotUndefined(var2.length), notArraysMessage);
+    _assert(commentArg(2, arguments), _checkNotUndefined(var2.join), notArraysMessage);
+
+    _assert(commentArg(1, arguments), _checkEquals(var1.length, var2.length), notEqualsMessage);
+
+    for (var i = 0; i < var1.length; i++) {
+        var found = false;
+        for (var j = 0; j < var2.length; j++) {
+            try {
+                assertObjectEquals(notEqualsMessage, var1[i], var2[j]);
+                found = true;
+            } catch (ignored) {
+                // found is set to false by default -- nothing else to do
+            }
+        }
+        _assert(commentArg(2, arguments), found, notEqualsMessage);
+    }
 }
 
 function standardizeHTML(html) {

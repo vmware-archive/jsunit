@@ -10,6 +10,7 @@ ASSERTION FUNCTIONS
 - assertHashEquals     }
 - assertRoughlyEquals  } Pivotal functions
 - assertContains       }
+- assertEqualsIgnoringOrder
 
 CLIENT-SIDE
 - changed expected/actual values display strings to use angle brackets, rather than square brackets
@@ -28,6 +29,7 @@ CLIENT-SIDE
 - new "setupPageTimeout" and "pageLoadTimeout" URL parameters for setting timeouts
 - jsUnitTestSuite constructor now takes a list of test pages and/or suites as an alternative to calling addTestPage() and addTestSuite():
     new jsUnitTestSuite("/path/to/page1.html", subsuite, "/path/to/page2.html");
+- uses IE's undocumented RuntimeObject to find test functions instead of searching through the text of the page (thanks to Dean ??? and Dan Pupius)
 
 SERVER
 - start-browser scripts in bin

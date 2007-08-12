@@ -424,6 +424,35 @@ function testAssertContains() {
     assertContains("bar", "foobar");
 }
 
+function testAssertEqualsIgnoringOrder() {
+    try {
+        assertEqualsIgnoringOrder("a", ["b", "c"]);
+        fail();
+    } catch (e) {
+        assertJsUnitException("both args should be arrays", e);
+        assertEquals("Expected arguments <a> (String) and <b,c> (Array) to be arrays", e.jsUnitMessage);
+    }
+
+    assertEqualsIgnoringOrder(["a", "b"], ["a", "b"]);
+    assertEqualsIgnoringOrder(["a", "b"], ["b", "a"]);
+
+    try {
+        assertEqualsIgnoringOrder(["a"], ["b"]);
+        fail();
+    } catch (e) {
+        assertJsUnitException("arrays are different", e);
+        assertEquals("Expected arrays <a> (Array) and <b> (Array) to be equal (ignoring order)", e.jsUnitMessage);
+    }
+
+    try {
+        assertEqualsIgnoringOrder(["a", "b", "c"], ["b", "c", "d"]);
+        fail();
+    } catch (e) {
+        assertJsUnitException("arrays are different", e);
+        assertEquals("Expected arrays <a,b,c> (Array) and <b,c,d> (Array) to be equal (ignoring order)", e.jsUnitMessage);
+    }
+}
+
 function assertJsUnitException(comment, allegedJsUnitException) {
     assertNotNull(comment, allegedJsUnitException);
     assert(comment, allegedJsUnitException.isJsUnitException);

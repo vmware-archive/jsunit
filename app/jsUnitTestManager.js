@@ -267,13 +267,58 @@ JsUnitTestManager.prototype.isTestPageSuite = function () {
     return result;
 }
 
-JsUnitTestManager.prototype.getTestFunctionNames = function () {
-    var testFrame = this.containerTestFrame;
-    var testFunctionNames = new Array();
-    var i;
+JsUnitTestManager.prototype.isTestFunction = function(propertyName, obj) {
+    return propertyName.substring(0, 4) == 'test' && typeof(obj[propertyName]) == 'function';
+}
 
-    if (testFrame && typeof(testFrame.exposeTestFunctionNames) == 'function')
+JsUnitTestManager.prototype.getTestFunctionNames = function () {
+    return this.getTestFunctionNamesFromExposedTestFunctionNames(this.containerTestFrame) ||
+        this.getTestFunctionNamesFromFrameProperties(this.containerTestFrame) ||
+        this.getTestFunctionNamesFromRuntimeObject(this.containerTestFrame) ||
+        this.getTestFunctionNamesUsingPlainTextSearch(this.containerTestFrame);
+}
+
+JsUnitTestManager.prototype.getTestFunctionNamesFromExposedTestFunctionNames = function (testFrame) {
+    if (testFrame && typeof(testFrame.exposeTestFunctionNames) == 'function') {
         return testFrame.exposeTestFunctionNames();
+    } else {
+        return null;
+    }
+}
+
+JsUnitTestManager.prototype.getTestFunctionNamesFromFrameProperties = function (testFrame) {
+    var testFunctionNames = [];
+
+    for (var i in testFrame) {
+        if (this.isTestFunction(i, testFrame)) {
+            push(testFunctionNames, i);
+        }
+    }
+
+    return testFunctionNames.length > 0 ? testFunctionNames : null;
+}
+
+JsUnitTestManager.prototype.getTestFunctionNamesFromRuntimeObject = function (testFrame) {
+    var testFunctionNames = [];
+
+    if (testFrame.RuntimeObject) {
+        var runtimeObject = testFrame.RuntimeObject("test*");
+        for (var i in runtimeObject) {
+            if (this.isTestFunction(i, runtimeObject)) {
+                push(testFunctionNames, i);
+            }
+        }
+    }
+
+    return testFunctionNames.length > 0 ? testFunctionNames : null;
+}
+
+/**
+ * Method of last resort. This will pick up functions that are commented-out and will not be able to pick up
+ * tests in included JS files.
+ */
+JsUnitTestManager.prototype.getTestFunctionNamesUsingPlainTextSearch = function (testFrame) {
+    var testFunctionNames = [];
 
     if (testFrame &&
         testFrame.document &&
@@ -283,17 +328,13 @@ JsUnitTestManager.prototype.getTestFunctionNames = function () {
 
         for (i = 0; i < scriptsInTestFrame.length; i++) {
             var someNames = this._extractTestFunctionNamesFromScript(scriptsInTestFrame[i]);
-            if (someNames)
+            if (someNames) {
                 testFunctionNames = testFunctionNames.concat(someNames);
+            }
         }
     }
-    else {
-        for (i in testFrame) {
-            if (i.substring(0, 4) == 'test' && typeof(testFrame[i]) == 'function')
-                push(testFunctionNames, i);
-        }
-    }
-    return testFunctionNames;
+
+    return testFunctionNames.length > 0 ? testFunctionNames : null;
 }
 
 JsUnitTestManager.prototype._extractTestFunctionNamesFromScript = function (aScript) {
