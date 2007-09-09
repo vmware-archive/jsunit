@@ -607,7 +607,7 @@ function JsUnitFailure(comment, message) {
     /**
      * The stack trace at the point at which the failure was encountered
      */
-    this.stackTrace = getStackTrace();
+    this.stackTrace = Utilities.getStackTrace();
 }
 
 /**
@@ -623,7 +623,7 @@ function JsUnitError(description) {
     /**
      * The stack trace at the point at which the error was encountered
      */
-    this.stackTrace = getStackTrace();
+    this.stackTrace = Utilities.getStackTrace();
 }
 
 /**
@@ -653,73 +653,6 @@ function setUp() {
 }
 
 function tearDown() {
-}
-
-function getFunctionName(aFunction) {
-    var regexpResult = aFunction.toString().match(/function(\s*)(\w*)/);
-    if (regexpResult && regexpResult.length >= 2 && regexpResult[2]) {
-        return regexpResult[2];
-    }
-    return 'anonymous';
-}
-
-function getStackTrace() {
-    var result = '';
-
-    if (typeof(arguments.caller) != 'undefined') { // IE, not ECMA
-        for (var a = arguments.caller; a != null; a = a.caller) {
-            result += '> ' + getFunctionName(a.callee) + '\n';
-            if (a.caller == a) {
-                result += '*';
-                break;
-            }
-        }
-    }
-    else { // Mozilla, not ECMA
-        // fake an exception so we can get Mozilla's error stack
-        try
-        {
-            foo.bar;
-        }
-        catch(exception)
-        {
-            var stack = parseErrorStack(exception);
-            for (var i = 1; i < stack.length; i++)
-            {
-                result += '> ' + stack[i] + '\n';
-            }
-        }
-    }
-
-    return result;
-}
-
-function parseErrorStack(exception) {
-    var stack = [];
-    var name;
-
-    if (!exception || !exception.stack) {
-        return stack;
-    }
-
-    var stacklist = exception.stack.split('\n');
-
-    for (var i = 0; i < stacklist.length - 1; i++) {
-        var framedata = stacklist[i];
-
-        name = framedata.match(/^(\w*)/)[1];
-        if (!name) {
-            name = 'anonymous';
-        }
-
-        stack[stack.length] = name;
-    }
-    // remove top level anonymous functions to match IE
-
-    while (stack.length && stack[stack.length - 1] == 'anonymous') {
-        stack.length = stack.length - 1;
-    }
-    return stack;
 }
 
 function warn() {
@@ -828,26 +761,6 @@ JsUnitTestSuite.prototype.clone = function () {
 //For legacy support - JsUnitTestSuite used to be called jsUnitTestSuite
 jsUnitTestSuite = JsUnitTestSuite;
 
-function trim(str) {
-    if (str == null)
-        return null;
-
-    var startingIndex = 0;
-    var endingIndex = str.length - 1;
-
-    var singleWhitespaceRegex = /\s/;
-    while (str.substring(startingIndex, startingIndex + 1).match(singleWhitespaceRegex))
-        startingIndex++;
-
-    while (str.substring(endingIndex, endingIndex + 1).match(singleWhitespaceRegex))
-        endingIndex--;
-
-    if (endingIndex < startingIndex)
-        return '';
-
-    return str.substring(startingIndex, endingIndex + 1);
-}
-
 function setJsUnitTracer(aJsUnitTracer) {
     top.tracer = aJsUnitTracer;
 }
@@ -900,11 +813,11 @@ var Utilities = function() {
 Utilities.standardizeHTML = function(html) {
     var translator = document.createElement("DIV");
     translator.innerHTML = html;
-    return trim(translator.innerHTML);
+    return Utilities.trim(translator.innerHTML);
 }
 
 Utilities.isBlank = function(str) {
-    return trim(str) == '';
+    return Utilities.trim(str) == '';
 }
 
 // the functions push(anArray, anObject) and pop(anArray)
@@ -922,3 +835,89 @@ Utilities.pop = function pop(anArray) {
     }
 }
 
+Utilities.getFunctionName = function(aFunction) {
+    var regexpResult = aFunction.toString().match(/function(\s*)(\w*)/);
+    if (regexpResult && regexpResult.length >= 2 && regexpResult[2]) {
+            return regexpResult[2];
+    }
+    return 'anonymous';
+}
+
+Utilities.getStackTrace = function() {
+    var result = '';
+
+    if (typeof(arguments.caller) != 'undefined') { // IE, not ECMA
+        for (var a = arguments.caller; a != null; a = a.caller) {
+            result += '> ' + Utilities.getFunctionName(a.callee) + '\n';
+            if (a.caller == a) {
+                result += '*';
+                break;
+            }
+        }
+    }
+    else { // Mozilla, not ECMA
+        // fake an exception so we can get Mozilla's error stack
+        try
+        {
+            foo.bar;
+        }
+        catch(exception)
+        {
+            var stack = Utilities.parseErrorStack(exception);
+            for (var i = 1; i < stack.length; i++)
+            {
+                result += '> ' + stack[i] + '\n';
+            }
+        }
+    }
+
+    return result;
+}
+
+Utilities.parseErrorStack = function(exception) {
+    var stack = [];
+    var name;
+
+    if (!exception || !exception.stack) {
+        return stack;
+    }
+
+    var stacklist = exception.stack.split('\n');
+
+    for (var i = 0; i < stacklist.length - 1; i++) {
+        var framedata = stacklist[i];
+
+        name = framedata.match(/^(\w*)/)[1];
+        if (!name) {
+            name = 'anonymous';
+        }
+
+        stack[stack.length] = name;
+    }
+    // remove top level anonymous functions to match IE
+
+    while (stack.length && stack[stack.length - 1] == 'anonymous') {
+        stack.length = stack.length - 1;
+    }
+    return stack;
+}
+
+Utilities.trim = function(str) {
+    if (str == null)
+        return null;
+
+    var startingIndex = 0;
+    var endingIndex = str.length - 1;
+
+    var singleWhitespaceRegex = /\s/;
+    while (str.substring(startingIndex, startingIndex + 1).match(singleWhitespaceRegex))
+        startingIndex++;
+
+    while (str.substring(endingIndex, endingIndex + 1).match(singleWhitespaceRegex))
+        endingIndex--;
+
+    if (endingIndex < startingIndex)
+        return '';
+
+    return str.substring(startingIndex, endingIndex + 1);
+}

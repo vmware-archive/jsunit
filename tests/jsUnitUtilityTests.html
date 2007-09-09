@@ -7,14 +7,14 @@
     <script type="text/javascript" src="../app/jsUnitCore.js"></script>
     <script type="text/javascript">
         function testTrim() {
-            assertEquals(null, trim(null));
-            assertEquals(null, trim(JSUNIT_UNDEFINED_VALUE));
-            assertEquals("", trim(""));
-            assertEquals("", trim("    "));
-            assertEquals("string", trim("string"));
-            assertEquals("str  ing", trim("str  ing"));
-            assertEquals("string", trim(" string   "));
-            assertEquals("string", trim("\r\n string \r\n"));
+            assertEquals(null, Utilities.trim(null));
+            assertEquals(null, Utilities.trim(JSUNIT_UNDEFINED_VALUE));
+            assertEquals("", Utilities.trim(""));
+            assertEquals("", Utilities.trim("    "));
+            assertEquals("string", Utilities.trim("string"));
+            assertEquals("str  ing", Utilities.trim("str  ing"));
+            assertEquals("string", Utilities.trim(" string   "));
+            assertEquals("string", Utilities.trim("\r\n string \r\n"));
         }
 
         function testIsBlank() {
