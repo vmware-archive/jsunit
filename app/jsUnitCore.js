@@ -800,6 +800,7 @@ function jsUnitSetOnLoad(windowRef, onloadHandler) {
 /**
  * @class
  * @constructor
+ * Contains utility functions for the JsUnit framework
  */
 var Utilities = function() {
 }
@@ -815,18 +816,27 @@ Utilities.standardizeHTML = function(html) {
     return Utilities.trim(translator.innerHTML);
 }
 
-Utilities.isBlank = function(str) {
-    return Utilities.trim(str) == '';
+/**
+ * Returns whether the given string is blank after being trimmed of whitespace
+ * @param string
+ */
+Utilities.isBlank = function(string) {
+    return Utilities.trim(string) == '';
 }
 
-// the functions push(anArray, anObject) and pop(anArray)
-// exist because the JavaScript Array.push(anObject) and Array.pop()
-// functions are not available in IE 5.0
-
+/**
+ * Implemented here because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
+ * @param anArray the array onto which to push
+ * @param anObject the object to push onto the array
+ */
 Utilities.push = function(anArray, anObject) {
     anArray[anArray.length] = anObject;
 }
 
+/**
+ * Implemented here because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
+ * @param anArray the array from which to pop
+ */
 Utilities.pop = function pop(anArray) {
     if (anArray.length >= 1) {
         delete anArray[anArray.length - 1];
@@ -834,6 +844,10 @@ Utilities.pop = function pop(anArray) {
     }
 }
 
+/**
+ * Returns the name of the given function, or 'anonymous' if it has no name
+ * @param aFunction
+ */
 Utilities.getFunctionName = function(aFunction) {
     var regexpResult = aFunction.toString().match(/function(\s*)(\w*)/);
     if (regexpResult && regexpResult.length >= 2 && regexpResult[2]) {
@@ -842,6 +856,9 @@ Utilities.getFunctionName = function(aFunction) {
     return 'anonymous';
 }
 
+/**
+ * Returns the current stack trace
+ */
 Utilities.getStackTrace = function() {
     var result = '';
 
@@ -873,6 +890,10 @@ Utilities.getStackTrace = function() {
     return result;
 }
 
+/**
+ * Returns an array of stack trace elements from the given exception
+ * @param exception
+ */
 Utilities.parseErrorStack = function(exception) {
     var stack = [];
     var name;
@@ -901,24 +922,28 @@ Utilities.parseErrorStack = function(exception) {
     return stack;
 }
 
-Utilities.trim = function(str) {
-    if (str == null)
+/**
+ * Strips whitespace from either end of the given string
+ * @param string
+ */
+Utilities.trim = function(string) {
+    if (string == null)
         return null;
 
     var startingIndex = 0;
-    var endingIndex = str.length - 1;
+    var endingIndex = string.length - 1;
 
     var singleWhitespaceRegex = /\s/;
-    while (str.substring(startingIndex, startingIndex + 1).match(singleWhitespaceRegex))
+    while (string.substring(startingIndex, startingIndex + 1).match(singleWhitespaceRegex))
         startingIndex++;
 
-    while (str.substring(endingIndex, endingIndex + 1).match(singleWhitespaceRegex))
+    while (string.substring(endingIndex, endingIndex + 1).match(singleWhitespaceRegex))
         endingIndex--;
 
     if (endingIndex < startingIndex)
         return '';
 
-    return str.substring(startingIndex, endingIndex + 1);
+    return string.substring(startingIndex, endingIndex + 1);
 }
 
 jsUnitSetOnLoad(window, newOnLoadEvent);
