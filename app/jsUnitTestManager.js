@@ -63,7 +63,7 @@ JsUnitTestManager.prototype.setup = function () {
     this._suiteStack = Array();
 
     var initialSuite = new top.jsUnitTestSuite();
-    push(this._suiteStack, initialSuite);
+    Utilities.push(this._suiteStack, initialSuite);
 }
 
 JsUnitTestManager.prototype.start = function () {
@@ -195,7 +195,7 @@ JsUnitTestManager.prototype._nextPage = function () {
         this.loadPage(this._currentSuite().nextPage());
     }
     else {
-        pop(this._suiteStack);
+        Utilities.pop(this._suiteStack);
         if (this._currentSuite() == null)
             this._done();
         else
@@ -291,7 +291,7 @@ JsUnitTestManager.prototype.getTestFunctionNamesFromFrameProperties = function (
 
     for (var i in testFrame) {
         if (this.isTestFunction(i, testFrame)) {
-            push(testFunctionNames, i);
+            Utilities.push(testFunctionNames, i);
         }
     }
 
@@ -305,7 +305,7 @@ JsUnitTestManager.prototype.getTestFunctionNamesFromRuntimeObject = function (te
         var runtimeObject = testFrame.RuntimeObject("test*");
         for (var i in runtimeObject) {
             if (this.isTestFunction(i, runtimeObject)) {
-                push(testFunctionNames, i);
+                Utilities.push(testFunctionNames, i);
             }
         }
     }
@@ -768,19 +768,4 @@ function getWebserver() {
         return myUrlWithProtocolStripped.substring(0, myUrlWithProtocolStripped.indexOf("/"));
     }
     return null;
-}
-
-// the functions push(anArray, anObject) and pop(anArray)
-// exist because the JavaScript Array.push(anObject) and Array.pop()
-// functions are not available in IE 5.0
-
-function push(anArray, anObject) {
-    anArray[anArray.length] = anObject;
-}
-
-function pop(anArray) {
-    if (anArray.length >= 1) {
-        delete anArray[anArray.length - 1];
-        anArray.length--;
-    }
 }

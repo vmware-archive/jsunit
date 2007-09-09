@@ -450,8 +450,8 @@ function assertHTMLEquals() {
     _validateArguments(2, arguments);
     var var1 = _nonCommentArg(1, 2, arguments);
     var var2 = _nonCommentArg(2, 2, arguments);
-    var var1Standardized = standardizeHTML(var1);
-    var var2Standardized = standardizeHTML(var2);
+    var var1Standardized = Utilities.standardizeHTML(var1);
+    var var2Standardized = Utilities.standardizeHTML(var2);
 
     _assert(_commentArg(2, arguments), var1Standardized === var2Standardized, 'Expected ' + _displayStringForValue(var1Standardized) + ' but was ' + _displayStringForValue(var2Standardized));
 }
@@ -644,11 +644,6 @@ function JsUnitAssertionArgumentError(description) {
  * the innerHTML back
  * @param html
  */
-function standardizeHTML(html) {
-    var translator = document.createElement("DIV");
-    translator.innerHTML = html;
-    return trim(translator.innerHTML);
-}
 
 function isLoaded() {
     return isTestPageLoaded;
@@ -853,24 +848,6 @@ function trim(str) {
     return str.substring(startingIndex, endingIndex + 1);
 }
 
-function isBlank(str) {
-    return trim(str) == '';
-}
-
-// the functions push(anArray, anObject) and pop(anArray)
-// exist because the JavaScript Array.push(anObject) and Array.pop()
-// functions are not available in IE 5.0
-
-function push(anArray, anObject) {
-    anArray[anArray.length] = anObject;
-}
-function pop(anArray) {
-    if (anArray.length >= 1) {
-        delete anArray[anArray.length - 1];
-        anArray.length--;
-    }
-}
-
 function setJsUnitTracer(aJsUnitTracer) {
     top.tracer = aJsUnitTracer;
 }
@@ -915,3 +892,33 @@ function jsUnitSetOnLoad(windowRef, onloadHandler) {
 }
 
 jsUnitSetOnLoad(window, newOnLoadEvent);
+
+
+var Utilities = function() {
+}
+
+Utilities.standardizeHTML = function(html) {
+    var translator = document.createElement("DIV");
+    translator.innerHTML = html;
+    return trim(translator.innerHTML);
+}
+
+Utilities.isBlank = function(str) {
+    return trim(str) == '';
+}
+
+// the functions push(anArray, anObject) and pop(anArray)
+// exist because the JavaScript Array.push(anObject) and Array.pop()
+// functions are not available in IE 5.0
+
+Utilities.push = function(anArray, anObject) {
+    anArray[anArray.length] = anObject;
+}
+
+Utilities.pop = function pop(anArray) {
+    if (anArray.length >= 1) {
+        delete anArray[anArray.length - 1];
+        anArray.length--;
+    }
+}
+

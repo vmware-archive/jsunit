@@ -18,18 +18,18 @@
         }
 
         function testIsBlank() {
-            assert(!isBlank("  string "));
-            assert(isBlank(""));
-            assert(isBlank("    "));
+            assert(!Utilities.isBlank("  string "));
+            assert(Utilities.isBlank(""));
+            assert(Utilities.isBlank("    "));
         }
 
         function testPushAndPop() {
-            //the functions push(anArray, anObject) and pop(anArray) exist because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
+            //the functions Utilities.push(anArray, anObject) and Utilities.pop(anArray) exist because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
             var anArray = Array();
             anArray[0] = "element 0";
             anArray[1] = "element 1";
-            push(anArray, "element 2");
-            push(anArray, "element 3");
+            Utilities.push(anArray, "element 2");
+            Utilities.push(anArray, "element 3");
 
             assertEquals("There should be 4 elements after 2 are pushed onto an array of size 2", 4, anArray.length);
             assertEquals("element 0", anArray[0]);
@@ -37,16 +37,16 @@
             assertEquals("element 2", anArray[2]);
             assertEquals("element 3", anArray[3]);
 
-            pop(anArray);
+            Utilities.pop(anArray);
             assertEquals("Should be 3 elements after popping 1 from an array of size 4", 3, anArray.length);
             assertEquals("element 0", anArray[0]);
             assertEquals("element 1", anArray[1]);
             assertEquals("element 2", anArray[2]);
-            pop(anArray);
-            pop(anArray);
-            pop(anArray);
+            Utilities.pop(anArray);
+            Utilities.pop(anArray);
+            Utilities.pop(anArray);
             assertEquals("Should be 0 elements after popping 3 from an array of size 3", 0, anArray.length);
-            pop(anArray);
+            Utilities.pop(anArray);
             assertEquals("Should be 0 elements after trying to pop an array of size 0", 0, anArray.length);
         }
 
