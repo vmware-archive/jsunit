@@ -133,7 +133,7 @@
                     }
                 }
 
-                var needsUploadField = isFileProtocol && top.browserSupportsReadingFullPathFromFileField() && testPageString.length == 0;
+                var needsUploadField = isFileProtocol && top._browserSupportsReadingFullPathFromFileField() && testPageString.length == 0;
                 if (needsUploadField)
                     document.writeln('<input type="file" name="testFileName" size="60" value="'+testPageString+'">');
                 else

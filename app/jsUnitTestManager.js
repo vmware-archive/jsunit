@@ -122,7 +122,7 @@ JsUnitTestManager.prototype._handleNewSuite = function () {
 **/
 JsUnitTestManager.prototype._cloneTestSuite = function(suite) {
 	var clone = new jsUnitTestSuite();
-	clone.testPages = suite.testPages.concat(new Array(0));
+	clone._testPages = suite._testPages.concat(new Array(0));
 	return clone;
 }
 
@@ -220,8 +220,8 @@ JsUnitTestManager.prototype.calculateProgressBarProportion = function () {
 
     for (var i = 0; i < this._suiteStack.length; i++) {
         var aSuite = this._suiteStack[i];
-        currentDivisor *= aSuite.testPages.length;
-        result += (aSuite.pageIndex - 1) / currentDivisor;
+        currentDivisor *= aSuite._testPages.length;
+        result += (aSuite._pageIndex - 1) / currentDivisor;
     }
     result += (this._testIndex + 1) / (this._numberOfTestsInPage * currentDivisor);
     return result;
@@ -395,7 +395,7 @@ JsUnitTestManager.prototype._isTestFrameLoaded = function () {
 JsUnitTestManager.prototype.executeTestFunction = function (functionName) {
     this._testFunctionName = functionName;
     this.setStatus('Running test "' + this._testFunctionName + '"');
-    var excep = null;
+    var exception = null;
     var timeBefore = new Date();
     try {
         if (this._restoredHTML)
@@ -405,7 +405,7 @@ JsUnitTestManager.prototype.executeTestFunction = function (functionName) {
         this.containerTestFrame[this._testFunctionName]();
     }
     catch (e1) {
-        excep = e1;
+        exception = e1;
     }
     finally {
         try {
@@ -414,23 +414,23 @@ JsUnitTestManager.prototype.executeTestFunction = function (functionName) {
         }
         catch (e2) {
             //Unlike JUnit, only assign a tearDown exception to excep if there is not already an exception from the test body
-            if (excep == null)
-                excep = e2;
+            if (exception == null)
+                exception = e2;
         }
     }
     var timeTaken = (new Date() - timeBefore) / 1000;
-    if (excep != null)
-        this._handleTestException(excep);
+    if (exception != null)
+        this._handleTestException(exception);
     var serializedTestCaseString = this._currentTestFunctionNameWithTestPageName(true) + "|" + timeTaken + "|";
-    if (excep == null)
+    if (exception == null)
         serializedTestCaseString += "S||";
     else {
-        if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException)
+        if (exception.isJsUnitFailure)
             serializedTestCaseString += "F|";
         else {
             serializedTestCaseString += "E|";
         }
-        serializedTestCaseString += this._problemDetailMessageFor(excep);
+        serializedTestCaseString += this._problemDetailMessageFor(exception);
     }
     this._addOption(this.testCaseResultsField,
             serializedTestCaseString,
@@ -491,7 +491,7 @@ JsUnitTestManager.prototype._addOption = function(listField, problemValue, probl
 JsUnitTestManager.prototype._handleTestException = function (excep) {
     var problemMessage = this._currentTestFunctionNameWithTestPageName(false) + ' ';
     var errOption;
-    if (typeof(excep.isJsUnitException) == 'undefined' || !excep.isJsUnitException) {
+    if (!excep.isJsUnitFailure) {
         problemMessage += 'had an error';
         this.errorCount++;
     }
@@ -507,7 +507,7 @@ JsUnitTestManager.prototype._handleTestException = function (excep) {
 
 JsUnitTestManager.prototype._problemDetailMessageFor = function (excep) {
     var result = null;
-    if (typeof(excep.isJsUnitException) != 'undefined' && excep.isJsUnitException) {
+    if (excep.isJsUnitFailure) {
         result = '';
         if (excep.comment != null)
             result += ('"' + excep.comment + '"\n');
@@ -745,7 +745,7 @@ function getDocumentProtocol() {
     return null;
 }
 
-function browserSupportsReadingFullPathFromFileField() {
+function _browserSupportsReadingFullPathFromFileField() {
     return !isOpera() && !isIE7();
 }
 

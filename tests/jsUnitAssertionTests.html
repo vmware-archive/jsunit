@@ -70,7 +70,7 @@ function testFail() {
     } catch (e) {
         excep = e;
     }
-    assertJsUnitException("fail(string) should throw a JsUnitException", excep);
+    assertJsUnitFailure("fail(string) should throw a JsUnitException", excep);
 }
 
 function testTooFewArguments() {
@@ -80,17 +80,17 @@ function testTooFewArguments() {
     } catch (e1) {
         excep = e1;
     }
-    assertNonJsUnitException("Calling an assertion function with too few arguments should throw an exception", excep);
+    assertNonJsUnitFailure("Calling an assertion function with too few arguments should throw an exception", excep);
 }
 
 function testTooManyArguments() {
-    var excep = null;
+    var exception = null;
     try {
         assertEquals("A comment", true, true, true);
-    } catch (e2) {
-        excep = e2;
+    } catch (e) {
+        exception = e;
     }
-    assertNonJsUnitException("Calling an assertion function with too many arguments should throw an exception", excep);
+    assertNonJsUnitFailure("Calling an assertion function with too many arguments should throw an exception", exception);
 }
 
 function testInvalidCommentArgumentType() {
@@ -100,17 +100,17 @@ function testInvalidCommentArgumentType() {
     } catch (e3) {
         excep = e3;
     }
-    assertNonJsUnitException("Calling an assertion function with a non-string comment should throw an exception", excep);
+    assertNonJsUnitFailure("Calling an assertion function with a non-string comment should throw an exception", excep);
 }
 
 function testInvalidArgumentType() {
-    var excep = null;
+    var exception = null;
     try {
         assert("string");
     } catch (e) {
-        excep = e;
+        exception = e;
     }
-    assertNonJsUnitException("Calling an assertion function with an invalid argument should throw an exception", excep);
+    assertNonJsUnitFailure("Calling an assertion function with an invalid argument should throw an exception", exception);
 }
 
 function testAssertArrayEquals() {
@@ -136,7 +136,7 @@ function testAssertArrayEquals() {
         assertArrayEquals(array1, array3);
         fail("Should not be equal");
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.comment == "Call to fail()")
             fail(e.comment + e.jsUnitMessage); //tried fail is also caught
     }
@@ -144,7 +144,7 @@ function testAssertArrayEquals() {
         assertArrayEquals(array1, array4);
         fail("Should not be equal");
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.comment == "Call to fail()")
             fail(e.comment + e.jsUnitMessage); //tried fail is also caught
     }
@@ -160,7 +160,7 @@ function testAssertArrayEquals() {
     }
     catch (e)
     {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -183,25 +183,21 @@ function testAssertObjectEquals_hash() {
             this.foo = 'foo';
             delete this.bar
         }};
-    try
-    {
+    try {
         assertObjectEquals(hash1, hash3);
         fail(failure = 'Simple differing objects found to be the same');
     }
-    catch (e)
-    {
-        assertJsUnitException("Should be a JsUnitException", e);
+    catch (e) {
+        assertJsUnitFailure("Should be a JsUnitFailure", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
-    try
-    {
+    try {
         assertObjectEquals(hash4, hash5);
         fail(failure = 'Objects with different methods found to be the same');
     }
-    catch (e)
-    {
-        assertJsUnitException("Should be a JsUnitException", e);
+    catch (e) {
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -209,8 +205,7 @@ function testAssertObjectEquals_hash() {
     hash4.bar();
     assertObjectEquals('Different objects, made to be the same', hash1, hash4);
 
-    try
-    {
+    try {
         assertObjectEquals({ts:new Date()}, {ts:new Date()});
         fail(failure = 'Objects with different Date attributes found to be the same');
         var d1 = new Date(1);
@@ -218,9 +213,8 @@ function testAssertObjectEquals_hash() {
         assertObjectEquals(d1, d2);
         fail(failure = 'Different Date objects (' + d1 + ' and ' + d2 + ') found to be the same');
     }
-    catch (e)
-    {
-        assertJsUnitException("Should be a JsUnitException", e);
+    catch (e) {
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -236,7 +230,7 @@ function testAssertObjectEquals_date() {
     }
     catch (e)
     {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -253,7 +247,7 @@ function testAssertObjectEquals_regularExpression() {
     }
     catch (e)
     {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -264,7 +258,7 @@ function testAssertObjectEquals_regularExpression() {
     }
     catch (e)
     {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -283,7 +277,7 @@ function testAssertObjectEquals_strings() {
         assertObjectEquals(failure, "foo", "fooXXX");
         fail(failure);
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -293,7 +287,7 @@ function testAssertObjectEquals_strings() {
         assertObjectEquals(failure, "foo", "bar");
         fail(failure);
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -315,7 +309,7 @@ function testAssertObjectEquals_numbers() {
     }
     catch (e)
     {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -326,7 +320,7 @@ function testAssertObjectEquals_numbers() {
     }
     catch (e)
     {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -338,7 +332,7 @@ function testAssertObjectEquals_differentTypes() {
         assertObjectEquals(1, "foo");
         fail(failure = "different types");
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -352,7 +346,7 @@ function testAssertEvaluatesToTrue() {
         assertEvaluatesToTrue(null);
         fail("Should have thrown a JsUnitException");
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
     }
 }
 
@@ -365,7 +359,7 @@ function testAssertEvaluatesToFalse() {
         assertEvaluatesToFalse("foo");
         fail("Should have thrown a JsUnitException");
     } catch (e) {
-        assertJsUnitException("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnitException", e);
     }
 }
 
@@ -386,21 +380,21 @@ function testAssertHashEquals() {
         assertHashEquals(hash1, hash2);
         fail();
     } catch (e) {
-        assertJsUnitException("hash2 is empty", e);
+        assertJsUnitFailure("hash2 is empty", e);
     }
     hash2["key1"] = "value1";
     try {
         assertHashEquals(hash1, hash2);
         fail();
     } catch (e) {
-        assertJsUnitException("hash2 is a of a different size", e);
+        assertJsUnitFailure("hash2 is a of a different size", e);
     }
     hash2["key2"] = "foo";
     try {
         assertHashEquals(hash1, hash2);
         fail();
     } catch (e) {
-        assertJsUnitException("hash2 has different values", e);
+        assertJsUnitFailure("hash2 has different values", e);
     }
     hash2["key2"] = "value2";
     assertHashEquals(hash1, hash2);
@@ -414,7 +408,7 @@ function testAssertRoughlyEquals() {
     try {
         assertRoughlyEquals(1, 2, 0.5);
     } catch (e) {
-        assertJsUnitException("1 and 2 are more than 0.5 apart", e);
+        assertJsUnitFailure("1 and 2 are more than 0.5 apart", e);
     }
 }
 
@@ -429,7 +423,7 @@ function testAssertEqualsIgnoringOrder() {
         assertEqualsIgnoringOrder("a", ["b", "c"]);
         fail();
     } catch (e) {
-        assertJsUnitException("both args should be arrays", e);
+        assertJsUnitFailure("both args should be arrays", e);
         assertEquals("Expected arguments <a> (String) and <b,c> (Array) to be arrays", e.jsUnitMessage);
     }
 
@@ -440,7 +434,7 @@ function testAssertEqualsIgnoringOrder() {
         assertEqualsIgnoringOrder(["a"], ["b"]);
         fail();
     } catch (e) {
-        assertJsUnitException("arrays are different", e);
+        assertJsUnitFailure("arrays are different", e);
         assertEquals("Expected arrays <a> (Array) and <b> (Array) to be equal (ignoring order)", e.jsUnitMessage);
     }
 
@@ -448,21 +442,21 @@ function testAssertEqualsIgnoringOrder() {
         assertEqualsIgnoringOrder(["a", "b", "c"], ["b", "c", "d"]);
         fail();
     } catch (e) {
-        assertJsUnitException("arrays are different", e);
+        assertJsUnitFailure("arrays are different", e);
         assertEquals("Expected arrays <a,b,c> (Array) and <b,c,d> (Array) to be equal (ignoring order)", e.jsUnitMessage);
     }
 }
 
-function assertJsUnitException(comment, allegedJsUnitException) {
-    assertNotNull(comment, allegedJsUnitException);
-    assert(comment, allegedJsUnitException.isJsUnitException);
-    assertNotUndefined(comment, allegedJsUnitException.comment);
+function assertJsUnitFailure(comment, allegedJsUnitFailure) {
+    assertNotNull(comment, allegedJsUnitFailure);
+    assert(comment, allegedJsUnitFailure.isJsUnitFailure);
+    assertNotUndefined(comment, allegedJsUnitFailure.comment);
 }
 
-function assertNonJsUnitException(comment, allegedNonJsUnitException) {
-    assertNotNull(comment, allegedNonJsUnitException);
-    assertUndefined(comment, allegedNonJsUnitException.isJsUnitException);
-    assertNotUndefined(comment, allegedNonJsUnitException.description);
+function assertNonJsUnitFailure(comment, allegedNonJsUnitFailure) {
+    assertNotNull(comment, allegedNonJsUnitFailure);
+    assertUndefined(comment, allegedNonJsUnitFailure.isJsUnitFailure);
+    assertNotUndefined(comment, allegedNonJsUnitFailure.description);
 }
 </script>
 </head>

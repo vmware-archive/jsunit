@@ -11,18 +11,18 @@
             var aSuite = new top.jsUnitTestSuite();
             aSuite.addTestPage("foo.html");
             aSuite.addTestPage("bar.html");
-            assertEquals(2, aSuite.testPages.length);
-            assertEquals("foo.html", aSuite.testPages[0]);
-            assertEquals("bar.html", aSuite.testPages[1]);
+            assertEquals(2, aSuite._testPages.length);
+            assertEquals("foo.html", aSuite._testPages[0]);
+            assertEquals("bar.html", aSuite._testPages[1]);
             var anotherSuite = new top.jsUnitTestSuite();
             anotherSuite.addTestPage("foo2.html");
             anotherSuite.addTestPage("bar2.html");
             aSuite.addTestSuite(anotherSuite);
-            assertEquals(4, aSuite.testPages.length);
-            assertEquals("foo.html", aSuite.testPages[0]);
-            assertEquals("bar.html", aSuite.testPages[1]);
-            assertEquals("foo2.html", aSuite.testPages[2]);
-            assertEquals("bar2.html", aSuite.testPages[3]);
+            assertEquals(4, aSuite._testPages.length);
+            assertEquals("foo.html", aSuite._testPages[0]);
+            assertEquals("bar.html", aSuite._testPages[1]);
+            assertEquals("foo2.html", aSuite._testPages[2]);
+            assertEquals("bar2.html", aSuite._testPages[3]);
         }
 
         function testTracing() {
