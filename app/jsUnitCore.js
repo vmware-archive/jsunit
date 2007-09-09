@@ -569,7 +569,7 @@ function assertEqualsIgnoringOrder() {
 }
 
 /**
- * Causes an failure
+ * Causes a failure
  * @param failureMessage the message for the failure
  */
 function fail(failureMessage) {
@@ -639,19 +639,19 @@ function JsUnitAssertionArgumentError(description) {
     this.description = description;
 }
 
-/**
- * Standardizes an HTML string by temporarily creating a DIV, setting its innerHTML to the string, and the asking for
- * the innerHTML back
- * @param html
- */
-
 function isLoaded() {
     return isTestPageLoaded;
 }
 
+/**
+ * @private
+ */
 function setUp() {
 }
 
+/**
+ * @private
+ */
 function tearDown() {
 }
 
@@ -701,12 +701,6 @@ function JsUnitTestSuite() {
             this.addTestPage(arguments[i]);
         }
     }
-}
-/**
- * Used to indicate that this object is a JsUnitTestSuite
- */
-JsUnitTestSuite.prototype.addTestPage = function () {
-    return true;
 }
 
 /**
@@ -803,12 +797,18 @@ function jsUnitSetOnLoad(windowRef, onloadHandler) {
     }
 }
 
-jsUnitSetOnLoad(window, newOnLoadEvent);
-
-
+/**
+ * @class
+ * @constructor
+ */
 var Utilities = function() {
 }
 
+/**
+ * Standardizes an HTML string by temporarily creating a DIV, setting its innerHTML to the string, and the asking for
+ * the innerHTML back
+ * @param html
+ */
 Utilities.standardizeHTML = function(html) {
     var translator = document.createElement("DIV");
     translator.innerHTML = html;
@@ -920,3 +920,5 @@ Utilities.trim = function(str) {
 
     return str.substring(startingIndex, endingIndex + 1);
 }
+
+jsUnitSetOnLoad(window, newOnLoadEvent);
