@@ -105,7 +105,7 @@ JsUnitTestManager.prototype.doneLoadingPage = function (pageName) {
 
 JsUnitTestManager.prototype._handleNewSuite = function () {
     var allegedSuite = this.containerTestFrame.suite();
-    if (allegedSuite.isjsUnitTestSuite) {
+    if (allegedSuite.isJsUnitTestSuite) {
  		var newSuite = this._cloneTestSuite(allegedSuite);
         if (newSuite.containsTestPages())
             push(this._suiteStack, newSuite);

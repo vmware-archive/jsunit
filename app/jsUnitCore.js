@@ -683,9 +683,8 @@ function debug() {
 function JsUnitTestSuite() {
     /**
      * Declares that this object is a JsUnitTestSuite
-     * @deprecated use isJsUnitTestSuite()
      */
-    this.isjsUnitTestSuite = true;
+    this.isJsUnitTestSuite = true;
     /**
      * @private
      */
