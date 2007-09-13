@@ -1,6 +1,6 @@
 function JsUnitTestManager() {
     this.log = [];
-    
+
     this._windowForAllProblemMessages = null;
 
     this.container = top.frames.testContainer;
@@ -108,7 +108,7 @@ JsUnitTestManager.prototype._handleNewSuite = function () {
     if (allegedSuite.isJsUnitTestSuite) {
  		var newSuite = this._cloneTestSuite(allegedSuite);
         if (newSuite.containsTestPages())
-            push(this._suiteStack, newSuite);
+            Utilities.push(this._suiteStack, newSuite);
         this._nextPage();
     }
     else {

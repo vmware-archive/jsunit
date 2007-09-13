@@ -22,7 +22,7 @@
                 top.init();
             }
 
-            if (isBlank(top.testManager.getTestFileName())) {
+            if (Utilities.isBlank(top.testManager.getTestFileName())) {
                 top.testManager.fatalError('No Test Page specified.');
                 return;
             }
