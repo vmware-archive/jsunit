@@ -338,6 +338,20 @@ function testAssertObjectEquals_differentTypes() {
     }
 }
 
+function testAssertObjectEquals_tooManyEntriesInActual() {
+    var failure;
+    try {
+        assertObjectEquals({a: "b"}, {a: "b", c: "d"});
+        fail(failure = "too many entries in actual");
+    } catch (e) {
+        assertJsUnitFailure("Should be a JsUnitException", e);
+        if (e.jsUnitMessage == failure)
+            fail(e.jsUnitMessage);
+
+        assertEquals("Expected keys \"a\" but found \"a, c\"", e.jsUnitMessage);
+    }
+}
+
 function testAssertEvaluatesToTrue() {
     assertEvaluatesToTrue("foo");
     assertEvaluatesToTrue(true);

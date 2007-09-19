@@ -381,9 +381,15 @@ function assertObjectEquals() {
         var primitiveEqualityPredicate = PRIMITIVE_EQUALITY_PREDICATES[typeOfVar1];
         if (primitiveEqualityPredicate) {
             isEqual = primitiveEqualityPredicate(var1, var2);
-        } else if (var1.length === var2.length) {
-            for (var i in var1)
+        } else {
+            var expectedKeys = Utilities.getKeys(var1).sort().join(", ");
+            var actualKeys = Utilities.getKeys(var2).sort().join(", ");
+            if (expectedKeys != actualKeys) {
+                _assert(failureMessage, false, 'Expected keys "' + expectedKeys + '" but found "' + actualKeys + '"');
+            }
+            for (var i in var1) {
                 assertObjectEquals(failureMessage + ' found nested ' + typeOfVar1 + '@' + i + '\n', var1[i], var2[i]);
+            }
             isEqual = true;
         }
     }
@@ -944,6 +950,14 @@ Utilities.trim = function(string) {
         return '';
 
     return string.substring(startingIndex, endingIndex + 1);
+}
+
+Utilities.getKeys = function(obj) {
+    var keys = [];
+    for (var key in obj) {
+        Utilities.push(keys, key);
+    }
+    return keys;
 }
 
 jsUnitSetOnLoad(window, newOnLoadEvent);
