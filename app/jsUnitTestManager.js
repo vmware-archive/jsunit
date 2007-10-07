@@ -182,6 +182,12 @@ JsUnitTestManager.prototype._runTest = function () {
 JsUnitTestManager.prototype._done = function () {
     var secondsSinceRunBegan = (new Date() - this._timeRunStarted) / 1000;
     this.setStatus('Done (' + secondsSinceRunBegan + ' seconds)');
+
+    // call the suite teardown function, if defined
+    if( typeof top.suiteTearDown === 'function' ) {
+        top.suiteTearDown();
+    }
+
     this._cleanUp();
     if (top.shouldSubmitResults()) {
         this.resultsTimeField.value = secondsSinceRunBegan;

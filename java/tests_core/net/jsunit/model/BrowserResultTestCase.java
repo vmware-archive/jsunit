@@ -20,6 +20,7 @@ public abstract class BrowserResultTestCase extends TestCase {
                     "<property name=\"remoteAddress\" value=\"123.45.67.8\" />" +
                     "<property name=\"url\" value=\"http://www.example.com/\" />" +
                     "<property name=\"testPage\" value=\"\" />" +
+                    "<property name=\"userProperty\" value=\"example user property\" />" +
                     "</properties>" +
                     "<testCaseResults>" +
                     "<testCaseResult type=\"SUCCESS\" name=\"page1.html:testFoo\" time=\"1.3\" />" +
@@ -53,6 +54,7 @@ public abstract class BrowserResultTestCase extends TestCase {
         browserResult.setRemoteAddress("123.45.67.8");
         browserResult.setBaseURL("http://www.example.com/");
         browserResult.setTime(4.3);
+        browserResult.setUserProperty("example user property");
         return browserResult;
     }
 
@@ -64,6 +66,7 @@ public abstract class BrowserResultTestCase extends TestCase {
         assertEquals("123.45.67.8", aResult.getRemoteAddress());
         assertEquals(4.3d, aResult.getTime(), 0.001d);
         assertEquals(3, aResult._getTestCaseResults().size());
+        assertEquals("example user property", aResult.getUserProperty());
         for (TestCaseResult testCaseResult : aResult._getTestCaseResults()) {
             assertNotNull(testCaseResult);
         }

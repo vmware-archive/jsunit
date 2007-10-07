@@ -21,7 +21,8 @@ public class BrowserResultWriter {
             PROPERTY_KEY = "name",
             PROPERTY_VALUE = "value",
             URL = "url",
-            TEST_PAGE_NAME = "testPage";
+            TEST_PAGE_NAME = "testPage",
+            USER_PROPERTY = "userProperty";
 
     BrowserResult browserResult;
 
@@ -49,6 +50,7 @@ public class BrowserResultWriter {
             addProperty(properties, REMOTE_ADDRESS, browserResult.getRemoteAddress());
             addProperty(properties, URL, browserResult.getBaseURL());
             addProperty(properties, TEST_PAGE_NAME, browserResult.getTestPageName());
+            addProperty(properties, USER_PROPERTY, browserResult.getUserProperty());
         }
         if (browserResult.hasServerSideExceptionStackTrace()) {
             Element stackTrace = createPropertyElement(SERVER_SIDE_EXCEPTION_STACK_TRACE);

@@ -23,6 +23,7 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
     private List<TestPageResult> testPageResults = new ArrayList<TestPageResult>();
     private String serverSideExceptionStackTrace;
     private ResultType resultType;
+    private String userProperty;
 
     public BrowserResult() {
         this.id = String.valueOf(System.currentTimeMillis());
@@ -235,5 +236,13 @@ public class BrowserResult extends AbstractResult implements XmlRenderable {
             return null;
         else
             return baseURL.substring(baseURL.lastIndexOf("/") + 1);
+    }
+
+    public String getUserProperty() {
+        return this.userProperty;
+    }
+
+    public void setUserProperty(String userProperty) {
+        this.userProperty = userProperty;
     }
 }
