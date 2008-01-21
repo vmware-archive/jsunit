@@ -63,6 +63,7 @@ public class DistributedTest extends TestCase {
         else
             specs.addAll(builder.forAllBrowsersFromRemoteURLs(configuration.getRemoteMachineURLs()));
         manager = new DistributedTestRunManager(serverHitter, configuration, overrideURL, specs);
+        manager.setListener(new DistributedTestRunListenerImpl(configuration));
         ensureTemporaryServerIsCreated();
         startServerIfNecessary();
     }

@@ -10,7 +10,7 @@
     <property
             name="browserFileNames"
             value=""
-            description="browserFileNames is the list of browsers in which to run tests when StandaloneTest is invoked on this machine. For a JsUnit Server, this is a mandatory property. For example: 'c:\program files\internet explorer\iexplore.exe,c:\program files\netscape\netscape7.1\netscp.exe'"
+            description="browserFileNames is a comma-separated list of browsers in which to run tests when StandaloneTest is invoked on this host. Each value can be a semi-colon separated list, with the second value being the program to run to shut down the browser and the third value being the display name of the browser. The second and third values are optional. For a JsUnit Server, this is a mandatory property. For example: 'c:\program files\internet explorer\iexplore.exe;c:\program files\killie.bat;Internet Explorer 6.0,c:\program files\netscape\netscape7.1\netscp.exe,c:\program files\Opera\runopera.bat'"
             />
 
     <property
@@ -51,7 +51,7 @@
     <property
             id="remoteMachineURLs"
             name="remoteMachineURLs"
-            value=""
+            value="http://localhost:8080"
             description="remoteMachineURLs is a property used only by the JsUnit Aggregate Server and the distributed_test target. Its value is the list of URLs of remote machines to which a request to run tests will be sent. For example: 'http://machine1.company.com:8080,http://localhost:8080,http://192.168.1.200:9090'"
             />
 
@@ -73,7 +73,7 @@
             id="url"
             name="url"
             value=""
-            description="url is the URL (HTTP or file protocol) to open in the browser. For a JsUnit Server, this is a mandatory property for a test run if the server is not passed the 'url' parameter. For example: 'file:///c:/jsunit/testRunner.html?testPage=c:/jsunit/tests/jsUnitTestSuite.html'"
+            description="url is the URL (HTTP or file protocol) to open in the browser. For a JsUnit Server, this is a mandatory property for a test run if the server is not passed the 'url' parameter. For example: 'http://myhost.mycompany.com:8080/jsunit/testRunner.html?testPage=http://myhost.mycompany.com:8080/jsunit/tests/jsUnitTestSuite.html'"
             />
 
     <property name="bin" location="java/bin"/>

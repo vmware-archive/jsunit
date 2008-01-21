@@ -7,6 +7,7 @@
                   value="Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8) Gecko/20060321 Firefox/2.0a1"/>
         <property name="remoteAddress" value="127.0.0.1"/>
         <property name="url" value="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html"/>
+        <property name="userProperty" value=""/>
     </properties>
     <testCases>
         <testCase name="http://localhost:48025/jsunit/tests/jsUnitUtilityTests.html:testTrueTypeOf" time="0.0"/>

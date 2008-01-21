@@ -47,6 +47,7 @@
 <input type="hidden" name="time">
 <input type="hidden" name="url">
 <input type="hidden" name="cacheBuster">
+<input type="hidden" name="userProperty">
 <select size="5" name="testCaseResults" multiple></select>
 </form>
 <script language="javascript" type="text/javascript">
@@ -57,6 +58,7 @@
         document.resultsForm.jsUnitVersion.value = jsUnitVersion;
         document.resultsForm.url.value = baseURL;
         document.resultsForm.cacheBuster.value = new Date().getTime();
+        document.resultsForm.userProperty.value = top.userProperty;
     }
     function submitResults() {
         var testCasesField = document.resultsForm.testCaseResults;
