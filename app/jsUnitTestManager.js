@@ -752,7 +752,7 @@ function getDocumentProtocol() {
 }
 
 function _browserSupportsReadingFullPathFromFileField() {
-    return !isOpera() && !isIE7();
+    return !isOpera() && !isIE7() && !isFirefox3();
 }
 
 function isOpera() {
@@ -761,6 +761,10 @@ function isOpera() {
 
 function isIE7() {
     return navigator.userAgent.toLowerCase().indexOf("msie 7") != -1;
+}
+
+function isFirefox3() {
+    return navigator.userAgent.toLowerCase().indexOf("firefox/3") != -1;
 }
 
 function isBeingRunOverHTTP() {
