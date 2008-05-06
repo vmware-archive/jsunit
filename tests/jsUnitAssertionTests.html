@@ -70,7 +70,7 @@ function testFail() {
     } catch (e) {
         excep = e;
     }
-    assertJsUnitFailure("fail(string) should throw a JsUnitException", excep);
+    assertJsUnitFailure("fail(string) should throw a JsUnit.Exception", excep);
 }
 
 function testTooFewArguments() {
@@ -136,7 +136,7 @@ function testAssertArrayEquals() {
         assertArrayEquals(array1, array3);
         fail("Should not be equal");
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.comment == "Call to fail()")
             fail(e.comment + e.jsUnitMessage); //tried fail is also caught
     }
@@ -144,7 +144,7 @@ function testAssertArrayEquals() {
         assertArrayEquals(array1, array4);
         fail("Should not be equal");
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.comment == "Call to fail()")
             fail(e.comment + e.jsUnitMessage); //tried fail is also caught
     }
@@ -160,7 +160,7 @@ function testAssertArrayEquals() {
     }
     catch (e)
     {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -188,7 +188,7 @@ function testAssertObjectEquals_hash() {
         fail(failure = 'Simple differing objects found to be the same');
     }
     catch (e) {
-        assertJsUnitFailure("Should be a JsUnitFailure", e);
+        assertJsUnitFailure("Should be a JsUnit.Failure", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -197,7 +197,7 @@ function testAssertObjectEquals_hash() {
         fail(failure = 'Objects with different methods found to be the same');
     }
     catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -214,7 +214,7 @@ function testAssertObjectEquals_hash() {
         fail(failure = 'Different Date objects (' + d1 + ' and ' + d2 + ') found to be the same');
     }
     catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -230,7 +230,7 @@ function testAssertObjectEquals_date() {
     }
     catch (e)
     {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -247,7 +247,7 @@ function testAssertObjectEquals_regularExpression() {
     }
     catch (e)
     {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -258,7 +258,7 @@ function testAssertObjectEquals_regularExpression() {
     }
     catch (e)
     {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -277,7 +277,7 @@ function testAssertObjectEquals_strings() {
         assertObjectEquals(failure, "foo", "fooXXX");
         fail(failure);
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -287,7 +287,7 @@ function testAssertObjectEquals_strings() {
         assertObjectEquals(failure, "foo", "bar");
         fail(failure);
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -309,7 +309,7 @@ function testAssertObjectEquals_numbers() {
     }
     catch (e)
     {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -320,7 +320,7 @@ function testAssertObjectEquals_numbers() {
     }
     catch (e)
     {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -332,7 +332,7 @@ function testAssertObjectEquals_differentTypes() {
         assertObjectEquals(1, "foo");
         fail(failure = "different types");
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
     }
@@ -344,7 +344,7 @@ function testAssertObjectEquals_tooManyEntriesInActual() {
         assertObjectEquals({a: "b"}, {a: "b", c: "d"});
         fail(failure = "too many entries in actual");
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
         if (e.jsUnitMessage == failure)
             fail(e.jsUnitMessage);
 
@@ -360,7 +360,7 @@ function testAssertEvaluatesToTrue() {
         assertEvaluatesToTrue(null);
         fail("Should have thrown a JsUnitException");
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
     }
 }
 
@@ -373,7 +373,7 @@ function testAssertEvaluatesToFalse() {
         assertEvaluatesToFalse("foo");
         fail("Should have thrown a JsUnitException");
     } catch (e) {
-        assertJsUnitFailure("Should be a JsUnitException", e);
+        assertJsUnitFailure("Should be a JsUnit.Exception", e);
     }
 }
 

@@ -8,28 +8,31 @@
     <script type="text/javascript">
 
         function coreSuite() {
-            var result = new top.jsUnitTestSuite();
+            var result = new JsUnitTestSuite();
             result.addTestPage("tests/jsUnitAssertionTests.html");
             result.addTestPage("tests/jsUnitFrameworkUtilityTests.html");
             result.addTestPage("tests/jsUnitOnLoadTests.html");
             result.addTestPage("tests/jsUnitRestoredHTMLDivTests.html");
             result.addTestPage("tests/jsUnitSetUpTearDownTests.html");
             result.addTestPage("tests/jsUnitTestManagerTests.html");
+            result.addTestPage("tests/jsUnitParamsTests.html");
             result.addTestPage("tests/jsUnitTestSetUpPages.html");
             result.addTestPage("tests/jsUnitTestSuiteTests.html");
             result.addTestPage("tests/jsUnitUtilityTests.html");
+            result.addTestPage("tests/TestPageTest.html");
+            result.addTestPage("tests/UiManagerTest.html");
             return result;
         }
 
         function librariesSuite() {
-            var result = new top.jsUnitTestSuite();
+            var result = new JsUnitTestSuite();
             result.addTestPage("tests/jsUnitMockTimeoutTest.html");
             result.addTestPage("tests/jsUnitAjaxTest.html");
             return result;
         }
 
         function suite() {
-            var newsuite = new top.jsUnitTestSuite();
+            var newsuite = new JsUnitTestSuite();
             newsuite.addTestSuite(coreSuite());
             newsuite.addTestSuite(librariesSuite());
             return newsuite;

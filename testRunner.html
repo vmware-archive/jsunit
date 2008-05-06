@@ -5,179 +5,63 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>JsUnit Test Runner</title>
 <script language="JavaScript" type="text/javascript" src="app/jsUnitCore.js"></script>
-<script language="JavaScript" type="text/javascript">
-    var DEFAULT_TEST_FRAME_HEIGHT = 250;
-
-    function jsUnitParseParms(string) {
-        var i;
-        var searchString = unescape(string);
-        var parameterHash = new Object();
-
-        if (!searchString) {
-            return parameterHash;
-        }
-
-        i = searchString.indexOf('?');
-        if (i != -1) {
-            searchString = searchString.substring(i + 1);
-        }
-
-        var parmList = searchString.split('&');
-        var a;
-        for (i = 0; i < parmList.length; i++) {
-            a = parmList[i].split('=');
-            a[0] = a[0].toLowerCase();
-            if (a.length > 1) {
-                parameterHash[a[0]] = a[1];
-            }
-            else {
-                parameterHash[a[0]] = true;
-            }
-        }
-        return parameterHash;
-    }
-
-    function jsUnitConstructTestParms() {
-        var p;
-        var parms = '';
-
-        for (p in jsUnitParmHash) {
-            var value = jsUnitParmHash[p];
-
-            if (!value ||
-                p == 'testpage' ||
-                p == 'autorun' ||
-                p == 'submitresults' ||
-                p == 'showtestframe' ||
-                p == 'browserid' ||
-                p == 'resultid') {
-                continue;
-            }
-
-            if (parms) {
-                parms += '&';
-            }
-
-            parms += escape(p);
-
-            if (typeof(value) != 'boolean') {
-                parms += '=' + escape(value);
-            }
-        }
-        return parms;
-    }
-
-    var jsUnitParmHash = jsUnitParseParms(document.location.search);
-
-</script>
-
 <script language="JavaScript" type="text/javascript" src="app/jsUnitTestManager.js"></script>
+<script language="JavaScript" type="text/javascript" src="app/BaseUiManager.js"></script>
+<script language="JavaScript" type="text/javascript" src="app/ClassicUiManager.js"></script>
+<script language="JavaScript" type="text/javascript" src="app/ModernUiManager.js"></script>
+<script language="JavaScript" type="text/javascript" src="app/jsUnitParams.js"></script>
 <script language="JavaScript" type="text/javascript" src="app/jsUnitTracer.js"></script>
 <script language="JavaScript" type="text/javascript">
 
+    var params = new JsUnit.Params(document.location.search);
     var testManager;
-    var utility;
     var tracer;
 
-    if (!Array.prototype.push) {
-        Array.prototype.push = function (anObject) {
-            this[this.length] = anObject;
-        }
+    function resetTestManager() {
+        testManager = new JsUnitTestManager(params);
+        tracer = new JsUnitTracer(testManager, params);
     }
 
-    if (!Array.prototype.pop) {
-        Array.prototype.pop = function () {
-            if (this.length > 0) {
-                delete this[this.length - 1];
-                this.length--;
-            }
-        }
+    resetTestManager();
+
+    function onLoadHandler() {
+        testManager.onLoad();
+        testManager.maybeRun();
     }
 
-    function shouldKickOffTestsAutomatically() {
-        return jsUnitGetParm('autorun') == "true";
+    function startTests() {
+        testManager.kickOffTests();
     }
 
-    function shouldShowTestFrame() {
-        return jsUnitGetParm('showtestframe');
+    function stopTests() {
+        testManager.abort();
+        resetTestManager();
+        testManager.onLoad();
     }
 
-    function shouldSubmitResults() {
-        return jsUnitGetParm('submitresults');
-    }
+    var uiFrameUrl = testManager.getUiFrameUrl();
 
-    function shouldSuppressDialogs() {
-        return shouldSubmitResults() || jsUnitGetParm('suppressdialogs');
-    }
-
-    function getPageLoadTimeout() {
-        return jsUnitGetParm('pageloadtimeout') || JsUnitTestManager.TESTPAGE_WAIT_SEC;
-    }
-
-    function getSetupPageTimeout() {
-        return jsUnitGetParm('setuppagetimeout') || JsUnitTestManager.SETUPPAGE_TIMEOUT;
-    }
-
-    function getResultId() {
-        if (jsUnitGetParm('resultid'))
-            return jsUnitGetParm('resultid');
-        return "";
-    }
-
-    function getBrowserId() {
-        if (jsUnitGetParm('browserid'))
-            return jsUnitGetParm('browserid');
-        return "";
-    }
-
-    function submitResults() {
-        window.mainFrame.mainData.document.testRunnerForm.runButton.disabled = true;
-        window.mainFrame.mainData.document.testRunnerForm.stopButton.disabled = true;
-        window.mainFrame.mainResults.populateHeaderFields(getResultId(), getBrowserId(), navigator.userAgent, JSUNIT_VERSION, testManager.resolveUserEnteredTestFileName());
-        window.mainFrame.mainResults.submitResults();
-    }
-
-    function wasResultUrlSpecified() {
-        return shouldSubmitResults() && jsUnitGetParm('submitresults') != 'true';
-    }
-
-    function getSpecifiedResultUrl() {
-        return jsUnitGetParm('submitresults');
-    }
-
-    function init() {
-        var testRunnerFrameset = document.getElementById('testRunnerFrameset');
-        if (shouldShowTestFrame() && testRunnerFrameset) {
-            var testFrameHeight;
-            if (jsUnitGetParm('showtestframe') == 'true')
-                testFrameHeight = DEFAULT_TEST_FRAME_HEIGHT;
-            else
-                testFrameHeight = jsUnitGetParm('showtestframe');
-            testRunnerFrameset.rows = '*,0,' + testFrameHeight;
-        }
-        testManager = new JsUnitTestManager();
-        tracer = new JsUnitTracer(testManager);
-
-        if (shouldKickOffTestsAutomatically()) {
-            window.mainFrame.mainData.kickOffTests();
-        }
-    }
-
+    document.open();
+    document.write(
+            '<frameset id="testRunnerFrameset" rows="*,0,0,0" border="0" onload="onLoadHandler()">' + "\n" +
+            '    <frame frameborder="0" name="mainFrame" src="' + uiFrameUrl + '">' + "\n" +
+            '    <frame frameborder="0" name="mainResults" src="./app/main-results.html">' + "\n" +
+            '    <frame frameborder="0" name="documentLoader" src="./app/main-loader.html">' + "\n" +
+            '    <frame frameborder="0" name="testContainer" src="./app/testContainer.html">' + "\n" +
+            '    <noframes>' + "\n" +
+            '        <body>' + "\n" +
+            '        <p>Sorry, JsUnit requires support for frames.</p>' + "\n" +
+            '        </body>' + "\n" +
+            '    </noframes>' + "\n" +
+            '</frameset>'
+    );
+    document.close();
 
 </script>
 </head>
 
-<frameset id="testRunnerFrameset" rows="*,0,0" border="0" onload="init()">
-
-    <frame frameborder="0" name="mainFrame" src="./app/main-frame.html">
-    <frame frameborder="0" name="documentLoader" src="./app/main-loader.html">
-    <frame frameborder="0" name="testContainer" src="./app/testContainer.html">
-
-    <noframes>
-        <body>
-        <p>Sorry, JsUnit requires support for frames.</p>
-        </body>
-    </noframes>
-</frameset>
+<body>
+<noscript>Sorry, JsUnit requires JavaScript.</noscript>
+</body>
 
 </html>

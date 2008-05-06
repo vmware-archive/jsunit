@@ -18,8 +18,8 @@
 
             try {
                 // attempt to access the var isTestPageLoaded in the testFrame
-                if (typeof(top.testManager.containerTestFrame.isTestPageLoaded) != 'undefined') {
-                    isTestPageLoaded = top.testManager.containerTestFrame.isTestPageLoaded;
+                if (typeof(top.testManager.testFrame.isTestPageLoaded) != 'undefined') {
+                    isTestPageLoaded = top.testManager.testFrame.isTestPageLoaded;
                 }
 
                 // ok, if the above did not throw an exception, then the
@@ -43,7 +43,7 @@
             try {
                 // attempt to set the isTestPageLoaded variable
                 // in the test frame to false.
-                top.testManager.containerTestFrame.isTestPageLoaded = false;
+                top.testManager.testFrame.isTestPageLoaded = false;
             }
             catch (e) {
                 // testFrame.isTestPageLoaded not available... ignore
@@ -51,10 +51,9 @@
         }
         function setTestPage(testPageURI) {
             setNotReady();
-            top.jsUnitParseParms(testPageURI);
             testPageURI = appendCacheBusterParameterTo(testPageURI);
             try {
-                top.testManager.containerTestFrame.location.href = testPageURI;
+                top.testManager.testFrame.location.href = testPageURI;
             } catch (e) {
             }
         }

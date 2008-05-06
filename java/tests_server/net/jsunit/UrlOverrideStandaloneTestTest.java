@@ -28,7 +28,7 @@ public class UrlOverrideStandaloneTestTest extends EndToEndTestCase {
         };
     }
 
-    public void testOverridenURL() throws Exception {
+    public void testOverriddenURL() throws Exception {
         StandaloneTest test = new StandaloneTest(configurationSource());
         test.setOverrideURL(
                 "http://localhost:" + port + "/jsunit/testRunner.html?testPage=http://localhost:" + port + "/jsunit/tests/jsUnitUtilityTests.html&autoRun=true&submitresults=true&resultId=foobar");

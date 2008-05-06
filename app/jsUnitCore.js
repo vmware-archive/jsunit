@@ -1,6 +1,6 @@
 /**
  * @fileoverview
- * jsUnitCore.js contains the implementation of the core JsUnit functionality: assertions, JsUnitTestSuites, and JsUnitException.
+ * jsUnitCore.js contains the implementation of the core JsUnit functionality: assertions, JsUnitTestSuites, and JsUnit.Failure.
  * An HTML page is considered to be a JsUnit Test Page if it "includes" jsUnitCore.js, i.e. the following line is present:
  * <code>
  * &lt;script type="text/javascript" src="/path/to/jsUnitCore.js"&gt;&lt;/script&gt;
@@ -8,11 +8,14 @@
  * @author Edward Hieatt, edward@jsunit.net, http://www.jsunit.net
  */
 
+var JsUnit = {};
+
 /**
  * The JsUnit version
  * @version
  */
-var JSUNIT_VERSION = 2.2;
+JsUnit.VERSION = 2.2;
+var JSUNIT_VERSION = JsUnit.VERSION;
 
 /**
  * For convenience, a variable that equals "undefined"
@@ -27,35 +30,35 @@ var isTestPageLoaded = false;
 /**
  * Predicate used for testing JavaScript == (i.e. equality excluding type)
  */
-var DOUBLE_EQUALITY_PREDICATE = function(var1, var2) {return var1 == var2;};
+JsUnit.DOUBLE_EQUALITY_PREDICATE = function(var1, var2) {return var1 == var2;};
 
 /**
  * Predicate used for testing JavaScript === (i.e. equality including type)
  */
-var TRIPLE_EQUALITY_PREDICATE = function(var1, var2) {return var1 === var2;};
+JsUnit.TRIPLE_EQUALITY_PREDICATE = function(var1, var2) {return var1 === var2;};
 
 /**
  * Predicate used for testing whether two obects' toStrings are equal
  */
-var TO_STRING_EQUALITY_PREDICATE = function(var1, var2) {return var1.toString() === var2.toString();};
+JsUnit.TO_STRING_EQUALITY_PREDICATE = function(var1, var2) {return var1.toString() === var2.toString();};
 
 /**
  * Hash of predicates for testing equality by primitive type
  */
-var PRIMITIVE_EQUALITY_PREDICATES = {
-    'String':   DOUBLE_EQUALITY_PREDICATE,
-    'Number':   DOUBLE_EQUALITY_PREDICATE,
-    'Boolean':  DOUBLE_EQUALITY_PREDICATE,
-    'Date':     TRIPLE_EQUALITY_PREDICATE,
-    'RegExp':   TO_STRING_EQUALITY_PREDICATE,
-    'Function': TO_STRING_EQUALITY_PREDICATE
+JsUnit.PRIMITIVE_EQUALITY_PREDICATES = {
+    'String':   JsUnit.DOUBLE_EQUALITY_PREDICATE,
+    'Number':   JsUnit.DOUBLE_EQUALITY_PREDICATE,
+    'Boolean':  JsUnit.DOUBLE_EQUALITY_PREDICATE,
+    'Date':     JsUnit.TRIPLE_EQUALITY_PREDICATE,
+    'RegExp':   JsUnit.TO_STRING_EQUALITY_PREDICATE,
+    'Function': JsUnit.TO_STRING_EQUALITY_PREDICATE
 }
 
 /**
  * Hack for NS62 bug
  * @private
  */
-function _jsUnitFixTop() {
+JsUnit._fixTop = function() {
     var tempTop = top;
     if (!tempTop) {
         tempTop = window;
@@ -73,14 +76,14 @@ function _jsUnitFixTop() {
     }
 }
 
-_jsUnitFixTop();
+JsUnit._fixTop();
 
 /**
  * @param Any object
  * @return String - the type of the given object
  * @private
  */
-function _trueTypeOf(something) {
+JsUnit._trueTypeOf = function(something) {
     var result = typeof something;
     try {
         switch (result) {
@@ -133,10 +136,10 @@ function _trueTypeOf(something) {
 /**
  * @private
  */
-function _displayStringForValue(aVar) {
+JsUnit._displayStringForValue = function(aVar) {
     var result = '<' + aVar + '>';
     if (!(aVar === null || aVar === JSUNIT_UNDEFINED_VALUE)) {
-        result += ' (' + _trueTypeOf(aVar) + ')';
+        result += ' (' + JsUnit._trueTypeOf(aVar) + ')';
     }
     return result;
 }
@@ -144,14 +147,14 @@ function _displayStringForValue(aVar) {
 /**
  * @private
  */
-function _argumentsIncludeComments(expectedNumberOfNonCommentArgs, args) {
+JsUnit._argumentsIncludeComments = function(expectedNumberOfNonCommentArgs, args) {
     return args.length == expectedNumberOfNonCommentArgs + 1;
 }
 /**
  * @private
  */
-function _commentArg(expectedNumberOfNonCommentArgs, args) {
-    if (_argumentsIncludeComments(expectedNumberOfNonCommentArgs, args))
+JsUnit._commentArg = function(expectedNumberOfNonCommentArgs, args) {
+    if (JsUnit._argumentsIncludeComments(expectedNumberOfNonCommentArgs, args))
         return args[0];
 
     return null;
@@ -159,8 +162,8 @@ function _commentArg(expectedNumberOfNonCommentArgs, args) {
 /**
  * @private
  */
-function _nonCommentArg(desiredNonCommentArgIndex, expectedNumberOfNonCommentArgs, args) {
-    return _argumentsIncludeComments(expectedNumberOfNonCommentArgs, args) ?
+JsUnit._nonCommentArg = function(desiredNonCommentArgIndex, expectedNumberOfNonCommentArgs, args) {
+    return JsUnit._argumentsIncludeComments(expectedNumberOfNonCommentArgs, args) ?
            args[desiredNonCommentArgIndex] :
            args[desiredNonCommentArgIndex - 1];
 }
@@ -168,30 +171,30 @@ function _nonCommentArg(desiredNonCommentArgIndex, expectedNumberOfNonCommentArg
 /**
  * @private
  */
-function _validateArguments(expectedNumberOfNonCommentArgs, args) {
+JsUnit._validateArguments = function(expectedNumberOfNonCommentArgs, args) {
     if (!( args.length == expectedNumberOfNonCommentArgs ||
            (args.length == expectedNumberOfNonCommentArgs + 1 && (typeof(args[0]) == 'string') || args[0] == null)))
-        throw new JsUnitAssertionArgumentError('Incorrect arguments passed to assert function');
+        throw new JsUnit.AssertionArgumentError('Incorrect arguments passed to assert function');
 }
 
 /**
  * @private
  */
-function _checkEquals(var1, var2) {
+JsUnit._checkEquals = function(var1, var2) {
     return var1 === var2;
 }
 
 /**
  * @private
  */
-function _checkNotUndefined(aVar) {
+JsUnit._checkNotUndefined = function(aVar) {
     return aVar !== JSUNIT_UNDEFINED_VALUE;
 }
 
 /**
  * @private
  */
-function _checkNotNull(aVar) {
+JsUnit._checkNotNull = function(aVar) {
     return aVar !== null;
 }
 
@@ -199,26 +202,26 @@ function _checkNotNull(aVar) {
  * All assertions ultimately go through this method.
  * @private
  */
-function _assert(comment, booleanValue, failureMessage) {
+JsUnit._assert = function(comment, booleanValue, failureMessage) {
     if (!booleanValue)
-        throw new JsUnitFailure(comment, failureMessage);
+        throw new JsUnit.Failure(comment, failureMessage);
 }
 
 /**
  * Checks that the given boolean value is true.
  * @param comment optional, displayed in the case of failure
  * @value value that is expected to be true
- * @throws JsUnitFailure if the given value is not true
+ * @throws JsUnit.Failure if the given value is not true
  * @throws JsUnitInvalidAssertionArgument if the given value is not a boolean or if an incorrect number of arguments is passed
  */
 function assert() {
-    _validateArguments(1, arguments);
-    var booleanValue = _nonCommentArg(1, 1, arguments);
+    JsUnit._validateArguments(1, arguments);
+    var booleanValue = JsUnit._nonCommentArg(1, 1, arguments);
 
     if (typeof(booleanValue) != 'boolean')
-        throw new JsUnitAssertionArgumentError('Bad argument to assert(boolean)');
+        throw new JsUnit.AssertionArgumentError('Bad argument to assert(boolean)');
 
-    _assert(_commentArg(1, arguments), booleanValue === true, 'Call to assert(boolean) with false');
+    JsUnit._assert(JsUnit._commentArg(1, arguments), booleanValue === true, 'Call to assert(boolean) with false');
 }
 
 /**
@@ -226,25 +229,25 @@ function assert() {
  * @see #assert
  */
 function assertTrue() {
-    _validateArguments(1, arguments);
-    assert(_commentArg(1, arguments), _nonCommentArg(1, 1, arguments));
+    JsUnit._validateArguments(1, arguments);
+    assert(JsUnit._commentArg(1, arguments), JsUnit._nonCommentArg(1, 1, arguments));
 }
 
 /**
  * Checks that a boolean value is false.
  * @param comment optional, displayed in the case of failure
  * @value value that is expected to be false
- * @throws JsUnitFailure if value is not false
+ * @throws JsUnit.Failure if value is not false
  * @throws JsUnitInvalidAssertionArgument if the given value is not a boolean or if an incorrect number of arguments is passed
  */
 function assertFalse() {
-    _validateArguments(1, arguments);
-    var booleanValue = _nonCommentArg(1, 1, arguments);
+    JsUnit._validateArguments(1, arguments);
+    var booleanValue = JsUnit._nonCommentArg(1, 1, arguments);
 
     if (typeof(booleanValue) != 'boolean')
-        throw new JsUnitAssertionArgumentError('Bad argument to assertFalse(boolean)');
+        throw new JsUnit.AssertionArgumentError('Bad argument to assertFalse(boolean)');
 
-    _assert(_commentArg(1, arguments), booleanValue === false, 'Call to assertFalse(boolean) with true');
+    JsUnit._assert(JsUnit._commentArg(1, arguments), booleanValue === false, 'Call to assertFalse(boolean) with true');
 }
 
 /**
@@ -252,14 +255,14 @@ function assertFalse() {
  * @param comment optional, displayed in the case of failure
  * @param expected the expected value
  * @param actual the actual value
- * @throws JsUnitFailure if the values are not equal
+ * @throws JsUnit.Failure if the values are not equal
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertEquals() {
-    _validateArguments(2, arguments);
-    var var1 = _nonCommentArg(1, 2, arguments);
-    var var2 = _nonCommentArg(2, 2, arguments);
-    _assert(_commentArg(2, arguments), _checkEquals(var1, var2), 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
+    JsUnit._validateArguments(2, arguments);
+    var var1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var var2 = JsUnit._nonCommentArg(2, 2, arguments);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkEquals(var1, var2), 'Expected ' + JsUnit._displayStringForValue(var1) + ' but was ' + JsUnit._displayStringForValue(var2));
 }
 
 /**
@@ -267,92 +270,92 @@ function assertEquals() {
  * @param comment optional, displayed in the case of failure
  * @param value1 a value
  * @param value2 another value
- * @throws JsUnitFailure if the values are equal
+ * @throws JsUnit.Failure if the values are equal
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertNotEquals() {
-    _validateArguments(2, arguments);
-    var var1 = _nonCommentArg(1, 2, arguments);
-    var var2 = _nonCommentArg(2, 2, arguments);
-    _assert(_commentArg(2, arguments), var1 !== var2, 'Expected not to be ' + _displayStringForValue(var2));
+    JsUnit._validateArguments(2, arguments);
+    var var1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var var2 = JsUnit._nonCommentArg(2, 2, arguments);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), var1 !== var2, 'Expected not to be ' + JsUnit._displayStringForValue(var2));
 }
 
 /**
  * Checks that a value is null
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the value is not null
+ * @throws JsUnit.Failure if the value is not null
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertNull() {
-    _validateArguments(1, arguments);
-    var aVar = _nonCommentArg(1, 1, arguments);
-    _assert(_commentArg(1, arguments), aVar === null, 'Expected ' + _displayStringForValue(null) + ' but was ' + _displayStringForValue(aVar));
+    JsUnit._validateArguments(1, arguments);
+    var aVar = JsUnit._nonCommentArg(1, 1, arguments);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), aVar === null, 'Expected ' + JsUnit._displayStringForValue(null) + ' but was ' + JsUnit._displayStringForValue(aVar));
 }
 
 /**
  * Checks that a value is not null
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the value is null
+ * @throws JsUnit.Failure if the value is null
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertNotNull() {
-    _validateArguments(1, arguments);
-    var aVar = _nonCommentArg(1, 1, arguments);
-    _assert(_commentArg(1, arguments), _checkNotNull(aVar), 'Expected not to be ' + _displayStringForValue(null));
+    JsUnit._validateArguments(1, arguments);
+    var aVar = JsUnit._nonCommentArg(1, 1, arguments);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), JsUnit._checkNotNull(aVar), 'Expected not to be ' + JsUnit._displayStringForValue(null));
 }
 
 /**
  * Checks that a value is undefined
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the value is not undefined
+ * @throws JsUnit.Failure if the value is not undefined
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertUndefined() {
-    _validateArguments(1, arguments);
-    var aVar = _nonCommentArg(1, 1, arguments);
-    _assert(_commentArg(1, arguments), aVar === JSUNIT_UNDEFINED_VALUE, 'Expected ' + _displayStringForValue(JSUNIT_UNDEFINED_VALUE) + ' but was ' + _displayStringForValue(aVar));
+    JsUnit._validateArguments(1, arguments);
+    var aVar = JsUnit._nonCommentArg(1, 1, arguments);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), aVar === JSUNIT_UNDEFINED_VALUE, 'Expected ' + JsUnit._displayStringForValue(JSUNIT_UNDEFINED_VALUE) + ' but was ' + JsUnit._displayStringForValue(aVar));
 }
 
 /**
  * Checks that a value is not undefined
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the value is undefined
+ * @throws JsUnit.Failure if the value is undefined
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertNotUndefined() {
-    _validateArguments(1, arguments);
-    var aVar = _nonCommentArg(1, 1, arguments);
-    _assert(_commentArg(1, arguments), _checkNotUndefined(aVar), 'Expected not to be ' + _displayStringForValue(JSUNIT_UNDEFINED_VALUE));
+    JsUnit._validateArguments(1, arguments);
+    var aVar = JsUnit._nonCommentArg(1, 1, arguments);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), JsUnit._checkNotUndefined(aVar), 'Expected not to be ' + JsUnit._displayStringForValue(JSUNIT_UNDEFINED_VALUE));
 }
 
 /**
  * Checks that a value is NaN (Not a Number)
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the value is a number
+ * @throws JsUnit.Failure if the value is a number
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertNaN() {
-    _validateArguments(1, arguments);
-    var aVar = _nonCommentArg(1, 1, arguments);
-    _assert(_commentArg(1, arguments), isNaN(aVar), 'Expected NaN');
+    JsUnit._validateArguments(1, arguments);
+    var aVar = JsUnit._nonCommentArg(1, 1, arguments);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), isNaN(aVar), 'Expected NaN');
 }
 
 /**
  * Checks that a value is not NaN (i.e. is a number)
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the value is not a number
+ * @throws JsUnit.Failure if the value is not a number
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertNotNaN() {
-    _validateArguments(1, arguments);
-    var aVar = _nonCommentArg(1, 1, arguments);
-    _assert(_commentArg(1, arguments), !isNaN(aVar), 'Expected not NaN');
+    JsUnit._validateArguments(1, arguments);
+    var aVar = JsUnit._nonCommentArg(1, 1, arguments);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), !isNaN(aVar), 'Expected not NaN');
 }
 
 /**
@@ -361,31 +364,31 @@ function assertNotNaN() {
  * @param comment optional, displayed in the case of failure
  * @param value the expected value
  * @param value the actual value
- * @throws JsUnitFailure if the actual value does not equal the expected value
+ * @throws JsUnit.Failure if the actual value does not equal the expected value
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertObjectEquals() {
-    _validateArguments(2, arguments);
-    var var1 = _nonCommentArg(1, 2, arguments);
-    var var2 = _nonCommentArg(2, 2, arguments);
-    var failureMessage = _commentArg(2, arguments) ? _commentArg(2, arguments) : '';
+    JsUnit._validateArguments(2, arguments);
+    var var1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var var2 = JsUnit._nonCommentArg(2, 2, arguments);
+    var failureMessage = JsUnit._commentArg(2, arguments) ? JsUnit._commentArg(2, arguments) : '';
     if (var1 === var2)
         return;
 
     var isEqual = false;
 
-    var typeOfVar1 = _trueTypeOf(var1);
-    var typeOfVar2 = _trueTypeOf(var2);
+    var typeOfVar1 = JsUnit._trueTypeOf(var1);
+    var typeOfVar2 = JsUnit._trueTypeOf(var2);
 
     if (typeOfVar1 == typeOfVar2) {
-        var primitiveEqualityPredicate = PRIMITIVE_EQUALITY_PREDICATES[typeOfVar1];
+        var primitiveEqualityPredicate = JsUnit.PRIMITIVE_EQUALITY_PREDICATES[typeOfVar1];
         if (primitiveEqualityPredicate) {
             isEqual = primitiveEqualityPredicate(var1, var2);
         } else {
-            var expectedKeys = Utilities.getKeys(var1).sort().join(", ");
-            var actualKeys = Utilities.getKeys(var2).sort().join(", ");
+            var expectedKeys = JsUnit.Util.getKeys(var1).sort().join(", ");
+            var actualKeys = JsUnit.Util.getKeys(var2).sort().join(", ");
             if (expectedKeys != actualKeys) {
-                _assert(failureMessage, false, 'Expected keys "' + expectedKeys + '" but found "' + actualKeys + '"');
+                JsUnit._assert(failureMessage, false, 'Expected keys "' + expectedKeys + '" but found "' + actualKeys + '"');
             }
             for (var i in var1) {
                 assertObjectEquals(failureMessage + ' found nested ' + typeOfVar1 + '@' + i + '\n', var1[i], var2[i]);
@@ -393,7 +396,7 @@ function assertObjectEquals() {
             isEqual = true;
         }
     }
-    _assert(failureMessage, isEqual, 'Expected ' + _displayStringForValue(var1) + ' but was ' + _displayStringForValue(var2));
+    JsUnit._assert(failureMessage, isEqual, 'Expected ' + JsUnit._displayStringForValue(var1) + ' but was ' + JsUnit._displayStringForValue(var2));
 }
 
 /**
@@ -401,45 +404,45 @@ function assertObjectEquals() {
  * @param comment optional, displayed in the case of failure
  * @param value the expected array
  * @param value the actual array
- * @throws JsUnitFailure if the actual value does not equal the expected value
+ * @throws JsUnit.Failure if the actual value does not equal the expected value
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertArrayEquals() {
-    _validateArguments(2, arguments);
-    var array1 = _nonCommentArg(1, 2, arguments);
-    var array2 = _nonCommentArg(2, 2, arguments);
-    if (_trueTypeOf(array1) != 'Array' || _trueTypeOf(array2) != 'Array') {
-        throw new JsUnitAssertionArgumentError('Non-array passed to assertArrayEquals');
+    JsUnit._validateArguments(2, arguments);
+    var array1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var array2 = JsUnit._nonCommentArg(2, 2, arguments);
+    if (JsUnit._trueTypeOf(array1) != 'Array' || JsUnit._trueTypeOf(array2) != 'Array') {
+        throw new JsUnit.AssertionArgumentError('Non-array passed to assertArrayEquals');
     }
-    assertObjectEquals(_commentArg(2, arguments), _nonCommentArg(1, 2, arguments), _nonCommentArg(2, 2, arguments));
+    assertObjectEquals(JsUnit._commentArg(2, arguments), JsUnit._nonCommentArg(1, 2, arguments), JsUnit._nonCommentArg(2, 2, arguments));
 }
 
 /**
  * Checks that a value evaluates to true in the sense that value == true
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the actual value does not evaluate to true
+ * @throws JsUnit.Failure if the actual value does not evaluate to true
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertEvaluatesToTrue() {
-    _validateArguments(1, arguments);
-    var value = _nonCommentArg(1, 1, arguments);
+    JsUnit._validateArguments(1, arguments);
+    var value = JsUnit._nonCommentArg(1, 1, arguments);
     if (!value)
-        fail(_commentArg(1, arguments));
+        fail(JsUnit._commentArg(1, arguments));
 }
 
 /**
  * Checks that a value evaluates to false in the sense that value == false
  * @param comment optional, displayed in the case of failure
  * @param value the value
- * @throws JsUnitFailure if the actual value does not evaluate to true
+ * @throws JsUnit.Failure if the actual value does not evaluate to true
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertEvaluatesToFalse() {
-    _validateArguments(1, arguments);
-    var value = _nonCommentArg(1, 1, arguments);
+    JsUnit._validateArguments(1, arguments);
+    var value = JsUnit._nonCommentArg(1, 1, arguments);
     if (value)
-        fail(_commentArg(1, arguments));
+        fail(JsUnit._commentArg(1, arguments));
 }
 
 /**
@@ -449,17 +452,17 @@ function assertEvaluatesToFalse() {
  * @param comment optional, displayed in the case of failure
  * @param value1 the expected HTML string
  * @param value2 the actual HTML string
- * @throws JsUnitFailure if the standardized actual value does not equal the standardized expected value
+ * @throws JsUnit.Failure if the standardized actual value does not equal the standardized expected value
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertHTMLEquals() {
-    _validateArguments(2, arguments);
-    var var1 = _nonCommentArg(1, 2, arguments);
-    var var2 = _nonCommentArg(2, 2, arguments);
-    var var1Standardized = Utilities.standardizeHTML(var1);
-    var var2Standardized = Utilities.standardizeHTML(var2);
+    JsUnit._validateArguments(2, arguments);
+    var var1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var var2 = JsUnit._nonCommentArg(2, 2, arguments);
+    var var1Standardized = JsUnit.Util.standardizeHTML(var1);
+    var var2Standardized = JsUnit.Util.standardizeHTML(var2);
 
-    _assert(_commentArg(2, arguments), var1Standardized === var2Standardized, 'Expected ' + _displayStringForValue(var1Standardized) + ' but was ' + _displayStringForValue(var2Standardized));
+    JsUnit._assert(JsUnit._commentArg(2, arguments), var1Standardized === var2Standardized, 'Expected ' + JsUnit._displayStringForValue(var1Standardized) + ' but was ' + JsUnit._displayStringForValue(var2Standardized));
 }
 
 /**
@@ -469,13 +472,13 @@ function assertHTMLEquals() {
  * @param comment optional, displayed in the case of failure
  * @param value the expected hash
  * @param value the actual hash
- * @throws JsUnitFailure if the actual hash does not evaluate to true
+ * @throws JsUnit.Failure if the actual hash does not evaluate to true
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertHashEquals() {
-    _validateArguments(2, arguments);
-    var var1 = _nonCommentArg(1, 2, arguments);
-    var var2 = _nonCommentArg(2, 2, arguments);
+    JsUnit._validateArguments(2, arguments);
+    var var1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var var2 = JsUnit._nonCommentArg(2, 2, arguments);
     for (var key in var1) {
         assertNotUndefined("Expected hash had key " + key + " that was not found", var2[key]);
         assertEquals(
@@ -494,14 +497,14 @@ function assertHashEquals() {
  * @param value1 a value
  * @param value1 another value
  * @param tolerance the tolerance
- * @throws JsUnitFailure if the two values are not within tolerance of each other
+ * @throws JsUnit.Failure if the two values are not within tolerance of each other
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments is passed
  */
 function assertRoughlyEquals() {
-    _validateArguments(3, arguments);
-    var expected = _nonCommentArg(1, 3, arguments);
-    var actual = _nonCommentArg(2, 3, arguments);
-    var tolerance = _nonCommentArg(3, 3, arguments);
+    JsUnit._validateArguments(3, arguments);
+    var expected = JsUnit._nonCommentArg(1, 3, arguments);
+    var actual = JsUnit._nonCommentArg(2, 3, arguments);
+    var tolerance = JsUnit._nonCommentArg(3, 3, arguments);
     assertTrue(
         "Expected " + expected + ", but got " + actual + " which was more than " + tolerance + " away",
         Math.abs(expected - actual) < tolerance
@@ -513,13 +516,13 @@ function assertRoughlyEquals() {
  * @param comment optional, displayed in the case of failure
  * @param collection the collection
  * @param value the value
- * @throws JsUnitFailure if the collection does not contain the value
+ * @throws JsUnit.Failure if the collection does not contain the value
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments are passed
  */
 function assertContains() {
-    _validateArguments(2, arguments);
-    var value = _nonCommentArg(1, 2, arguments);
-    var collection = _nonCommentArg(2, 2, arguments);
+    JsUnit._validateArguments(2, arguments);
+    var value = JsUnit._nonCommentArg(1, 2, arguments);
+    var collection = JsUnit._nonCommentArg(2, 2, arguments);
     assertTrue(
         "Expected '" + collection + "' to contain '" + value + "'",
         collection.indexOf(value) != -1
@@ -531,26 +534,26 @@ function assertContains() {
  * @param comment optional, displayed in the case of failure
  * @param array1 first array
  * @param array2 second array
- * @throws JsUnitFailure if the two arrays contain different contents
+ * @throws JsUnit.Failure if the two arrays contain different contents
  * @throws JsUnitInvalidAssertionArgument if an incorrect number of arguments are passed
  */
 function assertArrayEqualsIgnoringOrder() {
-    _validateArguments(2, arguments);
-    var var1 = _nonCommentArg(1, 2, arguments);
-    var var2 = _nonCommentArg(2, 2, arguments);
+    JsUnit._validateArguments(2, arguments);
+    var var1 = JsUnit._nonCommentArg(1, 2, arguments);
+    var var2 = JsUnit._nonCommentArg(2, 2, arguments);
 
-    var notEqualsMessage = "Expected arrays " + _displayStringForValue(var1) + " and " + _displayStringForValue(var2) + " to be equal (ignoring order)";
-    var notArraysMessage = "Expected arguments " + _displayStringForValue(var1) + " and " + _displayStringForValue(var2) + " to be arrays";
+    var notEqualsMessage = "Expected arrays " + JsUnit._displayStringForValue(var1) + " and " + JsUnit._displayStringForValue(var2) + " to be equal (ignoring order)";
+    var notArraysMessage = "Expected arguments " + JsUnit._displayStringForValue(var1) + " and " + JsUnit._displayStringForValue(var2) + " to be arrays";
 
-    _assert(_commentArg(2, arguments), _checkNotNull(var1), notEqualsMessage);
-    _assert(_commentArg(2, arguments), _checkNotNull(var2), notEqualsMessage);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkNotNull(var1), notEqualsMessage);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkNotNull(var2), notEqualsMessage);
 
-    _assert(_commentArg(2, arguments), _checkNotUndefined(var1.length), notArraysMessage);
-    _assert(_commentArg(2, arguments), _checkNotUndefined(var1.join), notArraysMessage);
-    _assert(_commentArg(2, arguments), _checkNotUndefined(var2.length), notArraysMessage);
-    _assert(_commentArg(2, arguments), _checkNotUndefined(var2.join), notArraysMessage);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkNotUndefined(var1.length), notArraysMessage);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkNotUndefined(var1.join), notArraysMessage);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkNotUndefined(var2.length), notArraysMessage);
+    JsUnit._assert(JsUnit._commentArg(2, arguments), JsUnit._checkNotUndefined(var2.join), notArraysMessage);
 
-    _assert(_commentArg(1, arguments), _checkEquals(var1.length, var2.length), notEqualsMessage);
+    JsUnit._assert(JsUnit._commentArg(1, arguments), JsUnit._checkEquals(var1.length, var2.length), notEqualsMessage);
 
     for (var i = 0; i < var1.length; i++) {
         var found = false;
@@ -561,7 +564,7 @@ function assertArrayEqualsIgnoringOrder() {
             } catch (ignored) {
             }
         }
-        _assert(_commentArg(2, arguments), found, notEqualsMessage);
+        JsUnit._assert(JsUnit._commentArg(2, arguments), found, notEqualsMessage);
     }
 }
 
@@ -570,8 +573,8 @@ function assertArrayEqualsIgnoringOrder() {
  * @see #assertArrayEqualsIgnoringOrder
  */
 function assertEqualsIgnoringOrder() {
-    _validateArguments(2, arguments);
-    assertArrayEqualsIgnoringOrder(_commentArg(2, arguments), _nonCommentArg(1, 2, arguments), _nonCommentArg(2, 2, arguments));
+    JsUnit._validateArguments(2, arguments);
+    assertArrayEqualsIgnoringOrder(JsUnit._commentArg(2, arguments), JsUnit._nonCommentArg(1, 2, arguments), JsUnit._nonCommentArg(2, 2, arguments));
 }
 
 /**
@@ -579,7 +582,7 @@ function assertEqualsIgnoringOrder() {
  * @param failureMessage the message for the failure
  */
 function fail(failureMessage) {
-    throw new JsUnitFailure("Call to fail()", failureMessage);
+    throw new JsUnit.Failure("Call to fail()", failureMessage);
 }
 
 /**
@@ -592,13 +595,13 @@ function error(errorMessage) {
 
 /**
  * @class
- * A JsUnitFailure represents an assertion failure (or a call to fail()) during the execution of a Test Function
+ * A JsUnit.Failure represents an assertion failure (or a call to fail()) during the execution of a Test Function
  * @param comment an optional comment about the failure
  * @param message the reason for the failure
  */
-function JsUnitFailure(comment, message) {
+JsUnit.Failure = function(comment, message) {
     /**
-     * Declaration that this is a JsUnitFailure
+     * Declaration that this is a JsUnit.Failure
      * @ignore
      */
     this.isJsUnitFailure = true;
@@ -613,15 +616,20 @@ function JsUnitFailure(comment, message) {
     /**
      * The stack trace at the point at which the failure was encountered
      */
-    this.stackTrace = Utilities.getStackTrace();
+    this.stackTrace = JsUnit.Util.getStackTrace();
 }
+
+/**
+ * @deprecated
+ */
+JsUnitFailure = JsUnit.Failure;
 
 /**
  * @class
  * A JsUnitError represents an error (an exception or a call to error()) during the execution of a Test Function
  * @param description the reason for the failure
  */
-function JsUnitError(description) {
+JsUnit.Error = function(description) {
     /**
      * The description of the error
      */
@@ -629,8 +637,13 @@ function JsUnitError(description) {
     /**
      * The stack trace at the point at which the error was encountered
      */
-    this.stackTrace = Utilities.getStackTrace();
+    this.stackTrace = JsUnit.Util.getStackTrace();
 }
+
+/**
+ * @deprecated
+ */
+JsUnitError = JsUnit.Error;
 
 /**
  * @class
@@ -638,7 +651,7 @@ function JsUnitError(description) {
  * or an incorrect number of arguments
  * @param description a description of the argument error
  */
-function JsUnitAssertionArgumentError(description) {
+JsUnit.AssertionArgumentError = function(description) {
     /**
      * A description of the argument error
      */
@@ -713,8 +726,8 @@ function JsUnitTestSuite() {
  * Adds a Test Page to the suite
  * @param pageName the path to the Test Page
  */
-JsUnitTestSuite.prototype.addTestPage = function (pageName) {
-    this._testPages[this._testPages.length] = pageName;
+JsUnitTestSuite.prototype.addTestPage = function (page) {
+    this._testPages[this._testPages.length] = page;
 }
 
 /**
@@ -765,18 +778,14 @@ function setJsUnitTracer(aJsUnitTracer) {
 }
 
 function jsUnitGetParm(name) {
-    if (typeof(top.jsUnitParmHash[name]) != 'undefined')
-    {
-        return top.jsUnitParmHash[name];
-    }
-    return null;
+    return top.params.get(name);
 }
 
-function newOnLoadEvent() {
+JsUnit._newOnLoadEvent = function() {
     isTestPageLoaded = true;
 }
 
-function jsUnitSetOnLoad(windowRef, onloadHandler) {
+JsUnit._setOnLoad = function(windowRef, onloadHandler) {
     var isKonqueror = navigator.userAgent.indexOf('Konqueror/') != -1;
 
     if (typeof(windowRef.attachEvent) != 'undefined') {
@@ -808,26 +817,25 @@ function jsUnitSetOnLoad(windowRef, onloadHandler) {
  * @constructor
  * Contains utility functions for the JsUnit framework
  */
-var Utilities = function() {
-}
+JsUnit.Util = {};
 
 /**
  * Standardizes an HTML string by temporarily creating a DIV, setting its innerHTML to the string, and the asking for
  * the innerHTML back
  * @param html
  */
-Utilities.standardizeHTML = function(html) {
+JsUnit.Util.standardizeHTML = function(html) {
     var translator = document.createElement("DIV");
     translator.innerHTML = html;
-    return Utilities.trim(translator.innerHTML);
+    return JsUnit.Util.trim(translator.innerHTML);
 }
 
 /**
  * Returns whether the given string is blank after being trimmed of whitespace
  * @param string
  */
-Utilities.isBlank = function(string) {
-    return Utilities.trim(string) == '';
+JsUnit.Util.isBlank = function(string) {
+    return JsUnit.Util.trim(string) == '';
 }
 
 /**
@@ -835,7 +843,7 @@ Utilities.isBlank = function(string) {
  * @param anArray the array onto which to push
  * @param anObject the object to push onto the array
  */
-Utilities.push = function(anArray, anObject) {
+JsUnit.Util.push = function(anArray, anObject) {
     anArray[anArray.length] = anObject;
 }
 
@@ -843,7 +851,7 @@ Utilities.push = function(anArray, anObject) {
  * Implemented here because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
  * @param anArray the array from which to pop
  */
-Utilities.pop = function pop(anArray) {
+JsUnit.Util.pop = function pop(anArray) {
     if (anArray.length >= 1) {
         delete anArray[anArray.length - 1];
         anArray.length--;
@@ -854,7 +862,7 @@ Utilities.pop = function pop(anArray) {
  * Returns the name of the given function, or 'anonymous' if it has no name
  * @param aFunction
  */
-Utilities.getFunctionName = function(aFunction) {
+JsUnit.Util.getFunctionName = function(aFunction) {
     var regexpResult = aFunction.toString().match(/function(\s*)(\w*)/);
     if (regexpResult && regexpResult.length >= 2 && regexpResult[2]) {
             return regexpResult[2];
@@ -865,12 +873,12 @@ Utilities.getFunctionName = function(aFunction) {
 /**
  * Returns the current stack trace
  */
-Utilities.getStackTrace = function() {
+JsUnit.Util.getStackTrace = function() {
     var result = '';
 
     if (typeof(arguments.caller) != 'undefined') { // IE, not ECMA
         for (var a = arguments.caller; a != null; a = a.caller) {
-            result += '> ' + Utilities.getFunctionName(a.callee) + '\n';
+            result += '> ' + JsUnit.Util.getFunctionName(a.callee) + '\n';
             if (a.caller == a) {
                 result += '*';
                 break;
@@ -885,7 +893,7 @@ Utilities.getStackTrace = function() {
         }
         catch(exception)
         {
-            var stack = Utilities.parseErrorStack(exception);
+            var stack = JsUnit.Util.parseErrorStack(exception);
             for (var i = 1; i < stack.length; i++)
             {
                 result += '> ' + stack[i] + '\n';
@@ -900,7 +908,7 @@ Utilities.getStackTrace = function() {
  * Returns an array of stack trace elements from the given exception
  * @param exception
  */
-Utilities.parseErrorStack = function(exception) {
+JsUnit.Util.parseErrorStack = function(exception) {
     var stack = [];
     var name;
 
@@ -932,7 +940,7 @@ Utilities.parseErrorStack = function(exception) {
  * Strips whitespace from either end of the given string
  * @param string
  */
-Utilities.trim = function(string) {
+JsUnit.Util.trim = function(string) {
     if (string == null)
         return null;
 
@@ -952,12 +960,18 @@ Utilities.trim = function(string) {
     return string.substring(startingIndex, endingIndex + 1);
 }
 
-Utilities.getKeys = function(obj) {
+JsUnit.Util.getKeys = function(obj) {
     var keys = [];
     for (var key in obj) {
-        Utilities.push(keys, key);
+        JsUnit.Util.push(keys, key);
     }
     return keys;
 }
 
-jsUnitSetOnLoad(window, newOnLoadEvent);
+JsUnit.Util.inherit = function(superclass, subclass) {
+    var x = function() {};
+    x.prototype = superclass.prototype;
+    subclass.prototype = new x();
+}
+
+JsUnit._setOnLoad(window, JsUnit._newOnLoadEvent);

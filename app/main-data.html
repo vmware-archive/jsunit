@@ -17,41 +17,6 @@
                 document.testRunnerForm.testFileName.focus();
         }
 
-        function kickOffTests() {
-            if (!top.testManager) {
-                top.init();
-            }
-
-            if (Utilities.isBlank(top.testManager.getTestFileName())) {
-                top.testManager.fatalError('No Test Page specified.');
-                return;
-            }
-
-            top.testManager.setup();
-
-            top.testManager._currentSuite().addTestPage(top.testManager.resolveUserEnteredTestFileName());
-            top.tracer.initialize();
-
-            var traceLevel = document.forms.testRunnerForm.traceLevel;
-            if (traceLevel.value != '0')
-            {
-                var traceWindow = top.tracer._getTraceWindow();
-                if (traceWindow) {
-                    traceWindow.focus();
-                }
-                else {
-                    top.testManager.fatalError('Tracing requires popup windows, and popups are blocked in your browser.\n\nPlease enable popups if you wish to use tracing.');
-                }
-            }
-
-            top.testManager.start();
-        }
-
-        function stopTests() {
-            top.testManager.abort();
-            top.testManager = null;
-        }
-
     </script>
 </head>
 
@@ -73,7 +38,7 @@
         </td>
         <td width="50">&nbsp;</td>
         <th align="left">
-            <h2>JsUnit <script language="javascript" type="text/javascript">document.write(JSUNIT_VERSION);</script> TestRunner</h2>
+            <h2>JsUnit <script language="javascript" type="text/javascript">document.write(JsUnit.VERSION);</script> TestRunner</h2>
             Running on
             <script language="javascript" type="text/javascript">document.write(navigator.userAgent);</script>
         </th>
@@ -93,7 +58,7 @@
 
 <form name="testRunnerForm" action="">
 <script type="text/javascript" language="javascript">
-    if (!jsUnitGetParm('testpage')) {
+    if (!top.params.getTestPage()) {
         document.write("<h4>Enter the location of the Test Page/Test Suite Page to be run:</h4>");
     } else {
         document.write("<br>");
@@ -104,44 +69,24 @@
     <tr>
         <td align="center" valign="middle">
             <script language="JavaScript" type="text/javascript">
-                if (!jsUnitGetParm('testpage'))
-                    document.write(top.getDocumentProtocol());
+                if (!top.params.getTestPage())
+                    document.write(top.testManager.getTestFileProtocol());
             </script>
         </td>
 
         <td nowrap align="center" valign="bottom">
             &nbsp;
             <script language="JavaScript" type="text/javascript">
-                var testPageParameter = jsUnitGetParm('testpage');
-                var isFileProtocol = top.getDocumentProtocol() == 'file:///';
-                var testPageString = "";
-                if (testPageParameter) {
-                    if (!isFileProtocol) {
-                        var topLocation = top.location;
-                        if (testPageParameter.indexOf('/') == 0)
-                            testPageString += topLocation.host;
-                        else if (testPageParameter.indexOf('./') == 0) {
-                            testPageString += topLocation.href.substr(0, topLocation.href.indexOf("testRunner.html"));
-                            testPageParameter = testPageParameter.substr(2, testPageParameter.length);
-                        }
-                    }
-                    testPageString += testPageParameter;
-                    var testParms = top.jsUnitConstructTestParms();
-                    if (testParms != '') {
-                        testPageString += '?';
-                        testPageString += testParms;
-                    }
-                }
+                var testManager = top.testManager;
+                var testPageString = testManager.getTestPageString();
 
-                var needsUploadField = isFileProtocol && top._browserSupportsReadingFullPathFromFileField() && testPageString.length == 0;
-                if (needsUploadField)
-                    document.writeln('<input type="file" name="testFileName" size="60" value="'+testPageString+'">');
-                else
-                    document.writeln('<input type="text" name="testFileName" size="60" value="'+testPageString+'">');
+                var needsUploadField = testManager.isFileProtocol() && testManager.browserSupportsReadingFullPathFromFileField() && testPageString.length == 0;
+                var inputType = needsUploadField ? "file" : "text";
+                document.writeln('<input type="' + inputType + '" name="testFileName" size="60" value="'+testPageString+'">');
 
                 var buttonClass = needsUploadField ? "" : "button";
-                document.writeln('<input type="button" name="runButton" value="Run" onclick="kickOffTests()" class="' + buttonClass + '">');
-                document.writeln('<input type="button" name="stopButton" value="Stop" onclick="stopTests()" class="' + buttonClass + '">');
+                document.writeln('<input type="button" name="runButton" value="Run" onclick="top.startTests()" class="' + buttonClass + '">');
+                document.writeln('<input type="button" name="stopButton" value="Stop" onclick="top.stopTests()" class="' + buttonClass + '">');
             </script>
         </td>
     </tr>
@@ -181,7 +126,7 @@
         <td nowrap>Page load timeout:</td>
         <td>&nbsp;
             <script language="javascript" type="text/javascript">
-                document.write('<input type="text" size="2" name="timeout" value="' + top.getPageLoadTimeout() + '">');
+                document.write('<input type="text" size="2" name="timeout" value="' + top.params.getPageLoadTimeout() + '">');
             </script>
         </td>
 
@@ -190,7 +135,7 @@
         <td nowrap>Setup page timeout:</td>
         <td>&nbsp;
             <script language="javascript" type="text/javascript">
-                document.write('<input type="text" size="2" name="setUpPageTimeout" value="' + top.getSetupPageTimeout() + '">');
+                document.write('<input type="text" size="2" name="setUpPageTimeout" value="' + top.params.getSetupPageTimeout() + '">');
             </script>
         </td>
     </tr>

@@ -7,39 +7,7 @@
 </head>
 
 <body>
-<script language="javascript" type="text/javascript">
-    var DEFAULT_SUBMIT_WEBSERVER = "localhost:8080";
-
-    function submitUrlFromSpecifiedUrl() {
-        var result = "";
-        var specifiedUrl = top.getSpecifiedResultUrl();
-        if (specifiedUrl.indexOf("http://") != 0)
-            result = "http://";
-        result += specifiedUrl;
-        return result;
-    }
-
-    function submitUrlFromTestRunnerLocation() {
-        var result = "http://";
-        var webserver = top.getWebserver();
-        var runningOverFileProtocol = webserver == null;
-        if (runningOverFileProtocol)
-            webserver = DEFAULT_SUBMIT_WEBSERVER;
-        result += webserver;
-        result += "/jsunit/acceptor";
-        return result;
-    }
-
-    var submitUrl = "";
-    if (top.wasResultUrlSpecified()) {
-        submitUrl = submitUrlFromSpecifiedUrl();
-    } else {
-        submitUrl = submitUrlFromTestRunnerLocation();
-    }
-
-    var formString = "<form name=\"resultsForm\" action=\"" + submitUrl + "\" method=\"post\" target=\"_top\">";
-    document.write(formString);
-</script>
+<form name="resultsForm" action="/" method="post" target="_top">
 <input type="hidden" name="id">
 <input type="hidden" name="browserId">
 <input type="hidden" name="userAgent">
@@ -58,7 +26,6 @@
         document.resultsForm.jsUnitVersion.value = jsUnitVersion;
         document.resultsForm.url.value = baseURL;
         document.resultsForm.cacheBuster.value = new Date().getTime();
-        document.resultsForm.userProperty.value = top.userProperty;
     }
     function submitResults() {
         var testCasesField = document.resultsForm.testCaseResults;

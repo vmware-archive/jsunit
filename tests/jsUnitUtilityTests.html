@@ -1,35 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit Utility Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
     <script type="text/javascript" src="../app/jsUnitCore.js"></script>
     <script type="text/javascript">
         function testTrim() {
-            assertEquals(null, Utilities.trim(null));
-            assertEquals(null, Utilities.trim(JSUNIT_UNDEFINED_VALUE));
-            assertEquals("", Utilities.trim(""));
-            assertEquals("", Utilities.trim("    "));
-            assertEquals("string", Utilities.trim("string"));
-            assertEquals("str  ing", Utilities.trim("str  ing"));
-            assertEquals("string", Utilities.trim(" string   "));
-            assertEquals("string", Utilities.trim("\r\n string \r\n"));
+            assertEquals(null, JsUnit.Util.trim(null));
+            assertEquals(null, JsUnit.Util.trim(JSUNIT_UNDEFINED_VALUE));
+            assertEquals("", JsUnit.Util.trim(""));
+            assertEquals("", JsUnit.Util.trim("    "));
+            assertEquals("string", JsUnit.Util.trim("string"));
+            assertEquals("str  ing", JsUnit.Util.trim("str  ing"));
+            assertEquals("string", JsUnit.Util.trim(" string   "));
+            assertEquals("string", JsUnit.Util.trim("\r\n string \r\n"));
         }
 
         function testIsBlank() {
-            assert(!Utilities.isBlank("  string "));
-            assert(Utilities.isBlank(""));
-            assert(Utilities.isBlank("    "));
+            assert(!JsUnit.Util.isBlank("  string "));
+            assert(JsUnit.Util.isBlank(""));
+            assert(JsUnit.Util.isBlank("    "));
         }
 
         function testPushAndPop() {
-            //the functions Utilities.push(anArray, anObject) and Utilities.pop(anArray) exist because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
+            //the functions JsUnit.Util.push(anArray, anObject) and JsUnit.Util.pop(anArray) exist because the JavaScript Array.push(anObject) and Array.pop() functions are not available in IE 5.0
             var anArray = Array();
             anArray[0] = "element 0";
             anArray[1] = "element 1";
-            Utilities.push(anArray, "element 2");
-            Utilities.push(anArray, "element 3");
+            JsUnit.Util.push(anArray, "element 2");
+            JsUnit.Util.push(anArray, "element 3");
 
             assertEquals("There should be 4 elements after 2 are pushed onto an array of size 2", 4, anArray.length);
             assertEquals("element 0", anArray[0]);
@@ -37,16 +37,16 @@
             assertEquals("element 2", anArray[2]);
             assertEquals("element 3", anArray[3]);
 
-            Utilities.pop(anArray);
+            JsUnit.Util.pop(anArray);
             assertEquals("Should be 3 elements after popping 1 from an array of size 4", 3, anArray.length);
             assertEquals("element 0", anArray[0]);
             assertEquals("element 1", anArray[1]);
             assertEquals("element 2", anArray[2]);
-            Utilities.pop(anArray);
-            Utilities.pop(anArray);
-            Utilities.pop(anArray);
+            JsUnit.Util.pop(anArray);
+            JsUnit.Util.pop(anArray);
+            JsUnit.Util.pop(anArray);
             assertEquals("Should be 0 elements after popping 3 from an array of size 3", 0, anArray.length);
-            Utilities.pop(anArray);
+            JsUnit.Util.pop(anArray);
             assertEquals("Should be 0 elements after trying to pop an array of size 0", 0, anArray.length);
         }
 
@@ -59,35 +59,35 @@
         }
 
         function testTrueTypeOf() {
-            assertEquals('Boolean', _trueTypeOf(true));
-            assertEquals('Using new', 'Boolean', _trueTypeOf(new Boolean('1')));
+            assertEquals('Boolean', JsUnit._trueTypeOf(true));
+            assertEquals('Using new', 'Boolean', JsUnit._trueTypeOf(new Boolean('1')));
 
-            assertEquals('Number', _trueTypeOf(1));
+            assertEquals('Number', JsUnit._trueTypeOf(1));
             var GI = new Number(1);
-            assertEquals('Using new', 'Number', _trueTypeOf(GI));
-            assertEquals('Number', _trueTypeOf(1.5));
+            assertEquals('Using new', 'Number', JsUnit._trueTypeOf(GI));
+            assertEquals('Number', JsUnit._trueTypeOf(1.5));
 
-            assertEquals('String', _trueTypeOf('foo'));
-            assertEquals('Using new', 'String', _trueTypeOf(new String('foo')));
+            assertEquals('String', JsUnit._trueTypeOf('foo'));
+            assertEquals('Using new', 'String', JsUnit._trueTypeOf(new String('foo')));
 
-            assertEquals('Using new', 'Function', _trueTypeOf(new Function()));
+            assertEquals('Using new', 'Function', JsUnit._trueTypeOf(new Function()));
             var f = function foo() {};
-            assertEquals('Function', _trueTypeOf(f));
-            assertEquals('Function', _trueTypeOf(testTrueTypeOf));
+            assertEquals('Function', JsUnit._trueTypeOf(f));
+            assertEquals('Function', JsUnit._trueTypeOf(testTrueTypeOf));
 
-            assertEquals('RegExp', _trueTypeOf(/foo/));
-            assertEquals('Using new', 'RegExp', _trueTypeOf(new RegExp('foo')));
+            assertEquals('RegExp', JsUnit._trueTypeOf(/foo/));
+            assertEquals('Using new', 'RegExp', JsUnit._trueTypeOf(new RegExp('foo')));
 
             var o = {foo: 'bar'};
-            assertEquals('Object', _trueTypeOf(o));
+            assertEquals('Object', JsUnit._trueTypeOf(o));
             o = new FooBarThingy();
-            assertEquals('FooBarThingy', _trueTypeOf(o));
-            assertEquals('String', _trueTypeOf(o.foo));
-            assertEquals('String', _trueTypeOf(o.bar()));
-            assertEquals('Function', _trueTypeOf(o.bar));
-            assertEquals('Date', _trueTypeOf(new Date()));
+            assertEquals('FooBarThingy', JsUnit._trueTypeOf(o));
+            assertEquals('String', JsUnit._trueTypeOf(o.foo));
+            assertEquals('String', JsUnit._trueTypeOf(o.bar()));
+            assertEquals('Function', JsUnit._trueTypeOf(o.bar));
+            assertEquals('Date', JsUnit._trueTypeOf(new Date()));
 
-            assertEquals('Object without constructor', 'Object', _trueTypeOf(window));
+            assertEquals('Object without constructor', 'Object', JsUnit._trueTypeOf(window));
         }
     </script>
 </head>

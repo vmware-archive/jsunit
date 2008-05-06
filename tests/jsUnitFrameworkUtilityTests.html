@@ -1,20 +1,20 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">    
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>JsUnit StackTrace Tests</title>
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
     <script type="text/javascript" src="../app/jsUnitCore.js"></script>
     <script type="text/javascript">
 
         function testJsUnitTestSuiteClass() {
-            var aSuite = new top.jsUnitTestSuite();
+            var aSuite = new JsUnitTestSuite();
             aSuite.addTestPage("foo.html");
             aSuite.addTestPage("bar.html");
             assertEquals(2, aSuite._testPages.length);
             assertEquals("foo.html", aSuite._testPages[0]);
             assertEquals("bar.html", aSuite._testPages[1]);
-            var anotherSuite = new top.jsUnitTestSuite();
+            var anotherSuite = new JsUnitTestSuite();
             anotherSuite.addTestPage("foo2.html");
             anotherSuite.addTestPage("bar2.html");
             aSuite.addTestSuite(anotherSuite);
@@ -52,26 +52,26 @@
         }
 
         function testDisplayStringForNumber() {
-            assertEquals("<3> (Number)", _displayStringForValue(3));
+            assertEquals("<3> (Number)", JsUnit._displayStringForValue(3));
         }
 
         function testDisplayStringForString() {
-            assertEquals("<foo> (String)", _displayStringForValue("foo"));
+            assertEquals("<foo> (String)", JsUnit._displayStringForValue("foo"));
         }
 
         function testDisplayStringForNull() {
-            assertEquals("<null>", _displayStringForValue(null));
+            assertEquals("<null>", JsUnit._displayStringForValue(null));
         }
 
         function testDisplayStringForUndefined() {
-            assertEquals("<undefined>", _displayStringForValue(JSUNIT_UNDEFINED_VALUE));
+            assertEquals("<undefined>", JsUnit._displayStringForValue(JSUNIT_UNDEFINED_VALUE));
         }
 
         function testDisplayStringForArray() {
             var anArray = new Array();
             anArray[0] = "foo";
             anArray[1] = "bar";
-            assertEquals("<foo,bar> (Array)", _displayStringForValue(anArray));
+            assertEquals("<foo,bar> (Array)", JsUnit._displayStringForValue(anArray));
         }
 
     </script>

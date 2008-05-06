@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" href="../css/jsUnitStyle.css">
     <script type="text/javascript" src="../app/jsUnitCore.js"></script>
     <script type="text/javascript" src="../app/jsUnitTestManager.js"></script>
+    <script type="text/javascript" src="../app/BaseUiManager.js"></script>
+    <script type="text/javascript" src="../app/ClassicUiManager.js"></script>
+    <script type="text/javascript" src="../app/jsUnitParams.js"></script>
     <script type="text/javascript">
         function testGetTestFunctionNamesUsingPlainTextSearch() {
             var scriptWithTests = "function te" + "stFoo() {} function te" + "stBar() {}";
@@ -66,6 +69,61 @@
                 manager.getTestFunctionNamesFromRuntimeObject(frameWithTests));
         }
 
+        function testGetSubmitUrl_WhenResultUrlNotSpecified() {
+            var manager = new JsUnitTestManager();
+            manager.getWebserver = function() { return "faked-web-host:1234"; };
+            assertEquals("http://faked-web-host:1234/jsunit/acceptor", manager.getSubmitUrl());
+        }
+
+        function testGetSubmitUrl_WhenResultUrlNotSpecifiedAndFileProtocol() {
+            var manager = new JsUnitTestManager();
+            manager.getWebserver = function() { return null; };
+            assertEquals("http://localhost:8080/jsunit/acceptor", manager.getSubmitUrl());
+        }
+
+        function testGetSubmitUrl_WhenSubmitResultsTrue() {
+            var manager = new JsUnitTestManager(new JsUnit.Params("submitresults=true"));
+            manager.getWebserver = function() { return "faked-web-host:8080"; };
+            assertEquals("http://faked-web-host:8080/jsunit/acceptor", manager.getSubmitUrl());
+        }
+
+        function testGetSubmitUrl_WhenSubmitResultsIsUrl() {
+            var manager = new JsUnitTestManager(new JsUnit.Params("submitresults=" + escape("http://submit-host:1234/url?query")));
+            assertEquals("http://submit-host:1234/url?query", manager.getSubmitUrl());
+
+            manager = new JsUnitTestManager(new JsUnit.Params("submitresults=" + escape("submit-host:1234/url?query")));
+            assertEquals("http://submit-host:1234/url?query", manager.getSubmitUrl());
+        }
+
+        function testDetermineBaseUrl() {
+            var manager = new JsUnitTestManager();
+            assertEquals("http://some.host:8080/jsunit/tests/",
+                    manager._determineBaseUrl("http://some.host:8080/jsunit/tests/jsUnitTestSuite.html?some=query&string"));
+            assertEquals("file:///tmp/jsunit/tests/",
+                    manager._determineBaseUrl("file:///tmp/jsunit/tests/jsUnitTestSuite.html"));
+
+            // are these two really valid?  [xw 20070916]
+            assertEquals("/tmp/jsunit/tests/",
+                    manager._determineBaseUrl("/tmp/jsunit/tests/jsUnitTestSuite.html"));
+            assertEquals("c:\\tmp\\jsunit\\tests\\",
+                    manager._determineBaseUrl("c:\\tmp\\jsunit\\tests\\"));
+        }
+
+//        function testCalculateProgressBarProportion() {
+//            var manager = new JsUnitTestManager();
+//            manager.totalCount = 1;
+//            var group1 = new JsUnit.TestGroup();
+//            var page1 = group1.addTestPage("/some/page1.html");
+//            var page2 = group1.addTestPage("/some/page2.html");
+//            var page3 = group1.addTestPage("/some/page3.html");
+//            group1._index = 2;
+//            manager._testGroupStack = [ group1 ];
+//            manager._testIndex = 1;
+//            manager._numberOfTestsInPage = 10;
+//
+//            assertRoughlyEquals(1/3, manager.calculateProgressBarProportion(), .01);
+//        }
+
         /*
         function testThisMethodShouldNotBeConsideredAtTest() {
             fail("This method is commented-out and should therefore not be considered a test.");
@@ -75,6 +133,6 @@
 </head>
 
 <body>
-    <h1>JsUnit test suite tests</h1>    
+    <h1>JsUnit test suite tests</h1>
 </body>
 </html>
