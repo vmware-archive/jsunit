@@ -54,6 +54,7 @@ JsUnit.ModernUiManager.prototype.getTraceLevel = function() {
 
 JsUnit.ModernUiManager.prototype.starting = function () {
     this._testsInfoCompleteDiv.innerHTML = '';
+    this._testResultDetailsDiv.innerHTML = '';
 }
 
 JsUnit.ModernUiManager.prototype.submittingResults = function () {
