@@ -854,7 +854,7 @@ JsUnitTestManager.prototype.getTestFileProtocol = function() {
 }
 
 JsUnitTestManager.prototype.browserSupportsReadingFullPathFromFileField = function() {
-    return !this.isOpera() && !this.isIE7() && !this.isFirefox3();
+    return !this.isOpera() && !this.isIE7() && !this.isFirefox3() &&!this.isSafari4();
 }
 
 JsUnitTestManager.prototype.isOpera = function() {
@@ -867,6 +867,10 @@ JsUnitTestManager.prototype.isIE7 = function() {
 
 JsUnitTestManager.prototype.isFirefox3 = function() {
     return navigator.userAgent.toLowerCase().indexOf("firefox/3") != -1;
+}
+
+JsUnitTestManager.prototype.isSafari4 = function() {
+    return navigator.userAgent.toLowerCase().indexOf("4.0 safari") != -1;
 }
 
 JsUnitTestManager.prototype.isBeingRunOverHTTP = function() {
