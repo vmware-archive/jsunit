@@ -854,7 +854,7 @@ JsUnitTestManager.prototype.getTestFileProtocol = function() {
 }
 
 JsUnitTestManager.prototype.browserSupportsReadingFullPathFromFileField = function() {
-    return !this.isOpera() && !this.isIE7() && !this.isFirefox3() &&!this.isSafari4();
+    return false; //pretty much all modern browsers disallow this now
 }
 
 JsUnitTestManager.prototype.isOpera = function() {
