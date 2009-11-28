@@ -39,7 +39,61 @@
         <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1" />
         <option name="KEEP_BLANK_LINES_IN_CODE" value="1" />
         <option name="HTML_ATTRIBUTE_WRAP" value="0" />
+        <ADDITIONAL_INDENT_OPTIONS fileType="groovy">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="gsp">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="java">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
         <ADDITIONAL_INDENT_OPTIONS fileType="js">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="jsp">
+          <option name="INDENT_SIZE" value="4" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="sql">
+          <option name="INDENT_SIZE" value="2" />
+          <option name="CONTINUATION_INDENT_SIZE" value="8" />
+          <option name="TAB_SIZE" value="4" />
+          <option name="USE_TAB_CHARACTER" value="false" />
+          <option name="SMART_TABS" value="false" />
+          <option name="LABEL_INDENT_SIZE" value="0" />
+          <option name="LABEL_INDENT_ABSOLUTE" value="false" />
+        </ADDITIONAL_INDENT_OPTIONS>
+        <ADDITIONAL_INDENT_OPTIONS fileType="xml">
           <option name="INDENT_SIZE" value="4" />
           <option name="CONTINUATION_INDENT_SIZE" value="8" />
           <option name="TAB_SIZE" value="4" />
@@ -71,6 +125,9 @@
       <entry name="?*.jpg" />
     </wildcardResourcePatterns>
   </component>
+  <component name="CopyrightManager" default="">
+    <module2copyright />
+  </component>
   <component name="DependenciesAnalyzeManager">
     <option name="myForwardDirection" value="false" />
   </component>
@@ -91,6 +148,7 @@
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
     <option name="MAXIMUM_HEAP_SIZE" value="128" />
   </component>
+  <component name="Encoding" useUTFGuessing="true" native2AsciiForPropertiesFiles="false" />
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -110,7 +168,12 @@
         <option name="myLocal" value="false" />
       </profile>
     </profiles>
-    <list size="0" />
+    <list size="4">
+      <item index="0" class="java.lang.String" itemvalue="SERVER PROBLEM" />
+      <item index="1" class="java.lang.String" itemvalue="INFO" />
+      <item index="2" class="java.lang.String" itemvalue="WARNING" />
+      <item index="3" class="java.lang.String" itemvalue="ERROR" />
+    </list>
   </component>
   <component name="JavacSettings">
     <option name="DEBUGGING_INFO" value="true" />
@@ -271,7 +334,13 @@
       </item>
     </group>
   </component>
+  <component name="ProjectDetails">
+    <option name="projectName" value="JsUnit" />
+  </component>
   <component name="ProjectFileVersion" converted="true" />
+  <component name="ProjectKey">
+    <option name="state" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/trunk/jsunit/JsUnit.ipr" />
+  </component>
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/intellij/aggregate.iml" filepath="$PROJECT_DIR$/intellij/aggregate.iml" />
@@ -281,7 +350,7 @@
       <module fileurl="file://$PROJECT_DIR$/intellij/union.iml" filepath="$PROJECT_DIR$/intellij/union.iml" />
     </modules>
   </component>
-  <component name="ProjectRootManager" version="2" assert-keyword="true" jdk-15="true" project-jdk-name="1.5" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_5" assert-keyword="true" jdk-15="true" project-jdk-name="1.6" project-jdk-type="JavaSDK" />
   <component name="RUBY_DOC_SETTINGS">
     <RUBY_DOC NAME="DEFAULTS" VALUE="TRUE" />
     <RUBY_DOC NAME="NUMBER" VALUE="0" />
@@ -299,6 +368,352 @@
     <option name="GENERATE_NO_WARNINGS" value="false" />
     <option name="GENERATE_IIOP_STUBS" value="false" />
     <option name="ADDITIONAL_OPTIONS_STRING" value="" />
+  </component>
+  <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://jsunit.svn.sourceforge.net/svnroot/jsunit/branches">
+                    <value>
+                      <list>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1197751296784" />
+                          <option name="revision" value="1323" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/branches/experimental-1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="991510373000" />
+                          <option name="revision" value="5" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/branches/vendor" />
+                        </SvnBranchItem>
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags">
+                    <value>
+                      <list>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1248724459319" />
+                          <option name="revision" value="1338" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1200548087383" />
+                          <option name="revision" value="1325" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2_0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1186991660484" />
+                          <option name="revision" value="1245" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha25" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1184109679604" />
+                          <option name="revision" value="1239" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha24" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1183079475625" />
+                          <option name="revision" value="1237" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha23" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1178064102157" />
+                          <option name="revision" value="1193" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha22" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1163028194716" />
+                          <option name="revision" value="1130" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha21" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1161111321933" />
+                          <option name="revision" value="1128" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha20" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1158111621439" />
+                          <option name="revision" value="1126" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha19" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1145580299975" />
+                          <option name="revision" value="840" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha18" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1144974064310" />
+                          <option name="revision" value="802" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha17" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1144170437245" />
+                          <option name="revision" value="777" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha16" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1143758196164" />
+                          <option name="revision" value="742" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha15" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1143481025565" />
+                          <option name="revision" value="717" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha14" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1143426409290" />
+                          <option name="revision" value="715" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha13" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1143251100990" />
+                          <option name="revision" value="695" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha12" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1143183128879" />
+                          <option name="revision" value="690" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha11" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1143152634006" />
+                          <option name="revision" value="683" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha10" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1142403957895" />
+                          <option name="revision" value="576" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/eclipse_plugin1_0alpha2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1142403261452" />
+                          <option name="revision" value="574" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha9" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1142017793000" />
+                          <option name="revision" value="533" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha8" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1141778542000" />
+                          <option name="revision" value="509" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha7" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1141086838000" />
+                          <option name="revision" value="449" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha5" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1140795746000" />
+                          <option name="revision" value="404" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha4" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1140711395000" />
+                          <option name="revision" value="391" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha6" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1140317766000" />
+                          <option name="revision" value="360" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2_alpha1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1140317766000" />
+                          <option name="revision" value="361" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1140317766000" />
+                          <option name="revision" value="362" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2alpha3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1140308285000" />
+                          <option name="revision" value="355" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2_0alpha_2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1138558889000" />
+                          <option name="revision" value="279" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_2_0_alpha_1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1118874524000" />
+                          <option name="revision" value="219" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_1_2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1118874524000" />
+                          <option name="revision" value="220" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_1_3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1118874524000" />
+                          <option name="revision" value="221" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_1_4" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1107660534000" />
+                          <option name="revision" value="216" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_1_1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1091922504000" />
+                          <option name="revision" value="189" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1091922504000" />
+                          <option name="revision" value="190" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1065289222000" />
+                          <option name="revision" value="135" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0beta_3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1063388334000" />
+                          <option name="revision" value="133" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0beta3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1061054280000" />
+                          <option name="revision" value="125" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0beta_2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1060711513000" />
+                          <option name="revision" value="123" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0beta_1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1060317295000" />
+                          <option name="revision" value="121" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_8" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059950422000" />
+                          <option name="revision" value="117" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_7" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059934970000" />
+                          <option name="revision" value="110" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_6" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059934385000" />
+                          <option name="revision" value="108" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_5" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059237936000" />
+                          <option name="revision" value="93" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_4" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059056357000" />
+                          <option name="revision" value="86" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059022412000" />
+                          <option name="revision" value="83" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1059022412000" />
+                          <option name="revision" value="84" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha_2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1058933860000" />
+                          <option name="revision" value="79" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v2_0alpha" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1055465804000" />
+                          <option name="revision" value="55" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_4_0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1042351444000" />
+                          <option name="revision" value="45" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_3_3" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1025102258000" />
+                          <option name="revision" value="39" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_3_2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1025062349000" />
+                          <option name="revision" value="37" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_3_1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1024890810000" />
+                          <option name="revision" value="35" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_3_0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1017599574000" />
+                          <option name="revision" value="21" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_2_7" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="999976341000" />
+                          <option name="revision" value="17" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_2_6" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="999972882000" />
+                          <option name="revision" value="15" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_2_5" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="992621695000" />
+                          <option name="revision" value="10" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_2_4" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="991510397000" />
+                          <option name="revision" value="7" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/start" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="991510397000" />
+                          <option name="revision" value="8" />
+                          <option name="url" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags/v1_2_3" />
+                        </SvnBranchItem>
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/branches" />
+                  <option value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://jsunit.svn.sourceforge.net/svnroot/jsunit/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="svn" />

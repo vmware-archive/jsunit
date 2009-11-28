@@ -2,8 +2,8 @@
 <module relativePaths="true" type="JAVA_MODULE" version="4">
   <component name="NewModuleRootManager" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/classes_core" />
-    <exclude-output />
     <output-test url="file://$MODULE_DIR$/classes_core_test" />
+    <exclude-output />
     <content url="file://$MODULE_DIR$/../java/source_core">
       <sourceFolder url="file://$MODULE_DIR$/../java/source_core" isTestSource="false" />
     </content>
@@ -13,7 +13,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="lib_core" level="project" />
-    <orderEntryProperties />
   </component>
 </module>
 
