@@ -1,4 +1,4 @@
-For 2.2 release:
+For next release:
   FEATURES:
     - make junitreport keep working with log results
     - queuing needs work - linkedlist, queue

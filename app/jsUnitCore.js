@@ -14,7 +14,7 @@ var JsUnit = {};
  * The JsUnit version
  * @version
  */
-JsUnit.VERSION = 2.3;
+JsUnit.VERSION = 2.2;
 var JSUNIT_VERSION = JsUnit.VERSION;
 
 /**
