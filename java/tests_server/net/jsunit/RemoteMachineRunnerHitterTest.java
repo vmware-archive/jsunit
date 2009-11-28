@@ -1,5 +1,3 @@
-// Copyright 2005 Google Inc.
-// All Rights Reserved.
 package net.jsunit;
 
 import junit.framework.TestCase;
