@@ -9,8 +9,6 @@ import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.configuration.ServerConfiguration;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -45,13 +43,10 @@ public class SeleniumTest extends TestCase {
         selenium.open("/jsunit/testRunner.html?testPage=/jsunit/tests/jsUnitTestSuite.html&autorun=true");
         waitForStatus();
 
-        // window.frames['mainFrame'].frames['mainCounts'].frames['mainCountsRuns'].document.getElementById('content').textContent
-        String runs = selenium.getEval("window.frames['mainFrame'].frames['mainCounts'].frames['mainCountsRuns'].document.getElementById('content').textContent").trim();
-        String fails = selenium.getEval("window.frames['mainFrame'].frames['mainCounts'].frames['mainCountsFailures'].document.getElementById('content').textContent").trim();
-        String errors = selenium.getEval("window.frames['mainFrame'].frames['mainCounts'].frames['mainCountsErrors'].document.getElementById('content').textContent").trim();
-//        String runs = selenium.getEval("window.mainFrame.mainCounts.mainCountsRuns.document.getElementById('content').textContent").trim();
-//        String fails = selenium.getEval("window.mainFrame.mainCounts.mainCountsFailures.document.getElementById('content').textContent").trim();
-//        String errors = selenium.getEval("window.mainFrame.mainCounts.mainCountsErrors.document.getElementById('content').textContent").trim();
+        // window.frames['mainFrame'].frames['mainCounts'].frames['mainCountsRuns'].document.getElementById('content').innerHTML
+        String runs = selenium.getEval("window.mainFrame.mainCounts.mainCountsRuns.document.getElementById('content').innerHTML").trim();
+        String fails = selenium.getEval("window.mainFrame.mainCounts.mainCountsFailures.document.getElementById('content').innerHTML").trim();
+        String errors = selenium.getEval("window.mainFrame.mainCounts.mainCountsErrors.document.getElementById('content').innerHTML").trim();
 
         Pattern pattern = Pattern.compile("\\d+$");
         Matcher matcher = pattern.matcher(runs);
@@ -70,7 +65,7 @@ public class SeleniumTest extends TestCase {
                 runCount, failCount, errorCount);
 
         if (failCount + errorCount > 0) {
-            String errorMessages = selenium.getEval("window.frames['mainFrame'].frames['mainErrors'].document.getElementsByName('problemsList')[0].innerHTML");
+            String errorMessages = selenium.getEval("window.mainFrame.mainErrors.document.getElementsByName('problemsList')[0].innerHTML");
             System.out.printf("Error messages: %s\n", errorMessages);
 
         }
@@ -79,7 +74,7 @@ public class SeleniumTest extends TestCase {
 
     private HashMap<String, String> loadSeleniumConfig(String configPath) throws Exception {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
         Document doc = docBuilder.parse (new File(configPath));
         doc.getDocumentElement().normalize();
         Element seleniumConfig = (Element)doc.getElementsByTagName("selenium_config").item(0);
@@ -137,7 +132,7 @@ public class SeleniumTest extends TestCase {
     private void waitForStatus() throws InterruptedException {
         new Wait() {
             public boolean until() {
-                String statusContent = selenium.getEval("window.mainFrame.mainStatus.document.getElementById('content').textContent");
+                String statusContent = selenium.getEval("window.mainFrame.mainStatus.document.getElementById('content').innerHTML");
                 return statusContent.indexOf("Done") != -1;
             }
         }.wait("This didn't quite work");
