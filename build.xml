@@ -141,7 +141,24 @@
             <sysproperty key="selenium.server.host" value="localhost"/>
             <sysproperty key="selenium.server.port" value="4444"/>
             <sysproperty key="selenium.browser.startCommand" value="*chrome /Applications/Firefox.app/Contents/MacOS/firefox-bin"/>
-            <sysproperty key="selenium.browser.url" value="http://localhost:8081"/>
+            <sysproperty key="selenium.browser.url" value="http://localhost:8080"/>
+            <sysproperty key="resourceBase" value="${resourceBase}"/>
+            <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
+            <sysproperty key="url" value="${url}"/>
+            <test name="net.jsunit.SeleniumTest"/>
+        </junit>
+    </target>
+
+    <target name="selenium_sauce" description="Runs tests on the local machine against selenium">
+        <junit showoutput="true" haltonerror="true" haltonfailure="true">
+            <formatter type="plain" usefile="false"/>
+            <classpath refid="classpath"/>
+            <sysproperty key="java.util.logging.config.file" value="${loggingPropertiesFile}"/>
+            <sysproperty key="browserFileNames" value="${browserFileNames}"/>
+            <sysproperty key="description" value="${description}"/>
+            <sysproperty key="closeBrowsersAfterTestRuns" value="${closeBrowsersAfterTestRuns}"/>
+            <sysproperty key="logsDirectory" value="${logsDirectory}"/>
+            <sysproperty key="port" value="${port}"/>
             <sysproperty key="resourceBase" value="${resourceBase}"/>
             <sysproperty key="timeoutSeconds" value="${timeoutSeconds}"/>
             <sysproperty key="url" value="${url}"/>
