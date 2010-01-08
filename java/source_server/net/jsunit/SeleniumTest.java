@@ -12,7 +12,10 @@ import org.w3c.dom.Element;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -26,17 +29,48 @@ public class SeleniumTest extends TestCase {
     protected static String SELENIUM_SERVER_PORT = "selenium.server.port";
     protected static String SELENIUM_BROWSER_STARTCOMMAND = "selenium.browser.startCommand";
     protected static String SELENIUM_BROWSER_URL = "selenium.browser.url";
+    protected Process tunnel_process;
+    protected String tunnel_id;
+    protected String tunnel_endpoint_hostname;
 
     public void setUp() throws Exception {
         super.setUp();
         startJsUnitServer();
+        startSauceTunnel();
         startSeleniumClient();
     }
 
     public void tearDown() throws Exception {
-        stopJsUnitServer();
         stopSeleniumClient();
+        stopSauceTunnel();
+        stopJsUnitServer();
         super.tearDown();
+    }
+
+    private void startSauceTunnel() throws IOException {
+        System.out.println("Starting sauce tunnel...");
+        tunnel_process = Runtime.getRuntime().exec("ruby sauce-tunnel-setup.rb");
+        String line;
+        BufferedReader input = new BufferedReader
+                        (new InputStreamReader(tunnel_process.getInputStream()));
+        Pattern pattern = Pattern.compile("\\[saucelabs-adapter\\] Tunnel ID (.*) for (.*) is up\\.$");
+
+        while ((line = input.readLine()) != null) {
+            System.out.println(line);
+            Matcher matcher = pattern.matcher(line);
+            if (matcher.find()) {
+                tunnel_id = matcher.group(1);
+                tunnel_endpoint_hostname = matcher.group(2);
+                System.out.println("tunnel_endpoint_hostname=" + tunnel_endpoint_hostname);
+                break;
+            }
+        }
+        System.out.println("done starting tunnel");
+    }
+
+    private void stopSauceTunnel() throws IOException {
+        System.out.println("stopping tunnel");
+        tunnel_process = Runtime.getRuntime().exec("ruby sauce-tunnel-delete.rb " + tunnel_id);
     }
 
     public void testStandaloneRun() throws Exception {
@@ -75,9 +109,9 @@ public class SeleniumTest extends TestCase {
     private HashMap<String, String> loadSeleniumConfig(String configPath) throws Exception {
         DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse (new File(configPath));
+        Document doc = docBuilder.parse(new File(configPath));
         doc.getDocumentElement().normalize();
-        Element seleniumConfig = (Element)doc.getElementsByTagName("selenium_config").item(0);
+        Element seleniumConfig = (Element) doc.getElementsByTagName("selenium_config").item(0);
         HashMap<String, String> seleniumProperties = new HashMap<String, String>();
 
         String host = System.getProperty(SELENIUM_SERVER_HOST);
@@ -86,16 +120,16 @@ public class SeleniumTest extends TestCase {
         String browser_url = System.getProperty(SELENIUM_BROWSER_URL);
 
         if (host == null) {
-          host = seleniumConfig.getElementsByTagName("host").item(0).getFirstChild().getNodeValue();
+            host = seleniumConfig.getElementsByTagName("host").item(0).getFirstChild().getNodeValue();
         }
         if (port == null) {
-          port = seleniumConfig.getElementsByTagName("port").item(0).getFirstChild().getNodeValue();
+            port = seleniumConfig.getElementsByTagName("port").item(0).getFirstChild().getNodeValue();
         }
         if (start_command == null) {
-          start_command = seleniumConfig.getElementsByTagName("browser_start_command").item(0).getFirstChild().getNodeValue();
+            start_command = seleniumConfig.getElementsByTagName("browser_start_command").item(0).getFirstChild().getNodeValue();
         }
         if (browser_url == null) {
-          browser_url = seleniumConfig.getElementsByTagName("browser_url").item(0).getFirstChild().getNodeValue();
+          browser_url = "http://" + tunnel_endpoint_hostname;
         }
         seleniumProperties.put("host", host);
         seleniumProperties.put("port", port);
