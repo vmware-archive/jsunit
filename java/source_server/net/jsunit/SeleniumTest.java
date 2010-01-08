@@ -133,7 +133,7 @@ public class SeleniumTest extends TestCase {
             start_command = seleniumConfigElement.getElementsByTagName("browser_start_command").item(0).getFirstChild().getNodeValue();
         }
         // If we are using saucelabs the browser_user will be automatically generated.
-        
+
         seleniumProperties.put("host", host);
         seleniumProperties.put("port", port);
         seleniumProperties.put("browser_start_command", start_command);
@@ -157,6 +157,7 @@ public class SeleniumTest extends TestCase {
         int port = Integer.parseInt(seleniumConfig.get("port"));
         String start_command = seleniumConfig.get("browser_start_command");
         String browser_url = seleniumConfig.get("browser_url");
+        System.out.println("DefaultSelenium.new(host=" + host + " port=" + port + " start_command=" + start_command + " browser_url=" + browser_url + ")");
         selenium = new DefaultSelenium(host, port, start_command, browser_url);
         selenium.start();
     }
