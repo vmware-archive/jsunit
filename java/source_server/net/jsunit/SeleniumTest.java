@@ -157,7 +157,6 @@ public class SeleniumTest extends TestCase {
         int port = Integer.parseInt(seleniumConfig.get("port"));
         String start_command = seleniumConfig.get("browser_start_command");
         String browser_url = seleniumConfig.get("browser_url");
-        System.out.println("DefaultSelenium.new(host=" + host + " port=" + port + " start_command=" + start_command + " browser_url=" + browser_url + ")");
         selenium = new DefaultSelenium(host, port, start_command, browser_url);
         selenium.start();
     }
