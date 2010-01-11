@@ -76,6 +76,13 @@
             description="url is the URL (HTTP or file protocol) to open in the browser. For a JsUnit Server, this is a mandatory property for a test run if the server is not passed the 'url' parameter. For example: 'http://myhost.mycompany.com:8080/jsunit/testRunner.html?testPage=http://myhost.mycompany.com:8080/jsunit/tests/jsUnitTestSuite.html'"
             />
 
+    <property
+            id="customJsUnitJarPath"
+            name="customJsUnitJarPath"
+            value=""
+            description="Custom path to jsunit.jar file (e.g. if you want to use a Jar outside of lib/bin)."
+            />
+
     <property name="bin" location="java/bin"/>
     <property name="lib" location="java/lib"/>
     <property name="loggingPropertiesFile" location="logging.properties"/>
@@ -88,6 +95,7 @@
         <fileset dir="${bin}">
             <include name="jsunit.jar"/>
         </fileset>
+        <file file="${customJsUnitJarPath}"/>
     </path>
 
     <target name="start_server" description="Starts a JsUnit Server">
