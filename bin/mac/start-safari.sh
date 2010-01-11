@@ -3,5 +3,5 @@
 # Starts Safari. Use this instead of calling the AppleScripts directly.
 
 osascript bin/mac/stop-safari.scpt
-osascript bin/mac/start-safari.scpt $1
-
+#osascript bin/mac/start-safari.scpt $1
+open -a Safari $*
