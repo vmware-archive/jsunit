@@ -1,0 +1,30 @@
+local:
+  selenium_server_address: "localhost"
+  selenium_server_port: "4444"
+  selenium_browser_key: "*chrome /Applications/Firefox.app/Contents/MacOS/firefox-bin"
+  application_address: "localhost"
+  application_port: "8080"
+
+# Possible Sauce Labs configurations as of 2009/11/19
+# From: http://saucelabs.com/products/docs/sauce-ondemand/browsers
+# os: "Windows 2003"
+#   browser: "iexplore"
+#     browser-version: "6.", "7.", "8."
+#   browser: "firefox"
+#     browser-version: "2.", "3.0", "3.5"
+#   browser: "safari"
+#     browser-version: "3.", "4."
+#   browser: "opera"
+#     browser-version: "9."
+#   browser: "googlechrome"
+#     browser-version: ""
+# os: "Linux"
+#   browser: "firefox"
+#     browser-version: "3."
+#
+saucelabs:
+  selenium_server_address: "saucelabs.com"
+  selenium_server_port: "4444"
+  selenium_browser_key: '{"username": "YOUR_SAUCELABS_USERNAME", "access-key": "YOUR_SAUCELABS_ACCESS_KEY", "os": "Linux", "browser": "firefox", "browser-version": "3."}'
+  # application_server is generated during tunnel setup
+  application_port: "80"

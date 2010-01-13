@@ -30,6 +30,20 @@
 
     <target name="run_unit_tests" depends="clean,run_core_tests,run_server_tests,run_aggregate_tests"/>
 
+    <target name="run_integration_tests_selenium_local">
+        <ant target="selenium_test">
+            <property name="seleniumConfigFilePath" value="./selenium.yml"/>
+            <property name="seleniumEnvironment" value="local"/>
+        </ant>
+    </target>
+
+    <target name="run_integration_tests_selenium_sauce">
+        <ant target="selenium_test">
+            <property name="seleniumConfigFilePath" value="./selenium.yml"/>
+            <property name="seleniumEnvironment" value="saucelabs"/>
+        </ant>
+    </target>
+
     <path id="self_tests_classpath">
         <fileset dir="${lib}">
             <include name="*.jar"/>

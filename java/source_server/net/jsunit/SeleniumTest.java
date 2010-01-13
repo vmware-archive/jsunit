@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import net.jsunit.configuration.CompositeConfigurationSource;
 import net.jsunit.configuration.DelegatingConfigurationSource;
 import net.jsunit.configuration.ServerConfiguration;
+import org.ho.yaml.Yaml;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -25,19 +26,15 @@ public class SeleniumTest extends TestCase {
     protected JsUnitServer server;
 
     protected static Selenium selenium;
-    protected static String SELENIUM_SERVER_HOST = "selenium.server.host";
-    protected static String SELENIUM_SERVER_PORT = "selenium.server.port";
-    protected static String SELENIUM_BROWSER_STARTCOMMAND = "selenium.browser.startCommand";
-    protected static String SELENIUM_BROWSER_URL = "selenium.browser.url";
     protected Process tunnel_process;
     protected String tunnel_id;
     protected HashMap<String, String> seleniumConfig;
 
     public void setUp() throws Exception {
         super.setUp();
-        seleniumConfig = loadSeleniumConfig("../selenium.xml");
+        seleniumConfig = loadSeleniumConfig(System.getProperty("seleniumEnvironment"));
         startJsUnitServer();
-        if (seleniumConfig.get("host").equals("saucelabs.com")) {
+        if (seleniumConfig.get("selenium_server_address").equals("saucelabs.com")) {
             startSauceTunnel();
         }
         startSeleniumClient();
@@ -45,7 +42,7 @@ public class SeleniumTest extends TestCase {
 
     public void tearDown() throws Exception {
         stopSeleniumClient();
-        if (seleniumConfig.get("host").equals("saucelabs.com")) {
+        if (seleniumConfig.get("selenium_server_address").equals("saucelabs.com")) {
             stopSauceTunnel();
         }
         stopJsUnitServer();
@@ -65,7 +62,7 @@ public class SeleniumTest extends TestCase {
             Matcher matcher = pattern.matcher(line);
             if (matcher.find()) {
                 tunnel_id = matcher.group(1);
-                seleniumConfig.put("browser_url", "http://" + matcher.group(2));
+                seleniumConfig.put("application_address", matcher.group(2));
                 break;
             }
         }
@@ -105,40 +102,15 @@ public class SeleniumTest extends TestCase {
         if (failCount + errorCount > 0) {
             String errorMessages = selenium.getEval("window.mainFrame.mainErrors.document.getElementsByName('problemsList')[0].innerHTML");
             System.out.printf("Error messages: %s\n", errorMessages);
-
         }
         assertEquals(0, failCount + errorCount);
     }
 
-    private HashMap<String, String> loadSeleniumConfig(String configPath) throws Exception {
-        DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse(new File(configPath));
-        doc.getDocumentElement().normalize();
-        Element seleniumConfigElement = (Element) doc.getElementsByTagName("selenium_config").item(0);
-        HashMap<String, String> seleniumProperties = new HashMap<String, String>();
-
-        String host = System.getProperty(SELENIUM_SERVER_HOST);
-        String port = System.getProperty(SELENIUM_SERVER_PORT);
-        String start_command = System.getProperty(SELENIUM_BROWSER_STARTCOMMAND);
-        String browser_url = System.getProperty(SELENIUM_BROWSER_URL);
-
-        if (host == null) {
-            host = seleniumConfigElement.getElementsByTagName("host").item(0).getFirstChild().getNodeValue();
-        }
-        if (port == null) {
-            port = seleniumConfigElement.getElementsByTagName("port").item(0).getFirstChild().getNodeValue();
-        }
-        if (start_command == null) {
-            start_command = seleniumConfigElement.getElementsByTagName("browser_start_command").item(0).getFirstChild().getNodeValue();
-        }
-        // If we are using saucelabs the browser_user will be automatically generated.
-
-        seleniumProperties.put("host", host);
-        seleniumProperties.put("port", port);
-        seleniumProperties.put("browser_start_command", start_command);
-        seleniumProperties.put("browser_url", browser_url);
-        return seleniumProperties;
+    private HashMap<String, String>loadSeleniumConfig(String environment) throws Exception {
+        String seleniumConfigFilePath = System.getProperty("seleniumConfigFilePath");
+        HashMap<String, Object> environments = (HashMap<String, Object>)Yaml.load(new File(seleniumConfigFilePath));
+        HashMap<String, String> config = (HashMap<String, String>)environments.get(environment);
+        return config;
     }
 
     private void startJsUnitServer() throws Exception {
@@ -153,10 +125,10 @@ public class SeleniumTest extends TestCase {
     }
 
     private void startSeleniumClient() throws Exception {
-        String host = seleniumConfig.get("host");
-        int port = Integer.parseInt(seleniumConfig.get("port"));
-        String start_command = seleniumConfig.get("browser_start_command");
-        String browser_url = seleniumConfig.get("browser_url");
+        String host = seleniumConfig.get("selenium_server_address");
+        int port = Integer.parseInt(seleniumConfig.get("selenium_server_port"));
+        String start_command = seleniumConfig.get("selenium_browser_key");
+        String browser_url = "http://" + seleniumConfig.get("application_address") + ":" + seleniumConfig.get("application_port");
         selenium = new DefaultSelenium(host, port, start_command, browser_url);
         selenium.start();
     }
