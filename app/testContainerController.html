@@ -59,12 +59,14 @@
         }
 
         function appendCacheBusterParameterTo(testPageURI) {
-            if (testPageURI.indexOf("?") == -1)
-                testPageURI += "?";
-            else
-                testPageURI += "&";
-            testPageURI += "cacheBuster=";
-            testPageURI += new Date().getTime();
+            if (!top.params.getSuppressCacheBuster()) {
+                if (testPageURI.indexOf("?") == -1)
+                    testPageURI += "?";
+                else
+                    testPageURI += "&";
+                testPageURI += "cacheBuster=";
+                testPageURI += new Date().getTime();
+            }
             return testPageURI;
         }
     </script>

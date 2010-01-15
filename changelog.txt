@@ -30,6 +30,7 @@ CLIENT-SIDE
 - jsUnitTestSuite constructor now takes a list of test pages and/or suites as an alternative to calling addTestPage() and addTestSuite():
     new jsUnitTestSuite("/path/to/page1.html", subsuite, "/path/to/page2.html");
 - uses IE's undocumented RuntimeObject to find test functions instead of searching through the text of the page (thanks to Dean McNamee and Dan Pupius)
+- new "supressCacheBuster" URL parameter
 
 SERVER
 - start-browser scripts in bin

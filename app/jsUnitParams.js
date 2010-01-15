@@ -58,6 +58,10 @@ JsUnit.Params.prototype.getSetupPageTimeout = function() {
     return this.get('setuppagetimeout') || JsUnitTestManager.SETUPPAGE_TIMEOUT;
 }
 
+JsUnit.Params.prototype.getSuppressCacheBuster = function() {
+    return this.get('suppresscachebuster') == "true";
+}
+
 JsUnit.Params.prototype.getResultId = function() {
     if (this.get('resultid'))
         return this.get('resultid');
