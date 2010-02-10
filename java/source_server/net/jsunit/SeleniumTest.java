@@ -66,7 +66,7 @@ public class SeleniumTest extends TestCase {
                 break;
             }
         }
-        System.out.println("done starting tunnel");
+        System.out.println("done starting tunnel, remote end is '" + seleniumConfig.get("application_address") + "'");
     }
 
     private void stopSauceTunnel() throws IOException {
@@ -127,7 +127,12 @@ public class SeleniumTest extends TestCase {
     private void startSeleniumClient() throws Exception {
         String host = seleniumConfig.get("selenium_server_address");
         int port = Integer.parseInt(seleniumConfig.get("selenium_server_port"));
-        String start_command = seleniumConfig.get("selenium_browser_key");
+        String start_command = "{" +
+                "\"username\": \""        + seleniumConfig.get("saucelabs_username")        + "\", " +
+                "\"access-key\": \""      + seleniumConfig.get("saucelabs_access_key")      + "\", " +
+                "\"os\": \""              + seleniumConfig.get("saucelabs_browser_os")      + "\", " +
+                "\"browser\": \""         + seleniumConfig.get("saucelabs_browser")         + "\", " +
+                "\"browser-version\": \"" + seleniumConfig.get("saucelabs_browser_version") + "\"}";
         String browser_url = "http://" + seleniumConfig.get("application_address") + ":" + seleniumConfig.get("application_port");
         selenium = new DefaultSelenium(host, port, start_command, browser_url);
         selenium.start();
