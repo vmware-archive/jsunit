@@ -1,4 +1,4 @@
-local:
+local: &local
   selenium_server_address: "localhost"
   selenium_server_port: "4444"
   selenium_browser_key: "*chrome /Applications/Firefox.app/Contents/MacOS/firefox-bin"
@@ -7,24 +7,30 @@ local:
 
 # Possible Sauce Labs configurations as of 2009/11/19
 # From: http://saucelabs.com/products/docs/sauce-ondemand/browsers
-# os: "Windows 2003"
-#   browser: "iexplore"
-#     browser-version: "6.", "7.", "8."
-#   browser: "firefox"
-#     browser-version: "2.", "3.0", "3.5"
-#   browser: "safari"
-#     browser-version: "3.", "4."
-#   browser: "opera"
-#     browser-version: "9."
-#   browser: "googlechrome"
-#     browser-version: ""
-# os: "Linux"
-#   browser: "firefox"
-#     browser-version: "3."
 #
-saucelabs:
+# saucelabs_browser_os  saucelabs_browser   saucelabs_browser_version (pick one)
+#
+# "Windows 2003"        "iexplore"          "6.", "7.", "8."
+#                       "firefox"           "2.", "3.0", "3.5"
+#                       "safari"            "3.", "4."
+#                       "opera"             "9."
+#                       "googlechrome"      ""
+# "Linux"               "firefox"           "3."
+saucelabs: &saucelabs
+  # URL of Selenium RC server:
   selenium_server_address: "saucelabs.com"
   selenium_server_port: "4444"
-  selenium_browser_key: '{"username": "YOUR_SAUCELABS_USERNAME", "access-key": "YOUR_SAUCELABS_ACCESS_KEY", "os": "Linux", "browser": "firefox", "browser-version": "3."}'
-  # application_server is generated during tunnel setup
+  # Saucelabs credentials / Browser to drive
+  saucelabs_username: "YOUR-SAUCELABS-USERNAME"
+  saucelabs_access_key: "YOUR-SAUCELABS-ACCESS-KEY"
+  saucelabs_browser_os: "Linux"
+  saucelabs_browser: "firefox"
+  saucelabs_browser_version: "3."
+  saucelabs_max_duration_seconds: "1800"
+  # Selenium RC browser connects to and tests the app at this URL:
+  application_address: "this will be ovewritten if tunnel_method == :saucetunnel"
   application_port: "80"
+  # App host is actually a tunnel that tunnels from <application_address>:<application_port> to localhost:<tunnel_to_localhost_port>
+  tunnel_method: :saucetunnel
+  tunnel_to_localhost_port: "8080"
+  tunnel_startup_timeout: "240"
