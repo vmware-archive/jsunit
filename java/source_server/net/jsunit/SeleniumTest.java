@@ -72,6 +72,13 @@ public class SeleniumTest extends TestCase {
     private void stopSauceTunnel() throws IOException {
         System.out.println("stopping tunnel");
         tunnel_process = Runtime.getRuntime().exec("ruby sauce-tunnel-delete.rb " + tunnel_id);
+        String line;
+        BufferedReader input = new BufferedReader
+                        (new InputStreamReader(tunnel_process.getInputStream()));
+
+        while ((line = input.readLine()) != null) {
+            System.out.println(line);
+        }
     }
 
     public void testStandaloneRun() throws Exception {

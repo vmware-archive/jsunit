@@ -14,12 +14,12 @@ else
 end
 
 def connect_to_rest_api
-  sauce_api_url = "https://#{@selenium_config['username']}:#{@selenium_config['access-key']}@saucelabs.com/rest/#{@selenium_config['username']}/"
-  # puts "[saucelabs-adapter] Connecting to Sauce API at #{sauce_api_url}"
+  sauce_api_url = "https://#{@selenium_config.saucelabs_username}:#{@selenium_config.saucelabs_access_key}@saucelabs.com/rest/#{@selenium_config.saucelabs_username}/"
   @sauce_api_endpoint = SauceREST::Client.new sauce_api_url
 end
 
-@selenium_config = SeleniumConfig.new('saucelabs', '../selenium.yml', 8080)
+puts "[sauce-tunnel] Stopping tunnel #{@tunnel_id}"
+@selenium_config = SaucelabsAdapter::SeleniumConfig.new('saucelabs', '../selenium.yml')
 connect_to_rest_api
 @sauce_api_endpoint.delete :tunnel, @tunnel_id
 
